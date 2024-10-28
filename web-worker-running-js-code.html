@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Worker Example</title>
+</head>
+<body>
+    <h1>Run JavaScript Code in a Web Worker</h1>
+    <textarea id="code-input" rows="10" cols="50" placeholder="Write your JavaScript code here..."></textarea>
+    <br>
+    <button id="run-code">Run Code</button>
+    <h3>Output:</h3>
+    <pre id="output"></pre>
+
+    <script>
+        // Create a new Web Worker from a blob
+        const workerCode = `
+            self.onmessage = function(event) {
+                const code = event.data;
+
+                try {
+                    // Use the Function constructor to evaluate the code
+                    const result = new Function(code)();
+                    // Send the result back to the main thread
+                    self.postMessage(result);
+                } catch (error) {
+                    // Send the error message back to the main thread
+                    self.postMessage('Error: ' + error.message);
+                }
+            };
+        `;
+
+        const blob = new Blob([workerCode], { type: 'application/javascript' });
+        const worker = new Worker(URL.createObjectURL(blob));
+
+        // Handle messages from the worker
+        worker.onmessage = function(event) {
+            document.getElementById('output').textContent = event.data;
+        };
+
+        // Run code when button is clicked
+        document.getElementById('run-code').onclick = function() {
+            const code = document.getElementById('code-input').value;
+            worker.postMessage(code);
+        };
+    </script>
+</body>
+</html>
