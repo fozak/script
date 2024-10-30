@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cognito Auth Example</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aws-amplify/4.3.27/aws-amplify.min.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        input { display: block; margin: 10px 0; }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+    <h1>User Authentication with Amazon Cognito</h1>
+    
+    <h2>Sign Up</h2>
+    <input type="text" id="signup-username" placeholder="Username" />
+    <input type="email" id="signup-email" placeholder="Email" />
+    <input type="password" id="signup-password" placeholder="Password" />
+    <button id="signup-button">Sign Up</button>
+    
+    <h2>Sign In</h2>
+    <input type="text" id="signin-username" placeholder="Username" />
+    <input type="password" id="signin-password" placeholder="Password" />
+    <button id="signin-button">Sign In</button>
+    
+    <h2>Sign Out</h2>
+    <button id="signout-button" class="hidden">Sign Out</button>
+
+    <div id="message"></div>
+
+    <script>
+        // Configure Amplify
+        Amplify.default.configure({
+            Auth: {
+                region: 'us-east-1', // Your User Pool region
+                userPoolId: 'us-east-1_vFSoQYucC', // Your User Pool ID
+                userPoolWebClientId: '1c4gfcgjfmimi4ba3tlrbpntga', // Your App Client ID
+            }
+        });
+
+        // Sign Up Function
+        document.getElementById('signup-button').onclick = async () => {
+            const username = document.getElementById('signup-username').value;
+            const email = document.getElementById('signup-email').value;
+            const password = document.getElementById('signup-password').value;
+
+            try {
+                const { user } = await Amplify.Auth.signUp({
+                    username,
+                    password,
+                    attributes: { email }
+                });
+                document.getElementById('message').innerText = `Sign up successful! Welcome, ${user.username}!`;
+            } catch (error) {
+                document.getElementById('message').innerText = `Error signing up: ${error.message}`;
+            }
+        };
+
+        // Sign In Function
+        document.getElementById('signin-button').onclick = async () => {
+            const username = document.getElementById('signin-username').value;
+            const password = document.getElementById('signin-password').value;
+
+            try {
+                const user = await Amplify.Auth.signIn(username, password);
+                document.getElementById('message').innerText = `Sign in successful! Welcome back, ${user.username}!`;
+                document.getElementById('signout-button').classList.remove('hidden');
+            } catch (error) {
+                document.getElementById('message').innerText = `Error signing in: ${error.message}`;
+            }
+        };
+
+        // Sign Out Function
+        document.getElementById('signout-button').onclick = async () => {
+            try {
+                await Amplify.Auth.signOut();
+                document.getElementById('message').innerText = 'You have signed out successfully!';
+                document.getElementById('signout-button').classList.add('hidden');
+            } catch (error) {
+                document.getElementById('message').innerText = `Error signing out: ${error.message}`;
+            }
+        };
+    </script>
+</body>
+</html>
