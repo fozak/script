@@ -1,0 +1,89 @@
+<!-- PROMPT 
+ can I use 2 s3 object keys to generate html page like this 
+
+-->
+<!-- this is s3 bucket/page.html 
+<h1>{title}</h1>
+<script>load_data_from_s3("{data}")</script>
+
+this is s3 bucket/page.html/data/title/MyTitle key 
+
+page is rendedered from key bucket/page.html/data/title/MyTitle
+
+the result is 
+
+<h1>MyTitle</h1>
+-->
+
+<!--AI 
+https://your-s3-bucket-url/page.html/data/title/data/subtitle -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Page</title>
+</head>
+<body>
+    <h1 id="page-title">{title}</h1>
+    <h2 id="page-subtitle">{subtitle}</h2>
+    <script>
+        // Function to load data from S3
+        function load_data_from_s3(dataKey, pageName) {
+            // Extract the S3 bucket URL from the current page
+            const bucketUrl = `${window.location.origin}/`;  // Assuming the bucket URL is the origin of the page
+
+            // Construct the full URL using the page name
+            const url = `${bucketUrl}${pageName}/data/${dataKey}`;
+
+            // Fetch the data from S3
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.text(); // Assuming the data is in text format
+                })
+                .then(data => {
+                    // Update the corresponding element in the HTML
+                    document.getElementById(dataKey).innerText = data;
+                })
+                .catch(error => {
+                    console.error('There was a problem with the fetch operation:', error);
+                });
+        }
+
+        // Function to extract variables and page name from the current URL
+        function getVariablesFromUrl() {
+            const currentUrl = window.location.pathname; // Get the current URL path
+            const regex = /\/data\/([a-zA-Z0-9_]+)/g; // Regex to match /data/key
+            let match;
+            let variables = {};
+            let pageName = currentUrl.split('/').slice(-2, -1)[0]; // Extract the page name
+
+            // Extract all matches
+            while ((match = regex.exec(currentUrl)) !== null) {
+                const key = match[1]; // the key (e.g., 'title' or 'subtitle')
+                variables[key] = true; // Store in the object (value is true for existence)
+            }
+
+            return { variables, pageName }; // Return the variables object and page name
+        }
+
+        // Function to initialize the page
+        function initPage() {
+            const { variables, pageName } = getVariablesFromUrl(); // Get variables and page name from the URL
+            for (const key in variables) {
+                if (variables.hasOwnProperty(key)) {
+                    // Call the load_data_from_s3 function with the key and page name
+                    load_data_from_s3(key, pageName);
+                }
+            }
+        }
+
+        // Call the initPage function when the page loads
+        initPage();
+    </script>
+</body>
+</html>
