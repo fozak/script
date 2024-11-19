@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AG Grid Example</title>
+    <link rel="stylesheet" href="https://unpkg.com/ag-grid-community/styles/ag-grid.css">
+    <link rel="stylesheet" href="https://unpkg.com/ag-grid-community/styles/ag-theme-alpine.css">
+</head>
+<body>
+
+<div id="myGrid" class="ag-theme-alpine" style="height: 400px; width: 600px;"></div>
+
+<script src="https://unpkg.com/ag-grid-community/dist/ag-grid-community.noStyle.js"></script>
+<script>
+    const columnDefs = [
+        { headerName: "Make", field: "make", sortable: true },
+        { headerName: "Model", field: "model", sortable: true },
+        { headerName: "Price", field: "price", sortable: true }
+    ];
+
+    const rowData = [
+        { make: "Toyota", model: "Celica", price: 35000 },
+        { make: "Ford", model: "Mondeo", price: 32000 },
+        { make: "Porsche", model: "Boxster", price: 72000 }
+    ];
+
+    const gridOptions = {
+        columnDefs: columnDefs,
+        rowData: rowData,
+    };
+
+    // Setup the grid after the DOM is ready
+    document.addEventListener('DOMContentLoaded', () => {
+        const gridDiv = document.getElementById('myGrid');
+        new agGrid.Grid(gridDiv, gridOptions);
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jupyter AI-like Chat Panel</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: #f7f7f7;
+            display: flex;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .chat-container {
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            width: 300px; /* Fixed width for the chat panel */
+            min-width: 250px; /* Minimum width */
+            max-width: 400px; /* Maximum width */
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        .chat-box {
+            flex: 1;
+            overflow-y: auto;
+            max-height: 400px;
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        .message {
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 5px;
+            max-width: 80%;
+            word-wrap: break-word;
+        }
+
+        .user-message {
+            background-color: #cce5ff;
+            align-self: flex-end;
+        }
+
+        .bot-message {
+            background-color: #e2e3e5;
+            align-self: flex-start;
+        }
+
+        textarea {
+            width: 100%;
+            resize: none;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        button {
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-box" id="chat-box"></div>
+        <textarea id="user-input" placeholder="Type your message..." rows="3"></textarea>
+        <button id="send-button">Send</button>
+    </div>
+
+    <script>
+        document.getElementById('send-button').addEventListener('click', sendMessage);
+        document.getElementById('user-input').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        });
+
+        function sendMessage() {
+            const inputField = document.getElementById('user-input');
+            const messageText = inputField.value.trim();
+            
+            if (messageText === '') return;
+
+            // Append user message
+            appendMessage(messageText, 'user-message');
+
+            // Clear input field
+            inputField.value = '';
+
+            // Simulate a response from the bot after a short delay
+            setTimeout(() => {
+                const botResponse = getBotResponse(messageText);
+                appendMessage(botResponse, 'bot-message');
+            }, 1000);
+        }
+
+        function appendMessage(text, className) {
+            const chatBox = document.getElementById('chat-box');
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('message', className);
+            messageDiv.textContent = text;
+            chatBox.appendChild(messageDiv);
+            chatBox.scrollTop = chatBox.scrollHeight; // Scroll to the bottom
+        }
+
+        function getBotResponse(userMessage) {
+            // Here you can implement your logic for generating bot responses
+            // For demonstration, we'll just echo the user's message
+            return `You said: "${userMessage}"`;
+        }
+    </script>
+</body>
+</html>

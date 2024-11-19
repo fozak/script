@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Messages</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .message { border: 1px solid #ccc; padding: 10px; margin: 10px 0; }
+        .message-title { font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>User Messages</h1>
+    <div id="messages"></div>
+
+    <script>
+        const discourseUrl = 'https://forum.qudza.com/u/mblacc4/messages.json';
+
+        async function fetchMessages() {
+            try {
+                const response = await fetch(discourseUrl, {
+                    method: 'GET',
+                    credentials: 'include' // Include cookies for session authentication
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                displayMessages(data);
+            } catch (error) {
+                console.error('Error fetching messages:', error);
+                document.getElementById('messages').innerText = 'Failed to load messages.';
+            }
+        }
+
+        function displayMessages(data) {
+            const messagesContainer = document.getElementById('messages');
+            messagesContainer.innerHTML = ''; // Clear previous messages
+
+            const messages = data.messages; // Adjust based on actual data structure
+
+            if (messages && messages.length > 0) {
+                messages.forEach(message => {
+                    const messageDiv = document.createElement('div');
+                    messageDiv.className = 'message';
+                    messageDiv.innerHTML = `
+                        <div class="message-title">${message.title || 'No Title'}</div>
+                        <div>${message.content}</div>
+                        <div><small>Created at: ${new Date(message.created_at).toLocaleString()}</small></div>
+                    `;
+                    messagesContainer.appendChild(messageDiv);
+                });
+            } else {
+                messagesContainer.innerText = 'No messages found.';
+            }
+        }
+
+        // Fetch messages on page load
+        fetchMessages();
+    </script>
+</body>
+</html>

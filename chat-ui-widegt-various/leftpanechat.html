@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Widget Example</title>
+    <style>
+        body {
+            display: flex; /* Use flexbox layout for the body */
+            margin: 0; /* Remove default margin */
+            height: 100vh; /* Full viewport height */
+            overflow: hidden; /* Prevent overflow of the body */
+        }
+        #chat-widget-container {
+            width: 300px; /* Fixed width for the chat widget */
+            background: #f1f1f1; /* Background color for the widget */
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5); /* Shadow for depth */
+            display: flex;
+            flex-direction: column;
+            height: 100%; /* Full height of the viewport */
+        }
+        #content {
+            flex: 1; /* Allow content to take up remaining space */
+            padding: 20px; /* Add some padding */
+            overflow-y: auto; /* Add scrolling if content overflows */
+            box-sizing: border-box; /* Include padding in total width */
+        }
+    </style>
+</head>
+<body>
+    <div id="chat-widget-container"></div> <!-- Widget will be appended here -->
+    <div id="content">
+        <h1>Main Content Area</h1>
+        <p>This is where your main content will go.</p>
+        <p>Feel free to add more elements here.</p>
+        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quisquam, quidem?</p>
+        <p>More content to illustrate the scrolling behavior.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente, velit.</p>
+        <!-- Add more main page content as needed -->
+    </div>
+
+    <script src="chat_widget.js"></script>  <!-- Include the external JS file -->
+</body>
+</html>
