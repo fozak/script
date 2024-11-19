@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Posts Gallery</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #fafafa; /* Light background */
+        }
+        h1 {
+            text-align: center; /* Center the title */
+            color: #333; /* Darker text for contrast */
+        }
+        #posts-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Responsive grid */
+            gap: 15px; /* Space between grid items */
+            padding: 10px; /* Padding around the grid */
+        }
+        .post {
+            background-color: #fff; /* White background for posts */
+            border-radius: 10px; /* Rounded corners */
+            overflow: hidden; /* Prevent overflow */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+            transition: transform 0.2s; /* Smooth scaling on hover */
+        }
+        .post:hover {
+            transform: scale(1.02); /* Slightly scale up on hover */
+        }
+        img {
+            width: 100%; /* Full width of the post */
+            height: auto; /* Maintain aspect ratio */
+            border-bottom: 1px solid #eaeaea; /* Divider between image and caption */
+        }
+        .caption {
+            padding: 10px; /* Padding for caption */
+            font-size: 14px; /* Smaller font size */
+            color: #333; /* Darker text for caption */
+        }
+        .tags {
+            color: #888; /* Gray for tags */
+            font-size: 12px; /* Smaller font size */
+            margin-top: 5px; /* Space above tags */
+        }
+    </style>
+</head>
+<body>
+    <h1>Posts Gallery</h1>
+    <div id="posts-container"></div>
+
+    
+
+    <script>
+        async function fetchPosts() {
+            try {
+                const response = await fetch('posts_data.json'); // Adjust path if necessary
+                const posts = await response.json();
+                const postsContainer = document.getElementById('posts-container');
+
+                posts.forEach(post => {
+                    // Create post element
+                    const postDiv = document.createElement('div');
+                    postDiv.className = 'post';
+
+                    // Create image element
+                    const img = document.createElement('img');
+                    img.src = post.image_urls.replace(/^\//, ''); // Remove leading slash if present
+                    img.alt = post.caption || 'Image';
+
+                    // Create caption element
+                    const caption = document.createElement('p');
+                    caption.textContent = post.caption || 'No caption provided';
+
+                    // Create tags element
+                    const tags = document.createElement('p');
+                    tags.className = 'tags';
+                    tags.textContent = post.tags.length > 0 ? `Tags: ${post.tags.join(', ')}` : 'No tags';
+
+                    // Append elements to post div
+                    postDiv.appendChild(img);
+                    postDiv.appendChild(caption);
+                    postDiv.appendChild(tags);
+                    
+                    // Append post div to container
+                    postsContainer.appendChild(postDiv);
+                });
+            } catch (error) {
+                console.error('Error fetching posts:', error);
+            }
+        }
+
+        // Fetch posts when the page loads
+        window.onload = fetchPosts;
+    </script>
+</body>
+</html>

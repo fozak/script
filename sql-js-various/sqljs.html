@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQLite to IndexedDB and Render Table</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <h1>SQLite to IndexedDB and Render Table</h1>
+    <div id="table-container"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.6.2/sql-wasm.js"></script>
+    <script>
+        async function loadSQLiteDatabase() {
+            const response = await fetch('noco.db');
+            const buffer = await response.arrayBuffer();
+            const SQL = await initSqlJs({ locateFile: file => `https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.6.2/${file}` });
+            const db = new SQL.Database(new Uint8Array(buffer));
+            return db;
+        }
+
+        async function readTable(db, tableName) {
+            const stmt = db.prepare(`SELECT * FROM ${tableName}`);
+            const rows = [];
+            while (stmt.step()) {
+                rows.push(stmt.getAsObject());
+            }
+            stmt.free();
+            return rows;
+        }
+
+        async function writeToIndexedDB(storeName, data) {
+            const dbName = 'MyDatabase';
+            return new Promise((resolve, reject) => {
+                const request = indexedDB.open(dbName, 1);
+
+                request.onerror = event => {
+                    reject(event.target.error);
+                };
+
+                request.onsuccess = event => {
+                    const db = event.target.result;
+                    const transaction = db.transaction([storeName], 'readwrite');
+                    const objectStore = transaction.objectStore(storeName);
+
+                    data.forEach(item => {
+                        objectStore.put(item);
+                    });
+
+                    transaction.oncomplete = () => {
+                        resolve();
+                    };
+
+                    transaction.onerror = event => {
+                        reject(event.target.error);
+                    };
+                };
+
+                request.onupgradeneeded = event => {
+                    const db = event.target.result;
+                    if (!db.objectStoreNames.contains(storeName)) {
+                        db.createObjectStore(storeName, { keyPath: 'id', autoIncrement: true });
+                    }
+                };
+            });
+        }
+
+        function renderTable(data) {
+            const tableContainer = document.getElementById('table-container');
+            tableContainer.innerHTML = ''; // Clear previous content
+            const table = document.createElement('table');
+            const thead = document.createElement('thead');
+            const tbody = document.createElement('tbody');
+
+            const headerRow = document.createElement('tr');
+            const headers = Object.keys(data[0]);
+            headers.forEach(header => {
+                const th = document.createElement('th');
+                th.textContent = header;
+                headerRow.appendChild(th);
+            });
+            thead.appendChild(headerRow);
+
+            data.forEach(row => {
+                const tr = document.createElement('tr');
+                headers.forEach(header => {
+                    const td = document.createElement('td');
+                    td.textContent = row[header];
+                    tr.appendChild(td);
+                });
+                tbody.appendChild(tr);
+            });
+
+            table.appendChild(thead);
+            table.appendChild(tbody);
+            tableContainer.appendChild(table);
+        }
+
+        (async () => {
+            try {
+                const db = await loadSQLiteDatabase();
+                const tableName = 'nc_bjh1__Content';  // Update this to your table name
+                const data = await readTable(db, tableName);
+
+                console.log('Data read from SQLite table:', data);
+
+                await writeToIndexedDB(tableName, data);
+                console.log('Data successfully copied to IndexedDB');
+
+                renderTable(data);
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        })();
+    </script>
+</body>
+</html>

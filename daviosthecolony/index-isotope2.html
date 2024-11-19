@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Davios The Colony</title>
+    <link rel="stylesheet" href="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        #filters {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        #post-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .post {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin: 10px;
+            padding: 10px;
+            width: 300px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+        .post img {
+            width: 100%;
+            border-radius: 8px 8px 0 0;
+        }
+        .post:hover {
+            transform: scale(1.02);
+        }
+        .caption {
+            padding: 10px;
+        }
+        .tags {
+            color: #777;
+            font-size: 0.9em;
+        }
+        .filter-button {
+            margin: 5px;
+            padding: 10px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        .filter-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Davios The Colony Posts</h1>
+    
+    <!-- Filter Buttons -->
+    <div id="filters"></div>
+
+    <div id="post-container"></div>
+
+    <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
+    <script>
+        const container = document.getElementById('post-container');
+        const iso = new Isotope(container, {
+            itemSelector: '.post',
+            layoutMode: 'fitRows'
+        });
+
+        async function loadPosts() {
+            const response = await fetch('posts_data.json');
+            const posts = await response.json();
+
+            const tagCount = {};
+            
+            // Create posts and count tags
+            posts.forEach(post => {
+                // Replace # with - to create valid class names
+                const sanitizedTags = post.tags.map(tag => tag.replace('#', '-'));
+                
+                const postElement = document.createElement('div');
+                postElement.className = `post ${sanitizedTags.join(' ')}`; // Add sanitized tags as classes
+                postElement.innerHTML = `
+                    <img src="${post.image_urls}" alt="Post Image">
+                    <div class="caption">
+                        <h3>${post.caption.split("\n")[0]}</h3>
+                        <p>${post.caption.split("\n").slice(1).join("\n")}</p>
+                        <p class="tags">${post.tags.join(" ")}</p>
+                    </div>
+                `;
+                container.appendChild(postElement);
+
+                // Count tags
+                sanitizedTags.forEach(tag => {
+                    tagCount[tag] = (tagCount[tag] || 0) + 1;
+                });
+            });
+
+            iso.reloadItems(); // Refresh Isotope layout after adding new items
+            iso.layout(); // Layout items after loading
+
+            // Generate filter buttons based on tag frequency
+            generateFilterButtons(tagCount);
+        }
+
+        function generateFilterButtons(tagCount) {
+            const filterDiv = document.getElementById('filters');
+            filterDiv.innerHTML = ''; // Clear existing filter buttons
+
+            // Sort tags by frequency
+            const sortedTags = Object.entries(tagCount).sort((a, b) => b[1] - a[1]);
+            const topTags = sortedTags.slice(0, 3); // Get the top 3 tags
+
+            // Create "Show All" button
+            const showAllButton = document.createElement('button');
+            showAllButton.className = 'filter-button';
+            showAllButton.setAttribute('data-filter', '*');
+            showAllButton.textContent = 'Show All';
+            filterDiv.appendChild(showAllButton);
+
+            // Create buttons for the top tags
+            topTags.forEach(([tag]) => {
+                const button = document.createElement('button');
+                button.className = 'filter-button';
+                button.setAttribute('data-filter', `.${tag}`); // Use sanitized tag for filtering
+                button.textContent = tag.replace('-', '#'); // Display original tag with #
+                filterDiv.appendChild(button);
+            });
+
+            // Add event listeners for filtering
+            const filterButtons = document.querySelectorAll('.filter-button');
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const filterValue = button.getAttribute('data-filter');
+                    iso.arrange({ filter: filterValue });
+                });
+            });
+        }
+
+        // Call loadPosts to display the posts
+        loadPosts();
+    </script>
+</body>
+</html>

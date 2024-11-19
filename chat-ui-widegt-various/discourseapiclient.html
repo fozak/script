@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discourse API Fetch Example</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Discourse Topics</h1>
+    <table id="topicsTable">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Posted At</th>
+                <th>Link</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <script>
+        const topicsTableBody = document.querySelector('#topicsTable tbody');
+        const DISCOURSE_API_URL = 'https://forum.qudza.com'; // Discourse URL
+        const API_KEY = "b5629e5139aa3a67909f9bdbbda84579ec93f623b0ab25fcd996bb424c6d5c71"; // Your API key
+        const API_USERNAME = "admin1"; // Your API username
+
+        async function fetchTopics() {
+            try {
+                const response = await fetch(`${DISCOURSE_API_URL}/t.json`, {
+                    method: 'GET',
+                    headers: {
+                        'Api-Key': API_KEY,
+                        'Api-Username': API_USERNAME // Use the provided username
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                displayTopics(data.topic_list.topics);
+            } catch (error) {
+                console.error('Error fetching topics:', error);
+            }
+        }
+
+        function displayTopics(topics) {
+            topics.forEach(topic => {
+                const row = document.createElement('tr');
+                
+                const cellId = document.createElement('td');
+                cellId.textContent = topic.id;
+                row.appendChild(cellId);
+                
+                const cellTitle = document.createElement('td');
+                cellTitle.textContent = topic.title;
+                row.appendChild(cellTitle);
+                
+                const cellPostedAt = document.createElement('td');
+                cellPostedAt.textContent = new Date(topic.created_at).toLocaleString();
+                row.appendChild(cellPostedAt);
+                
+                const cellLink = document.createElement('td');
+                const link = document.createElement('a');
+                link.href = `${DISCOURSE_API_URL}/t/${topic.id}`;
+                link.textContent = 'View Topic';
+                link.target = '_blank'; // Open link in a new tab
+                cellLink.appendChild(link);
+                row.appendChild(cellLink);
+                
+                topicsTableBody.appendChild(row);
+            });
+        }
+
+        // Call the fetch function on load
+        fetchTopics();
+    </script>
+</body>
+</html>

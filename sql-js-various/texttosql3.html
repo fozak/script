@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQLite to SQL Command Generator</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.6.2/sql-wasm.js"></script>
+</head>
+<body>
+   
+    <textarea id="sql-command" placeholder="Enter SQL command here..."></textarea>
+    <button id="run-sql">Run SQL Command</button>
+    <div id="table-container"></div>
+
+    <script>
+        async function loadSQLiteDatabase() {
+            const response = await fetch('noco.db'); // Ensure this path is correct for your database
+            const buffer = await response.arrayBuffer();
+            const SQL = await initSqlJs({ locateFile: file => `https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.6.2/${file}` });
+            const db = new SQL.Database(new Uint8Array(buffer));
+            console.log('DB loaded');
+
+            const tables = await runSQLCommand(db, "SELECT name FROM sqlite_master WHERE type='table';");
+            const tableDetails = [];
+
+            for (const table of tables) {
+                const tableName = table.name;
+                const headersQuery = `PRAGMA table_info(${tableName});`;
+                const headers = await runSQLCommand(db, headersQuery);
+                const columnNames = headers.map(header => header.name);
+
+                const firstRowQuery = `SELECT * FROM ${tableName} LIMIT 1;`;
+                const firstRow = await runSQLCommand(db, firstRowQuery);
+
+                const truncatedFirstRow = firstRow.length > 0
+                    ? Object.fromEntries(
+                        Object.entries(firstRow[0]).map(([key, value]) => [key, typeof value === 'string' ? value.substring(0, 100) : value])
+                    )
+                    : null;
+
+                const countRowsQuery = `SELECT COUNT(*) as count FROM ${tableName};`;
+                const rowCountResult = await runSQLCommand(db, countRowsQuery);
+                const totalCount = rowCountResult[0]?.count || 0;
+
+                const details = {
+                    tableName: tableName,
+                    headers: columnNames,
+                    firstRow: truncatedFirstRow,
+                    totalCount: totalCount
+                };
+
+                tableDetails.push(details);
+            }
+
+            console.log('Table details:', tableDetails);
+            return { db, tableDetails }; // Return both the database and the table details
+        }
+
+        function renderTable(data) {
+            const tableContainer = document.getElementById('table-container');
+            tableContainer.innerHTML = ''; // Clear previous content
+            const table = document.createElement('table');
+            const thead = document.createElement('thead');
+            const tbody = document.createElement('tbody');
+
+            if (data.length > 0) {
+                const headerRow = document.createElement('tr');
+                const headers = Object.keys(data[0]);
+                headers.forEach(header => {
+                    const th = document.createElement('th');
+                    th.textContent = header;
+                    headerRow.appendChild(th);
+                });
+                thead.appendChild(headerRow);
+
+                data.forEach(row => {
+                    const tr = document.createElement('tr');
+                    headers.forEach(header => {
+                        const td = document.createElement('td');
+                        td.textContent = row[header];
+                        tr.appendChild(td);
+                    });
+                    tbody.appendChild(tr);
+                });
+
+                table.appendChild(thead);
+                table.appendChild(tbody);
+                tableContainer.appendChild(table);
+            } else {
+                tableContainer.innerHTML = '<p>No data found</p>';
+            }
+        }
+
+        async function runSQLCommand(db, sql) {
+            try {
+                const results = [];
+                db.each(sql, [], row => {
+                    results.push(row);
+                });
+                return results;
+            } catch (error) {
+                console.error('Error running SQL command:', error);
+                return []; // Return an empty array if there's an error
+            }
+        }
+
+        async function generateSQLCommand(tableDetails, userPrompt) {
+            const apiKey = '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'; // Replace with your OpenAI API key or handle securely on the server
+
+            const tableInfo = tableDetails.map(detail => {
+                const headers = detail.headers.join(', ');
+                return `Table: ${detail.tableName}, Headers: [${headers}], Total Rows: ${detail.totalCount}, First Row: ${JSON.stringify(detail.firstRow)}`;
+            }).join('\n');
+
+            const prompt = `I have the sqlite db with the following data :\n${tableInfo} to identify tables and header names and datastructure and then generate SQL code to execute\n\n.Do not include any comments, just sql code. User Request: ${userPrompt} `;
+        
+            const response = await fetch('https://api.openai.com/v1/chat/completions', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${apiKey}`
+                },
+                body: JSON.stringify({
+                    model: 'gpt-4o-mini', // or 'gpt-4' if you have access
+                    messages: [{ role: 'user', content: prompt }],
+                    max_tokens: 4000 // Adjusted to a more reasonable value
+                })
+            });
+
+            const data = await response.json();
+            if (data.choices && data.choices.length > 0) {
+                let sqlCommand = data.choices[0].message.content.trim();
+                console.log('sql command', sqlCommand);
+                sqlCommand = sqlCommand.replace(/^\s*(sql)?\s*/i, ''); // Remove "sql" if present at the start
+                sqlCommand = sqlCommand.replace(/(^`+|`+$)/g, ''); // Clean up command
+                sqlCommand = sqlCommand.replace(/(^```\s*|\s*```$)/g, ''); // Clean up command
+                console.log('sql command after cleaning', sqlCommand);
+                return sqlCommand;
+            } else {
+                throw new Error('No SQL command generated');
+            }
+        }
+
+        (async () => {
+            try {
+                const { db, tableDetails } = await loadSQLiteDatabase(); // Destructure db and tableDetails
+                console.log('Database and table details loaded successfully:', tableDetails);
+
+                const sqlCommandElement = document.getElementById('sql-command');
+                const runSqlButton = document.getElementById('run-sql');
+
+                runSqlButton.addEventListener('click', async () => {
+                    const inputText = sqlCommandElement.value;
+                    const prompt = `sqlite db.Generate an SQL command based on the following input: ${inputText}. Only output the SQL command without sql word before, this is important`;
+                    
+                    const sqlCommand = await generateSQLCommand(tableDetails, prompt); // Pass tableDetails to the function
+                    console.log('Generated SQL command:', sqlCommand);
+
+                    const data = await runSQLCommand(db, sqlCommand);
+                    console.log('SQL command result:', data);
+                    renderTable(data);
+                });
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        })();
+    </script>
+</body>
+</html>

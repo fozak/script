@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Widget Example</title>
+    <style>
+        body {
+            display: flex; /* Use flexbox layout for the body */
+            margin: 0; /* Remove default margin */
+            height: 100vh; /* Full viewport height */
+            overflow: hidden; /* Prevent overflow of the body */
+        }
+        #chat-widget-container {
+            width: 300px; /* Fixed width for the chat widget */
+            background: #f1f1f1; /* Background color for the widget */
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5); /* Shadow for depth */
+            display: flex;
+            flex-direction: column;
+            height: 100%; /* Full height of the viewport */
+        }
+        #content {
+            flex: 1; /* Allow content to take up remaining space */
+            padding: 20px; /* Add some padding */
+            overflow-y: auto; /* Add scrolling if content overflows */
+            box-sizing: border-box; /* Include padding in total width */
+        }
+    </style>
+</head>
+<body>
+    <div id="chat-widget-container"></div> <!-- Widget will be appended here -->
+    <div id="content">
+        <!-- Content from index.html will be loaded here -->
+    </div>
+
+    <script src="chat_widget.js"></script>  <!-- Include the external JS file -->
+    <script>
+        // Function to load content from index.html
+        function loadContent() {
+            fetch('index.html')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.text();
+                })
+                .then(data => {
+                    document.getElementById('content').innerHTML = data;
+                })
+                .catch(error => {
+                    console.error('There was a problem with the fetch operation:', error);
+                });
+        }
+
+        // Load the content when the page is loaded
+        window.onload = loadContent;
+    </script>
+</body>
+</html>

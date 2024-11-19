@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Davios The Colony</title>
+    <link rel="stylesheet" href="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        #post-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .post {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin: 10px;
+            padding: 10px;
+            width: 300px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+        .post img {
+            width: 100%;
+            border-radius: 8px 8px 0 0;
+        }
+        .post:hover {
+            transform: scale(1.02);
+        }
+        .caption {
+            padding: 10px;
+        }
+        .tags {
+            color: #777;
+            font-size: 0.9em;
+        }
+        .filter-button {
+            margin: 5px;
+            padding: 10px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        .filter-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Davios The Colony Posts</h1>
+    
+    <!-- Filter Buttons -->
+    <div id="filters">
+        <button class="filter-button" data-filter="*">Show All</button>
+        <button class="filter-button" data-filter=".tag1">Tag 1</button>
+        <button class="filter-button" data-filter=".tag2">Tag 2</button>
+        <button class="filter-button" data-filter=".tag3">Tag 3</button>
+    </div>
+
+    <div id="post-container"></div>
+
+    <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
+    <script>
+        const container = document.getElementById('post-container');
+        const iso = new Isotope(container, {
+            itemSelector: '.post',
+            layoutMode: 'fitRows'
+        });
+
+        // Load data from the JSON file
+        async function loadPosts() {
+            const response = await fetch('posts_data.json');
+            const posts = await response.json();
+
+            posts.forEach(post => {
+                const postElement = document.createElement('div');
+                postElement.className = `post ${post.tags.join(' ')}`; // Add tags as classes
+                postElement.innerHTML = `
+                    <img src="${post.image_urls}" alt="Post Image">
+                    <div class="caption">
+                        <h3>${post.caption.split("\n")[0]}</h3>
+                        <p>${post.caption.split("\n").slice(1).join("\n")}</p>
+                        <p class="tags">${post.tags.join(" ")}</p>
+                    </div>
+                `;
+                container.appendChild(postElement);
+            });
+
+            iso.reloadItems(); // Refresh Isotope layout after adding new items
+            iso.layout(); // Layout items after loading
+        }
+
+        // Filter buttons
+        const filterButtons = document.querySelectorAll('.filter-button');
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const filterValue = button.getAttribute('data-filter');
+                iso.arrange({ filter: filterValue });
+            });
+        });
+
+        // Call loadPosts to display the posts
+        loadPosts();
+    </script>
+</body>
+</html>
