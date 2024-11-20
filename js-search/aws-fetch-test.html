@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S3 Key Fetcher</title>
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.1571.0.min.js"></script>
+</head>
+<body>
+    <script>
+        AWS.config.region = 'us-east-1';
+        console.log('Region: ' + AWS.config.region);
+        const bucketName = 'exponanta-public';
+        const s3 = new AWS.S3();
+        let keys = []; // Array to hold the S3 keys
+        let fuse; // Fuse instance for searching
+
+        // Function to fetch S3 keys
+        async function fetchS3Keys() {
+            const params = {
+                Bucket: bucketName,
+                MaxKeys: 1000 // Adjust as necessary
+            };
+
+            try {
+                const data = await s3.makeUnauthenticatedRequest('listObjectsV2', params).promise();
+                keys = data.Contents.map(item => item.Key);
+                console.log("Fetched keys:", keys);
+                return keys; // Return the fetched keys
+            } catch (error) {
+                console.error("Error fetching S3 keys:", error);
+                throw error; // Rethrow the error for further handling if needed
+            }
+        }
+
+        // Initialize the function on page load or as needed
+        window.onload = async () => {
+            try {
+                await fetchS3Keys();
+                // You can initialize Fuse.js or any other logic here after fetching keys
+            } catch (error) {
+                console.error("Initialization failed:", error);
+            }
+        };
+    </script>
+</body>
+</html>
