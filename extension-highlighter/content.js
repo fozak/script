@@ -1,17 +1,22 @@
 // Function to highlight names in the document
 function highlightNames(names) {
-    // Clear previous highlights
+    // Capture the current HTML content of the body
+    let bodyText = document.body.innerHTML;
 
-    
-    document.body.innerHTML = document.body.innerHTML.replace(/<span class="highlight">(.*?)<\/span>/g, '$1');
+    // Clear previous highlights
+    bodyText = bodyText.replace(/<span style="background-color: yellow; color: black;">(.*?)<\/span>/g, '$1');
 
     if (names && names.length > 0) {
-        const bodyText = document.body.innerHTML;
         names.forEach(name => {
+            // Define the regex to match the name
             const regex = new RegExp(`(${name})`, "gi");
-            document.body.innerHTML = bodyText.replace(regex, '<span class="highlight">$1</span>');
+            // Replace occurrences of the name with highlighted version
+            bodyText = bodyText.replace(regex, `<span style="background-color: yellow; color: black;">$1</span>`);
         });
     }
+
+    // Update the body with the new HTML content
+    document.body.innerHTML = bodyText;
 }
 
 // Listen for messages from the popup
