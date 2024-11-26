@@ -1,0 +1,1502 @@
+{
+   "contextmenu_add": {
+      "message": "Tilføj"
+   },
+   "contextmenu_add_bookmark": {
+      "message": "Tilføj bogmærke"
+   },
+   "contextmenu_bookmark_manager": {
+      "message": "Bogmæke administrator"
+   },
+   "contextmenu_check_bookmarks": {
+      "message": "Kontroller bogmærker"
+   },
+   "contextmenu_close_all_directories": {
+      "message": "Luk alle mapper"
+   },
+   "contextmenu_copy": {
+      "message": "Kopier URL til udklipsholder"
+   },
+   "contextmenu_current_tab": {
+      "message": "Åbne i den nuværende fane."
+   },
+   "contextmenu_delete_bookmark": {
+      "message": "Slet bogmærke"
+   },
+   "contextmenu_delete_dir": {
+      "message": "Slet mappe"
+   },
+   "contextmenu_delete_separator": {
+      "message": "Slet separator"
+   },
+   "contextmenu_deselect_bookmark": {
+      "message": "Fravælg bogmærke"
+   },
+   "contextmenu_deselect_dir": {
+      "message": "Fravælg mappe"
+   },
+   "contextmenu_edit_bookmark": {
+      "message": "Rediger bogmærke"
+   },
+   "contextmenu_edit_dir": {
+      "message": "Rediger mappe"
+   },
+   "contextmenu_edit_separator": {
+      "message": "Rediger seperator"
+   },
+   "contextmenu_hide_from_sidebar": {
+      "message": "Skjul fra sidepanel"
+   },
+   "contextmenu_infos": {
+      "message": "Information"
+   },
+   "contextmenu_keyboard_shortcuts": {
+      "message": "Tastatur genveje"
+   },
+   "contextmenu_new_tab": {
+      "message": "Åbne i ny fane"
+   },
+   "contextmenu_new_tab_incognito": {
+      "message": "Åbne i Inkognito vindue"
+   },
+   "contextmenu_new_window": {
+      "message": "Åbne i nyt vindue"
+   },
+   "contextmenu_open_children": {
+      "message": "Åbne bogmærker"
+   },
+   "contextmenu_pin": {
+      "message": "Fastgør til top"
+   },
+   "contextmenu_reload_sidebar": {
+      "message": "Genindlæs sidepanel"
+   },
+   "contextmenu_select_bookmark": {
+      "message": "Vælg bogmærke"
+   },
+   "contextmenu_select_dir": {
+      "message": "Vælg mappe"
+   },
+   "contextmenu_select_entries": {
+      "message": "Vælg flere poster"
+   },
+   "contextmenu_show_in_dir": {
+      "message": "Vis i mappe"
+   },
+   "contextmenu_show_in_sidebar": {
+      "message": "Vis i sidepanel"
+   },
+   "contextmenu_toggle_hidden": {
+      "message": "Vis skjulte poster"
+   },
+   "contextmenu_unpin": {
+      "message": "Frigør fra top"
+   },
+   "contribute_intro": {
+      "message": "For at gøre denne udvidelse bedre ønsker jeg at opnå kendskab til hvordan brugere benytter sidepanelet, samt hvilken opsætning de bruger."
+   },
+   "contribute_notice": {
+      "message": "Du kan hjælpe mig ved at dele din opsætning."
+   },
+   "contribute_outro": {
+      "message": "Hvis du har spørgsmål eller bekymringer om at dele denne information, send mig gerne din feedback."
+   },
+   "contribute_share_activity_desc1": {
+      "message": "Du kan dele din sidepanel-aktivitet anonymt, hvilket hjælper mig til at forstå hvordan brugere generelt benytter sidepanelet. Information omkring dine bogmærker eller dine besøgte hjemmesider [b]vil ikke[/b] blive målt."
+   },
+   "contribute_share_activity_desc2": {
+      "message": "Denne information er meget brugbar til at identificere problemer med brugervenligheden, eller features som for eksempel ikke bliver brugt særligt ofte."
+   },
+   "contribute_share_activity_example_1": {
+      "message": "Hvor mange bogmærker har brugere i gennemsnit?"
+   },
+   "contribute_share_activity_example_2": {
+      "message": "Hvilken platform benytter brugere (Windows, Mac, Linux, ...)?"
+   },
+   "contribute_share_activity_example_3": {
+      "message": "Benytter brugere søgefunktionen?"
+   },
+   "contribute_share_activity_example_4": {
+      "message": "Ændrer brugere sorteringen af bogmærkerne?"
+   },
+   "contribute_share_activity_example_5": {
+      "message": "Hvor ofte omarrangerer eller ændrer brugerne på emner?"
+   },
+   "contribute_share_activity_examples_intro": {
+      "message": "Data som bliver delt er for eksempel:"
+   },
+   "contribute_share_activity_label": {
+      "message": "Del aktivitet"
+   },
+   "contribute_share_config_desc": {
+      "message": "Du deler din opsætning anonymt, hvilket hjælper mig med at identificere populære indstillinger, samt hjælper mig med at forstå hvad der behøver forbedringer eller ændringer i fremtidige udgivelser."
+   },
+   "contribute_share_config_label": {
+      "message": "Del opsætning"
+   },
+   "extension_desc": {
+      "message": "Tilføjer et modificerbart sidepanel med alle dine bogmærker i kanten af dit browservindue."
+   },
+   "extension_last_update": {
+      "message": "Senest opdateret den {1}"
+   },
+   "extension_name": {
+      "message": "Bogmærke sidepanel"
+   },
+   "extension_name_short": {
+      "message": "Bogmærker"
+   },
+   "extension_version": {
+      "message": "Version"
+   },
+   "header_bookmarks": {
+      "message": "Bogmærker"
+   },
+   "header_bookmarks_single": {
+      "message": "Bogmærke"
+   },
+   "header_selected_entries": {
+      "message": "Valgt"
+   },
+   "keyboard_shortcuts_ctrl_c_desc": {
+      "message": "Kopierer URL'en for det fremhævede emne"
+   },
+   "keyboard_shortcuts_del_desc": {
+      "message": "Fjerner det fremhævede emne"
+   },
+   "keyboard_shortcuts_enter_desc": {
+      "message": "Udfører et klik på det fremhævede emne"
+   },
+   "keyboard_shortcuts_esc_desc": {
+      "message": "Lukker sidepanelet, det åbne overlæg eller den åbne kontekstmenu"
+   },
+   "keyboard_shortcuts_key_cmd": {
+      "message": "Command"
+   },
+   "keyboard_shortcuts_key_ctrl": {
+      "message": "Ctrl"
+   },
+   "keyboard_shortcuts_key_del": {
+      "message": "Delete"
+   },
+   "keyboard_shortcuts_key_enter": {
+      "message": "Enter"
+   },
+   "keyboard_shortcuts_key_esc": {
+      "message": "Esc"
+   },
+   "keyboard_shortcuts_key_shift": {
+      "message": "Shift"
+   },
+   "keyboard_shortcuts_key_tab": {
+      "message": "Tab"
+   },
+   "keyboard_shortcuts_shift_enter_desc": {
+      "message": "Åbner en kontekstmenu for det fremhævede emne"
+   },
+   "keyboard_shortcuts_tab_desc": {
+      "message": "Flyt til forrige eller næste felt i sidepanelet"
+   },
+   "more_link": {
+      "message": "Lær mere"
+   },
+   "newtab_fallback_desc": {
+      "message": "Vi har åbnet et nyt faneblad med sidepanel for dig i stedet."
+   },
+   "newtab_fallback_headline_extension_page": {
+      "message": "Sidepanelet kan ikke bruges på udvidelsessider"
+   },
+   "newtab_fallback_headline_general": {
+      "message": "Noget har blokeret sidepanelet"
+   },
+   "newtab_fallback_headline_new_tab": {
+      "message": "Sidepanelet kan ikke bruges på nyt faneblad siden"
+   },
+   "newtab_fallback_headline_system": {
+      "message": "Sidepanelet kan ikke bruges på {browserName} system sider"
+   },
+   "newtab_fallback_headline_url_filter": {
+      "message": "En af dine URL-regler forhindrede sidepanelet i at åbne"
+   },
+   "newtab_fallback_headline_webstore": {
+      "message": "Sidepanelet kan ikke bruges i {browserName} Webstore"
+   },
+   "newtab_fallback_set_as_new_tab": {
+      "message": "Vis altid denne side når et nyt faneblad åbnes"
+   },
+   "newtab_grid_links_appearance_favicon": {
+      "message": "Vis hjemmeside ikoner"
+   },
+   "newtab_grid_links_appearance_thumbnail": {
+      "message": "Vis forhåndsvisning af hjemmesider"
+   },
+   "newtab_grid_links_custom": {
+      "message": "Brugerdefinerede poster"
+   },
+   "newtab_grid_links_default": {
+      "message": "Mest viste"
+   },
+   "newtab_grid_links_grid_size": {
+      "message": "Gitter størrelse"
+   },
+   "newtab_grid_links_hidden": {
+      "message": "Vis ikke sider"
+   },
+   "newtab_grid_links_most_used": {
+      "message": "Mest brugte bogmærker"
+   },
+   "newtab_grid_links_recently_used": {
+      "message": "Senest brugte bogmærker"
+   },
+   "newtab_search_engine_custom": {
+      "message": "Brugerdefineret"
+   },
+   "newtab_search_engine_custom_title": {
+      "message": "Titel"
+   },
+   "newtab_search_engine_custom_url_homepage": {
+      "message": "Hjemmesidens URL"
+   },
+   "newtab_search_engine_custom_url_results": {
+      "message": "URL med søgeresultater"
+   },
+   "newtab_search_engine_headline": {
+      "message": "Søgemaskine"
+   },
+   "newtab_search_field_hide": {
+      "message": "Skjul søgefelt"
+   },
+   "newtab_search_field_show": {
+      "message": "Vis søgefelt"
+   },
+   "newtab_search_placeholder": {
+      "message": "Søg {1} eller skriv URL"
+   },
+   "newtab_search_suggest_bookmarks": {
+      "message": "Foreslå bogmærker"
+   },
+   "newtab_search_suggest_history": {
+      "message": "Foreslå besøgte sider"
+   },
+   "newtab_search_suggest_queries": {
+      "message": "Foreslå søgninger"
+   },
+   "newtab_speech_search_error": {
+      "message": "For at slå talesøgning til, er du nødt til at tillade brug af mikrofonen."
+   },
+   "newtab_speech_search_listening": {
+      "message": "Tal nu"
+   },
+   "newtab_title": {
+      "message": "Ny fane"
+   },
+   "newtab_upload_background": {
+      "message": "Upload baggrundsbillede"
+   },
+   "onboarding_finish_desc": {
+      "message": "God fornøjelse med dit sidepanel."
+   },
+   "onboarding_goto_appearance": {
+      "message": "Opsæt udseende"
+   },
+   "onboarding_goto_settings": {
+      "message": "Flere indstillinger"
+   },
+   "onboarding_handson_desc": {
+      "message": "Nu kan du prøve selv."
+   },
+   "onboarding_handson_done": {
+      "message": "Jeg er færdig"
+   },
+   "onboarding_handson_icon_desc": {
+      "message": "Klik på udvidelses-ikonet for at åbne sidepanelet."
+   },
+   "onboarding_handson_mouse_desc_1": {
+      "message": "Flyt markøren til den {1} side af dit vindue."
+   },
+   "onboarding_handson_mouse_desc_2": {
+      "message": "Derefter {1} -klik med din mus for at åbne sidepanelet."
+   },
+   "onboarding_handson_sidepanel_desc": {
+      "message": "Klik på sidepanelikonet øverst i din browser, og vælg visningen Bogmærke Sidepanel."
+   },
+   "onboarding_headline": {
+      "message": "Tak fordi du installerede denne udvidelse."
+   },
+   "onboarding_intro_desc": {
+      "message": "Der er flere måder at åbne dit sidepanel på."
+   },
+   "onboarding_intro_sidebar_overlay_desc": {
+      "message": "Åben på toppen af websteder"
+   },
+   "onboarding_intro_sidebar_sidepanel_desc": {
+      "message": "Åben i sidepanelet sammen med hovedindholdet på websider"
+   },
+   "onboarding_left": {
+      "message": "venstre"
+   },
+   "onboarding_right": {
+      "message": "højre"
+   },
+   "onboarding_setup_complete": {
+      "message": "Opsætning fuldført"
+   },
+   "onboarding_setup_start": {
+      "message": "Opsæt nu"
+   },
+   "onboarding_sidebar_open_action_desc": {
+      "message": "Hvordan ønsker du at åbne dit sidepanel?"
+   },
+   "onboarding_sidebar_overlay_disable": {
+      "message": "Jeg ønsker ikke at bruge dette overliggende sidepanel"
+   },
+   "onboarding_sidebar_position_desc": {
+      "message": "Hvor vil du have dit sidepanel?"
+   },
+   "onboarding_sidebar_surface_dark": {
+      "message": "Mørk"
+   },
+   "onboarding_sidebar_surface_desc": {
+      "message": "Hvilken stil foretrækker du?"
+   },
+   "onboarding_sidebar_surface_light": {
+      "message": "Lys"
+   },
+   "onboarding_title": {
+      "message": "Opsætning"
+   },
+   "overlay_add_position": {
+      "message": "Position"
+   },
+   "overlay_add_position_append": {
+      "message": "Sæt efter mappenavn"
+   },
+   "overlay_add_position_prepend": {
+      "message": "Sæt foran mappenavn"
+   },
+   "overlay_bookmark_additional_info": {
+      "message": "Mere info"
+   },
+   "overlay_bookmark_created_date": {
+      "message": "Oprettet den"
+   },
+   "overlay_bookmark_title": {
+      "message": "Titel"
+   },
+   "overlay_bookmark_url": {
+      "message": "URL"
+   },
+   "overlay_bookmark_views": {
+      "message": "Visninger"
+   },
+   "overlay_bookmark_views_per_month": {
+      "message": "per måned"
+   },
+   "overlay_bookmark_views_since": {
+      "message": "Optaget siden"
+   },
+   "overlay_bookmark_views_single": {
+      "message": "Vis"
+   },
+   "overlay_cancel": {
+      "message": "Annuller"
+   },
+   "overlay_check_bookmarks_loading": {
+      "message": "Checker bogmærke-URL'erne"
+   },
+   "overlay_check_bookmarks_menu_broken": {
+      "message": "Ødelagte"
+   },
+   "overlay_check_bookmarks_menu_changed": {
+      "message": "Ændret"
+   },
+   "overlay_check_bookmarks_menu_duplicate": {
+      "message": "Dubletter"
+   },
+   "overlay_check_bookmarks_menu_empty": {
+      "message": "Tomme mapper"
+   },
+   "overlay_check_bookmarks_no_results": {
+      "message": "Alle bogmærke URLs fungerer"
+   },
+   "overlay_check_bookmarks_no_results_broken": {
+      "message": "Der er ingen ødelagte bogmærke URLs"
+   },
+   "overlay_check_bookmarks_no_results_changed": {
+      "message": "Der er ingen ændrede bogmærke URLs"
+   },
+   "overlay_check_bookmarks_no_results_duplicate": {
+      "message": "Der er ingen bogmærke-URL dubletter"
+   },
+   "overlay_check_bookmarks_no_results_empty": {
+      "message": "Der er ingen mapper uden bogmærker"
+   },
+   "overlay_check_bookmarks_remove_selected": {
+      "message": "Fjern de valgte"
+   },
+   "overlay_check_bookmarks_update_selected": {
+      "message": "Opdatér de valgte"
+   },
+   "overlay_close": {
+      "message": "Luk"
+   },
+   "overlay_confirm_open_children": {
+      "message": "Vil du virkelig åbne alle {1} underliggende bogmærker?"
+   },
+   "overlay_confirm_open_selected": {
+      "message": "Vil du virkelig åbne alle {1} bogmærker, inklusive undermappernes bogmærker i de valgte mapper?"
+   },
+   "overlay_delete": {
+      "message": "Slet"
+   },
+   "overlay_delete_bookmark_confirm": {
+      "message": "Vil du virkelig slette dette bogmærke?"
+   },
+   "overlay_delete_dir_confirm": {
+      "message": "Vil du virkelig slette denne mappe? Alle underliggende bogmærker vil også blive fjernet."
+   },
+   "overlay_delete_selected": {
+      "message": "Slet valgte poster"
+   },
+   "overlay_delete_selected_confirm": {
+      "message": "Vil du virkelig slette de valgte poster? Alle undermappers bogmærker til de valgte mapper vil også blive slettet."
+   },
+   "overlay_dir_children": {
+      "message": "Elementer"
+   },
+   "overlay_dir_children_bookmarks": {
+      "message": "Bogmærker"
+   },
+   "overlay_dir_children_dirs": {
+      "message": "Mapper"
+   },
+   "overlay_hide_bookmark_confirm": {
+      "message": "Vil du virkelig skjule dette bogmærke fra sidepanelet?"
+   },
+   "overlay_hide_dir_confirm": {
+      "message": "Vil du virkelig skjule denne mappe fra sidepanelet? Alle underliggende bogmærker vil også blive skjult."
+   },
+   "overlay_hide_from_sidebar": {
+      "message": "Skjul fra sidepanel"
+   },
+   "overlay_label_bookmark": {
+      "message": "Bogmærke"
+   },
+   "overlay_label_dir": {
+      "message": "Mappe"
+   },
+   "overlay_label_separator": {
+      "message": "Separator"
+   },
+   "overlay_open_children": {
+      "message": "Åbn alle"
+   },
+   "overlay_save": {
+      "message": "Gem"
+   },
+   "overlay_separator_title_desc": {
+      "message": "Du kan eventuelt indtaste en titel. Den vil blive vist oven over separator-linien, og kan hjælpe dig med at organisere din bogmærkeliste."
+   },
+   "overlay_update": {
+      "message": "Opdatér"
+   },
+   "premium_activate": {
+      "message": "Aktivér Premium"
+   },
+   "premium_already_activated": {
+      "message": "Du bruger allerede Premium"
+   },
+   "premium_desc_1": {
+      "message": "Med Premium får du adgang til yderligere funktioner og hjælper mig med at opretholde udvidelsen."
+   },
+   "premium_desc_2": {
+      "message": "Du kan tjekke de funktioner, der er inkluderet i Premium nedenfor. Alle nøglefunktioner i udvidelserne er gratis at bruge og kræver slet ikke Premium. Du kan betale, hvad udvidelsen og mit arbejde er værd for dig, for at få adgang til disse funktioner."
+   },
+   "premium_feature_custom_background_desc": {
+      "message": "Hvis du bruger Ny fane-siden i denne udvidelse, kan du indstille dit eget baggrundsbillede for at få det til at se endnu pænere ud."
+   },
+   "premium_feature_custom_background_headline": {
+      "message": "Tilpas din ny fane side"
+   },
+   "premium_feature_custom_css_desc": {
+      "message": "Hvis du er bekendt med CSS, kan du ændre sidepanelets komplette udseende ved at tilføje dine egne stildefinitioner. Dette giver dig mulighed for at tilpasse alt."
+   },
+   "premium_feature_custom_css_headline": {
+      "message": "Tilpas det hele med dit eget stilark"
+   },
+   "premium_feature_early_access_desc": {
+      "message": "Med Premium får du adgang til uudgivne funktioner, som for øjeblikket er under udvikling eller underkastet test."
+   },
+   "premium_feature_early_access_headline": {
+      "message": "Vær den første, der prøver nye eksperimentelle funktioner"
+   },
+   "premium_feature_import_export_headline": {
+      "message": "Importer og eksporter dine indstillinger"
+   },
+   "premium_feature_linkchecker_desc": {
+      "message": "Du kan højreklikke på en mappe i dit sidepanel og udføre et check. Resultatsiden viser alle opdaterede webadresser, bogmærker, der ikke længere fungerer og bogmærker med samme URL.."
+   },
+   "premium_feature_linkchecker_headline": {
+      "message": "Tjek dine bogmærker for brudte links eller dubletter"
+   },
+   "premium_feature_sidebar_width_headline": {
+      "message": "Skift bredden på dit sidepanel til enhver tid"
+   },
+   "premium_feature_themes_desc": {
+      "message": "Du kan bytte rundt på hele sidepanel designet med kun et klik ved at installere et andet tema. Det kan også tilpasses med tilgængelige skydere og farver."
+   },
+   "premium_feature_themes_headline": {
+      "message": "Skift temaet til dit sidepanel"
+   },
+   "premium_get_now": {
+      "message": "Få Premium nu"
+   },
+   "premium_license_key": {
+      "message": "Licensnøgle"
+   },
+   "premium_pay_buy": {
+      "message": "Køb Premium"
+   },
+   "premium_pay_cancellation_policy": {
+      "message": "Afbestillingspolitik"
+   },
+   "premium_pay_confirm_headline": {
+      "message": "Bekræft køb"
+   },
+   "premium_pay_contact": {
+      "message": "Hvis du støder på problemer med din betaling eller har spørgsmål, kontakt mig venligst på {1}."
+   },
+   "premium_pay_eula": {
+      "message": "Slutbrugeraftale"
+   },
+   "premium_pay_eula_desc": {
+      "message": "Jeg læser og accepterer [a]Slutbrugerlicensaftale[/a]"
+   },
+   "premium_pay_info_email": {
+      "message": "E-mail"
+   },
+   "premium_pay_info_email_desc": {
+      "message": "Indtast venligst din e-mailadresse for at modtage licensnøglen."
+   },
+   "premium_pay_info_name": {
+      "message": "Navn"
+   },
+   "premium_pay_intro_payment_method": {
+      "message": "Vælg en betalingsmetode nedenfor og vælg det ønskede beløb i næste trin."
+   },
+   "premium_pay_license_key_desc": {
+      "message": "Hvis du vil aktivere {1} på en anden enhed eller efter geninstallation af udvidelsen, kan du indtaste følgende tast i indstillingerne for udvidelsen:"
+   },
+   "premium_pay_price_info": {
+      "message": "Dette er en engangsafgift og omfatter også alle fremtidige premium-funktioner."
+   },
+   "premium_pay_price_pay_what_you_want": {
+      "message": "Du kan betale det beløb, du synes passende for mit arbejde og udvidelsen, som vil give adgang til premium-funktionerne. Du vil altid modtage alle premium funktioner, uanset hvor meget du er villig til at betale."
+   },
+   "premium_pay_price_total": {
+      "message": "I alt"
+   },
+   "premium_pay_purchase_id": {
+      "message": "Købs-id"
+   },
+   "premium_pay_success_headline": {
+      "message": "Tak for dit køb"
+   },
+   "premium_pay_success_info": {
+      "message": "{1} er blevet aktiveret automatisk for denne enhed. Du behøver ikke at foretage yderligere skridt."
+   },
+   "premium_pay_verifying": {
+      "message": "Bekræfter transaktion"
+   },
+   "premium_pay_what_you_want": {
+      "message": "Betal hvad du vil"
+   },
+   "premium_popup_text": {
+      "message": "Har du tjekket om Premium er noget for dig?"
+   },
+   "premium_restricted_text": {
+      "message": "Denne funktion er kun tilgængelig med Premium"
+   },
+   "premium_show_license_input": {
+      "message": "Jeg har allerede Premium"
+   },
+   "settings_advanced": {
+      "message": "Avancerede indstillinger"
+   },
+   "settings_available_themes": {
+      "message": "Tilgængelige temaer"
+   },
+   "settings_background_blur": {
+      "message": "Baggrundsslør"
+   },
+   "settings_background_transparency": {
+      "message": "Baggrund gennemsigtighed"
+   },
+   "settings_bookmarks_dir_color": {
+      "message": "Mappe ikon farve"
+   },
+   "settings_bookmarks_dir_icon": {
+      "message": "Mappe ikon"
+   },
+   "settings_bookmarks_dir_indentation": {
+      "message": "Mappe indrykning"
+   },
+   "settings_bookmarks_font_size": {
+      "message": "Bogmærke skrift størrelse"
+   },
+   "settings_bookmarks_horizontal_padding": {
+      "message": "Bogmærker vandret polstring"
+   },
+   "settings_bookmarks_icon_size": {
+      "message": "Bogmærke ikon størrelse"
+   },
+   "settings_bookmarks_line_height": {
+      "message": "Bogmærke linje højde"
+   },
+   "settings_close_timeout": {
+      "message": "Lukke timeout"
+   },
+   "settings_close_timeout_desc": {
+      "message": "Timeout i sekunder hvorefter sidepanelet vil lukke. Starter så snart musen forlader sidepanelet og stopper, når du bevæger musen over det igen."
+   },
+   "settings_close_timeout_infinity": {
+      "message": "Luk ikke automatisk"
+   },
+   "settings_color_scheme": {
+      "message": "Farveskema"
+   },
+   "settings_color_scheme_desc": {
+      "message": "Farven på sidepanel-hovedet, afkrydsningsfelter osv."
+   },
+   "settings_custom_css": {
+      "message": "Brugerdefineret stilark"
+   },
+   "settings_custom_css_desc": {
+      "message": "Du kan definere dit typografiark for at tilsidesætte standard styling. Brug kun denne mulighed, hvis du er bekendt med CSS og ved, hvad du laver."
+   },
+   "settings_dashboard_appearance_options": {
+      "message": "Ændre udseende af dit sidepanel"
+   },
+   "settings_dashboard_appearance_options_desc": {
+      "message": "Du kan ændre udseendet af sidepanelet helt, så det passer til dine behov. Der er forskellige muligheder for at ændre skriftstørrelse, linjeafstand, farver, ikoner og meget mere. Du kan også vælge mellem foruddefinerede designs og forudindstillede muligheder for hurtigt at få sidepanelet til at se ud, som du ønsker."
+   },
+   "settings_dashboard_sidebar_options": {
+      "message": "Konfigurér opførslen af dit sidepanel"
+   },
+   "settings_dashboard_sidebar_options_desc": {
+      "message": "Der er forskellige indstillinger du kan ændre for at styre udvidelsen. Du kan for eksempel ændre, hvordan sidepanelet skal glide ind, eller hvordan dine bogmærker skal åbnes. Hvis du ikke ønsker, at sidepanelet skal indlæses på hver side, kan du også konfigurere dette ved at bruge passende regler."
+   },
+   "settings_dir_accordion": {
+      "message": "Vis kun nuværende mappe"
+   },
+   "settings_dir_accordion_desc": {
+      "message": "Lukker alle mapper bortset fra den aktuelt aktive."
+   },
+   "settings_directories_icon_size": {
+      "message": "Mappe ikon størrelse"
+   },
+   "settings_directory_arrows": {
+      "message": "Mappe pile"
+   },
+   "settings_expert_save_error": {
+      "message": "Kunne ikke gemme opsætningen. Ret venligst din indtastning."
+   },
+   "settings_expert_settings_desc": {
+      "message": "Med ekspertindstillingerne kan du ændre hver konfigurations-indstilling i udvidelsen, selv dem som ikke kan ændres ved brug af de almindelige afkrydsningsbokse eller slidere på opsætningssiden."
+   },
+   "settings_expert_settings_notice": {
+      "message": "Ændr venligst kun værdier her, hvis du ved hvad du laver. Fejlagtige opsætninger kan forårsage at udvidelsen opfører sig uventet. Hvis noget ikke virker efter hensigten, kan du gendanne standardindstillingerne."
+   },
+   "settings_export": {
+      "message": "Eksporter Indstillinger"
+   },
+   "settings_filter_explanation_1": {
+      "message": "Tilføj kun et URL-mønster pr. linje"
+   },
+   "settings_filter_explanation_2": {
+      "message": "Brug * til at matche ethvert tegn (fx example.com/* matcher alle sider under example.com)"
+   },
+   "settings_filter_explanation_3": {
+      "message": "Hvis du ikke inkluderer nogen * i en regel, matcher kun den nøjagtige webadresse (for eksempel vil \"example.com/about.html\" ikke matche URL'en \"example.com\")"
+   },
+   "settings_filter_explanation_4": {
+      "message": "Du behøver ikke tilføje protokollen (f.eks. http: //) i reglerne"
+   },
+   "settings_filter_rules": {
+      "message": "URL-mønstre"
+   },
+   "settings_filter_visibility": {
+      "message": "Indlæs sidepanel"
+   },
+   "settings_filter_visibility_always": {
+      "message": "På hver side"
+   },
+   "settings_filter_visibility_blacklist": {
+      "message": "På hver side undtagen specifikke sider"
+   },
+   "settings_filter_visibility_desc": {
+      "message": "Hvis du ikke vil have sidepanelet indlæst på hver side, kan du konfigurere hvor du skal indlæse udvidelsen (hvidliste) eller hvor ikke (sortliste)."
+   },
+   "settings_filter_visibility_whitelist": {
+      "message": "Kun på specifikke sider"
+   },
+   "settings_font_family": {
+      "message": "Skrifttype"
+   },
+   "settings_font_family_default": {
+      "message": "Standard"
+   },
+   "settings_font_family_desc": {
+      "message": "Skrifttype på sidepanel og overlag"
+   },
+   "settings_header_height": {
+      "message": "Højde"
+   },
+   "settings_headline_share_userdata": {
+      "message": "Del information"
+   },
+   "settings_hover_color": {
+      "message": "Mus-over farve"
+   },
+   "settings_icon_action": {
+      "message": "Klik på udvidelses-ikonet"
+   },
+   "settings_icon_action_desc": {
+      "message": "Du kan vælge hvordan sidepanelet skal blive vist, når du trykker på udvidelses-ikonet, hvilket er placeret til højre for adresse linjen."
+   },
+   "settings_icon_action_overlay": {
+      "message": "Åben sidepanelet oven på hjemmesider"
+   },
+   "settings_icon_action_sidepanel": {
+      "message": "Åben sidepanelet i browserens angivne sidepanel"
+   },
+   "settings_icon_background_color": {
+      "message": "Baggrundsfarve"
+   },
+   "settings_icon_color": {
+      "message": "Farve"
+   },
+   "settings_icon_color_auto": {
+      "message": "Automatisk"
+   },
+   "settings_icon_color_custom": {
+      "message": "Brugerdefineret"
+   },
+   "settings_icon_color_desc_1": {
+      "message": "Ikonfarven indstilles automatisk til at matche farveskemaet på dit system (lys eller mørk). Du kan også definere din brugerdefinerede farve til ikonet."
+   },
+   "settings_icon_color_desc_2": {
+      "message": "Bemærk, at den automatiske farve ikke fungerer, når du bruger et tilpasset {browserName}-tema."
+   },
+   "settings_icon_shape": {
+      "message": "Form"
+   },
+   "settings_import": {
+      "message": "Importer Indstillinger"
+   },
+   "settings_import_export_bookmarks": {
+      "message": "Importer/Eksporter Bogmærker"
+   },
+   "settings_import_export_bookmarks_desc": {
+      "message": "Dette er en browser funktion og ikke en del af udvidelsen. Læs mere om hvordan der importeres/eksporteres bogmærker i {browserName}."
+   },
+   "settings_import_export_desc": {
+      "message": "Du kan eksportere dine udvidelsesindstillinger og gemme dem lokalt på din computer. Du kan importere den tidligere eksporterede fil på en hvilken som helst computer, hvor udvidelsen er installeret."
+   },
+   "settings_import_export_headline": {
+      "message": "Importer/Eksporter Indstillinger"
+   },
+   "settings_import_export_notice": {
+      "message": "Sidepanelets opsætning synkroniseres automatisk mellem dine enheder, hvis du er logget ind med din {browserName} konto. Hvis du ikke ønsker at logge ind eller at dele din opsætning, kan du i stedet benytte import/eksport funktionen."
+   },
+   "settings_import_failed": {
+      "message": "Kunne ikke importere konfigurationen. Vælg venligst en gyldig fil."
+   },
+   "settings_import_saved": {
+      "message": "Konfigurationen importeret med succes"
+   },
+   "settings_indicator_color": {
+      "message": "Farve"
+   },
+   "settings_indicator_icon_color": {
+      "message": "Ikon farve"
+   },
+   "settings_indicator_icon_size": {
+      "message": "Ikon størrelse"
+   },
+   "settings_indicator_width": {
+      "message": "Bredde"
+   },
+   "settings_install_theme": {
+      "message": "Installer tema"
+   },
+   "settings_installed_theme_info": {
+      "message": "Aktuelt installeret"
+   },
+   "settings_keyboard_shortcut_button": {
+      "message": "Indstil tastaturgenvej"
+   },
+   "settings_language": {
+      "message": "Sprog"
+   },
+   "settings_language_default": {
+      "message": "Standard browser"
+   },
+   "settings_language_desc": {
+      "message": "Sproget i brugergrænsefladen"
+   },
+   "settings_link_action": {
+      "message": "Åben bogmærker"
+   },
+   "settings_link_action_current_tab": {
+      "message": "Nuværende fane"
+   },
+   "settings_link_action_desc": {
+      "message": "Venstre klik på et bogmærke åbner dem enten i den aktuelle fane eller i en ny fane."
+   },
+   "settings_link_action_new_tab": {
+      "message": "Ny fane"
+   },
+   "settings_menu_appearance": {
+      "message": "Udseende"
+   },
+   "settings_menu_appearance_dialog": {
+      "message": "Dialogboks"
+   },
+   "settings_menu_appearance_general": {
+      "message": "Generelt"
+   },
+   "settings_menu_appearance_icon": {
+      "message": "Ikon"
+   },
+   "settings_menu_appearance_indicator": {
+      "message": "Indikator"
+   },
+   "settings_menu_appearance_sidebar": {
+      "message": "Sidepanel"
+   },
+   "settings_menu_dashboard": {
+      "message": "Overblik"
+   },
+   "settings_menu_expert": {
+      "message": "Ekspert indstillinger"
+   },
+   "settings_menu_export": {
+      "message": "Import/Eksport"
+   },
+   "settings_menu_infos": {
+      "message": "Information"
+   },
+   "settings_menu_infos_aboutme": {
+      "message": "Om mig"
+   },
+   "settings_menu_infos_changelog": {
+      "message": "Ændringslog"
+   },
+   "settings_menu_infos_contact": {
+      "message": "Kontakt"
+   },
+   "settings_menu_infos_permissions": {
+      "message": "Tilladelser"
+   },
+   "settings_menu_infos_privacy": {
+      "message": "Privatliv"
+   },
+   "settings_menu_language": {
+      "message": "Sprog"
+   },
+   "settings_menu_language_general": {
+      "message": "Generelt"
+   },
+   "settings_menu_language_translate": {
+      "message": "Oversæt"
+   },
+   "settings_menu_newtab": {
+      "message": "Nyt faneblad"
+   },
+   "settings_menu_premium": {
+      "message": "Premium"
+   },
+   "settings_menu_sidebar": {
+      "message": "Sidepanel"
+   },
+   "settings_menu_sidebar_general": {
+      "message": "Generelt"
+   },
+   "settings_menu_sidebar_overlay": {
+      "message": "Overlæg"
+   },
+   "settings_menu_sidebar_sidepanel": {
+      "message": "Sidepanel"
+   },
+   "settings_menu_sidebar_tooltip": {
+      "message": "Værktøjstips"
+   },
+   "settings_menu_support": {
+      "message": "Support"
+   },
+   "settings_new_tab": {
+      "message": "Ny Fane"
+   },
+   "settings_new_tab_background": {
+      "message": "Åben i baggrunden"
+   },
+   "settings_new_tab_desc": {
+      "message": "Åbne bogmærker i ny fane i forgrunden eller baggrunden"
+   },
+   "settings_new_tab_foreground": {
+      "message": "Åben i forgrunden"
+   },
+   "settings_new_tab_position_after_current": {
+      "message": "Efter den nuværende fane"
+   },
+   "settings_new_tab_position_after_last": {
+      "message": "Efter den sidste fane"
+   },
+   "settings_new_tab_position_before_first": {
+      "message": "Før den første fane"
+   },
+   "settings_new_tab_position_desc": {
+      "message": "Åbne nye faner efter den sidste eller den aktuelle fane"
+   },
+   "settings_newtab_desc": {
+      "message": "Du kan overskrive standardsiden for ny fane i din browser med en side leveret af denne udvidelse. Denne side vil vise dit sidepanel og kan konfigureres til at forbedre din produktivitet."
+   },
+   "settings_newtab_focus_omnibox": {
+      "message": "Flyt fokus til adressebaren."
+   },
+   "settings_newtab_focus_omnibox_desc": {
+      "message": "Hvis aktiveret, vil fokus flyttes til adressebaren når du åbner et ny fane. Hvis denne ikke er aktiveret vil det istedet være websitets søgefunktion der benyttes."
+   },
+   "settings_newtab_override": {
+      "message": "Omgå standardsiden for nye faneblade"
+   },
+   "settings_newtab_override_configure": {
+      "message": "Konfigurer"
+   },
+   "settings_newtab_override_desc": {
+      "message": "Skal udvidelsen omgå din nuværende side for nye faneblade, med enten en hjemmelavet side eller indlæsning af en hjemmeside af eget valg, når et nyt faneblad åbnes?"
+   },
+   "settings_newtab_override_preview": {
+      "message": "Forhåndsvisning"
+   },
+   "settings_newtab_sidebar_auto_open": {
+      "message": "Åbn sidepanelet automatisk"
+   },
+   "settings_newtab_sidebar_auto_open_desc": {
+      "message": "Indstil hvorvidt sidepanelet skal åbne automatisk når et nyt faneblad åbnes."
+   },
+   "settings_newtab_website": {
+      "message": "Indlæs en hjemmeside"
+   },
+   "settings_newtab_website_desc": {
+      "message": "I stedet for at åbne standard hjemmeside ved åbning af et nyt faneblad, kan du vælge indlæsning af en alternativ hjemmeside."
+   },
+   "settings_not_synced": {
+      "message": "Vil ikke blive synkroniseret på tværs af dine enheder."
+   },
+   "settings_open_action": {
+      "message": "Åbn sidepanel"
+   },
+   "settings_open_action_desc": {
+      "message": "Åbn sidepanelet ved at venstre eller højre klikke eller føre musen over kanten af browservinduet. Alternativt kan du ændre det til kun at åbne, hvis udvidelses-ikonet bliver klikket."
+   },
+   "settings_open_action_icon": {
+      "message": "Klik på ikon"
+   },
+   "settings_open_action_leftclick": {
+      "message": "Venstre klik"
+   },
+   "settings_open_action_mouseover": {
+      "message": "Mus-over"
+   },
+   "settings_open_action_rightclick": {
+      "message": "Højre klik"
+   },
+   "settings_open_delay": {
+      "message": "Åben forsinkelse"
+   },
+   "settings_open_delay_desc": {
+      "message": "Forhindrer at sidepanelet åbnes øjeblikkeligt ved mus-over eller ved at klikke i det aktive område i kanten af browservinduet."
+   },
+   "settings_overlay_enabled": {
+      "message": "Aktiver overliggende sidepanel"
+   },
+   "settings_overlay_enabled_desc": {
+      "message": "Hvis du kun ønsker at få adgang til dine bogmærker i browserens sidepanel, kan du deaktivere det overliggende sidepanel."
+   },
+   "settings_overlay_mask_color": {
+      "message": "Maske farve"
+   },
+   "settings_permissions_bookmarks_desc": {
+      "message": "Udvidelsen viser dine bogmærker i sidepanelet og kræver derfor denne tilladelse for at få adgang hertil. Denne tilladelse gør det desuden muligt for udvidelsen at tilføje, redigere samt fjerne bogmærker."
+   },
+   "settings_permissions_contentscript_desc_1": {
+      "message": "Desværre har {browserName} ingen mekanisme til at vise indhold i browser-vinduet uden at interagere med den besøgte hjemmeside."
+   },
+   "settings_permissions_contentscript_desc_2": {
+      "message": "Eftersom sidepanelet bliver vist oven over den besøgte hjemmeside, er denne indstilling nødvendig. Udover denne tekniske årsag bliver tilladelsen ikke benyttet."
+   },
+   "settings_permissions_contentscript_desc_3": {
+      "message": "Hvis du har bekymringer om hvad jeg benytter tilladelsen til, er det muligt at se kildekoden for denne udvidelse på Github. Den er Open Source og tilgængelig for alle."
+   },
+   "settings_permissions_desc": {
+      "message": "For at gøre det muligt at lave et sidepanel der kan vises/skjules i {browserName}, har udvidelsen brug for følgende tilladelser:"
+   },
+   "settings_premium_activated": {
+      "message": "Premium er blevet aktiveret!"
+   },
+   "settings_premium_invalid_key": {
+      "message": "Kunne ikke aktivere Premium. Indtast venligst en gyldig licensnøgle"
+   },
+   "settings_presets": {
+      "message": "Indstil relative størrelser"
+   },
+   "settings_presets_desc": {
+      "message": "Du kan vælge foruddefinerede størrelser til sidepanelet. Dette ændrer skyderen på denne side for at justere sidpanelets bredde, linjehøjder, ikonstørrelser og mange flere muligheder."
+   },
+   "settings_prevent_pagescroll": {
+      "message": "Forhindre side rulle"
+   },
+   "settings_prevent_pagescroll_desc": {
+      "message": "Forhindrer at rulle den aktuelle hjemmeside, mens sidepanelet er åbent."
+   },
+   "settings_prevent_windowed": {
+      "message": "Deaktiver sidepanel i vindue-tilstand"
+   },
+   "settings_prevent_windowed_desc": {
+      "message": "Deaktiverer muligheden for at åbne sidepanelet ved at klikke eller svæve i kanten af browserens indhold, når browseren er i vindue-tilstand."
+   },
+   "settings_remember_desc": {
+      "message": "Vælg hvad du skal huske på tværs af sideændringer. Hvis du vælger at huske det sidst åbnede bogmærke, markeres det, når du åbner sidepanelet igen."
+   },
+   "settings_remember_open_states_sub_directories": {
+      "message": "Husk åbnede undermapper"
+   },
+   "settings_remember_state": {
+      "message": "Husk"
+   },
+   "settings_remember_state_all": {
+      "message": "Rul position, åbnede mapper og sidste åbnede bogmærke"
+   },
+   "settings_remember_state_nothing": {
+      "message": "Ingenting"
+   },
+   "settings_remember_state_open_states": {
+      "message": "Åbnede mapper"
+   },
+   "settings_remember_state_open_states_and_scroll": {
+      "message": "Rul position og åbne mapper"
+   },
+   "settings_remember_state_open_states_root": {
+      "message": "Åbnede mapper på øverste niveau"
+   },
+   "settings_restore": {
+      "message": "Gendan standardindstillingerne"
+   },
+   "settings_restore_confirm": {
+      "message": "Ønsker du virkelig at gendanne standardindstillingerne?"
+   },
+   "settings_restored_message": {
+      "message": "Gendannelse af indstillinger gennemført"
+   },
+   "settings_save": {
+      "message": "Gem Ændringer"
+   },
+   "settings_saved_message": {
+      "message": "Ændringer gemt med succes"
+   },
+   "settings_saved_share_userdata": {
+      "message": "Dine præferencer er blevet gemt"
+   },
+   "settings_scroll_bar_hide": {
+      "message": "Skjul rullepanel"
+   },
+   "settings_scroll_bar_hide_desc": {
+      "message": "Timeout i sekunder hvorefter rullepanel skjules. Rulning viser rullepanel igen."
+   },
+   "settings_scroll_bar_hide_infinity": {
+      "message": "Aldrig gemme"
+   },
+   "settings_scroll_bar_width": {
+      "message": "Rullebar bredde"
+   },
+   "settings_search_placeholder": {
+      "message": "Søg efter indstilling"
+   },
+   "settings_show_themes": {
+      "message": "Vis tilgængelige temaer"
+   },
+   "settings_sidebar_mask_color": {
+      "message": "Maske farve"
+   },
+   "settings_sidebar_overlay_intro": {
+      "message": "Her kan du ændre adfærden for det overliggende sidepanel, som åbnes oven på websteder."
+   },
+   "settings_sidebar_position": {
+      "message": "Position"
+   },
+   "settings_sidebar_position_desc": {
+      "message": "Giver dig mulighed for at indstille om sidepanelet skal åbnes i venstre eller højre kant af browservinduet."
+   },
+   "settings_sidebar_position_left": {
+      "message": "Venstre"
+   },
+   "settings_sidebar_position_right": {
+      "message": "Højre"
+   },
+   "settings_sidebar_position_sidepanel": {
+      "message": "Konfigurer sidepanelet til at åbne i venstre eller højre side."
+   },
+   "settings_sidebar_sidepanel_configure": {
+      "message": "Konfigurer sidepanelet"
+   },
+   "settings_sidebar_sidepanel_intro": {
+      "message": "Her kan du ændre hvordan virkemåden af sidepanelet skal være, når det vises i siden af den aktuelle webside."
+   },
+   "settings_sidebar_width": {
+      "message": "Bredde"
+   },
+   "settings_sidebar_width_desc": {
+      "message": "Sidepanelets bredde på en aktuel webside. Denne indstilling vil ikke have indvirkning på det sidepanel der er indbygget i browseren."
+   },
+   "settings_support_faq_headline": {
+      "message": "Ofte stillede spørgsmål"
+   },
+   "settings_support_feedback_desc": {
+      "message": "Har du forslag til forbedringer, spørgsmål, bemærket manglende konfigurationsindstillinger eller fundet en fejl? For at hjælpe med at forbedre denne udvidelse, ville jeg være meget taknemmelig for alle de tilbagemeldinger du måtte have."
+   },
+   "settings_support_feedback_email": {
+      "message": "Kan du lide at få et svar? Angiv venligst en e-mailadresse (valgfrit)"
+   },
+   "settings_support_feedback_headline": {
+      "message": "Tilbagemelding"
+   },
+   "settings_support_feedback_notice": {
+      "message": "Skriv venligst din tilbagemelding på engelsk, ellers vil det vil være svært at forstå og svare på din besked."
+   },
+   "settings_support_feedback_screenshot": {
+      "message": "Vedhæft skærmbilleder"
+   },
+   "settings_support_feedback_screenshot_error_amount": {
+      "message": "Du kan kun uploade maksimalt {1} skærmbilleder"
+   },
+   "settings_support_feedback_screenshot_error_filesize": {
+      "message": "Filstørrelsen på {1} er for stor (> 1 MB)"
+   },
+   "settings_support_feedback_send": {
+      "message": "Send feedback"
+   },
+   "settings_support_feedback_send_failed": {
+      "message": "Din besked kunne ikke sendes. Prøv igen."
+   },
+   "settings_support_feedback_sent_message": {
+      "message": "Tak for tilbagemeldingen"
+   },
+   "settings_surface": {
+      "message": "Overflade"
+   },
+   "settings_surface_auto": {
+      "message": "Automatisk"
+   },
+   "settings_surface_info": {
+      "message": "Tilpas sidepanelets farve automatisk til at matche farveskemaet på dit system (lys eller mørk) eller vælg en specifik farve."
+   },
+   "settings_text_color": {
+      "message": "Tekst farve"
+   },
+   "settings_theme": {
+      "message": "Tema"
+   },
+   "settings_theme_changed": {
+      "message": "Ændret tema succesfuldt"
+   },
+   "settings_theme_default": {
+      "message": "Standard tema"
+   },
+   "settings_theme_default_desc": {
+      "message": "Det her tema giver dig adgang til dine bookmarks på en simpel, moderne måde. farven på elementerne kan skiftes ved at modificere farverne"
+   },
+   "settings_theme_focus": {
+      "message": "Fokus tema"
+   },
+   "settings_theme_focus_desc": {
+      "message": "Dette tema reducerer brugen af animationer og benytter et tæt pakket layout af elementer for at forbedre produktivitet og ydelse."
+   },
+   "settings_theme_glass": {
+      "message": "Glas tema"
+   },
+   "settings_theme_glass_desc": {
+      "message": "Dette tema gør din baggrund på sidepanelet halv-gennemsigtig og giver en sløret glasagtig effekt. Du kan justere denne effekt og gennemsigtigheden af sidepanelet."
+   },
+   "settings_themes_notice": {
+      "message": "Du kan vælge det grundlæggende design af sidepanelet. Det valgte tema kan tilpasses med de tilgængelige skydere og farveindstillinger."
+   },
+   "settings_tips_tricks_about_desc": {
+      "message": "Denne udvidelse er et enmands-projekt, som startede som et hobbyprojekt til eget brug."
+   },
+   "settings_tips_tricks_activation_area": {
+      "message": "Aktiveringsområde"
+   },
+   "settings_tips_tricks_activation_area_desc": {
+      "message": "Som standard kan hele kanten af browservinduet åbne sidepanelet. Du kan formindske det aktive område, så sidepanelet kun vil åbne i en del af browservinduets højde - f.x. kan du ændre sidepanelet, så det kun kommer frem når du klikker på et aktivt område i nederste venstre hjørne. Dette kan være nyttigt for at forhindre sidepanelet i at komme frem unødigt, hvis du klikker på et link på en webside."
+   },
+   "settings_tips_tricks_expand_all_subfolders": {
+      "message": "Åben alle undermapper"
+   },
+   "settings_tips_tricks_expand_all_subfolders_desc": {
+      "message": "For hurtigt at åbne en mappe med alle dens undermapper åbne, så dobbeltklik på mappen i sidepanelet."
+   },
+   "settings_tips_tricks_facts": {
+      "message": "Vidste du?"
+   },
+   "settings_tips_tricks_hide_entries": {
+      "message": "Skjul poster"
+   },
+   "settings_tips_tricks_hide_entries_desc": {
+      "message": "Du kan skjule individuelle bogmærker og endda hele mapper i sidepanelet. Højreklik på enhver post i sidepanelet og klik derefter på {1} knappen i kontekstmenuen. For at vise skjulte poster igen, så klik på menu-ikonet i sidepanelets top og aktiver de tilhørende checkbokse."
+   },
+   "settings_tips_tricks_i18n_desc": {
+      "message": "Udvidelsen er tilgængelig på {1} forskellige sprog. Oversættelserne er brugerlavede og alle kan hjælpe til ved at oversætte teksten i udvidelsen til andre sprog. Oversættelser vil blive godkendt og føjet til udvidelsen med næste opdatering."
+   },
+   "settings_tips_tricks_keyboard_shortcuts": {
+      "message": "Tastaturgenveje"
+   },
+   "settings_tips_tricks_keyboard_shortcuts_desc": {
+      "message": "Sidepanelet kan styres v.h.a. tastaturgenveje. Du kan se en liste over genveje ved at klikke på menu-ikonet i sidepanelets top og klikke på {1} knappen."
+   },
+   "settings_tips_tricks_multiselect": {
+      "message": "Vælg flere poster"
+   },
+   "settings_tips_tricks_multiselect_desc": {
+      "message": "Du kan vælge flere bogmærker eller mapper ad gangen i sidepanelet for at åbne, slette eller flytte dem på én gang med \"træk og slip\"."
+   },
+   "settings_tips_tricks_newtab": {
+      "message": "Ny Fane"
+   },
+   "settings_tips_tricks_newtab_desc": {
+      "message": "Du kan konfigurere udseendet af et nyt faneblad direkte på siden, ved at klikke på {1} knappen i nederste hjørne. Så kan du ændre gitter-punkter, baggrundsbillede eller links øverst oppe"
+   },
+   "settings_tips_tricks_next": {
+      "message": "Næste tip"
+   },
+   "settings_tips_tricks_open_all_bookmarks": {
+      "message": "Åben alle bogmærker"
+   },
+   "settings_tips_tricks_open_all_bookmarks_desc": {
+      "message": "For at åbne alle bogmærkerne i en mappe, kan du midterklikke på mappen. Alternativt kan du trykke {1} imens du klikker på mappen med højre side af musen."
+   },
+   "settings_tips_tricks_privacy": {
+      "message": "Privatliv"
+   },
+   "settings_tips_tricks_privacy_desc": {
+      "message": "Bogmærkerne i sidepanelet bliver synkroniseret og styret af {browserName}. Udvidelsen gemmer eller analyserer ikke disse bogmærker og viser kun bogmærker fra din browser i sidepanelet."
+   },
+   "settings_tips_tricks_quick_bookmarking": {
+      "message": "Hurtig bogmærkning"
+   },
+   "settings_tips_tricks_quick_bookmarking_desc": {
+      "message": "Du kan trække enhver URL ind i sidepanelet og placere den hvor som helst. Du kan endda markere og trække en aktiv URL fra browserfanen på denne måde. Du kan også trække {1} symbolet t.v. for adresselinjen ind i sidepanelet for at bogmærke den nuværende side, uden først at markere hele adresselinjen"
+   },
+   "settings_tips_tricks_quick_search": {
+      "message": "Hurtigsøgning"
+   },
+   "settings_tips_tricks_quick_search_desc": {
+      "message": "Hvis du åbner sidepanelet, kan du søge efter bogmærker bare ved at skrive. Der er ingen grund til at klikke på søge ikonet i toppen af sidebaren først."
+   },
+   "settings_tips_tricks_quick_url_copy": {
+      "message": "Hurtig URL kopi"
+   },
+   "settings_tips_tricks_quick_url_copy_desc": {
+      "message": "For at kopiere URL'en fra et bogmærke i sidepanelet ind i udklipsholderen, så klik på {1} når musepilen er over adressen."
+   },
+   "settings_tips_tricks_right_click": {
+      "message": "Højreklik"
+   },
+   "settings_tips_tricks_right_click_desc": {
+      "message": "Du kan højreklikke et vilkårligt bogmærke eller en vilkårlig mappe i sidepanelet for at vise supplerende muligheder. F.x. kan du redigere eksisterende bogmærker eller fastgøre poster øverst i sidepanelet. Hvis du højreklikker på en mappe, kan du starte et check af bogmærker for at identificere ødelagte eller opdaterede URL'er."
+   },
+   "settings_tips_tricks_separators": {
+      "message": "Separatorer"
+   },
+   "settings_tips_tricks_separators_desc": {
+      "message": "Et bogmærke med URL {1} og en titel {2} eller {3} vil blive vist som separatorer i sidepanelet. Du kan tilføje separatorer ved at klikke på en hvilken som helst mappe i sidepanelet og klikke på {4} knappen."
+   },
+   "settings_tips_tricks_share_data": {
+      "message": "Del information"
+   },
+   "settings_tips_tricks_share_data_desc": {
+      "message": "Du kan anonymt dele din konfiguration, hvilket hjælper mig med at identificere populære indstillinger samt hvad der skal forbedres eller ændres i fremtidige opdateringer. Udvidelsen samler ingen personlige data og læser ingen bogmærker. Uden udtrykkelig tilladelse vil udvidelsen heller ikke dele nogen opsætning."
+   },
+   "settings_tips_tricks_sidepanel": {
+      "message": "Browser sidepanel"
+   },
+   "settings_tips_tricks_sidepanel_desc": {
+      "message": "Du kan have bogmærke sidepanelet permanent åbnet mens du browser. Der er et sidepanel til rådighed i din browser. Klik på sidepanel-ikonet øverst i din browser."
+   },
+   "settings_tips_tricks_synchronization": {
+      "message": "Synkronisering"
+   },
+   "settings_tips_tricks_synchronization_action": {
+      "message": "Tjek dine synkroniseringsindstillinger"
+   },
+   "settings_tips_tricks_synchronization_desc": {
+      "message": "Alle dine indstillinger i sidepanelet vil blive synkroniseret mellem dine enheder, hvis du aktiverer synkronisering i din browsers indstillinger. Også selvom du ikke er Premium-bruger."
+   },
+   "settings_tips_tricks_version_desc": {
+      "message": "Første version of denne udvidelse blev udgivet november 2016."
+   },
+   "settings_title": {
+      "message": "Indstillinger"
+   },
+   "settings_toggle_area": {
+      "message": "Konfigurer område"
+   },
+   "settings_toggle_area_desc": {
+      "message": "Som standard kan hele kanten af dit browservindue hæves for at åbne sidebjælken. Du kan ændre dette og konfigurere hvor du skal åbne sidelinjen nøjagtigt."
+   },
+   "settings_toggle_area_drag_desc": {
+      "message": "Træk for at flytte"
+   },
+   "settings_toggle_area_height": {
+      "message": "Højde"
+   },
+   "settings_toggle_area_height_desc": {
+      "message": "Du kan reducere højden på det aktive område så sidepanelet kun åbnes, når du flytter markøren til placeringen af kanten på dit browservindue."
+   },
+   "settings_toggle_area_width": {
+      "message": "Bredde"
+   },
+   "settings_toggle_area_width_windowed": {
+      "message": "Bredde (som vindue)"
+   },
+   "settings_tooltip_content": {
+      "message": "Værktøjstip indhold"
+   },
+   "settings_tooltip_content_additional_info": {
+      "message": "Yderligere information"
+   },
+   "settings_tooltip_content_all": {
+      "message": "Titel og URL"
+   },
+   "settings_tooltip_content_title": {
+      "message": "Kun titel"
+   },
+   "settings_tooltip_content_url": {
+      "message": "Kun URL"
+   },
+   "settings_tooltip_delay": {
+      "message": "Værktøjstip forsinkelse"
+   },
+   "settings_tooltip_delay_desc": {
+      "message": "Forsinkelse, før værktøjstips til bogmærkerne vises, når du svæver med musen."
+   },
+   "settings_tooltip_delay_infinity": {
+      "message": "Vis aldrig værktøjstips"
+   },
+   "settings_tooltip_desc": {
+      "message": "Vælg hvilke oplysninger værktøjstip skal indeholde."
+   },
+   "settings_tooltip_font_size": {
+      "message": "Værktøjstip skriftstørrelse"
+   },
+   "settings_translation_add_language": {
+      "message": "Tilføj sprog"
+   },
+   "settings_translation_back_to_overview": {
+      "message": "Tilbage til oversigt"
+   },
+   "settings_translation_desc": {
+      "message": "Du kan hjælpe med at oversætte udvidelsen på dit sprog eller forbedre den eksisterende."
+   },
+   "settings_translation_help": {
+      "message": "For hver post kan du se den engelske oversættelse, som skal oversættes til dit sprog. For at hjælpe dig med at identificere, hvor teksten bruges og hvad den er til, har hver post et navn (f.eks. {1}), som ikke skal oversættes. Husk at sende din oversættelse ved at trykke på knappen øverst til højre!"
+   },
+   "settings_translation_incomplete_info": {
+      "message": "Nogle oversættelser mangler"
+   },
+   "settings_translation_info": {
+      "message": "Du kan redigere eksisterende oversættelser eller tilføje manglende. Hvis du sender dine ændringer, vil jeg gennemgå dit input og godkende det."
+   },
+   "settings_translation_link": {
+      "message": "Gå til oversættelse oversigt"
+   },
+   "settings_translation_notice1": {
+      "message": "Så snart alle kategorier, der er markeret som \"påkrævet\" oversættes, vil oversættelsen blive frigivet."
+   },
+   "settings_translation_notice2": {
+      "message": "Ufuldstændige kategorier frigives ikke for at forhindre delvist oversatte tekster."
+   },
+   "settings_translation_reminder_desc": {
+      "message": "Jeg vil gerne blive underrettet, når nye sprogvariabler tilføjes til udvidelsen"
+   },
+   "settings_translation_required_category": {
+      "message": "Nødvendig"
+   },
+   "settings_translation_status_draft": {
+      "message": "Oversættelse er ufuldstændig eller har brug for en bedømmelse og er ikke tilgængelig for brugerne"
+   },
+   "settings_translation_status_incomplete": {
+      "message": "Oversættelse er tilgængelig men nogle kategorier er ufærdige"
+   },
+   "settings_translation_status_released": {
+      "message": "Oversættelse er tilgængelig"
+   },
+   "settings_translation_submit": {
+      "message": "Indsend"
+   },
+   "settings_translation_submit_message": {
+      "message": "Din oversættelse er blevet sendt succesfuldt"
+   },
+   "sidebar_copied_to_clipboard": {
+      "message": "URL kopieret"
+   },
+   "sidebar_deleted": {
+      "message": "Fjernet"
+   },
+   "sidebar_dir_children": {
+      "message": "Elementer"
+   },
+   "sidebar_search_no_results": {
+      "message": "Ingen bogmærker matcher søgestrengen"
+   },
+   "sidebar_search_placeholder": {
+      "message": "Søg bogmærke"
+   },
+   "sidebar_undo_deletion": {
+      "message": "Fortryd"
+   },
+   "sort_label_alphabetical": {
+      "message": "Alfabetisk"
+   },
+   "sort_label_custom": {
+      "message": "Brugerdefineret"
+   },
+   "sort_label_most_used": {
+      "message": "Mest brugte"
+   },
+   "sort_label_recently_added": {
+      "message": "Senest tilføjede"
+   },
+   "sort_label_recently_used": {
+      "message": "Senest brugte"
+   },
+   "sort_label_url": {
+      "message": "URL"
+   },
+   "sort_most_used_per_month": {
+      "message": "Pr. måned"
+   },
+   "sort_view_as_tree": {
+      "message": "Vis mapper"
+   },
+   "status_feedback_unavailable_desc": {
+      "message": "Tjenesten til indsamling af feedback er i øjeblikket ikke tilgængelig. Hvis du ønsker at give din feedback, send mig venligst en email i stedet."
+   },
+   "status_service_unavailable_headline": {
+      "message": "Tjeneste ikke tilgængelig"
+   },
+   "status_translation_unavailable_desc": {
+      "message": "Oversættelsestjenesten er i øjeblikket ikke tilgængelig. Prøv venligst igen senere."
+   }
+}
