@@ -38,27 +38,27 @@
             const originalConsoleInfo = console.info;
 
             // Override console.log
-            console.log = function(message) {
+            console.log = function() {
                 originalConsoleLog.apply(console, arguments);
-                appendMessage('Log', message);
+                appendMessage('Log', Array.from(arguments).join(' ')); // Join arguments for multiple values
             };
 
             // Override console.error
-            console.error = function(message) {
+            console.error = function() {
                 originalConsoleError.apply(console, arguments);
-                appendMessage('Error', message);
+                appendMessage('Error', Array.from(arguments).join(' '));
             };
 
             // Override console.warn
-            console.warn = function(message) {
+            console.warn = function() {
                 originalConsoleWarn.apply(console, arguments);
-                appendMessage('Warning', message);
+                appendMessage('Warning', Array.from(arguments).join(' '));
             };
 
             // Override console.info
-            console.info = function(message) {
+            console.info = function() {
                 originalConsoleInfo.apply(console, arguments);
-                appendMessage('Info', message);
+                appendMessage('Info', Array.from(arguments).join(' '));
             };
         })();
 
