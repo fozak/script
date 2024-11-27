@@ -3,17 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dynamic Console Capture</title>
+    <title>Dynamic HTML and JavaScript Console</title>
     <style>
         .log { color: black; }
         .error { color: red; }
         .warn { color: orange; }
         .info { color: blue; }
+        #html-input { width: 100%; height: 80px; margin-bottom: 10px; }
         #code-input { width: 100%; height: 150px; margin-bottom: 10px; }
         #console-output { margin-top: 20px; border: 1px solid #ccc; padding: 10px; max-height: 300px; overflow-y: auto; }
+        #drop-area { border: 2px dashed #ccc; padding: 10px; margin-bottom: 10px; }
     </style>
 </head>
 <body>
+    <div id="drop-area" contenteditable="true" placeholder="Drop or type HTML content here..."></div>
     <textarea id="code-input" placeholder="Enter your JavaScript code here..."></textarea>
     <button id="run-code">Run Code</button>
     <div id="console-output"></div>
@@ -65,12 +68,25 @@
         // Function to run user-inputted JavaScript code
         document.getElementById('run-code').addEventListener('click', function() {
             const code = document.getElementById('code-input').value;
+
+            // Clear previous output
+            const outputDiv = document.getElementById('console-output');
+            outputDiv.innerHTML = '';
+
             try {
                 // Use eval to execute the code entered by the user
                 eval(code);
             } catch (error) {
                 console.error('Error executing code: ' + error.message);
             }
+        });
+
+        // Optional: Allow users to drop HTML content into the drop area
+        const dropArea = document.getElementById('drop-area');
+
+        dropArea.addEventListener('input', function() {
+            // When the content changes, you can perform any action if needed
+            console.log('HTML Content:', dropArea.innerHTML);
         });
     </script>
 </body>
