@@ -81,6 +81,15 @@
                 Body: file,            // File content
                 ContentType: contentType // Set the content type
             };
+
+            // Perform the upload
+            s3.upload(uploadParams, function(err, data) {
+                if (err) {
+                    uploadStatus.innerText = 'Error uploading file: ' + err.message;
+                } else {
+                    uploadStatus.innerText = 'Successfully uploaded file: ' + data.Location;
+                }
+            });
         };
     </script>
 </body>
