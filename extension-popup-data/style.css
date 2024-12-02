@@ -1,0 +1,22 @@
+body {
+    font-family: Arial, sans-serif;
+    width: 300px;
+}
+
+#note-input {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+    min-height: 50px;
+    cursor: text;
+}
+
+#notes-list {
+    margin-top: 10px;
+}
+
+.note {
+    margin-top: 5px;
+    padding: 5px;
+    border: 1px solid #ddd;
+}
