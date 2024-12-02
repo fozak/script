@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>S3 Upload Example</title>
     <script src="https://sdk.amazonaws.com/js/aws-sdk-2.1.12.min.js"></script>
 </head>
+
 <body>
     <h1>Upload to S3</h1>
     <input type="file" id="file-input" required>
@@ -51,7 +53,7 @@
         const uploadStatus = document.getElementById('upload-status');
 
         // Function to upload a file to S3
-        uploadButton.onclick = function() {
+        uploadButton.onclick = function () {
             const fileInput = document.getElementById('file-input');
             const file = fileInput.files[0];
 
@@ -61,29 +63,25 @@
             }
 
 
-             // Use ManagedUpload for the file upload
-             const upload = new AWS.S3.ManagedUpload({
-                params: {
-                    Bucket: bucketName,
-                    Key: file.name,
-                    Body: file,
-                    // Uncomment the following line if you want the file to be publicly readable
-                    // ACL: 'public-read',
+            const s3 = new AWS.S3();
+
+            // Define upload parameters
+            const uploadParams = {
+                Bucket: bucketName,    // Bucket name
+                Key: file.name,        // File name (key)
+                Body: file             // File content
+            };
+
+            // Perform the upload
+            s3.upload(uploadParams, function (err, data) {
+                if (err) {
+                    uploadStatus.innerText = 'Error uploading file: ' + err.message;
+                } else {
+                    uploadStatus.innerText = 'Successfully uploaded file: ' + data.Location;
                 }
             });
-
-            // Start the upload and handle the promise
-            const promise = upload.promise();
-
-            promise.then(
-                function(data) {
-                    uploadStatus.innerText = 'Successfully uploaded file: ' + data.Location;
-                },
-                function(err) {
-                    uploadStatus.innerText = 'Error uploading file: ' + err.message;
-                }
-            );
         };
     </script>
 </body>
+
 </html>
