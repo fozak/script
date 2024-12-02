@@ -66,21 +66,21 @@
 
             const s3 = new AWS.S3();
 
+            // Determine the content type based on the file extension
+            let contentType = 'text/plain'; // Default to plain text
+            if (file.name.endsWith('.html')) {
+                contentType = 'text/html';
+            } else if (file.name.endsWith('.txt')) {
+                contentType = 'text/plain';
+            }
+
             // Define upload parameters
             const uploadParams = {
                 Bucket: bucketName,    // Bucket name
                 Key: file.name,        // File name (key)
-                Body: file             // File content
+                Body: file,            // File content
+                ContentType: contentType // Set the content type
             };
-
-            // Perform the upload
-            s3.upload(uploadParams, function (err, data) {
-                if (err) {
-                    uploadStatus.innerText = 'Error uploading file: ' + err.message;
-                } else {
-                    uploadStatus.innerText = 'Successfully uploaded file: ' + data.Location;
-                }
-            });
         };
     </script>
 </body>
