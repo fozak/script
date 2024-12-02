@@ -60,21 +60,29 @@
                 return;
             }
 
-            const s3 = new AWS.S3();
-            const params = {
-                Bucket: bucketName,
-                Key: file.name,
-                Body: file,
-                ACL: 'public-read', // Adjust according to your needs
-            };
 
-            s3.upload(params, function(err, data) {
-                if (err) {
-                    uploadStatus.innerText = 'Error uploading file: ' + err.message;
-                } else {
-                    uploadStatus.innerText = 'Successfully uploaded file: ' + data.Location;
+             // Use ManagedUpload for the file upload
+             const upload = new AWS.S3.ManagedUpload({
+                params: {
+                    Bucket: bucketName,
+                    Key: file.name,
+                    Body: file,
+                    // Uncomment the following line if you want the file to be publicly readable
+                    // ACL: 'public-read',
                 }
             });
+
+            // Start the upload and handle the promise
+            const promise = upload.promise();
+
+            promise.then(
+                function(data) {
+                    uploadStatus.innerText = 'Successfully uploaded file: ' + data.Location;
+                },
+                function(err) {
+                    uploadStatus.innerText = 'Error uploading file: ' + err.message;
+                }
+            );
         };
     </script>
 </body>
