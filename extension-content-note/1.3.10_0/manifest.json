@@ -1,0 +1,36 @@
+{
+   "action": {
+      "default_icon": {
+         "128": "assets/icon128.png",
+         "16": "assets/icon16.png",
+         "48": "assets/icon48.png"
+      },
+      "default_title": "Context Note"
+   },
+   "background": {
+      "service_worker": "background.js"
+   },
+   "content_scripts": [ {
+      "css": [ "content-scripts/main.css", "content-scripts/main.44bddb14.css" ],
+      "js": [ "content-scripts/main.js" ],
+      "matches": [ "\u003Call_urls>" ]
+   } ],
+   "icons": {
+      "128": "assets/icon128.png",
+      "16": "assets/icon16.png",
+      "48": "assets/icon48.png"
+   },
+   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAzVVDkBDg+b+Ivbyle+/Z876uSbnGiX50Zx9bu0bkTqP9m3ID9P3js+HVHvzy92C6oJMLzZhrV27wjL7d5kPrFOGOUVFc8CVe0ITo+jDrxONInZAgxBvoBJRmqLw/Pp6cXJSHLF1Igs9mmbHTZOTMeNc80V0cBAab3VoNNAX+68ncbR5/wVc/n0CifdJ4yE8EXMlK+S99mpsTuujC/XE2hFfYGvmZiIgKCcTxd9eG7ho7c4xOfkudmyc7kXwCTRNqQRfr9YejTU1I5ex3ns6dAY73yG5g6IBrSQYJhRHMseK0uW+R50FCNrSIfk/GY0ykgnafzCO4+3aXvDOtVWA7FwIDAQAB",
+   "manifest_version": 3,
+   "name": "context-note",
+   "permissions": [ "unlimitedStorage", "activeTab", "storage" ],
+   "update_url": "https://clients2.google.com/service/update2/crx",
+   "version": "1.3.10",
+   "web_accessible_resources": [ {
+      "matches": [ "\u003Call_urls>" ],
+      "resources": [ "assets/*" ]
+   }, {
+      "matches": [ "\u003Call_urls>" ],
+      "resources": [ "/assets/element-icons.9c88a535.woff", "/assets/element-icons.de5eb258.ttf" ]
+   } ]
+}
