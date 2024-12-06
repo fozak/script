@@ -73,25 +73,38 @@
         }
 
         // Display results
-        function displayResults(results) {
+        async function displayResults(results) {
             const resultsDiv = document.getElementById('results');
             resultsDiv.innerHTML = ''; // Clear previous results
+
+            // Check if any results were found
+            if (results.length > 0) {
+                // Fetch content of the first document
+                const firstResult = results[0].item.key;
+                const encodedKey = encodeURIComponent(firstResult);
+                const documentUrl = `https://${bucketName}.s3.amazonaws.com/${encodedKey}`;
+                
+                // Automatically fetch and display the first document
+                const content = await fetchDocumentContent(documentUrl);
+                displayDocumentContent(content);
+            }
+
             results.forEach(result => {
                 const link = document.createElement('a');
                 
                 // URL encode the key
                 const encodedKey = encodeURIComponent(result.item.key);
-                const documentUrl = `https://${bucketName}.s3.amazonaws.com/${encodedKey}`; // Use the encoded key for the URL
+                link.href = `https://${bucketName}.s3.amazonaws.com/${encodedKey}`; // Use the encoded key for the URL
                 
                 // Set HTML content
                 link.innerHTML = `<strong>${result.item.key}</strong>`; // Example of formatting
-                link.href = documentUrl;
+                
                 link.target = '_blank'; // Open in a new tab
 
-                // Fetch content when the link is clicked
+                // Add click event to fetch and display document content
                 link.addEventListener('click', async (event) => {
                     event.preventDefault(); // Prevent default link behavior
-                    const content = await fetchDocumentContent(documentUrl);
+                    const content = await fetchDocumentContent(link.href);
                     displayDocumentContent(content);
                 });
 
@@ -127,10 +140,10 @@
             const searchInput = document.getElementById('search-input');
 
             // Event listener for search input
-            searchInput.addEventListener('input', () => {
+            searchInput.addEventListener('input', async () => {
                 const searchTerm = searchInput.value;
                 const filteredResults = fuse.search(searchTerm);
-                displayResults(filteredResults);
+                await displayResults(filteredResults);
             });
         }
 
