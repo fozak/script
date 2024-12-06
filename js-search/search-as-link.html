@@ -74,7 +74,7 @@
                 const encodedKey = encodeURIComponent(result.item.key);
                 link.href = `https://${bucketName}.s3.amazonaws.com/${encodedKey}`; // Use the encoded key for the URL
                 
-                link.textContent = result.item.key; // Display the raw key as link text
+                link.innerHTML = result.item.key; //WAS link.textContent = result.item.key; // Display the raw key as link text
                 link.target = '_blank'; // Open in a new tab
                 resultsDiv.appendChild(link);
             });
