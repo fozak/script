@@ -7,33 +7,62 @@
     <script src="https://sdk.amazonaws.com/js/aws-sdk-2.1571.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.basic.min.js"></script>
     <style>
-        body {
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
             font-family: Arial, sans-serif;
-            margin: 20px;
-            display: flex; /* Use flexbox for layout */
+        }
+        .container {
+            display: flex;
+            height: 100vh;
+            padding: 20px;
+            box-sizing: border-box;
         }
         #left-container {
-            width: 30%; /* Fixed width for the left container */
-            margin-right: 20px; /* Space between left and right containers */
-            overflow-y: auto; /* Allow scrolling if content is large */
-        }
-        #right-container {
-            width: 70%; /* Fixed width for the right container */
-            border: 1px solid #ccc; /* Optional border for clarity */
-            padding: 10px; /* Padding for the content area */
-            overflow: auto; /* Allow scrolling if content is large */
-        }
-        #document-content {
-        width: 100%; /* Full width within right-container */
-        max-height: 100%; /* Avoid overflow */
-        overflow: auto; /* Allow scrolling if necessary */
+            width: 30%;
+            padding-right: 20px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
         }
         #search-area {
-            margin-bottom: 20px; /* Space between search input and results */
+            margin-bottom: 15px;
         }
-        a {
+        #search-input {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+        #results {
+            flex-grow: 1;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+        #right-container {
+            width: 70%;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            border: 1px solid #ccc;
+        }
+        #document-content {
+            flex-grow: 1;
+            overflow: auto;
+            padding: 15px;
+            background-color: #f9f9f9;
+        }
+        #results a {
             display: block;
             margin: 5px 0;
+            text-decoration: none;
+            color: #333;
+            padding: 5px;
+            border-bottom: 1px solid #eee;
+        }
+        #results a:hover {
+            background-color: #f0f0f0;
         }
     </style>
 </head>
