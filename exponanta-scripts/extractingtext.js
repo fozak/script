@@ -1,3 +1,4 @@
+//making trimmed text from the html documents, only text + hrefs
 try {
     // Step 1: Create a new temporary container
     const tempContainer = document.createElement('div');
@@ -6,7 +7,7 @@ try {
     tempContainer.innerHTML = document.body.innerHTML;
 
     // Step 3: Remove specified tags from the temporary container
-    const tagsToRemove = ['head', 'header', 'footer', 'code', 'script', 'style', 'img', 'svg', 'meta', 'title', 'link'];
+    const tagsToRemove = ['head', 'header', 'footer', 'code', 'script', 'style', 'img', 'svg', 'meta', 'title', 'link', 'button'];
     tagsToRemove.forEach(tag => {
         const elements = tempContainer.getElementsByTagName(tag);
         while (elements.length > 0) {
@@ -19,7 +20,7 @@ try {
     links.forEach(link => {
         const href = link.getAttribute('href');
         const newSpan = document.createElement('span');
-        newSpan.textContent = `${link.textContent.trim()} link: ${href || '(no link available)'}`;
+        newSpan.textContent = ` ${href || '(no link available)'}`;  //newSpan.textContent = `${link.textContent.trim()} link: ${href || '(no link available)'}`; 
         link.appendChild(newSpan);
     });
 
@@ -33,7 +34,7 @@ try {
     // Step 7: Final cleanup to remove extra spaces
     fullText = fullText.replace(/\s+/g, ' ').trim();
 
-    console.log(fullText);
+    console.log('Resulting text:',fullText);
 
     // Step 8: Clean up - remove the temporary container
     tempContainer.remove();

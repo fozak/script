@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S3 Upload Example</title>
+    <!--<script src="https://sdk.amazonaws.com/js/aws-sdk-2.1.12.min.js"></script>-->
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.1571.0.min.js"></script>
+</head>
+
+<body>
+    <h1>Upload to S3</h1>
+    <input type="file" id="file-input" required>
+    <button id="upload-btn">Upload</button>
+    <div id="upload-status"></div>
+
+    <script>
+        // Function to get AWS credentials from localStorage or prompt user
+        function getAWSCredentials() {
+            let accessKeyId = localStorage.getItem('accessKeyId');
+            let secretAccessKey = localStorage.getItem('secretAccessKey');
+            let region = localStorage.getItem('region');
+            let bucketName = localStorage.getItem('bucketName');
+
+            // If any credentials are missing, prompt the user to enter them
+            if (!accessKeyId || !secretAccessKey || !region || !bucketName) {
+                accessKeyId = prompt("Enter your IAM user's access key:");
+                secretAccessKey = prompt("Enter your IAM user's secret key:");
+                region = prompt("Enter your AWS region (e.g., us-east-1):");
+                bucketName = prompt("Enter your S3 bucket name:");
+
+                // Store the credentials in localStorage
+                localStorage.setItem('accessKeyId', accessKeyId);
+                localStorage.setItem('secretAccessKey', secretAccessKey);
+                localStorage.setItem('region', region);
+                localStorage.setItem('bucketName', bucketName);
+            }
+
+            return { accessKeyId, secretAccessKey, region, bucketName };
+        }
+
+        // Get AWS credentials
+        const { accessKeyId, secretAccessKey, region, bucketName } = getAWSCredentials();
+
+        // Configure AWS with IAM user credentials
+        AWS.config.update({
+            accessKeyId: accessKeyId,
+            secretAccessKey: secretAccessKey,
+            region: region
+        });
+
+        const uploadButton = document.getElementById('upload-btn');
+        const uploadStatus = document.getElementById('upload-status');
+
+        // Function to upload a file to S3
+        uploadButton.onclick = function () {
+            const fileInput = document.getElementById('file-input');
+            const file = fileInput.files[0];
+
+            if (!file) {
+                uploadStatus.innerText = 'Please select a file.';
+                return;
+            }
+
+
+            const s3 = new AWS.S3();
+
+            // Determine the content type based on the file extension
+            let contentType = 'text/plain'; // Default to plain text
+            if (file.name.endsWith('.html')) {
+                contentType = 'text/html';
+            } else if (file.name.endsWith('.txt')) {
+                contentType = 'text/plain';
+            }
+
+            // Define upload parameters
+            const uploadParams = {
+                Bucket: bucketName,    // Bucket name
+                Key: file.name,        // File name (key)
+                Body: file,            // File content
+                ContentType: contentType // Set the content type
+            };
+
+            // Perform the upload
+            s3.upload(uploadParams, function(err, data) {
+                if (err) {
+                    uploadStatus.innerText = 'Error uploading file: ' + err.message;
+                } else {
+                    uploadStatus.innerText = 'Successfully uploaded file: ' + data.Location;
+                }
+            });
+        };
+    </script>
+</body>
+
+</html>
