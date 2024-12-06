@@ -10,25 +10,21 @@
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
-            display: flex;
-            flex-direction: column; /* Change to column layout */
+            display: flex; /* Use flexbox for layout */
         }
-        #search-area {
-            margin-bottom: 20px; /* Space between search and results */
+        #left-container {
+            width: 30%; /* Fixed width for the left container */
+            margin-right: 20px; /* Space between left and right containers */
+            overflow-y: auto; /* Allow scrolling if content is large */
         }
-        #results {
-            margin-right: 20px;
-            width: 40%; /* Set width for the left pane */
-            overflow-y: auto; /* Allow scrolling if results are large */
-        }
-        #document-content {
-            border: 1px solid #ccc;
-            padding: 10px;
-            width: 60%; /* Set width for the right pane */
+        #right-container {
+            width: 70%; /* Fixed width for the right container */
+            border: 1px solid #ccc; /* Optional border for clarity */
+            padding: 10px; /* Padding for the content area */
             overflow: auto; /* Allow scrolling if content is large */
         }
-        #content-area {
-            display: flex; /* Use flexbox for layout */
+        #search-area {
+            margin-bottom: 20px; /* Space between search input and results */
         }
         a {
             display: block;
@@ -38,10 +34,15 @@
 </head>
 <body>
     <h1>S3 Key Search</h1>
-    <input type="text" id="search-input" placeholder="Search S3 keys..." />
-    <div id="results"></div>
-    <div id="document-content">Select a document to view its content here.</div>
-
+    <div id="left-container">
+        <div id="search-area">
+            <input type="text" id="search-input" placeholder="Search S3 keys..." />
+        </div>
+        <div id="results">Results will appear here.</div>
+    </div>
+    <div id="right-container">
+        <div id="document-content">Select a document to view its content here.</div>
+    </div>
     <script>
         // Configure AWS
         AWS.config.update({
