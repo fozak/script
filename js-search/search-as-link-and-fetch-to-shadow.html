@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,31 +12,48 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 20px;
-            display: flex; /* Use flexbox for layout */
+            display: flex;
+            /* Use flexbox for layout */
         }
+
         #left-container {
-            width: 30%; /* Fixed width for the left container */
-            margin-right: 20px; /* Space between left and right containers */
-            overflow-y: auto; /* Allow scrolling if content is large */
+            width: 30%;
+            /* Fixed width for the left container */
+            margin-right: 20px;
+            /* Space between left and right containers */
+            overflow-y: auto;
+            /* Allow scrolling if content is large */
         }
+
         #right-container {
-            width: 70%; /* Fixed width for the right container */
-            border: 1px solid #ccc; /* Optional border for clarity */
-            padding: 10px; /* Padding for the content area */
-            display: flex; /* Use flexbox to manage inner content */
-            flex-direction: column; /* Stack contents vertically */
-            height: calc(100vh - 40px); /* Full viewport height minus padding */
-            overflow: hidden; /* Prevent outer container from scrolling */
+            width: 70%;
+            /* Fixed width for the right container */
+            border: 1px solid #ccc;
+            /* Optional border for clarity */
+            padding: 10px;
+            /* Padding for the content area */
+            display: flex;
+            /* Use flexbox to manage inner content */
+            flex-direction: column;
+            /* Stack contents vertically */
+            height: calc(100vh - 40px);
+            /* Full viewport height minus padding */
+            overflow: hidden;
+            /* Prevent outer container from scrolling */
         }
+
         #search-area {
-            margin-bottom: 20px; /* Space between search input and results */
+            margin-bottom: 20px;
+            /* Space between search input and results */
         }
+
         a {
             display: block;
             margin: 5px 0;
         }
     </style>
 </head>
+
 <body>
     <h1>S3 Key Search</h1>
     <div id="left-container">
@@ -96,7 +114,7 @@
                 const firstResult = results[0].item.key;
                 const encodedKey = encodeURIComponent(firstResult);
                 const documentUrl = `https://${bucketName}.s3.amazonaws.com/${encodedKey}`;
-                
+
                 // Automatically fetch and display the first document
                 const content = await fetchDocumentContent(documentUrl);
                 displayDocumentContent(content);
@@ -104,14 +122,14 @@
 
             results.forEach(result => {
                 const link = document.createElement('a');
-                
+
                 // URL encode the key
                 const encodedKey = encodeURIComponent(result.item.key);
                 link.href = `https://${bucketName}.s3.amazonaws.com/${encodedKey}`; // Use the encoded key for the URL
-                
+
                 // Set HTML content
                 link.innerHTML = `<strong>${result.item.key}</strong>`; // Example of formatting
-                
+
                 link.target = '_blank'; // Open in a new tab
 
                 // Add click event to fetch and display document content
@@ -144,7 +162,7 @@
         function displayDocumentContent(content) {
             const documentContentDiv = document.getElementById('document-content');
             const shadow = documentContentDiv.attachShadow({ mode: 'open' }); // Create a shadow root
-            
+
             // Clear existing content in shadow root
             shadow.innerHTML = '';
 
@@ -155,6 +173,7 @@
         }
 
         // Main function to load keys and set up search
+        // Main function to load keys and set up search
         async function init() {
             keys = await fetchS3Keys();
             initFuse(keys);
@@ -163,8 +182,16 @@
             // Event listener for search input
             searchInput.addEventListener('input', async () => {
                 const searchTerm = searchInput.value;
-                const filteredResults = fuse.search(searchTerm);
-                await displayResults(filteredResults);
+
+                // Check if the input length is at least 2 before searching
+                if (searchTerm.length >= 2) {
+                    const filteredResults = fuse.search(searchTerm);
+                    await displayResults(filteredResults);
+                } else {
+                    // Clear results if input length is less than 2
+                    const resultsDiv = document.getElementById('results');
+                    resultsDiv.innerHTML = ''; // Clear previous results
+                }
             });
         }
 
@@ -172,4 +199,5 @@
         init();
     </script>
 </body>
+
 </html>
