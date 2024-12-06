@@ -12,6 +12,7 @@
 <body>
     <h1>Upload to S3</h1>
     <input type="file" id="file-input" required>
+    <input type="text" id="s3-key-input" placeholder="Enter S3 Key" required>
     <button id="upload-btn">Upload</button>
     <div id="upload-status"></div>
 
@@ -56,13 +57,19 @@
         // Function to upload a file to S3
         uploadButton.onclick = function () {
             const fileInput = document.getElementById('file-input');
+            const s3KeyInput = document.getElementById('s3-key-input');
             const file = fileInput.files[0];
+            const s3Key = s3KeyInput.value.trim();
 
             if (!file) {
                 uploadStatus.innerText = 'Please select a file.';
                 return;
             }
 
+            if (!s3Key) {
+                uploadStatus.innerText = 'Please enter an S3 key.';
+                return;
+            }
 
             const s3 = new AWS.S3();
 
@@ -77,7 +84,7 @@
             // Define upload parameters
             const uploadParams = {
                 Bucket: bucketName,    // Bucket name
-                Key: file.name,        // File name (key)
+                Key: s3Key,            // Use the user-provided S3 key
                 Body: file,            // File content
                 ContentType: contentType // Set the content type
             };
