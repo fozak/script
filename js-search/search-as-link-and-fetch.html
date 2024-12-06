@@ -7,62 +7,38 @@
     <script src="https://sdk.amazonaws.com/js/aws-sdk-2.1571.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.basic.min.js"></script>
     <style>
-        html, body {
-            height: 100%;
-            margin: 0;
-            padding: 0;
+        body {
             font-family: Arial, sans-serif;
-        }
-        .container {
-            display: flex;
-            height: 100vh;
+            margin: 0;
             padding: 20px;
-            box-sizing: border-box;
+            display: flex; /* Use flexbox for layout */
         }
         #left-container {
-            width: 30%;
-            padding-right: 20px;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
-        #search-area {
-            margin-bottom: 15px;
-        }
-        #search-input {
-            width: 100%;
-            padding: 8px;
-            box-sizing: border-box;
-        }
-        #results {
-            flex-grow: 1;
-            overflow-y: auto;
-            border: 1px solid #ddd;
-            padding: 10px;
+            width: 30%; /* Fixed width for the left container */
+            margin-right: 20px; /* Space between left and right containers */
+            overflow-y: auto; /* Allow scrolling if content is large */
         }
         #right-container {
-            width: 70%;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            border: 1px solid #ccc;
+            width: 70%; /* Fixed width for the right container */
+            border: 1px solid #ccc; /* Optional border for clarity */
+            padding: 10px; /* Padding for the content area */
+            display: flex; /* Use flexbox to manage inner content */
+            flex-direction: column; /* Stack contents vertically */
+            height: calc(100vh - 40px); /* Full viewport height minus padding */
+            overflow: hidden; /* Prevent outer container from scrolling */
         }
         #document-content {
-            flex-grow: 1;
-            overflow: auto;
-            padding: 15px;
-            background-color: #f9f9f9;
+            width: 100%; /* Full width within right-container */
+            max-height: 100%; /* Avoid overflow */
+            overflow: auto; /* Allow scrolling if necessary */
+            flex-grow: 1; /* Take up remaining space */
         }
-        #results a {
+        #search-area {
+            margin-bottom: 20px; /* Space between search input and results */
+        }
+        a {
             display: block;
             margin: 5px 0;
-            text-decoration: none;
-            color: #333;
-            padding: 5px;
-            border-bottom: 1px solid #eee;
-        }
-        #results a:hover {
-            background-color: #f0f0f0;
         }
     </style>
 </head>
