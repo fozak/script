@@ -6,8 +6,8 @@ try {
     // Step 2: Clone the current document's body into the temporary container
     tempContainer.innerHTML = document.body.innerHTML;
 
-    // Step 3: Remove specified tags from the temporary container
-    const tagsToRemove = ['head', 'header', 'footer', 'code', 'script', 'style', 'img', 'svg', 'meta', 'title', 'link', 'button'];
+    // Step 3: Remove specified tags from the temporary container CODE is removed
+    const tagsToRemove = ['head', 'header', 'code', 'footer', 'script', 'style', 'img', 'svg', 'meta', 'title', 'link', 'button'];
     tagsToRemove.forEach(tag => {
         const elements = tempContainer.getElementsByTagName(tag);
         while (elements.length > 0) {
