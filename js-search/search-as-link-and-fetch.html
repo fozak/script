@@ -11,16 +11,24 @@
             font-family: Arial, sans-serif;
             margin: 20px;
             display: flex;
+            flex-direction: column; /* Change to column layout */
+        }
+        #search-area {
+            margin-bottom: 20px; /* Space between search and results */
         }
         #results {
             margin-right: 20px;
             width: 40%; /* Set width for the left pane */
+            overflow-y: auto; /* Allow scrolling if results are large */
         }
         #document-content {
             border: 1px solid #ccc;
             padding: 10px;
             width: 60%; /* Set width for the right pane */
             overflow: auto; /* Allow scrolling if content is large */
+        }
+        #content-area {
+            display: flex; /* Use flexbox for layout */
         }
         a {
             display: block;
