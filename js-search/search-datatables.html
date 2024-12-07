@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S3 Key Display with DataTables</title>
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.1571.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        #table-s3keys {
+            margin-top: 20px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <h1>S3 Key Display</h1>
+    <table id="table-s3keys" class="display">
+        <thead>
+            <tr>
+                <th>Key</th>
+                <th>Link</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Rows will be populated dynamically -->
+        </tbody>
+    </table>
+
+    <script>
+        // Configure AWS
+        AWS.config.update({
+            region: 'us-east-1', // Change to your bucket's region
+        });
+
+        const bucketName = 'exponanta-public';
+        const s3 = new AWS.S3();
+        let keys = []; // Array to hold the S3 keys
+
+        // Function to fetch S3 keys
+        async function fetchS3Keys() {
+            const params = {
+                Bucket: bucketName,
+                MaxKeys: 1000 // Adjust as necessary
+            };
+
+            try {
+                const data = await s3.makeUnauthenticatedRequest('listObjectsV2', params).promise();
+                return data.Contents.map(item => item.Key);
+            } catch (error) {
+                console.error('Error fetching S3 keys:', error);
+                return [];
+            }
+        }
+
+        // Populate DataTable with S3 keys
+        function populateDataTable(keys) {
+            const tableBody = $('#table-s3keys tbody');
+            keys.forEach(key => {
+                const encodedKey = encodeURIComponent(key);
+                const link = `https://${bucketName}.s3.amazonaws.com/${encodedKey}`;
+                tableBody.append(`
+                    <tr>
+                        <td>${key}</td>  <!-- Key is directly used here -->
+                        <td><a href="${link}" target="_blank">View</a></td>
+                    </tr>
+                `);
+            });
+            $('#table-s3keys').DataTable(); // Initialize DataTable
+        }
+
+        // Main function to load keys and set up DataTable
+        async function init() {
+            keys = await fetchS3Keys();
+            populateDataTable(keys);
+        }
+
+        // Start the application
+        init();
+    </script>
+</body>
+</html>
