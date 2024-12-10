@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Data Storage</title>
+</head>
+<body>
+    <!-- Your application content -->
+
+    <div id="userDataDiv" style="display: none;">
+        <userdata>
+            <userprofile>
+                <user>User not found</user>
+                <userid></userid>
+            </userprofile>
+            <crawler></crawler>
+        </userdata>
+    </div>
+
+    <script>
+        let userData = document.getElementById('userDataDiv').innerHTML;
+
+        // Check if user data is empty
+        if (!userData || userData.trim() === '') {
+            userData = `
+            <userdata>
+                <userprofile>
+                    <user>User not found</user>
+                    <userid></userid>
+                </userprofile>
+                <crawler></crawler>
+            </userdata>`;
+            document.getElementById('userDataDiv').innerHTML = userData; // Update the div
+        }
+
+        // Retrieve user name
+        const userNameElement = document.querySelector('.global-nav__me img.global-nav__me-photo');
+        const userName = userNameElement ? userNameElement.getAttribute('alt') : 'User not found';
+        console.log(userName);
+
+        // Hash user name function
+        async function hashName(name) {
+            const encoder = new TextEncoder();
+            const data = encoder.encode(name);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            const hashHex = hashArray.map(b => ('00' + b.toString(16)).slice(-2)).join('');
+            return hashHex.slice(0, 8);
+        }
+
+        // Update user data
+        hashName(userName).then(userid => {
+            const parser = new DOMParser();
+            const parsedData = parser.parseFromString(userData, 'text/xml');
+            const userProfile = parsedData.getElementsByTagName('userprofile')[0];
+
+            userProfile.getElementsByTagName('user')[0].textContent = userName;
+            userProfile.getElementsByTagName('userid')[0].textContent = userid;
+
+            userData = new XMLSerializer().serializeToString(parsedData);
+            document.getElementById('userDataDiv').innerHTML = userData; // Update the div
+            console.log(userData);
+        });
+
+        // Function to add crawled data
+        function addCrawledData(sourceUrl, crawledUrls) {
+            const parser = new DOMParser();
+            const parsedData = parser.parseFromString(userData, 'text/xml');
+            const crawler = parsedData.getElementsByTagName('crawler')[0];
+
+            const webpageElement = parsedData.createElement('webpage');
+            const sourceUrlElement = parsedData.createElement('sourceurl');
+            sourceUrlElement.textContent = sourceUrl;
+            webpageElement.appendChild(sourceUrlElement);
+
+            const crawledUrlsElement = parsedData.createElement('crawledurls');
+            crawledUrls.forEach(url => {
+                const urlElement = parsedData.createElement('url');
+                urlElement.textContent = url;
+                crawledUrlsElement.appendChild(urlElement);
+            });
+            webpageElement.appendChild(crawledUrlsElement);
+
+            // Add additional fields
+            const typeElement = parsedData.createElement('type');
+            typeElement.textContent = 'connections';
+            webpageElement.appendChild(typeElement);
+
+            const statusElement = parsedData.createElement('status');
+            statusElement.textContent = 'processed';
+            webpageElement.appendChild(statusElement);
+
+            const lastUpdatedElement = parsedData.createElement('lastupdated');
+            lastUpdatedElement.textContent = new Date().toISOString();
+            webpageElement.appendChild(lastUpdatedElement);
+
+            crawler.appendChild(webpageElement);
+            userData = new XMLSerializer().serializeToString(parsedData);
+            document.getElementById('userDataDiv').innerHTML = userData; // Update the div
+        }
+
+        // Example usage
+        addCrawledData('https://www.linkedin.com/mynetwork/invite-connect/connections/', [
+            'https://www.linkedin.com/company/fluenceenergy/',
+            'https://www.linkedin.com/company/fluenceenergy/jobs/',
+            'https://www.linkedin.com/company/fluenceenergy/connections/'
+        ]);
+    </script>
+</body>
+</html>
