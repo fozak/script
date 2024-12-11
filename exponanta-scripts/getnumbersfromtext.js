@@ -48,3 +48,13 @@ try {
 } catch (error) {
     console.error('Error processing the document:', error);
 }
+
+var numbers = fullText.match(/-?\d+(\.\d+)?/g);
+
+// Convert the valid number strings to actual numbers
+if (numbers) {
+    numbers = numbers.map(Number);
+}
+
+// Log the extracted numbers, filtering out NaN values
+console.log(numbers.filter(num => !isNaN(num)));
