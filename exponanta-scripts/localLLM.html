@@ -5,15 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LLM in Browser</title>
     <script type="module">
-        import { Transformers } from 'https://cdn.jsdelivr.net/npm/@xenova/transformers@latest';
+        import * as transformers from 'https://cdn.jsdelivr.net/npm/@xenova/transformers@latest';
 
         async function loadModel() {
-            const model = await Transformers.load('gpt2'); // Load a small GPT-2 model
+            const model = await transformers.load('gpt2'); // Load a small GPT-2 model
 
             document.getElementById('generateButton').onclick = async () => {
                 const inputText = document.getElementById('inputText').value;
                 const output = await model.generate(inputText, { max_length: 50 });
-                document.getElementById('outputText').innerText = output;
+                document.getElementById('outputText').innerText = output[0]; // Adjust output access for array
             };
         }
 
