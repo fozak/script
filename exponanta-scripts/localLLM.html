@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LLM in Browser</title>
+    <script src="https://cdn.jsdelivr.net/npm/@xenova/transformers@latest"></script>
+</head>
+<body>
+    <h1>Text Generation with Transformers.js</h1>
+    <input type="text" id="inputText" placeholder="Enter your prompt" />
+    <button id="generateButton">Generate</button>
+    <p id="outputText"></p>
+
+    <script>
+        const model = await window.Transformers.load('gpt2'); // Load a small GPT-2 model
+
+        document.getElementById('generateButton').onclick = async () => {
+            const inputText = document.getElementById('inputText').value;
+            const output = await model.generate(inputText, { max_length: 50 });
+            document.getElementById('outputText').innerText = output;
+        };
+    </script>
+</body>
+</html>

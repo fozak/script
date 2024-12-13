@@ -74,28 +74,38 @@ class TextAnnotator {
       
       // Only show popup if text is selected
       if (selectedText) {
-        // Position the popup to the right of the selected text
+        // Get the range of the selection
         const range = selection.getRangeAt(0);
+        
+        // Get the bounding rectangle of the range, accounting for scroll
         const rect = range.getBoundingClientRect();
         
-        // Calculate popup position
+        // Calculate absolute positions accounting for scroll
+        const scrollLeft = window.pageXOffset;
+        const scrollTop = window.pageYOffset;
+        
         const popupWidth = 300; // Fixed width of the popup
         const popupHeight = 250; // Estimated height of the popup
         
-        // Position right of selection with some padding
-        let left = rect.right + 15;
-        let top = rect.top;
+        // Calculate absolute left and top positions
+        let left = scrollLeft + rect.right + 15;
+        let top = scrollTop + rect.top;
         
         // Adjust if popup would go off the right edge of the screen
-        if (left + popupWidth > window.innerWidth) {
-          left = rect.left - popupWidth - 15;
+        if (left + popupWidth > scrollLeft + window.innerWidth) {
+          left = scrollLeft + rect.left - popupWidth - 15;
         }
         
         // Adjust if popup would go below the screen
-        if (top + popupHeight > window.innerHeight) {
-          top = window.innerHeight - popupHeight - 20;
+        if (top + popupHeight > scrollTop + window.innerHeight) {
+          top = scrollTop + window.innerHeight - popupHeight - 20;
         }
         
+        // Ensure top is not negative
+        top = Math.max(scrollTop, top);
+        
+        // Apply styles
+        this.popupContainer.style.position = 'absolute';
         this.popupContainer.style.display = 'block';
         this.popupContainer.style.left = `${left}px`;
         this.popupContainer.style.top = `${top}px`;
@@ -109,6 +119,9 @@ class TextAnnotator {
         
         // Focus on the textarea
         this.noteTextarea.focus();
+        
+        // Ensure popup is on top of other elements
+        this.popupContainer.style.zIndex = '10000';
       }
     }
     
