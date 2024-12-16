@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List Files in Directory</title>
+</head>
+<body>
+    <h1>Select a Directory to List Files</h1>
+    <button id="selectDir">Select Directory</button>
+    <ul id="fileList"></ul>
+
+    <script>
+        document.getElementById('selectDir').addEventListener('click', async () => {
+            // Check if the File System Access API is supported
+            if ('showDirectoryPicker' in window) {
+                try {
+                    const directoryHandle = await window.showDirectoryPicker();
+                    const fileList = document.getElementById('fileList');
+                    fileList.innerHTML = ''; // Clear previous list
+                    
+                    // Iterate through the files in the directory
+                    for await (const entry of directoryHandle.values()) {
+                        const listItem = document.createElement('li');
+                        listItem.textContent = entry.name; // Display the file/directory name
+                        fileList.appendChild(listItem);
+                    }
+                } catch (error) {
+                    console.error('Error reading directory:', error);
+                }
+            } else {
+                alert('File System Access API is not supported in this browser.');
+            }
+        });
+    </script>
+</body>
+</html>
