@@ -1,0 +1,2035 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stock Price Table with Tags</title>
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+  <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script type="text/javascript" charset="utf8"
+    src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+</head>
+
+<body>
+
+  <div class="jupiter22-c-table-selected-filters">
+    <h3>Filtered by:</h3>
+    <span class="jupiter22-c-table-selected-filters__info-text" style="display: none;">No filter applied</span>
+    <div class="jupiter22-c-table-filters__filters">
+      <div class="jupiter22-c-table-filters__chip" data-filter="marketcap~mid">
+        <span class="jupiter22-c-table-filters__chip-name">Medium ($2B-$10B)</span>
+        <button class="jupiter22-c-table-filters__chip-close-button"></button>
+      </div>
+      <div class="jupiter22-c-table-filters__chip" data-filter="marketcap~small">
+        <span class="jupiter22-c-table-filters__chip-name">Small ($300M-$2B)</span>
+        <button class="jupiter22-c-table-filters__chip-close-button"></button>
+      </div>
+      <div class="jupiter22-c-table-filters__chip" data-filter="recommendation~strong_buy">
+        <span class="jupiter22-c-table-filters__chip-name">Strong Buy</span>
+        <button class="jupiter22-c-table-filters__chip-close-button"></button>
+      </div>
+      <div class="jupiter22-c-table-filters__chip" data-filter="recommendation~hold">
+        <span class="jupiter22-c-table-filters__chip-name">Hold</span>
+        <button class="jupiter22-c-table-filters__chip-close-button"></button>
+      </div>
+      <div class="jupiter22-c-table-filters__chip" data-filter="recommendation~buy">
+        <span class="jupiter22-c-table-filters__chip-name">Buy</span>
+        <button class="jupiter22-c-table-filters__chip-close-button"></button>
+      </div>
+      <div class="jupiter22-c-table-filters__chip" data-filter="sector~technology">
+        <span class="jupiter22-c-table-filters__chip-name">Technology</span>
+        <button class="jupiter22-c-table-filters__chip-close-button"></button>
+      </div>
+      <div class="jupiter22-c-table-filters__chip" data-filter="exchange~NASDAQ">
+        <span class="jupiter22-c-table-filters__chip-name">NASDAQ</span>
+        <button class="jupiter22-c-table-filters__chip-close-button"></button>
+      </div>
+    </div>
+  </div>
+  <table id="stockPrice">
+    <thead>
+      <tr>
+        <th>Symbol</th>
+        <th>Name</th>
+        <th>Last Sale</th>
+        <th>Net Change</th>
+        <th>% Change</th>
+        <th>Market Cap</th>
+        <th>Description</th>
+        <th>Tags</th> <!--SHOULD BE EQUAL-->
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>ENPH</td>
+        <td>Enphase Energy, Inc. Common Stock</td>
+        <td>$71.69</td>
+        <td>-2.15</td>
+        <td>-2.912%</td>
+        <td>9,685,793,803</td>
+        <td>Leading provider of solar microinverters and energy management technology.</td>
+      </tr>
+      <tr>
+        <td>GTLB</td>
+        <td>GitLab Inc. Class A Common Stock</td>
+        <td>$58.86</td>
+        <td>0.26</td>
+        <td>0.444%</td>
+        <td>9,552,978,000</td>
+        <td>A web-based DevOps lifecycle tool that provides a Git repository manager.</td>
+      </tr>
+      <tr>
+        <td>GLBE</td>
+        <td>Global-E Online Ltd. Ordinary Shares</td>
+        <td>$57.20</td>
+        <td>0.74</td>
+        <td>1.311%</td>
+        <td>9,482,267,881</td>
+        <td>E-commerce platform enabling global online merchants to sell internationally.</td>
+      </tr>
+      <tr>
+        <td>DBX</td>
+        <td>Dropbox, Inc. Class A Common Stock</td>
+        <td>$30.585</td>
+        <td>0.815</td>
+        <td>2.738%</td>
+        <td>9,473,097,402</td>
+        <td>Cloud storage service that allows users to store and share files online.</td>
+      </tr>
+      <tr>
+        <td>APPF</td>
+        <td>AppFolio, Inc. Class A Common Stock</td>
+        <td>$260.24</td>
+        <td>1.06</td>
+        <td>0.409%</td>
+        <td>9,455,382,156</td>
+        <td>Provides cloud-based property management software for real estate professionals.</td>
+      </tr>
+      <tr>
+        <td>ALTR</td>
+        <td>Altair Engineering Inc. Class A Common Stock</td>
+        <td>$106.52</td>
+        <td>-0.13</td>
+        <td>-0.122%</td>
+        <td>9,062,848,465</td>
+        <td>Software company specializing in simulation, machine learning, and optimization.</td>
+      </tr>
+      <tr>
+        <td>LSCC</td>
+        <td>Lattice Semiconductor Corporation Common Stock</td>
+        <td>$62.79</td>
+        <td>-0.66</td>
+        <td>-1.04%</td>
+        <td>8,663,211,146</td>
+        <td>Designs low-power programmable logic devices and semiconductor solutions.</td>
+      </tr>
+      <tr>
+        <td>VERX</td>
+        <td>Vertex, Inc. Class A Common Stock</td>
+        <td>$53.63</td>
+        <td>1.24</td>
+        <td>2.367%</td>
+        <td>8,364,132,655</td>
+        <td>Provides software and services for tax technology and compliance solutions.</td>
+      </tr>
+      <tr>
+        <td>PEGA</td>
+        <td>Pegasystems Inc. Common Stock</td>
+        <td>$96.43</td>
+        <td>1.84</td>
+        <td>1.945%</td>
+        <td>8,269,239,705</td>
+        <td>Develops software for customer engagement and operational excellence.</td>
+      </tr>
+      <tr>
+        <td>MTCH</td>
+        <td>Match Group, Inc. Common Stock</td>
+        <td>$32.59</td>
+        <td>1.14</td>
+        <td>3.625%</td>
+        <td>8,183,055,592</td>
+        <td>Operates various online dating services, including Tinder and Match.com.</td>
+      </tr>
+      <tr>
+        <td>LNW</td>
+        <td>Light &amp; Wonder, Inc. Common Stock</td>
+        <td>$91.705</td>
+        <td>0.115</td>
+        <td>0.126%</td>
+        <td>8,098,274,686</td>
+        <td>Gaming and entertainment company providing innovative gaming solutions.</td>
+      </tr>
+      <tr>
+        <td>MARA</td>
+        <td>MARA Holdings, Inc. Common Stock</td>
+        <td>$25.10</td>
+        <td>2.37</td>
+        <td>10.427%</td>
+        <td>8,077,970,324</td>
+        <td>Engages in cryptocurrency mining and blockchain technology.</td>
+      </tr>
+      <tr>
+        <td>BILI</td>
+        <td>Bilibili Inc. American Depositary Shares</td>
+        <td>$19.265</td>
+        <td>-0.545</td>
+        <td>-2.751%</td>
+        <td>7,940,201,253</td>
+        <td>A Chinese video sharing platform focused on animation, comics, and games.</td>
+      </tr>
+      <tr>
+        <td>OTEX</td>
+        <td>Open Text Corporation Common Shares</td>
+        <td>$29.47</td>
+        <td>-0.05</td>
+        <td>-0.169%</td>
+        <td>7,835,492,470</td>
+        <td>Provides enterprise information management software solutions.</td>
+      </tr>
+      <tr>
+        <td>OLED</td>
+        <td>Universal Display Corporation Common Stock</td>
+        <td>$161.09</td>
+        <td>-1.71</td>
+        <td>-1.05%</td>
+        <td>7,645,558,215</td>
+        <td>Developer of OLED technologies and materials for display and lighting.</td>
+      </tr>
+      <tr>
+        <td>CCCS</td>
+        <td>CCC Intelligent Solutions Holdings Inc. Common Stock</td>
+        <td>$12.14</td>
+        <td>0.01</td>
+        <td>0.082%</td>
+        <td>7,593,598,335</td>
+        <td>Provides technology solutions for the automotive and insurance industries.</td>
+      </tr>
+      <tr>
+        <td>CVLT</td>
+        <td>Commvault Systems, Inc. Common Stock</td>
+        <td>$169.67</td>
+        <td>0.98</td>
+        <td>0.581%</td>
+        <td>7,418,983,633</td>
+        <td>Offers data protection and information management solutions.</td>
+      </tr>
+      <tr>
+        <td>SPSC</td>
+        <td>SPS Commerce, Inc. Common Stock</td>
+        <td>$196.5101</td>
+        <td>4.1301</td>
+        <td>2.147%</td>
+        <td>7,382,503,424</td>
+        <td>Provides cloud-based supply chain management solutions.</td>
+      </tr>
+      <tr>
+        <td>OS</td>
+        <td>OneStream, Inc. Class A Common Stock</td>
+        <td>$29.63</td>
+        <td>0.56</td>
+        <td>1.926%</td>
+        <td>6,948,777,733</td>
+        <td>Offers a unified finance platform for corporate performance management.</td>
+      </tr>
+      <tr>
+        <td>HCP</td>
+        <td>HashiCorp, Inc. Class A Common Stock</td>
+        <td>$33.81</td>
+        <td>0.03</td>
+        <td>0.089%</td>
+        <td>6,912,365,546</td>
+        <td>Provides infrastructure automation software for cloud environments.</td>
+      </tr>
+      <tr>
+        <td>AMKR</td>
+        <td>Amkor Technology, Inc. Common Stock</td>
+        <td>$27.09</td>
+        <td>0.55</td>
+        <td>2.072%</td>
+        <td>6,681,235,415</td>
+        <td>A leading provider of semiconductor packaging and test services.</td>
+      </tr>
+      <tr>
+        <td>QRVO</td>
+        <td>Qorvo, Inc. Common Stock</td>
+        <td>$70.4746</td>
+        <td>0.8846</td>
+        <td>1.271%</td>
+        <td>6,661,731,231</td>
+        <td>Designs and manufactures radio frequency solutions for mobile devices.</td>
+      </tr>
+      <tr>
+        <td>SOUN</td>
+        <td>SoundHound AI, Inc Class A Common Stock</td>
+        <td>$17.965</td>
+        <td>1.055</td>
+        <td>6.239%</td>
+        <td>6,642,562,792</td>
+        <td>Provides voice recognition and conversational AI technology solutions.</td>
+      </tr>
+      <tr>
+        <td>TEM</td>
+        <td>Tempus AI, Inc. Class A Common Stock</td>
+        <td>$40.31</td>
+        <td>-0.69</td>
+        <td>-1.683%</td>
+        <td>6,346,635,482</td>
+        <td>Uses AI to analyze clinical and molecular data for personalized medicine.</td>
+      </tr>
+      <tr>
+        <td>RMBS</td>
+        <td>Rambus Inc. Common Stock</td>
+        <td>$59.14</td>
+        <td>1.73</td>
+        <td>3.013%</td>
+        <td>6,302,871,344</td>
+        <td>Develops memory and security technologies for various computing systems.</td>
+      </tr>
+      <tr>
+        <td>BZ</td>
+        <td>KANZHUN LIMITED American Depositary Shares</td>
+        <td>$13.865</td>
+        <td>-0.715</td>
+        <td>-4.904%</td>
+        <td>6,099,577,539</td>
+        <td>Provides recruitment services and job search platforms in China.</td>
+      </tr>
+      <tr>
+        <td>WAY</td>
+        <td>Waystar Holding Corp. Common Stock</td>
+        <td>$34.76</td>
+        <td>0.69</td>
+        <td>2.025%</td>
+        <td>5,981,713,844</td>
+        <td>Offers healthcare payment and revenue cycle management solutions.</td>
+      </tr>
+      <tr>
+        <td>TSEM</td>
+        <td>Tower Semiconductor Ltd. Ordinary Shares</td>
+        <td>$52.105</td>
+        <td>2.14</td>
+        <td>4.283%</td>
+        <td>5,734,155,250</td>
+        <td>Provides foundry services for analog integrated circuits.</td>
+      </tr>
+      <tr>
+        <td>ACIW</td>
+        <td>ACI Worldwide, Inc. Common Stock</td>
+        <td>$54.575</td>
+        <td>0.565</td>
+        <td>1.046%</td>
+        <td>5,724,297,637</td>
+        <td>Provides electronic payment systems and software solutions globally.</td>
+      </tr>
+      <tr>
+        <td>SITM</td>
+        <td>SiTime Corporation Common Stock</td>
+        <td>$242.60</td>
+        <td>-10.01</td>
+        <td>-3.963%</td>
+        <td>5,667,619,987</td>
+        <td>Designs and manufactures precision timing devices for various applications.</td>
+      </tr>
+      <tr>
+        <td>CRUS</td>
+        <td>Cirrus Logic, Inc. Common Stock</td>
+        <td>$105.43</td>
+        <td>-1.28</td>
+        <td>-1.20%</td>
+        <td>5,602,541,028</td>
+        <td>Develops high-precision analog and mixed-signal ICs for audio applications.</td>
+      </tr>
+      <tr>
+        <td>SAIC</td>
+        <td>Science Applications International Corporation Common Stock</td>
+        <td>$113.36</td>
+        <td>0.30</td>
+        <td>0.265%</td>
+        <td>5,541,208,654</td>
+        <td>Provides technology solutions and services in the defense and intelligence sectors.</td>
+      </tr>
+      <tr>
+        <td>NVMI</td>
+        <td>Nova Ltd. Ordinary Shares</td>
+        <td>$190.98</td>
+        <td>2.65</td>
+        <td>1.407%</td>
+        <td>5,541,062,590</td>
+        <td>Provides metrology solutions for the semiconductor manufacturing industry.</td>
+      </tr>
+      <tr>
+        <td>QLYS</td>
+        <td>Qualys, Inc. Common Stock</td>
+        <td>$147.50</td>
+        <td>-0.04</td>
+        <td>-0.027%</td>
+        <td>5,397,091,670</td>
+        <td>Offers cloud security and compliance solutions for enterprises.</td>
+      </tr>
+      <tr>
+        <td>VRNS</td>
+        <td>Varonis Systems, Inc. Common Stock</td>
+        <td>$47.90</td>
+        <td>0.80</td>
+        <td>1.699%</td>
+        <td>5,387,357,116</td>
+        <td>Provides data security and analytics solutions for enterprises.</td>
+      </tr>
+      <tr>
+        <td>INTA</td>
+        <td>Intapp, Inc. Common Stock</td>
+        <td>$68.82</td>
+        <td>0.19</td>
+        <td>0.277%</td>
+        <td>5,325,670,248</td>
+        <td>Offers software solutions for professional services firms.</td>
+      </tr>
+      <tr>
+        <td>TENB</td>
+        <td>Tenable Holdings, Inc. Common Stock</td>
+        <td>$42.62</td>
+        <td>1.02</td>
+        <td>2.452%</td>
+        <td>5,120,170,194</td>
+        <td>Provides cybersecurity solutions focused on vulnerability management.</td>
+      </tr>
+      <tr>
+        <td>SMTC</td>
+        <td>Semtech Corporation Common Stock</td>
+        <td>$67.645</td>
+        <td>2.495</td>
+        <td>3.83%</td>
+        <td>5,119,567,268</td>
+        <td>Designs and manufactures analog and mixed-signal semiconductors.</td>
+      </tr>
+      <tr>
+        <td>FRSH</td>
+        <td>Freshworks Inc. Class A Common Stock</td>
+        <td>$16.795</td>
+        <td>0.245</td>
+        <td>1.48%</td>
+        <td>5,086,441,260</td>
+        <td>Offers customer engagement software for businesses of all sizes.</td>
+      </tr>
+      <tr>
+        <td>AVT</td>
+        <td>Avnet, Inc. Common Stock</td>
+        <td>$54.145</td>
+        <td>-0.015</td>
+        <td>-0.028%</td>
+        <td>4,707,417,629</td>
+        <td>Global distributor of electronic components and solutions.</td>
+      </tr>
+      <tr>
+        <td>AEIS</td>
+        <td>Advanced Energy Industries, Inc. Common Stock</td>
+        <td>$123.12</td>
+        <td>5.90</td>
+        <td>5.033%</td>
+        <td>4,638,308,009</td>
+        <td>Provides precision power conversion and control solutions.</td>
+      </tr>
+      <tr>
+        <td>BRZE</td>
+        <td>Braze, Inc. Class A Common Stock</td>
+        <td>$44.335</td>
+        <td>2.705</td>
+        <td>6.498%</td>
+        <td>4,588,003,219</td>
+        <td>A customer engagement platform that helps brands deliver personalized messages.</td>
+      </tr>
+      <tr>
+        <td>PLXS</td>
+        <td>Plexus Corp. Common Stock</td>
+        <td>$167.035</td>
+        <td>0.925</td>
+        <td>0.557%</td>
+        <td>4,525,377,197</td>
+        <td>Provides electronic manufacturing services and supply chain solutions.</td>
+      </tr>
+      <tr>
+        <td>SANM</td>
+        <td>Sanmina Corporation Common Stock</td>
+        <td>$80.525</td>
+        <td>0.475</td>
+        <td>0.593%</td>
+        <td>4,342,518,057</td>
+        <td>Offers integrated manufacturing solutions for technology companies.</td>
+      </tr>
+      <tr>
+        <td>WRD</td>
+        <td>WeRide Inc. American Depositary Shares</td>
+        <td>$15.97</td>
+        <td>-0.23</td>
+        <td>-1.42%</td>
+        <td>4,333,898,835</td>
+        <td>Develops autonomous driving technology for vehicles.</td>
+      </tr>
+      <tr>
+        <td>PI</td>
+        <td>Impinj, Inc. Common Stock</td>
+        <td>$151.90</td>
+        <td>0.92</td>
+        <td>0.609%</td>
+        <td>4,297,032,416</td>
+        <td>Provides RAIN RFID solutions for tracking and data collection.</td>
+      </tr>
+      <tr>
+        <td>SLAB</td>
+        <td>Silicon Laboratories, Inc. Common Stock</td>
+        <td>$129.185</td>
+        <td>0.985</td>
+        <td>0.768%</td>
+        <td>4,191,799,660</td>
+        <td>Designs and develops semiconductor solutions for various applications.</td>
+      </tr>
+      <tr>
+        <td>NCNO</td>
+        <td>nCino, Inc. Common Stock</td>
+        <td>$36.155</td>
+        <td>0.695</td>
+        <td>1.96%</td>
+        <td>4,186,529,611</td>
+        <td>Provides cloud banking solutions for financial institutions.</td>
+      </tr>
+      <tr>
+        <td>CLBT</td>
+        <td>Cellebrite DI Ltd. Ordinary Shares</td>
+        <td>$20.21</td>
+        <td>0.33</td>
+        <td>1.66%</td>
+        <td>4,149,053,684</td>
+        <td>Provides digital intelligence solutions for law enforcement and enterprises.</td>
+      </tr>
+      <tr>
+        <td>ALGM</td>
+        <td>Allegro MicroSystems, Inc. Common Stock</td>
+        <td>$22.28</td>
+        <td>0.28</td>
+        <td>1.273%</td>
+        <td>4,099,160,267</td>
+        <td>Designs and manufactures sensing and power semiconductor solutions.</td>
+      </tr>
+      <tr>
+        <td>BL</td>
+        <td>BlackLine, Inc. Common Stock</td>
+        <td>$64.57</td>
+        <td>0.71</td>
+        <td>1.112%</td>
+        <td>4,034,690,091</td>
+        <td>Offers cloud-based solutions for finance and accounting automation.</td>
+      </tr>
+      <tr>
+        <td>ALKT</td>
+        <td>Alkami Technology, Inc. Common Stock</td>
+        <td>$39.95</td>
+        <td>0.34</td>
+        <td>0.858%</td>
+        <td>4,014,841,327</td>
+        <td>Provides digital banking solutions for financial institutions.</td>
+      </tr>
+      <tr>
+        <td>BLKB</td>
+        <td>Blackbaud, Inc. Common Stock</td>
+        <td>$78.37</td>
+        <td>-0.09</td>
+        <td>-0.115%</td>
+        <td>3,974,744,425</td>
+        <td>Offers software solutions for nonprofits, education, and healthcare sectors.</td>
+      </tr>
+      <tr>
+        <td>CARG</td>
+        <td>CarGurus, Inc. Class A Common Stock</td>
+        <td>$38.225</td>
+        <td>0.555</td>
+        <td>1.473%</td>
+        <td>3,964,239,600</td>
+        <td>Online automotive marketplace connecting buyers and sellers.</td>
+      </tr>
+      <tr>
+        <td>GDS</td>
+        <td>GDS Holdings Limited ADS</td>
+        <td>$20.11</td>
+        <td>-0.79</td>
+        <td>-3.78%</td>
+        <td>3,909,335,997</td>
+        <td>Provides data center services in China and globally.</td>
+      </tr>
+      <tr>
+        <td>AGYS</td>
+        <td>Agilysys, Inc. Common Stock (DE)</td>
+        <td>$139.30</td>
+        <td>6.37</td>
+        <td>4.792%</td>
+        <td>3,893,506,043</td>
+        <td>Provides hospitality software solutions for the hospitality industry.</td>
+      </tr>
+      <tr>
+        <td>IAC</td>
+        <td>IAC Inc. Common Stock</td>
+        <td>$45.03</td>
+        <td>0.56</td>
+        <td>1.259%</td>
+        <td>3,884,673,797</td>
+        <td>Holding company with interests in various media and internet businesses.</td>
+      </tr>
+      <tr>
+        <td>POWI</td>
+        <td>Power Integrations, Inc. Common Stock</td>
+        <td>$65.045</td>
+        <td>0.315</td>
+        <td>0.487%</td>
+        <td>3,698,759,273</td>
+        <td>Designs high-performance power conversion semiconductors.</td>
+      </tr>
+      <tr>
+        <td>ZI</td>
+        <td>ZoomInfo Technologies Inc Common Stock</td>
+        <td>$10.645</td>
+        <td>0.245</td>
+        <td>2.356%</td>
+        <td>3,655,160,397</td>
+        <td>Provides a cloud-based platform for sales and marketing intelligence.</td>
+      </tr>
+      <tr>
+        <td>PYCR</td>
+        <td>Paycor HCM, Inc. Common Stock</td>
+        <td>$20.26</td>
+        <td>0.28</td>
+        <td>1.401%</td>
+        <td>3,639,887,632</td>
+        <td>Provides HR and payroll software solutions for businesses.</td>
+      </tr>
+      <tr>
+        <td>CAMT</td>
+        <td>Camtek Ltd. Ordinary Shares</td>
+        <td>$78.01</td>
+        <td>3.14</td>
+        <td>4.194%</td>
+        <td>3,502,775,532</td>
+        <td>Provides inspection and metrology solutions for semiconductor manufacturing.</td>
+      </tr>
+      <tr>
+        <td>AVPT</td>
+        <td>AvePoint, Inc. Class A Common Stock</td>
+        <td>$18.655</td>
+        <td>0.29</td>
+        <td>1.579%</td>
+        <td>3,498,023,320</td>
+        <td>Offers data management solutions for Microsoft 365 and other platforms.</td>
+      </tr>
+      <tr>
+        <td>FROG</td>
+        <td>JFrog Ltd. Ordinary Shares</td>
+        <td>$31.15</td>
+        <td>0.99</td>
+        <td>3.282%</td>
+        <td>3,475,194,023</td>
+        <td>Provides a platform for managing software releases and artifacts.</td>
+      </tr>
+      <tr>
+        <td>FORM</td>
+        <td>FormFactor, Inc. Common Stock</td>
+        <td>$44.015</td>
+        <td>1.515</td>
+        <td>3.565%</td>
+        <td>3,408,989,700</td>
+        <td>Designs and manufactures test and measurement solutions for semiconductors.</td>
+      </tr>
+      <tr>
+        <td>RUM</td>
+        <td>Rumble Inc. Class A Common Stock</td>
+        <td>$8.63</td>
+        <td>0.33</td>
+        <td>3.976%</td>
+        <td>3,361,540,884</td>
+        <td>A video platform focused on user-generated content and free speech.</td>
+      </tr>
+      <tr>
+        <td>ALRM</td>
+        <td>Alarm.com Holdings, Inc. Common Stock</td>
+        <td>$67.795</td>
+        <td>0.685</td>
+        <td>1.021%</td>
+        <td>3,351,045,360</td>
+        <td>Provides security and automation solutions for homes and businesses.</td>
+      </tr>
+      <tr>
+        <td>IPGP</td>
+        <td>IPG Photonics Corporation Common Stock</td>
+        <td>$77.23</td>
+        <td>-0.40</td>
+        <td>-0.515%</td>
+        <td>3,340,049,218</td>
+        <td>Develops fiber laser technology for industrial applications.</td>
+      </tr>
+      <tr>
+        <td>FIVN</td>
+        <td>Five9, Inc. Common Stock</td>
+        <td>$42.73</td>
+        <td>0.52</td>
+        <td>1.232%</td>
+        <td>3,213,655,317</td>
+        <td>Cloud-based contact center software provider.</td>
+      </tr>
+      <tr>
+        <td>WULF</td>
+        <td>TeraWulf Inc. Common Stock</td>
+        <td>$8.27</td>
+        <td>1.23</td>
+        <td>17.472%</td>
+        <td>3,191,456,522</td>
+        <td>Engages in cryptocurrency mining and renewable energy projects.</td>
+      </tr>
+      <tr>
+        <td>AMBA</td>
+        <td>Ambarella, Inc. Ordinary Shares</td>
+        <td>$76.11</td>
+        <td>3.58</td>
+        <td>4.936%</td>
+        <td>3,173,935,643</td>
+        <td>Develops semiconductor solutions for video compression and image processing.</td>
+      </tr>
+      <tr>
+        <td>SYNA</td>
+        <td>Synaptics Incorporated Common Stock $0.001 Par Value</td>
+        <td>$78.71</td>
+        <td>-0.75</td>
+        <td>-0.944%</td>
+        <td>3,152,999,419</td>
+        <td>Designs and develops human interface solutions for electronic devices.</td>
+      </tr>
+      <tr>
+        <td>OSIS</td>
+        <td>OSI Systems, Inc. Common Stock (DE)</td>
+        <td>$185.06</td>
+        <td>3.27</td>
+        <td>1.799%</td>
+        <td>3,092,491,210</td>
+        <td>Provides electronic systems for security and inspection applications.</td>
+      </tr>
+      <tr>
+        <td>DIOD</td>
+        <td>Diodes Incorporated Common Stock</td>
+        <td>$65.855</td>
+        <td>1.215</td>
+        <td>1.88%</td>
+        <td>3,051,251,944</td>
+        <td>Designs and manufactures semiconductor products and solutions.</td>
+      </tr>
+      <tr>
+        <td>PRGS</td>
+        <td>Progress Software Corporation Common Stock (DE)</td>
+        <td>$69.01</td>
+        <td>0.11</td>
+        <td>0.16%</td>
+        <td>2,960,875,775</td>
+        <td>Provides software solutions for application development and digital transformation.</td>
+      </tr>
+      <tr>
+        <td>PLTK</td>
+        <td>Playtika Holding Corp. Common Stock</td>
+        <td>$7.475</td>
+        <td>-0.155</td>
+        <td>-2.031%</td>
+        <td>2,786,030,864</td>
+        <td>Develops online games and mobile gaming experiences.</td>
+      </tr>
+      <tr>
+        <td>CNXC</td>
+        <td>Concentrix Corporation Common Stock</td>
+        <td>$42.31</td>
+        <td>-1.82</td>
+        <td>-4.124%</td>
+        <td>2,742,481,270</td>
+        <td>Provides customer experience solutions and technology.</td>
+      </tr>
+      <tr>
+        <td>APPN</td>
+        <td>Appian Corporation Class A Common Stock</td>
+        <td>$37.10</td>
+        <td>0.28</td>
+        <td>0.76%</td>
+        <td>2,741,218,311</td>
+        <td>Provides a low-code automation platform for business applications.</td>
+      </tr>
+      <tr>
+        <td>STNE</td>
+        <td>StoneCo Ltd. Class A Common Shares</td>
+        <td>$8.845</td>
+        <td>-0.175</td>
+        <td>-1.94%</td>
+        <td>2,732,539,796</td>
+        <td>Provides financial technology and payment processing solutions in Brazil.</td>
+      </tr>
+      <tr>
+        <td>IREN</td>
+        <td>IREN Limited Ordinary Shares</td>
+        <td>$14.3885</td>
+        <td>1.2785</td>
+        <td>9.752%</td>
+        <td>2,724,406,058</td>
+        <td>Focuses on renewable energy solutions and services.</td>
+      </tr>
+      <tr>
+        <td>TTMI</td>
+        <td>TTM Technologies, Inc. Common Stock</td>
+        <td>$26.58</td>
+        <td>0.84</td>
+        <td>3.263%</td>
+        <td>2,710,348,247</td>
+        <td>Provides PCB manufacturing and engineering services.</td>
+      </tr>
+      <tr>
+        <td>KLIC</td>
+        <td>Kulicke and Soffa Industries, Inc. Common Stock</td>
+        <td>$49.47</td>
+        <td>-0.01</td>
+        <td>-0.02%</td>
+        <td>2,665,011,034</td>
+        <td>Manufactures equipment for the semiconductor assembly and packaging industry.</td>
+      </tr>
+      <tr>
+        <td>VICR</td>
+        <td>Vicor Corporation Common Stock</td>
+        <td>$56.78</td>
+        <td>2.23</td>
+        <td>4.088%</td>
+        <td>2,562,685,297</td>
+        <td>Provides power management solutions for electrical systems.</td>
+      </tr>
+      <tr>
+        <td>RPD</td>
+        <td>Rapid7, Inc. Common Stock</td>
+        <td>$39.62</td>
+        <td>-0.07</td>
+        <td>-0.176%</td>
+        <td>2,504,245,571</td>
+        <td>Cybersecurity company offering solutions for vulnerability management.</td>
+      </tr>
+      <tr>
+        <td>ACLS</td>
+        <td>Axcelis Technologies, Inc. Common Stock</td>
+        <td>$76.665</td>
+        <td>1.375</td>
+        <td>1.826%</td>
+        <td>2,492,081,000</td>
+        <td>Provides equipment and services for semiconductor manufacturing.</td>
+      </tr>
+      <tr>
+        <td>VIAV</td>
+        <td>Viavi Solutions Inc. Common Stock</td>
+        <td>$11.185</td>
+        <td>0.135</td>
+        <td>1.222%</td>
+        <td>2,480,980,966</td>
+        <td>Produces network test, monitoring, and assurance solutions.</td>
+      </tr>
+      <tr>
+        <td>WB</td>
+        <td>Weibo Corporation American Depositary Share</td>
+        <td>$10.115</td>
+        <td>-0.245</td>
+        <td>-2.365%</td>
+        <td>2,454,009,678</td>
+        <td>Chinese social media platform similar to Twitter.</td>
+      </tr>
+      <tr>
+        <td>YY</td>
+        <td>JOYY Inc. American Depositary Shares</td>
+        <td>$39.75</td>
+        <td>-0.06</td>
+        <td>-0.151%</td>
+        <td>2,419,489,485</td>
+        <td>Provides livestreaming and social media services in China.</td>
+      </tr>
+      <tr>
+        <td>MGNI</td>
+        <td>Magnite, Inc. Common Stock</td>
+        <td>$16.61</td>
+        <td>0.14</td>
+        <td>0.85%</td>
+        <td>2,336,868,225</td>
+        <td>Digital advertising technology platform focused on programmatic advertising.</td>
+      </tr>
+      <tr>
+        <td>MRCY</td>
+        <td>Mercury Systems Inc Common Stock</td>
+        <td>$39.065</td>
+        <td>1.195</td>
+        <td>3.156%</td>
+        <td>2,329,544,081</td>
+        <td>Provides secure sensor and electronic processing solutions for defense.</td>
+      </tr>
+      <tr>
+        <td>AVDX</td>
+        <td>AvidXchange Holdings, Inc. Common Stock</td>
+        <td>$11.28</td>
+        <td>0.13</td>
+        <td>1.166%</td>
+        <td>2,320,588,930</td>
+        <td>Provides accounts payable and payment automation solutions for businesses.</td>
+      </tr>
+      <tr>
+        <td>KC</td>
+        <td>Kingsoft Cloud Holdings Limited American Depositary Shares</td>
+        <td>$8.88</td>
+        <td>-0.28</td>
+        <td>-3.057%</td>
+        <td>2,252,728,599</td>
+        <td>Offers cloud services and solutions in China.</td>
+      </tr>
+      <tr>
+        <td>UPWK</td>
+        <td>Upwork Inc. Common Stock</td>
+        <td>$16.805</td>
+        <td>-0.085</td>
+        <td>-0.503%</td>
+        <td>2,246,276,002</td>
+        <td>Online platform connecting freelancers with businesses for project work.</td>
+      </tr>
+      <tr>
+        <td>EVCM</td>
+        <td>EverCommerce Inc. Common Stock</td>
+        <td>$12.04</td>
+        <td>-0.16</td>
+        <td>-1.311%</td>
+        <td>2,209,147,216</td>
+        <td>Provides software solutions for service-based businesses.</td>
+      </tr>
+      <tr>
+        <td>WGS</td>
+        <td>GeneDx Holdings Corp. Class A Common Stock</td>
+        <td>$78.19</td>
+        <td>2.76</td>
+        <td>3.659%</td>
+        <td>2,147,988,531</td>
+        <td>Offers genetic testing and genomic services for patient care.</td>
+      </tr>
+      <tr>
+        <td>PLUS</td>
+        <td>ePlus inc. Common Stock</td>
+        <td>$79.33</td>
+        <td>2.19</td>
+        <td>2.839%</td>
+        <td>2,126,279,769</td>
+        <td>Provides technology solutions and services for businesses.</td>
+      </tr>
+      <tr>
+        <td>OMCL</td>
+        <td>Omnicell, Inc. Common Stock ($0.001 par value)</td>
+        <td>$45.67</td>
+        <td>-0.34</td>
+        <td>-0.739%</td>
+        <td>2,115,289,398</td>
+        <td>Develops automation solutions for pharmacy and medication management.</td>
+      </tr>
+      <tr>
+        <td>SPT</td>
+        <td>Sprout Social, Inc Class A Common Stock</td>
+        <td>$35.55</td>
+        <td>1.62</td>
+        <td>4.775%</td>
+        <td>2,040,538,432</td>
+        <td>Provides social media management and analytics software.</td>
+      </tr>
+      <tr>
+        <td>AZTA</td>
+        <td>Azenta, Inc.</td>
+        <td>$44.67</td>
+        <td>-0.26</td>
+        <td>-0.579%</td>
+        <td>2,036,201,767</td>
+        <td>Provides sample management and storage solutions for scientific research.</td>
+      </tr>
+      <tr>
+        <td>SIMO</td>
+        <td>Silicon Motion Technology Corporation American Depositary Shares</td>
+        <td>$60.22</td>
+        <td>0.90</td>
+        <td>1.517%</td>
+        <td>2,028,307,156</td>
+        <td>Designs and develops NAND flash controllers and storage solutions.</td>
+      </tr>
+      <tr>
+        <td>MQ</td>
+        <td>Marqeta, Inc. Class A Common Stock</td>
+        <td>$3.965</td>
+        <td>-0.055</td>
+        <td>-1.368%</td>
+        <td>1,991,993,848</td>
+        <td>Provides a card issuing and payment processing platform for businesses.</td>
+      </tr>
+      <tr>
+        <td>JAMF</td>
+        <td>Jamf Holding Corp. Common Stock</td>
+        <td>$15.04</td>
+        <td>0.23</td>
+        <td>1.553%</td>
+        <td>1,931,812,589</td>
+        <td>Provides Apple device management solutions for businesses and education.</td>
+      </tr>
+      <tr>
+        <td>TRIP</td>
+        <td>TripAdvisor, Inc. Common Stock</td>
+        <td>$13.76</td>
+        <td>-0.01</td>
+        <td>-0.073%</td>
+        <td>1,917,261,516</td>
+        <td>Online travel platform offering reviews, bookings, and travel-related services.</td>
+      </tr>
+      <tr>
+        <td>EVGO</td>
+        <td>EVgo Inc. Class A Common Stock</td>
+        <td>$6.32</td>
+        <td>0.23</td>
+        <td>3.777%</td>
+        <td>1,915,921,853</td>
+        <td>Operates a public network of fast charging stations for electric vehicles.</td>
+      </tr>
+      <tr>
+        <td>MBLY</td>
+        <td>Mobileye Global Inc. Class A Common Stock</td>
+        <td>$18.80</td>
+        <td>1.29</td>
+        <td>7.367%</td>
+        <td>1,871,504,788</td>
+        <td>Develops advanced driver-assistance systems and autonomous vehicle technology.</td>
+      </tr>
+      <tr>
+        <td>CERT</td>
+        <td>Certara, Inc. Common Stock</td>
+        <td>$11.57</td>
+        <td>0.10</td>
+        <td>0.872%</td>
+        <td>1,862,478,586</td>
+        <td>Provides software and services for drug development and regulatory submissions.</td>
+      </tr>
+      <tr>
+        <td>VRNT</td>
+        <td>Verint Systems Inc. Common Stock</td>
+        <td>$29.06</td>
+        <td>0.05</td>
+        <td>0.172%</td>
+        <td>1,809,992,975</td>
+        <td>Provides customer engagement solutions and actionable intelligence software.</td>
+      </tr>
+      <tr>
+        <td>MXL</td>
+        <td>MaxLinear, Inc. Common Stock</td>
+        <td>$20.90</td>
+        <td>0.22</td>
+        <td>1.064%</td>
+        <td>1,763,161,160</td>
+        <td>Designs and develops radio frequency and mixed-signal semiconductor solutions.</td>
+      </tr>
+      <tr>
+        <td>OPRA</td>
+        <td>Opera Limited American Depositary Shares</td>
+        <td>$20.00</td>
+        <td>0.61</td>
+        <td>3.146%</td>
+        <td>1,750,365,680</td>
+        <td>Provides web browsers and online services for users globally.</td>
+      </tr>
+      <tr>
+        <td>GDRX</td>
+        <td>GoodRx Holdings, Inc. Class A Common Stock</td>
+        <td>$4.59</td>
+        <td>-0.12</td>
+        <td>-2.548%</td>
+        <td>1,749,442,680</td>
+        <td>Offers a platform for comparing prescription drug prices and discounts.</td>
+      </tr>
+      <tr>
+        <td>IAS</td>
+        <td>Integral Ad Science Holding Corp. Common Stock</td>
+        <td>$10.44</td>
+        <td>-0.14</td>
+        <td>-1.323%</td>
+        <td>1,698,279,467</td>
+        <td>Provides digital advertising verification and analytics services.</td>
+      </tr>
+      <tr>
+        <td>UCTT</td>
+        <td>Ultra Clean Holdings, Inc. Common Stock</td>
+        <td>$37.57</td>
+        <td>0.26</td>
+        <td>0.697%</td>
+        <td>1,692,906,717</td>
+        <td>Supplies critical subsystems for the semiconductor and other industries.</td>
+      </tr>
+      <tr>
+        <td>PLAB</td>
+        <td>Photronics, Inc. Common Stock</td>
+        <td>$26.50</td>
+        <td>0.01</td>
+        <td>0.038%</td>
+        <td>1,678,874,693</td>
+        <td>Develops and manufactures photomasks for the semiconductor industry.</td>
+      </tr>
+      <tr>
+        <td>NTCT</td>
+        <td>NetScout Systems, Inc. Common Stock</td>
+        <td>$22.69</td>
+        <td>0.31</td>
+        <td>1.385%</td>
+        <td>1,627,265,378</td>
+        <td>Provides network performance management and cybersecurity solutions.</td>
+      </tr>
+      <tr>
+        <td>SPNS</td>
+        <td>Sapiens International Corporation N.V. Common Shares (Cayman Islands)</td>
+        <td>$29.12</td>
+        <td>0.64</td>
+        <td>2.247%</td>
+        <td>1,622,951,774</td>
+        <td>Provides software solutions for the insurance and financial services industries.</td>
+      </tr>
+      <tr>
+        <td>RGTI</td>
+        <td>Rigetti Computing, Inc. Common Stock</td>
+        <td>$8.43</td>
+        <td>1.27</td>
+        <td>17.737%</td>
+        <td>1,621,053,670</td>
+        <td>Develops quantum computing systems and provides quantum cloud services.</td>
+      </tr>
+      <tr>
+        <td>MTTR</td>
+        <td>Matterport, Inc. Class A Common Stock</td>
+        <td>$4.96</td>
+        <td>0.01</td>
+        <td>0.202%</td>
+        <td>1,601,560,832</td>
+        <td>Provides 3D imaging technology for real estate and virtual tours.</td>
+      </tr>
+      <tr>
+        <td>ADEA</td>
+        <td>Adeia Inc. Common Stock</td>
+        <td>$14.61</td>
+        <td>0.23</td>
+        <td>1.599%</td>
+        <td>1,596,360,730</td>
+        <td>Provides software solutions for digital media and content delivery.</td>
+      </tr>
+      <tr>
+        <td>VECO</td>
+        <td>Veeco Instruments Inc. Common Stock</td>
+        <td>$27.95</td>
+        <td>0.27</td>
+        <td>0.975%</td>
+        <td>1,586,951,864</td>
+        <td>Provides equipment used in the manufacturing of LEDs, semiconductors, and data storage.</td>
+      </tr>
+      <tr>
+        <td>AAOI</td>
+        <td>Applied Optoelectronics, Inc. Common Stock</td>
+        <td>$35.09</td>
+        <td>-1.34</td>
+        <td>-3.678%</td>
+        <td>1,581,794,143</td>
+        <td>Designs and manufactures optical devices for broadband communications.</td>
+      </tr>
+      <tr>
+        <td>TASK</td>
+        <td>TaskUs, Inc. Class A Common Stock</td>
+        <td>$17.63</td>
+        <td>-0.83</td>
+        <td>-4.496%</td>
+        <td>1,574,492,283</td>
+        <td>Provides outsourced customer support and digital services for businesses.</td>
+      </tr>
+      <tr>
+        <td>CSGS</td>
+        <td>CSG Systems International, Inc. Common Stock</td>
+        <td>$54.04</td>
+        <td>0.28</td>
+        <td>0.521%</td>
+        <td>1,572,167,400</td>
+        <td>Provides billing and customer care solutions for service providers.</td>
+      </tr>
+      <tr>
+        <td>HLIT</td>
+        <td>Harmonic Inc. Common Stock</td>
+        <td>$13.36</td>
+        <td>0.18</td>
+        <td>1.366%</td>
+        <td>1,556,816,912</td>
+        <td>Provides video delivery and broadband solutions for telecommunications.</td>
+      </tr>
+      <tr>
+        <td>AMPL</td>
+        <td>Amplitude, Inc. Class A Common Stock</td>
+        <td>$11.89</td>
+        <td>0.13</td>
+        <td>1.105%</td>
+        <td>1,518,157,707</td>
+        <td>Provides product analytics and user behavior tracking tools for businesses.</td>
+      </tr>
+      <tr>
+        <td>SABR</td>
+        <td>Sabre Corporation Common Stock</td>
+        <td>$3.92</td>
+        <td>0.02</td>
+        <td>0.513%</td>
+        <td>1,512,547,629</td>
+        <td>Provides technology solutions for travel and hospitality industries.</td>
+      </tr>
+      <tr>
+        <td>GDYN</td>
+        <td>Grid Dynamics Holdings, Inc. Class A Common Stock</td>
+        <td>$19.56</td>
+        <td>0.44</td>
+        <td>2.301%</td>
+        <td>1,502,423,023</td>
+        <td>Provides digital transformation services and solutions for enterprises.</td>
+      </tr>
+      <tr>
+        <td>DCBO</td>
+        <td>Docebo Inc. Common Shares</td>
+        <td>$49.52</td>
+        <td>-0.73</td>
+        <td>-1.453%</td>
+        <td>1,497,035,505</td>
+        <td>Provides a cloud-based learning management system for businesses.</td>
+      </tr>
+      <tr>
+        <td>KARO</td>
+        <td>Karooooo Ltd. Ordinary Shares</td>
+        <td>$46.47</td>
+        <td>-0.82</td>
+        <td>-1.734%</td>
+        <td>1,435,923,000</td>
+        <td>Provides a subscription-based vehicle tracking and fleet management service.</td>
+      </tr>
+      <tr>
+        <td>HIMX</td>
+        <td>Himax Technologies, Inc. American Depositary Shares</td>
+        <td>$8.15</td>
+        <td>-0.435</td>
+        <td>-5.067%</td>
+        <td>1,424,001,016</td>
+        <td>Designs and manufactures display drivers and other semiconductor products.</td>
+      </tr>
+      <tr>
+        <td>LZ</td>
+        <td>LegalZoom.com, Inc. Common Stock</td>
+        <td>$8.12</td>
+        <td>0.05</td>
+        <td>0.62%</td>
+        <td>1,403,316,345</td>
+        <td>Provides online legal services and solutions for individuals and businesses.</td>
+      </tr>
+      <tr>
+        <td>MOMO</td>
+        <td>Hello Group Inc. American Depositary Shares</td>
+        <td>$7.44</td>
+        <td>-0.40</td>
+        <td>-5.102%</td>
+        <td>1,395,316,914</td>
+        <td>Operates social networking platforms in China, focusing on user-generated content.</td>
+      </tr>
+      <tr>
+        <td>TBLA</td>
+        <td>Taboola.com Ltd. Ordinary Shares</td>
+        <td>$4.05</td>
+        <td>0.04</td>
+        <td>0.998%</td>
+        <td>1,361,643,238</td>
+        <td>Operates a content recommendation platform for online publishers.</td>
+      </tr>
+      <tr>
+        <td>CRCT</td>
+        <td>Cricut, Inc. Class A Common Stock</td>
+        <td>$6.34</td>
+        <td>0.37</td>
+        <td>6.198%</td>
+        <td>1,359,596,364</td>
+        <td>Provides crafting tools and materials for DIY enthusiasts.</td>
+      </tr>
+      <tr>
+        <td>DSP</td>
+        <td>Viant Technology Inc. Class A Common Stock</td>
+        <td>$20.91</td>
+        <td>0.33</td>
+        <td>1.603%</td>
+        <td>1,314,231,619</td>
+        <td>Provides a technology platform for advertising and marketing solutions.</td>
+      </tr>
+      <tr>
+        <td>SCSC</td>
+        <td>ScanSource, Inc. Common Stock</td>
+        <td>$52.96</td>
+        <td>0.43</td>
+        <td>0.819%</td>
+        <td>1,271,310,467</td>
+        <td>Distributes technology products and services to resellers and retailers.</td>
+      </tr>
+      <tr>
+        <td>COMM</td>
+        <td>CommScope Holding Company, Inc. Common Stock</td>
+        <td>$5.80</td>
+        <td>0.06</td>
+        <td>1.045%</td>
+        <td>1,252,096,936</td>
+        <td>Provides infrastructure solutions for communications networks.</td>
+      </tr>
+      <tr>
+        <td>AOSL</td>
+        <td>Alpha and Omega Semiconductor Limited Common Shares</td>
+        <td>$43.02</td>
+        <td>-2.18</td>
+        <td>-4.823%</td>
+        <td>1,248,906,651</td>
+        <td>Designs and manufactures semiconductor devices for various applications.</td>
+      </tr>
+      <tr>
+        <td>VSAT</td>
+        <td>ViaSat, Inc. Common Stock</td>
+        <td>$9.43</td>
+        <td>0.095</td>
+        <td>1.018%</td>
+        <td>1,210,759,032</td>
+        <td>Provides satellite and wireless communication solutions.</td>
+      </tr>
+      <tr>
+        <td>PDFS</td>
+        <td>PDF Solutions, Inc. Common Stock</td>
+        <td>$30.74</td>
+        <td>0.56</td>
+        <td>1.856%</td>
+        <td>1,191,877,839</td>
+        <td>Provides software solutions for the semiconductor manufacturing process.</td>
+      </tr>
+      <tr>
+        <td>VMEO</td>
+        <td>Vimeo, Inc. Common Stock</td>
+        <td>$6.98</td>
+        <td>0.14</td>
+        <td>2.047%</td>
+        <td>1,157,639,380</td>
+        <td>Provides a video hosting and sharing platform for creators and businesses.</td>
+      </tr>
+      <tr>
+        <td>QUBT</td>
+        <td>Quantum Computing Inc. Common Stock</td>
+        <td>$11.08</td>
+        <td>4.375</td>
+        <td>65.25%</td>
+        <td>1,097,878,154</td>
+        <td>Develops quantum computing technologies and solutions.</td>
+      </tr>
+      <tr>
+        <td>ICHR</td>
+        <td>Ichor Holdings Ordinary Shares</td>
+        <td>$32.54</td>
+        <td>0.19</td>
+        <td>0.587%</td>
+        <td>1,096,202,541</td>
+        <td>Provides semiconductor manufacturing solutions and services.</td>
+      </tr>
+      <tr>
+        <td>INOD</td>
+        <td>Innodata Inc. Common Stock</td>
+        <td>$37.76</td>
+        <td>3.26</td>
+        <td>9.449%</td>
+        <td>1,095,052,234</td>
+        <td>Provides digital data solutions and services.</td>
+      </tr>
+      <tr>
+        <td>PENG</td>
+        <td>Penguin Solutions, Inc. Ordinary Shares</td>
+        <td>$19.61</td>
+        <td>-0.26</td>
+        <td>-1.309%</td>
+        <td>1,045,014,292</td>
+        <td>Offers technology and services for enterprise data management.</td>
+      </tr>
+      <tr>
+        <td>NYAX</td>
+        <td>Nayax Ltd. Ordinary Shares</td>
+        <td>$28.05</td>
+        <td>0.79</td>
+        <td>2.898%</td>
+        <td>1,017,093,000</td>
+        <td>Provides cashless payment solutions for unattended retail.</td>
+      </tr>
+      <tr>
+        <td>VNET</td>
+        <td>VNET Group, Inc. American Depositary Shares</td>
+        <td>$3.86</td>
+        <td>-0.13</td>
+        <td>-3.258%</td>
+        <td>993,519,614</td>
+        <td>Provides data center services and solutions in China.</td>
+      </tr>
+      <tr>
+        <td>NRDS</td>
+        <td>NerdWallet, Inc. Class A Common Stock</td>
+        <td>$13.47</td>
+        <td>0.13</td>
+        <td>0.975%</td>
+        <td>989,221,538</td>
+        <td>Provides financial advice and comparison tools for consumers.</td>
+      </tr>
+      <tr>
+        <td>HSTM</td>
+        <td>HealthStream, Inc. Common Stock</td>
+        <td>$32.41</td>
+        <td>0.07</td>
+        <td>0.216%</td>
+        <td>985,746,358</td>
+        <td>Provides healthcare workforce and patient engagement solutions.</td>
+      </tr>
+      <tr>
+        <td>ACMR</td>
+        <td>ACM Research, Inc. Class A Common Stock</td>
+        <td>$15.24</td>
+        <td>-0.35</td>
+        <td>-2.245%</td>
+        <td>954,448,388</td>
+        <td>Provides semiconductor manufacturing equipment and solutions.</td>
+      </tr>
+      <tr>
+        <td>ERII</td>
+        <td>Energy Recovery, Inc. Common Stock</td>
+        <td>$16.19</td>
+        <td>0.08</td>
+        <td>0.497%</td>
+        <td>937,302,225</td>
+        <td>Designs and manufactures solutions for energy recovery in industrial processes.</td>
+      </tr>
+      <tr>
+        <td>BMBL</td>
+        <td>Bumble Inc. Class A Common Stock</td>
+        <td>$8.43</td>
+        <td>0.11</td>
+        <td>1.322%</td>
+        <td>911,977,506</td>
+        <td>Operates a dating app focused on empowering women in the dating space.</td>
+      </tr>
+      <tr>
+        <td>INDI</td>
+        <td>indie Semiconductor, Inc. Class A Common Stock</td>
+        <td>$4.36</td>
+        <td>-0.07</td>
+        <td>-1.58%</td>
+        <td>880,355,587</td>
+        <td>Provides automotive semiconductors and software for advanced driver assistance systems.</td>
+      </tr>
+      <tr>
+        <td>BASE</td>
+        <td>Couchbase, Inc. Common Stock</td>
+        <td>$15.54</td>
+        <td>0.20</td>
+        <td>1.304%</td>
+        <td>813,487,205</td>
+        <td>Provides a cloud database platform for enterprise applications.</td>
+      </tr>
+      <tr>
+        <td>PUBM</td>
+        <td>PubMatic, Inc. Class A Common Stock</td>
+        <td>$16.51</td>
+        <td>0.21</td>
+        <td>1.288%</td>
+        <td>788,628,943</td>
+        <td>Operates a digital advertising platform for publishers.</td>
+      </tr>
+      <tr>
+        <td>RCAT</td>
+        <td>Red Cat Holdings, Inc. Common Stock</td>
+        <td>$10.45</td>
+        <td>2.22</td>
+        <td>26.974%</td>
+        <td>788,024,447</td>
+        <td>Develops and provides drone technology and services.</td>
+      </tr>
+      <tr>
+        <td>CAN</td>
+        <td>Canaan Inc. American Depositary Shares</td>
+        <td>$3.09</td>
+        <td>0.23</td>
+        <td>8.042%</td>
+        <td>785,700,205</td>
+        <td>Develops blockchain computing solutions and cryptocurrency mining equipment.</td>
+      </tr>
+      <tr>
+        <td>CEVA</td>
+        <td>CEVA, Inc. Common Stock</td>
+        <td>$33.25</td>
+        <td>0.62</td>
+        <td>1.90%</td>
+        <td>785,589,338</td>
+        <td>Provides signal processing IP for a range of applications.</td>
+      </tr>
+      <tr>
+        <td>CSIQ</td>
+        <td>Canadian Solar Inc. Common Shares (ON)</td>
+        <td>$11.66</td>
+        <td>-1.03</td>
+        <td>-8.117%</td>
+        <td>771,410,920</td>
+        <td>Designs and manufactures solar photovoltaic modules and systems.</td>
+      </tr>
+      <tr>
+        <td>DMRC</td>
+        <td>Digimarc Corporation Common Stock</td>
+        <td>$35.50</td>
+        <td>0.89</td>
+        <td>2.572%</td>
+        <td>761,539,042</td>
+        <td>Provides digital watermarking solutions for product identification.</td>
+      </tr>
+      <tr>
+        <td>SCWX</td>
+        <td>SecureWorks Corp. Class A Common Stock</td>
+        <td>$8.46</td>
+        <td>-0.02</td>
+        <td>-0.236%</td>
+        <td>752,009,958</td>
+        <td>Provides cybersecurity services and threat intelligence solutions.</td>
+      </tr>
+      <tr>
+        <td>CRSR</td>
+        <td>Corsair Gaming, Inc. Common Stock</td>
+        <td>$7.125</td>
+        <td>-0.135</td>
+        <td>-1.86%</td>
+        <td>745,990,122</td>
+        <td>Designs and sells high-performance gaming peripherals and hardware.</td>
+      </tr>
+      <tr>
+        <td>OSPN</td>
+        <td>OneSpan Inc. Common Stock</td>
+        <td>$19.38</td>
+        <td>1.32</td>
+        <td>7.309%</td>
+        <td>736,266,665</td>
+        <td>Provides secure digital identity and transaction solutions.</td>
+      </tr>
+      <tr>
+        <td>RBBN</td>
+        <td>Ribbon Communications Inc. Common Stock</td>
+        <td>$4.15</td>
+        <td>0.06</td>
+        <td>1.467%</td>
+        <td>727,842,301</td>
+        <td>Provides software and hardware solutions for real-time communications.</td>
+      </tr>
+      <tr>
+        <td>SEDG</td>
+        <td>SolarEdge Technologies, Inc. Common Stock</td>
+        <td>$12.32</td>
+        <td>-1.03</td>
+        <td>-7.715%</td>
+        <td>713,945,651</td>
+        <td>Develops and sells solar inverters and optimization solutions.</td>
+      </tr>
+      <tr>
+        <td>SSYS</td>
+        <td>Stratasys, Ltd. Ordinary Shares (Israel)</td>
+        <td>$10.24</td>
+        <td>0.16</td>
+        <td>1.587%</td>
+        <td>713,278,198</td>
+        <td>Provides 3D printing solutions for industrial applications.</td>
+      </tr>
+      <tr>
+        <td>NEXN</td>
+        <td>Nexxen International Ltd. American Depository Shares</td>
+        <td>$10.33</td>
+        <td>0.03</td>
+        <td>0.291%</td>
+        <td>698,521,542</td>
+        <td>Provides technology solutions for the hospitality industry.</td>
+      </tr>
+      <tr>
+        <td>PRCH</td>
+        <td>Porch Group, Inc. Common Stock</td>
+        <td>$5.82</td>
+        <td>0.47</td>
+        <td>8.785%</td>
+        <td>695,743,653</td>
+        <td>Offers home service solutions and software for homeowners and service providers.</td>
+      </tr>
+      <tr>
+        <td>SHLS</td>
+        <td>Shoals Technologies Group, Inc. Class A Common Stock</td>
+        <td>$4.17</td>
+        <td>-0.24</td>
+        <td>-5.442%</td>
+        <td>695,135,343</td>
+        <td>Provides electrical balance of systems for solar projects.</td>
+      </tr>
+      <tr>
+        <td>CGNT</td>
+        <td>Cognyte Software Ltd. Ordinary Shares</td>
+        <td>$9.50</td>
+        <td>0.75</td>
+        <td>8.571%</td>
+        <td>674,467,083</td>
+        <td>Provides security analytics software solutions for governments and enterprises.</td>
+      </tr>
+      <tr>
+        <td>ECX</td>
+        <td>ECARX Holdings Inc. Class A Ordinary shares</td>
+        <td>$1.94</td>
+        <td>-0.04</td>
+        <td>-2.02%</td>
+        <td>655,622,932</td>
+        <td>Develops intelligent automotive technology and solutions.</td>
+      </tr>
+      <tr>
+        <td>EVER</td>
+        <td>EverQuote, Inc. Class A Common Stock</td>
+        <td>$17.73</td>
+        <td>-0.33</td>
+        <td>-1.827%</td>
+        <td>626,781,474</td>
+        <td>Provides an online marketplace for insurance quotes and comparisons.</td>
+      </tr>
+      <tr>
+        <td>CLMB</td>
+        <td>Climb Global Solutions, Inc. Common Stock</td>
+        <td>$135.64</td>
+        <td>8.53</td>
+        <td>6.711%</td>
+        <td>624,864,996</td>
+        <td>Provides technology and IT solutions for businesses.</td>
+      </tr>
+      <tr>
+        <td>VREX</td>
+        <td>Varex Imaging Corporation Common Stock</td>
+        <td>$15.19</td>
+        <td>-0.25</td>
+        <td>-1.619%</td>
+        <td>624,309,000</td>
+        <td>Designs and manufactures imaging components for the medical and industrial markets.</td>
+      </tr>
+      <tr>
+        <td>SLP</td>
+        <td>Simulations Plus, Inc. Common Stock</td>
+        <td>$30.88</td>
+        <td>-0.05</td>
+        <td>-0.162%</td>
+        <td>619,674,642</td>
+        <td>Provides software for drug discovery and development.</td>
+      </tr>
+      <tr>
+        <td>MGIC</td>
+        <td>Magic Software Enterprises Ltd. Ordinary Shares</td>
+        <td>$12.51</td>
+        <td>0.25</td>
+        <td>2.039%</td>
+        <td>614,232,306</td>
+        <td>Provides software solutions for application development and integration.</td>
+      </tr>
+      <tr>
+        <td>EVLV</td>
+        <td>Evolv Technologies Holdings, Inc. Class A Common Stock</td>
+        <td>$3.89</td>
+        <td>0.14</td>
+        <td>3.733%</td>
+        <td>612,869,640</td>
+        <td>Provides security screening solutions for venues and events.</td>
+      </tr>
+      <tr>
+        <td>NVTS</td>
+        <td>Navitas Semiconductor Corporation Common Stock</td>
+        <td>$3.24</td>
+        <td>-0.20</td>
+        <td>-5.814%</td>
+        <td>605,220,660</td>
+        <td>Develops gallium nitride (GaN) power semiconductor solutions.</td>
+      </tr>
+      <tr>
+        <td>ITRN</td>
+        <td>Ituran Location and Control Ltd. Ordinary Shares</td>
+        <td>$30.41</td>
+        <td>-0.26</td>
+        <td>-0.848%</td>
+        <td>604,963,768</td>
+        <td>Provides vehicle tracking and location-based services.</td>
+      </tr>
+      <tr>
+        <td>DDI</td>
+        <td>DoubleDown Interactive Co., Ltd. American Depository Shares</td>
+        <td>$11.43</td>
+        <td>0.17</td>
+        <td>1.51%</td>
+        <td>566,395,819</td>
+        <td>Develops free-to-play casino games and applications.</td>
+      </tr>
+      <tr>
+        <td>RXT</td>
+        <td>Rackspace Technology, Inc. Common Stock</td>
+        <td>$2.45</td>
+        <td>0.03</td>
+        <td>1.24%</td>
+        <td>557,543,768</td>
+        <td>Provides cloud computing and managed services.</td>
+      </tr>
+      <tr>
+        <td>LASR</td>
+        <td>nLIGHT, Inc. Common Stock</td>
+        <td>$11.36</td>
+        <td>0.35</td>
+        <td>3.179%</td>
+        <td>550,157,484</td>
+        <td>Provides laser diodes and systems for industrial and aerospace applications.</td>
+      </tr>
+      <tr>
+        <td>BIGC</td>
+        <td>BigCommerce Holdings, Inc. Series 1 Common Stock</td>
+        <td>$6.96</td>
+        <td>-0.08</td>
+        <td>-1.136%</td>
+        <td>545,524,661</td>
+        <td>Provides an e-commerce platform for online retailers.</td>
+      </tr>
+      <tr>
+        <td>BAND</td>
+        <td>Bandwidth Inc. Class A Common Stock</td>
+        <td>$19.55</td>
+        <td>0.84</td>
+        <td>4.49%</td>
+        <td>537,822,631</td>
+        <td>Provides cloud-based communication services for businesses.</td>
+      </tr>
+      <tr>
+        <td>RDVT</td>
+        <td>Red Violet, Inc. Common Stock</td>
+        <td>$38.76</td>
+        <td>1.11</td>
+        <td>2.948%</td>
+        <td>534,564,432</td>
+        <td>Provides data solutions and analytics for marketers and investigators.</td>
+      </tr>
+      <tr>
+        <td>DH</td>
+        <td>Definitive Healthcare Corp. Class A Common Stock</td>
+        <td>$4.46</td>
+        <td>-0.03</td>
+        <td>-0.668%</td>
+        <td>515,231,817</td>
+        <td>Provides data and analytics for the healthcare industry.</td>
+      </tr>
+      <tr>
+        <td>SKYT</td>
+        <td>SkyWater Technology, Inc. Common Stock</td>
+        <td>$10.16</td>
+        <td>1.00</td>
+        <td>10.917%</td>
+        <td>484,184,940</td>
+        <td>Provides semiconductor manufacturing services.</td>
+      </tr>
+      <tr>
+        <td>HCAT</td>
+        <td>Health Catalyst, Inc Common Stock</td>
+        <td>$7.85</td>
+        <td>-0.14</td>
+        <td>-1.752%</td>
+        <td>477,654,115</td>
+        <td>Provides data and analytics solutions for healthcare providers.</td>
+      </tr>
+      <tr>
+        <td>MTLS</td>
+        <td>Materialise NV American Depositary Shares</td>
+        <td>$7.955</td>
+        <td>0.055</td>
+        <td>0.696%</td>
+        <td>469,879,465</td>
+        <td>Provides 3D printing software and services for various industries.</td>
+      </tr>
+      <tr>
+        <td>CCSI</td>
+        <td>Consensus Cloud Solutions, Inc. Common Stock</td>
+        <td>$24.27</td>
+        <td>0.17</td>
+        <td>0.705%</td>
+        <td>468,498,323</td>
+        <td>Provides secure cloud-based solutions for communications.</td>
+      </tr>
+      <tr>
+        <td>KE</td>
+        <td>Kimball Electronics, Inc. Common Stock</td>
+        <td>$18.62</td>
+        <td>-0.31</td>
+        <td>-1.638%</td>
+        <td>459,553,722</td>
+        <td>Designs and manufactures electronic assemblies and components.</td>
+      </tr>
+      <tr>
+        <td>SOHU</td>
+        <td>Sohu.com Limited American Depositary Shares</td>
+        <td>$13.43</td>
+        <td>-0.37</td>
+        <td>-2.681%</td>
+        <td>443,843,826</td>
+        <td>Operates an online media and entertainment platform in China.</td>
+      </tr>
+      <tr>
+        <td>MITK</td>
+        <td>Mitek Systems, Inc. Common Stock</td>
+        <td>$9.49</td>
+        <td>0.71</td>
+        <td>8.087%</td>
+        <td>438,474,261</td>
+        <td>Provides identity verification and document processing solutions.</td>
+      </tr>
+      <tr>
+        <td>API</td>
+        <td>Agora, Inc. American Depositary Shares</td>
+        <td>$4.65</td>
+        <td>-0.16</td>
+        <td>-3.326%</td>
+        <td>428,740,118</td>
+        <td>Provides real-time engagement and communication solutions.</td>
+      </tr>
+      <tr>
+        <td>PERI</td>
+        <td>Perion Network Ltd. Ordinary Shares</td>
+        <td>$8.58</td>
+        <td>0.03</td>
+        <td>0.351%</td>
+        <td>411,765,732</td>
+        <td>Provides digital advertising solutions for advertisers and publishers.</td>
+      </tr>
+      <tr>
+        <td>CRNT</td>
+        <td>Ceragon Networks Ltd. Ordinary Shares</td>
+        <td>$4.70</td>
+        <td>-0.09</td>
+        <td>-1.879%</td>
+        <td>401,466,109</td>
+        <td>Provides wireless backhaul solutions for telecommunications.</td>
+      </tr>
+      <tr>
+        <td>AIP</td>
+        <td>Arteris, Inc. Common Stock</td>
+        <td>$9.78</td>
+        <td>-0.51</td>
+        <td>-4.956%</td>
+        <td>392,934,904</td>
+        <td>Provides interconnect IP for semiconductor design.</td>
+      </tr>
+      <tr>
+        <td>LGTY</td>
+        <td>Logility Supply Chain Solutions, Inc. Common Stock</td>
+        <td>$11.53</td>
+        <td>0.13</td>
+        <td>1.14%</td>
+        <td>388,331,080</td>
+        <td>Provides supply chain planning and management solutions.</td>
+      </tr>
+      <tr>
+        <td>DADA</td>
+        <td>Dada Nexus Limited American Depositary Shares</td>
+        <td>$1.41</td>
+        <td>-0.02</td>
+        <td>-1.399%</td>
+        <td>372,349,756</td>
+        <td>Provides on-demand delivery services in China.</td>
+      </tr>
+      <tr>
+        <td>TRUE</td>
+        <td>TrueCar, Inc. Common Stock</td>
+        <td>$4.28</td>
+        <td>0.14</td>
+        <td>3.382%</td>
+        <td>372,180,612</td>
+        <td>Online automotive marketplace that connects buyers and sellers.</td>
+      </tr>
+      <tr>
+        <td>RZLV</td>
+        <td>Rezolve AI Limited Ordinary Shares</td>
+        <td>$2.13</td>
+        <td>0.14</td>
+        <td>7.035%</td>
+        <td>366,749,298</td>
+        <td>Provides AI-driven solutions for customer engagement.</td>
+      </tr>
+      <tr>
+        <td>GDEV</td>
+        <td>GDEV Inc. Ordinary Shares</td>
+        <td>$20.02</td>
+        <td>-0.98</td>
+        <td>-4.667%</td>
+        <td>362,489,628</td>
+        <td>Provides gaming solutions and technology for the global market.</td>
+      </tr>
+      <tr>
+        <td>CRNC</td>
+        <td>Cerence Inc. Common Stock</td>
+        <td>$8.16</td>
+        <td>0.80</td>
+        <td>10.87%</td>
+        <td>349,474,758</td>
+        <td>Provides AI-powered voice recognition solutions for vehicles.</td>
+      </tr>
+      <tr>
+        <td>OB</td>
+        <td>Outbrain Inc. Common Stock</td>
+        <td>$7.03</td>
+        <td>0.50</td>
+        <td>7.657%</td>
+        <td>349,034,994</td>
+        <td>Operates a content discovery platform for online publishers.</td>
+      </tr>
+      <tr>
+        <td>GILT</td>
+        <td>Gilat Satellite Networks Ltd. Ordinary Shares</td>
+        <td>$6.11</td>
+        <td>0.16</td>
+        <td>2.689%</td>
+        <td>348,368,285</td>
+        <td>Provides satellite communication solutions for various industries.</td>
+      </tr>
+      <tr>
+        <td>IBEX</td>
+        <td>IBEX Limited Common Shares</td>
+        <td>$20.17</td>
+        <td>0.10</td>
+        <td>0.498%</td>
+        <td>338,146,177</td>
+        <td>Provides customer experience management solutions for businesses.</td>
+      </tr>
+      <tr>
+        <td>EXFY</td>
+        <td>Expensify, Inc. Class A Common Stock</td>
+        <td>$3.80</td>
+        <td>-0.07</td>
+        <td>-1.809%</td>
+        <td>338,058,933</td>
+        <td>Provides expense management and reporting solutions for businesses.</td>
+      </tr>
+      <tr>
+        <td>CERS</td>
+        <td>Cerus Corporation Common Stock</td>
+        <td>$1.80</td>
+        <td>0.09</td>
+        <td>5.263%</td>
+        <td>334,287,747</td>
+        <td>Develops blood safety products and therapies for healthcare.</td>
+      </tr>
+      <tr>
+        <td>ARQQ</td>
+        <td>Arqit Quantum Inc. Ordinary Shares</td>
+        <td>$26.45</td>
+        <td>2.75</td>
+        <td>11.603%</td>
+        <td>330,731,038</td>
+        <td>Develops quantum encryption technology for secure communications.</td>
+      </tr>
+      <tr>
+        <td>POET</td>
+        <td>POET Technologies Inc. Common Shares</td>
+        <td>$4.58</td>
+        <td>0.33</td>
+        <td>7.765%</td>
+        <td>323,855,235</td>
+        <td>Provides photonic integrated circuits for optical communications.</td>
+      </tr>
+      <tr>
+        <td>IMMR</td>
+        <td>Immersion Corporation Common Stock</td>
+        <td>$9.73</td>
+        <td>0.575</td>
+        <td>6.281%</td>
+        <td>313,134,703</td>
+        <td>Provides haptic technology and solutions for touch feedback.</td>
+      </tr>
+      <tr>
+        <td>BLZE</td>
+        <td>Backblaze, Inc. Class A Common Stock</td>
+        <td>$6.80</td>
+        <td>0.04</td>
+        <td>0.592%</td>
+        <td>301,920,000</td>
+        <td>Provides cloud storage and backup solutions for individuals and businesses.</td>
+      </tr>
+    </tbody>
+  </table>
+  <button id="saveButton">Save</button>
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      // Add a new column for editable tags programmatically
+      $('#stockPrice tbody tr').each(function () {
+        $(this).append('<td contenteditable="true"></td>');
+      });
+
+      // Initialize DataTable after adding new elements with column definitions
+      var table = $('#stockPrice').DataTable({
+        columnDefs: [
+          {
+            targets: -1, // Target the last column (the editable one)
+            orderable: false // Disable ordering for the editable column
+          }
+        ]
+      });
+
+      // Optional: Add a listener to handle changes in the tags column
+      $('#stockPrice tbody').on('blur', 'td[contenteditable="true"]', function () {
+        var newValue = $(this).text();
+        console.log('New tag value:', newValue);
+
+        // Update the DataTable with the new value
+        var row = table.row($(this).closest('tr')); // Get the closest row
+        var columnIndex = $(this).index(); // Get the index of the current cell
+
+        // Update the data for the specific cell
+        row.data()[columnIndex] = newValue; // Update the data in the row
+        row.invalidate(); // Mark the row as needing to be redrawn
+        table.draw(); // Redraw the DataTable
+      });
+
+      // Save updated HTML file
+      $('#saveButton').click(async function () {
+        // Get the DataTable instance
+        const table = $('#stockPrice').DataTable();
+
+        // Clear the current HTML content of the table
+        let updatedTableContent = '<thead><tr><th>Symbol</th><th>Name</th><th>Last Sale</th><th>Net Change</th><th>% Change</th><th>Market Cap</th><th>Description</th><th>Tags</th></tr></thead><tbody>';
+
+        // Loop through each row in the DataTable to build the new HTML content
+        table.rows().every(function (rowIdx, tableLoop, rowLoop) {
+          const data = this.data(); // Get the data for the current row
+          updatedTableContent += '<tr>';
+          data.forEach(cell => {
+            updatedTableContent += `<td>${cell}</td>`; // Create a table cell for each data item
+          });
+          updatedTableContent += '</tr>';
+        });
+        updatedTableContent += '</tbody>';
+
+        // Replace the inner HTML of the table with the new content
+        $('#stockPrice').html(updatedTableContent);
+
+        // Now save the updated HTML content
+        const htmlContent = document.documentElement.outerHTML;
+
+        try {
+          const fileHandle = await window.showSaveFilePicker({
+            suggestedName: 'updated_stock_prices.html',
+            types: [{
+              description: 'HTML Files',
+              accept: { 'text/html': ['.html'] },
+            }],
+          });
+          const writable = await fileHandle.createWritable();
+          await writable.write(htmlContent);
+          await writable.close();
+          alert('File saved successfully!');
+        } catch (err) {
+          console.error('Error saving file:', err);
+          alert('Failed to save the file.');
+        }
+      });
+    });
+  </script>
+
+</html>
