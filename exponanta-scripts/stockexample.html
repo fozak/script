@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ticker Information</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Business Overview Table</h2>
+<table id="table1">
+    <tr>
+        <th>Ticker</th>
+        <th>Tags</th>
+        <th>Description</th>
+    </tr>
+    <tr><td>MQ</td><td>fintech, software</td><td>Marqeta is a modern card issuing and payment processing platform...</td></tr>
+    <tr><td>APPN</td><td>software, business services</td><td>Appian provides a low-code automation platform...</td></tr>
+    <tr><td>MTTR</td><td>technology, software</td><td>Matterport offers a 3D spatial data platform...</td></tr>
+    <tr><td>MGNI</td><td>advertising, technology</td><td>Magnite is a technology platform for digital advertising...</td></tr>
+    <tr><td>MTCH</td><td>technology, dating</td><td>Match Group is a leading provider of online dating services...</td></tr>
+    <tr><td>FROG</td><td>software, developer tools</td><td>JFrog provides a DevOps platform...</td></tr>
+    <tr><td>DSP</td><td>technology, software</td><td>DigitalOcean is a cloud infrastructure provider...</td></tr>
+    <tr><td>CNXC</td><td>software, business services</td><td>Concentrix offers customer experience solutions...</td></tr>
+    <tr><td>VREX</td><td>technology, software</td><td>Vortex provides software solutions for media...</td></tr>
+    <tr><td>ITRN</td><td>technology, software</td><td>Iteris is a technology solutions provider...</td></tr>
+    <tr><td>OS</td><td>software, operating systems</td><td>OSIsoft develops software solutions for real-time data management...</td></tr>
+    <tr><td>CCSI</td><td>technology, software</td><td>CCSI offers software solutions and consulting services...</td></tr>
+    <tr><td>BAND</td><td>technology, software</td><td>Bandwidth provides a communication API platform...</td></tr>
+    <tr><td>AIP</td><td>technology, software</td><td>AIP Technology delivers software solutions for industrial applications...</td></tr>
+    <tr><td>JAMF</td><td>software, technology</td><td>Jamf specializes in Apple device management solutions...</td></tr>
+</table>
+
+<h2>Company Summary Table</h2>
+<table id="table2">
+    <tr>
+        <th>Ticker</th>
+        <th>Company Summary</th>
+    </tr>
+    <!-- Company summaries will be populated here -->
+</table>
+
+<script>
+    const tickers = ['MQ', 'APPN', 'MTTR', 'MGNI', 'MTCH', 'FROG', 'DSP', 'CNXC', 'VREX', 'ITRN', 'OS', 'CCSI', 'BAND', 'AIP', 'JAMF'];
+    let currentIndex = 0;
+
+    function fetchCompanySummary() {
+        if (currentIndex < tickers.length) {
+            const ticker = tickers[currentIndex];
+            const url = `https://finance.yahoo.com/quote/${ticker}/`;
+            
+            fetch(url)
+                .then(response => response.text())
+                .then(html => {
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(html, 'text/html');
+                    const summary = doc.body.innerText; // Get the inner text of the body
+                    
+                    // Insert the ticker and summary into table2
+                    const table2 = document.getElementById('table2');
+                    const newRow = table2.insertRow();
+                    const tickerCell = newRow.insertCell(0);
+                    const summaryCell = newRow.insertCell(1);
+                    tickerCell.textContent = ticker;
+                    summaryCell.textContent = summary.substring(0, 200) + '...'; // Limit to 200 chars
+                    
+                    currentIndex++;
+                })
+                .catch(err => {
+                    console.error('Error fetching data:', err);
+                    currentIndex++;
+                });
+        } else {
+            clearInterval(intervalId);
+        }
+    }
+
+    const intervalId = setInterval(fetchCompanySummary, 5000);
+</script>
+
+</body>
+</html>
