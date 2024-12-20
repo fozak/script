@@ -17,8 +17,8 @@
         const documentClone = document.cloneNode(true);
         
         // Get text starting from the clone
-        const textStarting = getTextStarting(documentClone);
-        
+        //const textStarting = getTextStarting(documentClone); this ADDED
+        const textStarting = document.body.innerText.substring(0, 900);
         // Create the key
         const key = `${window.location.href} ${document.title} ${textStarting}`;
         
