@@ -1,16 +1,19 @@
 {
-    "manifest_version": 3,
-    "name": "Webpage HTML Saver",
-    "version": "1.0",
-    "description": "Saves webpage HTML to IndexedDB after 5 seconds",
-    "permissions": [
-      "activeTab",
-      "storage"
-    ],
-    "content_scripts": [
-      {
-        "matches": ["<all_urls>"],
-        "js": ["content.js"]
-      }
-    ]
-  }
+  "manifest_version": 3,
+  "name": "Webpage HTML Saver",
+  "version": "1.0",
+  "description": "Saves webpage HTML to IndexedDB after 5 seconds",
+  "permissions": [
+    "activeTab",
+    "storage"
+  ],
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"]
+    }
+  ]
+}
