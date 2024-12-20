@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inline HTML File Editor</title>
+    <style>
+        #editor {
+            width: 100%;
+            height: 300px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            overflow: auto;
+            background-color: #f9f9f9;
+        }
+        .editable {
+            border: 1px dashed #007BFF;
+            padding: 5px;
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <button id="openFile">Open HTML File</button>
+    <button id="saveFile">Save HTML File</button>
+    <div id="editor" contenteditable="true"></div> <!-- Make the editor contenteditable -->
+
+    <script>
+        let fileHandle;
+
+        // Load the HTML file
+        document.getElementById('openFile').addEventListener('click', async () => {
+            // Use the File Picker API to select a file
+            [fileHandle] = await window.showOpenFilePicker();
+            const file = await fileHandle.getFile();
+            const text = await file.text();
+
+            // Clear the editor and set the HTML content directly
+            const editor = document.getElementById('editor');
+            editor.innerHTML = text; // Set the innerHTML of the editor to the loaded content
+            console.log('File loaded successfully.');
+        });
+
+        // Save the edited HTML content back to the file
+        document.getElementById('saveFile').addEventListener('click', async () => {
+            if (fileHandle) {
+                const writable = await fileHandle.createWritable();
+                const editor = document.getElementById('editor');
+                const content = editor.innerHTML; // Get the edited HTML content
+
+                // Write the updated content to the file
+                await writable.write(content);
+                await writable.close(); // Close the file handle
+                console.log('File saved successfully.');
+            } else {
+                console.log('Please open a file first.');
+            }
+        });
+    </script>
+</body>
+</html>
