@@ -139,3 +139,5 @@ Key changes made:
 
 The rest of your extension files (manifest.json, content.js, background.js) remain the same. Would you like me to add any additional DataTables features or modify the current setup?
 
+# Challenges - not able to load js scripts
+
