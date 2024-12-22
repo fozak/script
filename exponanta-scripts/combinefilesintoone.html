@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Combiner</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        button {
+            padding: 10px 15px;
+            margin: 10px 0;
+            font-size: 16px;
+        }
+        #message {
+            margin-top: 20px;
+            font-weight: bold;
+            color: green;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Combine Files from a Directory</h1>
+<button id="combineBtn">Select Directory and Combine Files</button>
+<div id="message"></div>
+
+<script>
+    document.getElementById('combineBtn').addEventListener('click', selectDirectory);
+
+    async function selectDirectory() {
+        try {
+            // Ask user to select a directory
+            const dirHandle = await window.showDirectoryPicker();
+            let combinedText = '';
+            const processedFiles = new Set(); // Track processed file names
+
+            // Iterate through files in the selected directory
+            for await (const [name, handle] of dirHandle.entries()) {
+                if (handle.kind === 'file' && !processedFiles.has(name)) {
+                    const file = await handle.getFile();
+                    const text = await file.text();
+                    combinedText += `// ${name}\n${text}\n\n`; // Add separator and two new lines for spacing
+                    processedFiles.add(name); // Mark this file as processed
+                }
+            }
+
+            // Create the combined text file
+            const combinedFileHandle = await dirHandle.getFileHandle('combined.txt', { create: true });
+            const writableStream = await combinedFileHandle.createWritable();
+            await writableStream.write(combinedText);
+            await writableStream.close();
+
+            document.getElementById('message').innerText = 'Combined file created successfully: combined.txt';
+        } catch (error) {
+            console.error('Error:', error);
+            document.getElementById('message').innerText = 'Error: ' + error.message;
+        }
+    }
+</script>
+
+</body>
+</html>

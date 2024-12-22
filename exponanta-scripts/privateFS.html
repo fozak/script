@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auto Save Current Page</title>
+</head>
+<body>
+    <h1>Auto Save Current Page to File</h1>
+    <div id="message"></div>
+
+    <script>
+        let root;
+
+        // Function to get the directory
+        async function getDirectory() {
+            try {
+                root = await navigator.storage.getDirectory();
+                document.getElementById('message').innerText = 'Directory access granted!';
+            } catch (error) {
+                console.error('Error accessing directory:', error);
+                document.getElementById('message').innerText = 'Failed to access directory.';
+            }
+        }
+
+        // Function to save the current page content to a file
+        async function saveCurrentPage() {
+            if (!root) {
+                console.error('Root directory is not initialized.');
+                return;
+            }
+
+            try {
+                const fileHandle = await root.getFileHandle("currentPage.html", { create: true });
+                const writableStream = await fileHandle.createWritable();
+                const content = document.documentElement.outerHTML; // Get the entire HTML content
+                await writableStream.write(content);
+                await writableStream.close();
+                document.getElementById('message').innerText = 'Current page saved successfully!';
+            } catch (error) {
+                console.error('Error saving file:', error);
+                document.getElementById('message').innerText = 'Error saving file.';
+            }
+        }
+
+        // Initialize the directory and start the timer
+        async function init() {
+            await getDirectory();
+            setTimeout(saveCurrentPage, 10000); // 10 seconds timer
+        }
+
+        // Start the process when the page loads
+        window.onload = init;
+    </script>
+</body>
+</html>
