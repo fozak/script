@@ -64,12 +64,18 @@ async function displayKeys() {
 
             // Initialize DataTable with improved configuration
             $('#table-keys').DataTable({
-                pageLength: 10,
+                pageLength: 5,  // Show fewer rows per page
                 order: [[0, 'desc']],
                 columnDefs: [
                     {
                         targets: 0,
-                        width: '60%'
+                        width: '60%',
+                        render: function(data, type, row) {
+                            if (type === 'display') {
+                                return `<div title="${data}">${data}</div>`;
+                            }
+                            return data;
+                        }
                     },
                     {
                         targets: 1,
@@ -81,18 +87,20 @@ async function displayKeys() {
                         orderable: false
                     }
                 ],
-                // Remove drawCallback as we're using direct DOM manipulation
+                dom: '<"top"f>rt<"bottom"ip>',  // Customize the DataTables layout
                 language: {
-                    search: "Search saved pages:",
+                    search: "Search:",
                     paginate: {
-                        first: "First",
-                        last: "Last",
-                        next: "Next",
-                        previous: "Previous"
+                        first: "«",
+                        previous: "‹",
+                        next: "›",
+                        last: "»"
                     }
-                }
+                },
+                scrollY: '400px',  // Enable vertical scrolling
+                scrollCollapse: true,  // Enable scroll collapse
+                responsive: true  // Make the table responsive
             });
-        });
     } catch (error) {
         console.error('Error in displayKeys:', error);
     }

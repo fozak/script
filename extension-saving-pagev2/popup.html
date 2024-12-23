@@ -6,24 +6,112 @@
     <style>
         body {
             width: 800px;
-            max-height: 600px;
-            padding: 10px;
-            overflow-y: auto;
+            height: 500px;
+            margin: 0;
+            padding: 16px;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        h2 {
+            margin-top: 0;
+            margin-bottom: 16px;
+        }
+
+        .table-container {
+            flex: 1;
+            overflow: auto;
+        }
+
+        #table-keys {
+            width: 100% !important;
+            font-size: 13px;
+        }
+
+        #table-keys td {
+            max-width: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        /* First column - title & preview */
+        #table-keys td:first-child {
+            max-width: 400px;
+        }
+
+        /* Second column - link */
+        #table-keys td:nth-child(2) {
+            max-width: 100px;
+        }
+
+        /* Make the DataTables search box smaller and fit better */
+        .dataTables_filter {
+            margin-bottom: 10px;
+            font-size: 13px;
+        }
+
+        .dataTables_filter input {
+            width: 200px !important;
+            height: 24px !important;
+        }
+
+        /* Style the pagination to be more compact */
+        .dataTables_paginate {
+            font-size: 13px;
+            padding-top: 0.5em !important;
+        }
+
+        /* Style buttons */
+        button {
+            padding: 4px 8px;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #e0e0e0;
+        }
+
+        /* Links */
+        a {
+            color: #0066cc;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Make sure horizontal scroll shows when needed */
+        .dataTables_wrapper {
+            overflow-x: auto;
         }
     </style>
 </head>
 <body>
-    <h2>Saved Webpages</h2>
-    <table id="table-keys" class="display">
-        <thead>
-            <tr>
-                <th>Title & Preview</th>
-                <th>Link</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
+    <div class="container">
+        <h2>Saved Webpages</h2>
+        <div class="table-container">
+            <table id="table-keys" class="display">
+                <thead>
+                    <tr>
+                        <th>Title & Preview</th>
+                        <th>Link</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
     <script src="imported/jquery-3.7.1.min.js"></script>
     <script src="imported/jquery.dataTables.min.js"></script>
     <script src="popup.js"></script>
