@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DataTables Example</title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+    <style>
+        table {
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+
+<h2>First Table</h2>
+<table id="table1" class="display">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Age</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>John</td>
+            <td>30</td>
+        </tr>
+        <tr>
+            <td>Jane</td>
+            <td>25</td>
+        </tr>
+    </tbody>
+</table>
+
+<h2>Selected Entries</h2>
+<table id="table2" class="display">
+    <thead>
+        <tr>
+            <th>Selected Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Selected rows will be added here -->
+    </tbody>
+</table>
+
+<script>
+$(document).ready(function() {
+    var table1 = $('#table1').DataTable();
+    var table2 = $('#table2').DataTable();
+
+    $('#table1 tbody').on('click', 'tr', function() {
+        var data = table1.row(this).data();
+        if (data) {
+            // Check if the name is already in table2
+            var exists = table2.data().toArray().some(function(row) {
+                return row[0] === data[0]; // Assuming first column is the name
+            });
+
+            // If not, add it to table2
+            if (!exists) {
+                table2.row.add([data[0]]).draw();
+            } else {
+                alert(data[0] + " is already selected.");
+            }
+        }
+    });
+});
+</script>
+
+</body>
+</html>

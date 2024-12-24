@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+    <title>Task and Contact Manager</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .container { width: 80%; margin: auto; }
+        table { width: 100%; margin-top: 20px; }
+        .form-group { margin-bottom: 15px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Task and Contact Manager</h1>
+        
+        <h2>Add Task</h2>
+        <div class="form-group">
+            <input type="text" id="taskInput" placeholder="Enter task name" />
+            <select id="contactSelect">
+                <option value="">Select Contact</option>
+            </select>
+            <button id="addTask">Add Task</button>
+        </div>
+
+        <h2>Add Contact</h2>
+        <div class="form-group">
+            <input type="text" id="contactInput" placeholder="Enter contact name" />
+            <button id="addContact">Add Contact</button>
+        </div>
+        
+        <table id="recordsTable" class="display">
+            <thead>
+                <tr>
+                    <th>Task</th>
+                    <th>Assigned Contact</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script>
+        let tasks = [];
+        let contacts = [];
+
+        // Initialize DataTable
+        $(document).ready(function() {
+            $('#recordsTable').DataTable();
+        });
+
+        // Add Contact
+        $('#addContact').on('click', function() {
+            const contactName = $('#contactInput').val();
+            if (contactName) {
+                contacts.push(contactName);
+                $('#contactSelect').append(`<option value="${contactName}">${contactName}</option>`);
+                $('#contactInput').val('');
+            }
+        });
+
+        // Add Task
+        $('#addTask').on('click', function() {
+            const taskName = $('#taskInput').val();
+            const assignedContact = $('#contactSelect').val();
+            if (taskName && assignedContact) {
+                tasks.push({ task: taskName, contact: assignedContact });
+                updateTaskTable();
+                $('#taskInput').val('');
+                $('#contactSelect').val('');
+            }
+        });
+
+        // Update Task Table
+        function updateTaskTable() {
+            const tableBody = $('#recordsTable tbody');
+            tableBody.empty(); // Clear existing table data
+            tasks.forEach(task => {
+                tableBody.append(`<tr><td>${task.task}</td><td>${task.contact}</td></tr>`);
+            });
+            // Reinitialize DataTable to apply changes
+            $('#recordsTable').DataTable().clear().rows.add(tableBody.find('tr')).draw();
+        }
+    </script>
+</body>
+</html>

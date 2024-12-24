@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacts and Cities Management</title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+    <style>
+        table {
+            margin: 20px 0;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Contacts</h2>
+<table id="contactsTable" class="display">
+    <thead>
+        <tr>
+            <th>Contact Name</th>
+            <th>Email</th>
+            <th>Cities</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Contacts will be added here -->
+    </tbody>
+</table>
+
+<h2>Cities</h2>
+<table id="citiesTable" class="display">
+    <thead>
+        <tr>
+            <th>City Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Cities will be added here -->
+    </tbody>
+</table>
+
+<script>
+$(document).ready(function() {
+    // Sample data for cities
+    const cities = ['New York', 'Los Angeles', 'Chicago', 'Houston', 'Phoenix'];
+
+    // Initialize DataTables
+    const contactsTable = $('#contactsTable').DataTable();
+    const citiesTable = $('#citiesTable').DataTable();
+
+    // Add sample cities to the cities table
+    cities.forEach(city => {
+        citiesTable.row.add([city]).draw();
+    });
+
+    // Function to add a new contact
+    function addContact(name, email) {
+        const cityDropdown = $('<select multiple></select>').css('width', '200px');
+        cities.forEach(city => {
+            cityDropdown.append(new Option(city, city));
+        });
+
+        contactsTable.row.add([
+            name,
+            email,
+            cityDropdown.prop('outerHTML') // Use outerHTML to insert the dropdown
+        ]).draw();
+        
+        // Reinitialize the DataTable to ensure dropdowns are rendered properly
+        contactsTable.columns().every(function() {
+            const column = this;
+            if (column.index() === 2) {
+                column.nodes().each(function(cell) {
+                    const cellData = $(cell).html();
+                    $(cell).html(cellData);
+                });
+            }
+        });
+    }
+
+    // Example: Adding sample contacts
+    addContact('Alice', 'alice@example.com');
+    addContact('Bob', 'bob@example.com');
+    addContact('Charlie', 'charlie@example.com');
+
+    // You can add more functionality as needed, e.g., adding new contacts via a form
+});
+</script>
+
+</body>
+</html>
