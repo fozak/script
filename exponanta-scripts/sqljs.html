@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQLite.js Demo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-group input {
+            padding: 5px;
+            width: 200px;
+        }
+        button {
+            padding: 8px 15px;
+            margin: 5px;
+            cursor: pointer;
+        }
+        #userList {
+            margin-top: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+    </style>
+</head>
+<body>
+    <h1>SQLite.js Demo</h1>
+    
+    <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" id="name" required>
+    </div>
+    
+    <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" required>
+    </div>
+    
+    <button onclick="addUser()">Add User</button>
+    <button onclick="refreshUsers()">Refresh List</button>
+    <button onclick="db.exportToFile()">Export Database</button>
+    
+    <div id="userList">
+        <h2>Users</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Created At</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="userTableBody">
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Include SQL.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/sql-wasm.js"></script>
+    
+    <!-- Include our database class and functions -->
+    <script>
+        // SQLiteDB class from previous code
+        class SQLiteDB {
+            constructor() {
+                this.db = null;
+                this.initDB();
+            }
+
+            async initDB() {
+                try {
+                    const SQL = await initSqlJs({
+                        locateFile: file => `https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/${file}`
+                    });
+                    
+                    this.db = new SQL.Database();
+                    
+                    this.db.run(`
+                        CREATE TABLE IF NOT EXISTS users (
+                            id INTEGER PRIMARY KEY AUTOINCREMENT,
+                            name TEXT NOT NULL,
+                            email TEXT UNIQUE,
+                            created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+                        )
+                    `);
+                    
+                    console.log("Database initialized successfully");
+                    refreshUsers(); // Load initial data
+                } catch (err) {
+                    console.error("Error initializing database:", err);
+                }
+            }
+
+            insertUser(name, email) {
+                try {
+                    const stmt = this.db.prepare(
+                        "INSERT INTO users (name, email) VALUES (?, ?)"
+                    );
+                    const result = stmt.run([name, email]);
+                    stmt.free();
+                    return result;
+                } catch (err) {
+                    console.error("Error inserting user:", err);
+                    return null;
+                }
+            }
+
+            getAllUsers() {
+                try {
+                    const query = this.db.prepare("SELECT * FROM users ORDER BY id DESC");
+                    const results = [];
+                    while (query.step()) {
+                        results.push(query.getAsObject());
+                    }
+                    query.free();
+                    return results;
+                } catch (err) {
+                    console.error("Error getting users:", err);
+                    return [];
+                }
+            }
+
+            deleteUser(id) {
+                try {
+                    const stmt = this.db.prepare("DELETE FROM users WHERE id = ?");
+                    const result = stmt.run([id]);
+                    stmt.free();
+                    return result;
+                } catch (err) {
+                    console.error("Error deleting user:", err);
+                    return null;
+                }
+            }
+
+            exportToFile() {
+                try {
+                    const data = this.db.export();
+                    const blob = new Blob([data], { type: 'application/x-sqlite3' });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'database.sqlite';
+                    a.click();
+                    URL.revokeObjectURL(url);
+                } catch (err) {
+                    console.error("Error exporting database:", err);
+                }
+            }
+        }
+
+        // Initialize database
+        let db = new SQLiteDB();
+
+        // Add user function
+        function addUser() {
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            
+            if (!name || !email) {
+                alert('Please fill in all fields');
+                return;
+            }
+
+            db.insertUser(name, email);
+            
+            // Clear form
+            document.getElementById('name').value = '';
+            document.getElementById('email').value = '';
+            
+            // Refresh the list
+            refreshUsers();
+        }
+
+        // Refresh users list
+        function refreshUsers() {
+            const users = db.getAllUsers();
+            const tbody = document.getElementById('userTableBody');
+            tbody.innerHTML = '';
+            
+            users.forEach(user => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${user.id}</td>
+                    <td>${user.name}</td>
+                    <td>${user.email}</td>
+                    <td>${user.created_at}</td>
+                    <td>
+                        <button onclick="db.deleteUser(${user.id}); refreshUsers();">Delete</button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+    </script>
+</body>
+</html>
