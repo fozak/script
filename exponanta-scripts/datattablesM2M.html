@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Many-to-Many Relationship with Dropdowns</title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+    <style>
+        table {
+            margin: 20px 0;
+        }
+        .enrollment-form {
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Students</h2>
+<table id="studentsTable" class="display">
+    <thead>
+        <tr>
+            <th>Student Name</th>
+            <th>Age</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>John</td>
+            <td>20</td>
+        </tr>
+        <tr>
+            <td>Jane</td>
+            <td>22</td>
+        </tr>
+    </tbody>
+</table>
+
+<h2>Courses</h2>
+<table id="coursesTable" class="display">
+    <thead>
+        <tr>
+            <th>Course Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Math 101</td>
+        </tr>
+        <tr>
+            <td>Biology 101</td>
+        </tr>
+    </tbody>
+</table>
+
+<h2>Enrollment Form</h2>
+<div class="enrollment-form">
+    <label for="studentSelect">Select Student:</label>
+    <select id="studentSelect"></select>
+    
+    <label for="courseSelect">Select Course:</label>
+    <select id="courseSelect"></select>
+    
+    <button id="enrollButton">Enroll</button>
+</div>
+
+<h2>Enrollments</h2>
+<table id="enrollmentsTable" class="display">
+    <thead>
+        <tr>
+            <th>Student Name</th>
+            <th>Course Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Enrollments will be added here -->
+    </tbody>
+</table>
+
+<script>
+$(document).ready(function() {
+    var studentsTable = $('#studentsTable').DataTable();
+    var coursesTable = $('#coursesTable').DataTable();
+    var enrollmentsTable = $('#enrollmentsTable').DataTable();
+
+    // Populate student dropdown
+    studentsTable.rows().every(function() {
+        var data = this.data();
+        $('#studentSelect').append(new Option(data[0], data[0]));
+    });
+
+    // Populate course dropdown
+    coursesTable.rows().every(function() {
+        var data = this.data();
+        $('#courseSelect').append(new Option(data[0], data[0]));
+    });
+
+    // Enroll button click event
+    $('#enrollButton').on('click', function() {
+        var selectedStudent = $('#studentSelect').val();
+        var selectedCourse = $('#courseSelect').val();
+        
+        // Check for duplicates
+        var exists = enrollmentsTable.data().toArray().some(function(row) {
+            return row[0] === selectedStudent && row[1] === selectedCourse;
+        });
+
+        if (!exists) {
+            enrollmentsTable.row.add([selectedStudent, selectedCourse]).draw();
+        } else {
+            alert(selectedStudent + " is already enrolled in " + selectedCourse + ".");
+        }
+    });
+});
+</script>
+
+</body>
+</html>
