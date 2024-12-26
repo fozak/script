@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom JavaScript Function Execution</title>
+    <script src="https://unpkg.com/compromise"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        textarea {
+            width: 100%;
+            height: 100px;
+            margin-bottom: 20px;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Custom JavaScript Function Executor</h1>
+    
+    <h2>Input Text</h2>
+    <textarea id="textInput" placeholder="Enter your text here..."></textarea>
+    
+    <h2>Custom JavaScript Function</h2>
+    <textarea id="functionInput" placeholder="Enter your JavaScript function here..."></textarea>
+    
+    <button id="executeButton">Execute Function</button>
+
+    <div id="result"></div>
+
+    <script>
+        document.getElementById('executeButton').addEventListener('click', function() {
+            // Extract text from the textarea
+            let text = document.getElementById('textInput').value;
+
+            // Retrieve custom JavaScript function from the second textarea
+            let customFunctionCode = document.getElementById('functionInput').value;
+
+            // Create a function from the input code
+            let customFunction;
+            try {
+                customFunction = new Function('nlp', 'text', customFunctionCode);
+                // Execute the custom function with nlp and the input text
+                let customOutput = customFunction(nlp, text);
+
+                // Display the custom output in the result div
+                document.getElementById('result').innerHTML = 
+                    '<strong>Custom Function Output:</strong> ' + customOutput;
+            } catch (error) {
+                document.getElementById('result').innerHTML = 'Error in custom function: ' + error.message;
+            }
+        });
+    </script>
+
+</body>
+</html>
