@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Common Noun Finder</title>
+    <!-- Include the compromise library -->
+    <script src="https://unpkg.com/compromise"></script>
+</head>
+<body>
+    <script>
+        // Sample wordPairs array
+        let wordPairs = [
+            ['John', 'forest'],
+            ['meeting', 'park'],
+            ['Sarah', 'connor'],
+            ['dog', 'cat'],
+            ['apple', 'banana']
+        ];
+
+        // Function to get common nouns from the word pairs
+        function getCommonNounsFromPairs(pairs) {
+            // Array to hold common nouns found
+            let commonNouns = [];
+
+            // Iterate through each pair in wordPairs
+            for (let pair of pairs) {
+                // Convert the entire pair to a single string and lowercase
+                let lowerCaseText = pair.join(' ').toLowerCase();
+                
+                // Create the document with the lowercase text
+                let doc = nlp(lowerCaseText); 
+
+                // Find common nouns (not proper nouns)
+                let foundNouns = doc.match('#Noun').not('#ProperNoun').out('array');
+
+                // Add found common nouns to the commonNouns array
+                commonNouns.push(...foundNouns);
+            }
+
+            return commonNouns;
+        }
+
+        // Function to get remaining pairs
+        function getRemainingPairs(pairs) {
+            let remainingPairs = [];
+            let commonNouns = getCommonNounsFromPairs(pairs);
+
+            // Iterate through each pair again to check against common nouns
+            for (let pair of pairs) {
+                let lowerPair = pair.map(word => word.toLowerCase());
+
+                // Check if either word in the pair is a common noun
+                if (!commonNouns.includes(lowerPair[0]) && !commonNouns.includes(lowerPair[1])) {
+                    remainingPairs.push(pair); // Include the original pair if neither word is a common noun
+                }
+            }
+
+            return remainingPairs;
+        }
+
+        // Get remaining pairs
+        let remainingPairs = getRemainingPairs(wordPairs);
+
+        // Log the common nouns found
+        let commonNounsFound = getCommonNounsFromPairs(wordPairs);
+        console.log(`Common Nouns found: ${commonNounsFound.length > 0 ? commonNounsFound.join(', ') : 'No common nouns found.'}`);
+
+        // Log the remaining pairs to the console
+        console.log('Remaining Pairs:', remainingPairs);
+    </script>
+</body>
+</html>
