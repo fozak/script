@@ -29,28 +29,33 @@ const twoWordNames = personNames.filter(name => name.split(' ').length === 2);
 // Find first two-word name
 const firstPersonName = twoWordNames[0];
 
+// Find elements that match the first two-word name
 const nameElements = [...document.body.getElementsByTagName('*')].filter(el => {
     const text = el.innerText || el.textContent;
     return text && text.trim() === firstPersonName;
 });
 
-// Declare allNames outside the if block
-let allNames = [];
+// Declare extractedNames outside the if block
+let extractedNames = [];
 
+// Check if any nameElements were found
 if (nameElements.length > 0) {
     const element = nameElements[0];
     const className = element.className;
-    
+
+    // Get all elements with the same class name
     const similarElements = document.getElementsByClassName(className);
-    const extractedNames = [...similarElements].map(el => {
+    extractedNames = [...similarElements].map(el => {
         const text = el.innerText || el.textContent;
         return text ? text.trim() : '';
     }).filter(Boolean);
-    
-    // Combine and deduplicate names
-    const allNames = [...new Set([...extractedNames, ...twoWordNames])];
-    console.log('Combined unique names:', allNames);
 }
+
+// Combine and deduplicate names regardless of whether nameElements were found
+allNames = [...new Set([...extractedNames, ...twoWordNames])];
+
+// Log the final combined names
+console.log('Combined unique names:', allNames);
 
 
 
