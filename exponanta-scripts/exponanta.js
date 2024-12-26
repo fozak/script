@@ -19,213 +19,50 @@ script.onerror = function() {
     console.error('Failed to load the compromise library');
 };
 
-//this is compromize module selecting  
+//this is compromize seaching the html elements with like Omar Hayam
+const doc = nlp(document.body.innerText);
+const personNames = doc.people().out('array');
 
-// Create a script element
-// Get the text content from the body of the document
-let text = document.body.innerText;
+// Get all two-word names from Compromise
+const twoWordNames = personNames.filter(name => name.split(' ').length === 2);
 
-// 1. Extract unique word pairs with a single space (like "John Smith")
-let wordPairs = [...new Set(text.match(/\b[A-Z][a-zA-Z]* [A-Z][a-zA-Z]*\b/g) || [])];
+// Find first two-word name
+const firstPersonName = twoWordNames[0];
 
-// Log the unique word pairs to the console
-console.log('Unique Word Pairs:', wordPairs);
-
-// 2. Remove the identified word pairs from the text
-wordPairs.forEach(pair => {
-    text = text.replace(new RegExp('\\b' + pair + '\\b', 'g'), '');
+const nameElements = [...document.body.getElementsByTagName('*')].filter(el => {
+    const text = el.innerText || el.textContent;
+    return text && text.trim() === firstPersonName;
 });
 
-// 3. Extract unique single words starting with a capital letter from the modified text
-let capitalWords = [...new Set(text.match(/\b[A-Z][a-zA-Z]*\b/g) || [])];
+// Declare allNames outside the if block
+let allNames = [];
 
-// Log the results to the console
-console.log('Unique Single Words Starting with Capital Letters:', capitalWords);
-
-// Function to get common nouns from the word pairs
-function getCommonNounsFromPairs(pairs) {
-    // Array to hold common nouns found
-    let commonNouns = [];
-
-    // Iterate through each pair in wordPairs
-    for (let pair of pairs) {
-        // Convert the entire pair to a single string and lowercase
-        let lowerCaseText = pair.toLowerCase(); // Note: No need to join since pair is already a string
-        
-        // Create the document with the lowercase text
-        let doc = nlp(lowerCaseText); 
-
-        // Find common nouns (not proper nouns)
-        let foundNouns = doc.match('#Noun').not('#ProperNoun').out('array');
-
-        // Add found common nouns to the commonNouns array
-        commonNouns.push(...foundNouns);
-    }
-
-    return commonNouns;
+if (nameElements.length > 0) {
+    const element = nameElements[0];
+    const className = element.className;
+    
+    const similarElements = document.getElementsByClassName(className);
+    const extractedNames = [...similarElements].map(el => {
+        const text = el.innerText || el.textContent;
+        return text ? text.trim() : '';
+    }).filter(Boolean);
+    
+    // Combine and deduplicate names
+    const allNames = [...new Set([...extractedNames, ...twoWordNames])];
+    console.log('Combined unique names:', allNames);
 }
 
-// Function to get remaining pairs
-function getRemainingPairs(pairs) {
-    let remainingPairs = [];
-    let commonNouns = getCommonNounsFromPairs(pairs);
 
-    // Iterate through each pair again to check against common nouns
-    for (let pair of pairs) {
-        let lowerPair = pair.toLowerCase().split(' '); // Split the string into words
 
-        // Check if either word in the pair is a common noun
-        if (!commonNouns.includes(lowerPair[0]) && !commonNouns.includes(lowerPair[1])) {
-            remainingPairs.push(pair); // Include the original pair if neither word is a common noun
-        }
-    }
+//that has some duplicates 
 
-    return remainingPairs;
+function cleanNames(names) {
+    //To process the list of names you provided, we can follow these steps:
+
+//Filter for Two-Word Names: Select names that consist of exactly two words.
+//Remove Unwanted Characters: Strip out any commas (,) and periods (.) from the names.
+//Deduplicate the Names: Ensure that the resulting names are unique.
 }
 
-// Get remaining pairs
-let remainingPairs = getRemainingPairs(wordPairs);
-
-// Log the common nouns found
-let commonNounsFound = getCommonNounsFromPairs(wordPairs);
-console.log(`Common Nouns found: ${commonNounsFound.length > 0 ? commonNounsFound.join(', ') : 'No common nouns found.'}`);
-
-// Log the remaining pairs to the console
-console.log('Remaining Pairs:', remainingPairs);
-
-//not all filtered out
-[
-    "Trending Winter",
-    "Azerbaijan Airlines",
-    "Former Assad",
-    "The Sports",
-    "Cornell University",
-    "Elon Musk",
-    "Disney CEO",
-    "FOR SUBSCRIBERS",
-    "West Coast",
-    "NOW PLAYING",
-    "CNN Headlines",
-    "GO LIVE",
-    "For Subscribers",
-    "Cowboy Carter",
-    "Blue Ivy",
-    "Analysis Your",
-    "Whole Foods",
-    "MORE TOP",
-    "Hudson Meek",
-    "Baby Driver",
-    "New York",
-    "The Motley",
-    "MIDDLE EAST",
-    "CNN PODCASTS",
-    "Tyler Perry",
-    "YEAR IN",
-    "Taylor Swift",
-    "Travis Kelce",
-    "CHECK THESE",
-    "Lamar Jackson",
-    "Christmas Day",
-    "The Delta",
-    "CNN Underscored",
-    "Winter Sale",
-    "Most FSA",
-    "Apple AirTags",
-    "BACKED GUIDES",
-    "King Charles",
-    "Tallulah Willis",
-    "Christopher Nolan",
-    "The Odyssey",
-    "Blake Lively",
-    "Justin Baldoni",
-    "Adam Sandler",
-    "Chanukah Song",
-    "Celine Dion",
-    "PAID PARTNER",
-    "Worth Its",
-    "Weight In",
-    "Best Credit",
-    "Card For",
-    "Northern California",
-    "Mammoth Lakes",
-    "SPACE AND",
-    "Monica Lewinsky",
-    "Ariana Grande",
-    "The Brutalist",
-    "HEALTH AND",
-    "Former President",
-    "Bill Clinton",
-    "Matt Gaetz",
-    "Christmas Eve",
-    "Three Palestinian",
-    "Remembering Eddie",
-    "Van Halen",
-    "Hurricane Helene",
-    "Happy Gilmore",
-    "Caitlin Clark",
-    "Female Athlete",
-    "College Football",
-    "Artisan Setaro",
-    "Paid Content",
-    "Notre Dame",
-    "Paid Partner",
-    "The Santa",
-    "Father Christmases",
-    "Live TV",
-    "Russia War",
-    "Hamas War",
-    "About CNN",
-    "FOLLOW CNN",
-    "Privacy Policy",
-    "Cookie Settings",
-    "Ad Choices",
-    "Help Center",
-    "Cable News",
-    "A Warner",
-    "Discovery Company",
-    "All Rights",
-    "CNN Sans"
-]
-
-//outcome 
-
-[
-    "NOW PLAYING",
-    "GO LIVE",
-    "Hudson Meek",
-    "New York",
-    "Tyler Perry",
-    "Taylor Swift",
-    "Travis Kelce",
-    "CHECK THESE",
-    "Lamar Jackson",
-    "CNN Underscored",
-    "BACKED GUIDES",
-    "King Charles",
-    "Christopher Nolan",
-    "Blake Lively",
-    "Justin Baldoni",
-    "Adam Sandler",
-    "Celine Dion",
-    "Card For",
-    "Northern California",
-    "Mammoth Lakes",
-    "Monica Lewinsky",
-    "Ariana Grande",
-    "Bill Clinton",
-    "Matt Gaetz",
-    "Three Palestinian",
-    "Remembering Eddie",
-    "Van Halen",
-    "Caitlin Clark",
-    "Notre Dame",
-    "About CNN",
-    "FOLLOW CNN",
-    "All Rights",
-    "CNN Sans"
-]
-
-// CORRECT - 1) do not include words with more then 1 capital letter like CNn
-// 2) excude verbs "Remembering Eddie"
-// 3) other cases like 'Card For
-
+const cleanedNames = cleanNames(allNames);
+console.log(cleanedNames);
