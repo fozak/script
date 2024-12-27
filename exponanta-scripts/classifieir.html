@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website Classifier</title>
+    <style>
+        .category-input { margin-bottom: 5px; }
+        .keyword-input { margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+    <h1>Website Classifier</h1>
+    
+    <h2>Add Categories and Keywords</h2>
+    <div id="categories"></div>
+    <button onclick="addCategory()">Add Category</button><br><br>
+
+    <h2>Enter URL to Analyze</h2>
+    <input type="text" id="urlInput" placeholder="Enter URL" />
+    <button onclick="analyzeUrl()">Analyze</button>
+    <div id="result"></div>
+
+    <script>
+        // Custom Naive Bayes Implementation
+        class NaiveBayes {
+            constructor() {
+                this.classes = {};
+            }
+
+            learn(features, label) {
+                if (!this.classes[label]) {
+                    this.classes[label] = { count: 0, features: {} };
+                }
+                this.classes[label].count++;
+                features.forEach(feature => {
+                    if (!this.classes[label].features[feature]) {
+                        this.classes[label].features[feature] = 0;
+                    }
+                    this.classes[label].features[feature]++;
+                });
+            }
+
+            predict(features) {
+                let bestLabel = null;
+                let bestScore = -Infinity;
+
+                Object.keys(this.classes).forEach(label => {
+                    let score = Math.log(this.classes[label].count / Object.values(this.classes).reduce((sum, cls) => sum + cls.count, 0));
+                    features.forEach(feature => {
+                        if (this.classes[label].features[feature]) {
+                            score += Math.log(this.classes[label].features[feature] / this.classes[label].count);
+                        }
+                    });
+                    if (score > bestScore) {
+                        bestScore = score;
+                        bestLabel = label;
+                    }
+                });
+
+                return bestLabel;
+            }
+        }
+
+        const classifier = new NaiveBayes();
+        
+        function addCategory() {
+            const categoryDiv = document.createElement('div');
+            categoryDiv.classList.add('category-input');
+            
+            const categoryInput = document.createElement('input');
+            categoryInput.placeholder = 'Category Name';
+            categoryDiv.appendChild(categoryInput);
+            
+            const keywordInput = document.createElement('input');
+            keywordInput.placeholder = 'Keywords (comma-separated)';
+            keywordInput.classList.add('keyword-input');
+            categoryDiv.appendChild(keywordInput);
+            
+            const addButton = document.createElement('button');
+            addButton.innerText = 'Add';
+            addButton.onclick = () => {
+                const keywords = keywordInput.value.split(',').map(k => k.trim());
+                const categoryName = categoryInput.value.trim();
+                if (keywords.length > 0 && categoryName) {
+                    classifier.learn(keywords, categoryName);
+                    categoryInput.value = '';
+                    keywordInput.value = '';
+                    alert(`Added category "${categoryName}" with keywords: ${keywords.join(', ')}`);
+                } else {
+                    alert('Please enter a valid category and keywords.');
+                }
+            };
+            categoryDiv.appendChild(addButton);
+            
+            document.getElementById('categories').appendChild(categoryDiv);
+        }
+
+        async function analyzeUrl() {
+            const url = document.getElementById('urlInput').value;
+            try {
+                const response = await fetch(url);
+                const text = await response.text();
+
+                // Create a DOM parser to extract meta tags
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(text, 'text/html');
+
+                // Get meta keywords and description
+                const metaKeywords = doc.querySelector('meta[name="keywords"]')?.content || '';
+                const metaDescription = doc.querySelector('meta[name="description"]')?.content || '';
+
+                // Combine keywords and description for analysis
+                const combinedText = `${metaKeywords} ${metaDescription}`.toLowerCase();
+
+                // Classify the combined text
+                const prediction = classifier.predict(combinedText.split(/\s+/));
+
+                // Display the result
+                document.getElementById('result').innerText = `Predicted category: ${prediction}`;
+            } catch (error) {
+                document.getElementById('result').innerText = 'Error fetching the URL. Please check the URL and try again.';
+            }
+        }
+    </script>
+</body>
+</html>

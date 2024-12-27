@@ -1,0 +1,2178 @@
+this is source code of chrome extention
+separated by:'fileand path:///package.json'
+
+
+fileand path:///package.json
+{
+    "name": "context-note",
+    "version": "1.3.10",
+    "scripts": {
+        "dev": "vite build --mode developmemnt",
+        "build": "vite build",
+        "serve": "vite preview",
+        "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s"
+    },
+    "dependencies": {
+        "@element-plus/directives": "^0.0.5",
+        "@element-plus/icons": "^0.0.11",
+        "@soerenmartius/vue3-clipboard": "^0.1.2",
+        "@vueup/vue-quill": "^1.0.0-beta.7",
+        "conventional-changelog-cli": "^2.1.1",
+        "dayjs": "^1.10.6",
+        "element-plus": "^1.1.0-beta.4",
+        "is-chinese": "^1.4.6",
+        "mitt": "^3.0.0",
+        "pinyin": "^2.10.2",
+        "randomcolor": "^0.6.2",
+        "ts-enum-util": "^4.0.2",
+        "uuid": "^8.3.2",
+        "vue": "^3.0.5"
+    },
+    "devDependencies": {
+        "@types/pinyin": "^2.8.3",
+        "@types/randomcolor": "^0.5.6",
+        "@types/uuid": "^8.3.1",
+        "@vitejs/plugin-vue": "^1.2.1",
+        "@vitejs/plugin-vue-jsx": "^1.2.0",
+        "@vue/compiler-sfc": "^3.0.5",
+        "less": "^4.1.1",
+        "rollup-plugin-probe": "0.0.3",
+        "typescript": "^4.1.3",
+        "vite": "^2.4.4",
+        "vite-plugin-chrome-extension": "^0.0.7",
+        "vue-tsc": "^0.0.24"
+    }
+}
+
+
+directory:///src
+directory:///src/assets
+fileand path:///src/background.ts
+// trigger then clicking the extension logo
+chrome.action.onClicked.addListener((tab) => {
+  if (tab.id) {
+    chrome.tabs.sendMessage(tab.id, { toggleVisible: true });
+  }
+});
+
+// trigger when active tab switches
+chrome.tabs.onActivated.addListener(function(activeInfo) {
+  if (activeInfo?.tabId) {
+    chrome.tabs.sendMessage(activeInfo?.tabId, { updateStorage: true });
+  }
+});
+
+
+directory:///src/content-scripts
+fileand path:///src/content-scripts/main.css
+body {}
+
+/* Rewrite el-popper and el-overlay z-index, should be higher than extension mask z-index */
+.el-popper, .el-overlay {
+  padding: 5px !important;
+  z-index: 10001 !important;
+}
+
+/* Since extension is overflow scroll, setting dynamic left of quill tooltip
+will be invisible, so set left to 0. */
+.ql-tooltip {
+  left: 0 !important;
+}
+
+.popup-wrapper::-webkit-scrollbar {
+  width: 5px !important;
+}
+.popup-wrapper::-webkit-scrollbar-track {
+  -webkit-box-shadow: rgba(0, 0, 0, 0.3) !important;
+  border-radius: 5px !important;
+}
+.popup-wrapper::-webkit-scrollbar-thumb:window-inactive {
+  background: #aaa !important;
+}
+
+
+fileand path:///src/content-scripts/main.ts
+import { createApp } from "vue";
+import ElementPlus from "element-plus";
+import { VueClipboard } from "@soerenmartius/vue3-clipboard";
+import "element-plus/theme-chalk/index.css";
+import { ClickOutside } from "@element-plus/directives";
+
+import { Note } from "@/types/note";
+import { Query } from "@/types/dom";
+import { get } from "@/utils/storage";
+import mitt, { sendEmitAndWait } from "@/utils/mitt";
+import { StorageKeys } from "@/utils/constant";
+import { getUrlQuery, removeUrlPostfix } from "@/utils/utils";
+import Popup from "./renderer/popup/index.vue";
+import { parseRectsAndTextFromSelection } from "./parser/selection-meta";
+import { getFormattedTextFromTextList } from "./parser/text-list";
+import {
+  genHighlightRects,
+  boldHighlightGroupRects,
+  delHighlightRects,
+} from "./renderer/dom/rect";
+import {
+  clearLogoIcon,
+  genLogoIconAndRegisterClickCb,
+} from "./renderer/dom/logo-icon";
+
+// create vue instance and bind to extension
+const MOUNT_EL_ID = "attonex_clipper";
+let mountEl = document.getElementById(MOUNT_EL_ID);
+if (mountEl) {
+  mountEl.innerHTML = "";
+}
+mountEl = document.createElement("div");
+mountEl.setAttribute("id", MOUNT_EL_ID);
+document.body.appendChild(mountEl);
+const vm = createApp(Popup)
+  .use(ElementPlus)
+  .use(VueClipboard)
+  .directive("clickoutside", ClickOutside)
+  .mount(mountEl);
+
+// listen messages from `background.ts`
+chrome.runtime.onMessage.addListener((message: any) => {
+  if (message.toggleVisible) {
+    // open the popup by clicking the extension logo
+    (vm as any).visible = !(vm as any).visible;
+  }
+  if (message.updateStorage) {
+    // emit to update the storage data by switching tab
+    mitt.emit("update-storage");
+  }
+});
+
+// listen `mouseup` event to judge if any text is selected.
+document.addEventListener("mouseup", (e) => {
+  clearLogoIcon();
+  // if any text is selected, parse the `rects` and `texts` of it
+  const { rects, texts } = parseRectsAndTextFromSelection();
+  const text = getFormattedTextFromTextList(texts);
+  if (text) {
+    // show the logo icon which will run the extension function (take the note and etc.) when clicked
+    genLogoIconAndRegisterClickCb(e.pageX, e.pageY, async () => {
+      // 1. generate the highlight rects dom of selected text and get the `groupId`
+      const groupId = genHighlightRects("", rects, async (noteId: string) => {
+        await sendEmitAndWait("select-note", noteId);
+        (vm as any).visible = true;
+      });
+      // 2. take the note into notebook
+      await sendEmitAndWait("take-note", {
+        noteId: groupId, // use `groupId` as `noteId`
+        text: text,
+        rects: rects,
+      });
+      // 3. show the notebook
+      (vm as any).visible = true;
+    });
+  }
+});
+
+mitt.on("del-note", (noteId) => {
+  delHighlightRects(noteId as string);
+});
+
+mitt.on("bold-note", (data) => {
+  const { id = "", scrollIntoView = false } = data || ({} as any);
+  boldHighlightGroupRects("", id, scrollIntoView);
+});
+
+async function renderNoteHighlightRects() {
+  const url = removeUrlPostfix(window.location.href);
+  const notes = (await get(StorageKeys.notes)) as Note[];
+  const notesInCurUrl = notes.filter((note) => note.link === url);
+  notesInCurUrl.forEach((note) => {
+    const { id, rects } = note;
+    genHighlightRects(id, rects, async (noteId: string) => {
+      await sendEmitAndWait("select-note", noteId);
+      (vm as any).visible = true;
+    });
+  });
+}
+
+// initialize the extension
+async function initializeExtension() {
+  // clean the rects by the last page
+  delHighlightRects();
+  // render the rects of this page
+  await renderNoteHighlightRects();
+  // jump to the rect if this page is opened from an item of the notebook
+  const { noteId = "" } = getUrlQuery(window.location.href) as Query;
+  if (noteId) {
+    await sendEmitAndWait("select-note", noteId);
+    (vm as any).visible = true;
+    boldHighlightGroupRects("", noteId, true);
+  }
+}
+initializeExtension();
+
+// listen url change to redraw rects
+// !NOTE: need `setTimeout` to work correctly
+setTimeout(() => {
+  let lastUrl = window.location.href;
+  new MutationObserver(() => {
+    const url = window.location.href;
+    if (url !== lastUrl) {
+      lastUrl = url;
+      onUrlChange();
+    }
+  }).observe(document, { subtree: true, childList: true });
+
+  function onUrlChange() {
+    // reinitialize the extension
+    initializeExtension();
+    // emit to update the storage data
+    mitt.emit("update-storage");
+  }
+});
+
+
+directory:///src/content-scripts/parser
+fileand path:///src/content-scripts/parser/selection-meta.ts
+import { isObject } from "@/utils/utils";
+import { getNodeText } from "@/utils/dom";
+import { Rect } from "@/types/common";
+
+/**
+ * Get the texts list from an node.
+ */
+function getNodeTextList(node: DocumentFragment): string[] {
+  const _getQuery = (node: HTMLElement) => {
+    // querySelector query format：
+    // {tagName}#{id}.{class1}.{class2} ...(child query) ...(grandchild query)
+    let query = "";
+    if (node.id) {
+      query = `#${node.id}`;
+    }
+    if (node.className) {
+      let className = node.className;
+      if (isObject(className)) {
+        className = (className as any)?.["baseVal"] || "";
+      }
+      // TODO: filter the pesudo className temporarily
+      className = className
+        .split(" ")
+        .filter((ele) => !ele.includes(":"))
+        .map((className) => `.${className}`)
+        .join("");
+      query = `${query}${className}`;
+    }
+    if (node.tagName) {
+      query = `${node.tagName}${query}`;
+    }
+    return query;
+  };
+
+  const _iter = (node: HTMLElement, arr: string[] = [], query = "") => {
+    // iter and find the most inner dom, get its `query` and `innerText` (the most inner level is the text dom)
+    if (!node) return [];
+    if (node.childNodes && node.childNodes.length) {
+      query = `${query ? query + " " : ""}${_getQuery(node)}`;
+      for (const child of Array.from(node.childNodes)) {
+        _iter(child as HTMLElement, arr, query);
+      }
+    } else {
+      const text = getNodeText(node);
+      arr.push(text);
+    }
+    return arr;
+  };
+
+  let contentList = _iter((node as unknown) as HTMLElement);
+  return contentList;
+}
+
+/**
+ * Filter the rects with duplicated coordinates.
+ */
+function filterDuplicateRects(rects: Rect[]) {
+  const filterRectMap = new Map<string, Rect>();
+  for (const rect of rects) {
+    const key = `x:${rect.x},y:${rect.y}`;
+    if (!filterRectMap.has(key)) {
+      filterRectMap.set(key, rect);
+    } else {
+      const oriRect = filterRectMap.get(key) as Rect;
+      if (
+        (oriRect.width > rect.width && rect.width > 0) ||
+        oriRect.width === 0
+      ) {
+        filterRectMap.set(key, rect);
+      }
+    }
+  }
+  return Array.from(filterRectMap.values());
+}
+
+/**
+ * Some rects' coordinates are invalid, filter them.
+ */
+function filterInvalidCoorRects(rects: Rect[]) {
+  let excludeRects: Rect[] = [];
+  for (let m = 0; m < rects.length; m++) {
+    for (let n = 0; n < rects.length; n++) {
+      if (m !== n) {
+        const rect1 = rects[m];
+        const rect2 = rects[n];
+        if (
+          rect1.x <= rect2.x &&
+          rect1.y <= rect2.y &&
+          rect1.x + rect1.width >= rect2.x + rect2.width &&
+          rect1.y + rect1.height >= rect2.y + rect2.height
+        ) {
+          const rect = rect2.width === 0 ? rect2 : rect1; // exclude rect2 if rect2's width = 0, otherwise exclude rect1
+          excludeRects.push(rect);
+        }
+      }
+    }
+  }
+  return rects.filter((ele) => !excludeRects.includes(ele));
+}
+
+function parseSelectionRects(range: Range) {
+  let rects = Array.from(range.getClientRects()).map((r) => ({
+    x: r.x,
+    y: r.y + window.scrollY,
+    width: r.width,
+    height: r.height,
+  }));
+  rects = filterDuplicateRects(rects);
+  rects = filterInvalidCoorRects(rects);
+  return rects;
+}
+
+/**
+ * Get the `SelectionMeta` from current mouse selection object.
+ */
+export interface SelectionMeta {
+  rects: Rect[];
+  texts: string[];
+}
+export function parseRectsAndTextFromSelection(): SelectionMeta {
+  let rects: Rect[] = [];
+  let texts: string[] = [];
+  try {
+    // use `window.getSelection()` to get the rects of selected texts
+    const selection = window.getSelection();
+    if (selection) {
+      const range = selection.getRangeAt(0);
+      if (range) {
+        // 1. texts
+        const cloneFragment = range.cloneContents();
+        texts = getNodeTextList(cloneFragment);
+
+        // 2. rects
+        rects = parseSelectionRects(range);
+      }
+    }
+  } catch (err) {
+    console.log(err);
+  }
+  return {
+    rects,
+    texts,
+  };
+}
+
+
+fileand path:///src/content-scripts/parser/text-list.ts
+/**
+ * Format text of text list.
+ */
+export function getFormattedTextFromTextList(arr: string[]) {
+  // format lines
+  arr = arr.map((text) => {
+    if (/^[\s\n ][\s\n ]*[\s\n ]$/.test(text)) {
+      // if this line only contains `\n` and ` `, remove ` `
+      return text.replace(/ +/g, "");
+    } else {
+      return text;
+    }
+  });
+  // (1) continuous spaces -> one space
+  // (2) continuous `\n` -> one `\n`
+  // (3) `\n+\W\n+` -> `\W` (some delimiter would be separated by two `\n`)
+  const res = arr
+    .join("")
+    .replace(/ +/g, " ")
+    .replace(/\n+/g, "\n")
+    .replace(/\n+(\W)\n+/g, "$1");
+  return res;
+}
+
+
+directory:///src/content-scripts/renderer
+directory:///src/content-scripts/renderer/dom
+fileand path:///src/content-scripts/renderer/dom/logo-icon.ts
+const DOM_ICON_ID = "context-note-logo-icon";
+
+let onClickEvt: EventListener;
+/**
+ * generate a logo icon image dom on top left of selected text
+ * @param x mouse x
+ * @param y mouse y
+ * @param cb callback when clicked
+ * @returns 
+ */
+export function genLogoIconAndRegisterClickCb(
+  x: number,
+  y: number,
+  cb: () => void
+) {
+  const iconSize = 35;
+
+  const ele = document
+    .querySelector("body")
+    ?.appendChild(document.createElement("img")) as HTMLImageElement;
+  if (!ele) return;
+
+  ele.id = DOM_ICON_ID;
+  ele.style.position = "absolute";
+  ele.style.left = `${x}px`;
+  ele.style.top = `${y - iconSize}px`;
+  ele.style.width = `${iconSize}px`;
+  ele.style.height = `${iconSize}px`;
+  ele.style.cursor = "pointer";
+  ele.style.zIndex = '100';
+
+  // get assets of exteison by `chrome.runtime.getURL`
+  // https://stackoverflow.com/questions/11804332/insert-an-image-in-chrome-extension
+  ele.src = chrome.runtime.getURL("assets/icon16.png");
+
+  onClickEvt = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    cb?.();
+    clearLogoIcon();
+  };
+  ele.addEventListener("mouseup", onClickEvt);
+}
+
+export function clearLogoIcon() {
+  // delete all logo icon doms
+  const eles = document.querySelectorAll(`#${DOM_ICON_ID}`);
+  eles.forEach((ele) => {
+    onClickEvt && ele.removeEventListener("mouseup", onClickEvt);
+    const parent = ele.parentElement;
+    if (parent) {
+      parent.removeChild(ele);
+    }
+  });
+}
+
+
+fileand path:///src/content-scripts/renderer/dom/rect.ts
+import { v4 as uuid } from "uuid";
+import { Rect } from "@/types/common";
+import {
+  DOMATTR_RECT_GROUP,
+  PREFIX_RECT,
+  PREFIX_RECT_GROUP,
+} from "@/utils/constant";
+import { EnumValueVisiteeWithNull } from "ts-enum-util";
+
+function setHighlightStyle(ele: HTMLElement, rect: Rect) {
+  const PADDING = 6;
+  ele.style.pointerEvents = "none"; // not occupy the click event of the node in this position
+  ele.style.position = "absolute";
+  ele.style.left = rect.x - PADDING / 2 + "px";
+  ele.style.top = rect.y - PADDING / 2 + "px";
+  ele.style.width = `${rect.width + PADDING}px`;
+  ele.style.height = `${rect.height + PADDING}px`;
+  ele.style.background = "rgb(222, 250, 211)";
+  ele.style.opacity = "0.5";
+  ele.style.content = " ";
+}
+
+function findRelatedIds(
+  id: string,
+  idMap: { [key: string]: string[] }
+): [string, string[]] {
+  for (const key in idMap) {
+    const ids = idMap[key] || [];
+    if (ids.includes(id)) {
+      return [key, ids];
+    }
+  }
+  return ["", []];
+}
+
+function setRectStyleWithIds(ids: string[], key: string, value: string) {
+  if (ids.length === 0) return;
+
+  const rects = (document.querySelectorAll(
+    (ids.map((id) => `#${id}`) as unknown) as string
+  ) as unknown) as HTMLElement[];
+  rects.forEach((rect) => {
+    ((rect.style as { [key: string]: any }) || {})[key] = value;
+  });
+}
+
+const groupRectIdsMap: { [key: string]: string[] } = {};
+/**
+ * Generate the highlight rect doms and register their click event.
+ */
+export function genHighlightRects(
+  noteId: string,
+  rects: Rect[] = [],
+  clickCb?: (groupId: string) => void
+) {
+  const groupId = noteId || `${PREFIX_RECT_GROUP}-${uuid()}`;
+  groupRectIdsMap[groupId] = [];
+  for (const rect of rects) {
+    const ele = document.createElement("div");
+    const id = `${PREFIX_RECT}-${uuid()}`;
+    ele.setAttribute("id", id);
+    ele.setAttribute(DOMATTR_RECT_GROUP, groupId);
+    // highlight the rect
+    setHighlightStyle(ele, rect);
+    document.querySelector("body")?.appendChild(ele);
+    groupRectIdsMap[groupId].push(ele.id);
+
+    // click event
+    document.addEventListener("mouseup", (event) => {
+      const withinBoundaries =
+        event.pageX >= ele.offsetLeft &&
+        event.pageX <= ele.offsetWidth + ele.offsetLeft &&
+        event.pageY >= ele.offsetTop &&
+        event.pageY <= ele.offsetHeight + ele.offsetTop;
+      if (withinBoundaries) {
+        const groupId = boldHighlightGroupRects(ele?.id, "");
+        clickCb?.(groupId);
+      } else {
+        unboldHighlightGroupRects(ele?.id);
+      }
+    });
+  }
+  return groupId;
+}
+
+/**
+ * Delete all rects with `noteId`, if `noteId` is not provided, delete all rects.
+ */
+export function delHighlightRects(noteId?: string | undefined) {
+  const query = !noteId
+    ? `[${DOMATTR_RECT_GROUP}]`
+    : `[${DOMATTR_RECT_GROUP}=${noteId}]`;
+  const rectDoms = document.querySelectorAll(query);
+  rectDoms.forEach((dom) => {
+    dom.parentElement?.removeChild(dom);
+  });
+}
+
+/**
+ * Bold the group highlight rects.
+ * @param id one id of the group rects
+ * @param groupId the group id
+ * @param scrollIntoView if need scrollIntoView when bolding
+ * @returns groupId
+ */
+export function boldHighlightGroupRects(
+  id?: string,
+  groupId?: string,
+  scrollIntoView?: boolean
+): string {
+  // set all related rects border to dotted
+  let relatedIds: string[];
+  if (groupId) {
+    relatedIds = groupRectIdsMap[groupId] || [];
+  } else {
+    [groupId, relatedIds] = findRelatedIds(id || "", groupRectIdsMap);
+  }
+  setTimeout(() => {
+    setRectStyleWithIds(relatedIds, "border", "2px dotted #000");
+  });
+  if (groupId) {
+    if (scrollIntoView) {
+      // scroll to first rect
+      const firstRectId = relatedIds?.[0];
+      const firstRect = document.querySelector(`#${firstRectId}`);
+      firstRect && firstRect.scrollIntoView({ block: "center" });
+    }
+  }
+  return groupId;
+}
+
+/**
+ * Unbold the group highlight rects.
+ * @param id one id of the group rects.
+ */
+export function unboldHighlightGroupRects(id: string) {
+  // set all related rects border to none
+  const [_, relatedIds] = findRelatedIds(id, groupRectIdsMap);
+  setRectStyleWithIds(relatedIds, "border", "none");
+}
+
+
+directory:///src/content-scripts/renderer/popup
+directory:///src/content-scripts/renderer/popup/footer
+fileand path:///src/content-scripts/renderer/popup/footer/ex-import.ts
+import { $enum } from "ts-enum-util";
+import { ElMessageBox, ElMessage } from "element-plus";
+
+import { Oper } from "@/types/common";
+import { StorageKeys } from "@/utils/constant";
+import { get, set } from "@/utils/storage";
+import mitt from "@/utils/mitt";
+
+export const exportOper: Oper = {
+  title: "Export notes to json",
+  onClick: async () => {
+    const exportObj = {};
+    const keys = $enum(StorageKeys).keys();
+    for (const key of keys) {
+      const item = await get(key);
+      (exportObj as Record<StorageKeys, any>)[key] = item;
+    }
+    const dataStr =
+      "data:text/json;charset=utf-8," +
+      encodeURIComponent(JSON.stringify(exportObj, null, 2));
+    const dom: HTMLElement | null = document.createElement("a");
+    dom?.setAttribute("href", dataStr);
+    dom?.setAttribute("download", "context-note.json");
+    dom?.click();
+  },
+  isConfirm: false,
+};
+
+export const importOper: Oper = {
+  title: "Import notes from json",
+  onClick: async () => {
+    const input = document.createElement("input");
+    input.type = "file";
+    input.onchange = (e) => {
+      const errMsg =
+      "The parsing progress gets errors, please make sure to import the json file exported by Context-Note.";
+      const file = (e?.target as any)?.files?.[0];
+      const fileName = file?.name;
+      if (!fileName?.endsWith(".json")) {
+        ElMessage.error(
+          "The file format is wrong, please make sure to import the json file exported by Context-Note."
+        );
+        return;
+      }
+      const reader = new FileReader();
+      reader.readAsText(file, "UTF-8");
+      reader.onload = async (readerEvent) => {
+        const content = readerEvent?.target?.result?.toString(); // this is the content!
+        if (!content) {
+          ElMessage.error(errMsg);
+          return;
+        }
+        try {
+          const json = JSON.parse(content) ?? {};
+          const keys = Array.from($enum(StorageKeys).keys()) as string[];
+          // is the json valid or not
+          const isValid = Object.keys(json).reduce(
+            (prev, cur) => (keys.includes(cur) ? prev : false),
+            true
+          );
+          if (!isValid) {
+            ElMessage.error(errMsg);
+            return;
+          }
+          const items = (await Promise.all(keys.map((k) => get(k)))).map(
+            (item) => item ?? []
+          ) as [][];
+          const isNotEmpty = items.some((item) => item.length);
+          if (isNotEmpty) {
+            await ElMessageBox.confirm(
+              "You have already saved some notes, are you sure to overwrite them by the new importing one?",
+              "Warning",
+              {
+                confirmButtonText: "Yes",
+                cancelButtonText: "No",
+                type: "warning",
+              }
+            )
+              .then(res => res)
+              .catch(() => {
+                return;
+              });
+          }
+          for (const key of keys) {
+            console.log(key, json[key])
+            await set(key, json[key] ?? []);
+          }
+          mitt.emit("update-storage", null);
+          ElMessage.success(
+            `Notes are imported from ${fileName} successfully.`
+          );
+        } catch (err) {
+          ElMessage.error(err as string);
+        }
+      };
+      reader.onerror = () => {
+        ElMessage.error(errMsg);
+      };
+    };
+    input.click();
+  },
+};
+
+
+fileand path:///src/content-scripts/renderer/popup/footer/index.vue
+<template>
+  <div class="footer-container" :style="footerStyle">
+    <div class="footer">
+      <div class="footer-left">
+        <el-icon :size="16">
+          <DArrowLeft class="footer-collapse" v-if="!expanded" @click="() => (expanded = true)" />
+          <DArrowRight class="footer-collapse" v-else @click="() => (expanded = false)"
+        /></el-icon>
+        <el-tooltip placement="top" content="A ⭐ on Github would be much appreciated!">
+            <a class="footer-link" href="https://github.com/betterRunner/context-note" target="_blank">
+              <img class="footer-icon" :src="githubLogoSrc" height="30" />
+            </a>
+        </el-tooltip>
+      </div>
+      <More direction="row" size="4" color="#666" placement="top" :opers="opers" />
+    </div>
+  </div>
+</template>
+
+<script lang="ts">
+import { computed, watch, ref } from "vue";
+import { DArrowLeft, DArrowRight } from "@element-plus/icons";
+import { Oper } from "@/types/common";
+import mitt from "@/utils/mitt";
+import More from "../shared/more.vue";
+import { exportOper, importOper } from "./ex-import";
+import { EventType } from "mitt";
+
+export default {
+  components: {
+    More,
+    DArrowLeft,
+    DArrowRight,
+  },
+  props: {
+    width: {
+      type: Number,
+      required: true,
+    },
+  },
+  setup(props) {
+    const footerStyle = computed(() => ({
+      width: `${props.width}px`,
+      "min-width": `${props.width}px`,
+      transition: "0.5s",
+    }));
+
+    const expanded = ref(false);
+    watch(
+      expanded,
+      () => mitt.emit('expand-collapse-app', (expanded.value as unknown) as EventType)
+    );
+
+    const githubLogoSrc = chrome.runtime.getURL("assets/github-logo.png");
+    const opers = ref<Oper[]>([exportOper, importOper]);
+
+    return {
+      footerStyle,
+      expanded,
+      githubLogoSrc,
+      opers,
+    };
+  },
+};
+</script>
+
+<style lang="less" scoped>
+.footer-container {
+  position: fixed;
+  min-width: 500px;
+  width: 500px;
+  height: 50px;
+  bottom: 0px;
+  border: 1px solid rgba(100, 108, 255, 0.8);
+  box-shadow: rgba(100, 108, 255, 1) 0px 6px 18px 0px;
+  background: #fff;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  display: flex;
+  align-items: center;
+
+  .footer {
+    padding: 10px 20px 10px 10px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    .footer-left {
+      display: flex;
+      flex-direction: row;
+      flex-grow: 1;
+      align-items: center;
+
+      .footer-collapse {
+        cursor: pointer;
+      }
+    }
+
+    .footer-link {
+      user-select: none;
+    }
+
+    .footer-icon {
+      margin-left: 20px;
+      user-select: none;
+      width: 30px;
+      height: 30px;
+    }
+  }
+}
+</style>
+
+
+fileand path:///src/content-scripts/renderer/popup/index.vue
+<template>
+  <div v-show="visible">
+    <div class="popup-wrapper" :style="wrapperStyle">
+      <el-icon :size="18" class="popup-close" @click="handleClose"><Close /></el-icon>
+      <NoteBook :expanded="appExpanded" v-clickoutside="handleClickOutside" />
+      <Footer :width="appWidth" />
+    </div>
+  </div>
+</template>
+
+<script lang="ts">
+import { defineComponent, provide, ref, reactive, computed } from "vue";
+import { Close } from "@element-plus/icons";
+import NoteBook from "./note-book/index.vue";
+import Footer from "./footer/index.vue";
+import { Note } from "@/types/note";
+import { Tag } from "@/types/tag";
+import { Storage } from "@/types/storage";
+import { get } from "@/utils/storage";
+import mitt from "@/utils/mitt";
+import { StorageKeys, AppWidth } from "@/utils/constant";
+
+export default defineComponent({
+  components: {
+    Close,
+    NoteBook,
+    Footer,
+  },
+  setup() {
+    const appWidth = ref<AppWidth>(AppWidth.normal);
+    const appExpanded = ref(false);
+    mitt.on("expand-collapse-app", (e) => {
+      appExpanded.value = e as boolean;
+      appWidth.value = e ? AppWidth.expanded : AppWidth.normal;
+    });
+    const wrapperStyle = computed(() => {
+      const maxWidth = window.innerWidth * 0.9;
+      const width = appWidth.value > maxWidth ? maxWidth : appWidth.value;
+      return {
+        width: `${width}px`,
+        "min-width": `${width}px`,
+        transition: "0.5s",
+      };
+    });
+
+    const visible = ref(false);
+    const handleClickOutside = () => {
+      visible.value = false;
+    };
+    const handleClose = () => {
+       visible.value = false;
+    }
+
+    // global reading `notes` and `tags` from storage and provide to sub components.
+    const storage = reactive<Storage>({
+      [StorageKeys.notes]: [],
+      [StorageKeys.tags]: [],
+    });
+
+    const updateStorage = () => {
+      get(StorageKeys.notes).then((res) => {
+        storage.notes = (res as Note[]) || [];
+      });
+      get(StorageKeys.tags).then((res) => {
+        storage.tags = (res as Tag[]) || [];
+      });
+    };
+    updateStorage();
+    mitt.on("update-storage", () => {
+      updateStorage();
+    });
+
+    provide("storage", storage);
+
+    return {
+      appExpanded,
+      appWidth,
+      wrapperStyle,
+      visible,
+      handleClickOutside,
+      handleClose,
+    };
+  },
+});
+</script>
+
+<style lang="less" scoped>
+.popup-wrapper {
+  position: fixed;
+  right: 0px;
+  top: 1vh;
+  width: 500px;
+  min-width: 500px;
+  height: 98vh;
+  overflow-y: scroll;
+  background-color: rgba(100, 108, 255, 0.8);
+  opacity: 1;
+  border-radius: 10px;
+  z-index: 9999;
+
+  .popup-close {
+    position: fixed;
+    right: 10px;
+    top: 14px;
+    cursor: pointer;
+    color: white;
+  }
+}
+</style>
+
+
+directory:///src/content-scripts/renderer/popup/note-book
+fileand path:///src/content-scripts/renderer/popup/note-book/index.vue
+<template>
+  <NoteList :expanded="expanded"></NoteList>
+  <TagBook
+    v-show="!!curNoteId"
+    :noteId="curNoteId"
+    :coor="tagBookCoor"
+    @close="handleCloseTagBook"
+  ></TagBook>
+</template>
+
+<script lang="ts">
+import { ref } from "vue";
+import mitt from "@/utils/mitt";
+import { Coor } from "@/types/common";
+import TagBook from "../tag-book/index.vue";
+import NoteList from "./note-list.vue";
+export default {
+  components: {
+    NoteList,
+    TagBook,
+  },
+  props: {
+    expanded: {
+      type: Boolean,
+      default: false
+    }
+  },
+  setup() {
+    const tagBookCoor = ref<Coor>({ x: 0, y: 0 });
+    const curNoteId = ref("");
+
+    mitt.on("open-tag-book", ({ noteId, coor }: any) => {
+      if (coor) {
+        // `setTimeout` to let `handleCloseTagBook` trigger first.
+        setTimeout(() => {
+          tagBookCoor.value = coor as Coor;
+          curNoteId.value = noteId;
+        });
+      }
+    });
+    const handleCloseTagBook = () => {
+      curNoteId.value = "";
+    };
+
+    return {
+      tagBookCoor,
+      curNoteId,
+      handleCloseTagBook,
+    };
+  },
+};
+</script>
+
+<style scoped>
+</style>
+
+
+fileand path:///src/content-scripts/renderer/popup/note-book/note-list.vue
+<script lang="tsx">
+import { defineComponent, onBeforeUpdate, inject, ref, computed, nextTick } from "vue";
+import dayjs from "dayjs";
+import { Delta } from "@vueup/vue-quill";
+
+import { Rect } from "@/types/common";
+import { Note as TNote } from "@/types/note";
+import { Tag } from "@/types/tag";
+import { Storage } from "@/types/storage";
+import mitt from "@/utils/mitt";
+import {
+  addItemToArr,
+  updateArrItemProperty,
+  addItemToArrProperty,
+  delItemFromArrProperty,
+  delItemFromArr,
+} from "@/utils/storage";
+import { StorageKeys } from "@/utils/constant";
+import { filterArrBySearchText } from "@/utils/text";
+import { removeUrlPostfix } from "@/utils/utils";
+import Note from "./note.vue";
+
+export default defineComponent({
+  name: "note-list",
+  components: {
+    Note,
+  },
+  props: {
+    expanded: {
+      type: Boolean,
+      default: true,
+    },
+  },
+  setup(props) {
+    const storage: Storage = inject("storage", {
+      notes: [],
+      tags: [],
+    });
+    const notes = computed<TNote[]>(() => storage.notes || []);
+    const tags = computed<Tag[]>(() => storage.tags || []);
+
+    /// search note
+    const searchText = ref("");
+    const searchedNotes = computed((): TNote[] => {
+      let notes = storage.notes;
+
+      if (searchText.value) {
+        const plainNotes = notes.map((n) => ({
+          id: n.id,
+          plainText: (n.note as Delta)?.ops
+            ?.map((o: { insert: any }) => o?.insert || "")
+            .join(""),
+        }));
+        const filteredPlainNoteIds = filterArrBySearchText(
+          plainNotes,
+          "plainText",
+          searchText.value
+        ).map((n) => n.id);
+        // fitler by `searchText` in the following order
+        let ids = [
+          // 1. filter by content
+          ...filterArrBySearchText(notes, "content", searchText.value).map((n) => n.id),
+          // 2. filter by plain note
+          ...filteredPlainNoteIds,
+          // 3. filter by tags
+          ...notes
+            .filter((n) => !!filterArrBySearchText(n.tags, "", searchText.value).length)
+            .map((n) => n.id),
+          // 4. filter by link
+          ...notes.filter((n) => n.link.includes(searchText.value)).map((n) => n.id),
+        ];
+        // remove the duplicated ids
+        ids = Array.from(new Set(ids));
+        notes = ids
+          .map((id) => notes.find((n) => n.id === id))
+          .filter((n) => !!n) as TNote[];
+      }
+      // put the ones with the current location href to the head.
+      const href = removeUrlPostfix(window.location.href);
+      return [
+        ...notes.filter(n => n.link === href),
+        ...notes.filter(n => n.link !== href)
+      ];
+    });
+
+    /// create note
+    const noteDivs = ref<Element[]>([]);
+    // make sure to reset the refs before each update
+    onBeforeUpdate(() => {
+      noteDivs.value = [];
+    });
+    // listen the `take-note` event
+    mitt.on("take-note", async (data) => {
+      const { noteId = "", text = "", rects = [] } = data as {
+        noteId: string;
+        text: string;
+        rects: Rect[];
+      };
+
+      // 1. create the note item
+
+fileand path:///src/content-scripts/renderer/popup/note-book/note.vue
+<template>
+  <div
+    class="note-wrapper"
+    :class="{ 'note-wrapper__notselected': notSelected }"
+    :style="wrapperStyle"
+    @click="handleClickNote"
+    v-clickoutside="handleClickOutsideNote"
+  >
+    <!-- website link -->
+    <div :id="`link-${note.id}`" class="note-link">
+      <span @click="handleOpenLink(note)" class="note-link-content">{{ note.link }}</span>
+    </div>
+
+    <!-- opers area -->
+    <div class="note-opers">
+      <!-- tag=list -->
+      <div :id="`note-item-${note.id || ''}`" class="note-tag-wrapper">
+        <div
+          v-if="tags.length === 0"
+          class="note-tag-adder"
+          @click="handleOpenTagBook(note?.id)"
+        >
+          #Add tag..
+        </div>
+        <div
+          v-else
+          v-for="tag in tags || []"
+          :key="tag.id"
+          class="note-tag-item"
+          :style="getNoteTagItemStyle(tag)"
+          @click="handleOpenTagBook(note.id)"
+        >
+          {{ `#${tag.name}` }}
+        </div>
+      </div>
+      <!-- time -->
+      <div class="note-time">{{ dayjs.unix(note.createTime).format("MM/DD HH:mm") }}</div>
+    </div>
+    <!-- more opers -->
+    <div class="note-more-opers">
+      <More direction="column" :size="2" :opers="moreOpers" />
+    </div>
+    <!-- note content -->
+    <p class="note-content">{{ note.content }}</p>
+    <!-- note editor -->
+
+    <div
+      v-clickoutside="handleClickOutsideEditor"
+      :class="[
+        'note-editor',
+        enableEditor ? 'note-editor__edit' : 'note-editor__readonly',
+      ]"
+    >
+      <QuillEditor
+        ref="editorDom"
+        v-model:content="editorContent"
+        :toolbar="editorToolbar"
+        @click="handleClickEditor"
+      ></QuillEditor>
+    </div>
+  </div>
+</template>
+
+<script lang="ts">
+import { inject, ref, computed, nextTick, PropType } from "vue";
+import randomcolor from "randomcolor";
+import dayjs from "dayjs";
+import { ElMessage } from "element-plus";
+import { QuillEditor, Delta } from "@vueup/vue-quill";
+import "@vueup/vue-quill/dist/vue-quill.snow.css";
+import { toClipboard } from "@soerenmartius/vue3-clipboard"
+
+import { Note } from "@/types/note";
+import { Tag } from "@/types/tag";
+import { Storage } from "@/types/storage";
+import { Coor, Oper } from "@/types/common";
+import { Query } from "@/types/dom";
+import mitt from "@/utils/mitt";
+import { appendUrlQuery } from "@/utils/utils";
+import TagBook from "../tag-book/index.vue";
+import More from "../shared/more.vue";
+
+export default {
+  components: {
+    TagBook,
+    QuillEditor,
+    More,
+  },
+  props: {
+    curNoteId: {
+      type: Object as PropType<string>,
+      default: "",
+    },
+    note: {
+      required: true,
+      type: Object as PropType<Note>,
+    },
+    expanded: {
+      default: false,
+    },
+
+directory:///src/content-scripts/renderer/popup/shared
+fileand path:///src/content-scripts/renderer/popup/shared/more.vue
+<template>
+  <el-popover
+    :placement="placement"
+    :width="200"
+    trigger="click"
+    @click.prevent.stop="() => {}"
+  >
+    <template #reference>
+      <div class="more-icon">
+        <div :style="dotWrapperStyle">
+          <div
+            v-for="item in [1, 2, 3]"
+            :key="item"
+            :style="dotStyle"
+          ></div>
+        </div>
+      </div>
+    </template>
+
+    <div class="more-opers">
+      <div
+        v-for="oper in opers"
+        :key="oper.title"
+        class="more-opers-item"
+        @click.prevent.stop="() => handleClick(oper)"
+      >
+        {{ oper.title }}
+      </div>
+    </div>
+  </el-popover>
+</template>
+
+<script lang="ts">
+import { ref, PropType } from "vue";
+import { ElMessageBox } from "element-plus";
+import { Oper } from "@/types/common";
+
+enum Direction {
+  row = "row",
+  column = "column",
+}
+export default {
+  props: {
+    size: {
+      type: Number,
+      default: 2,
+    },
+    direction: {
+      type: Object as PropType<Direction>,
+      default: Direction.row,
+    },
+    color: {
+      type: String,
+      default: "#999",
+    },
+    placement: {
+      type: String,
+      default: "bottom-end",
+    },
+    opers: {
+      type: Object as PropType<Oper[]>,
+      default: [],
+    },
+  },
+  setup(props) {
+    const px = `${props.size}px`;
+    const dotWrapperStyle = ref({
+      display: "flex",
+      "flex-direction": props.direction,
+    });
+    const dotStyle = ref({
+      width: px,
+      height: px,
+      border: `${px} solid ${props.color}`,
+      "border-radius": px,
+      "box-sizing": "border-box",
+      margin: px,
+      cursor: 'pointer',
+      'user-select': 'none',
+    });
+
+    const handleClick = (oper: Oper) => {
+      if (oper.isConfirm) {
+        ElMessageBox.confirm("delete this note?", "Warning", {
+          confirmButtonText: "Yes",
+          cancelButtonText: "No",
+          type: "warning",
+        }).then(() => {
+          oper.onClick();
+        });
+      } else {
+        oper.onClick();
+      }
+    };
+
+    return {
+      dotWrapperStyle,
+      dotStyle,
+      handleClick,
+    };
+  },
+};
+</script>
+
+<style lang="less" scoped>
+.more-opers {
+  .more-opers-item {
+    cursor: pointer;
+    user-select: none;
+    padding: 5px;
+    &:hover {
+      background: #ccc;
+    }
+  }
+}
+</style>
+
+
+directory:///src/content-scripts/renderer/popup/tag-book
+fileand path:///src/content-scripts/renderer/popup/tag-book/index.vue
+<template>
+  <div v-clickoutside="handleClickOutside" class="tag-book-wrapper" :style="tagBookStyle">
+    <TagSearcher
+      :tags="tagsWithSelect"
+      @onSearch="handleSearchTags"
+      @onEnter="handleEnterSearch"
+    ></TagSearcher>
+    <TagSelector
+      :tags="tagsWithSelect"
+      :searchText="searchText"
+      :searchTags="searchTags"
+      @onSelect="handleSelectTagItem"
+    ></TagSelector>
+  </div>
+</template>
+
+<script lang="ts">
+import { PropType, inject, ref, computed, watch } from "vue";
+import dayjs from "dayjs";
+import randomColor from "randomcolor";
+
+import { Coor } from "@/types/common";
+import { Tag } from "@/types/tag";
+import { Storage } from "@/types/storage";
+import mitt, { sendEmitAndWait } from "@/utils/mitt";
+import {
+  addItemToArr,
+  addItemToArrProperty,
+  delItemFromArr,
+  delItemFromArrProperty,
+} from "@/utils/storage";
+import { StorageKeys } from "@/utils/constant";
+import TagSelector from "./tag-selector/index.vue";
+import TagSearcher from "./tag-searcher.vue";
+
+export default {
+  props: {
+    noteId: {
+      type: Object as PropType<string>,
+      required: true,
+    },
+    coor: {
+      type: Object as PropType<Coor>,
+      default: {
+        x: 0,
+        y: 0,
+      },
+    },
+  },
+  components: {
+    TagSearcher,
+    TagSelector,
+  },
+  setup(props, ctx) {
+    const TAG_BOOK_WIDTH = 400;
+    const TAG_BOOK_HEIGHT = 400;
+    const TAG_BOOK_MARGIN = 20;
+
+    /// tag book modal
+    const tagBookStyle = ref<{ [key: string]: any }>({
+      width: `${TAG_BOOK_WIDTH}px`,
+      height: `${TAG_BOOK_HEIGHT}px`,
+      minHeight: `${TAG_BOOK_HEIGHT}px`,
+    });
+    watch(() => props.noteId, () => {
+      if (props.noteId) {
+        mitt.emit('tag-search-focus');
+      }
+    })
+    watch(
+      () => props.coor,
+      () => {
+        let { x = 0, y = 0 } = props.coor;
+        // compare y + `TAG_BOOK_HEIGHT` + `TAG_BOOK_MARGIN` with browser height, adjust if overflow
+        const wh = window.outerHeight;
+        if (y + TAG_BOOK_HEIGHT + TAG_BOOK_MARGIN * 2 > wh) {
+          y = y - TAG_BOOK_MARGIN - TAG_BOOK_HEIGHT;
+        } else {
+          y = y + TAG_BOOK_MARGIN;
+        }
+
+        tagBookStyle.value = {
+          ...tagBookStyle.value,
+          left: `${x}px`,
+          top: `${y}px`,
+        };
+      },
+      {
+        deep: true,
+      }
+    );
+    const handleClickOutside = () => {
+      ctx.emit("close");
+      mitt.emit('tag-search-clear');
+    };
+
+    const storage: Storage = inject("storage", {
+      notes: [],
+      tags: [],
+    });
+
+fileand path:///src/content-scripts/renderer/popup/tag-book/tag-searcher.vue
+<template>
+  <div class="tag-searcher-wrapper">
+    <el-input
+      v-model="searchText"
+      ref="taginput"
+      size="mini"
+      autofocus
+      placeholder="create or search tag.."
+      @keydown.enter="handleEnter"
+    ></el-input>
+  </div>
+</template>
+
+<script lang="ts">
+import { PropType, ref, watch } from "vue";
+import { Tag } from "@/types/tag";
+import mitt from "@/utils/mitt";
+import { filterArrBySearchText } from "@/utils/text";
+export default {
+  props: {
+    tags: {
+      type: Object as PropType<Tag[]>,
+      default: [],
+    },
+  },
+  setup(props, ctx) {
+    const searchText = ref("");
+    watch(
+      () => searchText.value,
+      (val) => {
+        const searchTags = filterArrBySearchText(props.tags, "name", val);
+        ctx.emit("on-search", {
+          text: searchText.value,
+          result: searchTags,
+        });
+      }
+    );
+    const taginput = ref(null);
+    mitt.on('tag-search-clear', () => {
+      searchText.value = "";
+    })
+    mitt.on('tag-search-focus', () => {
+      (taginput.value as unknown as HTMLElement)?.focus();
+    })
+    const handleEnter = () => {
+      if (!searchText.value) return;
+
+      ctx.emit("on-enter", searchText.value);
+      searchText.value = "";
+    };
+    mitt.on("tag-complete-search", () => {
+      handleEnter();
+    });
+
+    return {
+      taginput,
+      searchText,
+      handleEnter,
+    };
+  },
+};
+</script>
+
+<style lang="less" scoped>
+.tag-searcher-wrapper {
+  border-top: #646cff80 solid 20px;
+  padding: 20px 20px;
+}
+</style>
+
+
+directory:///src/content-scripts/renderer/popup/tag-book/tag-selector
+fileand path:///src/content-scripts/renderer/popup/tag-book/tag-selector/index.vue
+<template>
+  <!-- show when not searching -->
+  <template v-if="searchText">
+    <TagList title="" :tags="optionalTags"></TagList>
+  </template>
+  <!-- show when searching -->
+  <template v-else>
+    <!-- recent use tags -->
+    <TagList
+      title="Recent Used"
+      :tags="recentTags"
+      @onSelect="(tag) => $emit('on-select', tag)"
+    ></TagList>
+    <!-- A-Z order tags -->
+    <TagList
+      v-for="key of Object.keys(allTagsMap).sort((a, b) => (a < b ? -1 : 1))"
+      :key="key"
+      :title="`${key === '_' ? 'Others' : key} (${(allTagsMap[key] || []).length})`"
+      :tags="allTagsMap[key] || []"
+      @onSelect="(tag) => $emit('on-select', tag)"
+    ></TagList>
+  </template>
+</template>
+
+<script lang="ts">
+import { PropType, ref, computed, watch } from "vue";
+import dayjs from "dayjs";
+import randomColor from "randomcolor";
+import { transArrInfoLetterMap } from "@/utils/text";
+import { Tag } from "@/types/tag";
+import TagList from "./tag-list.vue";
+export default {
+  components: {
+    TagList,
+  },
+  props: {
+    tags: {
+      type: Object as PropType<Tag[]>,
+      default: [],
+    },
+    searchText: {
+      type: Object as PropType<string>,
+      default: "",
+    },
+    searchTags: {
+      type: Object as PropType<Tag[]>,
+      default: [],
+    },
+  },
+  setup(props) {
+    // recently used tags
+    const recentTags = computed(() => props.tags);
+    // show the tags in alphabetical order
+    const allTagsMap = computed(() => transArrInfoLetterMap(props.tags, "name"));
+
+    // watch and create the optinal tags
+    const optionalTags = ref<Tag[]>([]);
+    watch(
+      () => props.searchText,
+      (val) => {
+        if (val) {
+          const newTag: Tag | null = props.searchTags.find((tag) => tag.id === val)
+            ? null
+            : {
+                id: val,
+                name: `Create # ${val} tag`,
+                color: randomColor(),
+                updateTime: dayjs().unix(),
+                noteIds: [],
+                isCreating: true,
+              };
+          optionalTags.value = props.searchTags;
+          if (newTag) {
+            optionalTags.value.unshift(newTag);
+          }
+        }
+      },
+      {
+        immediate: true,
+      }
+    );
+
+    return {
+      recentTags,
+      allTagsMap,
+      optionalTags,
+    };
+  },
+};
+</script>
+
+<style lang="less" scoped></style>
+
+
+fileand path:///src/content-scripts/renderer/popup/tag-book/tag-selector/tag-list.vue
+<template>
+  <div class="tag-list-wrapper">
+    <div class="tag-list-title">{{ title }}</div>
+    <div class="tag-list-content">
+      <el-tag
+        v-for="tag in tags"
+        :key="tag.id"
+        size="small"
+        type="info"
+        class="tag-item"
+        :class="{ 'tag-item-selected': tag.isSelect }"
+        @click="handleSelectTagItem(tag)"
+      >
+        <div class="tag-item-content">
+          <el-icon class="tag-item-icon" v-if="tag.isSelect" :size="12"><Check /></el-icon>
+          {{ tag.name }}
+        </div>
+      </el-tag>
+    </div>
+  </div>
+</template>
+
+<script lang="ts">
+import { PropType } from "vue";
+import { Check } from "@element-plus/icons";
+import { Tag } from "@/types/tag";
+export default {
+  components: {
+    Check,
+  },
+  props: {
+    title: {
+      type: Object as PropType<string>,
+      default: "",
+    },
+    tags: {
+      type: Object as PropType<Tag[]>,
+      default: [],
+    },
+  },
+  setup(props, ctx) {
+    const handleSelectTagItem = (tag: Tag) => {
+      ctx.emit("on-select", tag);
+    };
+
+    return {
+      handleSelectTagItem,
+    };
+  },
+};
+</script>
+
+<style lang="less" scoped>
+.tag-list-wrapper {
+  padding: 5px 20px 0 20px;
+  font-size: 12px;
+
+  .tag-list-title {
+    text-align: left;
+    font-weight: bold;
+    user-select: none;
+  }
+  .tag-list-content {
+    padding: 5px 0;
+    display: flex;
+    flex-wrap: wrap;
+    .tag-item {
+      cursor: pointer;
+      user-select: none;
+      margin: 0 10px 10px 0;
+      color: #000;
+    }
+    .tag-item-selected {
+      color: rgb(25, 65, 197);
+      background-color: rgb(180, 203, 245);
+    }
+    .tag-item-content {
+      display: flex;
+      align-items: center;
+      .tag-item-icon {
+        top: 0 !important;
+        right: 0 !important;
+      }
+    }
+  }
+}
+</style>
+
+
+fileand path:///src/global.d.ts
+declare module 'is-chinese'
+declare module "vue3-clipboard"
+
+fileand path:///src/manifest.json
+{
+  "name": "context-note",
+  "version": "1.3.10",
+  "manifest_version": 3,
+  "action": {
+    "default_icon": {
+      "16": "assets/icon16.png",
+      "48": "assets/icon48.png",
+      "128": "assets/icon128.png"
+    },
+    "default_title": "Context Note"
+  },
+  "icons": {
+    "16": "assets/icon16.png",
+    "48": "assets/icon48.png",
+    "128": "assets/icon128.png"
+  },
+  "background": {
+    "service_worker": "background.ts"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content-scripts/main.ts"],
+      "css": ["content-scripts/main.css"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "matches": ["<all_urls>"],
+      "resources": ["assets/*"]
+    }
+  ],
+  "permissions": [
+    "unlimitedStorage",
+    "activeTab"
+  ]
+}
+
+
+fileand path:///src/shims-vue.d.ts
+declare module '*.vue' {
+  import { DefineComponent } from 'vue'
+  const component: DefineComponent<{}, {}, any>
+  export default component
+}
+
+
+directory:///src/types
+fileand path:///src/types/common.ts
+export interface Coor {
+  x: number;
+  y: number;
+}
+
+export interface Rect {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  id?: string;
+}
+
+export interface Oper {
+  title: string;
+  onClick: () => void;
+  isConfirm?: boolean;
+}
+
+
+fileand path:///src/types/dom.ts
+export interface Query {
+  noteId: string;
+}
+
+
+fileand path:///src/types/note.ts
+import type { Delta } from "@vueup/vue-quill";
+import { Rect } from './common';
+
+export interface Note {
+  id: string;
+  createTime: number;
+  updateTime: number;
+  link: string;
+  rawLink: string;
+  linkTitle: string;
+  content: string;
+  tags: string[];
+  rects: Rect[];
+  note?: Delta;
+}
+
+
+fileand path:///src/types/storage.ts
+import { Note } from "./note";
+import { Tag } from "./tag";
+import { StorageKeys } from "@/utils/constant";
+
+export interface Storage {
+  [StorageKeys.notes]: Note[];
+  [StorageKeys.tags]: Tag[];
+}
+
+
+fileand path:///src/types/tag.ts
+export interface Tag {
+  id: string;
+  name: string;
+  color: string;
+  noteIds: string[];
+  updateTime: number;
+  isSelect?: boolean; // is the tag is selected or not
+  isCreating?: boolean; // is the tag is being created or not
+}
+
+
+directory:///src/utils
+fileand path:///src/utils/constant.ts
+export enum StorageKeys {
+  notes = "notes",
+  tags = "tags",
+}
+
+export const DOMATTR_RECT_GROUP = "note-id";
+
+export const PREFIX_RECT = "rect";
+export const PREFIX_RECT_GROUP = "note"; // use "note" as group prefix as rects belong to note
+
+export enum AppWidth {
+  normal = 500,
+  expanded = 1500,
+}
+
+
+fileand path:///src/utils/dom.ts
+import { getObjectType } from "../utils/utils";
+
+export const getNodeText = (node: any): string => {
+  let text = "";
+  const objType = getObjectType(node);
+  switch (objType) {
+    case "[object HTMLTimeElement]": {
+      text = node.dateTime || "";
+      break;
+    }
+    case "[object Text]": {
+      text = node.textContent || "";
+      break;
+    }
+    case "[object HTMLSpanElement]": {
+      text = node.innerText || "";
+      break;
+    }
+    // TODO: more options
+    default: {
+      break;
+    }
+  }
+  return text;
+};
+
+
+fileand path:///src/utils/mitt.ts
+import mitt from "mitt";
+
+const emitter = {
+  ...mitt(),
+  // add `once` function manually
+  // https://github.com/developit/mitt/issues/54
+  once: (type: string, handler: (...args: any) => void) => {
+    const wrappedHandler = (evt: any) => {
+      handler(evt);
+      emitter.off(type, wrappedHandler);
+    };
+    emitter.on(type, wrappedHandler);
+  },
+};
+
+export default emitter;
+
+export async function sendEmitAndWait(name: string, data: any) {
+  // wait until the `${name}-cb` event triggers
+  return new Promise((resolve) => {
+    emitter.once(`${name}-cb`, (data) => {
+      resolve(data);
+    });
+    // send the emit
+    emitter.emit(name, data);
+  });
+}
+
+
+fileand path:///src/utils/storage.ts
+// write the storage in order
+let queue: [string, any][] = [];
+const _set = (key: string, value: any) => {
+  return new Promise((resolve) => {
+    queue.push([key, value]);
+    // TODO: use `chrome.storage.local` instead of `chrome.storage.sync` since the synchronization has an issue.
+    const setter = () => chrome.storage.local.set({ [key]: value }, () => {
+      queue.shift();
+      if (queue.length) {
+        setter();
+      }
+    });
+    if (queue.length === 1) {
+      setter();
+    }
+    resolve(null);
+  })
+}
+
+const _get = (key: string) =>
+  new Promise((resolve) => {
+    chrome.storage.local.get([key], function(val: any) {
+      const res = val?.[key];
+      resolve(res);
+    });
+  });
+
+export function set(key: string, value: any) {
+  return _set(key, value);
+}
+
+export function get(key: string) {
+  return _get(key);
+}
+
+export async function addItemToArr(arrKey: string, val: any) {
+  const arr = ((await _get(arrKey)) as any[]) ?? [];
+  arr.push(val);
+  await set(arrKey, arr);
+  return arr;
+}
+
+export async function delItemFromArr(
+  arrKey: string,
+  val: string,
+  valKey?: string
+) {
+  const arr = ((await _get(arrKey)) as any[]) ?? [];
+  const index = arr.findIndex((ele) =>
+    valKey ? ele?.[valKey] === val : ele === val
+  );
+  if (index !== -1) {
+    arr.splice(index, 1);
+    await set(arrKey, arr);
+  }
+  return arr;
+}
+
+const _operArrItem = async (
+  arrKey: string,
+  itemKey: string,
+  itemVal: string,
+  oper: (item: any) => any
+) => {
+  const arr = ((await _get(arrKey)) as any[]) ?? [];
+  const index = arr.findIndex((ele) => itemKey ? ele?.[itemKey] === itemVal : ele === itemVal);
+  if (index !== -1) {
+    // run the `oper` to get new item
+    const newItem = oper(arr[index]);
+    arr.splice(index, 1, newItem);
+    await set(arrKey, arr);
+  }
+  return arr;
+};
+
+export async function updateArrItemProperty(
+  arrKey: string,
+  itemKey: string,
+  itemVal: string,
+  key: string,
+  val: any
+) {
+  return _operArrItem(arrKey, itemKey, itemVal, (item) => ({
+    ...item,
+    [key]: val,
+  }));
+}
+
+export async function addItemToArrProperty(
+  arrKey: string,
+  itemKey: string,
+  itemVal: string,
+  arrPropKey: string,
+  val: any,
+  checkDuplicate: boolean = true,
+) {
+  return _operArrItem(arrKey, itemKey, itemVal, (item) => {
+    const arrProp = item?.[arrPropKey] || [];
+    const insert = checkDuplicate ? !arrProp.includes(val) : true;
+    insert && arrProp.push(val);
+    return {
+      ...item,
+      [arrPropKey]: arrProp,
+    };
+  });
+}
+
+export async function delItemFromArrProperty(
+  arrKey: string,
+  itemKey: string,
+  itemVal: string,
+  arrPropKey: string,
+  val: any,
+  valKey?: string
+) {
+  return _operArrItem(arrKey, itemKey, itemVal, (item) => {
+    const arrProp = item?.[arrPropKey] || [];
+    const index = arrProp.findIndex((ele: any) =>
+      valKey ? ele?.[valKey] === val : ele === val
+    );
+    if (index !== -1) {
+      arrProp.splice(index, 1);
+    }
+    return {
+      ...item,
+      [arrPropKey]: arrProp,
+    };
+  });
+}
+
+
+fileand path:///src/utils/text.ts
+import pinyin, { STYLE_NORMAL } from "pinyin";
+import isChinese from "is-chinese";
+
+export function filterArrBySearchText(
+  arr: any[],
+  key = "",
+  text = "",
+  ignoreCase = true
+) {
+  const _getChPart = (text = "") => {
+    return text.replace(/[A-Za-z]/g, "");
+  };
+
+  const chPart = _getChPart(text);
+  const isTextContainCh = isChinese(chPart);
+  if (isTextContainCh) {
+    // searchText contains Chinese text
+    return arr.filter((e) => {
+      const item = key ? e[key] : e;
+      return item?.includes(chPart);
+    });
+  } else {
+    return arr.filter((e) => {
+      const item = key ? e[key] : e;
+      // parse all texts to pinyin parts
+      const parts = pinyin(item, {
+        style: STYLE_NORMAL,
+      });
+      let itemStr = parts.map((part) => (part.length ? part[0] : "")).join("");
+      itemStr = !ignoreCase ? itemStr : itemStr.toLowerCase();
+      text = !ignoreCase ? text : text.toLowerCase();
+      return itemStr.includes(text);
+    });
+  }
+}
+
+export function transArrInfoLetterMap(
+  arr: ({ [key: string]: any } | string)[],
+  key: string
+) {
+  const res: { [key: string]: any[] } = {};
+  arr.forEach((ele) => {
+    const item = key ? (ele as any)[key] : ele;
+    const parts = pinyin(item, {
+      style: STYLE_NORMAL,
+    });
+    if (parts.length) {
+      let firstLetter = parts[0]?.[0]?.[0].toUpperCase() || "";
+      if (firstLetter < 'A' || firstLetter > 'Z') {
+        firstLetter = '_'
+      }
+      res[firstLetter] = res[firstLetter] || [];
+      res[firstLetter].push(ele);
+    }
+  });
+  return res;
+}
+
+
+fileand path:///src/utils/utils.ts
+import appendQuery from 'append-query';
+
+export const isObject = (obj: any) => {
+  return typeof obj === 'object' && obj !== null
+}
+
+export const getObjectType = (obj: any) => Object.prototype.toString.call(obj)
+
+export const removeUrlPostfix = (url: string) => {
+  let res = url.split('?')?.[0] ?? ''
+  res = res.split('#')?.[0] ?? ''
+  return res
+}
+
+export const getUrlQuery = (url: string) => {
+  const queryStr = url.split('?')?.[1] ?? ''
+  const res = Object.fromEntries(
+    queryStr.split('&').map((part) => {
+      return part.split('=')
+    })
+  )
+  return res
+}
+
+// export const appendUrlQuery = (
+//   url: string,
+//   query: { [key: string]: any }
+// ) => {
+//   return appendQuery(url, query)
+// }
+
+export const appendUrlQuery = (
+  baseUrl: string,
+  params: Record<string, any>
+): string => {
+  const Url = new URL(baseUrl);
+  const urlParams: URLSearchParams = new URLSearchParams(Url.search);
+  for (const key in params) {
+    if (params[key] !== undefined) {
+      urlParams.set(key, params[key]);
+    }
+  }
+  Url.search = urlParams.toString();
+  return Url.toString();
+};
+
+fileand path:///tsconfig.json
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "strict": true,
+    "jsx": "preserve",
+    "sourceMap": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "lib": ["esnext", "dom"],
+    "types": ["@types/chrome", "vite/client"],
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"]
+}
+
+
+fileand path:///vite.config.ts
+import { resolve } from "path";
+import { defineConfig } from "vite";
+import vue from "@vitejs/plugin-vue";
+import jsx from '@vitejs/plugin-vue-jsx';
+import { chromeExtension } from "vite-plugin-chrome-extension";
+
+// https://vitejs.dev/config/
+export default defineConfig({
+    resolve: {
+        alias: {
+            "@": resolve(__dirname, "src"),
+        },
+    },
+    build: {
+        rollupOptions: {
+            input: "src/manifest.json",
+        },
+    },
+    plugins: [
+        vue(),
+        jsx(),
+        chromeExtension(),
+    ]
+})
+
+
+fileand path:///yarn.lock
+# THIS IS AN AUTOGENERATED FILE. DO NOT EDIT THIS FILE DIRECTLY.
+# yarn lockfile v1
+
+
