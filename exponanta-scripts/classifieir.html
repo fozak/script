@@ -97,7 +97,13 @@
         }
 
         async function analyzeUrl() {
-            const url = document.getElementById('urlInput').value;
+            let url = document.getElementById('urlInput').value.trim();
+
+            // Check if the URL starts with http:// or https://, if not, prepend https://
+            if (!url.startsWith('http://') && !url.startsWith('https://')) {
+                url = 'https://' + url; // Default to HTTPS
+            }
+
             try {
                 const response = await fetch(url);
                 const text = await response.text();
