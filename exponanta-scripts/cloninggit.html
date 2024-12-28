@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clone Repository</title>
+    <script src="https://unpkg.com/@isomorphic-git/lightning-fs"></script>
+    <script src="https://unpkg.com/isomorphic-git"></script>
+</head>
+<body>
+    <script type="module">
+        import http from 'https://unpkg.com/isomorphic-git/http/web/index.js';
+        
+        // Initialize isomorphic-git with a file system
+        window.fs = new LightningFS('fs');
+        // Use the Promisified version
+        window.pfs = window.fs.promises;
+
+        // Define the directory where the repo will be cloned
+        const dir = '/path/to/your/dir'; // Change this to your desired directory
+
+        async function cloneRepository() {
+            try {
+                await git.clone({
+                    fs: window.fs,
+                    http,
+                    dir,
+                    corsProxy: 'https://cors.isomorphic-git.org',
+                    url: 'https://github.com/isomorphic-git/isomorphic-git',
+                    ref: 'main',
+                    singleBranch: true,
+                    depth: 10
+                });
+
+                // Now it should not be empty...
+                const files = await window.pfs.readdir(dir);
+                console.log(files); // Log the contents of the directory
+            } catch (error) {
+                console.error('Error cloning repository:', error);
+            }
+        }
+
+        cloneRepository(); // Call the function to clone the repo
+    </script>
+</body>
+</html>

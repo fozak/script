@@ -1,0 +1,514 @@
+// background.js
+// Database setup
+const dbName = "webpageDB";
+const dbVersion = 1;
+const storeName = "webpages";
+
+async function initDB() {
+  return new Promise((resolve, reject) => {
+    const request = indexedDB.open(dbName, dbVersion);
+    request.onerror = () => reject(request.error);
+    request.onsuccess = () => resolve(request.result);
+    request.onupgradeneeded = (event) => {
+      const db = event.target.result;
+      if (!db.objectStoreNames.contains(storeName)) {
+        db.createObjectStore(storeName);
+      }
+    };
+  });
+}
+
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message.action === 'saveWebpage') {
+    handleSaveWebpage(message.data)
+      .then(() => sendResponse({ status: 'success' }))
+      .catch(error => sendResponse({ status: 'error', error: error.message }));
+    return true;
+  }
+  
+  if (message.action === 'getAllKeys') {
+    getAllKeys()
+      .then(keys => sendResponse({ status: 'success', keys }))
+      .catch(error => sendResponse({ status: 'error', error: error.message }));
+    return true;
+  }
+
+  if (message.action === 'deleteKey') {
+    deleteKey(message.key)
+      .then(() => sendResponse({ status: 'success' }))
+      .catch(error => sendResponse({ status: 'error', error: error.message }));
+    return true;
+  }
+
+  if (message.action === 'getHTML') {
+    getHTML(message.key)
+      .then(html => sendResponse({ status: 'success', html }))
+      .catch(error => sendResponse({ status: 'error', error: error.message }));
+    return true;
+  }
+});
+
+async function handleSaveWebpage(data) {
+  const db = await initDB();
+  const transaction = db.transaction([storeName], 'readwrite');
+  const store = transaction.objectStore(storeName);
+  
+  return new Promise((resolve, reject) => {
+    const request = store.put(data.html, data.key);
+    request.onsuccess = () => resolve();
+    request.onerror = () => reject(request.error);
+  });
+}
+
+async function getAllKeys() {
+  const db = await initDB();
+  const transaction = db.transaction([storeName], 'readonly');
+  const store = transaction.objectStore(storeName);
+  
+  return new Promise((resolve, reject) => {
+    const request = store.getAllKeys();
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = () => reject(request.error);
+  });
+}
+
+async function deleteKey(key) {
+  const db = await initDB();
+  const transaction = db.transaction([storeName], 'readwrite');
+  const store = transaction.objectStore(storeName);
+  
+  return new Promise((resolve, reject) => {
+    const request = store.delete(key);
+    request.onsuccess = () => resolve();
+    request.onerror = () => reject(request.error);
+  });
+}
+
+async function getHTML(key) {
+  const db = await initDB();
+  const transaction = db.transaction([storeName], 'readonly');
+  const store = transaction.objectStore(storeName);
+  
+  return new Promise((resolve, reject) => {
+    const request = store.get(key);
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = () => reject(request.error);
+  });
+}
+
+// content.js
+(function() {
+  function saveWebpage() {
+    try {
+      const documentClone = document.cloneNode(true);
+      const textStarting = document.body.innerText.trim().substring(0, 900);
+      const key = `${window.location.href} ${document.title} ${textStarting}`;
+      const html = document.documentElement.outerHTML;
+
+      chrome.runtime.sendMessage({
+        action: 'saveWebpage',
+        data: {
+          key: key,
+          html: html
+        }
+      }, response => {
+        console.log('Save response:', response);
+      });
+
+    } catch (error) {
+      console.error('Error processing webpage:', error);
+    }
+  }
+
+  window.addEventListener('load', () => {
+    setTimeout(saveWebpage, 5000);
+  });
+})();
+
+// manifest.json
+{
+  "manifest_version": 3,
+  "name": "Webpage HTML Saver",
+  "version": "1.0",
+  "description": "Saves webpage HTML using background script",
+  "permissions": [
+    "activeTab",
+    "storage"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}
+
+// popup.html
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="imported/jquery.dataTables.css">
+    <link rel="stylesheet" type="text/css" href="imported/dataTables.bootstrap5.min.css">
+    <style>
+        body {
+            width: 800px;
+            height: 500px;
+            margin: 0;
+            padding: 16px;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        h2 {
+            margin-top: 0;
+            margin-bottom: 16px;
+        }
+
+        .table-container {
+            flex: 1;
+            overflow: auto;
+        }
+
+        #table-keys {
+            width: 100% !important;
+            font-size: 13px;
+        }
+
+        #table-keys td {
+            max-width: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        /* First column - title & preview */
+        #table-keys td:first-child {
+            max-width: 400px;
+        }
+
+        /* Second column - link */
+        #table-keys td:nth-child(2) {
+            max-width: 100px;
+        }
+
+        /* Make the DataTables search box smaller and fit better */
+        .dataTables_filter {
+            margin-bottom: 10px;
+            font-size: 13px;
+        }
+
+        .dataTables_filter input {
+            width: 200px !important;
+            height: 24px !important;
+        }
+
+        /* Style the pagination to be more compact */
+        .dataTables_paginate {
+            font-size: 13px;
+            padding-top: 0.5em !important;
+        }
+
+        /* Style buttons */
+        button {
+            padding: 4px 8px;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #e0e0e0;
+        }
+
+        /* Links */
+        a {
+            color: #0066cc;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Make sure horizontal scroll shows when needed */
+        .dataTables_wrapper {
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Saved Webpages</h2>
+        <div class="table-container">
+            <table id="table-keys" class="display">
+                <thead>
+                    <tr>
+                        <th>Title & Preview</th>
+                        <th>Link</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+    <script src="imported/jquery-3.7.1.min.js"></script>
+    <script src="imported/jquery.dataTables.min.js"></script>
+    <script src="popup.js"></script>
+</body>
+</html>
+
+
+// popup.js
+document.addEventListener('DOMContentLoaded', displayKeys);
+
+async function viewSavedHTML(key) {
+    chrome.runtime.sendMessage({ 
+        action: 'getHTML', 
+        key: key 
+    }, response => {
+        if (response.status === 'success' && response.html) {
+            const newWindow = window.open('');
+            if (newWindow) {
+                newWindow.document.write('<!DOCTYPE html>');
+                newWindow.document.write(response.html);
+                newWindow.document.close();
+                const baseTag = newWindow.document.createElement('base');
+                baseTag.target = '_blank';
+                newWindow.document.head.appendChild(baseTag);
+            } else {
+                alert('Please allow pop-ups to view saved pages');
+            }
+        } else {
+            console.error('Error retrieving HTML:', response.error);
+            alert('Error viewing the saved page. Please try again.');
+        }
+    });
+}
+
+async function displayKeys() {
+    try {
+        chrome.runtime.sendMessage({ action: 'getAllKeys' }, response => {
+            if (response.status === 'error') {
+                console.error('Error:', response.error);
+                return;
+            }
+
+            const keys = response.keys;
+            
+            if ($.fn.DataTable.isDataTable('#table-keys')) {
+                $('#table-keys').DataTable().destroy();
+            }
+
+            const tableBody = $('#table-keys tbody');
+            tableBody.empty();
+
+            keys.forEach((key, index) => {
+                try {
+                    const urlEndIndex = key.indexOf(' ');
+                    const url = urlEndIndex !== -1 ? key.substring(0, urlEndIndex) : key;
+                    const buttonId = `delete-${index}`;
+                    
+                    const row = document.createElement('tr');
+                    
+                    const keyCell = document.createElement('td');
+                    keyCell.textContent = key;
+                    row.appendChild(keyCell);
+                    
+                    const linkCell = document.createElement('td');
+                    const originalLink = document.createElement('a');
+                    originalLink.href = url;
+                    originalLink.target = '_blank';
+                    originalLink.textContent = 'Original';
+                    originalLink.className = 'mr-2';
+                    linkCell.appendChild(originalLink);
+                    
+                    linkCell.appendChild(document.createTextNode(' | '));
+                    
+                    const savedLink = document.createElement('a');
+                    savedLink.href = '#';
+                    savedLink.textContent = 'Saved';
+                    savedLink.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        viewSavedHTML(key);
+                    });
+                    linkCell.appendChild(savedLink);
+                    
+                    row.appendChild(linkCell);
+                    
+                    const buttonCell = document.createElement('td');
+                    const deleteButton = document.createElement('button');
+                    deleteButton.id = buttonId;
+                    deleteButton.textContent = 'Delete';
+                    deleteButton.addEventListener('click', () => deleteKey(key));
+                    buttonCell.appendChild(deleteButton);
+                    row.appendChild(buttonCell);
+                    
+                    tableBody[0].appendChild(row);
+                    
+                } catch (err) {
+                    console.error('Error processing key:', err);
+                }
+            });
+
+            $('#table-keys').DataTable({
+                order: [[0, 'desc']],
+                columnDefs: [
+                    {
+                        targets: 0,
+                        width: '50%',
+                        render: function(data, type, row) {
+                            if (type === 'display') {
+                                return `<div title="${data.replace(/"/g, '&quot;')}">${data}</div>`;
+                            }
+                            return data;
+                        }
+                    },
+                    {
+                        targets: 1,
+                        width: '30%'
+                    },
+                    {
+                        targets: 2,
+                        width: '20%',
+                        orderable: false
+                    }
+                ],
+                dom: '<"top"f>rt<"bottom"ip>',
+                language: {
+                    search: "Search:",
+                    paginate: {
+                        first: "«",
+                        previous: "‹",
+                        next: "›",
+                        last: "»"
+                    },
+                    info: "_START_ - _END_ of _TOTAL_",
+                    infoEmpty: "No entries to show",
+                    infoFiltered: "(filtered from _MAX_ total entries)"
+                },
+                scrollY: '400px',
+                scrollCollapse: true,
+                responsive: true,
+                initComplete: function(settings, json) {
+                    $('.dataTables_filter input').attr('placeholder', 'Type to search...');
+                }
+            });
+
+            $(window).on('resize', function() {
+                if ($.fn.DataTable.isDataTable('#table-keys')) {
+                    $('#table-keys').DataTable().columns.adjust();
+                }
+            });
+        });
+    } catch (error) {
+        console.error('Error in displayKeys:', error);
+        const tableBody = $('#table-keys tbody');
+        tableBody.html('<tr><td colspan="3">Error loading saved pages. Please try again.</td></tr>');
+    }
+}
+
+function deleteKey(key) {
+    if (!key) {
+        console.error('No key provided for deletion');
+        return;
+    }
+
+    if (confirm('Are you sure you want to delete this saved page?')) {
+        chrome.runtime.sendMessage({ 
+            action: 'deleteKey', 
+            key: key 
+        }, response => {
+            if (response.status === 'success') {
+                displayKeys();
+            } else {
+                console.error('Error deleting key:', response.error);
+                alert('Error deleting the saved page. Please try again.');
+            }
+        });
+    }
+}
+
+window.onerror = function(msg, url, lineNo, columnNo, error) {
+    console.error('Error: ' + msg + '\nURL: ' + url + '\nLine: ' + lineNo + '\nColumn: ' + columnNo + '\nError object: ' + JSON.stringify(error));
+    return false;
+};
+
+// README.md
+ have chrome extension with code addatched. How to add also link (in the same column Link  to html  document saved in indexedDB )
+
+
+I can help you add a link to view the saved HTML document from IndexedDB. We'll need to modify the popup.js file to create a new function to retrieve and display the HTML content, and add another link in the Link column.
+
+
+Modified popup.js with HTML viewer functionality
+Click to open code
+
+Modified background.js with HTML retrieval
+Click to open code
+These changes will:
+
+Add a "View Saved" link next to the "Visit Original" link in the Link column
+Add functionality to retrieve the saved HTML from IndexedDB
+Display the saved HTML in a new tab/window when clicked
+To implement this:
+
+Update your popup.js with the content from the first artifact
+Add the new functions to background.js from the second artifact
+The interface will now show two links in the Link column:
+
+"Visit Original" - opens the original webpage
+"View Saved" - opens the saved HTML version from IndexedDB
+I've also added error handling and made sure the links are properly formatted. The saved HTML will open in a new tab/window when clicked.
+
+Would you like me to make any adjustments to this implementation?
+
+Copy
+Retry
+
+
+DD
+give full codes of popup.js and backgground.js doublecheck for accuracy
+
+
+
+Complete background.js
+Click to open code
+
+Complete popup.js
+Click to open code
+Copy
+Retry
+
+
+DD
+what will happen after clicking on saved page
+
+
+When you click the "View Saved" link, the following occurs:
+
+The viewSavedHTML() function sends a message to background.js requesting the HTML content for that key from IndexedDB
+When retrieved, it opens a new browser tab/window
+The saved HTML is written to this new window using document.write()
+The saved webpage appears as it was when originally saved, but:
+It will be static (no dynamic content/JavaScript)
+Some resources (images, styles) may be missing if they were externally linked
+It shows the exact HTML that was captured at save time
+Want me to help improve how the saved page is displayed? We could enhance it by preserving styles and resources.
+
+
