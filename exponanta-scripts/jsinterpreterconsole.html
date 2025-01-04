@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Code Executor</title>
+    <style>
+        body {
+            padding: 20px;
+            font-family: Arial, sans-serif;
+        }
+        textarea {
+            width: 100%;
+            font-family: monospace;
+        }
+        #output {
+            background-color: #f5f5f5;
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>JavaScript Code Executor</h1>
+    <textarea id="codeInput" rows="10" cols="50" placeholder="Enter your JavaScript code here..."></textarea><br>
+    <button id="executeButton">Execute Code</button>
+    <pre id="output"></pre>
+    <script>
+        // Create a custom console to capture output
+        const outputElement = document.getElementById('output');
+        const customConsole = {
+            log: (...args) => {
+                outputElement.innerText += args.map(arg => 
+                    typeof arg === 'object' ? JSON.stringify(arg, null, 2) : String(arg)
+                ).join(' ') + '\n';
+            },
+            error: (...args) => {
+                outputElement.innerText += 'Error: ' + args.join(' ') + '\n';
+            }
+        };
+
+        async function executeCodeBlock(code) {
+            try {
+                // Create a new function with custom console and await support
+                const AsyncFunction = Object.getPrototypeOf(async function(){}).constructor;
+                const executor = new AsyncFunction('console', code);
+                await executor(customConsole);
+            } catch (error) {
+                customConsole.error(error);
+            }
+        }
+
+        document.getElementById('executeButton').onclick = async () => {
+            outputElement.innerText = ''; // Clear previous output
+            const code = document.getElementById('codeInput').value;
+            
+            // Execute the entire code block as one unit
+            await executeCodeBlock(code);
+        };
+    </script>
+</body>
+</html>

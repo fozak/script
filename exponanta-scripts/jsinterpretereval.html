@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Code Executor</title>
+    <style>
+        body {
+            padding: 20px;
+            font-family: Arial, sans-serif;
+        }
+        textarea {
+            width: 100%;
+            font-family: monospace;
+        }
+        #output {
+            background-color: #f5f5f5;
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>JavaScript Code Executor</h1>
+    <textarea id="codeInput" rows="10" cols="50" placeholder="Enter your JavaScript code here..."></textarea><br>
+    <button id="executeButton">Execute Code</button>
+    <pre id="output"></pre>
+    <script>
+        // Create a custom console to capture output
+        const outputElement = document.getElementById('output');
+        const customConsole = {
+            log: (...args) => {
+                outputElement.innerText += args.map(arg => 
+                    typeof arg === 'object' ? JSON.stringify(arg, null, 2) : String(arg)
+                ).join(' ') + '\n';
+            },
+            error: (...args) => {
+                outputElement.innerText += 'Error: ' + args.join(' ') + '\n';
+            }
+        };
+
+        // Store the original console methods
+        const originalConsole = {
+            log: console.log,
+            error: console.error
+        };
+
+        async function executeCode(code) {
+            try {
+                // Override global console methods
+                console.log = customConsole.log;
+                console.error = customConsole.error;
+
+                // Execute the code in global scope
+                return await eval(code);
+            } catch (error) {
+                customConsole.error(error);
+            } finally {
+                // Restore original console methods
+                console.log = originalConsole.log;
+                console.error = originalConsole.error;
+            }
+        }
+
+        document.getElementById('executeButton').onclick = async () => {
+            outputElement.innerText = ''; // Clear previous output
+            const code = document.getElementById('codeInput').value;
+            await executeCode(code);
+        };
+    </script>
+</body>
+</html>
