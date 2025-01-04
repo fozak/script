@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Code Executor</title>
+</head>
+<body>
+    <h1>JavaScript Code Executor</h1>
+    <textarea id="codeInput" rows="10" cols="50" placeholder="Enter your JavaScript code here..."></textarea><br>
+    <button id="executeButton">Execute Code</button>
+    <pre id="output"></pre>
+
+    <script>
+        const imports = {}; // Object to store dynamically imported modules
+
+        async function executeCode(code) {
+            try {
+                // Execute the code within a new function scope
+                return await eval(code);
+            } catch (error) {
+                console.error('Code execution failed:', error);
+                document.getElementById('output').innerText += `Code execution failed: ${error}\n`;
+            }
+        }
+
+        document.getElementById('executeButton').onclick = async () => {
+            const codeInput = document.getElementById('codeInput').value;
+            const lines = codeInput.split('\n'); // Split the input into lines
+
+            // Use a for...of loop to await each line sequentially
+            for (const line of lines) {
+                // Trim the line to avoid executing empty lines
+                const trimmedLine = line.trim();
+                if (trimmedLine) {
+                    // Check if the line is an import statement
+                    if (trimmedLine.startsWith('import(')) {
+                        try {
+                            // Await the import statement
+                            const module = await eval(trimmedLine);
+                            // Store all exports in the imports object
+                            console.error('IMPORT EXECUTED:');
+                            Object.assign(imports, module);
+                        } catch (importError) {
+                            console.error('Import failed:', importError);
+                            document.getElementById('output').innerText += `Import failed: ${importError}\n`;
+                        }
+                    } else {
+                        // Execute other JavaScript code
+                        const output = await executeCode(trimmedLine);
+                        if (output !== undefined) {
+                            document.getElementById('output').innerText += `${output}\n`;
+                        }
+                    }
+                }
+            }
+        };
+    </script>
+</body>
+</html>
