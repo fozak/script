@@ -145,7 +145,7 @@
                 console.error = customConsole.error;
                 
                 // Execute the code in global scope
-                return await eval(code);
+                return await eval.call(window, code);//return await eval(code); - not global
             } catch (error) {
                 customConsole.error(error);
             } finally {
