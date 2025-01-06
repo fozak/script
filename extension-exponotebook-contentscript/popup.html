@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenAI Chat</title>
+    <!--<link rel="stylesheet" href="popup.css">-->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('open-chat').addEventListener('click', () => {
+                // Open the chat interface in a new tab
+                chrome.tabs.create({ url: chrome.runtime.getURL('chat.html') });
+            });
+        });
+    </script>
+</head>
+<body>
+    <h1>OpenAI Chat</h1>
+    <button id="open-chat">Open Chat</button>
+</body>
+</html>
