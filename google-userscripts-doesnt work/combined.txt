@@ -1,0 +1,326 @@
+//this is  chrome extension now when extension icon clicked it redirects to extension options page, change it  so by clicking on extension icon it loads popup that accepts the script as text and applies to active tabe. Use most of it the userScript API, make minimum changes. 
+
+
+
+// manifest.json
+{
+  "name": "User Scripts API Demo",
+  "version": "1.0",
+  "manifest_version": 3,
+  "minimum_chrome_version": "120",
+  "description": "Uses the chrome.userScripts API to inject JavaScript into web pages.",
+  "background": {
+    "service_worker": "sw.js"
+  },
+  "permissions": ["storage", "userScripts"],
+  "host_permissions": ["https://example.com/*"],
+  "action": {},
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": false
+  }
+}
+
+
+// options.css
+/* 
+Copyright 2023 Google LLC
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    https://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+html {
+  padding: 0 10px;
+}
+
+#warning {
+  display: none;
+  margin-bottom: 30px;
+}
+
+label {
+  display: flex;
+  align-items: center;
+}
+
+label input {
+  margin-right: 10px;
+}
+
+textarea {
+  resize: none;
+  width: calc(100% - 35px);
+  border: 2px solid black;
+  background: rgb(34, 34, 34);
+  padding: 15px;
+  color: white;
+}
+
+textarea:focus {
+  border: 2px solid grey;
+  outline: none;
+}
+
+button {
+  margin: 20px 0;
+}
+
+/* Hide custom script textarea by default */
+#custom-script-wrapper {
+  display: none;
+}
+
+/* Only show custom script textarea when custom type is selected */
+form:has(input[name='type'][value='custom']:checked) #custom-script-wrapper {
+  display: block;
+}
+
+
+// options.html
+<!--
+ Copyright 2023 Google LLC
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     https://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+  -->
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>User Scripts API Demo</title>
+    <link rel="stylesheet" type="text/css" href="options.css" />
+    <script defer src="options.js"></script>
+  </head>
+  <body>
+    <div id="warning">
+      <p>
+        ⚠️ To use the User Scripts API, you need to first enable developer mode
+        at <b>chrome://extensions</b>.
+      </p>
+      <a href="">Reload</a>
+    </div>
+    <form id="settings-form">
+      <h1>Settings</h1>
+      <h2>Type</h2>
+      <label>
+        <input type="radio" name="type" value="file" />
+        <span>File</span>
+      </label>
+      <label>
+        <input type="radio" name="type" value="custom" />
+        <span>Custom text</span>
+      </label>
+      <div id="custom-script-wrapper">
+        <h2>Custom script</h2>
+        <textarea
+          name="custom-script"
+          draggable="false"
+          rows="8"
+          placeholder="alert('hi');"
+        ></textarea>
+      </div>
+      <button type="button" id="save-button">Save & Enable</button>
+    </form>
+  </body>
+</html>
+
+
+// options.js
+// Copyright 2023 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     https://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+const USER_SCRIPT_ID = 'default';
+const SAVE_BUTTON_ID = 'save-button';
+
+const FORM_ID = 'settings-form';
+const FORM = document.getElementById(FORM_ID);
+
+const TYPE_INPUT_NAME = 'type';
+const SCRIPT_TEXTAREA_NAME = 'custom-script';
+
+/**
+ * Checks if the user has developer mode enabled, which is required to use the
+ * User Scripts API.
+ *
+ * @returns If the chrome.userScripts API is available.
+ */
+function isUserScriptsAvailable() {
+  try {
+    // Property access which throws if developer mode is not enabled.
+    chrome.userScripts;
+    return true;
+  } catch {
+    // Not available, so hide UI and show error.
+    document.getElementById('warning').style.display = 'block';
+    FORM.style.display = 'none';
+    return false;
+  }
+}
+
+async function updateUi() {
+  if (!isUserScriptsAvailable()) return;
+
+  // Access settings from storage with default values.
+  const { type, script } = await chrome.storage.local.get({
+    type: 'file',
+    script: "alert('hi');"
+  });
+
+  // Update UI with current values.
+  FORM.elements[TYPE_INPUT_NAME].value = type;
+  FORM.elements[SCRIPT_TEXTAREA_NAME].value = script;
+}
+
+async function onSave() {
+  if (!isUserScriptsAvailable()) return;
+
+  // Get values from form.
+  const type = FORM.elements[TYPE_INPUT_NAME].value;
+  const script = FORM.elements[SCRIPT_TEXTAREA_NAME].value;
+
+  // Save to storage.
+  chrome.storage.local.set({
+    type,
+    script
+  });
+
+  const existingScripts = await chrome.userScripts.getScripts({
+    ids: [USER_SCRIPT_ID]
+  });
+
+  if (existingScripts.length > 0) {
+    // Update existing script.
+    await chrome.userScripts.update([
+      {
+        id: USER_SCRIPT_ID,
+        matches: ['https://example.com/*'],
+        js: type === 'file' ? [{ file: 'user-script.js' }] : [{ code: script }]
+      }
+    ]);
+  } else {
+    // Register new script.
+    await chrome.userScripts.register([
+      {
+        id: USER_SCRIPT_ID,
+        matches: ['https://example.com/*'],
+        js: type === 'file' ? [{ file: 'user-script.js' }] : [{ code: script }]
+      }
+    ]);
+  }
+}
+
+// Update UI immediately, and on any storage changes.
+updateUi();
+chrome.storage.local.onChanged.addListener(updateUi);
+
+// Register listener for save button click.
+document.getElementById(SAVE_BUTTON_ID).addEventListener('click', onSave);
+
+
+// README.md
+# chrome.userScripts API
+
+This sample demonstrates using the [`chrome.userScripts`](https://developer.chrome.com/docs/extensions/reference/scripting/) API to inject JavaScript into web pages.
+
+## Overview
+
+Clicking this extension's action icon opens an options page.
+
+<img src="screenshot.png" height=250 alt="Screenshot showing the chrome.userScripts API demo running in Chrome.">
+
+## Running this extension
+
+1. Clone this repository.
+2. Load this directory in Chrome as an [unpacked extension](https://developer.chrome.com/docs/extensions/mv3/getstarted/development-basics/#load-unpacked).
+3. Click the extension's action icon to open the options page.
+4. Once a user script has been configured, visit https://example.com/.
+
+## Features
+
+This sample allows you to inject the following:
+
+- Files
+- Arbitrary code
+
+## Implementation Notes
+
+The User Scripts API requires users to enabled developer mode. We check for this by attempting to access `chrome.userScripts`, which throws an error on property access if it is disabled.
+
+When a change is made on the options page, use the `chrome.userScripts` API to update the user script registration.
+
+
+// sw.js
+// Copyright 2023 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     https://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+chrome.runtime.onInstalled.addListener(({ reason }) => {
+  if (reason == chrome.runtime.OnInstalledReason.INSTALL) {
+    chrome.runtime.openOptionsPage();
+  }
+});
+
+chrome.action.onClicked.addListener(() => {
+  chrome.runtime.openOptionsPage();
+});
+
+
+// user-script.js
+// Copyright 2023 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     https://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+alert('Hello World!');
+
+
