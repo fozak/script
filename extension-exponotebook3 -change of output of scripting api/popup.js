@@ -21,28 +21,32 @@ marked.setOptions({ renderer });
 async function executeInTab(code) {
     try {
         const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-        
+
+        // Prepare the function to execute the code
+        const executeCode = `
+            (function() {
+                try {
+                    ${code}
+                } catch (e) {
+                    console.error('Error executing code:', e);
+                }
+            })();
+        `;
+
         // Execute the script in the context of the active tab
-        const result = await chrome.scripting.executeScript({
+        await chrome.scripting.executeScript({
             target: { tabId: tab.id },
-            func: (code) => {
-                // Create a new script element
-                const script = document.createElement('script');
-                script.textContent = `(() => { ${code} })();`; // Wrap in an IIFE
-                document.body.appendChild(script); // Append it to the body to execute it
-                // Optionally, remove the script after execution
-                // document.body.removeChild(script);
-            },
-            args: [code] // Pass the code as an argument to the function
+            func: new Function('code', executeCode), // Use a different approach to execute
+            args: [code] // Pass the code as an argument
         });
 
-        // Since the result does not capture the output of the executed code, 
-        // you may want to directly return some output or state from your code.
-        return { success: true, data: result }; // 'result' will likely be an array of undefined
+        return { success: true, message: "Script executed successfully." };
     } catch (error) {
         return { success: false, error: error.message };
     }
 }
+
+
 // Event listener for code execution
 document.addEventListener('click', async (e) => {
     if (e.target.classList.contains('run-button')) {
