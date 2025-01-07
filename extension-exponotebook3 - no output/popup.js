@@ -1,3 +1,7 @@
+//this is popup.js - main part of chrome extension with manifest v3 that should run the user dynamic scripts generated here.
+//due to security limitations in chrome preventing running user scripts scripting API is used in the below  await chrome.scripting.executeScript({
+// check the logic of this executution and returning to popup the result
+//do not change other then async function executeInTab(code) { and processing the result part 
 let conversationHistory = [];
 
 const renderer = new marked.Renderer();
