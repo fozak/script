@@ -1,3 +1,25 @@
+<!--added file type checking and size limitations. Here's the updated version:
+File Combiner with Type and Size RestrictionsClick to open code
+The key changes I made to the code include:
+
+Added a list of image file extensions to exclude
+Created a function to check if a file is an image based on its extension
+Added a function to extract the first 10 lines of text for large files
+Added size checking (6KB = 6144 bytes)
+Created a tracking system for skipped files
+Enhanced the message display to show which files were skipped or truncated
+Added error styling for better visual feedback
+Improved the message formatting with line breaks
+
+Now the application will:
+
+Skip any image files completely
+For files larger than 6KB, only include the first 10 lines
+Show a detailed report of which files were skipped or truncated
+Still maintain the original functionality for valid files
+
+-->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,15 +41,34 @@
             font-weight: bold;
             color: green;
         }
+        .error {
+            color: red;
+        }
     </style>
 </head>
 <body>
-
 <h1>Combine Files from a Directory</h1>
 <button id="combineBtn">Select Directory and Combine Files</button>
 <div id="message"></div>
-
 <script>
+    // List of image file extensions to exclude
+    const imageExtensions = new Set([
+        'jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp', 
+        'tiff', 'svg', 'ico', 'heic', 'avif'
+    ]);
+
+    // Function to check if a file is an image based on extension
+    function isImageFile(filename) {
+        const extension = filename.split('.').pop().toLowerCase();
+        return imageExtensions.has(extension);
+    }
+
+    // Function to get first 10 lines of text
+    function getFirst10Lines(text) {
+        const lines = text.split('\n');
+        return lines.slice(0, 10).join('\n');
+    }
+
     document.getElementById('combineBtn').addEventListener('click', selectDirectory);
 
     async function selectDirectory() {
@@ -35,15 +76,31 @@
             // Ask user to select a directory
             const dirHandle = await window.showDirectoryPicker();
             let combinedText = '';
-            const processedFiles = new Set(); // Track processed file names
+            const processedFiles = new Set(); // Track processed files
+            const skippedFiles = []; // Track skipped files for reporting
 
             // Iterate through files in the selected directory
             for await (const [name, handle] of dirHandle.entries()) {
                 if (handle.kind === 'file' && !processedFiles.has(name)) {
+                    // Skip image files
+                    if (isImageFile(name)) {
+                        skippedFiles.push(`${name} (image file)`);
+                        continue;
+                    }
+
                     const file = await handle.getFile();
+                    
+                    // Check file size (6KB = 6144 bytes)
                     const text = await file.text();
-                    combinedText += `// ${name}\n${text}\n\n`; // Add separator and two new lines for spacing
-                    processedFiles.add(name); // Mark this file as processed
+                    let processedText = text;
+                    
+                    if (file.size > 6144) {
+                        processedText = getFirst10Lines(text);
+                        skippedFiles.push(`${name} (truncated to 10 lines due to size > 6KB)`);
+                    }
+
+                    combinedText += `// ${name}\n${processedText}\n\n`;
+                    processedFiles.add(name);
                 }
             }
 
@@ -53,13 +110,23 @@
             await writableStream.write(combinedText);
             await writableStream.close();
 
-            document.getElementById('message').innerText = 'Combined file created successfully: combined.txt';
+            // Display success message and skipped files
+            let message = 'Combined file created successfully: combined.txt\n\n';
+            if (skippedFiles.length > 0) {
+                message += 'Skipped or modified files:\n- ' + skippedFiles.join('\n- ');
+            }
+            
+            const messageElement = document.getElementById('message');
+            messageElement.innerHTML = message.replace(/\n/g, '<br>');
+            messageElement.classList.remove('error');
+
         } catch (error) {
             console.error('Error:', error);
-            document.getElementById('message').innerText = 'Error: ' + error.message;
+            const messageElement = document.getElementById('message');
+            messageElement.innerText = 'Error: ' + error.message;
+            messageElement.classList.add('error');
         }
     }
 </script>
-
 </body>
 </html>
