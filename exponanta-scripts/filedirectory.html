@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Directory File Explorer</title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Directory File Explorer</h1>
+    <button id="combineBtn">Select Directory</button>
+    <table id="fileTable">
+        <thead>
+            <tr>
+                <th>File Path</th>
+                <th>File Content (First 7KB)</th>
+                <th>File Size (KB)</th>
+                <th>Last Updated</th>
+                <th>Notes</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script>
+        document.getElementById('combineBtn').addEventListener('click', selectDirectory);
+
+        async function selectDirectory() {
+            try {
+                // Ask user to select a directory
+                const dirHandle = await window.showDirectoryPicker();
+                const tableBody = document.querySelector('#fileTable tbody');
+                tableBody.innerHTML = ''; // Clear previous results
+
+                // Iterate through files in the selected directory
+                for await (const [name, handle] of dirHandle.entries()) {
+                    await processFile(handle, name, tableBody);
+                }
+
+                // Initialize DataTable
+                $('#fileTable').DataTable();
+            } catch (error) {
+                console.error('Error selecting directory:', error);
+            }
+        }
+
+        async function processFile(handle, name, tableBody) {
+            if (handle.kind === 'file') {
+                const file = await handle.getFile();
+                const filePath = handle.name; // Modify if needed to get full path
+                const fileSizeKB = (file.size / 1024).toFixed(2);
+                const lastUpdated = file.lastModified ? new Date(file.lastModified).toLocaleString() : 'N/A';
+                let content = '';
+
+                // Check if the file is a media file
+                const mediaTypes = [
+                    'image',
+                    'video',
+                    'audio',
+                    'application/pdf', // PDF documents
+                    'application/zip',  // ZIP archives
+                    'application/x-rar-compressed', // RAR archives
+                    'application/octet-stream' // General binary files
+                ];
+
+                const isMediaFile = mediaTypes.some(type => file.type.startsWith(type));
+
+                if (!isMediaFile) {
+                    const reader = new FileReader();
+                    reader.onload = function (event) {
+                        content = event.target.result.substring(0, 7000); // Get first 7KB
+                        addRowToTable(tableBody, filePath, content, fileSizeKB, lastUpdated);
+                    };
+                    reader.readAsText(file.slice(0, 7000)); // Read first 7KB
+                } else {
+                    addRowToTable(tableBody, filePath, 'Media file - no content', fileSizeKB, lastUpdated);
+                }
+            } else if (handle.kind === 'directory') {
+                for await (const [subName, subHandle] of handle.entries()) {
+                    await processFile(subHandle, subName, tableBody); // Recursively process subdirectories
+                }
+            }
+        }
+
+        function addRowToTable(tableBody, filePath, content, fileSize, lastUpdated) {
+            const row = tableBody.insertRow();
+            row.insertCell(0).textContent = filePath;
+            row.insertCell(1).textContent = content;
+            row.insertCell(2).textContent = fileSize;
+            row.insertCell(3).textContent = lastUpdated;
+            row.insertCell(4).textContent = ''; // Empty notes column
+        }
+    </script>
+
+</body>
+
+</html>
