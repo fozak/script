@@ -4,16 +4,12 @@ document.getElementById('inject-button').addEventListener('click', async () => {
 
     if (script) {
         try {
-            // Retrieve existing scripts
-            const existingScripts = await chrome.userScripts.getAll();
-
-            // Check if the script with the same ID is already registered
-            const existingScript = existingScripts.find(s => s.id === USER_SCRIPT_ID);
-
-            // If it exists, unregister it to avoid the duplicate ID error
-            if (existingScript) {
+            // Unregister the existing script if needed
+            try {
                 await chrome.userScripts.unregister(USER_SCRIPT_ID);
                 alert('Previous script unregistered successfully.');
+            } catch (e) {
+                // Ignore errors if the script was not previously registered
             }
 
             // Register the new user script to run on all domains
@@ -29,13 +25,12 @@ document.getElementById('inject-button').addEventListener('click', async () => {
             alert('Script registered successfully! It will run on all domains.');
 
             // Optionally execute the script immediately on the active tab
-            const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-            await chrome.scripting.executeScript({
-                target: { tabId: tab.id },
-                func: new Function(script) // Execute the script as a function
+            chrome.userScripts.onBeforeScriptExecute.addListener((details) => {
+                if (details.scriptId === USER_SCRIPT_ID) {
+                    alert('Script executed in the active tab!');
+                }
             });
 
-            alert('Script executed in the active tab!');
         } catch (error) {
             console.error('Failed to register or execute script:', error);
             alert('Error: ' + error.message);
