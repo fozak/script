@@ -39,6 +39,7 @@
         <thead>
             <tr>
                 <th>File Path</th>
+                <th>File Content (First 7KB)</th>
                 <th>File Size (KB)</th>
                 <th>Last Updated</th>
                 <th>Notes</th>
@@ -68,12 +69,9 @@
                 const files = await response.json();
 
                 if (Array.isArray(files)) {
-                    files.forEach(file => {
-                        const filePath = file.path;
-                        const fileSizeKB = (file.size / 1024).toFixed(2);
-                        const lastUpdated = new Date(file.last_modified).toLocaleString();
-                        addRowToTable(tableBody, filePath, fileSizeKB, lastUpdated);
-                    });
+                    for (const file of files) {
+                        await processFile(file, tableBody);
+                    }
                 } else {
                     console.error('Error fetching repository contents:', files);
                 }
@@ -85,12 +83,47 @@
             }
         }
 
-        function addRowToTable(tableBody, filePath, fileSize, lastUpdated) {
+        async function processFile(file, tableBody) {
+            const filePath = file.path;
+            const fileSizeKB = (file.size / 1024).toFixed(2);
+            const lastUpdated = new Date(file.last_modified).toLocaleString();
+            let content = '';
+
+            // Check if the file is a media file
+            const mediaTypes = [
+                'image',
+                'video',
+                'audio',
+                'application/pdf', // PDF documents
+                'application/zip',  // ZIP archives
+                'application/x-rar-compressed', // RAR archives
+                'application/octet-stream' // General binary files
+            ];
+
+            const isMediaFile = mediaTypes.some(type => file.type && file.type.startsWith(type));
+
+            if (!isMediaFile) {
+                try {
+                    const fileResponse = await fetch(file.download_url);
+                    const textContent = await fileResponse.text();
+                    content = textContent.substring(0, 7000); // Get first 7KB
+                    addRowToTable(tableBody, filePath, content, fileSizeKB, lastUpdated);
+                } catch (error) {
+                    console.error('Error reading file content:', error);
+                    addRowToTable(tableBody, filePath, 'Error reading content', fileSizeKB, lastUpdated);
+                }
+            } else {
+                addRowToTable(tableBody, filePath, 'Media file - no content', fileSizeKB, lastUpdated);
+            }
+        }
+
+        function addRowToTable(tableBody, filePath, content, fileSize, lastUpdated) {
             const row = tableBody.insertRow();
             row.insertCell(0).textContent = filePath;
-            row.insertCell(1).textContent = fileSize;
-            row.insertCell(2).textContent = lastUpdated;
-            row.insertCell(3).textContent = ''; // Empty notes column
+            row.insertCell(1).textContent = content;
+            row.insertCell(2).textContent = fileSize;
+            row.insertCell(3).textContent = lastUpdated;
+            row.insertCell(4).textContent = ''; // Empty notes column
         }
     </script>
 
