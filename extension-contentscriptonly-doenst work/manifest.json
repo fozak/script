@@ -1,0 +1,13 @@
+{
+    "manifest_version": 3,
+    "name": "JS Executor Overlay",
+    "version": "1.0",
+    "description": "A simple overlay to execute JavaScript code in the browser.",
+    "permissions": ["activeTab"],
+    "content_scripts": [
+      {
+        "matches": ["<all_urls>"],
+        "js": ["content.js"]
+      }
+    ]
+  }
