@@ -1,6 +1,5 @@
-//popup.js
 document.addEventListener('DOMContentLoaded', displayKeys);
-//function to view saved html - woorking
+
 async function viewSavedHTML(key) {
     chrome.runtime.sendMessage({ 
         action: 'getHTML', 
@@ -23,33 +22,7 @@ async function viewSavedHTML(key) {
             alert('Error viewing the saved page. Please try again.');
         }
     });
-} 
-/* SLOW IMPLEMENTATION
-    async function viewSavedHTML(key) {
-        console.log('viewSavedHTML called with key:', key);
-        
-        chrome.runtime.sendMessage({ action: 'getHTML', key: key }, response => {
-            console.log('Received response:', response);
-            
-            if (response.status !== 'success' || !response.html) {
-                console.error('Error retrieving HTML:', response.error);
-                alert('Error viewing the saved page. Please try again.');
-                return;
-            }
-    
-            // Construct the HTML content directly
-            const htmlContent = `<!DOCTYPE html>${response.html}`;
-    
-            // Create a new tab with the HTML content as a data URL
-            chrome.tabs.create({ 
-                url: 'data:text/html;charset=utf-8,' + encodeURIComponent(htmlContent) 
-            }, tab => {
-                console.log('New tab created with HTML content.');
-            });
-        });
-    }
-*/
-//end of new function to view saved html
+}
 
 async function displayKeys() {
     try {
@@ -60,7 +33,7 @@ async function displayKeys() {
             }
 
             const keys = response.keys;
-
+            
             if ($.fn.DataTable.isDataTable('#table-keys')) {
                 $('#table-keys').DataTable().destroy();
             }
@@ -73,13 +46,13 @@ async function displayKeys() {
                     const urlEndIndex = key.indexOf(' ');
                     const url = urlEndIndex !== -1 ? key.substring(0, urlEndIndex) : key;
                     const buttonId = `delete-${index}`;
-
+                    
                     const row = document.createElement('tr');
-
+                    
                     const keyCell = document.createElement('td');
                     keyCell.textContent = key;
                     row.appendChild(keyCell);
-
+                    
                     const linkCell = document.createElement('td');
                     const originalLink = document.createElement('a');
                     originalLink.href = url;
@@ -87,9 +60,9 @@ async function displayKeys() {
                     originalLink.textContent = 'Original';
                     originalLink.className = 'mr-2';
                     linkCell.appendChild(originalLink);
-
+                    
                     linkCell.appendChild(document.createTextNode(' | '));
-
+                    
                     const savedLink = document.createElement('a');
                     savedLink.href = '#';
                     savedLink.textContent = 'Saved';
@@ -98,9 +71,9 @@ async function displayKeys() {
                         viewSavedHTML(key);
                     });
                     linkCell.appendChild(savedLink);
-
+                    
                     row.appendChild(linkCell);
-
+                    
                     const buttonCell = document.createElement('td');
                     const deleteButton = document.createElement('button');
                     deleteButton.id = buttonId;
@@ -108,9 +81,9 @@ async function displayKeys() {
                     deleteButton.addEventListener('click', () => deleteKey(key));
                     buttonCell.appendChild(deleteButton);
                     row.appendChild(buttonCell);
-
+                    
                     tableBody[0].appendChild(row);
-
+                    
                 } catch (err) {
                     console.error('Error processing key:', err);
                 }
@@ -122,7 +95,7 @@ async function displayKeys() {
                     {
                         targets: 0,
                         width: '50%',
-                        render: function (data, type, row) {
+                        render: function(data, type, row) {
                             if (type === 'display') {
                                 return `<div title="${data.replace(/"/g, '&quot;')}">${data}</div>`;
                             }
@@ -155,12 +128,12 @@ async function displayKeys() {
                 scrollY: '400px',
                 scrollCollapse: true,
                 responsive: true,
-                initComplete: function (settings, json) {
+                initComplete: function(settings, json) {
                     $('.dataTables_filter input').attr('placeholder', 'Type to search...');
                 }
             });
 
-            $(window).on('resize', function () {
+            $(window).on('resize', function() {
                 if ($.fn.DataTable.isDataTable('#table-keys')) {
                     $('#table-keys').DataTable().columns.adjust();
                 }
@@ -180,9 +153,9 @@ function deleteKey(key) {
     }
 
     if (confirm('Are you sure you want to delete this saved page?')) {
-        chrome.runtime.sendMessage({
-            action: 'deleteKey',
-            key: key
+        chrome.runtime.sendMessage({ 
+            action: 'deleteKey', 
+            key: key 
         }, response => {
             if (response.status === 'success') {
                 displayKeys();
@@ -194,7 +167,7 @@ function deleteKey(key) {
     }
 }
 
-window.onerror = function (msg, url, lineNo, columnNo, error) {
+window.onerror = function(msg, url, lineNo, columnNo, error) {
     console.error('Error: ' + msg + '\nURL: ' + url + '\nLine: ' + lineNo + '\nColumn: ' + columnNo + '\nError object: ' + JSON.stringify(error));
     return false;
 };

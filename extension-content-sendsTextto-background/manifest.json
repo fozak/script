@@ -11,5 +11,11 @@
         "matches": ["<all_urls>"],
         "js": ["content.js"]
       }
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": ["math.min.js"],
+            "matches": ["<all_urls>"]
+        }
     ]
   }

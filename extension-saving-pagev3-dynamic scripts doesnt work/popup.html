@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="imported/jquery.dataTables.css">
+    <link rel="stylesheet" type="text/css" href="imported/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" type="text/css" href="popup-styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="table-section">
+            <h2>Saved Webpages</h2>
+            <div class="table-container">
+                <table id="table-keys" class="display">
+                    <thead>
+                        <tr>
+                            <th>Title & Preview</th>
+                            <th>Link</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="chat-section">
+            <div id="chat-box" class="chat-box"></div>
+            <textarea id="user-input" class="user-input" placeholder="Type your message here..."></textarea>
+            <div class="button-container">
+                <button id="send-button">Send</button>
+                <button id="settings-button">Settings</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="imported/jquery-3.7.1.min.js"></script>
+    <script src="imported/jquery.dataTables.min.js"></script>
+    <script src="imported/marked.min.js"></script>
+    <script src="popup.js"></script>
+    <script src="chat.js"></script>
+</body>
+</html>
