@@ -292,10 +292,7 @@
             chatBox.appendChild(aiSeparator);
 
             chatBox.scrollTop = chatBox.scrollHeight;
-            //added message to tab 
-            chrome.runtime.sendMessage({ type: "fromSeparate", data: "Hello from separate.htm!" }, (response) => {
-                console.log("Response from background:", response);
-            });
+
         });
     </script>
 </body>
