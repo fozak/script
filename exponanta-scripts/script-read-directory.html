@@ -1,0 +1,76 @@
+<body></body>
+<script>
+    // Create input to select files
+const fileInput = document.createElement('input');
+fileInput.type = 'file';
+fileInput.id = 'fileInput';
+fileInput.webkitdirectory = true; // Allow directory selection
+fileInput.multiple = true; // Allow multiple file selection
+
+// Create button to generate file info
+const generateButton = document.createElement('button');
+generateButton.id = 'generateButton';
+generateButton.textContent = 'Generate File Info';
+
+// Create pre element to display output
+const output = document.createElement('pre');
+output.id = 'output';
+
+// Append elements to the body (or a specific container)
+document.body.appendChild(fileInput);
+document.body.appendChild(generateButton);
+document.body.appendChild(output);
+
+// Add event listener for the button
+generateButton.addEventListener('click', () => {
+    const files = Array.from(fileInput.files); // Convert FileList to an array
+    const fileInfoOutput = {};
+
+    if (files.length === 0) {
+        output.textContent = "No files selected. Please select a directory.";
+        return;
+    }
+
+    let readCount = 0;
+    files.forEach(file => {
+        const key = file.name;
+        const reader = new FileReader();
+
+        reader.onload = (event) => {
+            fileInfoOutput[key] = {
+                size: file.size,
+                name: file.name,
+                path: file.webkitRelativePath,
+                last_modified: file.lastModifiedDate ? file.lastModifiedDate.toISOString() : null,
+                created: new Date().toISOString(), // No way to get created date in browser
+                format: file.type,
+                mimetype: file.type,
+                content: event.target.result, // This would be the content of the file
+                writable: true,
+                type: "file" // Just marking as a file
+            };
+
+            // Increment the read count
+            readCount++;
+
+            // Check if all files have been read
+            if (readCount === files.length) {
+                output.textContent = JSON.stringify(fileInfoOutput, null, 2);
+            }
+        };
+
+        reader.onerror = (error) => {
+            console.error("Error reading file:", error);
+            fileInfoOutput[key] = {
+                error: "Error reading file"
+            };
+            readCount++;
+            if (readCount === files.length) {
+                output.textContent = JSON.stringify(fileInfoOutput, null, 2);
+            }
+        };
+
+        reader.readAsText(file); // Read file as text; change to readAsArrayBuffer if needed
+    });
+});
+</script>

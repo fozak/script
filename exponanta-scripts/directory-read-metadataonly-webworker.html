@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Metadata Generator</title>
+</head>
+<body>
+    <input type="file" id="fileInput" webkitdirectory multiple>
+    <button id="generateButton">Generate File Info</button>
+    <pre id="output"></pre>
+
+    <script>
+        // Create a new Web Worker
+        const worker = new Worker('worker.js');
+
+        const fileInput = document.getElementById('fileInput');
+        const generateButton = document.getElementById('generateButton');
+        const output = document.getElementById('output');
+
+        // Event listener for the button
+        generateButton.addEventListener('click', () => {
+            const files = Array.from(fileInput.files); // Convert FileList to an array
+            if (files.length === 0) {
+                output.textContent = "No files selected. Please select a directory.";
+                return;
+            }
+            worker.postMessage(files); // Send files to the worker for processing
+        });
+
+        // Handle messages received from the worker
+        worker.onmessage = function(event) {
+            const fileInfoOutput = event.data;
+            output.textContent = JSON.stringify(fileInfoOutput, null, 2);
+        };
+    </script>
+</body>
+</html>

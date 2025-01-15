@@ -1,0 +1,86 @@
+<body></body>
+<script>
+    // Create input to select files
+const fileInput = document.createElement('input');
+fileInput.type = 'file';
+fileInput.id = 'fileInput';
+fileInput.webkitdirectory = true; // Allow directory selection
+fileInput.multiple = true; // Allow multiple file selection
+
+// Create button to generate file info
+const generateButton = document.createElement('button');
+generateButton.id = 'generateButton';
+generateButton.textContent = 'Generate File Info';
+
+// Create pre element to display output
+const output = document.createElement('pre');
+output.id = 'output';
+
+// Append elements to the body (or a specific container)
+document.body.appendChild(fileInput);
+document.body.appendChild(generateButton);
+document.body.appendChild(output);
+
+// Add event listener for the button
+generateButton.addEventListener('click', async () => {
+    const files = Array.from(fileInput.files); // Convert FileList to an array
+    const fileInfoOutput = {};
+
+    if (files.length === 0) {
+        output.textContent = "No files selected. Please select a directory.";
+        return;
+    }
+
+    const readFile = (file) => {
+        return new Promise((resolve, reject) => {
+            const key = file.name; // Get the file name
+            const relativePath = file.webkitRelativePath; // Get the relative path
+
+            // Check if the file has already been processed
+            if (fileInfoOutput[key]) {
+                resolve(); // Skip if already processed
+                return;
+            }
+
+            const reader = new FileReader();
+
+            reader.onload = (event) => {
+                fileInfoOutput[key] = {
+                    size: file.size,
+                    name: file.name,
+                    path: relativePath, // Use relative path here
+                    last_modified: file.lastModifiedDate ? file.lastModifiedDate.toISOString() : null,
+                    created: new Date().toISOString(), // No way to get created date in the browser
+                    format: file.type,
+                    mimetype: file.type,
+                    content: event.target.result, // This would be the content of the file
+                    writable: true,
+                    type: "file" // Just marking as a file
+                };
+                resolve(); // Resolve the promise when done
+            };
+
+            reader.onerror = (error) => {
+                console.error("Error reading file:", error);
+                fileInfoOutput[key] = {
+                    error: "Error reading file"
+                };
+                resolve(); // Resolve instead of reject to allow other files to be processed
+            };
+
+            reader.readAsText(file); // Read file as text; change to readAsArrayBuffer if needed
+        });
+    };
+
+    // Create an array of promises for each file read operation
+    const readPromises = files.map(file => readFile(file));
+
+    try {
+        // Wait for all file read operations to complete
+        await Promise.all(readPromises);
+        output.textContent = JSON.stringify(fileInfoOutput, null, 2);
+    } catch (error) {
+        output.textContent = "One or more files could not be read.";
+    }
+});
+</script>
