@@ -1,0 +1,65 @@
+<body>
+<!-- TODO: rewrite this -->
+
+<p>Revisioned text1</p>
+<!-- TODOend: -->
+
+
+<!-- TODO: -->
+<!-- History:
+    - Revision 1: <p>Some text</p>
+    - Revision 2: <p>Updated text with new information</p>
+-->
+<p>Revisioned text</p>
+<!-- TODOend: -->
+
+
+
+<script>
+    //ERROR this capturing only one
+    function extractTodoContent() {
+    const sections = [];
+    let capturing = false;
+    let currentContent = [];
+    
+    const iterator = document.createNodeIterator(
+        document.body,
+        NodeFilter.SHOW_ALL,
+        null,
+        false
+    );
+
+    let node;
+    while (node = iterator.nextNode()) {
+        if (node.nodeType === Node.COMMENT_NODE) {
+            const commentText = node.textContent.trim();
+            
+            if (commentText.startsWith('TODO:') || commentText === 'TODO') {
+                capturing = true;
+                currentContent = [];
+                continue;
+            }
+            
+            if (commentText.includes('TODOend:')) {
+                if (capturing && currentContent.length > 0) {
+                    sections.push(currentContent.join('\n'));
+                }
+                capturing = false;
+                continue;
+            }
+        }
+        
+        if (capturing && node.nodeType === Node.ELEMENT_NODE) {
+            currentContent.push(node.outerHTML);
+        }
+    }
+    
+    return sections;
+}
+
+        // Using the function
+        const todos = extractTodoContent();
+        console.log(todos);
+</script>
+
+<body>

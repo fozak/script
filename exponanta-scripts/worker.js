@@ -4,7 +4,7 @@ self.onmessage = function(event) {
     const fileInfoOutput = {};
 
     files.forEach(file => {
-        const key = file.name; // Get the file name
+        const key = file.webkitRelativePath;//file.name; // Get the file name
         const relativePath = file.webkitRelativePath; // Get the relative path
 
         // Store only metadata

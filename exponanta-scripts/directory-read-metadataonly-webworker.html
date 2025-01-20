@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>File Metadata Generator</title>
+    <title>File Metadata Generator</title> <!--TODO: remove-->
 </head>
 <body>
     <input type="file" id="fileInput" webkitdirectory multiple>
@@ -11,6 +11,8 @@
     <pre id="output"></pre>
 
     <script>
+        //TODO: add global variable to store the list of files
+    //FIXME: add global variable to store the list of files
         // Create a new Web Worker
         const worker = new Worker('worker.js');
 
