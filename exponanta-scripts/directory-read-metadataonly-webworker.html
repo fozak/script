@@ -37,6 +37,7 @@
             // Create a script tag to hold the JSON data
             const scriptTag = document.createElement('script');
             scriptTag.type = 'application/json'; // Set type to application/json
+            scriptTag.id = 'jsondata'; // Set the id attribute to 'jsondata'
             scriptTag.textContent = JSON.stringify(fileInfoOutput, null, 2); // Add the JSON data
 
             // Append the script tag to the body or any other appropriate element
