@@ -79,30 +79,38 @@ Still maintain the original functionality for valid files
             const processedFiles = new Set(); // Track processed files
             const skippedFiles = []; // Track skipped files for reporting
 
-            // Iterate through files in the selected directory
-            for await (const [name, handle] of dirHandle.entries()) {
-                if (handle.kind === 'file' && !processedFiles.has(name)) {
-                    // Skip image files
-                    if (isImageFile(name)) {
-                        skippedFiles.push(`${name} (image file)`);
-                        continue;
-                    }
+            // Recursive function to process files in directories
+            async function processDirectory(directoryHandle) {
+                for await (const [name, handle] of directoryHandle.entries()) {
+                    if (handle.kind === 'file' && !processedFiles.has(name)) {
+                        // Skip image files
+                        if (isImageFile(name)) {
+                            skippedFiles.push(`${name} (image file)`);
+                            continue;
+                        }
 
-                    const file = await handle.getFile();
-                    
-                    // Check file size (6KB = 6144 bytes)
-                    const text = await file.text();
-                    let processedText = text;
-                    
-                    if (file.size > 6144) {
-                        processedText = getFirst10Lines(text);
-                        skippedFiles.push(`${name} (truncated to 10 lines due to size > 6KB)`);
-                    }
+                        const file = await handle.getFile();
+                        
+                        // Check file size (6KB = 6144 bytes)
+                        const text = await file.text();
+                        let processedText = text;
+                        
+                        if (file.size > 6144) {
+                            processedText = getFirst10Lines(text);
+                            skippedFiles.push(`${name} (truncated to 10 lines due to size > 6KB)`);
+                        }
 
-                    combinedText += `// ${name}\n${processedText}\n\n`;
-                    processedFiles.add(name);
+                        combinedText += `// ${name}\n${processedText}\n\n`;
+                        processedFiles.add(name);
+                    } else if (handle.kind === 'directory') {
+                        // Recur for directories
+                        await processDirectory(handle);
+                    }
                 }
             }
+
+            // Start processing the selected directory
+            await processDirectory(dirHandle);
 
             // Create the combined text file
             const combinedFileHandle = await dirHandle.getFileHandle('combined.txt', { create: true });
