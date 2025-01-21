@@ -1,0 +1,1448 @@
+{
+   "10_min": {
+      "message": "10 menit"
+   },
+   "1_min": {
+      "message": "1 menit"
+   },
+   "30_min": {
+      "message": "30 menit"
+   },
+   "5_min": {
+      "message": "5 menit"
+   },
+   "60_min": {
+      "message": "jam"
+   },
+   "Dashboard": {
+      "message": "Dasbor"
+   },
+   "Login": {
+      "message": "Login"
+   },
+   "Off": {
+      "message": "Mati"
+   },
+   "On": {
+      "message": "Pada"
+   },
+   "Selected": {
+      "message": "Terpilih"
+   },
+   "Settings": {
+      "message": "Pengaturan"
+   },
+   "Tutorial": {
+      "message": "Tutorial"
+   },
+   "action": {
+      "message": "Tindakan"
+   },
+   "activateScheduleTab": {
+      "message": "Aktifkan tab terjadwal."
+   },
+   "active": {
+      "message": "Aktif"
+   },
+   "activeAllScheduleTab": {
+      "message": "Menjalankan Penjadwal Tab"
+   },
+   "activeStatus": {
+      "message": "Status"
+   },
+   "actvInactvNotification": {
+      "message": "Tampilkan pemberitahuan saat tab jadwal dibuka"
+   },
+   "actvInactvOpnTb": {
+      "message": "Tab terbuka aktif atau tidak aktif"
+   },
+   "actvIntvClsTb": {
+      "message": "Tutup tab aktif atau tidak aktif"
+   },
+   "add": {
+      "message": "Menambahkan"
+   },
+   "addDescription": {
+      "message": "Tambahkan deskripsi"
+   },
+   "addNew": {
+      "message": "Tambahkan Baru"
+   },
+   "addNewURlCls": {
+      "message": "Tambahkan URL baru untuk menutup"
+   },
+   "addNewUrlToOpen": {
+      "message": "Tambahkan URL baru untuk dibuka di jendela baru"
+   },
+   "addTitle": {
+      "message": "Tambahkan Judul"
+   },
+   "addWebsite": {
+      "message": "Tambahkan situs web"
+   },
+   "all": {
+      "message": "Semua"
+   },
+   "allInputFieldReq": {
+      "message": "Semua kolom wajib diisi"
+   },
+   "all_weeks": {
+      "message": "Sepanjang Minggu"
+   },
+   "alreadyPurchase": {
+      "message": "Sudah Membeli? Masukkan Kunci di Sini"
+   },
+   "andAt": {
+      "message": "dan di"
+   },
+   "annually": {
+      "message": "Setiap tahun"
+   },
+   "appDesc": {
+      "message": "Tab browser akan terbuka dan tertutup secara otomatis pada waktu yang dipilih. Pengguna dapat mengaktifkan/menonaktifkan daftar berdasarkan kebutuhan"
+   },
+   "appName": {
+      "message": "Penjadwal Tab dengan buka dan tutup otomatis"
+   },
+   "april": {
+      "message": "April"
+   },
+   "at": {
+      "message": "pada"
+   },
+   "august": {
+      "message": "Agustus"
+   },
+   "autoFocus": {
+      "message": "Tab Fokus Otomatis"
+   },
+   "autoFocustip": {
+      "message": "Jika aktif, tab baru akan dibuka dalam status aktif/fokus."
+   },
+   "autofocustip": {
+      "message": "Tab baru yang terbuka akan secara otomatis fokus"
+   },
+   "basic": {
+      "message": "Dasar"
+   },
+   "billedAnnyally": {
+      "message": "Ditagih Setiap Tahun"
+   },
+   "billedMonthly": {
+      "message": "Ditagih Bulanan"
+   },
+   "both": {
+      "message": "Keduanya"
+   },
+   "browserOpen": {
+      "message": "Di Browser Buka"
+   },
+   "browserWebAddress": {
+      "message": "Alamat web peramban dimulai dan diakhiri dengan alamat web yang tidak dikenal. Letakkan \u003Cb>*\u003C/b> di kedua sisi kolom Tautan Situs Web masukan Anda."
+   },
+   "browserWebAddress2": {
+      "message": "Alamat web browser berisi nama domain google.com, yang akan ditutup dalam beberapa menit, apa pun subdomain dan jalur halamannya. Beri tanda \u003Cb>*\u003C/b> di kedua sisi nama domain dan TLD"
+   },
+   "browserWebAddress3": {
+      "message": "Alamat web browser dimulai dengan nama domain yang tidak diketahui dan diakhiri dengan jalur halaman yang tidak diketahui"
+   },
+   "browserWebAddress31": {
+      "message": "akan ditutup setelah menit yang ditentukan, beri tanda \u003Cb>*\u003C/b> di kedua sisi TLD"
+   },
+   "browserWebAddress4": {
+      "message": "Alamat web browser dimulai dengan alamat web yang tidak dikenal. Beri tanda \u003Cb>*\u003C/b> di awal URL Anda. Ingat alamat web browser harus sesuai dengan URL Anda setelah \u003Cb>tanda *\u003C/b> yang Anda tulis."
+   },
+   "browserWebAddress41": {
+      "message": "Alamat web browser dimulai dengan subdomain yang tidak diketahui"
+   },
+   "browserWebAddress42": {
+      "message": "di awal Tautan Situs Web Anda"
+   },
+   "browserWebAddress5": {
+      "message": "Alamat web browser diakhiri dengan alamat web yang tidak dikenal. Beri tanda \u003Cb>*\u003C/b> di akhir URL Anda. Ingat alamat web Anda harus sama sebelum \u003Cb>tanda *\u003C/b> yang Anda tulis."
+   },
+   "browserWebAddress51": {
+      "message": "Alamat web browser diakhiri dengan jalur halaman yang tidak diketahui. Beri tanda \u003Cb>*\u003C/b> di akhir alamat web Anda"
+   },
+   "browserWebAddress6": {
+      "message": "Cukup masukkan \u003Cb>tanda *\u003C/b> di kolom alamat situs web untuk menutup semua tab browser. Setelah semua tab ditutup, browser akan ditutup secara otomatis."
+   },
+   "browserWebAddress7": {
+      "message": "Anda harus menuliskan subdomain, domain tingkat atas, nama domain, dan jalur halaman yang tepat di bidang URL untuk dibuka di tab browser."
+   },
+   "browserWebAddress8": {
+      "message": "Anda dapat membuka url pada tanggal dan waktu tertentu, bulan tertentu, minggu tertentu, tahun tertentu, dan waktu pengulangan"
+   },
+   "buyPlan": {
+      "message": "Beli Paket"
+   },
+   "buycofee": {
+      "message": "Belikan Aku Kopi"
+   },
+   "cancel": {
+      "message": "Membatalkan"
+   },
+   "changeLanguage": {
+      "message": "Ubah Bahasa"
+   },
+   "checkAll": {
+      "message": "Periksa Semua"
+   },
+   "checkThisOpToPreventClosePinTb": {
+      "message": "Centang opsi ini untuk mencegah penutupan tab yang disematkan."
+   },
+   "checkThisOptionOnlyPartOfUrlMtch": {
+      "message": "Centang opsi ini jika hanya sebagian URL yang perlu dicocokkan."
+   },
+   "checkThisOptionToActivate": {
+      "message": "Centang opsi ini untuk mengaktifkan atau menonaktifkan url terjadwal Anda."
+   },
+   "checkThisOptionToCloseOnly": {
+      "message": "Centang opsi ini untuk menutup tab penyamaran saja. Aktifkan juga opsi 'Izinkan dalam Penyamaran' di detail ekstensi. Untuk petunjuk, silakan lihat halaman tutorial."
+   },
+   "checkThisOptionToCloseOnlyInIncgnitoTb": {
+      "message": "Centang opsi ini untuk menutup tab penyamaran saja. Aktifkan juga opsi 'Izinkan dalam Penyamaran' di detail ekstensi. Untuk petunjuk, silakan lihat halaman tutorial."
+   },
+   "checkThisOptionToInBg": {
+      "message": "Centang opsi ini jika Anda ingin membuka URL di latar belakang tanpa membukanya di tab baru"
+   },
+   "checkThisOptionToInactivNotification": {
+      "message": "Centang opsi ini untuk menonaktifkan pemberitahuan pada url terjadwal"
+   },
+   "checkThisOptionToOpen": {
+      "message": "Centang opsi ini jika Anda ingin membuka url Anda dalam mode penyamaran"
+   },
+   "checkThisOptionToOpenIncogito": {
+      "message": "Centang opsi ini jika Anda ingin membuka url Anda dalam mode penyamaran"
+   },
+   "checkThisOptionToPrevent": {
+      "message": "Centang opsi ini untuk mencegah penutupan tab yang disematkan."
+   },
+   "clickExtIcon": {
+      "message": "Klik ikon “Ekstensi” di bilah alat, yang tampak seperti potongan puzzle."
+   },
+   "clickTheSwitch": {
+      "message": "Klik tombol di sampingnya untuk menyalakannya"
+   },
+   "close": {
+      "message": "Menutup"
+   },
+   "closeAllTab": {
+      "message": "12. Tutup semua tab browser"
+   },
+   "closeAllTabExm1": {
+      "message": "Dalam contoh di atas URL yang diberikan ada di tab tutup, yang menyatakan akan menutup semua tab pada pukul 12:00 pada 25/2/2023"
+   },
+   "closeDate": {
+      "message": "Tanggal Tutup"
+   },
+   "closeDay": {
+      "message": "Hari Tutup"
+   },
+   "closeEveryYear": {
+      "message": "Tutup setiap tahun pada"
+   },
+   "closeInEvery": {
+      "message": "Tutup di setiap"
+   },
+   "closeIncognitoTab": {
+      "message": "Tutup hanya tab penyamaran"
+   },
+   "closeMinute": {
+      "message": "Tutup Menit"
+   },
+   "closeOnDay": {
+      "message": "Tutup pada hari ini"
+   },
+   "closeOnEvery": {
+      "message": "Tutup setiap saat"
+   },
+   "closeOnEveryDay": {
+      "message": "Tutup setiap hari pada"
+   },
+   "closeOnEveryMonth": {
+      "message": "Tutup setiap bulan pada hari"
+   },
+   "closeOnEveryWeek": {
+      "message": "Tutup setiap minggu pada"
+   },
+   "closeSecond": {
+      "message": "Tutup Kedua"
+   },
+   "closeSeconsMoreThan5": {
+      "message": "Detik-detik terdekat seharusnya lebih dari 5."
+   },
+   "closeTabSchedule": {
+      "message": "Tutup Jadwal Tab"
+   },
+   "closeTabURL": {
+      "message": "Tutup URL Tab"
+   },
+   "closeTime": {
+      "message": "Waktu Tutup"
+   },
+   "closeUrl": {
+      "message": "Tutup Tautan Situs Web"
+   },
+   "closeWeek": {
+      "message": "Minggu Tutup"
+   },
+   "closeWeeks": {
+      "message": "Minggu Tutup"
+   },
+   "close_on": {
+      "message": "Tutup pada"
+   },
+   "cngrtsForSubcr": {
+      "message": "Selamat! Paket Anda telah berhasil diaktifkan."
+   },
+   "commonQuestionsAns": {
+      "message": "Pertanyaan dan jawaban umum"
+   },
+   "copySucessClose": {
+      "message": "Data URL tab Tutup disalin ke data URL tab Buka"
+   },
+   "createNewTimer": {
+      "message": "Buat Pengatur Waktu Baru"
+   },
+   "currentPlan": {
+      "message": "Rencana Saat Ini"
+   },
+   "currentTabSchedule": {
+      "message": "Jadwal tab saat ini"
+   },
+   "currentTbScheduleTimer": {
+      "message": "Pengatur waktu tab saat ini yang terjadwal."
+   },
+   "cusSec": {
+      "message": "Kustom Kedua"
+   },
+   "custMin": {
+      "message": "Menit Kustom"
+   },
+   "custmMinSch": {
+      "message": "7. Jadwal Menit Kustom"
+   },
+   "custmMinSchExm1": {
+      "message": "Dalam contoh di atas URL yang diberikan ada di tab terbuka, yang menyatakan URL yang diberikan dibuka di tab baru Setiap 15 Menit."
+   },
+   "custmMinSchExm2": {
+      "message": "Dalam contoh di atas URL yang diberikan ada di tab tutup, yang menyatakan bahwa URL yang dibuka di tab baru akan ditutup setelah 15 menit."
+   },
+   "customSecondWarning": {
+      "message": "Fungsionalitas detik khusus bersifat eksperimental, dan mungkin tidak berfungsi dengan benar jika detik ditetapkan di bawah 60."
+   },
+   "darkMode": {
+      "message": "Mode Gelap"
+   },
+   "datNotCopy": {
+      "message": "Beberapa data tidak disalin karena URL tidak valid."
+   },
+   "dataSaved": {
+      "message": "Data pengatur waktu berhasil disimpan"
+   },
+   "date": {
+      "message": "Tanggal"
+   },
+   "dateIsOutOfRange": {
+      "message": "Tanggal di luar jangkauan"
+   },
+   "day": {
+      "message": "Hari"
+   },
+   "december": {
+      "message": "Desember"
+   },
+   "delete": {
+      "message": "Menghapus"
+   },
+   "deleteScheduleTb": {
+      "message": "Hapus tab terjadwal."
+   },
+   "description": {
+      "message": "Keterangan"
+   },
+   "developedBy": {
+      "message": "Dikembangkan oleh:"
+   },
+   "doNotCloseInPinnedTabs": {
+      "message": "Jangan tutup tab yang disematkan"
+   },
+   "doNotShowNotification": {
+      "message": "Jangan tampilkan notifikasi"
+   },
+   "domainName": {
+      "message": "Nama Domain"
+   },
+   "downloadCloseTbSampleCsv": {
+      "message": "Unduh contoh CSV tab tutup untuk melihat contoh format yang diperlukan"
+   },
+   "downloadOpenTbSampleCsv": {
+      "message": "Unduh contoh CSV tab terbuka untuk melihat contoh format yang diperlukan"
+   },
+   "editScheduleTb": {
+      "message": "Edit tab yang terjadwal."
+   },
+   "email": {
+      "message": "E-mail"
+   },
+   "enterDateToCloseTab": {
+      "message": "Masukkan tanggal di sini untuk menutup tab jadwal."
+   },
+   "enterDateToOpen": {
+      "message": "Masukkan tanggal untuk membuka tab jadwal."
+   },
+   "enterMiniutesToCloseTb": {
+      "message": "Masukkan menit untuk menutup tab."
+   },
+   "enterMiniutesToOpen": {
+      "message": "Masukkan menit untuk membuka tab jadwal."
+   },
+   "enterMinute": {
+      "message": "Masukkan Menit"
+   },
+   "enterSecond": {
+      "message": "Masuk Kedua"
+   },
+   "enterSecondsToCloseTab": {
+      "message": "Masukkan detik untuk menutup tab."
+   },
+   "enterSecondsToOpen": {
+      "message": "Masukkan detik untuk membuka tab jadwal."
+   },
+   "enterTilteOfScheduleUrl": {
+      "message": "Masukkan judul URL yang dijadwalkan."
+   },
+   "enterTimeToCloseTab": {
+      "message": "Masukkan waktu di sini untuk menutup tab jadwal."
+   },
+   "enterTimeToSchedule": {
+      "message": "Masukkan waktu untuk membuka tab jadwal."
+   },
+   "enterValidEmail": {
+      "message": "Harap Masukkan Email yang Valid"
+   },
+   "enterValidUrl": {
+      "message": "Harap masukkan URL yang valid"
+   },
+   "enterValueInCloseSec": {
+      "message": "Masukkan nilai dalam hitungan detik"
+   },
+   "enterValueInOpenCloseSec": {
+      "message": "Masukkan nilai dalam detik buka atau tutup"
+   },
+   "enterValueInOpenMinutes": {
+      "message": "Masukkan nilai dalam menit terbuka"
+   },
+   "enterVlaueInCloseMinutes": {
+      "message": "Masukkan nilai dalam hitungan menit"
+   },
+   "enterVlaueInOpenCloseMin": {
+      "message": "Masukkan nilai dalam menit buka atau tutup"
+   },
+   "enterVlaueInOpenSeconds": {
+      "message": "Masukkan nilai dalam detik terbuka"
+   },
+   "enterYourURLToSchedule": {
+      "message": "Masukkan URL Anda untuk menjadwalkan."
+   },
+   "every": {
+      "message": "setiap"
+   },
+   "every10Min": {
+      "message": "Setiap 10 Menit"
+   },
+   "every1Minute": {
+      "message": "setiap 1 menit"
+   },
+   "every30Min": {
+      "message": "Setiap 30 Menit"
+   },
+   "every5Min": {
+      "message": "Setiap 5 Menit"
+   },
+   "everyDay": {
+      "message": "Setiap hari"
+   },
+   "everyDayAt": {
+      "message": "setiap hari di"
+   },
+   "everyHour": {
+      "message": "Setiap Jam"
+   },
+   "everyMinute": {
+      "message": "Setiap Menit"
+   },
+   "everyMonth": {
+      "message": "Setiap Bulan"
+   },
+   "everyMonthOn": {
+      "message": "setiap bulan pada"
+   },
+   "everyMonthOnDay": {
+      "message": "setiap bulan pada hari"
+   },
+   "everyWeek": {
+      "message": "Setiap Minggu"
+   },
+   "everyWeekOn": {
+      "message": "setiap minggu pada"
+   },
+   "everyYear": {
+      "message": "Setiap Tahun"
+   },
+   "everyYesrOn": {
+      "message": "setiap tahun pada"
+   },
+   "evr10MinSch": {
+      "message": "2. Jadwal Setiap 10 Menit"
+   },
+   "evr10MinSchExm1": {
+      "message": "Dalam contoh di atas URL yang diberikan ada di tab terbuka, yang menyatakan URL yang diberikan akan terbuka di tab baru setiap 10 menit."
+   },
+   "evr10MinSchExm2": {
+      "message": "Dalam contoh di atas URL yang diberikan ada di tab tutup, yang menyatakan bahwa URL yang dibuka di tab baru akan ditutup setelah 10 menit."
+   },
+   "evrDaySch": {
+      "message": "3. Jadwal Setiap Hari"
+   },
+   "evrDaySchExm1": {
+      "message": "Dalam contoh di atas URL yang diberikan ada di tab terbuka, yang menyatakan bahwa URL akan terbuka di tab baru Setiap Hari pada pukul 17:27"
+   },
+   "evrDaySchExm2": {
+      "message": "Dalam contoh di atas URL yang diberikan ada di tab tutup, yang menyatakan bahwa tab yang sudah dibuka akan ditutup pada pukul 17:27 setiap hari"
+   },
+   "evrMonthSch": {
+      "message": "5.Jadwal Setiap Bulan"
+   },
+   "evrMonthSchExm1": {
+      "message": "Dalam contoh di atas URL yang diberikan ada di tab terbuka, yang menyatakan URL tersebut akan terbuka di tab baru Setiap Bulan pada pukul 13:45 pada hari ke-25"
+   },
+   "evrMonthSchExm2": {
+      "message": "Dalam contoh di atas URL yang diberikan ada di tab tutup, yang menyatakan akan menutup tab yang sudah dibuka pada Setiap Bulan pukul 13:45 pada hari ke-25"
+   },
+   "evrWeekSch": {
+      "message": "4.Jadwal Setiap Minggu"
+   },
+   "evrWeekSchExm1": {
+      "message": "Dalam contoh di atas, URL yang diberikan berada di tab terbuka, yang menyatakan bahwa URL tersebut akan terbuka di tab baru setiap minggu pada pukul 17:00 pada \u003Cb>hari Senin &amp; Selasa\u003C/b> ."
+   },
+   "evrWeekSchExm2": {
+      "message": "Dalam contoh di atas, URL yang diberikan ada di tab tutup, yang menyatakan bahwa tab yang sudah dibuka akan ditutup pada Setiap Minggu pukul 17:00 pada \u003Cb>hari Senin &amp; Selasa\u003C/b> ."
+   },
+   "evrWeekSchExm3": {
+      "message": "Dalam contoh di atas, beberapa hari dapat dipilih dalam pengatur waktu seminggu."
+   },
+   "evrYearSch": {
+      "message": "6.Jadwal Setiap Tahun"
+   },
+   "evrYearSchExm1": {
+      "message": "Dalam contoh di atas URL yang diberikan ada di tab terbuka, yang menyatakan bahwa URL tersebut akan terbuka di tab baru Setiap Tahun pada pukul 13:35 pada tanggal 1 Januari"
+   },
+   "evrYearSchExm2": {
+      "message": "Dalam contoh di atas URL yang diberikan ada di tab tutup, yang menyatakan akan menutup tab yang sudah dibuka setiap tahun pada pukul 13:35 tanggal 1 Januari"
+   },
+   "exampleSort": {
+      "message": "misalnya"
+   },
+   "exdMaxLim": {
+      "message": "Melebihi jumlah perangkat maksimum yang diizinkan!"
+   },
+   "exmpOpnClsTbSch": {
+      "message": "Contoh cara membuka dan menutup tab di Tab Scheduler"
+   },
+   "expLicKy": {
+      "message": "Kunci lisensi ini telah kedaluwarsa."
+   },
+   "export": {
+      "message": "Ekspor"
+   },
+   "exportBefore": {
+      "message": "Kamu sudah punya\u003Cexday>\u003C/exday>hari tersisa, Silakan berlangganan untuk terus menikmati fitur premium"
+   },
+   "exportClsTbDta": {
+      "message": "Ekspor data tab tutup"
+   },
+   "exportOpenTbDt": {
+      "message": "Ekspor data tab terbuka"
+   },
+   "exportedData": {
+      "message": "Data pengatur waktu berhasil diekspor"
+   },
+   "extensionShouldAble": {
+      "message": "Sekarang, ekstensi tersebut seharusnya dapat menutup tab dalam mode Penyamaran."
+   },
+   "faq": {
+      "message": "Tanya Jawab Umum"
+   },
+   "faq_1": {
+      "message": "Apa itu Penjadwal Tab dengan Buka dan Tutup Otomatis?"
+   },
+   "faq_10": {
+      "message": "Bagaimana cara melihat tab terjadwal saya?"
+   },
+   "faq_11": {
+      "message": "Apakah wajib untuk mengisi waktu buka dan waktu tutup?"
+   },
+   "faq_12": {
+      "message": "Apa fungsi fitur Tab Fokus Otomatis, Aktifkan Semua Tab Terjadwal, dan Mode Daya?"
+   },
+   "faq_13": {
+      "message": "Bisakah saya membuka/menutup Tautan Situs Web terjadwal di tab penyamaran?"
+   },
+   "faq_14": {
+      "message": "Apa gunanya tab Refresh jika URL sudah terbuka?"
+   },
+   "faq_2": {
+      "message": "Apa gunanya Tautan Situs Web?"
+   },
+   "faq_3": {
+      "message": "Bagaimana cara menjadwalkan URL menggunakan Tab Scheduler?"
+   },
+   "faq_4": {
+      "message": "Apa itu opsi 'Buka URL di Latar Belakang'?"
+   },
+   "faq_5": {
+      "message": "Bisakah saya mencegah ekstensi menutup tab yang disematkan?"
+   },
+   "faq_6": {
+      "message": "Apa maksud tipe jadwal 'Keduanya'?"
+   },
+   "faq_7": {
+      "message": "Bagaimana cara kerja fitur 'Penyaringan URL'?"
+   },
+   "faq_8": {
+      "message": "Bisakah saya menonaktifkan tab terjadwal tanpa menghapusnya?"
+   },
+   "faq_9": {
+      "message": "Apakah saya akan menerima pemberitahuan untuk tab yang terjadwal?"
+   },
+   "faq_a_1": {
+      "message": "\u003Cp>Penjadwal Tab dengan Buka dan Tutup Otomatis adalah ekstensi peramban yang memungkinkan pengguna menjadwalkan tab untuk dibuka dan ditutup secara otomatis pada waktu yang ditentukan. Pengguna dapat memilih jadwal satu kali atau mengatur jadwal berulang dengan berbagai opsi frekuensi. Ekstensi ini memiliki berbagai tujuan bagi pengguna dan menyediakan banyak fitur yang berguna bagi Anda.\u003C/p>"
+   },
+   "faq_a_10": {
+      "message": "Semua tab terjadwal ditampilkan dalam daftar yang menunjukkan judul, tautan situs web, waktu buka dan tutup, status, dan tindakan yang dapat Anda lakukan (misalnya, mengaktifkan, mengedit, menghapus)."
+   },
+   "faq_a_11": {
+      "message": "Tidak, Anda dapat menjadwalkan waktu buka atau waktu tutup. Namun, Anda harus mengisi atau memilih kolom yang wajib diisi yang ditandai dengan tanda bintang (*)."
+   },
+   "faq_a_12": {
+      "message": "Tab Fokus Otomatis memastikan bahwa saat tab terjadwal terbuka, Aktifkan Semua Tab Terjadwal memungkinkan Anda untuk mengaktifkan semua tab terjadwal dengan cepat hanya dengan satu klik. Mode Daya mengoptimalkan kinerja ekstensi dengan mengelola sumber daya browser secara lebih efisien."
+   },
+   "faq_a_13": {
+      "message": "Ya, Anda dapat memilih untuk membuka tab terjadwal dalam mode penyamaran dengan memilih opsi \"Buka dalam mode penyamaran\". Anda dapat memilih untuk menutup hanya tab penyamaran dengan memilih opsi \"Tutup hanya tab penyamaran\", asalkan \"Izinkan dalam Penyamaran\" diaktifkan di setelan ekstensi"
+   },
+   "faq_a_14": {
+      "message": "Bila opsi ini diaktifkan, ekstensi akan secara otomatis menyegarkan tab yang ada jika URL yang sama sudah terbuka di browser Anda. Ini mencegah pembukaan tab duplikat dan memastikan bahwa Anda selalu memiliki versi terbaru dari halaman yang dimuat."
+   },
+   "faq_a_14_1": {
+      "message": "Jika Anda mencoba membuka https://github.com/ dan tab tersebut sudah terbuka di tab lain, ekstensi akan menyegarkan tab tersebut alih-alih membuka tab baru."
+   },
+   "faq_a_14_2": {
+      "message": "Jika https://github.com/ sudah terbuka di tiga tab, ekstensi akan menyegarkan ketiga tab tersebut."
+   },
+   "faq_a_2": {
+      "message": "Tautan Situs Web adalah alamat situs web pada tab terbuka browser Anda. Cara menggunakan alamat situs web disebutkan di bawah ini."
+   },
+   "faq_a_3": {
+      "message": "Untuk menjadwalkan URL, masukkan tautan situs web, beri judul pada jadwal, pilih frekuensi (Satu Kali, Setiap Menit, Setiap Hari, dsb.), dan pilih waktu buka dan tutup. Anda juga dapat menentukan tanggal, hari, atau detik untuk membuka dan menutup tab."
+   },
+   "faq_a_4": {
+      "message": "\u003Cp>Opsi ini memberi Anda kendali penuh untuk menjadwalkan URL agar dibuka di latar belakang tanpa menampilkan tab baru. URL akan terbuka secara diam-diam sementara Anda terus bekerja di tab lain. Opsi ini sangat berguna saat Anda memerlukan browser untuk mengambil data dari URL terjadwal tanpa menampilkannya secara aktif, seperti dalam kasus permintaan API GET.\u003C/p>\u003Cbr> \u003Cp>Misalnya, jika Anda ingin mengambil data dari titik akhir API pada waktu tertentu secara berkala, Anda dapat menggunakan opsi efisien ini untuk menjalankan permintaan di latar belakang tanpa membuka tab baru yang terlihat.\u003C/p>"
+   },
+   "faq_a_5": {
+      "message": "Ya, ada opsi untuk mencegah penutupan tab yang disematkan. Centang opsi \"Jangan tutup tab yang disematkan\" untuk memastikan tab ini tetap terbuka meskipun memenuhi kriteria penutupan lainnya."
+   },
+   "faq_a_6": {
+      "message": "Jenis jadwal 'Keduanya' memberi Anda kendali penuh atas kapan tab dibuka dan ditutup, memungkinkan Anda mengatur waktu tertentu untuk kedua tindakan."
+   },
+   "faq_a_7": {
+      "message": "Penyaringan URL memastikan bahwa hanya bagian tertentu dari URL yang perlu dicocokkan agar tindakan terjadwal dapat dilakukan. Ini berguna saat Anda ingin mengotomatiskan tindakan tertentu berdasarkan kecocokan URL parsial. Misalnya, jika Anda mencentang opsi Penyaringan URL untuk URL https://example.com/page, opsi ini juga akan berlaku untuk URL seperti https://example.com/page/123, https://example.com/page?query=example, dan https://subdomain.example.com/page."
+   },
+   "faq_a_8": {
+      "message": "Dengan opsi \"Aktifkan tab terjadwal ini\", Anda dapat dengan mudah mengaktifkan atau menonaktifkan tab terjadwal, memberikan Anda fleksibilitas untuk mengelola jadwal tanpa kehilangan konfigurasi."
+   },
+   "faq_a_9": {
+      "message": "Secara default, Anda akan menerima notifikasi. Namun, jika Anda ingin menghentikan notifikasi, Anda dapat mencentang opsi \"Jangan tampilkan notifikasi\" untuk menonaktifkannya."
+   },
+   "february": {
+      "message": "Februari"
+   },
+   "filterTips": {
+      "message": "Filter berlaku setelah 'https://' atau 'www.', Misal 'github.com'"
+   },
+   "for_exp": {
+      "message": "Misalnya"
+   },
+   "freeForever": {
+      "message": "Gratis Selamanya"
+   },
+   "freeSchedule": {
+      "message": "jadwal gratis"
+   },
+   "freeTral": {
+      "message": "Sebagai pengguna awal yang berharga, Anda akan menikmati\u003Crday>120\u003C/rday>hari akses gratis sebelum beralih ke paket berbayar baru kami—terima kasih atas dukungan Anda yang berkelanjutan!\u003Cp class=\"p-t-5\">Kamu sudah punya\u003Cb>\u003Cspan>\u003C/span>\u003C/b>hari tersisa dari Anda\u003Crday>120\u003C/rday>-hari periode bebas.\u003Cafex class=\"warning\">\u003Cafex>\u003C/afex>\u003C/afex>\u003C/p> "
+   },
+   "frequentlyAskedQuestions": {
+      "message": "Pertanyaan yang sering diajukan"
+   },
+   "friday": {
+      "message": "Jumat"
+   },
+   "getThisPlan": {
+      "message": "Dapatkan Paket Ini"
+   },
+   "goToSettingsPageToSchedule": {
+      "message": "Buka halaman pengaturan untuk menjadwalkan pembukaan dan penutupan URL."
+   },
+   "goURL": {
+      "message": "Pergi ke URL"
+   },
+   "helpAccordion12": {
+      "message": "Apakah ekstensi ini berfungsi dalam mode tidur/tidur?"
+   },
+   "helpAccordion3": {
+      "message": "Bisakah saya menjadwalkan tab untuk dibuka dalam mode penyamaran?"
+   },
+   "helpAccordion6": {
+      "message": "Apa itu \"Waktu habis\"?"
+   },
+   "helpAccordion7": {
+      "message": "Bisakah saya mengekspor URL terjadwal?"
+   },
+   "helpAccordion8": {
+      "message": "Bisakah Saya Mengimpor ke URL Jadwal?"
+   },
+   "helpPanelBodyDesc12First": {
+      "message": "Tidak, ekstensi ini tidak akan berfungsi dalam mode tidur/tidur."
+   },
+   "helpPanelBodyDesc12Second": {
+      "message": "Jika ada URL yang dijadwalkan di tab buka atau tutup, maka PC Anda tidak akan secara otomatis masuk ke mode tidur atau tunda."
+   },
+   "helpPanelBodyDesc3": {
+      "message": "Ya, Anda dapat memilih untuk membuka tab terjadwal dalam mode penyamaran dengan memilih opsi 'Buka dalam mode penyamaran'. Pastikan opsi 'Izinkan dalam mode Penyamaran' pada ekstensi diaktifkan dalam pengaturan ekstensi browser."
+   },
+   "helpPanelBodyDesc6": {
+      "message": "- Tanggal dan waktu yang diberikan dilewatkan dari tanggal dan waktu saat ini, lalu teks \"Waktu Kedaluwarsa\" akan ditampilkan."
+   },
+   "helpPanelBodyDesc7": {
+      "message": "Ya, Anda dapat mengekspor URL tab terbuka dan tab tertutup yang telah dijadwalkan dalam format csv dan menggunakannya dengan sistem lain untuk mengimpor URL tersebut."
+   },
+   "helpPanelBodyDesc8": {
+      "message": "Ya, Anda dapat mengimpor URL buka dan tutup yang valid dalam format csv. Format csv yang diimpor akan secara otomatis dijadwalkan pada waktu yang ditentukan"
+   },
+   "herAreStepsToAllow": {
+      "message": "Berikut langkah-langkah untuk \"Izinkan dalam Penyamaran\" di Google Chrome:"
+   },
+   "home": {
+      "message": "Rumah"
+   },
+   "hour_minute_close": {
+      "message": "Setiap Jam Tutup Menit"
+   },
+   "hour_minute_open": {
+      "message": "Setiap Jam Buka Menit"
+   },
+   "how_to_use_tab": {
+      "message": "Bagaimana cara menggunakan Penjadwal Tab?"
+   },
+   "import": {
+      "message": "Impor"
+   },
+   "importClsTbDta": {
+      "message": "Impor data tab tutup"
+   },
+   "importExport": {
+      "message": "Impor/Ekspor"
+   },
+   "importOpenTbDt": {
+      "message": "Impor data tab terbuka"
+   },
+   "importedRecored": {
+      "message": ", impor direkam"
+   },
+   "inactivateScheduleTab": {
+      "message": "Nonaktifkan tab terjadwal."
+   },
+   "inactive": {
+      "message": "Tidak aktif"
+   },
+   "inactiveSch": {
+      "message": "8.URL Tidak Aktif"
+   },
+   "inactiveSchExm1": {
+      "message": "Dalam contoh di atas URL yang diberikan ada di tab terbuka atau tab tertutup, yang menyatakan URL yang diberikan tidak aktif dan tidak akan melakukan tindakan apa pun."
+   },
+   "inactiveThisScheduledTabs": {
+      "message": "Aktifkan tab terjadwal ini"
+   },
+   "invalidDuplicate": {
+      "message": ", duplikat atau tidak valid yang direkam"
+   },
+   "invldLicKy": {
+      "message": "Kunci lisensi tidak valid!"
+   },
+   "isClose": {
+      "message": "sudah dekat"
+   },
+   "isOpen": {
+      "message": "terbuka"
+   },
+   "january": {
+      "message": "Januari"
+   },
+   "july": {
+      "message": "Juli"
+   },
+   "june": {
+      "message": "Juni"
+   },
+   "licKeyDis": {
+      "message": "Kunci lisensi ini dinonaktifkan."
+   },
+   "listTitle": {
+      "message": "Penjadwal Tab"
+   },
+   "loading": {
+      "message": "Harap tunggu..."
+   },
+   "locale": {
+      "message": "id"
+   },
+   "march": {
+      "message": "Berbaris"
+   },
+   "maxSchedule": {
+      "message": "4 Batasan jadwal maksimum"
+   },
+   "may": {
+      "message": "Mungkin"
+   },
+   "mintValid": {
+      "message": "Minimal 1 menit diperlukan"
+   },
+   "minute": {
+      "message": "Menit"
+   },
+   "minutesNotLessThan1": {
+      "message": "Menit tidak boleh kurang dari 1."
+   },
+   "monday": {
+      "message": "Senin"
+   },
+   "month": {
+      "message": "Bulan"
+   },
+   "monthly": {
+      "message": "Bulanan"
+   },
+   "more": {
+      "message": "lagi"
+   },
+   "mostSubscribe": {
+      "message": "Paling Banyak Berlangganan"
+   },
+   "no": {
+      "message": "TIDAK"
+   },
+   "noDataToExport": {
+      "message": "Tidak ada data untuk diekspor."
+   },
+   "noScheduledTabs": {
+      "message": "Tidak ada tab terjadwal"
+   },
+   "noTimerSetAddNewTimer": {
+      "message": "Tidak ada pengatur waktu yang ditetapkan, Klik tombol Tambah untuk mengatur pengatur waktu baru"
+   },
+   "not_show_tutorial": {
+      "message": "Jangan tampilkan tutorial ini lagi"
+   },
+   "notificationOpenTab": {
+      "message": "13. Pemberitahuan saat membuka/menutup URL tab"
+   },
+   "notificationOpenTabExm1": {
+      "message": "Dalam contoh di atas URL yang diberikan ada di tab terbuka, yang menyatakan akan memberikan pemberitahuan dan membuka/menutup URL di tab baru setiap 5 menit."
+   },
+   "notifications": {
+      "message": "Pemberitahuan"
+   },
+   "november": {
+      "message": "November"
+   },
+   "october": {
+      "message": "Oktober"
+   },
+   "onTheExtensionDetailPage": {
+      "message": "Pada halaman detail ekstensi, gulir ke bawah dan temukan opsi “Izinkan dalam penyamaran”."
+   },
+   "oneTime": {
+      "message": "Suatu Kali"
+   },
+   "oneTmSch": {
+      "message": "1. Jadwal Satu Kali"
+   },
+   "oneTmSchExm1": {
+      "message": "Dalam contoh di atas URL yang diberikan ada di tab terbuka, yang menyatakan bahwa URL akan terbuka di tab baru Suatu Saat pada pukul 13:45 pada 21/1/2023"
+   },
+   "oneTmSchExm2": {
+      "message": "Dalam contoh di atas URL yang diberikan ada di tab tutup, yang menyatakan akan menutup semua tab URL yang cocok pada pukul 13:45 pada 21/1/2023"
+   },
+   "open": {
+      "message": "Membuka"
+   },
+   "openBackground": {
+      "message": "Jika ya, Memuat URL di latar belakang tanpa membukanya di tab baru"
+   },
+   "openDate": {
+      "message": "Tanggal Buka"
+   },
+   "openDay": {
+      "message": "Hari Terbuka"
+   },
+   "openEveryDayOn": {
+      "message": "Buka setiap hari pada"
+   },
+   "openEveryMonthOn": {
+      "message": "Buka setiap bulan pada hari"
+   },
+   "openEveryWeekOn": {
+      "message": "Buka setiap minggu pada"
+   },
+   "openEveryYearOn": {
+      "message": "Buka setiap tahun pada"
+   },
+   "openGoogleChrome": {
+      "message": "Buka Google Chrome."
+   },
+   "openInBackground": {
+      "message": "Buka URL di Latar Belakang"
+   },
+   "openInEvery": {
+      "message": "Buka setiap hari"
+   },
+   "openInIncognito": {
+      "message": "Buka dalam mode penyamaran"
+   },
+   "openMinute": {
+      "message": "Buka Menit"
+   },
+   "openOnDay": {
+      "message": "Buka pada Siang Hari"
+   },
+   "openOnEvery": {
+      "message": "Buka setiap hari"
+   },
+   "openSecond": {
+      "message": "Buka Kedua"
+   },
+   "openSecondsMoreThan5": {
+      "message": "Detik terbuka harus lebih dari 5."
+   },
+   "openTabSchedule": {
+      "message": "Jadwal Tab Terbuka"
+   },
+   "openTabURL": {
+      "message": "Buka URL Tab"
+   },
+   "openTime": {
+      "message": "Waktu Buka"
+   },
+   "openUrl": {
+      "message": "Buka Tautan Situs Web"
+   },
+   "openWeek": {
+      "message": "Minggu Terbuka"
+   },
+   "openWeeks": {
+      "message": "Minggu Terbuka"
+   },
+   "open_on": {
+      "message": "Buka pada"
+   },
+   "optional": {
+      "message": "Opsional"
+   },
+   "or": {
+      "message": "atau"
+   },
+   "outof": {
+      "message": "dari"
+   },
+   "pagePath": {
+      "message": "Jalur Halaman"
+   },
+   "paidFeature": {
+      "message": "Fitur Berbayar"
+   },
+   "pauseSchedule": {
+      "message": "Mulai atau Hentikan semua jadwal"
+   },
+   "pauseTabScheduler": {
+      "message": "Penjadwal Tab yang Dijeda"
+   },
+   "pleaseAllowIncognitoMessage": {
+      "message": "Harap aktifkan opsi 'Izinkan dalam mode Penyamaran' di detail ekstensi. Untuk petunjuk, silakan lihat halaman tutorial."
+   },
+   "pleaseShareYourSuggestions": {
+      "message": "Mohon sampaikan saran Anda."
+   },
+   "plsShreAnySugWithUs": {
+      "message": "Tolong berikan saran untuk meningkatkan kami"
+   },
+   "powerMode": {
+      "message": "Mode Daya"
+   },
+   "premium": {
+      "message": "Premi"
+   },
+   "pricePlan": {
+      "message": "Harga &amp; Paket"
+   },
+   "privcyPolicy": {
+      "message": "Kebijakan Privasi"
+   },
+   "prowerModeTip": {
+      "message": "Jaga agar sistem selalu aktif dengan mengaktifkan Mode Daya"
+   },
+   "put": {
+      "message": "Meletakkan"
+   },
+   "rateUs": {
+      "message": "Nilai Kami"
+   },
+   "removeDuplicateEntry": {
+      "message": "Harap hapus entri duplikat"
+   },
+   "removeOpenTbURL": {
+      "message": "Hapus URL tab yang terbuka"
+   },
+   "repeat": {
+      "message": "Mengulang"
+   },
+   "requiredMsg": {
+      "message": "Diperlukan"
+   },
+   "rmvClsTb": {
+      "message": "Hapus URL tab tutup"
+   },
+   "sameTabs": {
+      "message": "Segarkan tab jika URL sudah terbuka"
+   },
+   "sameTabsInfo": {
+      "message": "Cegah pembukaan beberapa tab untuk URL yang sama. Misalnya, jika www.google.com sudah dibuka, maka tab yang sudah ada akan disegarkan alih-alih membuka tab baru untuknya."
+   },
+   "sampleCsvOpenPath": {
+      "message": "../sample_csv/en/open_tab_sample.csv"
+   },
+   "sampleFile": {
+      "message": "Contoh berkas"
+   },
+   "saturday": {
+      "message": "Sabtu"
+   },
+   "savOpnData": {
+      "message": "Simpan data tab terbuka"
+   },
+   "save": {
+      "message": "Menyimpan"
+   },
+   "saveClsTbData": {
+      "message": "Simpan data tab tutup"
+   },
+   "saveSchedule": {
+      "message": "Simpan Jadwal"
+   },
+   "scheduleCloseTab": {
+      "message": "Jadwal Tutup Tab"
+   },
+   "scheduleCurrentTab": {
+      "message": "Jadwalkan tab saat ini"
+   },
+   "scheduleOpenTab": {
+      "message": "Jadwal Buka Tab"
+   },
+   "scheduledTabIsAlreadyExistWithSameTimer": {
+      "message": "Tab terjadwal ini sudah ada dengan pengatur waktu yang sama."
+   },
+   "scheduledTabList": {
+      "message": "Daftar Tab Terjadwal"
+   },
+   "scheduledType": {
+      "message": "Jenis Jadwal"
+   },
+   "search": {
+      "message": "Mencari"
+   },
+   "secValid": {
+      "message": "Minimal 5 detik diperlukan"
+   },
+   "second": {
+      "message": "Kedua"
+   },
+   "selectCloseDate": {
+      "message": "Pilih tanggal tutup"
+   },
+   "selectCloseDay": {
+      "message": "Pilih hari tutup"
+   },
+   "selectCloseTime": {
+      "message": "Pilih waktu tutup"
+   },
+   "selectColumn": {
+      "message": "Pilih Kolom"
+   },
+   "selectDateAndTime": {
+      "message": "Pilih tanggal dan waktu untuk membuka tab baru"
+   },
+   "selectDateAndTimeClsTb": {
+      "message": "Pilih tanggal dan waktu untuk menutup tab"
+   },
+   "selectDayToCloseSchTb": {
+      "message": "Pilih hari untuk menutup tab jadwal."
+   },
+   "selectDayToClsTb": {
+      "message": "Pilih hari untuk menutup tab"
+   },
+   "selectDayToSchdule": {
+      "message": "Pilih hari untuk menjadwalkan tab."
+   },
+   "selectDaysInWeek": {
+      "message": "Pilih hari dalam seminggu"
+   },
+   "selectDaysInWeekIClsTime": {
+      "message": "Pilih hari dalam seminggu dalam penghitung waktu tertutup."
+   },
+   "selectDaysInWeekIOpClsTime": {
+      "message": "Pilih hari dalam seminggu dalam pengatur waktu buka atau tutup."
+   },
+   "selectDaysInWeekIOpTime": {
+      "message": "Pilih hari dalam seminggu pada pengatur waktu terbuka."
+   },
+   "selectFrequency": {
+      "message": "Pilih Frekuensi"
+   },
+   "selectFrequencyOfScheduleUrl": {
+      "message": "Pilih frekuensi URL yang dijadwalkan."
+   },
+   "selectOpenDate": {
+      "message": "Pilih tanggal buka"
+   },
+   "selectOpenDay": {
+      "message": "Pilih hari terbuka"
+   },
+   "selectOpenOrClose": {
+      "message": "Pilih waktu buka dan tutup"
+   },
+   "selectOpenOrCloseDate": {
+      "message": "Pilih tanggal buka dan tutup"
+   },
+   "selectOpenOrCloseDay": {
+      "message": "Pilih hari buka dan tutup"
+   },
+   "selectOpenTime": {
+      "message": "Pilih waktu buka"
+   },
+   "selectPreferredLanguage": {
+      "message": "Pilih bahasa yang Anda inginkan."
+   },
+   "selectToOpenTab": {
+      "message": "Pilih hari untuk membuka tab baru"
+   },
+   "selectTypTimerClsTb": {
+      "message": "Pilih jenis pengatur waktu untuk menutup tab"
+   },
+   "selectTypeOfSchedule": {
+      "message": "Pilih jenis jadwal, jika Anda ingin membuka dan menutup keduanya, pilih \"Keduanya\"."
+   },
+   "selectTypeOfTimer": {
+      "message": "Pilih jenis pengatur waktu untuk membuka tab baru"
+   },
+   "select_weeks": {
+      "message": "Pilih Minggu"
+   },
+   "september": {
+      "message": "September"
+   },
+   "settingSave": {
+      "message": "Pengaturan berhasil disimpan"
+   },
+   "settingToClose": {
+      "message": "Pengaturan untuk menutup tab dalam mode penyamaran."
+   },
+   "shareYourSuggestionWithUs": {
+      "message": "Bagikan saran Anda dengan kami.."
+   },
+   "slectDayToScheduleWeekly": {
+      "message": "Pilih hari untuk menjadwalkan tab mingguan."
+   },
+   "slectMinute": {
+      "message": "Pilih Menit"
+   },
+   "smthngWrng": {
+      "message": "Ada yang salah"
+   },
+   "softpulseInfotech": {
+      "message": "Softpulse Infotech"
+   },
+   "somethingWentWrong": {
+      "message": "Terjadi kesalahan. Segarkan halaman dan coba lagi."
+   },
+   "status": {
+      "message": "Status"
+   },
+   "subcrKeyShldNEmpt": {
+      "message": "Silakan masukkan kunci berlangganan."
+   },
+   "subdomain": {
+      "message": "Subdomain"
+   },
+   "subkeyInputTitle": {
+      "message": "Masukkan kunci berlangganan"
+   },
+   "submFeedBack": {
+      "message": "Kirim"
+   },
+   "suggForTbSch": {
+      "message": "Saran untuk penjadwal tab"
+   },
+   "suggestionAndRateUs": {
+      "message": "Saran &amp; Nilai kami"
+   },
+   "sunday": {
+      "message": "Minggu"
+   },
+   "tabCloseOneTime": {
+      "message": "Tab hanya akan ditutup satu kali pada"
+   },
+   "tabSchTutorial": {
+      "message": "Tutorial Penjadwal Tab"
+   },
+   "tabScheduler": {
+      "message": "Penjadwal Tab"
+   },
+   "tabSchedulerOptions": {
+      "message": "Opsi Penjadwal Tab"
+   },
+   "tabWillOpenOneTime": {
+      "message": "Tab hanya akan terbuka satu kali di"
+   },
+   "tabWillOpenWhenBrowserOpen": {
+      "message": "Tab akan terbuka saat browser dibuka di"
+   },
+   "termCondition": {
+      "message": "Syarat &amp; Ketentuan"
+   },
+   "thanksFrRev": {
+      "message": "Terima Kasih Atas Ulasan Anda"
+   },
+   "thnkUFeedBack": {
+      "message": "Terima kasih atas saran Anda"
+   },
+   "thnkUFrUsngTbSch": {
+      "message": "Tolong berikan saran untuk meningkatkan kami"
+   },
+   "thursday": {
+      "message": "Kamis"
+   },
+   "time": {
+      "message": "Waktu"
+   },
+   "timeExpired": {
+      "message": "Waktu Kedaluwarsa"
+   },
+   "timer": {
+      "message": "Pengatur waktu"
+   },
+   "title": {
+      "message": "Judul"
+   },
+   "titleLengtWarn": {
+      "message": "Panjang judul tidak boleh lebih dari 200 karakter."
+   },
+   "toScheduledOpenTbMsg": {
+      "message": "Untuk menjadwalkan pembukaan tab, harap hapus centang pada pemfilteran url."
+   },
+   "toogleCloseTab": {
+      "message": "Mulai/Hentikan alarm jadwal untuk semua URL tab yang ditutup"
+   },
+   "toogleDarkmode": {
+      "message": "Beralih antara mode gelap dan mode default untuk menyesuaikan pengalaman menonton Anda."
+   },
+   "toogleOff": {
+      "message": "Mati"
+   },
+   "toogleOn": {
+      "message": "Pada"
+   },
+   "toogleOpenTab": {
+      "message": "Mulai/Hentikan alarm jadwal untuk semua URL tab yang terbuka"
+   },
+   "topLevelDomain": {
+      "message": "Domain Tingkat Atas"
+   },
+   "totalProcessed": {
+      "message": "Total tercatat diproses"
+   },
+   "tuesday": {
+      "message": "Selasa"
+   },
+   "tutorialImg1": {
+      "message": "\u003Cimg src=\"../images/en/1.png\">"
+   },
+   "tutorialImg10": {
+      "message": "\u003Cimg src=\"../images/en/10.png\">"
+   },
+   "tutorialImg11": {
+      "message": "\u003Cimg src=\"../images/en/11.png\">"
+   },
+   "tutorialImg12": {
+      "message": "\u003Cimg src=\"../images/en/12.png\">"
+   },
+   "tutorialImg13": {
+      "message": "\u003Cimg src=\"../images/en/13.png\">"
+   },
+   "tutorialImg14": {
+      "message": "\u003Cimg src=\"../images/en/14.png\">"
+   },
+   "tutorialImg2": {
+      "message": "\u003Cimg src=\"../images/en/2.png\">"
+   },
+   "tutorialImg3": {
+      "message": "\u003Cimg src=\"../images/en/3.png\">"
+   },
+   "tutorialImg4": {
+      "message": "\u003Cimg src=\"../images/en/4.png\">"
+   },
+   "tutorialImg5": {
+      "message": "\u003Cimg src=\"../images/en/5.png\">"
+   },
+   "tutorialImg6": {
+      "message": "\u003Cimg src=\"../images/en/6.png\">"
+   },
+   "tutorialImg7": {
+      "message": "\u003Cimg src=\"../images/en/7.png\">"
+   },
+   "tutorialImg8": {
+      "message": "\u003Cimg src=\"../images/en/8.png\">"
+   },
+   "tutorialImg9": {
+      "message": "\u003Cimg src=\"../images/en/9.png\">"
+   },
+   "uncheckAll": {
+      "message": "Hapus centang Semua"
+   },
+   "unlimitedSchedule": {
+      "message": "Batas jadwal tidak terbatas"
+   },
+   "unspecifiedURL": {
+      "message": "11. URL jalur tidak ditentukan"
+   },
+   "unspecifiedURLExm1": {
+      "message": "Dalam contoh di atas URL yang diberikan ada di tab tutup, yang menyatakan bahwa URL yang dibuka di tab baru dan dimulai serta diakhiri dengan alamat web yang tidak dikenal akan ditutup setelah 5 menit."
+   },
+   "upgradePlan": {
+      "message": "Silakan Beli Paket ATAU Masuk &amp; Tingkatkan paket Anda untuk membuka lebih banyak fitur."
+   },
+   "upgradePlanUnlock": {
+      "message": "Tingkatkan paket Anda untuk membuka lebih banyak fitur."
+   },
+   "uploadValidFormat": {
+      "message": "Harap unggah format yang valid"
+   },
+   "url": {
+      "message": "Alamat URL-nya"
+   },
+   "urlContExat": {
+      "message": "Penyaringan URL"
+   },
+   "urlEndWithUnspesifiedPth": {
+      "message": "9. URL diakhiri dengan jalur yang tidak ditentukan"
+   },
+   "urlEndWithUnspesifiedPthExm1": {
+      "message": "Dalam contoh di atas, URL yang diberikan ada di tab tutup, yang menyatakan bahwa URL yang dibuka di tab baru dan diakhiri dengan jalur tidak dikenal akan ditutup setelah 5 menit."
+   },
+   "urlFilterInfo": {
+      "message": "Berisi URL yang sedang diperiksa hanya memerlukan sebagian URL dan URL Tepat yang sedang diperiksa harus sama persis dengan URL yang ditentukan"
+   },
+   "urlFilterinCLoseTb": {
+      "message": "14. Penyaringan URL pada tab tutup URL"
+   },
+   "urlFilterinCLoseTbExample": {
+      "message": "Dalam contoh di atas URL yang diberikan ada di tab tutup, yang menyatakan URL tab yang sudah dibuka cocok dengan beberapa bagian URL yang diberikan sehingga akan menutup tab tersebut"
+   },
+   "urlIsRequired": {
+      "message": "Tautan Situs Web diperlukan"
+   },
+   "urlNotvalid": {
+      "message": "URL tidak valid"
+   },
+   "urlStartWithUnspesifiedPth": {
+      "message": "10. URL dimulai dengan jalur yang tidak ditentukan"
+   },
+   "urlStartWithUnspesifiedPthExm1": {
+      "message": "Dalam contoh di atas URL yang diberikan ada di tab tutup, yang menyatakan bahwa URL yang dibuka di tab baru dan dimulai dengan subdomain tak dikenal \u003Cb>'www'\u003C/b> atau \u003Cb>'blog'\u003C/b> akan ditutup setelah 5 menit."
+   },
+   "useSpecificUrl": {
+      "message": "Gunakan Tautan Situs Web Tertentu"
+   },
+   "useSpecificUrl1": {
+      "message": "Anda harus menuliskan subdomain, domain tingkat atas, nama domain, dan jalur halaman yang tepat di bidang Tautan Situs Web pada tab browser yang ditutup."
+   },
+   "useSpecificUrl2": {
+      "message": "Gunakan tutup semua tab browser"
+   },
+   "useSpecificUrl3": {
+      "message": "Gunakan Tautan Situs Web yang spesifik dan lengkap"
+   },
+   "useUnSpecificUrl1": {
+      "message": "Gunakan Tautan Situs Web yang tidak ditentukan"
+   },
+   "useUnSpecificUrl2": {
+      "message": "Gunakan mulai dengan Tautan Situs Web yang tidak ditentukan"
+   },
+   "useUnSpecificUrl3": {
+      "message": "Gunakan akhir dengan Tautan Situs Web yang tidak ditentukan"
+   },
+   "used": {
+      "message": "Kamu sudah menggunakannya"
+   },
+   "validFormatCsv": {
+      "message": "Apa format file CSV yang valid untuk mengimpor?"
+   },
+   "websiteLink": {
+      "message": "Tautan Situs Web"
+   },
+   "websiteUrl": {
+      "message": "URL situs web"
+   },
+   "wednesday": {
+      "message": "Rabu"
+   },
+   "weekName": {
+      "message": "Nama Minggu"
+   },
+   "weekly": {
+      "message": "Mingguan"
+   },
+   "whenExtensionTabAppears": {
+      "message": "Saat tab Ekstensi muncul, cari \"Penjadwal Tab dengan buka dan tutup otomatis\" untuk mengaktifkannya dalam mode Penyamaran, lalu klik tombol \"Detail\" di sebelahnya."
+   },
+   "whenMenuPopup": {
+      "message": "Saat menu muncul, pilih \"Kelola ekstensi\"."
+   },
+   "withSignMustFill": {
+      "message": "Dengan tanda \u003Cspan>*\u003C/span> harus diisi atau dipilih, Pilih waktu buka atau tutup atau keduanya."
+   },
+   "writeYourDescriptionAboutSchUrl": {
+      "message": "Tulis deskripsi Anda tentang url terjadwal di sini."
+   },
+   "yes": {
+      "message": "Ya"
+   },
+   "yourEmailAddress": {
+      "message": "Alamat email Anda"
+   },
+   "yourScheduleUrl": {
+      "message": "URL Jadwal Anda"
+   }
+}

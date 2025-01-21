@@ -1,0 +1,4 @@
+URL,Timer,Status,Open Date,Close Date,Open Time,Close Time,Open Week,Close Week,On Browser Open,Open Day,Close Day,Open Minute,Close Minute,Open Second,Close Second,Notification,Title,Description,Open URL in Background,Open in incognito mode,Do not close pinned tabs,Close only incognito tabs,URL Filtering,Schedule Type,Every Hour Open Minute ,Every Hour Close Minute ,Refresh tab if URL is already open
+https://www.google.com/,Every Minute,Active,,,,,,,,,,,,,,Inactive,Close Every Minute,,No,No,No,No,Yes,Close,0,0,Yes
+http://www.w3schools.com/,Every Day,Active,,,16:31,,,,,,,,,,,Inactive,Every Day Open,,No,No,No,No,No,Open,0,0,No
+https://www.flipkart.com/,Custom Minute,Active,,,,,,,,,,120,5,,,Inactive,Open and Close,,No,No,No,No,No,Both,0,0,No

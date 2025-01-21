@@ -1,0 +1,1448 @@
+{
+   "10_min": {
+      "message": "10분"
+   },
+   "1_min": {
+      "message": "1분"
+   },
+   "30_min": {
+      "message": "30분"
+   },
+   "5_min": {
+      "message": "5분"
+   },
+   "60_min": {
+      "message": "시간"
+   },
+   "Dashboard": {
+      "message": "계기반"
+   },
+   "Login": {
+      "message": "로그인"
+   },
+   "Off": {
+      "message": "끄다"
+   },
+   "On": {
+      "message": "~에"
+   },
+   "Selected": {
+      "message": "선택된"
+   },
+   "Settings": {
+      "message": "설정"
+   },
+   "Tutorial": {
+      "message": "지도 시간"
+   },
+   "action": {
+      "message": "행동"
+   },
+   "activateScheduleTab": {
+      "message": "예약된 탭을 활성화합니다."
+   },
+   "active": {
+      "message": "활동적인"
+   },
+   "activeAllScheduleTab": {
+      "message": "탭 스케줄러 실행"
+   },
+   "activeStatus": {
+      "message": "상태"
+   },
+   "actvInactvNotification": {
+      "message": "일정 탭이 열릴 때 알림 표시"
+   },
+   "actvInactvOpnTb": {
+      "message": "활성화 또는 비활성화된 열린 탭"
+   },
+   "actvIntvClsTb": {
+      "message": "활성화 또는 비활성화 탭 닫기"
+   },
+   "add": {
+      "message": "추가하다"
+   },
+   "addDescription": {
+      "message": "설명 추가"
+   },
+   "addNew": {
+      "message": "새로 추가"
+   },
+   "addNewURlCls": {
+      "message": "새 URL을 추가하여 닫기"
+   },
+   "addNewUrlToOpen": {
+      "message": "새 창에서 열릴 새 URL 추가"
+   },
+   "addTitle": {
+      "message": "제목 추가"
+   },
+   "addWebsite": {
+      "message": "웹사이트 추가"
+   },
+   "all": {
+      "message": "모두"
+   },
+   "allInputFieldReq": {
+      "message": "모든 필드는 필수입니다"
+   },
+   "all_weeks": {
+      "message": "일주일 내내"
+   },
+   "alreadyPurchase": {
+      "message": "이미 구매하셨나요? 여기에 키를 입력하세요"
+   },
+   "andAt": {
+      "message": "그리고"
+   },
+   "annually": {
+      "message": "매년"
+   },
+   "appDesc": {
+      "message": "브라우저 탭은 선택한 시간에 자동으로 열리고 닫힙니다. 사용자는 요구 사항에 따라 목록을 활성화/비활성화할 수 있습니다."
+   },
+   "appName": {
+      "message": "자동 열기 및 닫기 기능이 있는 탭 스케줄러"
+   },
+   "april": {
+      "message": "4월"
+   },
+   "at": {
+      "message": "~에"
+   },
+   "august": {
+      "message": "팔월"
+   },
+   "autoFocus": {
+      "message": "자동 초점 탭"
+   },
+   "autoFocustip": {
+      "message": "켜져 있으면 새 탭이 활성/포커스 상태로 열립니다."
+   },
+   "autofocustip": {
+      "message": "새로운 탭이 열리면 자동으로 초점이 맞춰집니다."
+   },
+   "basic": {
+      "message": "기초적인"
+   },
+   "billedAnnyally": {
+      "message": "연간 청구"
+   },
+   "billedMonthly": {
+      "message": "월별 청구"
+   },
+   "both": {
+      "message": "둘 다"
+   },
+   "browserOpen": {
+      "message": "브라우저를 열 때"
+   },
+   "browserWebAddress": {
+      "message": "브라우저의 웹 주소가 알 수 없는 웹 주소로 시작하고 끝납니다. 입력 웹사이트 링크 필드의 양쪽에 \u003Cb>*를 입력하세요.\u003C/b>"
+   },
+   "browserWebAddress2": {
+      "message": "브라우저의 웹 주소에는 도메인 이름 google.com이 포함되어 있으며, 이는 주어진 분 안에 닫힐 것입니다. 하위 도메인과 페이지 경로가 무엇이든. 도메인 이름과 TLD 양쪽에 \u003Cb>*를 넣습니다.\u003C/b>"
+   },
+   "browserWebAddress3": {
+      "message": "브라우저의 웹 주소는 알 수 없는 도메인 이름으로 시작하고 알 수 없는 페이지 경로로 끝납니다."
+   },
+   "browserWebAddress31": {
+      "message": "지정된 분 후에 닫힙니다. TLD 양쪽에 \u003Cb>*를 넣으세요.\u003C/b>"
+   },
+   "browserWebAddress4": {
+      "message": "브라우저의 웹 주소가 알 수 없는 웹 주소로 시작합니다. URL의 시작 부분에 \u003Cb>*를 넣으세요. 브라우저의 웹 주소는 \u003C/b>\u003Cb>*를\u003C/b> 쓴 후 URL과 일치해야 합니다."
+   },
+   "browserWebAddress41": {
+      "message": "브라우저의 웹 주소가 알 수 없는 하위 도메인으로 시작합니다."
+   },
+   "browserWebAddress42": {
+      "message": "웹사이트 링크 시작 부분에서"
+   },
+   "browserWebAddress5": {
+      "message": "브라우저의 웹 주소가 알 수 없는 웹 주소로 끝납니다. URL 끝에 \u003Cb>* 를 넣으세요. \u003C/b>\u003Cb>*\u003C/b> 를 쓰기 전에 웹 주소가 일치해야 한다는 것을 기억하세요."
+   },
+   "browserWebAddress51": {
+      "message": "브라우저의 웹 주소가 알 수 없는 페이지 경로로 끝납니다. 웹 주소 끝에 \u003Cb>* 를 넣으세요.\u003C/b>"
+   },
+   "browserWebAddress6": {
+      "message": "\u003Cb>모든 브라우저 탭을 닫으려면 웹사이트 주소 필드에 *\u003C/b> 만 넣으세요 . 모든 탭을 닫으면 브라우저가 자동으로 닫힙니다."
+   },
+   "browserWebAddress7": {
+      "message": "브라우저 탭에서 열리려면 URL 필드에 정확한 하위 도메인, 최상위 도메인, 도메인 이름, 페이지 경로를 입력해야 합니다."
+   },
+   "browserWebAddress8": {
+      "message": "특정 날짜와 시간, 특정 월, 특정 주, 특정 년도 및 반복 시간에 URL을 열 수 있습니다."
+   },
+   "buyPlan": {
+      "message": "구매 계획"
+   },
+   "buycofee": {
+      "message": "나에게 커피 한 잔 사줘"
+   },
+   "cancel": {
+      "message": "취소"
+   },
+   "changeLanguage": {
+      "message": "언어 변경"
+   },
+   "checkAll": {
+      "message": "모두 확인"
+   },
+   "checkThisOpToPreventClosePinTb": {
+      "message": "고정된 탭이 닫히는 것을 방지하려면 이 옵션을 선택하세요."
+   },
+   "checkThisOptionOnlyPartOfUrlMtch": {
+      "message": "URL의 일부만 일치하면 되는 경우 이 옵션을 선택하세요."
+   },
+   "checkThisOptionToActivate": {
+      "message": "예약된 URL을 활성화하거나 비활성화하려면 이 옵션을 선택하세요."
+   },
+   "checkThisOptionToCloseOnly": {
+      "message": "시크릿 모드 탭만 닫으려면 이 옵션을 체크하세요. 또한 확장 프로그램 세부 정보에서 '시크릿 모드에서 허용' 옵션을 활성화하세요. 지침은 튜토리얼 페이지를 참조하세요."
+   },
+   "checkThisOptionToCloseOnlyInIncgnitoTb": {
+      "message": "시크릿 모드 탭만 닫으려면 이 옵션을 체크하세요. 또한 확장 프로그램 세부 정보에서 '시크릿 모드에서 허용' 옵션을 활성화하세요. 지침은 튜토리얼 페이지를 참조하세요."
+   },
+   "checkThisOptionToInBg": {
+      "message": "새 탭에서 열지 않고 백그라운드에서 URL을 열려면 이 옵션을 선택하세요."
+   },
+   "checkThisOptionToInactivNotification": {
+      "message": "예약된 URL에서 알림을 비활성화하려면 이 옵션을 선택하세요."
+   },
+   "checkThisOptionToOpen": {
+      "message": "시크릿 모드로 URL을 열려면 이 옵션을 선택하세요"
+   },
+   "checkThisOptionToOpenIncogito": {
+      "message": "시크릿 모드로 URL을 열려면 이 옵션을 선택하세요"
+   },
+   "checkThisOptionToPrevent": {
+      "message": "고정된 탭이 닫히는 것을 방지하려면 이 옵션을 선택하세요."
+   },
+   "clickExtIcon": {
+      "message": "도구 모음에서 퍼즐 조각처럼 생긴 \"확장 프로그램\" 아이콘을 클릭합니다."
+   },
+   "clickTheSwitch": {
+      "message": "옆에 있는 스위치를 클릭하여 켜세요."
+   },
+   "close": {
+      "message": "닫다"
+   },
+   "closeAllTab": {
+      "message": "12. 브라우저의 모든 탭을 닫습니다."
+   },
+   "closeAllTabExm1": {
+      "message": "위의 예에서 주어진 URL은 닫기 탭에 있으며, 이는 2023년 2월 25일 12시에 모든 탭을 닫는다고 명시합니다."
+   },
+   "closeDate": {
+      "message": "마감일"
+   },
+   "closeDay": {
+      "message": "휴무일"
+   },
+   "closeEveryYear": {
+      "message": "매년 닫힙니다"
+   },
+   "closeInEvery": {
+      "message": "모든 것을 닫습니다"
+   },
+   "closeIncognitoTab": {
+      "message": "시크릿 모드 탭만 닫기"
+   },
+   "closeMinute": {
+      "message": "마감 분"
+   },
+   "closeOnDay": {
+      "message": "당일 휴무"
+   },
+   "closeOnEvery": {
+      "message": "모든 시간에 닫음"
+   },
+   "closeOnEveryDay": {
+      "message": "매일 휴무"
+   },
+   "closeOnEveryMonth": {
+      "message": "매월 당일 휴무"
+   },
+   "closeOnEveryWeek": {
+      "message": "매주 닫힙니다"
+   },
+   "closeSecond": {
+      "message": "두 번째 닫기"
+   },
+   "closeSeconsMoreThan5": {
+      "message": "근접 2초는 5초 이상이어야 합니다."
+   },
+   "closeTabSchedule": {
+      "message": "탭 일정 닫기"
+   },
+   "closeTabURL": {
+      "message": "탭 URL 닫기"
+   },
+   "closeTime": {
+      "message": "마감 시간"
+   },
+   "closeUrl": {
+      "message": "웹사이트 링크 닫기"
+   },
+   "closeWeek": {
+      "message": "주 마감"
+   },
+   "closeWeeks": {
+      "message": "가까운 주"
+   },
+   "close_on": {
+      "message": "닫기"
+   },
+   "cngrtsForSubcr": {
+      "message": "축하합니다! 귀하의 플랜이 성공적으로 활성화되었습니다."
+   },
+   "commonQuestionsAns": {
+      "message": "일반적인 질문과 답변"
+   },
+   "copySucessClose": {
+      "message": "닫기 탭 URL 데이터가 열기 탭 URL 데이터로 복사되었습니다."
+   },
+   "createNewTimer": {
+      "message": "새로운 타이머 만들기"
+   },
+   "currentPlan": {
+      "message": "현재 계획"
+   },
+   "currentTabSchedule": {
+      "message": "현재 탭 일정"
+   },
+   "currentTbScheduleTimer": {
+      "message": "현재 탭에 예약된 타이머가 있습니다."
+   },
+   "cusSec": {
+      "message": "사용자 정의 초"
+   },
+   "custMin": {
+      "message": "사용자 정의 분"
+   },
+   "custmMinSch": {
+      "message": "7. 사용자 정의 분 단위 일정"
+   },
+   "custmMinSchExm1": {
+      "message": "위의 예에서 주어진 URL은 열린 탭에 있으며, 이는 주어진 URL이 15분마다 새 탭에서 열린다는 것을 나타냅니다."
+   },
+   "custmMinSchExm2": {
+      "message": "위의 예에서 주어진 URL은 닫기 탭에 있는데, 이는 새 탭에서 열린 주어진 URL이 15분 후에 닫힘을 나타냅니다."
+   },
+   "customSecondWarning": {
+      "message": "사용자 지정 초 기능은 실험적 단계이므로 초를 60 미만으로 설정하면 제대로 작동하지 않을 수 있습니다."
+   },
+   "darkMode": {
+      "message": "다크 모드"
+   },
+   "datNotCopy": {
+      "message": "잘못된 URL로 인해 일부 데이터가 복사되지 않았습니다."
+   },
+   "dataSaved": {
+      "message": "타이머 데이터가 성공적으로 저장되었습니다"
+   },
+   "date": {
+      "message": "날짜"
+   },
+   "dateIsOutOfRange": {
+      "message": "날짜가 범위를 벗어났습니다."
+   },
+   "day": {
+      "message": "낮"
+   },
+   "december": {
+      "message": "12월"
+   },
+   "delete": {
+      "message": "삭제"
+   },
+   "deleteScheduleTb": {
+      "message": "예약된 탭을 삭제합니다."
+   },
+   "description": {
+      "message": "설명"
+   },
+   "developedBy": {
+      "message": "개발자:"
+   },
+   "doNotCloseInPinnedTabs": {
+      "message": "고정된 탭을 닫지 마세요"
+   },
+   "doNotShowNotification": {
+      "message": "알림을 표시하지 않습니다"
+   },
+   "domainName": {
+      "message": "도메인 이름"
+   },
+   "downloadCloseTbSampleCsv": {
+      "message": "필수 형식의 예를 보려면 닫기 탭 샘플 CSV를 다운로드하세요."
+   },
+   "downloadOpenTbSampleCsv": {
+      "message": "필요한 형식의 예를 보려면 오픈 탭 샘플 CSV를 다운로드하세요."
+   },
+   "editScheduleTb": {
+      "message": "예약된 탭을 편집합니다."
+   },
+   "email": {
+      "message": "이메일"
+   },
+   "enterDateToCloseTab": {
+      "message": "일정 탭을 닫으려면 여기에 날짜를 입력하세요."
+   },
+   "enterDateToOpen": {
+      "message": "날짜를 입력하여 일정 탭을 여세요."
+   },
+   "enterMiniutesToCloseTb": {
+      "message": "탭을 닫으려면 분을 입력하세요."
+   },
+   "enterMiniutesToOpen": {
+      "message": "일정 탭을 열려면 분을 입력하세요."
+   },
+   "enterMinute": {
+      "message": "분을 입력하세요"
+   },
+   "enterSecond": {
+      "message": "두 번째를 입력하세요"
+   },
+   "enterSecondsToCloseTab": {
+      "message": "탭을 닫으려면 초를 입력하세요."
+   },
+   "enterSecondsToOpen": {
+      "message": "일정 탭을 열려면 초를 입력하세요."
+   },
+   "enterTilteOfScheduleUrl": {
+      "message": "예약된 URL의 제목을 입력하세요."
+   },
+   "enterTimeToCloseTab": {
+      "message": "일정 탭을 닫으려면 여기에 시간을 입력하세요."
+   },
+   "enterTimeToSchedule": {
+      "message": "일정 탭을 열려면 시간을 입력하세요."
+   },
+   "enterValidEmail": {
+      "message": "유효한 이메일을 입력하세요"
+   },
+   "enterValidUrl": {
+      "message": "유효한 URL을 입력하세요"
+   },
+   "enterValueInCloseSec": {
+      "message": "몇 초 안에 값을 입력하세요"
+   },
+   "enterValueInOpenCloseSec": {
+      "message": "시작 또는 종료 초 단위로 값을 입력하세요"
+   },
+   "enterValueInOpenMinutes": {
+      "message": "영업시간에 값을 입력하세요"
+   },
+   "enterVlaueInCloseMinutes": {
+      "message": "가까운 분 안에 값을 입력하세요"
+   },
+   "enterVlaueInOpenCloseMin": {
+      "message": "개장 또는 마감 분 단위로 값을 입력하세요."
+   },
+   "enterVlaueInOpenSeconds": {
+      "message": "오픈 초 단위로 값을 입력하세요"
+   },
+   "enterYourURLToSchedule": {
+      "message": "예약하려면 URL을 입력하세요."
+   },
+   "every": {
+      "message": "모든"
+   },
+   "every10Min": {
+      "message": "10분마다"
+   },
+   "every1Minute": {
+      "message": "1분마다"
+   },
+   "every30Min": {
+      "message": "30분마다"
+   },
+   "every5Min": {
+      "message": "5분마다"
+   },
+   "everyDay": {
+      "message": "매일"
+   },
+   "everyDayAt": {
+      "message": "매일 매일"
+   },
+   "everyHour": {
+      "message": "매 시간마다"
+   },
+   "everyMinute": {
+      "message": "매 분마다"
+   },
+   "everyMonth": {
+      "message": "매달"
+   },
+   "everyMonthOn": {
+      "message": "매달마다"
+   },
+   "everyMonthOnDay": {
+      "message": "매달 요일"
+   },
+   "everyWeek": {
+      "message": "매주"
+   },
+   "everyWeekOn": {
+      "message": "매주마다"
+   },
+   "everyYear": {
+      "message": "매년"
+   },
+   "everyYesrOn": {
+      "message": "매년마다"
+   },
+   "evr10MinSch": {
+      "message": "2. 10분 단위 스케줄"
+   },
+   "evr10MinSchExm1": {
+      "message": "위의 예에서 주어진 URL은 열린 탭에 있으며, 이는 주어진 URL이 10분마다 새 탭에서 열린다는 것을 나타냅니다."
+   },
+   "evr10MinSchExm2": {
+      "message": "위의 예에서 주어진 URL은 닫기 탭에 있는데, 이는 새 탭에서 열린 주어진 URL이 10분 후에 닫힌다는 것을 나타냅니다."
+   },
+   "evrDaySch": {
+      "message": "3. 매일 일정"
+   },
+   "evrDaySchExm1": {
+      "message": "위의 예에서 주어진 URL은 열린 탭에 있으며 매일 오후 5시 27분에 새 탭에서 열린다고 명시되어 있습니다."
+   },
+   "evrDaySchExm2": {
+      "message": "위의 예에서 주어진 URL은 닫기 탭에 있으며, 이는 매일 오후 5시 27분에 이미 열려 있는 탭을 닫는다는 것을 나타냅니다."
+   },
+   "evrMonthSch": {
+      "message": "5.매월 일정"
+   },
+   "evrMonthSchExm1": {
+      "message": "위의 예에서 주어진 URL은 열린 탭에 있으며 매달 25일 13:45에 새 탭에서 열립니다라고 명시되어 있습니다."
+   },
+   "evrMonthSchExm2": {
+      "message": "위의 예에서 주어진 URL은 닫기 탭에 있으며, 이는 매월 25일 13:45에 이미 열려 있는 탭을 닫는다고 명시합니다."
+   },
+   "evrWeekSch": {
+      "message": "4. 매주 일정"
+   },
+   "evrWeekSchExm1": {
+      "message": "위의 예에서 주어진 URL은 열린 탭에 있으며, 이는 매주 \u003Cb>월요일과 화요일\u003C/b> 오후 5시에 새 탭에서 열린다는 것을 나타냅니다 ."
+   },
+   "evrWeekSchExm2": {
+      "message": "위의 예에서 주어진 URL은 닫기 탭에 있으며, 이는 매주 \u003Cb>월요일과 화요일\u003C/b> 오후 5시에 이미 열려 있는 탭을 닫는다는 것을 나타냅니다 ."
+   },
+   "evrWeekSchExm3": {
+      "message": "위의 예에서, 주 타이머에서 여러 요일을 선택할 수 있습니다."
+   },
+   "evrYearSch": {
+      "message": "6.매년 일정"
+   },
+   "evrYearSchExm1": {
+      "message": "위의 예에서 주어진 URL은 열린 탭에 있으며, 이는 매년 1월 1일 13:35에 새 탭에서 열린다는 것을 나타냅니다."
+   },
+   "evrYearSchExm2": {
+      "message": "위의 예에서 주어진 URL은 닫기 탭에 있으며, 이는 매년 1월 1일 13:35에 이미 열려 있는 탭을 닫는다는 것을 나타냅니다."
+   },
+   "exampleSort": {
+      "message": "예를 들어"
+   },
+   "exdMaxLim": {
+      "message": "허용되는 최대 장치 수를 초과했습니다!"
+   },
+   "exmpOpnClsTbSch": {
+      "message": "탭 스케줄러에서 탭을 열고 닫는 방법에 대한 예"
+   },
+   "expLicKy": {
+      "message": "라이센스 키가 만료되었습니다."
+   },
+   "export": {
+      "message": "내보내다"
+   },
+   "exportBefore": {
+      "message": "당신은 가지고있다\u003Cexday>\u003C/exday>남은 일수, 프리미엄 기능을 계속 즐기려면 구독하세요"
+   },
+   "exportClsTbDta": {
+      "message": "닫기 탭 데이터 내보내기"
+   },
+   "exportOpenTbDt": {
+      "message": "열린 탭 데이터 내보내기"
+   },
+   "exportedData": {
+      "message": "타이머 데이터가 성공적으로 내보내졌습니다."
+   },
+   "extensionShouldAble": {
+      "message": "이제 확장 프로그램을 사용하면 시크릿 모드에서도 탭을 닫을 수 있습니다."
+   },
+   "faq": {
+      "message": "자주 묻는 질문"
+   },
+   "faq_1": {
+      "message": "자동 열기 및 닫기 기능이 있는 탭 스케줄러란 무엇인가요?"
+   },
+   "faq_10": {
+      "message": "예약된 탭을 보려면 어떻게 해야 하나요?"
+   },
+   "faq_11": {
+      "message": "오픈 시간과 마감 시간을 모두 입력해야 합니까?"
+   },
+   "faq_12": {
+      "message": "자동 초점 탭, 모든 예약된 탭 활성화, 전원 모드의 기능은 무엇인가요?"
+   },
+   "faq_13": {
+      "message": "예약된 웹사이트 링크를 시크릿 모드 탭에서 열거나 닫을 수 있나요?"
+   },
+   "faq_14": {
+      "message": "URL이 이미 열려 있는 경우 새로 고침 탭의 용도는 무엇입니까?"
+   },
+   "faq_2": {
+      "message": "웹사이트 링크의 용도는 무엇인가요?"
+   },
+   "faq_3": {
+      "message": "Tab Scheduler를 사용하여 URL을 예약하려면 어떻게 해야 하나요?"
+   },
+   "faq_4": {
+      "message": "'백그라운드에서 URL 열기' 옵션은 무엇인가요?"
+   },
+   "faq_5": {
+      "message": "확장 프로그램이 고정된 탭을 닫지 못하게 할 수 있나요?"
+   },
+   "faq_6": {
+      "message": "'둘 다' 일정 유형은 무엇을 의미합니까?"
+   },
+   "faq_7": {
+      "message": "'URL 필터링' 기능은 어떻게 작동하나요?"
+   },
+   "faq_8": {
+      "message": "예약된 탭을 삭제하지 않고도 비활성화할 수 있나요?"
+   },
+   "faq_9": {
+      "message": "예약된 탭에 대한 알림을 받을 수 있나요?"
+   },
+   "faq_a_1": {
+      "message": "\u003Cp>Tab Scheduler with Auto Open and Close는 사용자가 탭이 설정된 시간에 자동으로 열리고 닫히도록 예약할 수 있는 브라우저 확장 프로그램입니다. 사용자는 일회성 일정을 선택하거나 다양한 빈도 옵션으로 반복 일정을 설정할 수 있습니다. 이 확장 프로그램은 사용자에게 여러 가지 용도가 있으며 사용자에게 도움이 되는 많은 기능을 제공합니다.\u003C/p>"
+   },
+   "faq_a_10": {
+      "message": "예약된 모든 탭은 제목, 웹사이트 링크, 개장 및 폐장 시간, 상태, 수행할 수 있는 작업(예: 활성화, 편집, 삭제)을 보여주는 목록으로 표시됩니다."
+   },
+   "faq_a_11": {
+      "message": "아니요, 오픈 타임이나 클로즈 타임을 예약할 수 있습니다. 그러나 별표(*)로 표시된 필수 필드는 작성하거나 선택해야 합니다."
+   },
+   "faq_a_12": {
+      "message": "Auto Focus Tab은 예약된 탭이 열릴 때 Activate All Scheduled Tabs를 사용하면 한 번의 클릭으로 모든 예약된 탭을 빠르게 켤 수 있습니다. Power Mode는 브라우저 리소스를 보다 효율적으로 관리하여 확장 프로그램의 성능을 최적화합니다."
+   },
+   "faq_a_13": {
+      "message": "네, \"시크릿 모드로 열기\" 옵션을 선택하여 예약된 탭을 시크릿 모드로 열 수 있습니다. 확장 프로그램 설정에서 \"시크릿 모드에서 허용\"이 활성화되어 있는 경우 \"시크릿 탭만 닫기\" 옵션을 선택하여 시크릿 탭만 닫을 수 있습니다."
+   },
+   "faq_a_14": {
+      "message": "이 옵션을 활성화하면 확장 프로그램은 브라우저에 동일한 URL이 이미 열려 있는 경우 기존 탭을 자동으로 새로 고칩니다. 이렇게 하면 중복된 탭을 여는 것을 방지하고 항상 최신 버전의 페이지가 로드되도록 할 수 있습니다."
+   },
+   "faq_a_14_1": {
+      "message": "https://github.com/을 열려고 하는데 다른 탭에서 이미 열려 있는 경우, 확장 기능은 새 탭을 열지 않고 기존 탭을 새로 고칩니다."
+   },
+   "faq_a_14_2": {
+      "message": "https://github.com/이 이미 세 개의 탭으로 열려 있으면 확장 프로그램은 세 개의 탭을 모두 새로 고칩니다."
+   },
+   "faq_a_2": {
+      "message": "웹사이트 링크는 브라우저의 오픈 탭 웹사이트 주소입니다. 웹사이트 주소를 사용하는 방법은 아래에 언급되어 있습니다."
+   },
+   "faq_a_3": {
+      "message": "URL을 예약하려면 웹사이트 링크를 입력하고, 일정에 제목을 지정하고, 빈도(한 번, 매 분, 매일 등)를 선택하고, 열고 닫는 시간을 선택합니다. 탭을 열고 닫을 날짜, 요일 또는 초를 지정할 수도 있습니다."
+   },
+   "faq_a_4": {
+      "message": "\u003Cp>이 옵션을 사용하면 새 탭에 초점을 맞추지 않고도 백그라운드에서 열 URL을 예약할 수 있는 전체 제어가 가능합니다. 다른 탭에서 작업을 계속하는 동안 URL이 조용히 열립니다. GET API 요청의 경우처럼 브라우저가 예약된 URL에서 데이터를 적극적으로 표시하지 않고도 데이터를 가져와야 할 때 특히 유용합니다.\u003C/p>\u003Cbr> \u003Cp>예를 들어, 정기적으로 특정 시간에 API 엔드포인트에서 데이터를 가져오려면 이 효율적인 옵션을 사용하면 새 탭을 열지 않고도 백그라운드에서 요청을 실행할 수 있습니다.\u003C/p>"
+   },
+   "faq_a_5": {
+      "message": "네, 고정된 탭이 닫히지 않도록 하는 옵션이 있습니다. \"고정된 탭 닫지 않기\" 옵션을 체크하면 다른 닫기 기준을 충족하더라도 해당 탭이 계속 열려 있도록 할 수 있습니다."
+   },
+   "faq_a_6": {
+      "message": "'둘 다' 일정 유형을 사용하면 탭이 열리고 닫히는 시점을 완벽하게 제어할 수 있어 두 작업에 대한 특정 시간을 설정할 수 있습니다."
+   },
+   "faq_a_7": {
+      "message": "URL 필터링은 예약된 작업이 수행되도록 URL의 특정 부분만 일치하도록 합니다. 이는 부분 URL 일치에 따라 특정 작업을 자동화하려는 경우에 유용합니다. 예를 들어, URL https://example.com/page에 대해 URL 필터링 옵션을 선택하면 https://example.com/page/123, https://example.com/page?query=example, https://subdomain.example.com/page와 같은 URL에도 적용됩니다."
+   },
+   "faq_a_8": {
+      "message": "\"이 예약된 탭 활성화\" 옵션을 사용하면 예약된 탭을 쉽게 활성화하거나 비활성화하여 구성을 잃지 않고 일정을 관리할 수 있는 유연성을 제공합니다."
+   },
+   "faq_a_9": {
+      "message": "기본적으로 알림을 받게 됩니다. 그러나 알림을 중지하려면 \"알림 표시 안 함\" 옵션을 체크하여 알림을 비활성화할 수 있습니다."
+   },
+   "february": {
+      "message": "2월"
+   },
+   "filterTips": {
+      "message": "필터는 'https://' 또는 'www.' 뒤에 적용됩니다(예: 'github.com')."
+   },
+   "for_exp": {
+      "message": "예를 들어"
+   },
+   "freeForever": {
+      "message": "영원히 무료"
+   },
+   "freeSchedule": {
+      "message": "자유 일정"
+   },
+   "freeTral": {
+      "message": "귀중한 초기 사용자로서, 당신은 즐길 것입니다\u003Crday>120\u003C/rday>새로운 유료 플랜으로 전환하기 전에 며칠 동안 무료로 접속하실 수 있습니다. 지속적인 지원에 감사드립니다!\u003Cp class=\"p-t-5\">당신은 가지고있다\u003Cb>\u003Cspan>\u003C/span>\u003C/b>남은 일수\u003Crday>120\u003C/rday>- 1일 무료 기간.\u003Cafex class=\"warning\">\u003Cafex>\u003C/afex>\u003C/afex>\u003C/p> "
+   },
+   "frequentlyAskedQuestions": {
+      "message": "자주 묻는 질문"
+   },
+   "friday": {
+      "message": "금요일"
+   },
+   "getThisPlan": {
+      "message": "이 플랜을 받으세요"
+   },
+   "goToSettingsPageToSchedule": {
+      "message": "URL 열기 및 닫기를 예약하려면 설정 페이지로 이동하세요."
+   },
+   "goURL": {
+      "message": "URL로 이동"
+   },
+   "helpAccordion12": {
+      "message": "이 확장 기능은 절전/중단 모드에서도 작동하나요?"
+   },
+   "helpAccordion3": {
+      "message": "시크릿 모드로 열리도록 탭을 예약할 수 있나요?"
+   },
+   "helpAccordion6": {
+      "message": "\"시간 만료\"는 무엇입니까?"
+   },
+   "helpAccordion7": {
+      "message": "예약된 URL을 내보낼 수 있나요?"
+   },
+   "helpAccordion8": {
+      "message": "일정 URL로 가져올 수 있나요?"
+   },
+   "helpPanelBodyDesc12First": {
+      "message": "아니요, 이 확장 기능은 절전/일시 중지 모드에서는 작동하지 않습니다."
+   },
+   "helpPanelBodyDesc12Second": {
+      "message": "열려 있는 탭이나 닫는 탭에 URL이 예약되어 있는 경우 PC가 자동으로 절전 모드나 대기 모드로 전환되지 않습니다."
+   },
+   "helpPanelBodyDesc3": {
+      "message": "네, '시크릿 모드로 열기' 옵션을 선택하여 예약된 탭을 시크릿 모드로 열 수 있습니다. 브라우저의 확장 프로그램 설정에서 확장 프로그램의 '시크릿 모드로 허용' 옵션이 활성화되어 있는지 확인하세요."
+   },
+   "helpPanelBodyDesc6": {
+      "message": "- 주어진 날짜와 시간이 현재 날짜와 시간으로부터 지나면 \"시간 만료\" 텍스트가 표시됩니다."
+   },
+   "helpPanelBodyDesc7": {
+      "message": "네, 이미 예약된 열기 탭과 닫기 탭 URL을 csv 형식으로 내보내고 다른 시스템에서 해당 URL을 가져올 수 있습니다."
+   },
+   "helpPanelBodyDesc8": {
+      "message": "예, 유효한 열기 및 닫기 URL을 csv 형식으로 가져올 수 있습니다. 가져온 csv 형식은 지정된 시간에 자동으로 예약됩니다."
+   },
+   "herAreStepsToAllow": {
+      "message": "Google Chrome에서 \"시크릿 모드에서 허용\"하는 단계는 다음과 같습니다."
+   },
+   "home": {
+      "message": "집"
+   },
+   "hour_minute_close": {
+      "message": "매 시간 마감 분"
+   },
+   "hour_minute_open": {
+      "message": "매 시간 오픈 분"
+   },
+   "how_to_use_tab": {
+      "message": "탭 스케줄러를 어떻게 사용하나요?"
+   },
+   "import": {
+      "message": "수입"
+   },
+   "importClsTbDta": {
+      "message": "닫기 탭 데이터 가져오기"
+   },
+   "importExport": {
+      "message": "수입/수출"
+   },
+   "importOpenTbDt": {
+      "message": "열린 탭 데이터 가져오기"
+   },
+   "importedRecored": {
+      "message": ", 수입 기록"
+   },
+   "inactivateScheduleTab": {
+      "message": "예약된 탭을 비활성화합니다."
+   },
+   "inactive": {
+      "message": "비활성"
+   },
+   "inactiveSch": {
+      "message": "8. 비활성 URL"
+   },
+   "inactiveSchExm1": {
+      "message": "위의 예에서 주어진 URL은 열린 탭 또는 닫힌 탭에 있는데, 이는 주어진 URL이 비활성화되어 아무런 작업도 수행하지 않음을 나타냅니다."
+   },
+   "inactiveThisScheduledTabs": {
+      "message": "이 예약된 탭을 활성화합니다"
+   },
+   "invalidDuplicate": {
+      "message": ", 중복 또는 잘못된 기록"
+   },
+   "invldLicKy": {
+      "message": "잘못된 라이센스 키입니다!"
+   },
+   "isClose": {
+      "message": "가깝다"
+   },
+   "isOpen": {
+      "message": "열려있습니다"
+   },
+   "january": {
+      "message": "1월"
+   },
+   "july": {
+      "message": "칠월"
+   },
+   "june": {
+      "message": "6월"
+   },
+   "licKeyDis": {
+      "message": "이 라이센스 키는 비활성화되어 있습니다."
+   },
+   "listTitle": {
+      "message": "탭 스케줄러"
+   },
+   "loading": {
+      "message": "기다리세요..."
+   },
+   "locale": {
+      "message": "ko"
+   },
+   "march": {
+      "message": "3월"
+   },
+   "maxSchedule": {
+      "message": "4 최대 일정 한도"
+   },
+   "may": {
+      "message": "5월"
+   },
+   "mintValid": {
+      "message": "최소 1분이 필요합니다"
+   },
+   "minute": {
+      "message": "분"
+   },
+   "minutesNotLessThan1": {
+      "message": "분은 1보다 작아서는 안 됩니다."
+   },
+   "monday": {
+      "message": "월요일"
+   },
+   "month": {
+      "message": "월"
+   },
+   "monthly": {
+      "message": "월간 간행물"
+   },
+   "more": {
+      "message": "더"
+   },
+   "mostSubscribe": {
+      "message": "가장 많이 구독"
+   },
+   "no": {
+      "message": "아니요"
+   },
+   "noDataToExport": {
+      "message": "내보낼 데이터가 없습니다."
+   },
+   "noScheduledTabs": {
+      "message": "예약된 탭이 없습니다"
+   },
+   "noTimerSetAddNewTimer": {
+      "message": "타이머가 설정되지 않았습니다. 추가 버튼을 클릭하여 새 타이머를 설정하세요."
+   },
+   "not_show_tutorial": {
+      "message": "이 튜토리얼을 다시 표시하지 마세요"
+   },
+   "notificationOpenTab": {
+      "message": "13. 탭 열기/닫기 URL에 대한 알림"
+   },
+   "notificationOpenTabExm1": {
+      "message": "위의 예에서 주어진 URL은 열린 탭에 있으며, 이는 5분마다 알림을 제공하고 새 탭에서 URL을 열거나 닫는다는 것을 나타냅니다."
+   },
+   "notifications": {
+      "message": "공고"
+   },
+   "november": {
+      "message": "십일월"
+   },
+   "october": {
+      "message": "십월"
+   },
+   "onTheExtensionDetailPage": {
+      "message": "확장 프로그램의 세부 정보 페이지에서 아래로 스크롤하여 \"시크릿 모드에서 허용\" 옵션을 찾으세요."
+   },
+   "oneTime": {
+      "message": "일회"
+   },
+   "oneTmSch": {
+      "message": "1.일회성 일정"
+   },
+   "oneTmSchExm1": {
+      "message": "위의 예에서 주어진 URL은 열린 탭에 있으며, 이는 2023년 1월 21일 13:45에 한 번 새 탭에서 열린다고 명시합니다."
+   },
+   "oneTmSchExm2": {
+      "message": "위의 예에서 주어진 URL은 닫기 탭에 있으며, 이는 2023년 1월 21일 13:45에 모든 일치 URL 탭을 닫는다고 명시합니다."
+   },
+   "open": {
+      "message": "열려 있는"
+   },
+   "openBackground": {
+      "message": "그렇다면 새 탭에서 열지 않고 백그라운드에서 URL을 로드합니다."
+   },
+   "openDate": {
+      "message": "오픈 날짜"
+   },
+   "openDay": {
+      "message": "오픈 데이"
+   },
+   "openEveryDayOn": {
+      "message": "매일 오픈"
+   },
+   "openEveryMonthOn": {
+      "message": "매월 오픈일"
+   },
+   "openEveryWeekOn": {
+      "message": "매주 오픈"
+   },
+   "openEveryYearOn": {
+      "message": "매년 오픈"
+   },
+   "openGoogleChrome": {
+      "message": "Google Chrome을 엽니다."
+   },
+   "openInBackground": {
+      "message": "백그라운드에서 URL 열기"
+   },
+   "openInEvery": {
+      "message": "모든 시간에 오픈"
+   },
+   "openInIncognito": {
+      "message": "시크릿 모드로 열기"
+   },
+   "openMinute": {
+      "message": "오픈 미닛"
+   },
+   "openOnDay": {
+      "message": "오픈 날짜"
+   },
+   "openOnEvery": {
+      "message": "매일 오픈"
+   },
+   "openSecond": {
+      "message": "오픈 세컨드"
+   },
+   "openSecondsMoreThan5": {
+      "message": "오픈 세컨드는 5개 이상이어야 합니다."
+   },
+   "openTabSchedule": {
+      "message": "오픈 탭 일정"
+   },
+   "openTabURL": {
+      "message": "탭 URL 열기"
+   },
+   "openTime": {
+      "message": "오픈 타임"
+   },
+   "openUrl": {
+      "message": "웹사이트 링크 열기"
+   },
+   "openWeek": {
+      "message": "오픈 위크"
+   },
+   "openWeeks": {
+      "message": "오픈 위크"
+   },
+   "open_on": {
+      "message": "오픈"
+   },
+   "optional": {
+      "message": "선택 과목"
+   },
+   "or": {
+      "message": "또는"
+   },
+   "outof": {
+      "message": "에서"
+   },
+   "pagePath": {
+      "message": "페이지 경로"
+   },
+   "paidFeature": {
+      "message": "유료 기능"
+   },
+   "pauseSchedule": {
+      "message": "모든 일정 시작 또는 중지"
+   },
+   "pauseTabScheduler": {
+      "message": "일시 중지된 탭 스케줄러"
+   },
+   "pleaseAllowIncognitoMessage": {
+      "message": "확장 프로그램 세부 정보에서 '시크릿 모드에서 허용' 옵션을 활성화하세요. 지침은 튜토리얼 페이지를 참조하세요."
+   },
+   "pleaseShareYourSuggestions": {
+      "message": "귀하의 제안을 공유해 주세요."
+   },
+   "plsShreAnySugWithUs": {
+      "message": "개선을 위한 제안을 해주세요"
+   },
+   "powerMode": {
+      "message": "전원 모드"
+   },
+   "premium": {
+      "message": "프리미엄"
+   },
+   "pricePlan": {
+      "message": "가격 및 계획"
+   },
+   "privcyPolicy": {
+      "message": "개인정보 보호정책"
+   },
+   "prowerModeTip": {
+      "message": "전원 모드를 활성화하여 시스템을 항상 활성 상태로 유지하세요."
+   },
+   "put": {
+      "message": "놓다"
+   },
+   "rateUs": {
+      "message": "우리를 평가하세요"
+   },
+   "removeDuplicateEntry": {
+      "message": "중복된 항목을 제거해주세요."
+   },
+   "removeOpenTbURL": {
+      "message": "열린 탭 URL 제거"
+   },
+   "repeat": {
+      "message": "반복하다"
+   },
+   "requiredMsg": {
+      "message": "필수의"
+   },
+   "rmvClsTb": {
+      "message": "닫기 탭 URL 제거"
+   },
+   "sameTabs": {
+      "message": "URL이 이미 열려 있는 경우 탭을 새로 고침합니다."
+   },
+   "sameTabsInfo": {
+      "message": "동일한 URL에 대해 여러 탭을 여는 것을 방지합니다. 예를 들어, www.google.com이 이미 열려 있는 경우 새 탭을 여는 대신 기존 탭이 새로 고쳐집니다."
+   },
+   "sampleCsvOpenPath": {
+      "message": "../sample_csv/en/open_tab_sample.csv"
+   },
+   "sampleFile": {
+      "message": "샘플 파일"
+   },
+   "saturday": {
+      "message": "토요일"
+   },
+   "savOpnData": {
+      "message": "열려있는 탭 데이터 저장"
+   },
+   "save": {
+      "message": "구하다"
+   },
+   "saveClsTbData": {
+      "message": "탭 데이터 저장 닫기"
+   },
+   "saveSchedule": {
+      "message": "일정 저장"
+   },
+   "scheduleCloseTab": {
+      "message": "일정 닫기 탭"
+   },
+   "scheduleCurrentTab": {
+      "message": "현재 탭 일정"
+   },
+   "scheduleOpenTab": {
+      "message": "일정 열기 탭"
+   },
+   "scheduledTabIsAlreadyExistWithSameTimer": {
+      "message": "이 예약된 탭은 이미 같은 타이머로 존재합니다."
+   },
+   "scheduledTabList": {
+      "message": "예약된 탭 목록"
+   },
+   "scheduledType": {
+      "message": "일정 유형"
+   },
+   "search": {
+      "message": "찾다"
+   },
+   "secValid": {
+      "message": "최소 5초가 필요합니다"
+   },
+   "second": {
+      "message": "두번째"
+   },
+   "selectCloseDate": {
+      "message": "마감일을 선택하세요"
+   },
+   "selectCloseDay": {
+      "message": "마감일을 선택하세요"
+   },
+   "selectCloseTime": {
+      "message": "마감시간을 선택하세요"
+   },
+   "selectColumn": {
+      "message": "열 선택"
+   },
+   "selectDateAndTime": {
+      "message": "새 탭을 열려면 날짜와 시간을 선택하세요"
+   },
+   "selectDateAndTimeClsTb": {
+      "message": "탭을 닫으려면 날짜와 시간을 선택하세요"
+   },
+   "selectDayToCloseSchTb": {
+      "message": "일정 탭을 닫을 날짜를 선택하세요."
+   },
+   "selectDayToClsTb": {
+      "message": "탭을 닫으려는 날짜를 선택하세요"
+   },
+   "selectDayToSchdule": {
+      "message": "일정을 예약할 날짜를 선택하세요."
+   },
+   "selectDaysInWeek": {
+      "message": "요일 선택"
+   },
+   "selectDaysInWeekIClsTime": {
+      "message": "닫기 타이머에서 요일을 선택하세요."
+   },
+   "selectDaysInWeekIOpClsTime": {
+      "message": "열기 또는 닫기 타이머에서 요일을 선택하세요."
+   },
+   "selectDaysInWeekIOpTime": {
+      "message": "오픈 타이머에서 요일을 선택하세요."
+   },
+   "selectFrequency": {
+      "message": "주파수 선택"
+   },
+   "selectFrequencyOfScheduleUrl": {
+      "message": "예약된 URL의 빈도를 선택하세요."
+   },
+   "selectOpenDate": {
+      "message": "오픈날짜를 선택하세요"
+   },
+   "selectOpenDay": {
+      "message": "오픈일을 선택하세요"
+   },
+   "selectOpenOrClose": {
+      "message": "오픈 및 마감시간을 선택하세요"
+   },
+   "selectOpenOrCloseDate": {
+      "message": "오픈 및 마감일을 선택하세요"
+   },
+   "selectOpenOrCloseDay": {
+      "message": "오픈 및 마감일을 선택하세요"
+   },
+   "selectOpenTime": {
+      "message": "오픈시간을 선택하세요"
+   },
+   "selectPreferredLanguage": {
+      "message": "원하는 언어를 선택하세요."
+   },
+   "selectToOpenTab": {
+      "message": "새 탭을 열 날짜를 선택하세요"
+   },
+   "selectTypTimerClsTb": {
+      "message": "탭을 닫으려는 타이머 유형을 선택하세요"
+   },
+   "selectTypeOfSchedule": {
+      "message": "일정 유형을 선택하세요. 일정을 열고 닫으려면 \"둘 다\"를 선택하세요."
+   },
+   "selectTypeOfTimer": {
+      "message": "새 탭을 열려면 타이머 유형을 선택하세요"
+   },
+   "select_weeks": {
+      "message": "주 선택"
+   },
+   "september": {
+      "message": "구월"
+   },
+   "settingSave": {
+      "message": "설정이 성공적으로 저장되었습니다"
+   },
+   "settingToClose": {
+      "message": "시크릿 모드에서 탭을 닫도록 설정합니다."
+   },
+   "shareYourSuggestionWithUs": {
+      "message": "여러분의 제안을 저희와 공유해 주세요."
+   },
+   "slectDayToScheduleWeekly": {
+      "message": "매주 탭을 클릭하여 일정을 예약할 요일을 선택하세요."
+   },
+   "slectMinute": {
+      "message": "분 선택"
+   },
+   "smthngWrng": {
+      "message": "문제가 발생했습니다"
+   },
+   "softpulseInfotech": {
+      "message": "소프트펄스 인포테크"
+   },
+   "somethingWentWrong": {
+      "message": "오류가 발생했습니다. 페이지를 새로 고침하고 다시 시도하세요."
+   },
+   "status": {
+      "message": "상태"
+   },
+   "subcrKeyShldNEmpt": {
+      "message": "구독키를 입력해주세요."
+   },
+   "subdomain": {
+      "message": "하위 도메인"
+   },
+   "subkeyInputTitle": {
+      "message": "구독키를 입력하세요"
+   },
+   "submFeedBack": {
+      "message": "제출하다"
+   },
+   "suggForTbSch": {
+      "message": "탭 스케줄러에 대한 제안"
+   },
+   "suggestionAndRateUs": {
+      "message": "제안 및 평가"
+   },
+   "sunday": {
+      "message": "일요일"
+   },
+   "tabCloseOneTime": {
+      "message": "탭은 한 번만 닫힙니다."
+   },
+   "tabSchTutorial": {
+      "message": "탭 스케줄러 튜토리얼"
+   },
+   "tabScheduler": {
+      "message": "탭 스케줄러"
+   },
+   "tabSchedulerOptions": {
+      "message": "탭 스케줄러 옵션"
+   },
+   "tabWillOpenOneTime": {
+      "message": "탭은 한 번만 열립니다."
+   },
+   "tabWillOpenWhenBrowserOpen": {
+      "message": "브라우저가 열리면 탭이 열립니다."
+   },
+   "termCondition": {
+      "message": "이용약관"
+   },
+   "thanksFrRev": {
+      "message": "귀하의 리뷰에 감사드립니다"
+   },
+   "thnkUFeedBack": {
+      "message": "귀하의 제안에 감사드립니다"
+   },
+   "thnkUFrUsngTbSch": {
+      "message": "개선을 위한 제안을 해주세요"
+   },
+   "thursday": {
+      "message": "목요일"
+   },
+   "time": {
+      "message": "시간"
+   },
+   "timeExpired": {
+      "message": "시간 만료"
+   },
+   "timer": {
+      "message": "시간제 노동자"
+   },
+   "title": {
+      "message": "제목"
+   },
+   "titleLengtWarn": {
+      "message": "제목의 길이는 200자를 넘지 않아야 합니다."
+   },
+   "toScheduledOpenTbMsg": {
+      "message": "예약된 탭을 열려면 URL 필터링을 선택 해제하세요."
+   },
+   "toogleCloseTab": {
+      "message": "모든 닫힌 탭 URL에 대한 일정 알람 시작/중지"
+   },
+   "toogleDarkmode": {
+      "message": "다크 모드와 기본 모드를 전환하여 시청 환경을 맞춤 설정하세요."
+   },
+   "toogleOff": {
+      "message": "끄다"
+   },
+   "toogleOn": {
+      "message": "~에"
+   },
+   "toogleOpenTab": {
+      "message": "열려 있는 모든 탭 URL에 대한 일정 알람 시작/중지"
+   },
+   "topLevelDomain": {
+      "message": "최상위 도메인"
+   },
+   "totalProcessed": {
+      "message": "총 기록된 처리"
+   },
+   "tuesday": {
+      "message": "화요일"
+   },
+   "tutorialImg1": {
+      "message": "\u003Cimg src=\"../images/en/1.png\">"
+   },
+   "tutorialImg10": {
+      "message": "\u003Cimg src=\"../images/en/10.png\">"
+   },
+   "tutorialImg11": {
+      "message": "\u003Cimg src=\"../images/en/11.png\">"
+   },
+   "tutorialImg12": {
+      "message": "\u003Cimg src=\"../images/en/12.png\">"
+   },
+   "tutorialImg13": {
+      "message": "\u003Cimg src=\"../images/en/13.png\">"
+   },
+   "tutorialImg14": {
+      "message": "\u003Cimg src=\"../images/en/14.png\">"
+   },
+   "tutorialImg2": {
+      "message": "\u003Cimg src=\"../images/en/2.png\">"
+   },
+   "tutorialImg3": {
+      "message": "\u003Cimg src=\"../images/en/3.png\">"
+   },
+   "tutorialImg4": {
+      "message": "\u003Cimg src=\"../images/en/4.png\">"
+   },
+   "tutorialImg5": {
+      "message": "\u003Cimg src=\"../images/en/5.png\">"
+   },
+   "tutorialImg6": {
+      "message": "\u003Cimg src=\"../images/en/6.png\">"
+   },
+   "tutorialImg7": {
+      "message": "\u003Cimg src=\"../images/en/7.png\">"
+   },
+   "tutorialImg8": {
+      "message": "\u003Cimg src=\"../images/en/8.png\">"
+   },
+   "tutorialImg9": {
+      "message": "\u003Cimg src=\"../images/en/9.png\">"
+   },
+   "uncheckAll": {
+      "message": "모두 선택 해제"
+   },
+   "unlimitedSchedule": {
+      "message": "무제한 스케줄 제한"
+   },
+   "unspecifiedURL": {
+      "message": "11. URL 지정되지 않은 경로"
+   },
+   "unspecifiedURLExm1": {
+      "message": "위의 예에서 주어진 URL은 닫기 탭에 있는데, 이는 새 탭에서 열리고 알 수 없는 웹 주소로 시작하고 끝나는 주어진 URL은 5분 후에 닫힘을 나타냅니다."
+   },
+   "upgradePlan": {
+      "message": "더 많은 기능을 사용하려면 플랜을 구매하거나 로그인하여 플랜을 업그레이드하세요."
+   },
+   "upgradePlanUnlock": {
+      "message": "더 많은 기능을 사용하려면 플랜을 업그레이드하세요."
+   },
+   "uploadValidFormat": {
+      "message": "유효한 형식을 업로드해 주세요."
+   },
+   "url": {
+      "message": "웹 주소"
+   },
+   "urlContExat": {
+      "message": "URL 필터링"
+   },
+   "urlEndWithUnspesifiedPth": {
+      "message": "9. URL이 지정되지 않은 경로로 끝납니다."
+   },
+   "urlEndWithUnspesifiedPthExm1": {
+      "message": "위의 예에서 주어진 URL은 닫기 탭에 있으며, 이는 새 탭에서 열리고 알 수 없는 경로로 끝나는 주어진 URL은 5분 후에 닫힘을 나타냅니다."
+   },
+   "urlFilterInfo": {
+      "message": "검사되는 URL 포함은 URL의 일부만 필요하고 검사되는 정확한 URL은 지정된 URL과 정확히 일치해야 합니다."
+   },
+   "urlFilterinCLoseTb": {
+      "message": "14. 탭 닫기 URL에 대한 URL 필터링"
+   },
+   "urlFilterinCLoseTbExample": {
+      "message": "위의 예에서 주어진 URL은 닫기 탭에 있으며, 이는 이미 열려 있는 탭 URL이 주어진 URL의 일부와 일치하므로 해당 탭을 닫을 것임을 나타냅니다."
+   },
+   "urlIsRequired": {
+      "message": "웹사이트 링크가 필요합니다"
+   },
+   "urlNotvalid": {
+      "message": "URL이 유효하지 않습니다"
+   },
+   "urlStartWithUnspesifiedPth": {
+      "message": "10. URL이 지정되지 않은 경로로 시작됨"
+   },
+   "urlStartWithUnspesifiedPthExm1": {
+      "message": "위의 예에서 주어진 URL은 닫기 탭에 있으며, 이는 새 탭에서 열리고 알 수 없는 하위 도메인 \u003Cb>'www'\u003C/b> 또는 \u003Cb>'blog'\u003C/b> 로 시작하는 주어진 URL은 5분 후에 닫힘을 나타냅니다."
+   },
+   "useSpecificUrl": {
+      "message": "특정 웹사이트 링크 사용"
+   },
+   "useSpecificUrl1": {
+      "message": "닫힌 브라우저 탭의 웹사이트 링크 필드에 정확한 하위 도메인, 최상위 도메인, 도메인 이름, 페이지 경로를 입력해야 합니다."
+   },
+   "useSpecificUrl2": {
+      "message": "모든 브라우저의 탭을 닫아 사용하세요"
+   },
+   "useSpecificUrl3": {
+      "message": "구체적이고 완전한 웹사이트 링크를 사용하세요"
+   },
+   "useUnSpecificUrl1": {
+      "message": "지정되지 않은 웹사이트 링크 사용"
+   },
+   "useUnSpecificUrl2": {
+      "message": "지정되지 않은 웹사이트 링크로 시작 사용"
+   },
+   "useUnSpecificUrl3": {
+      "message": "지정되지 않은 웹사이트 링크로 종료를 사용하세요"
+   },
+   "used": {
+      "message": "당신은 사용했습니다"
+   },
+   "validFormatCsv": {
+      "message": "가져오기에 유효한 CSV 파일 형식은 무엇입니까?"
+   },
+   "websiteLink": {
+      "message": "웹사이트 링크"
+   },
+   "websiteUrl": {
+      "message": "웹사이트 URL"
+   },
+   "wednesday": {
+      "message": "수요일"
+   },
+   "weekName": {
+      "message": "주 이름"
+   },
+   "weekly": {
+      "message": "주간"
+   },
+   "whenExtensionTabAppears": {
+      "message": "확장 프로그램 탭이 나타나면 시크릿 모드에서 활성화할 \"자동 열기 및 닫기 기능이 있는 탭 스케줄러\"를 찾은 다음 옆에 있는 \"세부 정보\" 버튼을 클릭합니다."
+   },
+   "whenMenuPopup": {
+      "message": "메뉴가 나타나면 \"확장 프로그램 관리\"를 선택하세요."
+   },
+   "withSignMustFill": {
+      "message": "\u003Cspan>*\u003C/span> 기호 는 입력 또는 선택해야 합니다. 오픈 시간이나 마감 시간, 또는 두 시간 모두를 선택하세요."
+   },
+   "writeYourDescriptionAboutSchUrl": {
+      "message": "여기에 예약된 URL에 대한 설명을 작성하세요."
+   },
+   "yes": {
+      "message": "예"
+   },
+   "yourEmailAddress": {
+      "message": "귀하의 이메일 주소"
+   },
+   "yourScheduleUrl": {
+      "message": "일정 URL"
+   }
+}

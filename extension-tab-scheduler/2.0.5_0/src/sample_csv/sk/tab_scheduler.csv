@@ -1,0 +1,4 @@
+﻿URL,Časovač,Stav,Dátum otvorenia,Dátum zatvorenia,Open Time,Čas zatvorenia,Týždeň otvorených dverí,Uzavretý týždeň,Pri otvorení prehliadača,Deň otvorených dverí,Deň zatvorenia,Otvorená minúta,Zatvoriť minútu,Otvorte druhý,Close Second,Oznámenie,Názov,Popis,Otvoriť adresu URL na pozadí,Otvoriť v režime inkognito,Nezatvárajte pripnuté záložky,Zatvorte iba karty inkognito,Filtrovanie adries URL,Typ rozvrhu,Každá hodina otvorená minúta,Každú hodinu Close Minute,Obnoviť kartu, ak je adresa URL už otvorená
+https://www.google.com/,Každú minútu,Aktívne,,,,,"","","",,,,,,,Neaktívne,Close Every Minute,,Nie,Nie,Nie,Nie,áno,Zavrieť,0,0,áno
+http://www.w3schools.com/,Každý deň,Aktívne,,,16:31,,"","","",,,,,,,Neaktívne,Every Day Open,,Nie,Nie,Nie,Nie,Nie,OTVORENÉ,0,0,Nie
+https://www.flipkart.com/,Vlastná minúta,Aktívne,,,,,"","","",,,120,5,,,Neaktívne,Open and Close,,Nie,Nie,Nie,Nie,Nie,Obaja,0,0,Nie

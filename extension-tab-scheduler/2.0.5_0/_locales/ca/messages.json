@@ -1,0 +1,1448 @@
+{
+   "10_min": {
+      "message": "10 minuts"
+   },
+   "1_min": {
+      "message": "1 minut"
+   },
+   "30_min": {
+      "message": "30 minuts"
+   },
+   "5_min": {
+      "message": "5 minuts"
+   },
+   "60_min": {
+      "message": "hora"
+   },
+   "Dashboard": {
+      "message": "Tauler de control"
+   },
+   "Login": {
+      "message": "Inicieu sessió"
+   },
+   "Off": {
+      "message": "Apagat"
+   },
+   "On": {
+      "message": "Encès"
+   },
+   "Selected": {
+      "message": "Seleccionat"
+   },
+   "Settings": {
+      "message": "Configuració"
+   },
+   "Tutorial": {
+      "message": "Tutorial"
+   },
+   "action": {
+      "message": "Acció"
+   },
+   "activateScheduleTab": {
+      "message": "Activa la pestanya programada."
+   },
+   "active": {
+      "message": "Actius"
+   },
+   "activeAllScheduleTab": {
+      "message": "S'està executant el planificador de pestanyes"
+   },
+   "activeStatus": {
+      "message": "Estat"
+   },
+   "actvInactvNotification": {
+      "message": "Mostra la notificació quan s'obre la pestanya de programació"
+   },
+   "actvInactvOpnTb": {
+      "message": "Pestanya oberta activa o inactiva"
+   },
+   "actvIntvClsTb": {
+      "message": "Tanca la pestanya activa o inactiva"
+   },
+   "add": {
+      "message": "Afegeix"
+   },
+   "addDescription": {
+      "message": "Afegeix una descripció"
+   },
+   "addNew": {
+      "message": "Afegeix nou"
+   },
+   "addNewURlCls": {
+      "message": "Afegeix un URL nou per tancar"
+   },
+   "addNewUrlToOpen": {
+      "message": "Afegeix un URL nou per obrir-lo en una finestra nova"
+   },
+   "addTitle": {
+      "message": "Afegeix un títol"
+   },
+   "addWebsite": {
+      "message": "Afegeix un lloc web"
+   },
+   "all": {
+      "message": "Tots"
+   },
+   "allInputFieldReq": {
+      "message": "Tots els camps són obligatoris"
+   },
+   "all_weeks": {
+      "message": "Tota la setmana"
+   },
+   "alreadyPurchase": {
+      "message": "Ja has comprat? Introduïu la clau aquí"
+   },
+   "andAt": {
+      "message": "i a les"
+   },
+   "annually": {
+      "message": "Anualment"
+   },
+   "appDesc": {
+      "message": "Les pestanyes del navegador s'obriran i es tancaran automàticament a l'hora seleccionada. L'usuari pot activar/desactivar la llista segons els requisits"
+   },
+   "appName": {
+      "message": "Programador de pestanyes amb obertura i tancament automàtic"
+   },
+   "april": {
+      "message": "Abril"
+   },
+   "at": {
+      "message": "a les"
+   },
+   "august": {
+      "message": "Agost"
+   },
+   "autoFocus": {
+      "message": "Pestanya Enfocament automàtic"
+   },
+   "autoFocustip": {
+      "message": "Si està activat, la nova pestanya s'obrirà en un estat actiu/enfocat."
+   },
+   "autofocustip": {
+      "message": "Les noves pestanyes obertes es centraran automàticament"
+   },
+   "basic": {
+      "message": "Bàsica"
+   },
+   "billedAnnyally": {
+      "message": "Facturat anualment"
+   },
+   "billedMonthly": {
+      "message": "Facturat mensualment"
+   },
+   "both": {
+      "message": "Tots dos"
+   },
+   "browserOpen": {
+      "message": "Al navegador obert"
+   },
+   "browserWebAddress": {
+      "message": "L'adreça web del navegador comença i acaba amb una adreça web desconeguda. Posa \u003Cb>*\u003C/b> a ambdós costats del camp d'entrada d'enllaç al lloc web."
+   },
+   "browserWebAddress2": {
+      "message": "L'adreça web del navegador conté el nom de domini google.com, que es tancarà en determinats minuts, sigui quin sigui el subdomini i el camí de la pàgina. Posa \u003Cb>*\u003C/b> als dos costats nom de domini i TLD"
+   },
+   "browserWebAddress3": {
+      "message": "L'adreça web del navegador comença amb un nom de domini desconegut i acaba amb un camí de pàgina desconegut"
+   },
+   "browserWebAddress31": {
+      "message": "es tancarà després de determinats minuts, poseu \u003Cb>*\u003C/b> als dos costats del TLD"
+   },
+   "browserWebAddress4": {
+      "message": "L'adreça web del navegador comença amb una adreça web desconeguda. Posa \u003Cb>*\u003C/b> al principi de la teva URL. Recordeu que l'adreça web del navegador ha de coincidir amb la vostra URL després d' haver escrit \u003Cb>* .\u003C/b>"
+   },
+   "browserWebAddress41": {
+      "message": "L'adreça web del navegador comença amb un subdomini desconegut"
+   },
+   "browserWebAddress42": {
+      "message": "al començament de l'enllaç del vostre lloc web"
+   },
+   "browserWebAddress5": {
+      "message": "L'adreça web del navegador acaba amb una adreça web desconeguda. Posa \u003Cb>*\u003C/b> al final de la teva URL. Recordeu que la vostra adreça web ha de coincidir abans que \u003Cb>*\u003C/b> hagi escrit."
+   },
+   "browserWebAddress51": {
+      "message": "L'adreça web del navegador acaba amb un camí de pàgina desconegut. Posa \u003Cb>*\u003C/b> al final de la teva adreça web"
+   },
+   "browserWebAddress6": {
+      "message": "Posa només \u003Cb>*\u003C/b> al camp de l'adreça del lloc web per tancar totes les pestanyes del navegador. Després de tancar totes les pestanyes, el navegador es tancarà automàticament."
+   },
+   "browserWebAddress7": {
+      "message": "Heu d'haver escrit el subdomini exacte, el domini de nivell superior, el nom del domini i el camí de la pàgina al camp de l'URL que s'obre a la pestanya del navegador."
+   },
+   "browserWebAddress8": {
+      "message": "Podeu obrir l'URL en una data i hora específiques, un mes específic, una setmana específica, un any específic i una hora de repetició"
+   },
+   "buyPlan": {
+      "message": "Pla de compra"
+   },
+   "buycofee": {
+      "message": "Compra'm un cafè"
+   },
+   "cancel": {
+      "message": "Cancel·la"
+   },
+   "changeLanguage": {
+      "message": "Canviar Idioma"
+   },
+   "checkAll": {
+      "message": "Marqueu-ho tot"
+   },
+   "checkThisOpToPreventClosePinTb": {
+      "message": "Marqueu aquesta opció per evitar el tancament de les pestanyes fixades."
+   },
+   "checkThisOptionOnlyPartOfUrlMtch": {
+      "message": "Marqueu aquesta opció si només cal que coincideixi una part de l'URL."
+   },
+   "checkThisOptionToActivate": {
+      "message": "Marqueu aquesta opció per activar o desactivar l'URL programat."
+   },
+   "checkThisOptionToCloseOnly": {
+      "message": "Marqueu aquesta opció per tancar només les pestanyes d'incògnit. A més, activeu l'opció \"Permetre en mode d'incògnit\" als detalls de l'extensió. Per obtenir instruccions, consulteu la pàgina del tutorial."
+   },
+   "checkThisOptionToCloseOnlyInIncgnitoTb": {
+      "message": "Marqueu aquesta opció per tancar només les pestanyes d'incògnit. A més, activeu l'opció \"Permetre en mode d'incògnit\" als detalls de l'extensió. Per obtenir instruccions, consulteu la pàgina del tutorial."
+   },
+   "checkThisOptionToInBg": {
+      "message": "Marqueu aquesta opció si voleu obrir l'URL en segon pla sense obrir-lo en una pestanya nova"
+   },
+   "checkThisOptionToInactivNotification": {
+      "message": "Marqueu aquesta opció per a la notificació inactiva a l'URL programat"
+   },
+   "checkThisOptionToOpen": {
+      "message": "Marqueu aquesta opció si voleu obrir la vostra URL en mode d'incògnit"
+   },
+   "checkThisOptionToOpenIncogito": {
+      "message": "Marqueu aquesta opció si voleu obrir la vostra URL en mode d'incògnit"
+   },
+   "checkThisOptionToPrevent": {
+      "message": "Marqueu aquesta opció per evitar el tancament de les pestanyes fixades."
+   },
+   "clickExtIcon": {
+      "message": "Feu clic a la icona \"Extensions\" de la barra d'eines, que sembla una peça del trencaclosques."
+   },
+   "clickTheSwitch": {
+      "message": "Feu clic a l'interruptor que hi ha al costat per activar-lo"
+   },
+   "close": {
+      "message": "Tancar"
+   },
+   "closeAllTab": {
+      "message": "12. Tanqueu totes les pestanyes del navegador"
+   },
+   "closeAllTabExm1": {
+      "message": "A l'exemple anterior, l'URL donat es troba a la pestanya tanca, que indica que tancarà totes les pestanyes a les 12:00 del 25/2/2023"
+   },
+   "closeDate": {
+      "message": "Data de tancament"
+   },
+   "closeDay": {
+      "message": "Dia de tancament"
+   },
+   "closeEveryYear": {
+      "message": "Tanquem cada any"
+   },
+   "closeInEvery": {
+      "message": "A prop en cada"
+   },
+   "closeIncognitoTab": {
+      "message": "Tanqueu només les pestanyes d'incògnit"
+   },
+   "closeMinute": {
+      "message": "Minut de tancament"
+   },
+   "closeOnDay": {
+      "message": "Tanca el dia"
+   },
+   "closeOnEvery": {
+      "message": "Tanca a cada"
+   },
+   "closeOnEveryDay": {
+      "message": "Tanca tots els dies"
+   },
+   "closeOnEveryMonth": {
+      "message": "Tanca cada mes el dia"
+   },
+   "closeOnEveryWeek": {
+      "message": "Tanca cada setmana"
+   },
+   "closeSecond": {
+      "message": "Tancar segon"
+   },
+   "closeSeconsMoreThan5": {
+      "message": "Els segons de tancament haurien de ser més de 5."
+   },
+   "closeTabSchedule": {
+      "message": "Tanca la programació de la pestanya"
+   },
+   "closeTabURL": {
+      "message": "Tanca l'URL de la pestanya"
+   },
+   "closeTime": {
+      "message": "Temps de tancament"
+   },
+   "closeUrl": {
+      "message": "Tanca l'enllaç del lloc web"
+   },
+   "closeWeek": {
+      "message": "Tanca setmana"
+   },
+   "closeWeeks": {
+      "message": "Setmanes de tancament"
+   },
+   "close_on": {
+      "message": "Tancament"
+   },
+   "cngrtsForSubcr": {
+      "message": "Felicitats! El vostre pla s'ha activat correctament."
+   },
+   "commonQuestionsAns": {
+      "message": "Preguntes i respostes habituals"
+   },
+   "copySucessClose": {
+      "message": "Les dades de l'URL de la pestanya Tanca s'han copiat a les dades de l'URL de la pestanya Obre"
+   },
+   "createNewTimer": {
+      "message": "Crea un temporitzador nou"
+   },
+   "currentPlan": {
+      "message": "Pla actual"
+   },
+   "currentTabSchedule": {
+      "message": "Horari de pestanyes actual"
+   },
+   "currentTbScheduleTimer": {
+      "message": "Temporitzador programat de la pestanya actual."
+   },
+   "cusSec": {
+      "message": "Segon personalitzat"
+   },
+   "custMin": {
+      "message": "Minut personalitzat"
+   },
+   "custmMinSch": {
+      "message": "7. Horari de minuts personalitzat"
+   },
+   "custmMinSchExm1": {
+      "message": "A l'exemple anterior, l'URL donat es troba a la pestanya oberta, que indica l'URL donat obert en una pestanya nova cada 15 minuts."
+   },
+   "custmMinSchExm2": {
+      "message": "A l'exemple anterior, l'URL donat es troba a la pestanya de tancament, que indica que l'URL donat que s'ha obert en una pestanya nova es tancarà al cap de 15 minuts."
+   },
+   "customSecondWarning": {
+      "message": "La funció de segon personalitzada és experimental i pot ser que no funcioni correctament si els segons es defineixen per sota de 60."
+   },
+   "darkMode": {
+      "message": "Mode fosc"
+   },
+   "datNotCopy": {
+      "message": "Algunes dades no es copien a causa d'un URL no vàlid."
+   },
+   "dataSaved": {
+      "message": "Les dades del temporitzador s'han guardat correctament"
+   },
+   "date": {
+      "message": "Data"
+   },
+   "dateIsOutOfRange": {
+      "message": "La data està fora de l'interval"
+   },
+   "day": {
+      "message": "Dia"
+   },
+   "december": {
+      "message": "desembre"
+   },
+   "delete": {
+      "message": "Suprimeix"
+   },
+   "deleteScheduleTb": {
+      "message": "Suprimeix la pestanya programada."
+   },
+   "description": {
+      "message": "Descripció"
+   },
+   "developedBy": {
+      "message": "Desenvolupat per:"
+   },
+   "doNotCloseInPinnedTabs": {
+      "message": "No tanqueu les pestanyes fixades"
+   },
+   "doNotShowNotification": {
+      "message": "No mostris notificació"
+   },
+   "domainName": {
+      "message": "Nom de domini"
+   },
+   "downloadCloseTbSampleCsv": {
+      "message": "Baixeu un CSV de mostra de pestanya tancada per veure un exemple del format requerit"
+   },
+   "downloadOpenTbSampleCsv": {
+      "message": "Baixeu un CSV de mostra de pestanya oberta per veure un exemple del format requerit"
+   },
+   "editScheduleTb": {
+      "message": "Edita la pestanya programada."
+   },
+   "email": {
+      "message": "Correu electrònic"
+   },
+   "enterDateToCloseTab": {
+      "message": "Introduïu la data aquí per tancar la pestanya de programació."
+   },
+   "enterDateToOpen": {
+      "message": "Introduïu la data per obrir la pestanya d'agenda."
+   },
+   "enterMiniutesToCloseTb": {
+      "message": "Introduïu minuts per tancar la pestanya."
+   },
+   "enterMiniutesToOpen": {
+      "message": "Introduïu minuts per obrir la pestanya de programació."
+   },
+   "enterMinute": {
+      "message": "Introduïu el minut"
+   },
+   "enterSecond": {
+      "message": "Entra Segon"
+   },
+   "enterSecondsToCloseTab": {
+      "message": "Introduïu segons per tancar la pestanya."
+   },
+   "enterSecondsToOpen": {
+      "message": "Introduïu segons per obrir la pestanya de programació."
+   },
+   "enterTilteOfScheduleUrl": {
+      "message": "Introduïu el títol de l'URL programat."
+   },
+   "enterTimeToCloseTab": {
+      "message": "Introduïu l'hora aquí per tancar la pestanya de programació."
+   },
+   "enterTimeToSchedule": {
+      "message": "Introduïu l'hora per obrir la pestanya de programació."
+   },
+   "enterValidEmail": {
+      "message": "Introduïu un correu electrònic vàlid"
+   },
+   "enterValidUrl": {
+      "message": "Introduïu un URL vàlid"
+   },
+   "enterValueInCloseSec": {
+      "message": "Introduïu el valor en pocs segons"
+   },
+   "enterValueInOpenCloseSec": {
+      "message": "Introduïu el valor en segons d'obertura o tancament"
+   },
+   "enterValueInOpenMinutes": {
+      "message": "Introduïu el valor en minuts oberts"
+   },
+   "enterVlaueInCloseMinutes": {
+      "message": "Introduïu el valor en minuts tancats"
+   },
+   "enterVlaueInOpenCloseMin": {
+      "message": "Introduïu el valor en minuts d'obertura o tancament"
+   },
+   "enterVlaueInOpenSeconds": {
+      "message": "Introduïu el valor en segons oberts"
+   },
+   "enterYourURLToSchedule": {
+      "message": "Introduïu el vostre URL per programar-lo."
+   },
+   "every": {
+      "message": "cada"
+   },
+   "every10Min": {
+      "message": "Cada 10 minuts"
+   },
+   "every1Minute": {
+      "message": "cada 1 minut"
+   },
+   "every30Min": {
+      "message": "Cada 30 minuts"
+   },
+   "every5Min": {
+      "message": "Cada 5 minuts"
+   },
+   "everyDay": {
+      "message": "Cada dia"
+   },
+   "everyDayAt": {
+      "message": "cada dia a les"
+   },
+   "everyHour": {
+      "message": "Cada hora"
+   },
+   "everyMinute": {
+      "message": "Cada Minut"
+   },
+   "everyMonth": {
+      "message": "Cada mes"
+   },
+   "everyMonthOn": {
+      "message": "cada mes"
+   },
+   "everyMonthOnDay": {
+      "message": "cada mes al dia"
+   },
+   "everyWeek": {
+      "message": "Cada setmana"
+   },
+   "everyWeekOn": {
+      "message": "cada setmana"
+   },
+   "everyYear": {
+      "message": "Cada any"
+   },
+   "everyYesrOn": {
+      "message": "cada any"
+   },
+   "evr10MinSch": {
+      "message": "2. Horari cada 10 minuts"
+   },
+   "evr10MinSchExm1": {
+      "message": "A l'exemple anterior, l'URL donat es troba a la pestanya oberta, que indica que l'URL donat s'obrirà a una pestanya nova cada 10 minuts."
+   },
+   "evr10MinSchExm2": {
+      "message": "A l'exemple anterior, l'URL donat es troba a la pestanya de tancament, que indica que l'URL donat que s'ha obert en una pestanya nova es tancarà al cap de 10 minuts."
+   },
+   "evrDaySch": {
+      "message": "3. Horari de cada dia"
+   },
+   "evrDaySchExm1": {
+      "message": "A l'exemple anterior, l'URL donat es troba a la pestanya oberta, que indica que s'obrirà en una pestanya nova cada dia a les 17:27"
+   },
+   "evrDaySchExm2": {
+      "message": "A l'exemple anterior, l'URL donat es troba a la pestanya tanca, que indica que tancarà la pestanya ja oberta a les 17:27 cada dia"
+   },
+   "evrMonthSch": {
+      "message": "5. Horari de cada mes"
+   },
+   "evrMonthSchExm1": {
+      "message": "A l'exemple anterior, l'URL donat es troba a la pestanya oberta, que indica que s'obrirà en una pestanya nova Cada mes a les 13:45 del dia 25"
+   },
+   "evrMonthSchExm2": {
+      "message": "A l'exemple anterior, l'URL donat es troba a la pestanya tanca, que indica que tancarà la pestanya ja oberta cada mes a les 13:45 del dia 25"
+   },
+   "evrWeekSch": {
+      "message": "4. Horari de cada setmana"
+   },
+   "evrWeekSchExm1": {
+      "message": "A l'exemple anterior, l'URL donat es troba en una pestanya oberta, que indica que s'obrirà en una pestanya nova cada setmana a les 17:00 els \u003Cb>dilluns i els dimarts\u003C/b> ."
+   },
+   "evrWeekSchExm2": {
+      "message": "A l'exemple anterior, l'URL donat es troba a la pestanya de tancament, que indica que tancarà la pestanya ja oberta cada setmana a les 17:00 els \u003Cb>dilluns i els dimarts\u003C/b> ."
+   },
+   "evrWeekSchExm3": {
+      "message": "A l'exemple anterior, es poden seleccionar diversos dies al temporitzador setmanal."
+   },
+   "evrYearSch": {
+      "message": "6. Horari de cada any"
+   },
+   "evrYearSchExm1": {
+      "message": "A l'exemple anterior, l'URL donat es troba a la pestanya oberta, que indica que s'obrirà en una pestanya nova Cada any a les 13:35 de l'1 de gener"
+   },
+   "evrYearSchExm2": {
+      "message": "A l'exemple anterior, l'URL donat es troba a la pestanya tanca, que indica que tancarà la pestanya ja oberta cada any a les 13:35 de l'1 de gener"
+   },
+   "exampleSort": {
+      "message": "ex"
+   },
+   "exdMaxLim": {
+      "message": "S'han superat el nombre màxim de dispositius permesos!"
+   },
+   "exmpOpnClsTbSch": {
+      "message": "Exemple de com obrir i tancar la pestanya al Programador de pestanyes"
+   },
+   "expLicKy": {
+      "message": "Aquesta clau de llicència ha caducat."
+   },
+   "export": {
+      "message": "Exporta"
+   },
+   "exportBefore": {
+      "message": "Ho tens\u003Cexday>\u003C/exday>Queden dies, subscriu-te per continuar gaudint de la funció premium"
+   },
+   "exportClsTbDta": {
+      "message": "Exporta les dades de tancament de la pestanya"
+   },
+   "exportOpenTbDt": {
+      "message": "Exporta les dades de la pestanya oberta"
+   },
+   "exportedData": {
+      "message": "Les dades del temporitzador s'han exportat correctament"
+   },
+   "extensionShouldAble": {
+      "message": "Ara, l'extensió hauria de poder tancar pestanyes en mode d'incògnit."
+   },
+   "faq": {
+      "message": "PMF"
+   },
+   "faq_1": {
+      "message": "Què és el programador de pestanyes amb obertura i tancament automàtic?"
+   },
+   "faq_10": {
+      "message": "Com puc veure les meves pestanyes programades?"
+   },
+   "faq_11": {
+      "message": "És obligatori omplir tant l'horari d'obertura com de tancament?"
+   },
+   "faq_12": {
+      "message": "Què fan les funcions de la pestanya Enfocament automàtic, Activa totes les pestanyes programades i el mode d'alimentació?"
+   },
+   "faq_13": {
+      "message": "Puc obrir/tancar l'enllaç del lloc web programat a la pestanya d'incògnit.?"
+   },
+   "faq_14": {
+      "message": "Per a què serveix la pestanya Actualitza si l'URL ja està obert?"
+   },
+   "faq_2": {
+      "message": "Per a què serveix l'enllaç al lloc web?"
+   },
+   "faq_3": {
+      "message": "Com puc programar un URL mitjançant Tab Scheduler?"
+   },
+   "faq_4": {
+      "message": "Què és l'opció \"Obrir URL en segon pla\"?"
+   },
+   "faq_5": {
+      "message": "Puc evitar que l'extensió tanqui les pestanyes fixades?"
+   },
+   "faq_6": {
+      "message": "Què significa el tipus d'horari \"Tots dos\"?"
+   },
+   "faq_7": {
+      "message": "Com funciona la funció \"Filtratge d'URL\"?"
+   },
+   "faq_8": {
+      "message": "Puc desactivar una pestanya programada sense suprimir-la?"
+   },
+   "faq_9": {
+      "message": "Rebré notificacions de les pestanyes programades?"
+   },
+   "faq_a_1": {
+      "message": "\u003Cp>El Programador de pestanyes amb obertura i tancament automàtics és una extensió del navegador que permet als usuaris programar les pestanyes perquè s'obrin i es tanquin automàticament a hores establertes. Els usuaris poden seleccionar una programació única o configurar programes recurrents amb diverses opcions de freqüència. Aquesta extensió té múltiples finalitats per als usuaris i ofereix moltes funcions que us són útils.\u003C/p>"
+   },
+   "faq_a_10": {
+      "message": "Totes les pestanyes programades es mostren en una llista que mostra el títol, l'enllaç del lloc web, les hores d'obertura i tancament, l'estat i les accions que podeu dur a terme (p. ex., activar, editar, suprimir)."
+   },
+   "faq_a_11": {
+      "message": "No, podeu programar una hora d'obertura o una hora de tancament. Tanmateix, heu d'omplir o seleccionar els camps obligatoris marcats amb un asterisc (*)."
+   },
+   "faq_a_12": {
+      "message": "La pestanya Enfocament automàtic garanteix que quan s'obre una pestanya programada, Activa totes les pestanyes programades us permet activar ràpidament totes les pestanyes programades amb un sol clic. El mode d'alimentació optimitza el rendiment de l'extensió gestionant els recursos del navegador de manera més eficient."
+   },
+   "faq_a_13": {
+      "message": "Sí, podeu optar per obrir una pestanya programada en mode d'incògnit seleccionant l'opció \"Obre en mode d'incògnit\". Pots optar per tancar només les pestanyes d'incògnit seleccionant l'opció \"Tanca només les pestanyes d'incògnit\", sempre que l'opció \"Permet en mode d'incògnit\" estigui habilitat a la configuració de l'extensió."
+   },
+   "faq_a_14": {
+      "message": "Quan aquesta opció està activada, l'extensió actualitzarà automàticament una pestanya existent si el mateix URL ja està obert al vostre navegador. Això evita obrir pestanyes duplicades i garanteix que sempre tingueu la darrera versió de la pàgina carregada."
+   },
+   "faq_a_14_1": {
+      "message": "Si proveu d'obrir https://github.com/ i ja està obert en una altra pestanya, l'extensió simplement actualitzarà aquesta pestanya en lloc d'obrir-ne una de nova."
+   },
+   "faq_a_14_2": {
+      "message": "Si https://github.com/ ja està obert en tres pestanyes, l'extensió actualitzarà les tres pestanyes."
+   },
+   "faq_a_2": {
+      "message": "L'enllaç del lloc web és l'adreça del lloc web de la pestanya oberta del vostre navegador. Com podeu utilitzar l'adreça del lloc web s'esmenta a continuació."
+   },
+   "faq_a_3": {
+      "message": "Per programar una URL, introduïu l'enllaç del lloc web, doneu un títol a la programació, seleccioneu la freqüència (Una vegada, Cada minut, Diàriament, etc.) i trieu els horaris d'obertura i tancament. També podeu especificar una data, un dia o uns segons per obrir i tancar la pestanya."
+   },
+   "faq_a_4": {
+      "message": "\u003Cp>Aquesta opció us ofereix un control total per programar un URL perquè s'obri en segon pla sense centrar la nova pestanya. L'URL s'obrirà en silenci mentre continueu treballant en altres pestanyes. És especialment útil quan necessiteu que el navegador obtingui dades de l'URL programat sense mostrar-los activament, com en el cas d'una sol·licitud d'API GET.\u003C/p>\u003Cbr> \u003Cp>Per exemple, si voleu obtenir dades d'un punt final de l'API a una hora determinada amb regularitat, podeu utilitzar aquesta opció eficient per executar la sol·licitud en segon pla sense obrir una nova pestanya visible.\u003C/p>"
+   },
+   "faq_a_5": {
+      "message": "Sí, hi ha una opció per evitar el tancament de les pestanyes fixades. Marqueu l'opció \"No tanqueu les pestanyes fixades\" per assegurar-vos que aquestes pestanyes romanen obertes encara que compleixin altres criteris de tancament."
+   },
+   "faq_a_6": {
+      "message": "El tipus de programació \"Tots dos\" us ofereix un control complet sobre quan s'obre i es tanca una pestanya, la qual cosa us permet establir hores específiques per a ambdues accions."
+   },
+   "faq_a_7": {
+      "message": "El filtratge d'URL garanteix que només una part específica de l'URL ha de coincidir perquè tingui lloc l'acció programada. Això és útil quan voleu automatitzar determinades accions basades en coincidències parcials d'URL. Per exemple, si marqueu l'opció de filtratge d'URL per a l'URL https://example.com/page, també s'aplicarà a URL com https://example.com/page/123, https://example.com/ page?query=example i https://subdomain.example.com/page."
+   },
+   "faq_a_8": {
+      "message": "Amb l'opció \"Activa aquesta pestanya programada\", pots activar o desactivar fàcilment les pestanyes programades, donant-te la flexibilitat per gestionar els teus horaris sense perdre configuracions."
+   },
+   "faq_a_9": {
+      "message": "Per defecte, rebràs notificacions. Tanmateix, si preferiu aturar les notificacions, podeu marcar l'opció \"No mostrar notificacions\" per desactivar-les."
+   },
+   "february": {
+      "message": "febrer"
+   },
+   "filterTips": {
+      "message": "El filtre s'aplica després de \"https://\" o \"www.\", per exemple, \"github.com\""
+   },
+   "for_exp": {
+      "message": "Per exemple"
+   },
+   "freeForever": {
+      "message": "Lliure per sempre"
+   },
+   "freeSchedule": {
+      "message": "horari gratuït"
+   },
+   "freeTral": {
+      "message": "Com a usuari primerenc apreciat, gaudiràs\u003Crday>120\u003C/rday>dies d'accés gratuït abans de canviar al nostre nou pla de pagament; gràcies pel vostre suport continuat!\u003Cp class=\"p-t-5\">Ho tens\u003Cb>\u003Cspan>\u003C/span>\u003C/b>dies que queden fora del teu\u003Crday>120\u003C/rday>-període de dia lliure.\u003Cafex class=\"warning\">\u003Cafex>\u003C/afex>\u003C/afex>\u003C/p> "
+   },
+   "frequentlyAskedQuestions": {
+      "message": "Preguntes freqüents"
+   },
+   "friday": {
+      "message": "divendres"
+   },
+   "getThisPlan": {
+      "message": "Obteniu aquest pla"
+   },
+   "goToSettingsPageToSchedule": {
+      "message": "Aneu a la pàgina de configuració per programar l'obertura i el tancament dels URL."
+   },
+   "goURL": {
+      "message": "Aneu a l'URL"
+   },
+   "helpAccordion12": {
+      "message": "Aquesta extensió funciona en mode de repòs/suspensió?"
+   },
+   "helpAccordion3": {
+      "message": "Puc programar una pestanya perquè s'obri en mode d'incògnit?"
+   },
+   "helpAccordion6": {
+      "message": "Què és \"Temps expirat\"?"
+   },
+   "helpAccordion7": {
+      "message": "Puc exportar l'URL programat?"
+   },
+   "helpAccordion8": {
+      "message": "Puc importar a l'URL de la programació?"
+   },
+   "helpPanelBodyDesc12First": {
+      "message": "No, aquesta extensió no funcionarà en mode de repòs/suspensió."
+   },
+   "helpPanelBodyDesc12Second": {
+      "message": "Si es programa algun URL a la pestanya d'obertura o tancament, el vostre ordinador no passarà automàticament al mode de suspensió o de suspensió."
+   },
+   "helpPanelBodyDesc3": {
+      "message": "Sí, podeu optar per obrir una pestanya programada en mode d'incògnit seleccionant l'opció \"Obre en mode d'incògnit\". Assegureu-vos que l'opció \"Permetre en mode d'incògnit\" de l'extensió estigui activada a la configuració de l'extensió del navegador."
+   },
+   "helpPanelBodyDesc6": {
+      "message": "- La data i l'hora indicades passa de la data i l'hora actuals i es mostrarà el text \"Temps caducat\"."
+   },
+   "helpPanelBodyDesc7": {
+      "message": "Sí, podeu exportar la pestanya oberta i tancar l'URL de la pestanya ja programada en format csv i utilitzar-la amb un altre sistema per importar aquesta URL."
+   },
+   "helpPanelBodyDesc8": {
+      "message": "Sí, podeu importar un URL d'obertura i tancament vàlid en format csv. El format csv importat es programarà automàticament en un moment donat"
+   },
+   "herAreStepsToAllow": {
+      "message": "Aquests són els passos per \"Permetre en mode d'incògnit\" a Google Chrome:"
+   },
+   "home": {
+      "message": "a casa"
+   },
+   "hour_minute_close": {
+      "message": "Cada hora Minut de tancament"
+   },
+   "hour_minute_open": {
+      "message": "Cada hora Minut obert"
+   },
+   "how_to_use_tab": {
+      "message": "Com utilitzar el planificador de pestanyes?"
+   },
+   "import": {
+      "message": "Importar"
+   },
+   "importClsTbDta": {
+      "message": "Importa les dades de tancament de la pestanya"
+   },
+   "importExport": {
+      "message": "Importa/Exporta"
+   },
+   "importOpenTbDt": {
+      "message": "Importa les dades de la pestanya oberta"
+   },
+   "importedRecored": {
+      "message": ", gravat importat"
+   },
+   "inactivateScheduleTab": {
+      "message": "Desactiva la pestanya programada."
+   },
+   "inactive": {
+      "message": "Inactiu"
+   },
+   "inactiveSch": {
+      "message": "8.URL inactiu"
+   },
+   "inactiveSchExm1": {
+      "message": "A l'exemple anterior, l'URL donat es troba a la pestanya oberta o tancada, que indica que l'URL donat està inactiu i no realitzarà cap acció."
+   },
+   "inactiveThisScheduledTabs": {
+      "message": "Activa aquesta pestanya programada"
+   },
+   "invalidDuplicate": {
+      "message": ", duplicat o gravat no vàlid"
+   },
+   "invldLicKy": {
+      "message": "Clau de llicència no vàlida!"
+   },
+   "isClose": {
+      "message": "està a prop"
+   },
+   "isOpen": {
+      "message": "està obert"
+   },
+   "january": {
+      "message": "gener"
+   },
+   "july": {
+      "message": "juliol"
+   },
+   "june": {
+      "message": "juny"
+   },
+   "licKeyDis": {
+      "message": "Aquesta clau de llicència està desactivada."
+   },
+   "listTitle": {
+      "message": "Programador de pestanyes"
+   },
+   "loading": {
+      "message": "Si us plau, espereu..."
+   },
+   "locale": {
+      "message": "en"
+   },
+   "march": {
+      "message": "març"
+   },
+   "maxSchedule": {
+      "message": "4 Límit màxim d'horari"
+   },
+   "may": {
+      "message": "maig"
+   },
+   "mintValid": {
+      "message": "Es requereix un mínim d'1 minut"
+   },
+   "minute": {
+      "message": "Minut"
+   },
+   "minutesNotLessThan1": {
+      "message": "Els minuts no han de ser inferiors a 1."
+   },
+   "monday": {
+      "message": "dilluns"
+   },
+   "month": {
+      "message": "Mes"
+   },
+   "monthly": {
+      "message": "Mensualment"
+   },
+   "more": {
+      "message": "més"
+   },
+   "mostSubscribe": {
+      "message": "La majoria Subscriu-te"
+   },
+   "no": {
+      "message": "No"
+   },
+   "noDataToExport": {
+      "message": "No hi ha dades per exportar."
+   },
+   "noScheduledTabs": {
+      "message": "No hi ha pestanyes programades"
+   },
+   "noTimerSetAddNewTimer": {
+      "message": "No s'ha establert un temporitzador, feu clic al botó Afegeix per configurar un temporitzador nou"
+   },
+   "not_show_tutorial": {
+      "message": "No tornis a mostrar aquest tutorial"
+   },
+   "notificationOpenTab": {
+      "message": "13. Notificació a l'URL de la pestanya obrir/tancar"
+   },
+   "notificationOpenTabExm1": {
+      "message": "A l'exemple anterior, l'URL donat es troba a la pestanya oberta, que indica que donarà una notificació i obrirà/tancarà l'URL a una pestanya nova cada 5 minuts."
+   },
+   "notifications": {
+      "message": "Notificació"
+   },
+   "november": {
+      "message": "novembre"
+   },
+   "october": {
+      "message": "Octubre"
+   },
+   "onTheExtensionDetailPage": {
+      "message": "A la pàgina de detalls de l'extensió, desplaceu-vos cap avall i cerqueu l'opció \"Permetre en mode d'incògnit\"."
+   },
+   "oneTime": {
+      "message": "Una vegada"
+   },
+   "oneTmSch": {
+      "message": "1. Horari únic"
+   },
+   "oneTmSchExm1": {
+      "message": "A l'exemple anterior, l'URL donat es troba a la pestanya oberta, que indica que s'obrirà a una pestanya nova Una vegada a les 13:45 del 21/1/2023"
+   },
+   "oneTmSchExm2": {
+      "message": "A l'exemple anterior, l'URL donat es troba a la pestanya de tancament, que indica que tancarà totes les pestanyes d'URL coincidents específiques a les 13:45 del 21/1/2023"
+   },
+   "open": {
+      "message": "Obert"
+   },
+   "openBackground": {
+      "message": "En cas afirmatiu, carregant un URL en segon pla sense obrir-lo en una pestanya nova"
+   },
+   "openDate": {
+      "message": "Data d'obertura"
+   },
+   "openDay": {
+      "message": "Jornada de portes obertes"
+   },
+   "openEveryDayOn": {
+      "message": "Obert tots els dies"
+   },
+   "openEveryMonthOn": {
+      "message": "Obert tots els mesos els dies"
+   },
+   "openEveryWeekOn": {
+      "message": "Obert totes les setmanes"
+   },
+   "openEveryYearOn": {
+      "message": "Obert cada any"
+   },
+   "openGoogleChrome": {
+      "message": "Obriu Google Chrome."
+   },
+   "openInBackground": {
+      "message": "Obre l'URL en segon pla"
+   },
+   "openInEvery": {
+      "message": "Obert a tots"
+   },
+   "openInIncognito": {
+      "message": "Obre en mode d'incògnit"
+   },
+   "openMinute": {
+      "message": "Minut Obert"
+   },
+   "openOnDay": {
+      "message": "Obert el dia"
+   },
+   "openOnEvery": {
+      "message": "Obert a tots"
+   },
+   "openSecond": {
+      "message": "Obre segon"
+   },
+   "openSecondsMoreThan5": {
+      "message": "Els segons oberts haurien de ser més de 5."
+   },
+   "openTabSchedule": {
+      "message": "Obre la pestanya Programació"
+   },
+   "openTabURL": {
+      "message": "URL de la pestanya oberta"
+   },
+   "openTime": {
+      "message": "Temps Obert"
+   },
+   "openUrl": {
+      "message": "Obriu l'enllaç del lloc web"
+   },
+   "openWeek": {
+      "message": "Setmana de portes obertes"
+   },
+   "openWeeks": {
+      "message": "Setmanes de portes obertes"
+   },
+   "open_on": {
+      "message": "Obre encès"
+   },
+   "optional": {
+      "message": "Opcional"
+   },
+   "or": {
+      "message": "o"
+   },
+   "outof": {
+      "message": "fora de"
+   },
+   "pagePath": {
+      "message": "Ruta de la pàgina"
+   },
+   "paidFeature": {
+      "message": "Funció de pagament"
+   },
+   "pauseSchedule": {
+      "message": "Inicia o atura tots els horaris"
+   },
+   "pauseTabScheduler": {
+      "message": "Programador de pestanyes en pausa"
+   },
+   "pleaseAllowIncognitoMessage": {
+      "message": "Activeu l'opció \"Permetre en mode d'incògnit\" als detalls de l'extensió. Per obtenir instruccions, consulteu la pàgina del tutorial."
+   },
+   "pleaseShareYourSuggestions": {
+      "message": "Comparteix el teu suggeriment."
+   },
+   "plsShreAnySugWithUs": {
+      "message": "Si us plau, feu un suggeriment per millorar-nos"
+   },
+   "powerMode": {
+      "message": "Mode d'alimentació"
+   },
+   "premium": {
+      "message": "Premium"
+   },
+   "pricePlan": {
+      "message": "Preus i plans"
+   },
+   "privcyPolicy": {
+      "message": "Política de privadesa"
+   },
+   "prowerModeTip": {
+      "message": "Manteniu el sistema sempre actiu activant el mode d'alimentació"
+   },
+   "put": {
+      "message": "Posa"
+   },
+   "rateUs": {
+      "message": "Valora'ns"
+   },
+   "removeDuplicateEntry": {
+      "message": "Si us plau, elimineu l'entrada duplicada"
+   },
+   "removeOpenTbURL": {
+      "message": "Elimina l'URL de la pestanya oberta"
+   },
+   "repeat": {
+      "message": "Repetiu"
+   },
+   "requiredMsg": {
+      "message": "Obligatori"
+   },
+   "rmvClsTb": {
+      "message": "Elimina l'URL de la pestanya de tancament"
+   },
+   "sameTabs": {
+      "message": "Actualitza la pestanya si l'URL ja està obert"
+   },
+   "sameTabsInfo": {
+      "message": "Eviteu obrir diverses pestanyes per al mateix URL. Per exemple, si www.google.com ja està obert, la pestanya existent s'actualitzarà en lloc d'obrir-ne una nova."
+   },
+   "sampleCsvOpenPath": {
+      "message": "../sample_csv/en/open_tab_sample.csv"
+   },
+   "sampleFile": {
+      "message": "Fitxer de mostra"
+   },
+   "saturday": {
+      "message": "dissabte"
+   },
+   "savOpnData": {
+      "message": "Desa les dades de la pestanya oberta"
+   },
+   "save": {
+      "message": "Desa"
+   },
+   "saveClsTbData": {
+      "message": "Desa les dades de tancament de la pestanya"
+   },
+   "saveSchedule": {
+      "message": "Guardar horari"
+   },
+   "scheduleCloseTab": {
+      "message": "Programa Tanca la pestanya"
+   },
+   "scheduleCurrentTab": {
+      "message": "Programa la pestanya actual"
+   },
+   "scheduleOpenTab": {
+      "message": "Pestanya Obre Programa"
+   },
+   "scheduledTabIsAlreadyExistWithSameTimer": {
+      "message": "Aquesta pestanya programada ja existeix amb el mateix temporitzador."
+   },
+   "scheduledTabList": {
+      "message": "Llista de pestanyes programades"
+   },
+   "scheduledType": {
+      "message": "Tipus d'horari"
+   },
+   "search": {
+      "message": "Cerca"
+   },
+   "secValid": {
+      "message": "Es requereix un mínim de 5 segons"
+   },
+   "second": {
+      "message": "Segon"
+   },
+   "selectCloseDate": {
+      "message": "Seleccioneu la data de tancament"
+   },
+   "selectCloseDay": {
+      "message": "Seleccioneu el dia de tancament"
+   },
+   "selectCloseTime": {
+      "message": "Seleccioneu l'hora de tancament"
+   },
+   "selectColumn": {
+      "message": "Seleccioneu Columna"
+   },
+   "selectDateAndTime": {
+      "message": "Seleccioneu la data i l'hora per obrir una pestanya nova"
+   },
+   "selectDateAndTimeClsTb": {
+      "message": "Seleccioneu la data i l'hora per tancar la pestanya"
+   },
+   "selectDayToCloseSchTb": {
+      "message": "Seleccioneu el dia per tancar la pestanya de programació."
+   },
+   "selectDayToClsTb": {
+      "message": "Seleccioneu el dia per tancar la pestanya"
+   },
+   "selectDayToSchdule": {
+      "message": "Seleccioneu el dia per programar la pestanya."
+   },
+   "selectDaysInWeek": {
+      "message": "Seleccioneu els dies de la setmana"
+   },
+   "selectDaysInWeekIClsTime": {
+      "message": "Seleccioneu els dies de la setmana amb el temporitzador de tancament."
+   },
+   "selectDaysInWeekIOpClsTime": {
+      "message": "Seleccioneu els dies de la setmana amb el temporitzador d'obertura o tancament."
+   },
+   "selectDaysInWeekIOpTime": {
+      "message": "Seleccioneu els dies de la setmana al temporitzador obert."
+   },
+   "selectFrequency": {
+      "message": "Seleccioneu Freqüència"
+   },
+   "selectFrequencyOfScheduleUrl": {
+      "message": "Seleccioneu la freqüència de l'URL programat."
+   },
+   "selectOpenDate": {
+      "message": "Seleccioneu la data d'obertura"
+   },
+   "selectOpenDay": {
+      "message": "Seleccioneu el dia de portes obertes"
+   },
+   "selectOpenOrClose": {
+      "message": "Seleccioneu l'hora d'obertura i tancament"
+   },
+   "selectOpenOrCloseDate": {
+      "message": "Seleccioneu la data d'obertura i tancament"
+   },
+   "selectOpenOrCloseDay": {
+      "message": "Seleccioneu el dia d'obertura i tancament"
+   },
+   "selectOpenTime": {
+      "message": "Seleccioneu l'hora d'obertura"
+   },
+   "selectPreferredLanguage": {
+      "message": "Seleccioneu el vostre idioma preferit."
+   },
+   "selectToOpenTab": {
+      "message": "Seleccioneu el dia per obrir una pestanya nova"
+   },
+   "selectTypTimerClsTb": {
+      "message": "Seleccioneu el tipus de temporitzador per tancar la pestanya"
+   },
+   "selectTypeOfSchedule": {
+      "message": "Seleccioneu el tipus d'horari, si voleu obrir i tancar tant, seleccioneu \"Tots dos\"."
+   },
+   "selectTypeOfTimer": {
+      "message": "Seleccioneu el tipus de temporitzador per obrir una pestanya nova"
+   },
+   "select_weeks": {
+      "message": "Seleccioneu Setmanes"
+   },
+   "september": {
+      "message": "setembre"
+   },
+   "settingSave": {
+      "message": "La configuració s'ha desat correctament"
+   },
+   "settingToClose": {
+      "message": "Configuració per tancar la pestanya en mode d'incògnit."
+   },
+   "shareYourSuggestionWithUs": {
+      "message": "Comparteix els teus suggeriments amb nosaltres.."
+   },
+   "slectDayToScheduleWeekly": {
+      "message": "Seleccioneu els dies per programar la pestanya setmanalment."
+   },
+   "slectMinute": {
+      "message": "Seleccioneu Minut"
+   },
+   "smthngWrng": {
+      "message": "Alguna cosa va fallar"
+   },
+   "softpulseInfotech": {
+      "message": "Softpulse Infotech"
+   },
+   "somethingWentWrong": {
+      "message": "Alguna cosa va fallar. Actualitza la pàgina i torna-ho a provar."
+   },
+   "status": {
+      "message": "Estat"
+   },
+   "subcrKeyShldNEmpt": {
+      "message": "Introduïu la clau de subscripció."
+   },
+   "subdomain": {
+      "message": "Subdomini"
+   },
+   "subkeyInputTitle": {
+      "message": "Introduïu la clau de subscripció"
+   },
+   "submFeedBack": {
+      "message": "Envia"
+   },
+   "suggForTbSch": {
+      "message": "Suggeriment per al planificador de pestanyes"
+   },
+   "suggestionAndRateUs": {
+      "message": "Suggeriment i puntua'ns"
+   },
+   "sunday": {
+      "message": "diumenge"
+   },
+   "tabCloseOneTime": {
+      "message": "La pestanya només es tancarà una vegada"
+   },
+   "tabSchTutorial": {
+      "message": "Tutorial del programador de pestanyes"
+   },
+   "tabScheduler": {
+      "message": "Programador de pestanyes"
+   },
+   "tabSchedulerOptions": {
+      "message": "Opcions del programador de pestanyes"
+   },
+   "tabWillOpenOneTime": {
+      "message": "La pestanya només s'obrirà una vegada"
+   },
+   "tabWillOpenWhenBrowserOpen": {
+      "message": "La pestanya s'obrirà quan s'obri el navegador"
+   },
+   "termCondition": {
+      "message": "Termes i condicions"
+   },
+   "thanksFrRev": {
+      "message": "Gràcies per la teva ressenya"
+   },
+   "thnkUFeedBack": {
+      "message": "Gràcies pel teu suggeriment"
+   },
+   "thnkUFrUsngTbSch": {
+      "message": "Si us plau, feu un suggeriment per millorar-nos"
+   },
+   "thursday": {
+      "message": "dijous"
+   },
+   "time": {
+      "message": "Temps"
+   },
+   "timeExpired": {
+      "message": "Temps caducat"
+   },
+   "timer": {
+      "message": "Temporitzador"
+   },
+   "title": {
+      "message": "Títol"
+   },
+   "titleLengtWarn": {
+      "message": "La longitud del títol no ha de superar els 200 caràcters."
+   },
+   "toScheduledOpenTbMsg": {
+      "message": "Per a la pestanya oberta programada, desmarqueu el filtratge d'URL."
+   },
+   "toogleCloseTab": {
+      "message": "Inicia/atura l'alarma de programació per a tots els URL de pestanya tanca"
+   },
+   "toogleDarkmode": {
+      "message": "Canvia entre el mode fosc i el mode predeterminat per personalitzar la teva experiència de visualització."
+   },
+   "toogleOff": {
+      "message": "Apagat"
+   },
+   "toogleOn": {
+      "message": "Encès"
+   },
+   "toogleOpenTab": {
+      "message": "Inicia/atura l'alarma de programació per a tots els URL de les pestanyes obertes"
+   },
+   "topLevelDomain": {
+      "message": "Domini de primer nivell"
+   },
+   "totalProcessed": {
+      "message": "Total de gravats processats"
+   },
+   "tuesday": {
+      "message": "dimarts"
+   },
+   "tutorialImg1": {
+      "message": "\u003Cimg src=\"../images/en/1.png\">"
+   },
+   "tutorialImg10": {
+      "message": "\u003Cimg src=\"../images/en/10.png\">"
+   },
+   "tutorialImg11": {
+      "message": "\u003Cimg src=\"../images/en/11.png\">"
+   },
+   "tutorialImg12": {
+      "message": "\u003Cimg src=\"../images/en/12.png\">"
+   },
+   "tutorialImg13": {
+      "message": "\u003Cimg src=\"../images/en/13.png\">"
+   },
+   "tutorialImg14": {
+      "message": "\u003Cimg src=\"../images/en/14.png\">"
+   },
+   "tutorialImg2": {
+      "message": "\u003Cimg src=\"../images/en/2.png\">"
+   },
+   "tutorialImg3": {
+      "message": "\u003Cimg src=\"../images/en/3.png\">"
+   },
+   "tutorialImg4": {
+      "message": "\u003Cimg src=\"../images/en/4.png\">"
+   },
+   "tutorialImg5": {
+      "message": "\u003Cimg src=\"../images/en/5.png\">"
+   },
+   "tutorialImg6": {
+      "message": "\u003Cimg src=\"../images/en/6.png\">"
+   },
+   "tutorialImg7": {
+      "message": "\u003Cimg src=\"../images/en/7.png\">"
+   },
+   "tutorialImg8": {
+      "message": "\u003Cimg src=\"../images/en/8.png\">"
+   },
+   "tutorialImg9": {
+      "message": "\u003Cimg src=\"../images/en/9.png\">"
+   },
+   "uncheckAll": {
+      "message": "Desmarqueu Tot"
+   },
+   "unlimitedSchedule": {
+      "message": "Límit d'horari il·limitat"
+   },
+   "unspecifiedURL": {
+      "message": "11. Camí d'URL no especificat"
+   },
+   "unspecifiedURLExm1": {
+      "message": "A l'exemple anterior, l'URL donat es troba a la pestanya tanca, que indica que l'URL donat que s'ha obert en una pestanya nova i comença i acaba amb una adreça web desconeguda es tancarà al cap de 5 minuts."
+   },
+   "upgradePlan": {
+      "message": "Compreu el pla O inicieu sessió i actualitzeu el vostre pla per desbloquejar més funcions."
+   },
+   "upgradePlanUnlock": {
+      "message": "Actualitza el teu pla per desbloquejar més funcions."
+   },
+   "uploadValidFormat": {
+      "message": "Pengeu un format vàlid"
+   },
+   "url": {
+      "message": "URL"
+   },
+   "urlContExat": {
+      "message": "Filtrat d'URL"
+   },
+   "urlEndWithUnspesifiedPth": {
+      "message": "9. Final de l'URL amb un camí no especificat"
+   },
+   "urlEndWithUnspesifiedPthExm1": {
+      "message": "A l'exemple anterior, l'URL donat es troba a la pestanya de tancament, que indica que l'URL donat que s'ha obert en una pestanya nova i acaba amb un camí desconegut es tancarà al cap de 5 minuts."
+   },
+   "urlFilterInfo": {
+      "message": "Conté l'URL que s'està comprovant només necessita una part de l'URL i l'URL exacte que s'està comprovant ha de coincidir exactament amb l'URL especificat"
+   },
+   "urlFilterinCLoseTb": {
+      "message": "14. Filtrat d'URL a l'URL de la pestanya tancada"
+   },
+   "urlFilterinCLoseTbExample": {
+      "message": "A l'exemple anterior, l'URL donat es troba a la pestanya tanca, que indica que l'URL de la pestanya ja oberta coincideix amb una part de l'URL donat, de manera que tancarà aquesta pestanya"
+   },
+   "urlIsRequired": {
+      "message": "Es requereix un enllaç al lloc web"
+   },
+   "urlNotvalid": {
+      "message": "L'URL no és vàlid"
+   },
+   "urlStartWithUnspesifiedPth": {
+      "message": "10. L'URL comença amb un camí no especificat"
+   },
+   "urlStartWithUnspesifiedPthExm1": {
+      "message": "A l'exemple anterior, l'URL donat es troba a la pestanya tanca, que indica que l'URL donat que s'ha obert en una pestanya nova i comença amb un subdomini desconegut \u003Cb>\"www\"\u003C/b> o \u003Cb>\"blog\"\u003C/b> es tancarà al cap de 5 minuts."
+   },
+   "useSpecificUrl": {
+      "message": "Utilitzeu un enllaç al lloc web específic"
+   },
+   "useSpecificUrl1": {
+      "message": "Heu d'haver escrit el subdomini exacte, el domini de nivell superior, el nom del domini i la ruta de la pàgina al camp Enllaç al lloc web a la pestanya del navegador tancat."
+   },
+   "useSpecificUrl2": {
+      "message": "Utilitzeu totes les pestanyes tancades del navegador"
+   },
+   "useSpecificUrl3": {
+      "message": "Utilitzeu un enllaç al lloc web específic i complet"
+   },
+   "useUnSpecificUrl1": {
+      "message": "Utilitzeu un enllaç al lloc web no especificat"
+   },
+   "useUnSpecificUrl2": {
+      "message": "Feu servir comenceu amb un enllaç al lloc web no especificat"
+   },
+   "useUnSpecificUrl3": {
+      "message": "Utilitzeu final amb un enllaç al lloc web no especificat"
+   },
+   "used": {
+      "message": "Vas fer servir"
+   },
+   "validFormatCsv": {
+      "message": "Quin és el format de fitxer CSV vàlid per a la importació?"
+   },
+   "websiteLink": {
+      "message": "Enllaç al lloc web"
+   },
+   "websiteUrl": {
+      "message": "URL del lloc web"
+   },
+   "wednesday": {
+      "message": "dimecres"
+   },
+   "weekName": {
+      "message": "Nom de la setmana"
+   },
+   "weekly": {
+      "message": "Setmanalment"
+   },
+   "whenExtensionTabAppears": {
+      "message": "Quan aparegui la pestanya Extensions, cerqueu el \"Programador de pestanyes amb obertura i tancament automàtic\" per activar-lo en mode d'incògnit i feu clic al botó \"Detalls\" que hi ha al costat."
+   },
+   "whenMenuPopup": {
+      "message": "Quan aparegui un menú, seleccioneu \"Gestiona les extensions\"."
+   },
+   "withSignMustFill": {
+      "message": "Amb el signe \u003Cspan>*\u003C/span> s'ha d'omplir o seleccionar, seleccioneu l'hora d'obertura o tancament o totes dues."
+   },
+   "writeYourDescriptionAboutSchUrl": {
+      "message": "Escriu aquí la teva descripció sobre l'URL programat."
+   },
+   "yes": {
+      "message": "Sí"
+   },
+   "yourEmailAddress": {
+      "message": "La teva adreça de correu electrònic"
+   },
+   "yourScheduleUrl": {
+      "message": "URL de la vostra programació"
+   }
+}

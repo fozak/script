@@ -1,0 +1,1448 @@
+{
+   "10_min": {
+      "message": "10分"
+   },
+   "1_min": {
+      "message": "1分"
+   },
+   "30_min": {
+      "message": "30分"
+   },
+   "5_min": {
+      "message": "5分"
+   },
+   "60_min": {
+      "message": "時間"
+   },
+   "Dashboard": {
+      "message": "ダッシュボード"
+   },
+   "Login": {
+      "message": "ログイン"
+   },
+   "Off": {
+      "message": "オフ"
+   },
+   "On": {
+      "message": "の上"
+   },
+   "Selected": {
+      "message": "選択済み"
+   },
+   "Settings": {
+      "message": "設定"
+   },
+   "Tutorial": {
+      "message": "チュートリアル"
+   },
+   "action": {
+      "message": "アクション"
+   },
+   "activateScheduleTab": {
+      "message": "スケジュールされたタブをアクティブにします。"
+   },
+   "active": {
+      "message": "アクティブ"
+   },
+   "activeAllScheduleTab": {
+      "message": "タブスケジューラの実行"
+   },
+   "activeStatus": {
+      "message": "状態"
+   },
+   "actvInactvNotification": {
+      "message": "スケジュールタブを開いたときに通知を表示する"
+   },
+   "actvInactvOpnTb": {
+      "message": "アクティブまたは非アクティブな開いているタブ"
+   },
+   "actvIntvClsTb": {
+      "message": "アクティブまたは非アクティブなタブを閉じる"
+   },
+   "add": {
+      "message": "追加"
+   },
+   "addDescription": {
+      "message": "説明を追加"
+   },
+   "addNew": {
+      "message": "新規追加"
+   },
+   "addNewURlCls": {
+      "message": "新しいURLを追加して閉じる"
+   },
+   "addNewUrlToOpen": {
+      "message": "新しいウィンドウで開くための新しい URL を追加します"
+   },
+   "addTitle": {
+      "message": "タイトルを追加"
+   },
+   "addWebsite": {
+      "message": "ウェブサイトを追加"
+   },
+   "all": {
+      "message": "全て"
+   },
+   "allInputFieldReq": {
+      "message": "すべてのフィールドは必須です"
+   },
+   "all_weeks": {
+      "message": "今週"
+   },
+   "alreadyPurchase": {
+      "message": "すでに購入済みですか? ここにキーを入力してください"
+   },
+   "andAt": {
+      "message": "そして"
+   },
+   "annually": {
+      "message": "毎年"
+   },
+   "appDesc": {
+      "message": "ブラウザのタブは、選択した時間に自動的に開いたり閉じたりします。ユーザーは必要に応じてリストをアクティブ化/非アクティブ化できます。"
+   },
+   "appName": {
+      "message": "自動開閉機能付きタブスケジューラ"
+   },
+   "april": {
+      "message": "4月"
+   },
+   "at": {
+      "message": "で"
+   },
+   "august": {
+      "message": "8月"
+   },
+   "autoFocus": {
+      "message": "オートフォーカスタブ"
+   },
+   "autoFocustip": {
+      "message": "オンの場合、新しいタブはアクティブ/フォーカス状態で開かれます。"
+   },
+   "autofocustip": {
+      "message": "新しいタブを開くと自動的にフォーカスされます"
+   },
+   "basic": {
+      "message": "基本"
+   },
+   "billedAnnyally": {
+      "message": "年払い"
+   },
+   "billedMonthly": {
+      "message": "毎月請求"
+   },
+   "both": {
+      "message": "両方"
+   },
+   "browserOpen": {
+      "message": "ブラウザで開く"
+   },
+   "browserWebAddress": {
+      "message": "ブラウザの Web アドレスは不明な Web アドレスで始まり、終わります。入力 Web サイト リンク フィールドの両側に\u003Cb>* を入力してください。\u003C/b>"
+   },
+   "browserWebAddress2": {
+      "message": "ブラウザのウェブアドレスにはドメイン名google.comが含まれています。これは、サブドメインやページパスに関係なく、指定された分数で閉じられます。ドメイン名とTLDの両側に\u003Cb>*を入れてください。\u003C/b>"
+   },
+   "browserWebAddress3": {
+      "message": "ブラウザのウェブアドレスは不明なドメイン名で始まり、不明なページパスで終わります"
+   },
+   "browserWebAddress31": {
+      "message": "指定された分数後に閉じられます。TLDの両側に\u003Cb>*を付けてください。\u003C/b>"
+   },
+   "browserWebAddress4": {
+      "message": "ブラウザの Web アドレスが不明な Web アドレスで始まっています。URLの先頭に\u003Cb>*を付けてください。ブラウザの Web アドレスは、 \u003C/b>\u003Cb>*\u003C/b>を付けた後の URL と一致している必要があることに注意してください。"
+   },
+   "browserWebAddress41": {
+      "message": "ブラウザのウェブアドレスが不明なサブドメインで始まっています"
+   },
+   "browserWebAddress42": {
+      "message": "ウェブサイトリンクの先頭に"
+   },
+   "browserWebAddress5": {
+      "message": "ブラウザの Web アドレスが不明な Web アドレスで終わっています。URLの末尾に\u003Cb>*を付けてください。Web アドレスは、 \u003C/b>\u003Cb>* を\u003C/b>記入する前のアドレスと一致している必要があることに注意してください。"
+   },
+   "browserWebAddress51": {
+      "message": "ブラウザのウェブアドレスは不明なページパスで終わります。ウェブアドレスの末尾に\u003Cb>*を付けてください\u003C/b>"
+   },
+   "browserWebAddress6": {
+      "message": "\u003Cb>すべてのブラウザ タブを閉じるには、Web サイトのアドレス フィールドに*\u003C/b>のみを入力します。すべてのタブを閉じると、ブラウザは自動的に閉じられます。"
+   },
+   "browserWebAddress7": {
+      "message": "ブラウザのタブで開くには、URL フィールドに正確なサブドメイン、トップレベル ドメイン、ドメイン名、ページ パスを入力する必要があります。"
+   },
+   "browserWebAddress8": {
+      "message": "特定の日付と時間、特定の月、特定の週、特定の年、繰り返し時間にURLを開くことができます"
+   },
+   "buyPlan": {
+      "message": "プランを購入"
+   },
+   "buycofee": {
+      "message": "コーヒーを買って"
+   },
+   "cancel": {
+      "message": "キャンセル"
+   },
+   "changeLanguage": {
+      "message": "言語を変更"
+   },
+   "checkAll": {
+      "message": "すべてチェック"
+   },
+   "checkThisOpToPreventClosePinTb": {
+      "message": "固定されたタブが閉じられないようにするには、このオプションをオンにします。"
+   },
+   "checkThisOptionOnlyPartOfUrlMtch": {
+      "message": "URL の一部のみを一致させる必要がある場合は、このオプションをオンにします。"
+   },
+   "checkThisOptionToActivate": {
+      "message": "スケジュールされた URL を有効または無効にするには、このオプションをオンにします。"
+   },
+   "checkThisOptionToCloseOnly": {
+      "message": "シークレット タブのみを閉じるには、このオプションをオンにします。また、拡張機能の詳細で「シークレット タブで許可」オプションを有効にします。手順については、チュートリアル ページを参照してください。"
+   },
+   "checkThisOptionToCloseOnlyInIncgnitoTb": {
+      "message": "シークレット タブのみを閉じるには、このオプションをオンにします。また、拡張機能の詳細で「シークレット タブで許可」オプションを有効にします。手順については、チュートリアル ページを参照してください。"
+   },
+   "checkThisOptionToInBg": {
+      "message": "新しいタブで開かずにバックグラウンドでURLを開きたい場合はこのオプションをチェックしてください"
+   },
+   "checkThisOptionToInactivNotification": {
+      "message": "スケジュールされたURLの通知を無効にするには、このオプションをオンにします"
+   },
+   "checkThisOptionToOpen": {
+      "message": "シークレットモードでURLを開く場合はこのオプションをチェックしてください"
+   },
+   "checkThisOptionToOpenIncogito": {
+      "message": "シークレットモードでURLを開く場合はこのオプションをチェックしてください"
+   },
+   "checkThisOptionToPrevent": {
+      "message": "固定されたタブが閉じられないようにするには、このオプションをオンにします。"
+   },
+   "clickExtIcon": {
+      "message": "ツールバーにあるパズルのピースのような「拡張機能」アイコンをクリックします。"
+   },
+   "clickTheSwitch": {
+      "message": "横にあるスイッチをクリックしてオンにします"
+   },
+   "close": {
+      "message": "近い"
+   },
+   "closeAllTab": {
+      "message": "12. ブラウザのタブをすべて閉じる"
+   },
+   "closeAllTabExm1": {
+      "message": "上記の例では、指定されたURLは閉じるタブにあり、2023年2月25日の12:00にすべてのタブを閉じることを示しています。"
+   },
+   "closeDate": {
+      "message": "締め切り日"
+   },
+   "closeDay": {
+      "message": "クローズデー"
+   },
+   "closeEveryYear": {
+      "message": "毎年閉店"
+   },
+   "closeInEvery": {
+      "message": "あらゆる面で"
+   },
+   "closeIncognitoTab": {
+      "message": "シークレットタブのみを閉じる"
+   },
+   "closeMinute": {
+      "message": "終了時刻"
+   },
+   "closeOnDay": {
+      "message": "当日休業"
+   },
+   "closeOnEvery": {
+      "message": "毎日閉店"
+   },
+   "closeOnEveryDay": {
+      "message": "毎日閉店"
+   },
+   "closeOnEveryMonth": {
+      "message": "毎月定休日"
+   },
+   "closeOnEveryWeek": {
+      "message": "毎週休業"
+   },
+   "closeSecond": {
+      "message": "僅差で2位"
+   },
+   "closeSeconsMoreThan5": {
+      "message": "近い秒数は 5 秒以上である必要があります。"
+   },
+   "closeTabSchedule": {
+      "message": "タブを閉じるスケジュール"
+   },
+   "closeTabURL": {
+      "message": "タブを閉じる URL"
+   },
+   "closeTime": {
+      "message": "終了時間"
+   },
+   "closeUrl": {
+      "message": "ウェブサイトリンクを閉じる"
+   },
+   "closeWeek": {
+      "message": "クローズウィーク"
+   },
+   "closeWeeks": {
+      "message": "クローズウィーク"
+   },
+   "close_on": {
+      "message": "閉じる"
+   },
+   "cngrtsForSubcr": {
+      "message": "おめでとうございます！プランが正常に有効化されました。"
+   },
+   "commonQuestionsAns": {
+      "message": "よくある質問と回答"
+   },
+   "copySucessClose": {
+      "message": "タブを閉じる URL データがタブを開く URL データにコピーされました"
+   },
+   "createNewTimer": {
+      "message": "新しいタイマーを作成"
+   },
+   "currentPlan": {
+      "message": "現在の計画"
+   },
+   "currentTabSchedule": {
+      "message": "現在のタブスケジュール"
+   },
+   "currentTbScheduleTimer": {
+      "message": "現在のタブのスケジュールされたタイマー。"
+   },
+   "cusSec": {
+      "message": "カスタムセカンド"
+   },
+   "custMin": {
+      "message": "カスタムミニッツ"
+   },
+   "custmMinSch": {
+      "message": "7. カスタム分スケジュール"
+   },
+   "custmMinSchExm1": {
+      "message": "上記の例では、指定された URL は開いているタブにあり、指定された URL が 15 分ごとに新しいタブで開かれることを示しています。"
+   },
+   "custmMinSchExm2": {
+      "message": "上記の例では、指定された URL は閉じるタブにあり、新しいタブで開かれた指定された URL は 15 分後に閉じられることを示しています。"
+   },
+   "customSecondWarning": {
+      "message": "カスタム秒機能は実験段階であり、秒が 60 未満に設定されている場合は正しく機能しない可能性があります。"
+   },
+   "darkMode": {
+      "message": "ダークモード"
+   },
+   "datNotCopy": {
+      "message": "URL が無効なため、一部のデータはコピーされません。"
+   },
+   "dataSaved": {
+      "message": "タイマーデータが正常に保存されました"
+   },
+   "date": {
+      "message": "日付"
+   },
+   "dateIsOutOfRange": {
+      "message": "日付が範囲外です"
+   },
+   "day": {
+      "message": "日"
+   },
+   "december": {
+      "message": "12月"
+   },
+   "delete": {
+      "message": "消去"
+   },
+   "deleteScheduleTb": {
+      "message": "スケジュールされたタブを削除します。"
+   },
+   "description": {
+      "message": "説明"
+   },
+   "developedBy": {
+      "message": "開発者:"
+   },
+   "doNotCloseInPinnedTabs": {
+      "message": "固定されたタブを閉じないでください"
+   },
+   "doNotShowNotification": {
+      "message": "通知を表示しない"
+   },
+   "domainName": {
+      "message": "ドメイン名"
+   },
+   "downloadCloseTbSampleCsv": {
+      "message": "必要な形式の例を確認するには、タブを閉じるサンプルCSVをダウンロードしてください。"
+   },
+   "downloadOpenTbSampleCsv": {
+      "message": "必要な形式の例を確認するには、開いているタブのサンプルCSVをダウンロードしてください。"
+   },
+   "editScheduleTb": {
+      "message": "スケジュールされたタブを編集します。"
+   },
+   "email": {
+      "message": "メール"
+   },
+   "enterDateToCloseTab": {
+      "message": "スケジュール タブを閉じるには、ここに日付を入力します。"
+   },
+   "enterDateToOpen": {
+      "message": "日付を入力するとスケジュール タブが開きます。"
+   },
+   "enterMiniutesToCloseTb": {
+      "message": "タブを閉じるには分数を入力してください。"
+   },
+   "enterMiniutesToOpen": {
+      "message": "分数を入力するとスケジュール タブが開きます。"
+   },
+   "enterMinute": {
+      "message": "分を入力"
+   },
+   "enterSecond": {
+      "message": "2番目を入力"
+   },
+   "enterSecondsToCloseTab": {
+      "message": "タブを閉じるまでの秒数を入力します。"
+   },
+   "enterSecondsToOpen": {
+      "message": "秒数を入力してスケジュール タブを開きます。"
+   },
+   "enterTilteOfScheduleUrl": {
+      "message": "スケジュールされた URL のタイトルを入力します。"
+   },
+   "enterTimeToCloseTab": {
+      "message": "スケジュール タブを閉じるには、ここに時刻を入力してください。"
+   },
+   "enterTimeToSchedule": {
+      "message": "時間を入力するとスケジュール タブが開きます。"
+   },
+   "enterValidEmail": {
+      "message": "有効なメールアドレスを入力してください"
+   },
+   "enterValidUrl": {
+      "message": "有効なURLを入力してください"
+   },
+   "enterValueInCloseSec": {
+      "message": "近い秒数で値を入力"
+   },
+   "enterValueInOpenCloseSec": {
+      "message": "開始秒数または終了秒数を入力"
+   },
+   "enterValueInOpenMinutes": {
+      "message": "オープン分の値を入力してください"
+   },
+   "enterVlaueInCloseMinutes": {
+      "message": "終了した分に値を入力"
+   },
+   "enterVlaueInOpenCloseMin": {
+      "message": "始値または終値で値を入力"
+   },
+   "enterVlaueInOpenSeconds": {
+      "message": "オープン秒数の値を入力してください"
+   },
+   "enterYourURLToSchedule": {
+      "message": "スケジュールを設定するには URL を入力してください。"
+   },
+   "every": {
+      "message": "毎"
+   },
+   "every10Min": {
+      "message": "10分ごと"
+   },
+   "every1Minute": {
+      "message": "1分ごとに"
+   },
+   "every30Min": {
+      "message": "30分ごと"
+   },
+   "every5Min": {
+      "message": "5分ごと"
+   },
+   "everyDay": {
+      "message": "毎日"
+   },
+   "everyDayAt": {
+      "message": "毎日"
+   },
+   "everyHour": {
+      "message": "毎時"
+   },
+   "everyMinute": {
+      "message": "毎分"
+   },
+   "everyMonth": {
+      "message": "毎月"
+   },
+   "everyMonthOn": {
+      "message": "毎月"
+   },
+   "everyMonthOnDay": {
+      "message": "毎月日"
+   },
+   "everyWeek": {
+      "message": "毎週"
+   },
+   "everyWeekOn": {
+      "message": "毎週"
+   },
+   "everyYear": {
+      "message": "毎年"
+   },
+   "everyYesrOn": {
+      "message": "毎年"
+   },
+   "evr10MinSch": {
+      "message": "2.10分毎のスケジュール"
+   },
+   "evr10MinSchExm1": {
+      "message": "上記の例では、指定された URL は開いているタブにあり、指定された URL が 10 分ごとに新しいタブで開くことを示しています。"
+   },
+   "evr10MinSchExm2": {
+      "message": "上記の例では、指定された URL は閉じるタブにあり、新しいタブで開かれた指定された URL は 10 分後に閉じられることを示しています。"
+   },
+   "evrDaySch": {
+      "message": "3.毎日のスケジュール"
+   },
+   "evrDaySchExm1": {
+      "message": "上記の例では、指定されたURLは開いているタブにあり、毎日午後5時27分に新しいタブで開くことを示しています。"
+   },
+   "evrDaySchExm2": {
+      "message": "上記の例では、指定されたURLはタブを閉じることになっており、すでに開いているタブを毎日午後5時27分に閉じることを示しています。"
+   },
+   "evrMonthSch": {
+      "message": "5.毎月のスケジュール"
+   },
+   "evrMonthSchExm1": {
+      "message": "上記の例では、指定されたURLが開いているタブにあり、毎月25日の13:45に新しいタブで開くと表示されます。"
+   },
+   "evrMonthSchExm2": {
+      "message": "上記の例では、指定されたURLはタブを閉じることになっており、毎月25日の13:45に既に開いているタブを閉じることを示しています。"
+   },
+   "evrWeekSch": {
+      "message": "4.毎週のスケジュール"
+   },
+   "evrWeekSchExm1": {
+      "message": "上記の例では、指定された URL は開いているタブにあり、毎週\u003Cb>月曜日と火曜日\u003C/b>の 17:00 に新しいタブで開くことを示しています。"
+   },
+   "evrWeekSchExm2": {
+      "message": "\u003Cb>上記の例では、指定された URL は閉じるタブにあり、毎週月曜日と火曜日\u003C/b>の 17:00 に既に開いているタブを閉じることを示しています。"
+   },
+   "evrWeekSchExm3": {
+      "message": "上記の例では、週タイマーで複数の日を選択できます。"
+   },
+   "evrYearSch": {
+      "message": "6.年間スケジュール"
+   },
+   "evrYearSchExm1": {
+      "message": "上記の例では、指定されたURLは開いているタブにあり、毎年1月1日の13:35に新しいタブで開くことを示しています。"
+   },
+   "evrYearSchExm2": {
+      "message": "上記の例では、指定されたURLは閉じるタブにあり、毎年1月1日の13:35に既に開いているタブを閉じることを示しています。"
+   },
+   "exampleSort": {
+      "message": "例えば"
+   },
+   "exdMaxLim": {
+      "message": "許可されるデバイスの最大数を超えました。"
+   },
+   "exmpOpnClsTbSch": {
+      "message": "タブスケジューラでタブを開いたり閉じたりする方法の例"
+   },
+   "expLicKy": {
+      "message": "このライセンスキーは期限切れです。"
+   },
+   "export": {
+      "message": "輸出"
+   },
+   "exportBefore": {
+      "message": "あなたが持っている\u003Cexday>\u003C/exday>残り日数。プレミアム機能を継続してお楽しみいただくには、ご登録ください。"
+   },
+   "exportClsTbDta": {
+      "message": "閉じるタブデータをエクスポート"
+   },
+   "exportOpenTbDt": {
+      "message": "開いているタブのデータをエクスポートする"
+   },
+   "exportedData": {
+      "message": "タイマーデータが正常にエクスポートされました"
+   },
+   "extensionShouldAble": {
+      "message": "これで、拡張機能はシークレット モードでタブを閉じることができるようになります。"
+   },
+   "faq": {
+      "message": "よくある質問"
+   },
+   "faq_1": {
+      "message": "自動開閉機能付きタブスケジューラとは何ですか?"
+   },
+   "faq_10": {
+      "message": "スケジュールされたタブを表示するにはどうすればよいですか?"
+   },
+   "faq_11": {
+      "message": "開店時間と閉店時間の両方を記入する必要がありますか?"
+   },
+   "faq_12": {
+      "message": "「タブの自動フォーカス」、「スケジュールされたすべてのタブのアクティブ化」、および「電源モード」の機能は何をしますか?"
+   },
+   "faq_13": {
+      "message": "スケジュールされたウェブサイトリンクをシークレットタブで開いたり閉じたりできますか?"
+   },
+   "faq_14": {
+      "message": "URL がすでに開いている場合、「更新」タブは何の役に立つのでしょうか?"
+   },
+   "faq_2": {
+      "message": "ウェブサイトリンクの用途は何ですか?"
+   },
+   "faq_3": {
+      "message": "Tab Scheduler を使用して URL をスケジュールするにはどうすればよいですか?"
+   },
+   "faq_4": {
+      "message": "「バックグラウンドで URL を開く」オプションとは何ですか?"
+   },
+   "faq_5": {
+      "message": "拡張機能が固定されたタブを閉じないようにすることはできますか?"
+   },
+   "faq_6": {
+      "message": "「両方」スケジュールタイプとはどういう意味ですか?"
+   },
+   "faq_7": {
+      "message": "「URL フィルタリング」機能はどのように機能しますか?"
+   },
+   "faq_8": {
+      "message": "スケジュールされたタブを削除せずに非アクティブ化できますか?"
+   },
+   "faq_9": {
+      "message": "スケジュールされたタブの通知を受け取りますか?"
+   },
+   "faq_a_1": {
+      "message": "\u003Cp>自動開閉機能付きタブ スケジューラは、ユーザーが設定した時間にタブを自動的に開閉するようにスケジュールできるブラウザ拡張機能です。ユーザーは、1 回限りのスケジュールを選択したり、さまざまな頻度オプションを使用して定期的なスケジュールを設定したりできます。この拡張機能は、ユーザーにとってさまざまな目的があり、役立つ多くの機能を提供します。\u003C/p>"
+   },
+   "faq_a_10": {
+      "message": "スケジュールされたすべてのタブは、タイトル、Web サイト リンク、開く時間と閉じる時間、ステータス、実行できるアクション (アクティブ化、編集、削除など) を示すリストに表示されます。"
+   },
+   "faq_a_11": {
+      "message": "いいえ、開店時間または閉店時間のどちらかをスケジュールできます。ただし、アスタリスク (*) でマークされた必須フィールドに入力または選択する必要があります。"
+   },
+   "faq_a_12": {
+      "message": "Auto Focus Tab により、スケジュールされたタブが開いたときに、Activate All Scheduled Tabs により、1 回のクリックですべてのスケジュールされたタブをすばやくオンにすることができます。Power Mode は、ブラウザ リソースをより効率的に管理することで、拡張機能のパフォーマンスを最適化します。"
+   },
+   "faq_a_13": {
+      "message": "はい、「シークレットモードで開く」オプションを選択すると、スケジュールされたタブをシークレットモードで開くことができます。拡張機能の設定で「シークレットモードで許可」が有効になっている限り、「シークレットタブのみを閉じる」オプションを選択すると、シークレットタブのみを閉じることができます。"
+   },
+   "faq_a_14": {
+      "message": "このオプションを有効にすると、ブラウザで同じ URL が既に開いている場合、拡張機能は既存のタブを自動的に更新します。これにより、重複したタブが開かれることがなくなり、常に最新バージョンのページが読み込まれるようになります。"
+   },
+   "faq_a_14_1": {
+      "message": "https://github.com/ を開こうとしたときに、すでに別のタブで開いている場合、拡張機能は新しいタブを開くのではなく、そのタブを更新するだけです。"
+   },
+   "faq_a_14_2": {
+      "message": "https://github.com/ がすでに 3 つのタブで開いている場合、拡張機能は 3 つのタブすべてを更新します。"
+   },
+   "faq_a_2": {
+      "message": "ウェブサイト リンクは、ブラウザの開いているタブのウェブサイト アドレスです。ウェブサイト アドレスの使用方法については、以下を参照してください。"
+   },
+   "faq_a_3": {
+      "message": "URL をスケジュールするには、Web サイトのリンクを入力し、スケジュールにタイトルを付け、頻度 (1 回、1 分ごと、毎日など) を選択し、タブを開く時間と閉じる時間を選択します。タブを開いたり閉じたりする日付、曜日、秒数を指定することもできます。"
+   },
+   "faq_a_4": {
+      "message": "\u003Cp>このオプションを使用すると、新しいタブにフォーカスを当てることなく、URL をバックグラウンドで開くようにスケジュール設定できます。他のタブで作業を続ける間、URL は静かに開きます。これは、GET API リクエストの場合など、スケジュールされた URL からデータをアクティブに表示せずにブラウザでデータを取得する必要がある場合に特に便利です。\u003C/p>\u003Cbr> \u003Cp>たとえば、設定した時間に API エンドポイントから定期的にデータを取得する場合、この効率的なオプションを使用して、新しい表示タブを開かずにバックグラウンドでリクエストを実行できます。\u003C/p>"
+   },
+   "faq_a_5": {
+      "message": "はい、固定されたタブが閉じられないようにするオプションがあります。「固定されたタブを閉じない」オプションをオンにすると、他の閉じる条件を満たしていてもこれらのタブが開いたままになります。"
+   },
+   "faq_a_6": {
+      "message": "「両方」のスケジュール タイプでは、タブを開くタイミングと閉じるタイミングを完全に制御できるため、両方のアクションに特定の時間を設定できます。"
+   },
+   "faq_a_7": {
+      "message": "URL フィルタリングにより、スケジュールされたアクションを実行するには、URL の特定の部分のみが一致する必要があります。これは、部分的な URL の一致に基づいて特定のアクションを自動化する場合に便利です。たとえば、URL https://example.com/page の URL フィルタリング オプションをオンにすると、https://example.com/page/123、https://example.com/page?query=example、https://subdomain.example.com/page などの URL にも適用されます。"
+   },
+   "faq_a_8": {
+      "message": "「このスケジュールされたタブをアクティブ化する」オプションを使用すると、スケジュールされたタブを簡単にアクティブ化または非アクティブ化できるため、構成を失うことなくスケジュールを柔軟に管理できます。"
+   },
+   "faq_a_9": {
+      "message": "デフォルトでは通知が届きます。ただし、通知を停止したい場合は、「通知を表示しない」オプションをチェックして無効にすることができます。"
+   },
+   "february": {
+      "message": "2月"
+   },
+   "filterTips": {
+      "message": "フィルターは「https://」または「www.」の後に適用されます。例:「github.com」"
+   },
+   "for_exp": {
+      "message": "例えば"
+   },
+   "freeForever": {
+      "message": "永久無料"
+   },
+   "freeSchedule": {
+      "message": "フリースケジュール"
+   },
+   "freeTral": {
+      "message": "貴重な早期ユーザーとして、\u003Crday>120\u003C/rday>新しい有料プランに切り替える前に、 日間の無料アクセスをご利用いただけます。引き続きのご支援をよろしくお願いいたします。\u003Cp class=\"p-t-5\">あなたが持っている\u003Cb>\u003Cspan>\u003C/span>\u003C/b>残り日数\u003Crday>120\u003C/rday>日間の無料期間。\u003Cafex class=\"warning\">\u003Cafex>\u003C/afex>\u003C/afex>\u003C/p> "
+   },
+   "frequentlyAskedQuestions": {
+      "message": "よくある質問"
+   },
+   "friday": {
+      "message": "金曜日"
+   },
+   "getThisPlan": {
+      "message": "このプランを入手"
+   },
+   "goToSettingsPageToSchedule": {
+      "message": "URL の開閉をスケジュールするには、設定ページに移動します。"
+   },
+   "goURL": {
+      "message": "URLへ移動"
+   },
+   "helpAccordion12": {
+      "message": "この拡張機能はスリープ/サスペンドモードでも動作しますか?"
+   },
+   "helpAccordion3": {
+      "message": "タブをシークレット モードで開くようにスケジュールできますか?"
+   },
+   "helpAccordion6": {
+      "message": "「時間切れ」とは何ですか?"
+   },
+   "helpAccordion7": {
+      "message": "スケジュールされた URL をエクスポートできますか?"
+   },
+   "helpAccordion8": {
+      "message": "スケジュール URL にインポートできますか?"
+   },
+   "helpPanelBodyDesc12First": {
+      "message": "いいえ、この拡張機能はスリープ/サスペンド モードでは動作しません。"
+   },
+   "helpPanelBodyDesc12Second": {
+      "message": "開くタブまたは閉じるタブに URL がスケジュールされている場合、PC は自動的にスリープ モードまたはサスペンド モードになりません。"
+   },
+   "helpPanelBodyDesc3": {
+      "message": "はい、「シークレット モードで開く」オプションを選択すると、スケジュールされたタブをシークレット モードで開くことができます。ブラウザの拡張機能設定で、拡張機能の「シークレット モードで許可」オプションが有効になっていることを確認してください。"
+   },
+   "helpPanelBodyDesc6": {
+      "message": "- 指定された日時が現在の日時から経過すると、「期限切れ」というテキストが表示されます。"
+   },
+   "helpPanelBodyDesc7": {
+      "message": "はい、すでにスケジュールされているタブを開く、タブを閉じる URL を csv 形式でエクスポートし、別のシステムで使用してその URL をインポートできます。"
+   },
+   "helpPanelBodyDesc8": {
+      "message": "はい、有効なオープンURLとクローズURLをCSV形式でインポートできます。インポートされたCSV形式は、指定された時間に自動的にスケジュールされます。"
+   },
+   "herAreStepsToAllow": {
+      "message": "Google Chrome で「シークレット モードを許可する」手順は次のとおりです。"
+   },
+   "home": {
+      "message": "家"
+   },
+   "hour_minute_close": {
+      "message": "毎時終了分"
+   },
+   "hour_minute_open": {
+      "message": "毎時1分"
+   },
+   "how_to_use_tab": {
+      "message": "タブスケジューラの使い方は？"
+   },
+   "import": {
+      "message": "輸入"
+   },
+   "importClsTbDta": {
+      "message": "閉じるタブデータをインポート"
+   },
+   "importExport": {
+      "message": "インポート/エクスポート"
+   },
+   "importOpenTbDt": {
+      "message": "開いているタブのデータをインポートする"
+   },
+   "importedRecored": {
+      "message": "、インポート録音"
+   },
+   "inactivateScheduleTab": {
+      "message": "スケジュールされたタブを非アクティブ化します。"
+   },
+   "inactive": {
+      "message": "非アクティブ"
+   },
+   "inactiveSch": {
+      "message": "8.非アクティブなURL"
+   },
+   "inactiveSchExm1": {
+      "message": "上記の例では、指定された URL は開いているタブまたは閉じているタブにあり、指定された URL は非アクティブであり、何のアクションも実行されないことを示しています。"
+   },
+   "inactiveThisScheduledTabs": {
+      "message": "このスケジュールされたタブをアクティブにする"
+   },
+   "invalidDuplicate": {
+      "message": "重複または無効な記録"
+   },
+   "invldLicKy": {
+      "message": "ライセンスキーが無効です。"
+   },
+   "isClose": {
+      "message": "近い"
+   },
+   "isOpen": {
+      "message": "開いている"
+   },
+   "january": {
+      "message": "1月"
+   },
+   "july": {
+      "message": "7月"
+   },
+   "june": {
+      "message": "6月"
+   },
+   "licKeyDis": {
+      "message": "このライセンス キーは無効です。"
+   },
+   "listTitle": {
+      "message": "タブスケジューラ"
+   },
+   "loading": {
+      "message": "お待ちください..."
+   },
+   "locale": {
+      "message": "ja 翻訳"
+   },
+   "march": {
+      "message": "行進"
+   },
+   "maxSchedule": {
+      "message": "4 スケジュールの上限"
+   },
+   "may": {
+      "message": "5月"
+   },
+   "mintValid": {
+      "message": "最低1分必要です"
+   },
+   "minute": {
+      "message": "分"
+   },
+   "minutesNotLessThan1": {
+      "message": "分は 1 未満にしないでください。"
+   },
+   "monday": {
+      "message": "月曜日"
+   },
+   "month": {
+      "message": "月"
+   },
+   "monthly": {
+      "message": "月次"
+   },
+   "more": {
+      "message": "もっと"
+   },
+   "mostSubscribe": {
+      "message": "最も多く購読されている"
+   },
+   "no": {
+      "message": "いいえ"
+   },
+   "noDataToExport": {
+      "message": "エクスポートするデータがありません。"
+   },
+   "noScheduledTabs": {
+      "message": "スケジュールされたタブはありません"
+   },
+   "noTimerSetAddNewTimer": {
+      "message": "タイマーが設定されていません。新しいタイマーを設定するには、[追加] ボタンをクリックします。"
+   },
+   "not_show_tutorial": {
+      "message": "このチュートリアルを再度表示しない"
+   },
+   "notificationOpenTab": {
+      "message": "13. タブのURLを開く/閉じる際の通知"
+   },
+   "notificationOpenTabExm1": {
+      "message": "上記の例では、指定された URL が開いているタブにあり、5 分ごとに通知が表示され、新しいタブで URL が開いたり閉じたりすることを示しています。"
+   },
+   "notifications": {
+      "message": "通知"
+   },
+   "november": {
+      "message": "11月"
+   },
+   "october": {
+      "message": "10月"
+   },
+   "onTheExtensionDetailPage": {
+      "message": "拡張機能の詳細ページで、下にスクロールして「シークレットモードで許可」オプションを見つけます。"
+   },
+   "oneTime": {
+      "message": "一度"
+   },
+   "oneTmSch": {
+      "message": "1.ワンタイムスケジュール"
+   },
+   "oneTmSchExm1": {
+      "message": "上記の例では、指定された URL は開いているタブにあり、2023 年 1 月 21 日の 13:45 に新しいタブで 1 回開かれることを示しています。"
+   },
+   "oneTmSchExm2": {
+      "message": "上記の例では、指定された URL は閉じるタブにあり、2023 年 1 月 21 日の 13:45 に一致するすべての特定の URL タブが閉じられることを示しています。"
+   },
+   "open": {
+      "message": "開ける"
+   },
+   "openBackground": {
+      "message": "はいの場合、新しいタブで開かずにバックグラウンドでURLを読み込む"
+   },
+   "openDate": {
+      "message": "オープン日"
+   },
+   "openDay": {
+      "message": "オープンデー"
+   },
+   "openEveryDayOn": {
+      "message": "毎日営業"
+   },
+   "openEveryMonthOn": {
+      "message": "毎月第2日曜日に営業"
+   },
+   "openEveryWeekOn": {
+      "message": "毎週営業"
+   },
+   "openEveryYearOn": {
+      "message": "毎年開催"
+   },
+   "openGoogleChrome": {
+      "message": "Google Chrome を開きます。"
+   },
+   "openInBackground": {
+      "message": "バックグラウンドでURLを開く"
+   },
+   "openInEvery": {
+      "message": "どこでも開く"
+   },
+   "openInIncognito": {
+      "message": "シークレットモードで開く"
+   },
+   "openMinute": {
+      "message": "オープンミニッツ"
+   },
+   "openOnDay": {
+      "message": "営業日"
+   },
+   "openOnEvery": {
+      "message": "毎日営業"
+   },
+   "openSecond": {
+      "message": "オープンセカンド"
+   },
+   "openSecondsMoreThan5": {
+      "message": "オープン秒数は 5 秒以上である必要があります。"
+   },
+   "openTabSchedule": {
+      "message": "タブスケジュールを開く"
+   },
+   "openTabURL": {
+      "message": "タブURLを開く"
+   },
+   "openTime": {
+      "message": "営業時間"
+   },
+   "openUrl": {
+      "message": "ウェブサイトリンクを開く"
+   },
+   "openWeek": {
+      "message": "オープンウィーク"
+   },
+   "openWeeks": {
+      "message": "オープンウィーク"
+   },
+   "open_on": {
+      "message": "オープン日"
+   },
+   "optional": {
+      "message": "オプション"
+   },
+   "or": {
+      "message": "または"
+   },
+   "outof": {
+      "message": "から"
+   },
+   "pagePath": {
+      "message": "ページパス"
+   },
+   "paidFeature": {
+      "message": "有料機能"
+   },
+   "pauseSchedule": {
+      "message": "すべてのスケジュールを開始または停止する"
+   },
+   "pauseTabScheduler": {
+      "message": "一時停止タブスケジューラ"
+   },
+   "pleaseAllowIncognitoMessage": {
+      "message": "拡張機能の詳細で「シークレットモードで許可」オプションを有効にしてください。手順については、チュートリアル ページを参照してください。"
+   },
+   "pleaseShareYourSuggestions": {
+      "message": "あなたの提案を共有してください。"
+   },
+   "plsShreAnySugWithUs": {
+      "message": "改善のためのご提案をお願いします"
+   },
+   "powerMode": {
+      "message": "パワーモード"
+   },
+   "premium": {
+      "message": "プレミアム"
+   },
+   "pricePlan": {
+      "message": "価格とプラン"
+   },
+   "privcyPolicy": {
+      "message": "プライバシーポリシー"
+   },
+   "prowerModeTip": {
+      "message": "電源モードを有効にしてシステムを常にアクティブに保つ"
+   },
+   "put": {
+      "message": "置く"
+   },
+   "rateUs": {
+      "message": "評価する"
+   },
+   "removeDuplicateEntry": {
+      "message": "重複したエントリを削除してください"
+   },
+   "removeOpenTbURL": {
+      "message": "開いているタブの URL を削除する"
+   },
+   "repeat": {
+      "message": "繰り返す"
+   },
+   "requiredMsg": {
+      "message": "必須"
+   },
+   "rmvClsTb": {
+      "message": "タブを閉じる URL を削除する"
+   },
+   "sameTabs": {
+      "message": "URLがすでに開いている場合はタブを更新します"
+   },
+   "sameTabsInfo": {
+      "message": "同じ URL に対して複数のタブが開かないようにする。たとえば、www.google.com がすでに開いている場合は、新しいタブが開かれるのではなく、既存のタブが更新されます。"
+   },
+   "sampleCsvOpenPath": {
+      "message": "../sample_csv/en/open_tab_sample.csv"
+   },
+   "sampleFile": {
+      "message": "サンプルファイル"
+   },
+   "saturday": {
+      "message": "土曜日"
+   },
+   "savOpnData": {
+      "message": "開いているタブのデータを保存する"
+   },
+   "save": {
+      "message": "保存"
+   },
+   "saveClsTbData": {
+      "message": "タブを閉じるデータを保存する"
+   },
+   "saveSchedule": {
+      "message": "スケジュールを保存"
+   },
+   "scheduleCloseTab": {
+      "message": "スケジュールタブを閉じる"
+   },
+   "scheduleCurrentTab": {
+      "message": "現在のタブをスケジュールする"
+   },
+   "scheduleOpenTab": {
+      "message": "スケジュールを開くタブ"
+   },
+   "scheduledTabIsAlreadyExistWithSameTimer": {
+      "message": "このスケジュールされたタブは、同じタイマーで既に存在しています。"
+   },
+   "scheduledTabList": {
+      "message": "スケジュールされたタブリスト"
+   },
+   "scheduledType": {
+      "message": "スケジュールタイプ"
+   },
+   "search": {
+      "message": "検索"
+   },
+   "secValid": {
+      "message": "最低5秒必要です"
+   },
+   "second": {
+      "message": "2番"
+   },
+   "selectCloseDate": {
+      "message": "終了日を選択"
+   },
+   "selectCloseDay": {
+      "message": "休業日を選択"
+   },
+   "selectCloseTime": {
+      "message": "終了時間を選択"
+   },
+   "selectColumn": {
+      "message": "列を選択"
+   },
+   "selectDateAndTime": {
+      "message": "新しいタブを開くには日付と時刻を選択してください"
+   },
+   "selectDateAndTimeClsTb": {
+      "message": "タブを閉じる日付と時刻を選択してください"
+   },
+   "selectDayToCloseSchTb": {
+      "message": "スケジュール タブを閉じる日を選択します。"
+   },
+   "selectDayToClsTb": {
+      "message": "タブを閉じる日を選択"
+   },
+   "selectDayToSchdule": {
+      "message": "スケジュールタブで日を選択します。"
+   },
+   "selectDaysInWeek": {
+      "message": "曜日を選択"
+   },
+   "selectDaysInWeekIClsTime": {
+      "message": "クローズタイマーで週の曜日を選択します。"
+   },
+   "selectDaysInWeekIOpClsTime": {
+      "message": "オープンタイマーまたはクローズタイマーで曜日を選択します。"
+   },
+   "selectDaysInWeekIOpTime": {
+      "message": "オープンタイマーで曜日を選択します。"
+   },
+   "selectFrequency": {
+      "message": "周波数を選択"
+   },
+   "selectFrequencyOfScheduleUrl": {
+      "message": "スケジュールされた URL の頻度を選択します。"
+   },
+   "selectOpenDate": {
+      "message": "オープン日を選択"
+   },
+   "selectOpenDay": {
+      "message": "オープン日を選択"
+   },
+   "selectOpenOrClose": {
+      "message": "開店時間と閉店時間を選択する"
+   },
+   "selectOpenOrCloseDate": {
+      "message": "開始日と終了日を選択"
+   },
+   "selectOpenOrCloseDay": {
+      "message": "営業日と休業日を選択"
+   },
+   "selectOpenTime": {
+      "message": "営業時間を選択"
+   },
+   "selectPreferredLanguage": {
+      "message": "ご希望の言語を選択します。"
+   },
+   "selectToOpenTab": {
+      "message": "新しいタブを開くには日を選択してください"
+   },
+   "selectTypTimerClsTb": {
+      "message": "タブを閉じるタイマーの種類を選択してください"
+   },
+   "selectTypeOfSchedule": {
+      "message": "スケジュールの種類を選択します。開くと閉じるの両方を行う場合は、「両方」を選択します。"
+   },
+   "selectTypeOfTimer": {
+      "message": "タイマーの種類を選択して新しいタブを開きます"
+   },
+   "select_weeks": {
+      "message": "週を選択"
+   },
+   "september": {
+      "message": "9月"
+   },
+   "settingSave": {
+      "message": "設定が正常に保存されました"
+   },
+   "settingToClose": {
+      "message": "シークレットモードでタブを閉じる設定。"
+   },
+   "shareYourSuggestionWithUs": {
+      "message": "ご提案をぜひお聞かせください。"
+   },
+   "slectDayToScheduleWeekly": {
+      "message": "タブを毎週スケジュールする日を選択します。"
+   },
+   "slectMinute": {
+      "message": "分を選択"
+   },
+   "smthngWrng": {
+      "message": "問題が発生しました"
+   },
+   "softpulseInfotech": {
+      "message": "ソフトパルスインフォテック"
+   },
+   "somethingWentWrong": {
+      "message": "問題が発生しました。ページを更新してもう一度お試しください。"
+   },
+   "status": {
+      "message": "状態"
+   },
+   "subcrKeyShldNEmpt": {
+      "message": "サブスクリプションキーを入力してください。"
+   },
+   "subdomain": {
+      "message": "サブドメイン"
+   },
+   "subkeyInputTitle": {
+      "message": "サブスクリプションキーを入力してください"
+   },
+   "submFeedBack": {
+      "message": "提出する"
+   },
+   "suggForTbSch": {
+      "message": "タブスケジューラの提案"
+   },
+   "suggestionAndRateUs": {
+      "message": "ご提案と評価"
+   },
+   "sunday": {
+      "message": "日曜日"
+   },
+   "tabCloseOneTime": {
+      "message": "タブは1回だけ閉じます"
+   },
+   "tabSchTutorial": {
+      "message": "タブスケジューラチュートリアル"
+   },
+   "tabScheduler": {
+      "message": "タブスケジューラ"
+   },
+   "tabSchedulerOptions": {
+      "message": "タブスケジューラオプション"
+   },
+   "tabWillOpenOneTime": {
+      "message": "タブは1回だけ開きます"
+   },
+   "tabWillOpenWhenBrowserOpen": {
+      "message": "ブラウザが開くとタブが開きます"
+   },
+   "termCondition": {
+      "message": "利用規約"
+   },
+   "thanksFrRev": {
+      "message": "レビューをありがとうございます"
+   },
+   "thnkUFeedBack": {
+      "message": "ご提案ありがとうございます"
+   },
+   "thnkUFrUsngTbSch": {
+      "message": "改善のためのご提案をお願いします"
+   },
+   "thursday": {
+      "message": "木曜日"
+   },
+   "time": {
+      "message": "時間"
+   },
+   "timeExpired": {
+      "message": "時間切れ"
+   },
+   "timer": {
+      "message": "タイマー"
+   },
+   "title": {
+      "message": "タイトル"
+   },
+   "titleLengtWarn": {
+      "message": "タイトルの長さは 200 文字以内にしてください。"
+   },
+   "toScheduledOpenTbMsg": {
+      "message": "タブをスケジュールして開くには、URL フィルタリングのチェックを外してください。"
+   },
+   "toogleCloseTab": {
+      "message": "すべての閉じたタブのURLのスケジュールアラームを開始/停止する"
+   },
+   "toogleDarkmode": {
+      "message": "ダーク モードとデフォルト モードを切り替えて、表示エクスペリエンスをカスタマイズします。"
+   },
+   "toogleOff": {
+      "message": "オフ"
+   },
+   "toogleOn": {
+      "message": "の上"
+   },
+   "toogleOpenTab": {
+      "message": "開いているすべてのタブのスケジュールアラームを開始/停止する URL"
+   },
+   "topLevelDomain": {
+      "message": "トップレベルドメイン"
+   },
+   "totalProcessed": {
+      "message": "記録された処理済みの合計"
+   },
+   "tuesday": {
+      "message": "火曜日"
+   },
+   "tutorialImg1": {
+      "message": "\u003Cimg src=\"../images/en/1.png\">"
+   },
+   "tutorialImg10": {
+      "message": "\u003Cimg src=\"../images/en/10.png\">"
+   },
+   "tutorialImg11": {
+      "message": "\u003Cimg src=\"../images/en/11.png\">"
+   },
+   "tutorialImg12": {
+      "message": "\u003Cimg src=\"../images/en/12.png\">"
+   },
+   "tutorialImg13": {
+      "message": "\u003Cimg src=\"../images/en/13.png\">"
+   },
+   "tutorialImg14": {
+      "message": "\u003Cimg src=\"../images/en/14.png\">"
+   },
+   "tutorialImg2": {
+      "message": "\u003Cimg src=\"../images/en/2.png\">"
+   },
+   "tutorialImg3": {
+      "message": "\u003Cimg src=\"../images/en/3.png\">"
+   },
+   "tutorialImg4": {
+      "message": "\u003Cimg src=\"../images/en/4.png\">"
+   },
+   "tutorialImg5": {
+      "message": "\u003Cimg src=\"../images/en/5.png\">"
+   },
+   "tutorialImg6": {
+      "message": "\u003Cimg src=\"../images/en/6.png\">"
+   },
+   "tutorialImg7": {
+      "message": "\u003Cimg src=\"../images/en/7.png\">"
+   },
+   "tutorialImg8": {
+      "message": "\u003Cimg src=\"../images/en/8.png\">"
+   },
+   "tutorialImg9": {
+      "message": "\u003Cimg src=\"../images/en/9.png\">"
+   },
+   "uncheckAll": {
+      "message": "すべてチェックを外す"
+   },
+   "unlimitedSchedule": {
+      "message": "スケジュール制限無制限"
+   },
+   "unspecifiedURL": {
+      "message": "11. URL 未指定パス"
+   },
+   "unspecifiedURLExm1": {
+      "message": "上記の例では、指定された URL は閉じるタブにあります。これは、新しいタブで開かれ、不明な Web アドレスで始まり、不明な Web アドレスで終わる指定された URL は 5 分後に閉じられることを示しています。"
+   },
+   "upgradePlan": {
+      "message": "より多くの機能のロックを解除するには、プランを購入するか、ログインしてプランをアップグレードしてください。"
+   },
+   "upgradePlanUnlock": {
+      "message": "プランをアップグレードすると、さらに多くの機能が利用できるようになります。"
+   },
+   "uploadValidFormat": {
+      "message": "有効な形式をアップロードしてください"
+   },
+   "url": {
+      "message": "メールアドレス"
+   },
+   "urlContExat": {
+      "message": "URLフィルタリング"
+   },
+   "urlEndWithUnspesifiedPth": {
+      "message": "9. URL が未指定のパスで終了する"
+   },
+   "urlEndWithUnspesifiedPthExm1": {
+      "message": "上記の例では、指定された URL は閉じるタブにあります。これは、新しいタブで開かれ、不明なパスで終わる指定された URL は 5 分後に閉じられることを示しています。"
+   },
+   "urlFilterInfo": {
+      "message": "チェック対象の URL を含むには URL の一部のみが必要で、チェック対象の URL の完全一致は指定された URL と完全に一致する必要があります。"
+   },
+   "urlFilterinCLoseTb": {
+      "message": "14. タブを閉じる際の URL フィルタリング"
+   },
+   "urlFilterinCLoseTbExample": {
+      "message": "上記の例では、指定された URL は閉じたタブにあり、すでに開かれているタブの URL が指定された URL の一部と一致したため、そのタブが閉じられることを示しています。"
+   },
+   "urlIsRequired": {
+      "message": "ウェブサイトリンクが必要です"
+   },
+   "urlNotvalid": {
+      "message": "URL が無効です"
+   },
+   "urlStartWithUnspesifiedPth": {
+      "message": "10. URL が未指定のパスで始まる"
+   },
+   "urlStartWithUnspesifiedPthExm1": {
+      "message": "\u003Cb>上記の例では、指定された URL は閉じるタブにあります。これは、新しいタブで開かれ、不明なサブドメイン「www」\u003C/b>または\u003Cb>「blog」\u003C/b>で始まる指定された URL が5 分後に閉じられることを示しています。"
+   },
+   "useSpecificUrl": {
+      "message": "特定のウェブサイトリンクを使用する"
+   },
+   "useSpecificUrl1": {
+      "message": "閉じたブラウザのタブの「ウェブサイト リンク」フィールドに、正確なサブドメイン、トップレベル ドメイン、ドメイン名、ページ パスを入力する必要があります。"
+   },
+   "useSpecificUrl2": {
+      "message": "ブラウザのすべてのタブを閉じる"
+   },
+   "useSpecificUrl3": {
+      "message": "具体的かつ完全なウェブサイトリンクを使用する"
+   },
+   "useUnSpecificUrl1": {
+      "message": "指定されていないウェブサイトリンクを使用する"
+   },
+   "useUnSpecificUrl2": {
+      "message": "指定されていないウェブサイトリンクで始まる"
+   },
+   "useUnSpecificUrl3": {
+      "message": "指定されていないウェブサイトリンクで終了を使用する"
+   },
+   "used": {
+      "message": "使用した"
+   },
+   "validFormatCsv": {
+      "message": "インポートに有効な CSV ファイル形式は何ですか?"
+   },
+   "websiteLink": {
+      "message": "ウェブサイトリンク"
+   },
+   "websiteUrl": {
+      "message": "ウェブサイトURL"
+   },
+   "wednesday": {
+      "message": "水曜日"
+   },
+   "weekName": {
+      "message": "週名"
+   },
+   "weekly": {
+      "message": "毎週"
+   },
+   "whenExtensionTabAppears": {
+      "message": "拡張機能タブが表示されたら、シークレット モードで有効にする「自動開閉機能付きタブ スケジューラ」を見つけて、その横にある「詳細」ボタンをクリックします。"
+   },
+   "whenMenuPopup": {
+      "message": "メニューがポップアップしたら、「拡張機能の管理」を選択します。"
+   },
+   "withSignMustFill": {
+      "message": "\u003Cspan>*\u003C/span>記号がある場合は入力または選択する必要があります。開店時間または閉店時間のいずれか、または両方の時間を選択します。"
+   },
+   "writeYourDescriptionAboutSchUrl": {
+      "message": "スケジュールされた URL についての説明をここに記入します。"
+   },
+   "yes": {
+      "message": "はい"
+   },
+   "yourEmailAddress": {
+      "message": "あなたのメールアドレス"
+   },
+   "yourScheduleUrl": {
+      "message": "スケジュールURL"
+   }
+}

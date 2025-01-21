@@ -1,0 +1,1448 @@
+{
+   "10_min": {
+      "message": "10 Minuten"
+   },
+   "1_min": {
+      "message": "1 Minute"
+   },
+   "30_min": {
+      "message": "30 Minuten"
+   },
+   "5_min": {
+      "message": "5 Minuten"
+   },
+   "60_min": {
+      "message": "Stunde"
+   },
+   "Dashboard": {
+      "message": "Armaturenbrett"
+   },
+   "Login": {
+      "message": "Login"
+   },
+   "Off": {
+      "message": "Aus"
+   },
+   "On": {
+      "message": "An"
+   },
+   "Selected": {
+      "message": "Ausgewählt"
+   },
+   "Settings": {
+      "message": "Einstellungen"
+   },
+   "Tutorial": {
+      "message": "Lernprogramm"
+   },
+   "action": {
+      "message": "Aktion"
+   },
+   "activateScheduleTab": {
+      "message": "Aktivieren Sie die Registerkarte „Geplant“."
+   },
+   "active": {
+      "message": "Aktiv"
+   },
+   "activeAllScheduleTab": {
+      "message": "Ausführen des Tab-Schedulers"
+   },
+   "activeStatus": {
+      "message": "Status"
+   },
+   "actvInactvNotification": {
+      "message": "Benachrichtigung anzeigen, wenn die Registerkarte „Zeitplan“ geöffnet wird"
+   },
+   "actvInactvOpnTb": {
+      "message": "Aktiver oder inaktiver geöffneter Tab"
+   },
+   "actvIntvClsTb": {
+      "message": "Aktiver oder inaktiver Tab zum Schließen"
+   },
+   "add": {
+      "message": "Hinzufügen"
+   },
+   "addDescription": {
+      "message": "Beschreibung hinzufügen"
+   },
+   "addNew": {
+      "message": "Neu hinzufügen"
+   },
+   "addNewURlCls": {
+      "message": "Zum Schließen neue URL hinzufügen"
+   },
+   "addNewUrlToOpen": {
+      "message": "Neue URL zum Öffnen in neuem Fenster hinzufügen"
+   },
+   "addTitle": {
+      "message": "Titel hinzufügen"
+   },
+   "addWebsite": {
+      "message": "Website hinzufügen"
+   },
+   "all": {
+      "message": "Alle"
+   },
+   "allInputFieldReq": {
+      "message": "Alle Felder sind Pflichtfelder"
+   },
+   "all_weeks": {
+      "message": "Die ganze Woche"
+   },
+   "alreadyPurchase": {
+      "message": "Bereits gekauft? Geben Sie den Schlüssel hier ein"
+   },
+   "andAt": {
+      "message": "und bei"
+   },
+   "annually": {
+      "message": "Jährlich"
+   },
+   "appDesc": {
+      "message": "Browser-Tabs werden zur ausgewählten Zeit automatisch geöffnet und geschlossen. Der Benutzer kann die Liste je nach Bedarf aktivieren/deaktivieren."
+   },
+   "appName": {
+      "message": "Tab-Scheduler mit automatischem Öffnen und Schließen"
+   },
+   "april": {
+      "message": "April"
+   },
+   "at": {
+      "message": "bei"
+   },
+   "august": {
+      "message": "August"
+   },
+   "autoFocus": {
+      "message": "Registerkarte „Autofokus“"
+   },
+   "autoFocustip": {
+      "message": "Wenn aktiviert, wird die neue Registerkarte im aktiven/fokussierten Zustand geöffnet."
+   },
+   "autofocustip": {
+      "message": "Neue Tabs fokussieren automatisch"
+   },
+   "basic": {
+      "message": "Basic"
+   },
+   "billedAnnyally": {
+      "message": "Jährliche Abrechnung"
+   },
+   "billedMonthly": {
+      "message": "Monatliche Abrechnung"
+   },
+   "both": {
+      "message": "Beide"
+   },
+   "browserOpen": {
+      "message": "Beim Öffnen des Browsers"
+   },
+   "browserWebAddress": {
+      "message": "Die Webadresse des Browsers beginnt und endet mit einer unbekannten Webadresse. Setzen Sie auf beiden Seiten Ihres Eingabefelds „Website-Link“ ein \u003Cb>* .\u003C/b>"
+   },
+   "browserWebAddress2": {
+      "message": "Die Webadresse des Browsers enthält den Domänennamen google.com, der in den angegebenen Minuten unabhängig von der Subdomäne und dem Seitenpfad geschlossen wird. Setzen Sie \u003Cb>*\u003C/b> auf beiden Seiten des Domänennamens und der TLD"
+   },
+   "browserWebAddress3": {
+      "message": "Die Webadresse des Browsers beginnt mit einem unbekannten Domänennamen und endet mit einem unbekannten Seitenpfad"
+   },
+   "browserWebAddress31": {
+      "message": "wird nach den angegebenen Minuten geschlossen, setzen Sie \u003Cb>*\u003C/b> auf beiden Seiten der TLD"
+   },
+   "browserWebAddress4": {
+      "message": "Die Webadresse des Browsers beginnt mit einer unbekannten Webadresse. Setzen Sie \u003Cb>*\u003C/b> am Anfang Ihrer URL. Denken Sie daran, dass die Webadresse des Browsers mit Ihrer URL nach \u003Cb>*\u003C/b> übereinstimmen muss ."
+   },
+   "browserWebAddress41": {
+      "message": "Die Webadresse des Browsers beginnt mit einer unbekannten Subdomäne"
+   },
+   "browserWebAddress42": {
+      "message": "am Anfang Ihres Website-Links"
+   },
+   "browserWebAddress5": {
+      "message": "Die Webadresse des Browsers endet mit einer unbekannten Webadresse. Fügen Sie \u003Cb>*\u003C/b> am Ende Ihrer URL ein. Denken Sie daran, dass Ihre Webadresse mit dem von Ihnen eingegebenen \u003Cb>* übereinstimmen muss.\u003C/b>"
+   },
+   "browserWebAddress51": {
+      "message": "Die Webadresse des Browsers endet mit einem unbekannten Seitenpfad. Setzen Sie \u003Cb>*\u003C/b> am Ende Ihrer Webadresse"
+   },
+   "browserWebAddress6": {
+      "message": "Geben Sie nur \u003Cb>*\u003C/b> in das Website-Adressfeld ein, um alle Browser-Tabs zu schließen. Nachdem alle Tabs geschlossen wurden, wird der Browser automatisch geschlossen."
+   },
+   "browserWebAddress7": {
+      "message": "Sie müssen die genaue Subdomäne, Top-Level-Domäne, den Domänennamen und den Seitenpfad in das URL-Feld geschrieben haben, um es im Browser-Tab zu öffnen."
+   },
+   "browserWebAddress8": {
+      "message": "Sie können die URL an einem bestimmten Datum und zu einer bestimmten Uhrzeit, in einem bestimmten Monat, einer bestimmten Woche, einem bestimmten Jahr und zu einer Wiederholungszeit öffnen."
+   },
+   "buyPlan": {
+      "message": "Plan kaufen"
+   },
+   "buycofee": {
+      "message": "Kauf mir einen Kaffee"
+   },
+   "cancel": {
+      "message": "Stornieren"
+   },
+   "changeLanguage": {
+      "message": "Sprache ändern"
+   },
+   "checkAll": {
+      "message": "Alle prüfen"
+   },
+   "checkThisOpToPreventClosePinTb": {
+      "message": "Aktivieren Sie diese Option, um das Schließen angehefteter Registerkarten zu verhindern."
+   },
+   "checkThisOptionOnlyPartOfUrlMtch": {
+      "message": "Aktivieren Sie diese Option, wenn nur ein Teil der URL abgeglichen werden muss."
+   },
+   "checkThisOptionToActivate": {
+      "message": "Aktivieren Sie diese Option, um Ihre geplante URL zu aktivieren oder zu deaktivieren."
+   },
+   "checkThisOptionToCloseOnly": {
+      "message": "Aktivieren Sie diese Option, um nur Inkognito-Tabs zu schließen. Aktivieren Sie außerdem die Option „Im Inkognitomodus zulassen“ in den Erweiterungsdetails. Anweisungen dazu finden Sie auf der Tutorial-Seite."
+   },
+   "checkThisOptionToCloseOnlyInIncgnitoTb": {
+      "message": "Aktivieren Sie diese Option, um nur Inkognito-Tabs zu schließen. Aktivieren Sie außerdem die Option „Im Inkognitomodus zulassen“ in den Erweiterungsdetails. Anweisungen dazu finden Sie auf der Tutorial-Seite."
+   },
+   "checkThisOptionToInBg": {
+      "message": "Aktivieren Sie diese Option, wenn Sie die URL im Hintergrund öffnen möchten, ohne sie in einem neuen Tab zu öffnen"
+   },
+   "checkThisOptionToInactivNotification": {
+      "message": "Aktivieren Sie diese Option, um eine Inaktivitätsbenachrichtigung über die geplante URL zu erhalten"
+   },
+   "checkThisOptionToOpen": {
+      "message": "Aktivieren Sie diese Option, wenn Sie Ihre URL im Inkognito-Modus öffnen möchten"
+   },
+   "checkThisOptionToOpenIncogito": {
+      "message": "Aktivieren Sie diese Option, wenn Sie Ihre URL im Inkognito-Modus öffnen möchten"
+   },
+   "checkThisOptionToPrevent": {
+      "message": "Aktivieren Sie diese Option, um das Schließen angehefteter Registerkarten zu verhindern."
+   },
+   "clickExtIcon": {
+      "message": "Klicken Sie in der Symbolleiste auf das Symbol „Erweiterungen“, das wie ein Puzzleteil aussieht."
+   },
+   "clickTheSwitch": {
+      "message": "Klicken Sie auf den Schalter daneben, um es einzuschalten"
+   },
+   "close": {
+      "message": "Schließen"
+   },
+   "closeAllTab": {
+      "message": "12. Schließen Sie alle Browser-Tabs"
+   },
+   "closeAllTabExm1": {
+      "message": "Im obigen Beispiel befindet sich die angegebene URL im Tab „Schließen“, was bedeutet, dass alle Tabs am 25.02.2023 um 12:00 Uhr geschlossen werden."
+   },
+   "closeDate": {
+      "message": "Schlusstermin"
+   },
+   "closeDay": {
+      "message": "Tag schließen"
+   },
+   "closeEveryYear": {
+      "message": "Schließen Sie jedes Jahr am"
+   },
+   "closeInEvery": {
+      "message": "Schließen Sie in jedem"
+   },
+   "closeIncognitoTab": {
+      "message": "Schließen Sie nur Inkognito-Tabs"
+   },
+   "closeMinute": {
+      "message": "Minute schließen"
+   },
+   "closeOnDay": {
+      "message": "Schließtag"
+   },
+   "closeOnEvery": {
+      "message": "Schließen Sie jeden"
+   },
+   "closeOnEveryDay": {
+      "message": "Geschlossen jeden Tag am"
+   },
+   "closeOnEveryMonth": {
+      "message": "Schließung jeden Monats am Tag"
+   },
+   "closeOnEveryWeek": {
+      "message": "Schließen Sie jede Woche am"
+   },
+   "closeSecond": {
+      "message": "Knapper Zweiter"
+   },
+   "closeSeconsMoreThan5": {
+      "message": "Knappe Sekunden sollten mehr als 5 sein."
+   },
+   "closeTabSchedule": {
+      "message": "Tab „Zeitplan“ schließen"
+   },
+   "closeTabURL": {
+      "message": "URL der Registerkarte „Schließen“"
+   },
+   "closeTime": {
+      "message": "Schließzeit"
+   },
+   "closeUrl": {
+      "message": "Website-Link schließen"
+   },
+   "closeWeek": {
+      "message": "Woche schließen"
+   },
+   "closeWeeks": {
+      "message": "Wochen schließen"
+   },
+   "close_on": {
+      "message": "Schließen am"
+   },
+   "cngrtsForSubcr": {
+      "message": "Herzlichen Glückwunsch! Ihr Plan wurde erfolgreich aktiviert."
+   },
+   "commonQuestionsAns": {
+      "message": "Häufig gestellte Fragen und Antworten"
+   },
+   "copySucessClose": {
+      "message": "Die URL-Daten des Tabs „Tab schließen“ wurden in die URL-Daten des Tabs „Tab öffnen“ kopiert."
+   },
+   "createNewTimer": {
+      "message": "Neuen Timer erstellen"
+   },
+   "currentPlan": {
+      "message": "Aktueller Plan"
+   },
+   "currentTabSchedule": {
+      "message": "Aktueller Tab-Zeitplan"
+   },
+   "currentTbScheduleTimer": {
+      "message": "Aktueller Tab: Geplanter Timer."
+   },
+   "cusSec": {
+      "message": "Benutzerdefinierte Sekunde"
+   },
+   "custMin": {
+      "message": "Benutzerdefinierte Minute"
+   },
+   "custmMinSch": {
+      "message": "7.Benutzerdefinierter Minutenplan"
+   },
+   "custmMinSchExm1": {
+      "message": "Im obigen Beispiel befindet sich die angegebene URL in einem geöffneten Tab, was bedeutet, dass die angegebene URL alle 15 Minuten in einem neuen Tab geöffnet wird."
+   },
+   "custmMinSchExm2": {
+      "message": "Im obigen Beispiel befindet sich die angegebene URL in einem geschlossenen Tab. Dies bedeutet, dass die in einem neuen Tab geöffnete URL nach 15 Minuten geschlossen wird."
+   },
+   "customSecondWarning": {
+      "message": "Die benutzerdefinierte Sekundenfunktionalität ist experimentell und funktioniert möglicherweise nicht richtig, wenn der Sekundenwert unter 60 liegt."
+   },
+   "darkMode": {
+      "message": "Dunkler Modus"
+   },
+   "datNotCopy": {
+      "message": "Einige Daten werden aufgrund einer ungültigen URL nicht kopiert."
+   },
+   "dataSaved": {
+      "message": "Timerdaten erfolgreich gespeichert"
+   },
+   "date": {
+      "message": "Datum"
+   },
+   "dateIsOutOfRange": {
+      "message": "Das Datum liegt außerhalb des gültigen Bereichs"
+   },
+   "day": {
+      "message": "Tag"
+   },
+   "december": {
+      "message": "Dezember"
+   },
+   "delete": {
+      "message": "Löschen"
+   },
+   "deleteScheduleTb": {
+      "message": "Geplante Registerkarte löschen."
+   },
+   "description": {
+      "message": "Beschreibung"
+   },
+   "developedBy": {
+      "message": "Entwickelt von:"
+   },
+   "doNotCloseInPinnedTabs": {
+      "message": "Angeheftete Tabs nicht schließen"
+   },
+   "doNotShowNotification": {
+      "message": "Benachrichtigung nicht anzeigen"
+   },
+   "domainName": {
+      "message": "Domänenname"
+   },
+   "downloadCloseTbSampleCsv": {
+      "message": "Laden Sie eine Beispiel-CSV zum Schließen von Tabs herunter, um ein Beispiel für das erforderliche Format anzuzeigen"
+   },
+   "downloadOpenTbSampleCsv": {
+      "message": "Laden Sie eine Beispiel-CSV-Datei für geöffnete Registerkarten herunter, um ein Beispiel für das erforderliche Format anzuzeigen."
+   },
+   "editScheduleTb": {
+      "message": "Registerkarte „Geplant bearbeiten“."
+   },
+   "email": {
+      "message": "E-Mail"
+   },
+   "enterDateToCloseTab": {
+      "message": "Geben Sie hier das Datum ein, um die Registerkarte „Zeitplan“ zu schließen."
+   },
+   "enterDateToOpen": {
+      "message": "Geben Sie das Datum ein, um die Registerkarte „Zeitplan“ zu öffnen."
+   },
+   "enterMiniutesToCloseTb": {
+      "message": "Geben Sie die Anzahl der Minuten ein, in denen die Registerkarte geschlossen werden soll."
+   },
+   "enterMiniutesToOpen": {
+      "message": "Geben Sie Minuten ein, um die Registerkarte „Zeitplan“ zu öffnen."
+   },
+   "enterMinute": {
+      "message": "Minute eingeben"
+   },
+   "enterSecond": {
+      "message": "Geben Sie die zweite ein"
+   },
+   "enterSecondsToCloseTab": {
+      "message": "Geben Sie die Sekunden zum Schließen der Registerkarte ein."
+   },
+   "enterSecondsToOpen": {
+      "message": "Geben Sie Sekunden ein, um die Registerkarte „Zeitplan“ zu öffnen."
+   },
+   "enterTilteOfScheduleUrl": {
+      "message": "Geben Sie den Titel der geplanten URL ein."
+   },
+   "enterTimeToCloseTab": {
+      "message": "Geben Sie hier die Zeit ein, um die Registerkarte „Zeitplan“ zu schließen."
+   },
+   "enterTimeToSchedule": {
+      "message": "Geben Sie die Uhrzeit ein, um die Registerkarte „Zeitplan“ zu öffnen."
+   },
+   "enterValidEmail": {
+      "message": "Bitte geben Sie eine gültige E-Mail-Adresse ein"
+   },
+   "enterValidUrl": {
+      "message": "Bitte geben Sie eine gültige URL ein"
+   },
+   "enterValueInCloseSec": {
+      "message": "Geben Sie den Wert in Sekundenschnelle ein"
+   },
+   "enterValueInOpenCloseSec": {
+      "message": "Geben Sie den Wert in Sekunden zum Öffnen oder Schließen ein."
+   },
+   "enterValueInOpenMinutes": {
+      "message": "Geben Sie den Wert in offenen Minuten ein"
+   },
+   "enterVlaueInCloseMinutes": {
+      "message": "Geben Sie den Wert in den nächsten Minuten ein"
+   },
+   "enterVlaueInOpenCloseMin": {
+      "message": "Geben Sie den Wert in Öffnungs- oder Schließminuten ein"
+   },
+   "enterVlaueInOpenSeconds": {
+      "message": "Geben Sie den Wert in offenen Sekunden ein"
+   },
+   "enterYourURLToSchedule": {
+      "message": "Geben Sie zum Planen Ihre URL ein."
+   },
+   "every": {
+      "message": "jeder"
+   },
+   "every10Min": {
+      "message": "Alle 10 Minuten"
+   },
+   "every1Minute": {
+      "message": "jede Minute"
+   },
+   "every30Min": {
+      "message": "Alle 30 Minuten"
+   },
+   "every5Min": {
+      "message": "Alle 5 Minuten"
+   },
+   "everyDay": {
+      "message": "Täglich"
+   },
+   "everyDayAt": {
+      "message": "jeden Tag um"
+   },
+   "everyHour": {
+      "message": "Stündlich"
+   },
+   "everyMinute": {
+      "message": "Jede Minute"
+   },
+   "everyMonth": {
+      "message": "Jeden Monat"
+   },
+   "everyMonthOn": {
+      "message": "jeden Monat auf"
+   },
+   "everyMonthOnDay": {
+      "message": "jeden Monat am Tag"
+   },
+   "everyWeek": {
+      "message": "Jede Woche"
+   },
+   "everyWeekOn": {
+      "message": "jede Woche auf"
+   },
+   "everyYear": {
+      "message": "Jährlich"
+   },
+   "everyYesrOn": {
+      "message": "jedes Jahr auf"
+   },
+   "evr10MinSch": {
+      "message": "2. Alle 10 Minuten Zeitplan"
+   },
+   "evr10MinSchExm1": {
+      "message": "Im obigen Beispiel befindet sich die angegebene URL in einem geöffneten Tab. Dies bedeutet, dass die angegebene URL alle 10 Minuten in einem neuen Tab geöffnet wird."
+   },
+   "evr10MinSchExm2": {
+      "message": "Im obigen Beispiel befindet sich die angegebene URL in einem geschlossenen Tab. Dies bedeutet, dass die in einem neuen Tab geöffnete angegebene URL nach 10&nbsp;Minuten geschlossen wird."
+   },
+   "evrDaySch": {
+      "message": "3. Täglicher Zeitplan"
+   },
+   "evrDaySchExm1": {
+      "message": "Im obigen Beispiel befindet sich die angegebene URL in einem geöffneten Tab, was bedeutet, dass sie jeden Tag um 17:27 Uhr in einem neuen Tab geöffnet wird."
+   },
+   "evrDaySchExm2": {
+      "message": "Im obigen Beispiel befindet sich die angegebene URL in „Tab schließen“, was bedeutet, dass der bereits geöffnete Tab jeden Tag um 17:27 Uhr geschlossen wird."
+   },
+   "evrMonthSch": {
+      "message": "5.Monatlicher Zeitplan"
+   },
+   "evrMonthSchExm1": {
+      "message": "Im obigen Beispiel befindet sich die angegebene URL in einem geöffneten Tab, in dem steht: Sie wird jeden Monat um 13:45 Uhr am 25. Tag in einem neuen Tab geöffnet"
+   },
+   "evrMonthSchExm2": {
+      "message": "Im obigen Beispiel befindet sich die angegebene URL in „Tab schließen“, was bedeutet, dass der bereits geöffnete Tab jeden Monat um 13:45 Uhr am 25. Tag geschlossen wird."
+   },
+   "evrWeekSch": {
+      "message": "4. Wöchentlicher Zeitplan"
+   },
+   "evrWeekSchExm1": {
+      "message": "Im obigen Beispiel befindet sich die angegebene URL in einem geöffneten Tab. Es ist angegeben, dass sie jede Woche \u003Cb>montags und dienstags\u003C/b> um 17:00 Uhr in einem neuen Tab geöffnet wird ."
+   },
+   "evrWeekSchExm2": {
+      "message": "\u003Cb>Im obigen Beispiel befindet sich die angegebene URL im Tab „Schließen“, wo angegeben ist, dass der bereits geöffnete Tab jede Woche um 17:00 Uhr am Montag und Dienstag\u003C/b> geschlossen wird ."
+   },
+   "evrWeekSchExm3": {
+      "message": "Im obigen Beispiel können in der Wochenzeitschaltuhr mehrere Tage ausgewählt werden."
+   },
+   "evrYearSch": {
+      "message": "6.Jahresplan"
+   },
+   "evrYearSchExm1": {
+      "message": "Im obigen Beispiel befindet sich die angegebene URL in einem geöffneten Tab, was bedeutet, dass sie jedes Jahr um 13:35 Uhr am 1. Januar in einem neuen Tab geöffnet wird."
+   },
+   "evrYearSchExm2": {
+      "message": "Im obigen Beispiel befindet sich die angegebene URL in „Tab schließen“, was bedeutet, dass der bereits geöffnete Tab jedes Jahr um 13:35 Uhr am 1. Januar geschlossen wird."
+   },
+   "exampleSort": {
+      "message": "z.B"
+   },
+   "exdMaxLim": {
+      "message": "Maximal zulässige Geräteanzahl überschritten!"
+   },
+   "exmpOpnClsTbSch": {
+      "message": "Beispiel zum Öffnen und Schließen einer Registerkarte im Tab Scheduler"
+   },
+   "expLicKy": {
+      "message": "Dieser Lizenzschlüssel ist abgelaufen."
+   },
+   "export": {
+      "message": "Export"
+   },
+   "exportBefore": {
+      "message": "Du hast\u003Cexday>\u003C/exday>Tage verbleiben, bitte abonnieren Sie, um weiterhin die Premium-Funktion nutzen zu können"
+   },
+   "exportClsTbDta": {
+      "message": "Daten zum Schließen von Tabs exportieren"
+   },
+   "exportOpenTbDt": {
+      "message": "Exportieren von Daten geöffneter Tabs"
+   },
+   "exportedData": {
+      "message": "Timerdaten erfolgreich exportiert"
+   },
+   "extensionShouldAble": {
+      "message": "Jetzt sollte die Erweiterung in der Lage sein, Tabs im Inkognito-Modus zu schließen."
+   },
+   "faq": {
+      "message": "Häufig gestellte Fragen"
+   },
+   "faq_1": {
+      "message": "Was ist der Tab-Scheduler mit automatischem Öffnen und Schließen?"
+   },
+   "faq_10": {
+      "message": "Wie kann ich meine geplanten Tabs anzeigen?"
+   },
+   "faq_11": {
+      "message": "Ist es zwingend erforderlich, sowohl die Öffnungs- als auch die Schließzeiten anzugeben?"
+   },
+   "faq_12": {
+      "message": "Was bewirken die Funktionen „Autofokus-Registerkarte“, „Alle geplanten Registerkarten aktivieren“ und „Power-Modus“?"
+   },
+   "faq_13": {
+      "message": "Kann ich den geplanten Website-Link im Inkognito-Tab öffnen/schließen?"
+   },
+   "faq_14": {
+      "message": "Was nützt die Registerkarte „Aktualisieren“, wenn die URL bereits geöffnet ist?"
+   },
+   "faq_2": {
+      "message": "Wozu dient ein Website-Link?"
+   },
+   "faq_3": {
+      "message": "Wie plane ich eine URL mit dem Tab Scheduler?"
+   },
+   "faq_4": {
+      "message": "Was ist die Option „URL im Hintergrund öffnen“?"
+   },
+   "faq_5": {
+      "message": "Kann ich verhindern, dass die Erweiterung angeheftete Tabs schließt?"
+   },
+   "faq_6": {
+      "message": "Was bedeutet der Zeitplantyp „Beide“?"
+   },
+   "faq_7": {
+      "message": "Wie funktioniert die Funktion „URL-Filterung“?"
+   },
+   "faq_8": {
+      "message": "Kann ich einen geplanten Tab deaktivieren, ohne ihn zu löschen?"
+   },
+   "faq_9": {
+      "message": "Erhalte ich Benachrichtigungen für geplante Tabs?"
+   },
+   "faq_a_1": {
+      "message": "\u003Cp>Tab Scheduler mit automatischem Öffnen und Schließen ist eine Browsererweiterung, mit der Benutzer Tabs so planen können, dass sie zu festgelegten Zeiten automatisch geöffnet und geschlossen werden. Benutzer können einen einmaligen Zeitplan auswählen oder wiederkehrende Zeitpläne mit verschiedenen Frequenzoptionen einrichten. Diese Erweiterung erfüllt mehrere Zwecke für Benutzer und bietet viele Funktionen, die für Sie hilfreich sind.\u003C/p>"
+   },
+   "faq_a_10": {
+      "message": "Alle geplanten Registerkarten werden in einer Liste mit Titel, Website-Link, Öffnungs- und Schließzeiten, Status und Aktionen angezeigt, die Sie ausführen können (z. B. aktivieren, bearbeiten, löschen)."
+   },
+   "faq_a_11": {
+      "message": "Nein, Sie können entweder eine Öffnungszeit oder eine Schließzeit einplanen. Die mit einem Sternchen (*) gekennzeichneten Pflichtfelder müssen Sie jedoch ausfüllen bzw. auswählen."
+   },
+   "faq_a_12": {
+      "message": "Auto Focus Tab stellt sicher, dass beim Öffnen eines geplanten Tabs mit Activate All Scheduled Tabs alle geplanten Tabs mit einem einzigen Klick aktiviert werden können. Der Power Mode optimiert die Leistung der Erweiterung, indem er die Browserressourcen effizienter verwaltet."
+   },
+   "faq_a_13": {
+      "message": "Ja, Sie können einen geplanten Tab im Inkognito-Modus öffnen, indem Sie die Option „Im Inkognito-Modus öffnen“ auswählen. Sie können festlegen, dass nur Inkognito-Tabs geschlossen werden, indem Sie die Option „Nur Inkognito-Tabs schließen“ auswählen, sofern „Im Inkognito-Modus zulassen“ in den Erweiterungseinstellungen aktiviert ist."
+   },
+   "faq_a_14": {
+      "message": "Wenn diese Option aktiviert ist, aktualisiert die Erweiterung automatisch einen vorhandenen Tab, wenn dieselbe URL bereits in Ihrem Browser geöffnet ist. Dadurch wird das Öffnen doppelter Tabs verhindert und sichergestellt, dass immer die neueste Version der Seite geladen ist."
+   },
+   "faq_a_14_1": {
+      "message": "Wenn Sie versuchen, https://github.com/ zu öffnen und es bereits in einem anderen Tab geöffnet ist, aktualisiert die Erweiterung einfach diesen Tab, anstatt einen neuen zu öffnen."
+   },
+   "faq_a_14_2": {
+      "message": "Wenn https://github.com/ bereits in drei Tabs geöffnet ist, aktualisiert die Erweiterung alle drei Tabs."
+   },
+   "faq_a_2": {
+      "message": "Der Website-Link ist die Website-Adresse in der geöffneten Registerkarte Ihres Browsers. Wie Sie die Website-Adresse verwenden können, erfahren Sie weiter unten."
+   },
+   "faq_a_3": {
+      "message": "Um eine URL zu planen, geben Sie den Website-Link ein, geben Sie dem Zeitplan einen Titel, wählen Sie die Häufigkeit (Einmalig, Jede Minute, Täglich usw.) und wählen Sie die Öffnungs- und Schließzeiten. Sie können auch ein Datum, einen Tag oder Sekunden angeben, um die Registerkarte zu öffnen und zu schließen."
+   },
+   "faq_a_4": {
+      "message": "\u003Cp>Mit dieser Option haben Sie die volle Kontrolle darüber, eine URL so zu planen, dass sie im Hintergrund geöffnet wird, ohne dass die neue Registerkarte in den Fokus rückt. Die URL wird im Hintergrund geöffnet, während Sie auf anderen Registerkarten weiterarbeiten. Dies ist besonders nützlich, wenn der Browser Daten von der geplanten URL abrufen muss, ohne sie aktiv anzuzeigen, z. B. im Fall einer GET-API-Anforderung.\u003C/p>\u003Cbr> \u003Cp>Wenn Sie beispielsweise regelmäßig zu einer festgelegten Zeit Daten von einem API-Endpunkt abrufen möchten, können Sie diese effiziente Option verwenden, um die Anforderung im Hintergrund auszuführen, ohne eine neue sichtbare Registerkarte zu öffnen.\u003C/p>"
+   },
+   "faq_a_5": {
+      "message": "Ja, es gibt eine Option, um das Schließen angehefteter Tabs zu verhindern. Aktivieren Sie die Option „Angeheftete Tabs nicht schließen“, um sicherzustellen, dass diese Tabs geöffnet bleiben, auch wenn sie andere Schließkriterien erfüllen."
+   },
+   "faq_a_6": {
+      "message": "Mit dem Zeitplantyp „Beide“ haben Sie die vollständige Kontrolle darüber, wann eine Registerkarte geöffnet und geschlossen wird, und können für beide Aktionen bestimmte Zeiten festlegen."
+   },
+   "faq_a_7": {
+      "message": "Durch die URL-Filterung wird sichergestellt, dass nur ein bestimmter Teil der URL übereinstimmen muss, damit die geplante Aktion ausgeführt wird. Dies ist nützlich, wenn Sie bestimmte Aktionen basierend auf teilweisen URL-Übereinstimmungen automatisieren möchten. Wenn Sie beispielsweise die Option „URL-Filterung“ für die URL https://example.com/page aktivieren, gilt sie auch für URLs wie https://example.com/page/123, https://example.com/page?query=example und https://subdomain.example.com/page."
+   },
+   "faq_a_8": {
+      "message": "Mit der Option „Diesen geplanten Tab aktivieren“ können Sie geplante Tabs einfach aktivieren oder deaktivieren. Dies gibt Ihnen die Flexibilität, Ihre Zeitpläne zu verwalten, ohne Konfigurationen zu verlieren."
+   },
+   "faq_a_9": {
+      "message": "Standardmäßig erhalten Sie Benachrichtigungen. Wenn Sie jedoch keine Benachrichtigungen mehr erhalten möchten, können Sie die Option „Benachrichtigung nicht anzeigen“ aktivieren, um sie zu deaktivieren."
+   },
+   "february": {
+      "message": "Februar"
+   },
+   "filterTips": {
+      "message": "Filter wird nach „https://“ oder „www.“ angewendet, z. B. „github.com“."
+   },
+   "for_exp": {
+      "message": "Zum Beispiel"
+   },
+   "freeForever": {
+      "message": "Für immer kostenlos"
+   },
+   "freeSchedule": {
+      "message": "freier Zeitplan"
+   },
+   "freeTral": {
+      "message": "Als geschätzter Erstnutzer genießen Sie\u003Crday>120\u003C/rday>Tage kostenloser Zugriff, bevor Sie zu unserem neuen kostenpflichtigen Plan wechseln – vielen Dank für Ihre fortwährende Unterstützung!\u003Cp class=\"p-t-5\">Du hast\u003Cb>\u003Cspan>\u003C/span>\u003C/b>verbleibende Tage von Ihrem\u003Crday>120\u003C/rday>-tägiger freier Zeitraum.\u003Cafex class=\"warning\">\u003Cafex>\u003C/afex>\u003C/afex>\u003C/p> "
+   },
+   "frequentlyAskedQuestions": {
+      "message": "Häufig gestellte Fragen"
+   },
+   "friday": {
+      "message": "Freitag"
+   },
+   "getThisPlan": {
+      "message": "Holen Sie sich diesen Plan"
+   },
+   "goToSettingsPageToSchedule": {
+      "message": "Gehen Sie zur Einstellungsseite, um das Öffnen und Schließen von URLs zu planen."
+   },
+   "goURL": {
+      "message": "Gehen Sie zur URL"
+   },
+   "helpAccordion12": {
+      "message": "Funktioniert diese Erweiterung im Ruhe-/Suspendmodus?"
+   },
+   "helpAccordion3": {
+      "message": "Kann ich das Öffnen eines Tabs im Inkognito-Modus planen?"
+   },
+   "helpAccordion6": {
+      "message": "Was bedeutet „Zeit abgelaufen“?"
+   },
+   "helpAccordion7": {
+      "message": "Kann ich geplante URLs exportieren?"
+   },
+   "helpAccordion8": {
+      "message": "Kann ich eine URL in den Zeitplan importieren?"
+   },
+   "helpPanelBodyDesc12First": {
+      "message": "Nein, diese Erweiterung funktioniert nicht im Ruhe-/Suspendierungsmodus."
+   },
+   "helpPanelBodyDesc12Second": {
+      "message": "Wenn eine beliebige URL in der Registerkarte „Öffnen“ oder „Schließen“ geplant ist, wechselt Ihr PC nicht automatisch in den Ruhe- oder Suspend-Modus."
+   },
+   "helpPanelBodyDesc3": {
+      "message": "Ja, Sie können einen geplanten Tab im Inkognito-Modus öffnen, indem Sie die Option „Im Inkognito-Modus öffnen“ auswählen. Stellen Sie sicher, dass die Option „Im Inkognito-Modus zulassen“ in den Erweiterungseinstellungen des Browsers aktiviert ist."
+   },
+   "helpPanelBodyDesc6": {
+      "message": "- Das angegebene Datum und die Uhrzeit liegen zwischen dem aktuellen Datum und der aktuellen Uhrzeit. Anschließend wird der Text „Zeit abgelaufen“ angezeigt."
+   },
+   "helpPanelBodyDesc7": {
+      "message": "Ja, Sie können bereits geplante URLs zum Öffnen und Schließen von Tabs im CSV-Format exportieren und mit einem anderen System verwenden, um diese URL zu importieren."
+   },
+   "helpPanelBodyDesc8": {
+      "message": "Ja, Sie können gültige Öffnungs- und Schließ-URLs im CSV-Format importieren. Das importierte CSV-Format wird automatisch zur angegebenen Zeit eingeplant."
+   },
+   "herAreStepsToAllow": {
+      "message": "So aktivieren Sie „Inkognito zulassen“ in Google Chrome:"
+   },
+   "home": {
+      "message": "Heim"
+   },
+   "hour_minute_close": {
+      "message": "Jede Stunde, jede Minute"
+   },
+   "hour_minute_open": {
+      "message": "Jede Stunde Offene Minute"
+   },
+   "how_to_use_tab": {
+      "message": "Wie verwende ich den Tab-Scheduler?"
+   },
+   "import": {
+      "message": "Import"
+   },
+   "importClsTbDta": {
+      "message": "Daten zum Schließen von Tabs importieren"
+   },
+   "importExport": {
+      "message": "Importieren/Exportieren"
+   },
+   "importOpenTbDt": {
+      "message": "Geöffnete Tab-Daten importieren"
+   },
+   "importedRecored": {
+      "message": ", importiert aufgezeichnet"
+   },
+   "inactivateScheduleTab": {
+      "message": "Geplante Registerkarte deaktivieren."
+   },
+   "inactive": {
+      "message": "Inaktiv"
+   },
+   "inactiveSch": {
+      "message": "8.Inaktive URL"
+   },
+   "inactiveSchExm1": {
+      "message": "Im obigen Beispiel befindet sich die angegebene URL in einem geöffneten oder geschlossenen Tab. Dies bedeutet, dass die angegebene URL inaktiv ist und keine Aktion ausführt."
+   },
+   "inactiveThisScheduledTabs": {
+      "message": "Diesen geplanten Tab aktivieren"
+   },
+   "invalidDuplicate": {
+      "message": ", doppelte oder ungültige Einträge"
+   },
+   "invldLicKy": {
+      "message": "Ungültiger Lizenzschlüssel!"
+   },
+   "isClose": {
+      "message": "ist nah"
+   },
+   "isOpen": {
+      "message": "ist geöffnet"
+   },
+   "january": {
+      "message": "Januar"
+   },
+   "july": {
+      "message": "Juli"
+   },
+   "june": {
+      "message": "Juni"
+   },
+   "licKeyDis": {
+      "message": "Dieser Lizenzschlüssel ist deaktiviert."
+   },
+   "listTitle": {
+      "message": "Registerkarte „Planer“"
+   },
+   "loading": {
+      "message": "Bitte warten..."
+   },
+   "locale": {
+      "message": "de"
+   },
+   "march": {
+      "message": "Marsch"
+   },
+   "maxSchedule": {
+      "message": "4 Maximale Zeitplangrenze"
+   },
+   "may": {
+      "message": "Mai"
+   },
+   "mintValid": {
+      "message": "Mindestens 1 Minute erforderlich"
+   },
+   "minute": {
+      "message": "Minute"
+   },
+   "minutesNotLessThan1": {
+      "message": "Die Anzahl der Minuten sollte nicht weniger als 1 betragen."
+   },
+   "monday": {
+      "message": "Montag"
+   },
+   "month": {
+      "message": "Monat"
+   },
+   "monthly": {
+      "message": "Monatlich"
+   },
+   "more": {
+      "message": "mehr"
+   },
+   "mostSubscribe": {
+      "message": "Die meisten abonnieren"
+   },
+   "no": {
+      "message": "NEIN"
+   },
+   "noDataToExport": {
+      "message": "Keine Daten zum Exportieren."
+   },
+   "noScheduledTabs": {
+      "message": "Keine geplanten Tabs"
+   },
+   "noTimerSetAddNewTimer": {
+      "message": "Kein Timer eingestellt. Klicken Sie auf die Schaltfläche „Hinzufügen“, um einen neuen Timer einzustellen."
+   },
+   "not_show_tutorial": {
+      "message": "Dieses Tutorial nicht mehr anzeigen"
+   },
+   "notificationOpenTab": {
+      "message": "13. Benachrichtigung beim Öffnen/Schließen der Registerkarten-URL"
+   },
+   "notificationOpenTabExm1": {
+      "message": "Im obigen Beispiel befindet sich die angegebene URL in einer geöffneten Registerkarte. Dies bedeutet, dass alle 5 Minuten eine Benachrichtigung erfolgt und die URL in einer neuen Registerkarte geöffnet/geschlossen wird."
+   },
+   "notifications": {
+      "message": "Benachrichtigung"
+   },
+   "november": {
+      "message": "November"
+   },
+   "october": {
+      "message": "Oktober"
+   },
+   "onTheExtensionDetailPage": {
+      "message": "Scrollen Sie auf der Detailseite der Erweiterung nach unten und suchen Sie die Option „Im Inkognitomodus zulassen“."
+   },
+   "oneTime": {
+      "message": "Einmalig"
+   },
+   "oneTmSch": {
+      "message": "1.Einmaliger Zeitplan"
+   },
+   "oneTmSchExm1": {
+      "message": "Im obigen Beispiel befindet sich die angegebene URL in einem geöffneten Tab. Dies bedeutet, dass sie am 21.01.2023 um 13:45 Uhr einmalig in einem neuen Tab geöffnet wird."
+   },
+   "oneTmSchExm2": {
+      "message": "Im obigen Beispiel befindet sich die angegebene URL in einem geschlossenen Tab. Dies bedeutet, dass alle Tabs mit den entsprechenden URLs am 21.01.2023 um 13:45 Uhr geschlossen werden."
+   },
+   "open": {
+      "message": "Offen"
+   },
+   "openBackground": {
+      "message": "Wenn ja, wird eine URL im Hintergrund geladen, ohne sie in einem neuen Tab zu öffnen."
+   },
+   "openDate": {
+      "message": "Offenes Datum"
+   },
+   "openDay": {
+      "message": "Tag der offenen Tür"
+   },
+   "openEveryDayOn": {
+      "message": "Täglich geöffnet am"
+   },
+   "openEveryMonthOn": {
+      "message": "Geöffnet jeden Monat an einem Tag"
+   },
+   "openEveryWeekOn": {
+      "message": "Geöffnet jede Woche am"
+   },
+   "openEveryYearOn": {
+      "message": "Geöffnet jedes Jahr am"
+   },
+   "openGoogleChrome": {
+      "message": "Öffnen Sie Google Chrome."
+   },
+   "openInBackground": {
+      "message": "URL im Hintergrund öffnen"
+   },
+   "openInEvery": {
+      "message": "Offen in jeder"
+   },
+   "openInIncognito": {
+      "message": "Im Inkognito-Modus öffnen"
+   },
+   "openMinute": {
+      "message": "Offene Minute"
+   },
+   "openOnDay": {
+      "message": "Geöffnet am Tag"
+   },
+   "openOnEvery": {
+      "message": "Geöffnet jeden"
+   },
+   "openSecond": {
+      "message": "Offene Sekunde"
+   },
+   "openSecondsMoreThan5": {
+      "message": "Die Anzahl der offenen Sekunden sollte über 5 liegen."
+   },
+   "openTabSchedule": {
+      "message": "Registerkarte „Zeitplan“ öffnen"
+   },
+   "openTabURL": {
+      "message": "Öffnen Sie die Tab-URL"
+   },
+   "openTime": {
+      "message": "Offene Zeit"
+   },
+   "openUrl": {
+      "message": "Website-Link öffnen"
+   },
+   "openWeek": {
+      "message": "Offene Woche"
+   },
+   "openWeeks": {
+      "message": "Offene Wochen"
+   },
+   "open_on": {
+      "message": "Geöffnet am"
+   },
+   "optional": {
+      "message": "Optional"
+   },
+   "or": {
+      "message": "oder"
+   },
+   "outof": {
+      "message": "von"
+   },
+   "pagePath": {
+      "message": "Seitenpfad"
+   },
+   "paidFeature": {
+      "message": "Kostenpflichtige Funktion"
+   },
+   "pauseSchedule": {
+      "message": "Alle Zeitpläne starten oder stoppen"
+   },
+   "pauseTabScheduler": {
+      "message": "Planer für pausierte Tabs"
+   },
+   "pleaseAllowIncognitoMessage": {
+      "message": "Bitte aktivieren Sie die Option „Im Inkognitomodus zulassen“ in den Erweiterungsdetails. Anweisungen dazu finden Sie auf der Tutorial-Seite."
+   },
+   "pleaseShareYourSuggestions": {
+      "message": "Bitte teilen Sie uns Ihren Vorschlag mit."
+   },
+   "plsShreAnySugWithUs": {
+      "message": "Bitte machen Sie uns einen Verbesserungsvorschlag"
+   },
+   "powerMode": {
+      "message": "Power-Modus"
+   },
+   "premium": {
+      "message": "Prämie"
+   },
+   "pricePlan": {
+      "message": "Preise und Pläne"
+   },
+   "privcyPolicy": {
+      "message": "Datenschutzrichtlinie"
+   },
+   "prowerModeTip": {
+      "message": "Halten Sie das System immer aktiv, indem Sie den Power-Modus aktivieren"
+   },
+   "put": {
+      "message": "Setzen"
+   },
+   "rateUs": {
+      "message": "Bewerten Sie uns"
+   },
+   "removeDuplicateEntry": {
+      "message": "Bitte doppelten Eintrag entfernen"
+   },
+   "removeOpenTbURL": {
+      "message": "URL des geöffneten Tabs entfernen"
+   },
+   "repeat": {
+      "message": "Wiederholen"
+   },
+   "requiredMsg": {
+      "message": "Erforderlich"
+   },
+   "rmvClsTb": {
+      "message": "URL zum Schließen des Tabs entfernen"
+   },
+   "sameTabs": {
+      "message": "Tab aktualisieren, wenn die URL bereits geöffnet ist"
+   },
+   "sameTabsInfo": {
+      "message": "Verhindern Sie das Öffnen mehrerer Tabs für dieselbe URL. Wenn beispielsweise www.google.com bereits geöffnet ist, wird dieser vorhandene Tab aktualisiert, anstatt einen neuen Tab dafür zu öffnen."
+   },
+   "sampleCsvOpenPath": {
+      "message": "../sample_csv/en/open_tab_sample.csv"
+   },
+   "sampleFile": {
+      "message": "Beispieldatei"
+   },
+   "saturday": {
+      "message": "Samstag"
+   },
+   "savOpnData": {
+      "message": "Geöffnete Tab-Daten speichern"
+   },
+   "save": {
+      "message": "Speichern"
+   },
+   "saveClsTbData": {
+      "message": "Daten zum Schließen von Tabs speichern"
+   },
+   "saveSchedule": {
+      "message": "Zeitplan speichern"
+   },
+   "scheduleCloseTab": {
+      "message": "Zeitplan Tab schließen"
+   },
+   "scheduleCurrentTab": {
+      "message": "Aktuelle Registerkarte planen"
+   },
+   "scheduleOpenTab": {
+      "message": "Zeitplan – Registerkarte „Öffnen“"
+   },
+   "scheduledTabIsAlreadyExistWithSameTimer": {
+      "message": "Diese geplante Registerkarte mit demselben Timer existiert bereits."
+   },
+   "scheduledTabList": {
+      "message": "Geplante Registerkartenliste"
+   },
+   "scheduledType": {
+      "message": "Zeitplantyp"
+   },
+   "search": {
+      "message": "Suchen"
+   },
+   "secValid": {
+      "message": "Mindestens 5 Sekunden sind erforderlich"
+   },
+   "second": {
+      "message": "Zweite"
+   },
+   "selectCloseDate": {
+      "message": "Schließendatum auswählen"
+   },
+   "selectCloseDay": {
+      "message": "Schließtag auswählen"
+   },
+   "selectCloseTime": {
+      "message": "Schließzeit auswählen"
+   },
+   "selectColumn": {
+      "message": "Spalte auswählen"
+   },
+   "selectDateAndTime": {
+      "message": "Wählen Sie Datum und Uhrzeit zum Öffnen einer neuen Registerkarte aus"
+   },
+   "selectDateAndTimeClsTb": {
+      "message": "Wählen Sie Datum und Uhrzeit zum Schließen der Registerkarte aus"
+   },
+   "selectDayToCloseSchTb": {
+      "message": "Wählen Sie den Tag aus, an dem die Registerkarte „Zeitplan“ geschlossen werden soll."
+   },
+   "selectDayToClsTb": {
+      "message": "Tag zum Schließen der Registerkarte auswählen"
+   },
+   "selectDayToSchdule": {
+      "message": "Wählen Sie den Tag für die Planungsregisterkarte aus."
+   },
+   "selectDaysInWeek": {
+      "message": "Tage in der Woche auswählen"
+   },
+   "selectDaysInWeekIClsTime": {
+      "message": "Wählen Sie im Schließtimer Wochentage aus."
+   },
+   "selectDaysInWeekIOpClsTime": {
+      "message": "Wählen Sie im Öffnungs- oder Schließtimer Wochentage aus."
+   },
+   "selectDaysInWeekIOpTime": {
+      "message": "Wählen Sie im offenen Timer Wochentage aus."
+   },
+   "selectFrequency": {
+      "message": "Frequenz auswählen"
+   },
+   "selectFrequencyOfScheduleUrl": {
+      "message": "Wählen Sie die Häufigkeit der geplanten URL aus."
+   },
+   "selectOpenDate": {
+      "message": "Wählen Sie ein offenes Datum"
+   },
+   "selectOpenDay": {
+      "message": "Tag der offenen Tür auswählen"
+   },
+   "selectOpenOrClose": {
+      "message": "Wählen Sie Öffnungs- und Schließzeit"
+   },
+   "selectOpenOrCloseDate": {
+      "message": "Wählen Sie das Eröffnungs- und Schlussdatum"
+   },
+   "selectOpenOrCloseDay": {
+      "message": "Öffnungs- und Schließtag auswählen"
+   },
+   "selectOpenTime": {
+      "message": "Offene Zeit auswählen"
+   },
+   "selectPreferredLanguage": {
+      "message": "Wählen Sie Ihre bevorzugte Sprache."
+   },
+   "selectToOpenTab": {
+      "message": "Tag zum Öffnen einer neuen Registerkarte auswählen"
+   },
+   "selectTypTimerClsTb": {
+      "message": "Wählen Sie den Timertyp zum Schließen der Registerkarte aus"
+   },
+   "selectTypeOfSchedule": {
+      "message": "Wählen Sie den Zeitplantyp aus. Wenn Sie sowohl öffnen als auch schließen möchten, wählen Sie „Beides“ aus."
+   },
+   "selectTypeOfTimer": {
+      "message": "Wählen Sie den Timertyp zum Öffnen einer neuen Registerkarte aus"
+   },
+   "select_weeks": {
+      "message": "Wochen auswählen"
+   },
+   "september": {
+      "message": "September"
+   },
+   "settingSave": {
+      "message": "Einstellungen erfolgreich gespeichert"
+   },
+   "settingToClose": {
+      "message": "Einstellung zum Schließen des Tabs im Inkognito-Modus."
+   },
+   "shareYourSuggestionWithUs": {
+      "message": "Teilen Sie uns Ihre Vorschläge mit."
+   },
+   "slectDayToScheduleWeekly": {
+      "message": "Wählen Sie Tage aus, an denen die Registerkarte wöchentlich geplant werden soll."
+   },
+   "slectMinute": {
+      "message": "Minute auswählen"
+   },
+   "smthngWrng": {
+      "message": "Da ist etwas schiefgelaufen"
+   },
+   "softpulseInfotech": {
+      "message": "Softpulse Infotech"
+   },
+   "somethingWentWrong": {
+      "message": "Etwas ist schiefgelaufen. Aktualisieren Sie die Seite und versuchen Sie es erneut."
+   },
+   "status": {
+      "message": "Status"
+   },
+   "subcrKeyShldNEmpt": {
+      "message": "Bitte geben Sie den Abonnementschlüssel ein."
+   },
+   "subdomain": {
+      "message": "Subdomäne"
+   },
+   "subkeyInputTitle": {
+      "message": "Abonnementschlüssel eingeben"
+   },
+   "submFeedBack": {
+      "message": "Einreichen"
+   },
+   "suggForTbSch": {
+      "message": "Vorschlag für den Tab-Scheduler"
+   },
+   "suggestionAndRateUs": {
+      "message": "Vorschlag &amp; Bewerten Sie uns"
+   },
+   "sunday": {
+      "message": "Sonntag"
+   },
+   "tabCloseOneTime": {
+      "message": "Tab wird nur einmal geschlossen auf"
+   },
+   "tabSchTutorial": {
+      "message": "Tab Scheduler-Tutorial"
+   },
+   "tabScheduler": {
+      "message": "Registerkarte „Planer“"
+   },
+   "tabSchedulerOptions": {
+      "message": "Registerkarte „Planeroptionen“"
+   },
+   "tabWillOpenOneTime": {
+      "message": "Tab wird nur einmal geöffnet auf"
+   },
+   "tabWillOpenWhenBrowserOpen": {
+      "message": "Tab öffnet sich, wenn Browser geöffnet wird auf"
+   },
+   "termCondition": {
+      "message": "Allgemeine Geschäftsbedingungen"
+   },
+   "thanksFrRev": {
+      "message": "Vielen Dank für Ihre Bewertung"
+   },
+   "thnkUFeedBack": {
+      "message": "Vielen Dank für Ihren Vorschlag"
+   },
+   "thnkUFrUsngTbSch": {
+      "message": "Bitte machen Sie uns einen Verbesserungsvorschlag"
+   },
+   "thursday": {
+      "message": "Donnerstag"
+   },
+   "time": {
+      "message": "Zeit"
+   },
+   "timeExpired": {
+      "message": "Zeit abgelaufen"
+   },
+   "timer": {
+      "message": "Timer"
+   },
+   "title": {
+      "message": "Titel"
+   },
+   "titleLengtWarn": {
+      "message": "Die Titellänge sollte 200 Zeichen nicht überschreiten."
+   },
+   "toScheduledOpenTbMsg": {
+      "message": "Um das Öffnen von Tabs zu planen, deaktivieren Sie bitte die URL-Filterung."
+   },
+   "toogleCloseTab": {
+      "message": "Starten/Stoppen Sie den geplanten Alarm für alle URLs zum Schließen von Tabs"
+   },
+   "toogleDarkmode": {
+      "message": "Wechseln Sie zwischen Dunkelmodus und Standardmodus, um Ihr Anzeigeerlebnis anzupassen."
+   },
+   "toogleOff": {
+      "message": "Aus"
+   },
+   "toogleOn": {
+      "message": "An"
+   },
+   "toogleOpenTab": {
+      "message": "Starten/Stoppen des geplanten Alarms für alle geöffneten Tab-URLs"
+   },
+   "topLevelDomain": {
+      "message": "Top-Level-Domain"
+   },
+   "totalProcessed": {
+      "message": "Insgesamt erfasste verarbeitete"
+   },
+   "tuesday": {
+      "message": "Dienstag"
+   },
+   "tutorialImg1": {
+      "message": "\u003Cimg src=\"../images/en/1.png\">"
+   },
+   "tutorialImg10": {
+      "message": "\u003Cimg src=\"../images/en/10.png\">"
+   },
+   "tutorialImg11": {
+      "message": "\u003Cimg src=\"../images/en/11.png\">"
+   },
+   "tutorialImg12": {
+      "message": "\u003Cimg src=\"../images/en/12.png\">"
+   },
+   "tutorialImg13": {
+      "message": "\u003Cimg src=\"../images/en/13.png\">"
+   },
+   "tutorialImg14": {
+      "message": "\u003Cimg src=\"../images/en/14.png\">"
+   },
+   "tutorialImg2": {
+      "message": "\u003Cimg src=\"../images/en/2.png\">"
+   },
+   "tutorialImg3": {
+      "message": "\u003Cimg src=\"../images/en/3.png\">"
+   },
+   "tutorialImg4": {
+      "message": "\u003Cimg src=\"../images/en/4.png\">"
+   },
+   "tutorialImg5": {
+      "message": "\u003Cimg src=\"../images/en/5.png\">"
+   },
+   "tutorialImg6": {
+      "message": "\u003Cimg src=\"../images/en/6.png\">"
+   },
+   "tutorialImg7": {
+      "message": "\u003Cimg src=\"../images/en/7.png\">"
+   },
+   "tutorialImg8": {
+      "message": "\u003Cimg src=\"../images/en/8.png\">"
+   },
+   "tutorialImg9": {
+      "message": "\u003Cimg src=\"../images/en/9.png\">"
+   },
+   "uncheckAll": {
+      "message": "Alle abwählen"
+   },
+   "unlimitedSchedule": {
+      "message": "Unbegrenztes Zeitplanlimit"
+   },
+   "unspecifiedURL": {
+      "message": "11. URL nicht angegebener Pfad"
+   },
+   "unspecifiedURLExm1": {
+      "message": "Im obigen Beispiel befindet sich die angegebene URL in einem geschlossenen Tab. Dies bedeutet, dass die angegebene URL, die in einem neuen Tab geöffnet wird und mit einer unbekannten Webadresse beginnt und endet, nach 5 Minuten geschlossen wird."
+   },
+   "upgradePlan": {
+      "message": "Bitte kaufen Sie den Plan ODER melden Sie sich an und aktualisieren Sie Ihren Plan, um weitere Funktionen freizuschalten."
+   },
+   "upgradePlanUnlock": {
+      "message": "Aktualisieren Sie Ihren Plan, um weitere Funktionen freizuschalten."
+   },
+   "uploadValidFormat": {
+      "message": "Bitte laden Sie ein gültiges Format hoch"
+   },
+   "url": {
+      "message": "URL"
+   },
+   "urlContExat": {
+      "message": "URL-Filterung"
+   },
+   "urlEndWithUnspesifiedPth": {
+      "message": "9. URL endet mit nicht angegebenem Pfad"
+   },
+   "urlEndWithUnspesifiedPthExm1": {
+      "message": "Im obigen Beispiel befindet sich die angegebene URL in einem geschlossenen Tab. Dies bedeutet, dass die angegebene URL, die in einem neuen Tab geöffnet wurde und mit einem unbekannten Pfad endet, nach 5 Minuten geschlossen wird."
+   },
+   "urlFilterInfo": {
+      "message": "Enthält die zu prüfende URL, die nur einen Teil der URL benötigt, und die zu prüfende genaue URL muss genau mit der angegebenen URL übereinstimmen."
+   },
+   "urlFilterinCLoseTb": {
+      "message": "14. URL-Filterung beim Schließen der Registerkarte-URL"
+   },
+   "urlFilterinCLoseTbExample": {
+      "message": "Im obigen Beispiel befindet sich die angegebene URL in einem geschlossenen Tab, was bedeutet, dass die bereits geöffnete Tab-URL mit einem Teil der angegebenen URL übereinstimmt, sodass dieser Tab geschlossen wird"
+   },
+   "urlIsRequired": {
+      "message": "Website-Link ist erforderlich"
+   },
+   "urlNotvalid": {
+      "message": "Die URL ist ungültig"
+   },
+   "urlStartWithUnspesifiedPth": {
+      "message": "10. URL beginnt mit nicht angegebenem Pfad"
+   },
+   "urlStartWithUnspesifiedPthExm1": {
+      "message": "Im obigen Beispiel befindet sich die angegebene URL in einem geschlossenen Tab. Dies bedeutet, dass die angegebene URL, die in einem neuen Tab geöffnet wurde und mit einer unbekannten Subdomäne \u003Cb>„www“\u003C/b> oder \u003Cb>„Blog“\u003C/b> beginnt, nach 5 Minuten geschlossen wird."
+   },
+   "useSpecificUrl": {
+      "message": "Bestimmten Website-Link verwenden"
+   },
+   "useSpecificUrl1": {
+      "message": "Sie müssen die genaue Subdomäne, Top-Level-Domäne, den Domänennamen und den Seitenpfad in das Feld „Website-Link“ in der Registerkarte des geschlossenen Browsers geschrieben haben."
+   },
+   "useSpecificUrl2": {
+      "message": "Alle Browser-Tabs schließen"
+   },
+   "useSpecificUrl3": {
+      "message": "Verwenden Sie einen spezifischen und vollständigen Website-Link"
+   },
+   "useUnSpecificUrl1": {
+      "message": "Nicht angegebenen Website-Link verwenden"
+   },
+   "useUnSpecificUrl2": {
+      "message": "Verwenden Sie „Start mit nicht angegebenem Website-Link“"
+   },
+   "useUnSpecificUrl3": {
+      "message": "Verwendung endet mit nicht angegebenem Website-Link"
+   },
+   "used": {
+      "message": "Sie verwendeten"
+   },
+   "validFormatCsv": {
+      "message": "Was ist das gültige CSV-Dateiformat für den Import?"
+   },
+   "websiteLink": {
+      "message": "Website-Link"
+   },
+   "websiteUrl": {
+      "message": "Website-URL"
+   },
+   "wednesday": {
+      "message": "Mittwoch"
+   },
+   "weekName": {
+      "message": "Wochenname"
+   },
+   "weekly": {
+      "message": "Wöchentlich"
+   },
+   "whenExtensionTabAppears": {
+      "message": "Wenn die Registerkarte „Erweiterungen“ angezeigt wird, suchen Sie den „Tab-Scheduler mit automatischem Öffnen und Schließen“, um ihn im Inkognito-Modus zu aktivieren, und klicken Sie daneben auf die Schaltfläche „Details“."
+   },
+   "whenMenuPopup": {
+      "message": "Wenn ein Menü erscheint, wählen Sie „Erweiterungen verwalten“."
+   },
+   "withSignMustFill": {
+      "message": "Mit \u003Cspan>*\u003C/span> -Zeichen muss es ausgefüllt oder ausgewählt werden. Wählen Sie entweder die Öffnungszeit oder die Schließzeit oder beide Zeiten aus."
+   },
+   "writeYourDescriptionAboutSchUrl": {
+      "message": "Schreiben Sie hier Ihre Beschreibung zur geplanten URL."
+   },
+   "yes": {
+      "message": "Ja"
+   },
+   "yourEmailAddress": {
+      "message": "Ihre E-Mail-Adresse"
+   },
+   "yourScheduleUrl": {
+      "message": "Ihre Zeitplan-URL"
+   }
+}

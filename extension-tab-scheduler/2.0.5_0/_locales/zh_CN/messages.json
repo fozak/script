@@ -1,0 +1,1442 @@
+{
+   "10_min": {
+      "message": "10 分钟"
+   },
+   "1_min": {
+      "message": "1 分钟"
+   },
+   "30_min": {
+      "message": "30 分钟"
+   },
+   "5_min": {
+      "message": "5 分钟"
+   },
+   "60_min": {
+      "message": "小时"
+   },
+   "Dashboard": {
+      "message": "仪表板"
+   },
+   "Login": {
+      "message": "登录"
+   },
+   "Off": {
+      "message": "离开"
+   },
+   "On": {
+      "message": "在"
+   },
+   "Selected": {
+      "message": "选定"
+   },
+   "Settings": {
+      "message": "设置"
+   },
+   "Tutorial": {
+      "message": "教程"
+   },
+   "action": {
+      "message": "行动"
+   },
+   "activateScheduleTab": {
+      "message": "激活预定标签。"
+   },
+   "active": {
+      "message": "积极的"
+   },
+   "activeAllScheduleTab": {
+      "message": "激活所有计划选项卡"
+   },
+   "activeStatus": {
+      "message": "地位"
+   },
+   "actvInactvNotification": {
+      "message": "打开计划选项卡时显示通知"
+   },
+   "actvInactvOpnTb": {
+      "message": "活动或非活动打开的标签页"
+   },
+   "actvIntvClsTb": {
+      "message": "活动或非活动关闭标签页"
+   },
+   "add": {
+      "message": "添加"
+   },
+   "addDescription": {
+      "message": "添加描述"
+   },
+   "addNew": {
+      "message": "添加新"
+   },
+   "addNewURlCls": {
+      "message": "添加新 URL 以关闭"
+   },
+   "addNewUrlToOpen": {
+      "message": "添加新 URL 以在新窗口中打开"
+   },
+   "addTitle": {
+      "message": "添加标题"
+   },
+   "addWebsite": {
+      "message": "添加网站"
+   },
+   "all": {
+      "message": "全部"
+   },
+   "allInputFieldReq": {
+      "message": "所有字段均为必填项"
+   },
+   "all_weeks": {
+      "message": "整周"
+   },
+   "alreadyPurchase": {
+      "message": "已购买？在此输入密钥"
+   },
+   "andAt": {
+      "message": "以及"
+   },
+   "annually": {
+      "message": "每年"
+   },
+   "appDesc": {
+      "message": "浏览器选项卡将在选定的时间自动打开和关闭。用户可以根据需要激活/停用列表"
+   },
+   "appName": {
+      "message": "具有自动打开和关闭功能的选项卡调度程序"
+   },
+   "april": {
+      "message": "四月"
+   },
+   "at": {
+      "message": "在"
+   },
+   "august": {
+      "message": "八月"
+   },
+   "autoFocus": {
+      "message": "自动对焦选项卡"
+   },
+   "autoFocustip": {
+      "message": "如果打开，新选项卡将以活动/焦点状态打开。"
+   },
+   "autofocustip": {
+      "message": "新打开的标签页将自动聚焦"
+   },
+   "basic": {
+      "message": "基本的"
+   },
+   "billedAnnyally": {
+      "message": "每年计费"
+   },
+   "billedMonthly": {
+      "message": "按月计费"
+   },
+   "both": {
+      "message": "两个都"
+   },
+   "browserOpen": {
+      "message": "在浏览器打开时"
+   },
+   "browserWebAddress": {
+      "message": "浏览器的网址以未知的网址开头和结尾。请在输入网站链接字段的两侧加上\u003Cb>* 。\u003C/b>"
+   },
+   "browserWebAddress2": {
+      "message": "浏览器的网址包含域名 google.com，无论子域名和页面路径如何，该网址都会在给定的分钟内关闭。在域名和 TLD 两侧都加上\u003Cb>*\u003C/b>"
+   },
+   "browserWebAddress3": {
+      "message": "浏览器的网址以未知域名开头，以未知页面路径结尾"
+   },
+   "browserWebAddress31": {
+      "message": "将在给定分钟数后关闭，在 TLD 的两侧加上\u003Cb>*\u003C/b>"
+   },
+   "browserWebAddress4": {
+      "message": "浏览器的网址以未知的网址开头。在 URL 开头添加\u003Cb>*\u003C/b>。请记住，浏览器的网址必须与您输入的\u003Cb>*后的 URL 相匹配。\u003C/b>"
+   },
+   "browserWebAddress41": {
+      "message": "浏览器的网址以未知的子域名开头"
+   },
+   "browserWebAddress42": {
+      "message": "在您的网站链接的开头"
+   },
+   "browserWebAddress5": {
+      "message": "浏览器的网址以未知网址结尾。在 URL 末尾添加\u003Cb>*\u003C/b> 。请记住，您的网址必须在您输入的\u003Cb>*之前匹配。\u003C/b>"
+   },
+   "browserWebAddress51": {
+      "message": "浏览器的网址以未知的页面路径结尾。在网址末尾添加\u003Cb>*\u003C/b>"
+   },
+   "browserWebAddress6": {
+      "message": "只需在网址字段中输入\u003Cb>*即可关闭所有浏览器选项卡。关闭后，所有选项卡浏览器将自动关闭。\u003C/b>"
+   },
+   "browserWebAddress7": {
+      "message": "您必须在浏览器选项卡中打开的 URL 字段中写入准确的子域、顶级域、域名和页面路径。"
+   },
+   "browserWebAddress8": {
+      "message": "您可以在特定日期和时间、特定月份、特定星期、特定年份和重复时间打开网址"
+   },
+   "buyPlan": {
+      "message": "购买计划"
+   },
+   "buycofee": {
+      "message": "给我买杯咖啡"
+   },
+   "cancel": {
+      "message": "取消"
+   },
+   "changeLanguage": {
+      "message": "更改语言"
+   },
+   "checkAll": {
+      "message": "检查全部"
+   },
+   "checkThisOpToPreventClosePinTb": {
+      "message": "勾选此选项可以防止关闭固定的标签页。"
+   },
+   "checkThisOptionOnlyPartOfUrlMtch": {
+      "message": "如果仅需匹配 URL 的一部分，请勾选此选项。"
+   },
+   "checkThisOptionToActivate": {
+      "message": "勾选此选项可以激活或停用您的预定 URL。"
+   },
+   "checkThisOptionToCloseOnly": {
+      "message": "勾选此选项可仅关闭隐身标签页。此外，在扩展程序详细信息中启用“隐身模式下允许”选项。有关说明，请参阅教程页面。"
+   },
+   "checkThisOptionToCloseOnlyInIncgnitoTb": {
+      "message": "勾选此选项可仅关闭隐身标签页。此外，在扩展程序详细信息中启用“隐身模式下允许”选项。有关说明，请参阅教程页面。"
+   },
+   "checkThisOptionToInBg": {
+      "message": "如果您想在后台打开 URL 而不是在新选项卡中打开，请勾选此选项"
+   },
+   "checkThisOptionToInactivNotification": {
+      "message": "勾选此选项可停用计划 URL 上的通知"
+   },
+   "checkThisOptionToOpen": {
+      "message": "如果您想以隐身模式打开您的网址，请勾选此选项"
+   },
+   "checkThisOptionToOpenIncogito": {
+      "message": "如果您想以隐身模式打开您的网址，请勾选此选项"
+   },
+   "checkThisOptionToPrevent": {
+      "message": "勾选此选项可以防止关闭固定的标签页。"
+   },
+   "clickExtIcon": {
+      "message": "单击工具栏中的“扩展”图标，它看起来像一个拼图碎片。"
+   },
+   "clickTheSwitch": {
+      "message": "点击旁边的开关将其打开"
+   },
+   "close": {
+      "message": "关闭"
+   },
+   "closeAllTab": {
+      "message": "12. 关闭所有浏览器标签"
+   },
+   "closeAllTabExm1": {
+      "message": "上例中给出的 URL 处于关闭标签页状态，表示将于 2023 年 2 月 25 日 12:00 关闭所有标签页"
+   },
+   "closeDate": {
+      "message": "截止日期"
+   },
+   "closeDay": {
+      "message": "休市日"
+   },
+   "closeEveryYear": {
+      "message": "每年关闭"
+   },
+   "closeInEvery": {
+      "message": "关闭每一个"
+   },
+   "closeIncognitoTab": {
+      "message": "仅关闭隐身标签页"
+   },
+   "closeMinute": {
+      "message": "接近一分钟"
+   },
+   "closeOnDay": {
+      "message": "当天关闭"
+   },
+   "closeOnEvery": {
+      "message": "关闭每一个"
+   },
+   "closeOnEveryDay": {
+      "message": "每天关闭"
+   },
+   "closeOnEveryMonth": {
+      "message": "每月日关闭"
+   },
+   "closeOnEveryWeek": {
+      "message": "每周关闭"
+   },
+   "closeSecond": {
+      "message": "紧随其后"
+   },
+   "closeSeconsMoreThan5": {
+      "message": "接近秒数应大于5。"
+   },
+   "closeTabSchedule": {
+      "message": "关闭标签时间表"
+   },
+   "closeTabURL": {
+      "message": "关闭标签页网址"
+   },
+   "closeTime": {
+      "message": "关闭时间"
+   },
+   "closeUrl": {
+      "message": "关闭网站链接"
+   },
+   "closeWeek": {
+      "message": "关闭一周"
+   },
+   "closeWeeks": {
+      "message": "关闭几周"
+   },
+   "close_on": {
+      "message": "关闭"
+   },
+   "cngrtsForSubcr": {
+      "message": "恭喜！您的计划已成功激活。"
+   },
+   "commonQuestionsAns": {
+      "message": "常见问题和解答"
+   },
+   "copySucessClose": {
+      "message": "关闭标签页 URL 数据已复制到打开标签页 URL 数据"
+   },
+   "createNewTimer": {
+      "message": "创建新计时器"
+   },
+   "currentPlan": {
+      "message": "当前计划"
+   },
+   "currentTabSchedule": {
+      "message": "当前标签页计划"
+   },
+   "currentTbScheduleTimer": {
+      "message": "当前标签页预定的计时器。"
+   },
+   "cusSec": {
+      "message": "定制第二"
+   },
+   "custMin": {
+      "message": "自定义分钟"
+   },
+   "custmMinSch": {
+      "message": "7.自定义分钟计划"
+   },
+   "custmMinSchExm1": {
+      "message": "在上面的例子中，给定的 URL 位于打开的选项卡中，它表明给定的 URL 每 15 分钟在新选项卡中打开一次。"
+   },
+   "custmMinSchExm2": {
+      "message": "在上面的例子中，给定的 URL 处于关闭选项卡中，这表明在新选项卡中打开的给定 URL 将在 15 分钟后关闭。"
+   },
+   "customSecondWarning": {
+      "message": "自定义秒功能是实验性的，如果秒数设置低于 60，它可能无法正常运行。"
+   },
+   "darkMode": {
+      "message": "暗黑模式"
+   },
+   "datNotCopy": {
+      "message": "由于 URL 无效，某些数据未被复制。"
+   },
+   "dataSaved": {
+      "message": "定时器数据保存成功"
+   },
+   "date": {
+      "message": "日期"
+   },
+   "dateIsOutOfRange": {
+      "message": "日期超出范围"
+   },
+   "day": {
+      "message": "天"
+   },
+   "december": {
+      "message": "十二月"
+   },
+   "delete": {
+      "message": "删除"
+   },
+   "deleteScheduleTb": {
+      "message": "删除预定的标签。"
+   },
+   "description": {
+      "message": "描述"
+   },
+   "developedBy": {
+      "message": "开发者："
+   },
+   "doNotCloseInPinnedTabs": {
+      "message": "不要关闭固定标签页"
+   },
+   "doNotShowNotification": {
+      "message": "不显示通知"
+   },
+   "domainName": {
+      "message": "域名"
+   },
+   "downloadCloseTbSampleCsv": {
+      "message": "下载关闭标签示例 CSV 以查看所需格式的示例"
+   },
+   "downloadOpenTbSampleCsv": {
+      "message": "下载打开的标签页示例 CSV 以查看所需格式的示例"
+   },
+   "editScheduleTb": {
+      "message": "编辑计划选项卡。"
+   },
+   "email": {
+      "message": "电子邮件"
+   },
+   "enterDateToCloseTab": {
+      "message": "在此处输入日期以关闭日程表选项卡。"
+   },
+   "enterDateToOpen": {
+      "message": "输入日期以打开时间表选项卡。"
+   },
+   "enterMiniutesToCloseTb": {
+      "message": "输入分钟数来关闭标签。"
+   },
+   "enterMiniutesToOpen": {
+      "message": "输入分钟数来打开时间表选项卡。"
+   },
+   "enterMinute": {
+      "message": "输入分钟"
+   },
+   "enterSecond": {
+      "message": "输入第二个"
+   },
+   "enterSecondsToCloseTab": {
+      "message": "输入秒数来关闭标签。"
+   },
+   "enterSecondsToOpen": {
+      "message": "输入秒数来打开计划选项卡。"
+   },
+   "enterTilteOfScheduleUrl": {
+      "message": "输入预定 URL 的标题。"
+   },
+   "enterTimeToCloseTab": {
+      "message": "在此处输入时间以关闭日程安排选项卡。"
+   },
+   "enterTimeToSchedule": {
+      "message": "输入时间以打开时间表选项卡。"
+   },
+   "enterValidEmail": {
+      "message": "请输入有效的电子邮件"
+   },
+   "enterValidUrl": {
+      "message": "请输入有效的 URL"
+   },
+   "enterValueInCloseSec": {
+      "message": "在几秒内输入值"
+   },
+   "enterValueInOpenCloseSec": {
+      "message": "输入打开或关闭的秒数"
+   },
+   "enterValueInOpenMinutes": {
+      "message": "输入开放分钟数的值"
+   },
+   "enterVlaueInCloseMinutes": {
+      "message": "在几分钟内输入价值"
+   },
+   "enterVlaueInOpenCloseMin": {
+      "message": "输入开盘或收盘分钟数"
+   },
+   "enterVlaueInOpenSeconds": {
+      "message": "输入开放秒数的值"
+   },
+   "enterYourURLToSchedule": {
+      "message": "输入您的 URL 进行安排。"
+   },
+   "every": {
+      "message": "每一个"
+   },
+   "every10Min": {
+      "message": "每 10 分钟"
+   },
+   "every1Minute": {
+      "message": "每 1 分钟"
+   },
+   "every30Min": {
+      "message": "每 30 分钟"
+   },
+   "every5Min": {
+      "message": "每 5 分钟"
+   },
+   "everyDay": {
+      "message": "每天"
+   },
+   "everyDayAt": {
+      "message": "每天"
+   },
+   "everyHour": {
+      "message": "每小时"
+   },
+   "everyMinute": {
+      "message": "每分钟"
+   },
+   "everyMonth": {
+      "message": "每月"
+   },
+   "everyMonthOn": {
+      "message": "每个月"
+   },
+   "everyMonthOnDay": {
+      "message": "每月某一天"
+   },
+   "everyWeek": {
+      "message": "每周"
+   },
+   "everyWeekOn": {
+      "message": "每周"
+   },
+   "everyYear": {
+      "message": "每年"
+   },
+   "everyYesrOn": {
+      "message": "每年"
+   },
+   "evr10MinSch": {
+      "message": "2.每10分钟时间表"
+   },
+   "evr10MinSchExm1": {
+      "message": "在上面的例子中，给定的 URL 位于打开的选项卡中，这表明给定的 URL 将每 10 分钟在新选项卡中打开一次。"
+   },
+   "evr10MinSchExm2": {
+      "message": "在上面的例子中，给定的 URL 处于关闭选项卡中，这表明在新选项卡中打开的给定 URL 将在 10 分钟后关闭。"
+   },
+   "evrDaySch": {
+      "message": "3.每日行程"
+   },
+   "evrDaySchExm1": {
+      "message": "在上面的例子中，给定的 URL 位于打开的选项卡中，这表明它将每天下午 5:27 在新选项卡中打开"
+   },
+   "evrDaySchExm2": {
+      "message": "上面的例子给出的 URL 位于关闭选项卡中，表示它将在每天下午 5:27 关闭已经打开的选项卡"
+   },
+   "evrMonthSch": {
+      "message": "5.每月日程安排"
+   },
+   "evrMonthSchExm1": {
+      "message": "在上面的例子中，给定的 URL 位于打开的选项卡中，表明它将在每个月第 25 天的 13:45 在新选项卡中打开"
+   },
+   "evrMonthSchExm2": {
+      "message": "在上面的例子中，给定的 URL 位于关闭选项卡中，这表明它将在每个月第 25 天的 13:45 关闭已打开的选项卡"
+   },
+   "evrWeekSch": {
+      "message": "4.每周日程安排"
+   },
+   "evrWeekSchExm1": {
+      "message": "在上面的例子中，给定的 URL 位于打开的选项卡中，这表明它将在每周\u003Cb>一和周二\u003C/b>的 17:00 在新选项卡中打开。"
+   },
+   "evrWeekSchExm2": {
+      "message": "在上面的例子中，给定的 URL 位于关闭标签页中，这表明它将在每周\u003Cb>一和周二\u003C/b>的 17:00 关闭已经打开的标签页。"
+   },
+   "evrWeekSchExm3": {
+      "message": "在上面的例子中，可以在周计时器中选择多天。"
+   },
+   "evrYearSch": {
+      "message": "6.每年日程安排"
+   },
+   "evrYearSchExm1": {
+      "message": "上面的例子中，给定的 URL 位于打开的选项卡中，表示它将每年 1 月 1 日 13:35 在新选项卡中打开"
+   },
+   "evrYearSchExm2": {
+      "message": "在上面的例子中，给定的 URL 处于关闭选项卡中，这表明它将在每年 1 月 1 日 13:35 关闭已经打开的选项卡"
+   },
+   "exampleSort": {
+      "message": "例如"
+   },
+   "exdMaxLim": {
+      "message": "超出允许的最大设备数量！"
+   },
+   "exmpOpnClsTbSch": {
+      "message": "如何在 Tab Scheduler 中打开和关闭选项卡的示例"
+   },
+   "expLicKy": {
+      "message": "此许可证密钥已过期。"
+   },
+   "export": {
+      "message": "出口"
+   },
+   "exportBefore": {
+      "message": "你有\u003Cexday>\u003C/exday>还剩几天，请订阅以继续享受高级功能"
+   },
+   "exportClsTbDta": {
+      "message": "导出关闭标签数据"
+   },
+   "exportOpenTbDt": {
+      "message": "导出打开的标签页数据"
+   },
+   "exportedData": {
+      "message": "计时器数据导出成功"
+   },
+   "extensionShouldAble": {
+      "message": "现在，该扩展程序应该能够在隐身模式下关闭标签页。"
+   },
+   "faq": {
+      "message": "常问问题"
+   },
+   "faq_1": {
+      "message": "什么是具有自动打开和关闭功能的标签调度程序？"
+   },
+   "faq_10": {
+      "message": "我如何查看我的预定标签？"
+   },
+   "faq_11": {
+      "message": "开市和关市时间都必须填写吗？"
+   },
+   "faq_12": {
+      "message": "自动聚焦选项卡、激活所有计划选项卡和电源模式的功能有什么作用？"
+   },
+   "faq_13": {
+      "message": "我可以在隐身标签中打开/关闭预定的网站链接吗？"
+   },
+   "faq_14": {
+      "message": "如果 URL 已经打开，那么“刷新”选项卡有什么用？"
+   },
+   "faq_2": {
+      "message": "网页链接有什么用处？"
+   },
+   "faq_3": {
+      "message": "如何使用 Tab Scheduler 安排 URL？"
+   },
+   "faq_4": {
+      "message": "‘在后台打开 URL’选项是什么？"
+   },
+   "faq_5": {
+      "message": "我可以阻止扩展程序关闭固定的标签吗？"
+   },
+   "faq_6": {
+      "message": "“两者”计划类型是什么意思？"
+   },
+   "faq_7": {
+      "message": "“URL 过滤”功能如何工作？"
+   },
+   "faq_8": {
+      "message": "我是否可以停用计划标签而不删除它？"
+   },
+   "faq_9": {
+      "message": "我会收到预定标签的通知吗？"
+   },
+   "faq_a_1": {
+      "message": "\u003Cp>具有自动打开和关闭功能的选项卡调度程序是一款浏览器扩展程序，它允许用户安排选项卡在设定的时间自动打开和关闭。用户可以选择一次性计划或设置具有各种频率选项的重复计划。此扩展程序为用户提供了多种用途，并提供了许多对您有用的功能。\u003C/p>"
+   },
+   "faq_a_10": {
+      "message": "所有计划的选项卡都显示在列表中，显示标题、网站链接、打开和关闭时间、状态以及您可以采取的操作（例如，激活、编辑、删除）。"
+   },
+   "faq_a_11": {
+      "message": "不，您可以安排开放时间或关闭时间。但是，您必须填写或选择标有星号 (*) 的必填字段。"
+   },
+   "faq_a_12": {
+      "message": "自动聚焦选项卡确保当计划选项卡打开时，激活所有计划选项卡可让您通过单击快速打开所有计划选项卡。超级模式通过更有效地管理浏览器资源来优化扩展程序的性能。"
+   },
+   "faq_a_13": {
+      "message": "是的，您可以选择在隐身模式下打开计划的标签页，方法是选择“在隐身模式下打开”选项。您可以选择仅关闭隐身标签页，方法是选择“仅关闭隐身标签页”，只要在扩展程序设置中启用了“在隐身模式下允许”即可"
+   },
+   "faq_a_14": {
+      "message": "启用此选项后，如果浏览器中已打开相同的 URL，扩展程序将自动刷新现有选项卡。这可防止打开重复的选项卡，并确保您始终加载最新版本的页面。"
+   },
+   "faq_a_14_1": {
+      "message": "如果您尝试打开 https://github.com/ 并且它已在另一个选项卡中打开，则扩展程序将简单地刷新该选项卡而不是打开新的选项卡。"
+   },
+   "faq_a_14_2": {
+      "message": "如果 https://github.com/ 已经在三个选项卡中打开，则扩展程序将刷新所有三个选项卡。"
+   },
+   "faq_a_2": {
+      "message": "网站链接是您的浏览器打开的标签网站地址。如何使用网站地址如下所述。"
+   },
+   "faq_a_3": {
+      "message": "要安排 URL，请输入网站链接，为安排添加标题，选择频率（一次、每分钟、每天等），然后选择打开和关闭时间。您还可以指定打开和关闭标签的日期、星期几或秒数。"
+   },
+   "faq_a_4": {
+      "message": "\u003Cp>此选项可让您完全控制在后台打开 URL 而不将新标签页置于焦点中。当您继续处理其他标签页时，URL 将静默打开。当您需要浏览器从预定的 URL 获取数据而不主动显示数据时（例如在 GET API 请求的情况下），此选项特别有用。\u003C/p>\u003Cbr> \u003Cp>例如，如果您想定期在设定的时间从 API 端点获取数据，则可以使用此高效选项在后台运行请求，而无需打开新的可见选项卡。\u003C/p>"
+   },
+   "faq_a_5": {
+      "message": "是的，有一个选项可以防止关闭固定标签页。选中“不关闭固定标签页”选项可确保这些标签页即使满足其他关闭条件仍保持打开状态。"
+   },
+   "faq_a_6": {
+      "message": "“两者”计划类型让您完全控制选项卡的打开和关闭时间，允许您为这两个操作设置特定的时间。"
+   },
+   "faq_a_7": {
+      "message": "URL 过滤可确保只需匹配 URL 的特定部分即可执行计划的操作。当您想根据部分 URL 匹配自动执行某些操作时，此功能非常有用。例如，如果您选中 URL https://example.com/page 的 URL 过滤选项，它也会应用于 https://example.com/page/123、https://example.com/page?query=example 和 https://subdomain.example.com/page 等 URL。"
+   },
+   "faq_a_8": {
+      "message": "通过“激活此计划选项卡”选项，您可以轻松激活或停用计划选项卡，让您可以灵活地管理您的计划而不会丢失配置。"
+   },
+   "faq_a_9": {
+      "message": "默认情况下，您会收到通知。但是，如果您希望停止通知，您可以勾选“不显示通知”选项来禁用通知。"
+   },
+   "february": {
+      "message": "二月"
+   },
+   "for_exp": {
+      "message": "例如"
+   },
+   "freeForever": {
+      "message": "永远免费"
+   },
+   "freeSchedule": {
+      "message": "自由安排"
+   },
+   "freeTral": {
+      "message": "作为尊贵的早期用户，您将享受\u003Crday>120\u003C/rday>在转换到我们的新付费计划之前，您可以免费访问几天 - 感谢您一直以来的支持！\u003Cp class=\"p-t-5\">你有\u003Cb>\u003Cspan>\u003C/span>\u003C/b>剩余天数\u003Crday>120\u003C/rday>天免费期。\u003Cafex class=\"warning\">\u003Cafex>\u003C/afex>\u003C/afex>\u003C/p> "
+   },
+   "frequentlyAskedQuestions": {
+      "message": "常见问题"
+   },
+   "friday": {
+      "message": "星期五"
+   },
+   "getThisPlan": {
+      "message": "获取此计划"
+   },
+   "goToSettingsPageToSchedule": {
+      "message": "进入设置页面，安排URL的打开和关闭。"
+   },
+   "goURL": {
+      "message": "转到 URL"
+   },
+   "helpAccordion12": {
+      "message": "此扩展在睡眠/挂起模式下有效吗？"
+   },
+   "helpAccordion3": {
+      "message": "我可以安排标签以隐身模式打开吗？"
+   },
+   "helpAccordion6": {
+      "message": "什么是“时间已到”？"
+   },
+   "helpAccordion7": {
+      "message": "我可以导出预定的 URL 吗？"
+   },
+   "helpAccordion8": {
+      "message": "我可以导入到计划 URL 吗？"
+   },
+   "helpPanelBodyDesc12First": {
+      "message": "不，此扩展程序在睡眠/挂起模式下无法工作。"
+   },
+   "helpPanelBodyDesc12Second": {
+      "message": "如果在打开或关闭选项卡中安排了任何 URL，那么您的电脑将不会自动进入睡眠或挂起模式。"
+   },
+   "helpPanelBodyDesc3": {
+      "message": "是的，您可以选择“以隐身模式打开”选项以隐身模式打开预定的标签页。请确保在浏览器的扩展程序设置中启用了扩展程序的“以隐身模式允许”选项。"
+   },
+   "helpPanelBodyDesc6": {
+      "message": "- 给定的日期和时间是从当前日期和时间开始的，然后会显示“时间已过”文本。"
+   },
+   "helpPanelBodyDesc7": {
+      "message": "是的，您可以以 csv 格式导出已安排的打开选项卡和关闭选项卡 URL，并将其与另一个系统一起使用以导入该 URL。"
+   },
+   "helpPanelBodyDesc8": {
+      "message": "是的，您可以以 csv 格式导入有效的打开和关闭 URL。导入的 csv 格式将在给定时间内自动安排"
+   },
+   "herAreStepsToAllow": {
+      "message": "以下是在 Google Chrome 中“允许隐身模式”的步骤："
+   },
+   "home": {
+      "message": "家"
+   },
+   "hour_minute_close": {
+      "message": "每小时接近一分钟"
+   },
+   "hour_minute_open": {
+      "message": "每小时开放分钟"
+   },
+   "how_to_use_tab": {
+      "message": "如何使用标签调度程序？"
+   },
+   "import": {
+      "message": "进口"
+   },
+   "importClsTbDta": {
+      "message": "导入关闭标签数据"
+   },
+   "importExport": {
+      "message": "导入/导出"
+   },
+   "importOpenTbDt": {
+      "message": "导入打开的标签页数据"
+   },
+   "importedRecored": {
+      "message": "，进口记录"
+   },
+   "inactivateScheduleTab": {
+      "message": "停用预定的选项卡。"
+   },
+   "inactive": {
+      "message": "不活跃"
+   },
+   "inactiveSch": {
+      "message": "8.无效的 URL"
+   },
+   "inactiveSchExm1": {
+      "message": "在上面的例子中，给定的 URL 处于打开选项卡或关闭选项卡中，这表明给定的 URL 处于非活动状态并且不会执行任何操作。"
+   },
+   "inactiveThisScheduledTabs": {
+      "message": "激活此计划选项卡"
+   },
+   "invalidDuplicate": {
+      "message": "、重复或无效记录"
+   },
+   "invldLicKy": {
+      "message": "许可证密钥无效！"
+   },
+   "isClose": {
+      "message": "很接近"
+   },
+   "isOpen": {
+      "message": "是开放的"
+   },
+   "january": {
+      "message": "一月"
+   },
+   "july": {
+      "message": "七月"
+   },
+   "june": {
+      "message": "六月"
+   },
+   "licKeyDis": {
+      "message": "此许可证密钥已被禁用。"
+   },
+   "listTitle": {
+      "message": "标签调度程序"
+   },
+   "loading": {
+      "message": "请稍等..."
+   },
+   "locale": {
+      "message": "英文"
+   },
+   "march": {
+      "message": "行进"
+   },
+   "maxSchedule": {
+      "message": "4 最大进度限制"
+   },
+   "may": {
+      "message": "可能"
+   },
+   "mintValid": {
+      "message": "至少需要 1 分钟"
+   },
+   "minute": {
+      "message": "分钟"
+   },
+   "minutesNotLessThan1": {
+      "message": "分钟不应少于1。"
+   },
+   "monday": {
+      "message": "周一"
+   },
+   "month": {
+      "message": "月"
+   },
+   "monthly": {
+      "message": "每月"
+   },
+   "more": {
+      "message": "更多的"
+   },
+   "mostSubscribe": {
+      "message": "最多订阅"
+   },
+   "no": {
+      "message": "不"
+   },
+   "noDataToExport": {
+      "message": "没有可导出的数据。"
+   },
+   "noScheduledTabs": {
+      "message": "没有预定的标签"
+   },
+   "noTimerSetAddNewTimer": {
+      "message": "未设置计时器，单击“添加”按钮设置新计时器"
+   },
+   "not_show_tutorial": {
+      "message": "不再显示此教程"
+   },
+   "notificationOpenTab": {
+      "message": "13. 打开/关闭标签页 URL 的通知"
+   },
+   "notificationOpenTabExm1": {
+      "message": "在上面的例子中，给定的 URL 位于打开的选项卡中，这表明它将每 5 分钟发出通知并在新选项卡中打开/关闭 URL。"
+   },
+   "notifications": {
+      "message": "通知"
+   },
+   "november": {
+      "message": "十一月"
+   },
+   "october": {
+      "message": "十月"
+   },
+   "onTheExtensionDetailPage": {
+      "message": "在扩展程序的详细信息页面上，向下滚动并找到“允许隐身”选项。"
+   },
+   "oneTime": {
+      "message": "一度"
+   },
+   "oneTmSch": {
+      "message": "1.一次性计划"
+   },
+   "oneTmSchExm1": {
+      "message": "在上面的例子中，给定的 URL 位于打开的选项卡中，这表明它将在 2023 年 1 月 21 日 13:45 在新选项卡中打开一次"
+   },
+   "oneTmSchExm2": {
+      "message": "在上面的例子中，给定的 URL 处于关闭选项卡中，这表明它将在 2023 年 1 月 21 日 13:45 关闭所有特定匹配的 URL 选项卡"
+   },
+   "open": {
+      "message": "打开"
+   },
+   "openBackground": {
+      "message": "如果是，则在后台加载 URL，而不在新选项卡中打开它"
+   },
+   "openDate": {
+      "message": "开放日期"
+   },
+   "openDay": {
+      "message": "开放日"
+   },
+   "openEveryDayOn": {
+      "message": "每天营业"
+   },
+   "openEveryMonthOn": {
+      "message": "每月开放日"
+   },
+   "openEveryWeekOn": {
+      "message": "每周开放"
+   },
+   "openEveryYearOn": {
+      "message": "每年开放"
+   },
+   "openGoogleChrome": {
+      "message": "打开 Google Chrome。"
+   },
+   "openInBackground": {
+      "message": "在后台打开 URL"
+   },
+   "openInEvery": {
+      "message": "在每个"
+   },
+   "openInIncognito": {
+      "message": "以隐身模式打开"
+   },
+   "openMinute": {
+      "message": "开放时间"
+   },
+   "openOnDay": {
+      "message": "开放日期"
+   },
+   "openOnEvery": {
+      "message": "每天开放"
+   },
+   "openSecond": {
+      "message": "公开第二"
+   },
+   "openSecondsMoreThan5": {
+      "message": "开放秒数应大于5。"
+   },
+   "openTabSchedule": {
+      "message": "打开标签计划"
+   },
+   "openTabURL": {
+      "message": "打开标签页网址"
+   },
+   "openTime": {
+      "message": "开放时间"
+   },
+   "openUrl": {
+      "message": "打开网站链接"
+   },
+   "openWeek": {
+      "message": "开放周"
+   },
+   "openWeeks": {
+      "message": "开放周"
+   },
+   "open_on": {
+      "message": "打开"
+   },
+   "optional": {
+      "message": "选修的"
+   },
+   "or": {
+      "message": "或者"
+   },
+   "outof": {
+      "message": "出"
+   },
+   "pagePath": {
+      "message": "页面路径"
+   },
+   "paidFeature": {
+      "message": "付费功能"
+   },
+   "pauseSchedule": {
+      "message": "开始或停止所有计划"
+   },
+   "pleaseAllowIncognitoMessage": {
+      "message": "请在扩展程序详细信息中启用“允许隐身模式”选项。有关说明，请参阅教程页面。"
+   },
+   "pleaseShareYourSuggestions": {
+      "message": "请分享您的建议。"
+   },
+   "plsShreAnySugWithUs": {
+      "message": "请提出建议以改进我们"
+   },
+   "powerMode": {
+      "message": "电源模式"
+   },
+   "premium": {
+      "message": "优质的"
+   },
+   "pricePlan": {
+      "message": "定价与计划"
+   },
+   "privcyPolicy": {
+      "message": "隐私政策"
+   },
+   "prowerModeTip": {
+      "message": "启用电源模式，保持系统始终处于活动状态"
+   },
+   "put": {
+      "message": "放"
+   },
+   "rateUs": {
+      "message": "给我们评分"
+   },
+   "removeDuplicateEntry": {
+      "message": "请删除重复条目"
+   },
+   "removeOpenTbURL": {
+      "message": "移除打开的标签页 URL"
+   },
+   "repeat": {
+      "message": "重复"
+   },
+   "requiredMsg": {
+      "message": "必需的"
+   },
+   "rmvClsTb": {
+      "message": "删除关闭标签页的 URL"
+   },
+   "sameTabs": {
+      "message": "如果 URL 已打开 则刷新选项卡"
+   },
+   "sameTabsInfo": {
+      "message": "防止为同一 URL 打开多个标签页。例如，如果 www.google.com 已打开，则将刷新现有标签页，而不是为其打开新标签页。"
+   },
+   "sampleCsvOpenPath": {
+      "message": "../sample_csv/en/open_tab_sample.csv"
+   },
+   "sampleFile": {
+      "message": "示例文件"
+   },
+   "saturday": {
+      "message": "周六"
+   },
+   "savOpnData": {
+      "message": "保存打开的标签页数据"
+   },
+   "save": {
+      "message": "节省"
+   },
+   "saveClsTbData": {
+      "message": "保存关闭标签数据"
+   },
+   "saveSchedule": {
+      "message": "保存日程"
+   },
+   "scheduleCloseTab": {
+      "message": "时间表关闭标签"
+   },
+   "scheduleCurrentTab": {
+      "message": "安排当前标签页"
+   },
+   "scheduleOpenTab": {
+      "message": "安排打开标签页"
+   },
+   "scheduledTabIsAlreadyExistWithSameTimer": {
+      "message": "此预定选项卡已与同一计时器共存。"
+   },
+   "scheduledTabList": {
+      "message": "计划标签列表"
+   },
+   "scheduledType": {
+      "message": "日程表类型"
+   },
+   "search": {
+      "message": "搜索"
+   },
+   "secValid": {
+      "message": "至少需要 5 秒"
+   },
+   "second": {
+      "message": "第二"
+   },
+   "selectCloseDate": {
+      "message": "选择结束日期"
+   },
+   "selectCloseDay": {
+      "message": "选择关闭日"
+   },
+   "selectCloseTime": {
+      "message": "选择关闭时间"
+   },
+   "selectColumn": {
+      "message": "选择列"
+   },
+   "selectDateAndTime": {
+      "message": "选择日期和时间打开新标签页"
+   },
+   "selectDateAndTimeClsTb": {
+      "message": "选择关闭标签的日期和时间"
+   },
+   "selectDayToCloseSchTb": {
+      "message": "选择关闭日程表选项卡的日期。"
+   },
+   "selectDayToClsTb": {
+      "message": "选择关闭标签的日期"
+   },
+   "selectDayToSchdule": {
+      "message": "选择日期来安排标签。"
+   },
+   "selectDaysInWeek": {
+      "message": "选择星期几"
+   },
+   "selectDaysInWeekIClsTime": {
+      "message": "在关闭计时器中选择星期几。"
+   },
+   "selectDaysInWeekIOpClsTime": {
+      "message": "选择打开或关闭计时器的星期几。"
+   },
+   "selectDaysInWeekIOpTime": {
+      "message": "在打开的计时器中选择星期几。"
+   },
+   "selectFrequency": {
+      "message": "选择频率"
+   },
+   "selectFrequencyOfScheduleUrl": {
+      "message": "选择预定 URL 的频率。"
+   },
+   "selectOpenDate": {
+      "message": "选择开放日期"
+   },
+   "selectOpenDay": {
+      "message": "选择开放日"
+   },
+   "selectOpenOrClose": {
+      "message": "选择开门和关门时间"
+   },
+   "selectOpenOrCloseDate": {
+      "message": "选择开始和结束日期"
+   },
+   "selectOpenOrCloseDay": {
+      "message": "选择开市及收市日"
+   },
+   "selectOpenTime": {
+      "message": "选择开放时间"
+   },
+   "selectPreferredLanguage": {
+      "message": "选择您的首选语言。"
+   },
+   "selectToOpenTab": {
+      "message": "选择日期打开新标签页"
+   },
+   "selectTypTimerClsTb": {
+      "message": "选择关闭标签的定时器类型"
+   },
+   "selectTypeOfSchedule": {
+      "message": "选择时间表类型，如果您想要同时打开和关闭，请选择“两者”。"
+   },
+   "selectTypeOfTimer": {
+      "message": "选择打开新标签的定时器类型"
+   },
+   "select_weeks": {
+      "message": "选择周数"
+   },
+   "september": {
+      "message": "九月"
+   },
+   "settingSave": {
+      "message": "设置保存成功"
+   },
+   "settingToClose": {
+      "message": "设置为在隐身模式下关闭标签页。"
+   },
+   "shareYourSuggestionWithUs": {
+      "message": "与我们分享您的建议.."
+   },
+   "slectDayToScheduleWeekly": {
+      "message": "选择每周安排标签的日子。"
+   },
+   "slectMinute": {
+      "message": "选择分钟"
+   },
+   "smthngWrng": {
+      "message": "出了点问题"
+   },
+   "softpulseInfotech": {
+      "message": "Softpulse 信息技术公司"
+   },
+   "somethingWentWrong": {
+      "message": "出了点问题。请刷新页面并重试。"
+   },
+   "status": {
+      "message": "地位"
+   },
+   "subcrKeyShldNEmpt": {
+      "message": "请输入订阅密钥。"
+   },
+   "subdomain": {
+      "message": "子域名"
+   },
+   "subkeyInputTitle": {
+      "message": "输入订阅密钥"
+   },
+   "submFeedBack": {
+      "message": "提交"
+   },
+   "suggForTbSch": {
+      "message": "关于标签调度程序的建议"
+   },
+   "suggestionAndRateUs": {
+      "message": "建议和评价我们"
+   },
+   "sunday": {
+      "message": "星期日"
+   },
+   "tabCloseOneTime": {
+      "message": "标签页仅关闭一次"
+   },
+   "tabSchTutorial": {
+      "message": "标签调度器教程"
+   },
+   "tabScheduler": {
+      "message": "标签调度程序"
+   },
+   "tabSchedulerOptions": {
+      "message": "选项卡调度程序选项"
+   },
+   "tabWillOpenOneTime": {
+      "message": "选项卡将仅打开一次"
+   },
+   "tabWillOpenWhenBrowserOpen": {
+      "message": "浏览器打开时标签页将打开"
+   },
+   "termCondition": {
+      "message": "条款及细则"
+   },
+   "thanksFrRev": {
+      "message": "感谢您的评论"
+   },
+   "thnkUFeedBack": {
+      "message": "谢谢你的建议"
+   },
+   "thnkUFrUsngTbSch": {
+      "message": "请提出建议以改进我们"
+   },
+   "thursday": {
+      "message": "周四"
+   },
+   "time": {
+      "message": "时间"
+   },
+   "timeExpired": {
+      "message": "时间已过"
+   },
+   "timer": {
+      "message": "计时器"
+   },
+   "title": {
+      "message": "标题"
+   },
+   "titleLengtWarn": {
+      "message": "标题长度不得超过200个字符。"
+   },
+   "toScheduledOpenTbMsg": {
+      "message": "要按计划打开标签，请取消选中 URL 过滤。"
+   },
+   "toogleCloseTab": {
+      "message": "启动/停止所有关闭标签页 URL 的计划闹钟"
+   },
+   "toogleDarkmode": {
+      "message": "在暗模式和默认模式之间切换以自定义您的观看体验。"
+   },
+   "toogleOff": {
+      "message": "离开"
+   },
+   "toogleOn": {
+      "message": "在"
+   },
+   "toogleOpenTab": {
+      "message": "启动/停止所有打开标签页 URL 的计划闹钟"
+   },
+   "topLevelDomain": {
+      "message": "顶级域名"
+   },
+   "totalProcessed": {
+      "message": "已处理的总记录数"
+   },
+   "tuesday": {
+      "message": "周二"
+   },
+   "tutorialImg1": {
+      "message": "\u003Cimg src=\"../images/en/1.png\">"
+   },
+   "tutorialImg10": {
+      "message": "\u003Cimg src=\"../images/en/10.png\">"
+   },
+   "tutorialImg11": {
+      "message": "\u003Cimg src=\"../images/en/11.png\">"
+   },
+   "tutorialImg12": {
+      "message": "\u003Cimg src=\"../images/en/12.png\">"
+   },
+   "tutorialImg13": {
+      "message": "\u003Cimg src=\"../images/en/13.png\">"
+   },
+   "tutorialImg14": {
+      "message": "\u003Cimg src=\"../images/en/14.png\">"
+   },
+   "tutorialImg2": {
+      "message": "\u003Cimg src=\"../images/en/2.png\">"
+   },
+   "tutorialImg3": {
+      "message": "\u003Cimg src=\"../images/en/3.png\">"
+   },
+   "tutorialImg4": {
+      "message": "\u003Cimg src=\"../images/en/4.png\">"
+   },
+   "tutorialImg5": {
+      "message": "\u003Cimg src=\"../images/en/5.png\">"
+   },
+   "tutorialImg6": {
+      "message": "\u003Cimg src=\"../images/en/6.png\">"
+   },
+   "tutorialImg7": {
+      "message": "\u003Cimg src=\"../images/en/7.png\">"
+   },
+   "tutorialImg8": {
+      "message": "\u003Cimg src=\"../images/en/8.png\">"
+   },
+   "tutorialImg9": {
+      "message": "\u003Cimg src=\"../images/en/9.png\">"
+   },
+   "uncheckAll": {
+      "message": "取消全部"
+   },
+   "unlimitedSchedule": {
+      "message": "无限制的计划限制"
+   },
+   "unspecifiedURL": {
+      "message": "11. URL 未指定路径"
+   },
+   "unspecifiedURLExm1": {
+      "message": "在上面的例子中，给定的 URL 位于关闭选项卡中，这表明在新选项卡中打开并且以未知网址开头和结尾的给定 URL 将在 5 分钟后关闭。"
+   },
+   "upgradePlan": {
+      "message": "请购买计划或登录并升级您的计划以解锁更多功能。"
+   },
+   "upgradePlanUnlock": {
+      "message": "升级您的计划以解锁更多功能。"
+   },
+   "uploadValidFormat": {
+      "message": "请上传有效格式"
+   },
+   "url": {
+      "message": "网址"
+   },
+   "urlContExat": {
+      "message": "URL 过滤"
+   },
+   "urlEndWithUnspesifiedPth": {
+      "message": "9. URL 以未指定路径结尾"
+   },
+   "urlEndWithUnspesifiedPthExm1": {
+      "message": "上面的例子中，给定的 URL 处于关闭选项卡中，这表明在新选项卡中打开并且以未知路径结尾的给定 URL 将在 5 分钟后关闭。"
+   },
+   "urlFilterInfo": {
+      "message": "包含 URL 检查仅需要 URL 的一部分，而精确 URL 检查必须与指定的 URL 完全匹配"
+   },
+   "urlFilterinCLoseTb": {
+      "message": "14. 关闭标签页 URL 时的 URL 过滤"
+   },
+   "urlFilterinCLoseTbExample": {
+      "message": "在上面的例子中，给定的 URL 处于关闭状态，这表明已经打开的选项卡 URL 与给定 URL 的某些部分匹配，因此它将关闭该选项卡"
+   },
+   "urlIsRequired": {
+      "message": "需要网站链接"
+   },
+   "urlNotvalid": {
+      "message": "URL 无效"
+   },
+   "urlStartWithUnspesifiedPth": {
+      "message": "10. URL 以未指定路径开头"
+   },
+   "urlStartWithUnspesifiedPthExm1": {
+      "message": "在上面的例子中，给定的 URL 位于关闭选项卡中，这表明在新选项卡中打开并以未知子域\u003Cb>“www”\u003C/b>或\u003Cb>“blog”\u003C/b>开头的给定 URL将在 5 分钟后关闭。"
+   },
+   "useSpecificUrl": {
+      "message": "使用特定的网站链接"
+   },
+   "useSpecificUrl1": {
+      "message": "您必须在关闭的浏览器选项卡的网站链接字段中写入准确的子域、顶级域、域名和页面路径。"
+   },
+   "useSpecificUrl2": {
+      "message": "使用关闭所有浏览器的标签"
+   },
+   "useSpecificUrl3": {
+      "message": "使用具体且完整的网站链接"
+   },
+   "useUnSpecificUrl1": {
+      "message": "使用未指定的网站链接"
+   },
+   "useUnSpecificUrl2": {
+      "message": "使用以未指定的网站链接开头"
+   },
+   "useUnSpecificUrl3": {
+      "message": "使用未指定的网站链接结尾"
+   },
+   "used": {
+      "message": "你使用了"
+   },
+   "validFormatCsv": {
+      "message": "导入的有效 CSV 文件格式是什么？"
+   },
+   "websiteLink": {
+      "message": "网站链接"
+   },
+   "websiteUrl": {
+      "message": "网站网址"
+   },
+   "wednesday": {
+      "message": "周三"
+   },
+   "weekName": {
+      "message": "周名称"
+   },
+   "weekly": {
+      "message": "每周"
+   },
+   "whenExtensionTabAppears": {
+      "message": "当“扩展”选项卡出现时，找到“带有自动打开和关闭的选项卡调度程序”以在隐身模式下启用，然后单击旁边的“详细信息”按钮。"
+   },
+   "whenMenuPopup": {
+      "message": "当菜单弹出时，选择“管理扩展”。"
+   },
+   "withSignMustFill": {
+      "message": "带\u003Cspan>*\u003C/span>号的为必填项，可选择开门时间、关门时间或者两者兼有。"
+   },
+   "writeYourDescriptionAboutSchUrl": {
+      "message": "在此处写下有关预定网址的描述。"
+   },
+   "yes": {
+      "message": "是的"
+   },
+   "yourEmailAddress": {
+      "message": "您的电子邮件地址"
+   },
+   "yourScheduleUrl": {
+      "message": "您的日程安排 URL"
+   }
+}

@@ -1,0 +1,1448 @@
+{
+   "10_min": {
+      "message": "10 דקות"
+   },
+   "1_min": {
+      "message": "דקה אחת"
+   },
+   "30_min": {
+      "message": "30 דקות"
+   },
+   "5_min": {
+      "message": "5 דקות"
+   },
+   "60_min": {
+      "message": "שָׁעָה"
+   },
+   "Dashboard": {
+      "message": "לוּחַ מַחווָנִים"
+   },
+   "Login": {
+      "message": "כְּנִיסָה לַמַעֲרֶכֶת"
+   },
+   "Off": {
+      "message": "כבוי"
+   },
+   "On": {
+      "message": "עַל"
+   },
+   "Selected": {
+      "message": "נִבחָר"
+   },
+   "Settings": {
+      "message": "הגדרות"
+   },
+   "Tutorial": {
+      "message": "שֶׁל מוֹרֶה"
+   },
+   "action": {
+      "message": "פְּעוּלָה"
+   },
+   "activateScheduleTab": {
+      "message": "הפעל את הכרטיסייה המתוזמנת."
+   },
+   "active": {
+      "message": "פָּעִיל"
+   },
+   "activeAllScheduleTab": {
+      "message": "הפעלת מתזמן כרטיסיות"
+   },
+   "activeStatus": {
+      "message": "סטָטוּס"
+   },
+   "actvInactvNotification": {
+      "message": "הצג הודעה כאשר כרטיסיית לוח זמנים נפתחת"
+   },
+   "actvInactvOpnTb": {
+      "message": "כרטיסייה פתוחה פעילה או לא פעילה"
+   },
+   "actvIntvClsTb": {
+      "message": "כרטיסיית סגירה פעילה או לא פעילה"
+   },
+   "add": {
+      "message": "לְהוֹסִיף"
+   },
+   "addDescription": {
+      "message": "הוסף תיאור"
+   },
+   "addNew": {
+      "message": "הוסף חדש"
+   },
+   "addNewURlCls": {
+      "message": "הוסף כתובת אתר חדשה לסגירה"
+   },
+   "addNewUrlToOpen": {
+      "message": "הוסף כתובת אתר חדשה כדי לפתוח בחלון חדש"
+   },
+   "addTitle": {
+      "message": "הוסף כותרת"
+   },
+   "addWebsite": {
+      "message": "הוסף אתר"
+   },
+   "all": {
+      "message": "כֹּל"
+   },
+   "allInputFieldReq": {
+      "message": "כל השדות נדרשים"
+   },
+   "all_weeks": {
+      "message": "כל השבוע"
+   },
+   "alreadyPurchase": {
+      "message": "כבר נרכש? הכנס מפתח כאן"
+   },
+   "andAt": {
+      "message": "וב"
+   },
+   "annually": {
+      "message": "מדי שנה"
+   },
+   "appDesc": {
+      "message": "כרטיסיות הדפדפן ייפתחו ויסגרו אוטומטית בזמן שנבחר. המשתמש יכול להפעיל/לבטל רשימה על סמך דרישה"
+   },
+   "appName": {
+      "message": "מתזמן כרטיסיות עם פתיחה וסגירה אוטומטית"
+   },
+   "april": {
+      "message": "אַפּרִיל"
+   },
+   "at": {
+      "message": "בְּ-"
+   },
+   "august": {
+      "message": "אוֹגוּסט"
+   },
+   "autoFocus": {
+      "message": "לשונית פוקוס אוטומטי"
+   },
+   "autoFocustip": {
+      "message": "אם פועל, הכרטיסייה החדשה תיפתח במצב פעיל/מיקוד."
+   },
+   "autofocustip": {
+      "message": "כרטיסיות חדשות שנפתחות יתמקדו באופן אוטומטי"
+   },
+   "basic": {
+      "message": "בְּסִיסִי"
+   },
+   "billedAnnyally": {
+      "message": "מחויב מדי שנה"
+   },
+   "billedMonthly": {
+      "message": "מחויב חודשי"
+   },
+   "both": {
+      "message": "שְׁנֵיהֶם"
+   },
+   "browserOpen": {
+      "message": "בדפדפן פתח"
+   },
+   "browserWebAddress": {
+      "message": "כתובת האינטרנט של הדפדפן מתחילה ומסתיימת בכתובת אינטרנט לא ידועה. שים \u003Cb>*\u003C/b> משני הצדדים של השדה קישור לאתר הקלט שלך."
+   },
+   "browserWebAddress2": {
+      "message": "כתובת האינטרנט של הדפדפן מכילה את שם הדומיין google.com, אשר ייסגר תוך דקות נתון, לא משנה מה תת-הדומיין ונתיב הדף. שים \u003Cb>*\u003C/b> בשני הצדדים שם דומיין ו-TLD"
+   },
+   "browserWebAddress3": {
+      "message": "כתובת האינטרנט של הדפדפן מתחילה בשם דומיין לא ידוע ומסתיימת בנתיב דף לא ידוע"
+   },
+   "browserWebAddress31": {
+      "message": "ייסגר לאחר דקות נתונות, שימו \u003Cb>*\u003C/b> בשני הצדדים של ה-TLD"
+   },
+   "browserWebAddress4": {
+      "message": "כתובת האינטרנט של הדפדפן מתחילה בכתובת אינטרנט לא ידועה. שים \u003Cb>*\u003C/b> בתחילת כתובת האתר שלך. זכור שכתובת האינטרנט של הדפדפן חייבת להתאים לכתובת האתר שלך לאחר \u003Cb>*\u003C/b> שכתבת."
+   },
+   "browserWebAddress41": {
+      "message": "כתובת האינטרנט של הדפדפן מתחילה בתת-דומיין לא ידוע"
+   },
+   "browserWebAddress42": {
+      "message": "בתחילת הקישור לאתר שלך"
+   },
+   "browserWebAddress5": {
+      "message": "כתובת האינטרנט של הדפדפן מסתיימת בכתובת אינטרנט לא ידועה. שים \u003Cb>*\u003C/b> בסוף כתובת האתר שלך. זכור שכתובת האינטרנט שלך חייבת להתאים לפני \u003Cb>*\u003C/b> שכתבת."
+   },
+   "browserWebAddress51": {
+      "message": "כתובת האינטרנט של הדפדפן מסתיימת בנתיב עמוד לא ידוע. שים \u003Cb>*\u003C/b> בסוף כתובת האינטרנט שלך"
+   },
+   "browserWebAddress6": {
+      "message": "שים רק \u003Cb>*\u003C/b> בשדה כתובת האתר כדי לסגור את כל לשוניות הדפדפן. לאחר סגירת כל הכרטיסיות הדפדפן ייסגר אוטומטית."
+   },
+   "browserWebAddress7": {
+      "message": "אתה חייב לכתוב את תת-הדומיין המדויק, הדומיין ברמה העליונה, שם הדומיין ונתיב הדף בשדה כתובת האתר כדי לפתוח בכרטיסייה של הדפדפן."
+   },
+   "browserWebAddress8": {
+      "message": "אתה יכול לפתוח כתובת אתר בתאריך ושעה ספציפיים, חודש ספציפי, שבוע ספציפי, שנה ספציפית וזמן חוזר"
+   },
+   "buyPlan": {
+      "message": "קנה תוכנית"
+   },
+   "buycofee": {
+      "message": "קנה לי קפה"
+   },
+   "cancel": {
+      "message": "לְבַטֵל"
+   },
+   "changeLanguage": {
+      "message": "שנה שפה"
+   },
+   "checkAll": {
+      "message": "סמן הכל"
+   },
+   "checkThisOpToPreventClosePinTb": {
+      "message": "סמן אפשרות זו כדי למנוע סגירה של כרטיסיות מוצמדות."
+   },
+   "checkThisOptionOnlyPartOfUrlMtch": {
+      "message": "סמן אפשרות זו אם יש צורך להתאים רק חלק מכתובת האתר."
+   },
+   "checkThisOptionToActivate": {
+      "message": "סמן אפשרות זו כדי להפעיל או להשבית את כתובת האתר המתוזמנת שלך."
+   },
+   "checkThisOptionToCloseOnly": {
+      "message": "סמן אפשרות זו כדי לסגור רק כרטיסיות גלישה בסתר. כמו כן, הפעל את האפשרות 'אפשר בסתר' בפרטי התוסף. להנחיות, עיין בדף ההדרכה."
+   },
+   "checkThisOptionToCloseOnlyInIncgnitoTb": {
+      "message": "סמן אפשרות זו כדי לסגור רק כרטיסיות גלישה בסתר. כמו כן, הפעל את האפשרות 'אפשר בסתר' בפרטי התוסף. להנחיות, עיין בדף ההדרכה."
+   },
+   "checkThisOptionToInBg": {
+      "message": "סמן אפשרות זו אם ברצונך לפתוח את כתובת האתר ברקע מבלי לפתוח אותה בלשונית חדשה"
+   },
+   "checkThisOptionToInactivNotification": {
+      "message": "סמן אפשרות זו להודעה לא פעילה בכתובת האתר המתוזמנת"
+   },
+   "checkThisOptionToOpen": {
+      "message": "סמן אפשרות זו אם ברצונך לפתוח את כתובת האתר שלך במצב גלישה בסתר"
+   },
+   "checkThisOptionToOpenIncogito": {
+      "message": "סמן אפשרות זו אם ברצונך לפתוח את כתובת האתר שלך במצב גלישה בסתר"
+   },
+   "checkThisOptionToPrevent": {
+      "message": "סמן אפשרות זו כדי למנוע סגירה של כרטיסיות מוצמדות."
+   },
+   "clickExtIcon": {
+      "message": "לחץ על סמל \"הרחבות\" בסרגל הכלים, שנראה כמו חתיכת פאזל."
+   },
+   "clickTheSwitch": {
+      "message": "לחץ על המתג שלידו כדי להפעיל אותו"
+   },
+   "close": {
+      "message": "לִסְגוֹר"
+   },
+   "closeAllTab": {
+      "message": "12. סגור את כל הכרטיסיות של הדפדפן"
+   },
+   "closeAllTabExm1": {
+      "message": "בדוגמה שלמעלה כתובת האתר הנתונה נמצאת בכרטיסייה סגורה, שמציינת שהיא תסגור את כל הכרטיסיות בשעה 12:00 ב-25/2/2023"
+   },
+   "closeDate": {
+      "message": "תאריך סגירה"
+   },
+   "closeDay": {
+      "message": "יום סגור"
+   },
+   "closeEveryYear": {
+      "message": "סגור כל שנה הלאה"
+   },
+   "closeInEvery": {
+      "message": "קרוב בכל"
+   },
+   "closeIncognitoTab": {
+      "message": "סגור רק כרטיסיות גלישה בסתר"
+   },
+   "closeMinute": {
+      "message": "דקה סגורה"
+   },
+   "closeOnDay": {
+      "message": "סגור ביום"
+   },
+   "closeOnEvery": {
+      "message": "סגור על כל"
+   },
+   "closeOnEveryDay": {
+      "message": "סגור כל יום על"
+   },
+   "closeOnEveryMonth": {
+      "message": "סגור כל חודש ביום"
+   },
+   "closeOnEveryWeek": {
+      "message": "סגור כל שבוע ב"
+   },
+   "closeSecond": {
+      "message": "סגור שני"
+   },
+   "closeSeconsMoreThan5": {
+      "message": "שניות קרובות צריכות להיות יותר מ-5."
+   },
+   "closeTabSchedule": {
+      "message": "סגור לוח זמנים של כרטיסיות"
+   },
+   "closeTabURL": {
+      "message": "כתובת אתר סגור כרטיסייה"
+   },
+   "closeTime": {
+      "message": "זמן סגירה"
+   },
+   "closeUrl": {
+      "message": "סגור קישור לאתר"
+   },
+   "closeWeek": {
+      "message": "סגור שבוע"
+   },
+   "closeWeeks": {
+      "message": "סגור שבועות"
+   },
+   "close_on": {
+      "message": "סגור על"
+   },
+   "cngrtsForSubcr": {
+      "message": "מזל טוב! התוכנית שלך הופעלה בהצלחה."
+   },
+   "commonQuestionsAns": {
+      "message": "שאלות ותשובות נפוצות"
+   },
+   "copySucessClose": {
+      "message": "נתוני כתובת ה-URL של הכרטיסייה סגור הועתקו לנתוני כתובת ה-URL של הכרטיסייה פתח"
+   },
+   "createNewTimer": {
+      "message": "צור טיימר חדש"
+   },
+   "currentPlan": {
+      "message": "תוכנית נוכחית"
+   },
+   "currentTabSchedule": {
+      "message": "לוח הזמנים הנוכחי של הכרטיסייה"
+   },
+   "currentTbScheduleTimer": {
+      "message": "טיימר מתוזמן בכרטיסייה הנוכחית."
+   },
+   "cusSec": {
+      "message": "מותאם שני"
+   },
+   "custMin": {
+      "message": "דקה מותאמת אישית"
+   },
+   "custmMinSch": {
+      "message": "7. לוח זמנים של דקות מותאם אישית"
+   },
+   "custmMinSchExm1": {
+      "message": "בדוגמה שלמעלה כתובת ה-URL הנתונה נמצאת בכרטיסייה פתוחה, שמציינת שכתובת ה-URL הנתונה פתוחה בכרטיסייה חדשה כל 15 דקות."
+   },
+   "custmMinSchExm2": {
+      "message": "בדוגמה שלמעלה כתובת האתר הנתונה נמצאת בכרטיסייה סגורה, שמציינת שכתובת אתר נתונה שנפתחה בכרטיסייה חדשה תיסגר לאחר 15 דקות."
+   },
+   "customSecondWarning": {
+      "message": "הפונקציונליות השנייה המותאמת אישית היא ניסיונית, וייתכן שהיא לא תפעל כראוי אם שניות מוגדרות מתחת ל-60."
+   },
+   "darkMode": {
+      "message": "מצב כהה"
+   },
+   "datNotCopy": {
+      "message": "חלק מהנתונים אינם מועתקים עקב כתובת אתר לא חוקית."
+   },
+   "dataSaved": {
+      "message": "שמירת נתוני טיימר בהצלחה"
+   },
+   "date": {
+      "message": "תַאֲרִיך"
+   },
+   "dateIsOutOfRange": {
+      "message": "התאריך הוא מחוץ לטווח"
+   },
+   "day": {
+      "message": "יְוֹם"
+   },
+   "december": {
+      "message": "דֵצֶמבֶּר"
+   },
+   "delete": {
+      "message": "לִמְחוֹק"
+   },
+   "deleteScheduleTb": {
+      "message": "מחק את הכרטיסייה המתוזמנת."
+   },
+   "description": {
+      "message": "תֵאוּר"
+   },
+   "developedBy": {
+      "message": "פותח על ידי:"
+   },
+   "doNotCloseInPinnedTabs": {
+      "message": "אל תסגור לשוניות מוצמדות"
+   },
+   "doNotShowNotification": {
+      "message": "אל תציג הודעה"
+   },
+   "domainName": {
+      "message": "שם דומיין"
+   },
+   "downloadCloseTbSampleCsv": {
+      "message": "הורד CSV לדוגמה של כרטיסיית סגור כדי לראות דוגמה לפורמט הנדרש"
+   },
+   "downloadOpenTbSampleCsv": {
+      "message": "הורד CSV לדוגמה של כרטיסייה פתוחה כדי לראות דוגמה לפורמט הנדרש"
+   },
+   "editScheduleTb": {
+      "message": "ערוך כרטיסייה מתוזמנת."
+   },
+   "email": {
+      "message": "אֶלֶקטרוֹנִי"
+   },
+   "enterDateToCloseTab": {
+      "message": "הזן תאריך כאן כדי לסגור את כרטיסיית לוח הזמנים."
+   },
+   "enterDateToOpen": {
+      "message": "הזן תאריך כדי לפתוח את לשונית לוח הזמנים."
+   },
+   "enterMiniutesToCloseTb": {
+      "message": "הזן דקות כדי לסגור את הכרטיסייה."
+   },
+   "enterMiniutesToOpen": {
+      "message": "הזן דקות כדי לפתוח את לשונית לוח הזמנים."
+   },
+   "enterMinute": {
+      "message": "הזן דקה"
+   },
+   "enterSecond": {
+      "message": "הזן שני"
+   },
+   "enterSecondsToCloseTab": {
+      "message": "הזן שניות כדי לסגור את הכרטיסייה."
+   },
+   "enterSecondsToOpen": {
+      "message": "הזן שניות כדי לפתוח את לשונית לוח הזמנים."
+   },
+   "enterTilteOfScheduleUrl": {
+      "message": "הזן את הכותרת של כתובת האתר המתוזמנת."
+   },
+   "enterTimeToCloseTab": {
+      "message": "הזן כאן זמן כדי לסגור את כרטיסיית לוח הזמנים."
+   },
+   "enterTimeToSchedule": {
+      "message": "הזן זמן כדי לפתוח את לשונית לוח הזמנים."
+   },
+   "enterValidEmail": {
+      "message": "נא להזין דוא\"ל חוקי"
+   },
+   "enterValidUrl": {
+      "message": "אנא הזן כתובת אתר חוקית"
+   },
+   "enterValueInCloseSec": {
+      "message": "הזן ערך בשניות קרובות"
+   },
+   "enterValueInOpenCloseSec": {
+      "message": "הזן ערך בשניות פתוחות או סגורות"
+   },
+   "enterValueInOpenMinutes": {
+      "message": "הזן ערך בדקות פתוחות"
+   },
+   "enterVlaueInCloseMinutes": {
+      "message": "הזן ערך בדקות קרובות"
+   },
+   "enterVlaueInOpenCloseMin": {
+      "message": "הזן ערך בדקות פתוחות או סגורות"
+   },
+   "enterVlaueInOpenSeconds": {
+      "message": "הזן ערך בשניות פתוחות"
+   },
+   "enterYourURLToSchedule": {
+      "message": "הזן את כתובת האתר שלך לתזמון."
+   },
+   "every": {
+      "message": "כֹּל"
+   },
+   "every10Min": {
+      "message": "כל 10 דקות"
+   },
+   "every1Minute": {
+      "message": "כל דקה 1"
+   },
+   "every30Min": {
+      "message": "כל 30 דקות"
+   },
+   "every5Min": {
+      "message": "כל 5 דקות"
+   },
+   "everyDay": {
+      "message": "כל יום"
+   },
+   "everyDayAt": {
+      "message": "כל יום בשעה"
+   },
+   "everyHour": {
+      "message": "כל שעה"
+   },
+   "everyMinute": {
+      "message": "כל דקה"
+   },
+   "everyMonth": {
+      "message": "כל חודש"
+   },
+   "everyMonthOn": {
+      "message": "כל חודש הלאה"
+   },
+   "everyMonthOnDay": {
+      "message": "כל חודש ביום"
+   },
+   "everyWeek": {
+      "message": "כל שבוע"
+   },
+   "everyWeekOn": {
+      "message": "כל שבוע על"
+   },
+   "everyYear": {
+      "message": "כל שנה"
+   },
+   "everyYesrOn": {
+      "message": "כל שנה הלאה"
+   },
+   "evr10MinSch": {
+      "message": "2. לוח זמנים של כל 10 דקות"
+   },
+   "evr10MinSchExm1": {
+      "message": "בדוגמה שלמעלה כתובת ה-URL הנתונה נמצאת בכרטיסייה פתוחה, אשר מדינות ה-URL הנתונה תיפתח בכרטיסייה חדשה כל 10 דקות."
+   },
+   "evr10MinSchExm2": {
+      "message": "בדוגמה שלמעלה כתובת האתר הנתונה נמצאת בכרטיסייה סגורה, שמציינת שכתובת אתר נתונה שנפתחה בלשונית חדשה תיסגר לאחר 10 דקות."
+   },
+   "evrDaySch": {
+      "message": "3. לוח זמנים של כל יום"
+   },
+   "evrDaySchExm1": {
+      "message": "בדוגמה שלמעלה כתובת האתר הנתונה נמצאת בכרטיסייה פתוחה, מה שאומר שהיא תיפתח בכרטיסייה חדשה כל יום בשעה 17:27"
+   },
+   "evrDaySchExm2": {
+      "message": "בדוגמה שלמעלה כתובת האתר הנתונה נמצאת בכרטיסייה סגורה, מה שמציין שהיא תסגור את הכרטיסייה שכבר נפתחה בשעה 17:27 בכל יום"
+   },
+   "evrMonthSch": {
+      "message": "5. לוח זמנים של כל חודש"
+   },
+   "evrMonthSchExm1": {
+      "message": "בדוגמה שלמעלה כתובת האתר הנתונה נמצאת בכרטיסייה פתוחה, שבה נכתב שהיא תיפתח בכרטיסייה חדשה בכל חודש בשעה 13:45 ביום 25"
+   },
+   "evrMonthSchExm2": {
+      "message": "בדוגמה שלמעלה כתובת האתר הנתונה נמצאת בכרטיסייה סגורה, מה שאומר שהיא תסגור את הכרטיסייה שכבר נפתחה בכל חודש בשעה 13:45 ביום 25"
+   },
+   "evrWeekSch": {
+      "message": "4. לוח זמנים של כל שבוע"
+   },
+   "evrWeekSchExm1": {
+      "message": "בדוגמה שלמעלה, כתובת האתר הנתונה נמצאת בכרטיסייה פתוחה, המציינת שהיא תיפתח בכרטיסייה חדשה בכל שבוע בשעה 17:00 בימי \u003Cb>שני ושלישי\u003C/b> ."
+   },
+   "evrWeekSchExm2": {
+      "message": "בדוגמה שלמעלה, כתובת האתר הנתונה נמצאת בכרטיסיית הסגירה, שמציינת שהיא תסגור את הכרטיסייה שכבר נפתחה בכל שבוע בשעה 17:00 בימי \u003Cb>שני ושלישי\u003C/b> ."
+   },
+   "evrWeekSchExm3": {
+      "message": "בדוגמה לעיל, ניתן לבחור מספר ימים בטיימר השבוע."
+   },
+   "evrYearSch": {
+      "message": "6. לוח זמנים לכל שנה"
+   },
+   "evrYearSchExm1": {
+      "message": "בדוגמה שלמעלה כתובת האתר הנתונה נמצאת בכרטיסייה פתוחה, מה שאומר שהיא תיפתח בכרטיסייה חדשה בכל שנה בשעה 13:35 ב-1 בינואר"
+   },
+   "evrYearSchExm2": {
+      "message": "בדוגמה שלמעלה כתובת האתר הנתונה נמצאת בכרטיסייה סגורה, מה שמציין שהיא תסגור את הכרטיסייה שכבר נפתחה בכל שנה בשעה 13:35 ב-1 בינואר"
+   },
+   "exampleSort": {
+      "message": "לְמָשָׁל"
+   },
+   "exdMaxLim": {
+      "message": "חריגה ממספר התקנים המותר!"
+   },
+   "exmpOpnClsTbSch": {
+      "message": "דוגמה כיצד לפתוח ולסגור כרטיסייה ב-Tab Scheduler"
+   },
+   "expLicKy": {
+      "message": "פג תוקף מפתח רישיון זה."
+   },
+   "export": {
+      "message": "יְצוּא"
+   },
+   "exportBefore": {
+      "message": "יש לך\u003Cexday>\u003C/exday>נותרו ימים, אנא הירשם כדי להמשיך ליהנות מתכונת פרימיום"
+   },
+   "exportClsTbDta": {
+      "message": "ייצא נתוני כרטיסייה סגורה"
+   },
+   "exportOpenTbDt": {
+      "message": "ייצוא נתוני כרטיסייה פתוחה"
+   },
+   "exportedData": {
+      "message": "נתוני הטיימר יוצאו בהצלחה"
+   },
+   "extensionShouldAble": {
+      "message": "כעת, התוסף אמור להיות מסוגל לסגור כרטיסיות במצב גלישה בסתר."
+   },
+   "faq": {
+      "message": "שאלות נפוצות"
+   },
+   "faq_1": {
+      "message": "מהו מתזמן כרטיסיות עם פתיחה וסגירה אוטומטית?"
+   },
+   "faq_10": {
+      "message": "כיצד אוכל להציג את הכרטיסיות המתוזמנות שלי?"
+   },
+   "faq_11": {
+      "message": "האם חובה למלא גם את שעות הפתיחה וגם את שעות הסגירה?"
+   },
+   "faq_12": {
+      "message": "מה עושות התכונות של כרטיסיית מיקוד אוטומטי, הפעלת כל הכרטיסיות המתוזמנות ומצב הפעלה?"
+   },
+   "faq_13": {
+      "message": "האם אוכל לפתוח/לסגור את קישור האתר המתוכנן בכרטיסיית גלישה בסתר?"
+   },
+   "faq_14": {
+      "message": "מה השימוש בכרטיסייה רענן אם כתובת האתר כבר פתוחה?"
+   },
+   "faq_2": {
+      "message": "מה השימוש בקישור לאתר?"
+   },
+   "faq_3": {
+      "message": "כיצד אוכל לתזמן כתובת אתר באמצעות מתזמן כרטיסיות?"
+   },
+   "faq_4": {
+      "message": "מהי האפשרות 'פתח כתובת אתר ברקע'?"
+   },
+   "faq_5": {
+      "message": "האם אוכל למנוע מהתוסף לסגור כרטיסיות מוצמדות?"
+   },
+   "faq_6": {
+      "message": "מה המשמעות של סוג לוח הזמנים 'שניהם'?"
+   },
+   "faq_7": {
+      "message": "כיצד פועלת התכונה 'סינון כתובות אתרים'?"
+   },
+   "faq_8": {
+      "message": "האם אוכל לבטל כרטיסייה מתוזמנת מבלי למחוק אותה?"
+   },
+   "faq_9": {
+      "message": "האם אקבל התראות על כרטיסיות מתוזמנות?"
+   },
+   "faq_a_1": {
+      "message": "\u003Cp>מתזמן כרטיסיות עם פתיחה וסגירה אוטומטית היא תוסף דפדפן המאפשר למשתמשים לתזמן כרטיסיות לפתיחה וסגירה אוטומטית בזמנים מוגדרים. משתמשים יכולים לבחור לוח זמנים חד פעמי או להגדיר לוחות זמנים חוזרים עם אפשרויות תדירות שונות. להרחבה זו מטרות מרובות למשתמשים והיא מספקת תכונות רבות המועילות לך.\u003C/p>"
+   },
+   "faq_a_10": {
+      "message": "כל הכרטיסיות המתוזמנות מוצגות ברשימה המציגה את הכותרת, הקישור לאתר, זמני פתיחה וסגירה, סטטוס ופעולות שתוכל לבצע (למשל, הפעלה, עריכה, מחיקה)."
+   },
+   "faq_a_11": {
+      "message": "לא, אתה יכול לתזמן שעה פתוחה או שעת סגירה. עם זאת, עליך למלא או לבחור את השדות הנדרשים המסומנים בכוכבית (*)."
+   },
+   "faq_a_12": {
+      "message": "כרטיסיית מיקוד אוטומטי מבטיחה שכאשר נפתחת כרטיסייה מתוזמנת, הפעל את כל הכרטיסיות המתוזמנות מאפשר לך להפעיל במהירות את כל הכרטיסיות המתוזמנות שלך בלחיצה אחת. Power Mode מייעל את ביצועי התוסף על ידי ניהול משאבי הדפדפן בצורה יעילה יותר."
+   },
+   "faq_a_13": {
+      "message": "כן, אתה יכול לבחור לפתוח כרטיסייה מתוזמנת במצב גלישה בסתר על ידי בחירה באפשרות \"פתח במצב גלישה בסתר\". אתה יכול לבחור לסגור רק כרטיסיות גלישה בסתר על ידי בחירה באפשרות \"סגור רק כרטיסיות גלישה בסתר\", כל עוד \"אפשר בסתר\" מופעל בהגדרות התוסף"
+   },
+   "faq_a_14": {
+      "message": "כאשר אפשרות זו מופעלת, התוסף ירענן אוטומטית כרטיסייה קיימת אם אותה כתובת אתר כבר פתוחה בדפדפן שלך. זה מונע פתיחת כרטיסיות כפולות ומבטיח שהגרסה העדכנית ביותר של הדף תהיה נטענת תמיד."
+   },
+   "faq_a_14_1": {
+      "message": "אם תנסה לפתוח את https://github.com/ והיא כבר פתוחה בלשונית אחרת, התוסף פשוט ירענן את הכרטיסייה במקום לפתוח כרטיסייה חדשה."
+   },
+   "faq_a_14_2": {
+      "message": "אם https://github.com/ כבר פתוח בשלוש כרטיסיות, התוסף ירענן את כל שלוש הכרטיסיות."
+   },
+   "faq_a_2": {
+      "message": "קישור האתר הוא כתובת האתר של הדפדפן שלך בכרטיסייה פתוחה. איך אתה יכול להשתמש בכתובת האתר מוזכר להלן."
+   },
+   "faq_a_3": {
+      "message": "כדי לתזמן כתובת URL, היכנסו לקישור האתר, תנו כותרת ללוח הזמנים, בחרו את התדירות (חד פעמי, כל דקה, יומי וכו') ובחרו את שעות הפתיחה והסגירה. ניתן גם לציין תאריך, יום או שניות לפתיחה וסגירה של הכרטיסייה."
+   },
+   "faq_a_4": {
+      "message": "\u003Cp>אפשרות זו מעניקה לך שליטה מלאה לתזמן כתובת אתר לפתיחה ברקע מבלי להכניס את הכרטיסייה החדשה לפוקוס. כתובת האתר תיפתח בשקט בזמן שאתה ממשיך לעבוד על כרטיסיות אחרות. זה שימושי במיוחד כאשר אתה צריך שהדפדפן יביא נתונים מכתובת האתר המתוזמנת מבלי להציג אותם באופן פעיל, כמו למשל במקרה של בקשת GET API.\u003C/p>\u003Cbr> \u003Cp>לדוגמה, אם ברצונך להביא נתונים מנקודת קצה של API בזמן מוגדר באופן קבוע, תוכל להשתמש באפשרות היעילה הזו כדי להפעיל את הבקשה ברקע מבלי לפתוח כרטיסייה גלויה חדשה.\u003C/p>"
+   },
+   "faq_a_5": {
+      "message": "כן, יש אפשרות למנוע סגירה של כרטיסיות מוצמדות. סמן את האפשרות \"אל תסגור כרטיסיות מוצמדות\" כדי להבטיח שכרטיסיות אלו יישארו פתוחות גם אם הן עומדות בקריטריונים אחרים לסגירה."
+   },
+   "faq_a_6": {
+      "message": "סוג לוח הזמנים 'שניהם' נותן לך שליטה מלאה על מתי פתיחה ונסגרת כרטיסייה, ומאפשר לך להגדיר זמנים ספציפיים לשתי הפעולות."
+   },
+   "faq_a_7": {
+      "message": "סינון כתובת האתר מבטיח שרק חלק מסוים מכתובת האתר צריך להתאים כדי שהפעולה המתוזמנת תתבצע. זה שימושי כאשר ברצונך להפוך פעולות מסוימות לאוטומטיות על סמך התאמות חלקיות של כתובות אתרים. לדוגמה, אם תסמן את אפשרות סינון כתובת האתר עבור כתובת האתר https://example.com/page, היא תחול גם על כתובות אתרים כמו https://example.com/page/123, https://example.com/ page?query=example, ו-https://subdomain.example.com/page."
+   },
+   "faq_a_8": {
+      "message": "עם האפשרות \"הפעל את הכרטיסייה המתוזמנת הזו\", אתה יכול בקלות להפעיל או לבטל כרטיסיות מתוזמנות, מה שמעניק לך את הגמישות לנהל את לוחות הזמנים שלך מבלי לאבד תצורות."
+   },
+   "faq_a_9": {
+      "message": "כברירת מחדל, תקבל הודעות. עם זאת, אם אתה מעדיף להפסיק הודעות, תוכל לסמן את האפשרות \"אל תראה הודעה\" כדי להשבית אותן."
+   },
+   "february": {
+      "message": "פֶבּרוּאָר"
+   },
+   "filterTips": {
+      "message": "המסנן חל אחרי 'https://' או 'www.', למשל 'github.com'"
+   },
+   "for_exp": {
+      "message": "לְדוּגמָה"
+   },
+   "freeForever": {
+      "message": "חינם לנצח"
+   },
+   "freeSchedule": {
+      "message": "לוח זמנים חינם"
+   },
+   "freeTral": {
+      "message": "כמשתמש מוקדם מוערך, אתה תהנה\u003Crday>120\u003C/rday>ימים של גישה חופשית לפני המעבר לתוכנית בתשלום החדשה שלנו - תודה על תמיכתך המתמשכת!\u003Cp class=\"p-t-5\">יש לך\u003Cb>\u003Cspan>\u003C/span>\u003C/b>ימים שנותרו מחוץ לך\u003Crday>120\u003C/rday>-תקופת חינם של יום.\u003Cafex class=\"warning\">\u003Cafex>\u003C/afex>\u003C/afex>\u003C/p> "
+   },
+   "frequentlyAskedQuestions": {
+      "message": "שאלות נפוצות"
+   },
+   "friday": {
+      "message": "יוֹם שִׁישִׁי"
+   },
+   "getThisPlan": {
+      "message": "קבל את התוכנית הזו"
+   },
+   "goToSettingsPageToSchedule": {
+      "message": "עבור לדף ההגדרות כדי לתזמן את הפתיחה והסגירה של כתובות אתרים."
+   },
+   "goURL": {
+      "message": "עבור אל כתובת האתר"
+   },
+   "helpAccordion12": {
+      "message": "האם התוסף הזה עובד במצב שינה/השעיה?"
+   },
+   "helpAccordion3": {
+      "message": "האם אני יכול לתזמן כרטיסייה לפתיחה במצב גלישה בסתר?"
+   },
+   "helpAccordion6": {
+      "message": "מה זה \"פג תוקף הזמן\"?"
+   },
+   "helpAccordion7": {
+      "message": "האם אוכל לייצא כתובת אתר מתוזמנת?"
+   },
+   "helpAccordion8": {
+      "message": "האם אני יכול לייבא כתובת אתר לתזמון?"
+   },
+   "helpPanelBodyDesc12First": {
+      "message": "לא, הרחבה זו לא תעבוד במצב שינה/השעיה."
+   },
+   "helpPanelBodyDesc12Second": {
+      "message": "אם כתובת אתר כלשהי מתוזמנת בכרטיסיית הפתיחה או הסגירה, המחשב שלך לא יעבור אוטומטית למצב שינה או השעיה."
+   },
+   "helpPanelBodyDesc3": {
+      "message": "כן, אתה יכול לבחור לפתוח כרטיסייה מתוזמנת במצב גלישה בסתר על ידי בחירה באפשרות 'פתח במצב גלישה בסתר'. ודא שהאפשרות 'אפשר בסתר' של התוסף מופעלת בהגדרות התוסף של הדפדפן."
+   },
+   "helpPanelBodyDesc6": {
+      "message": "- התאריך והשעה הנתונים עוברים מהתאריך והשעה הנוכחיים ואז הטקסט \"פג תוקף\" יופיע."
+   },
+   "helpPanelBodyDesc7": {
+      "message": "כן, אתה יכול לייצא את כתובת האתר של כרטיסיית פתוחה וסגירה כבר מתוזמנת בפורמט csv ולהשתמש בה עם מערכת אחרת כדי לייבא את כתובת האתר הזו."
+   },
+   "helpPanelBodyDesc8": {
+      "message": "כן, אתה יכול לייבא כתובת אתר פתוחה וסגורה חוקית בפורמט CSV. פורמט ה-CSV המיובא יתוזמן אוטומטית בזמן נתון"
+   },
+   "herAreStepsToAllow": {
+      "message": "להלן השלבים ל\"אפשר בסתר\" ב-Google Chrome:"
+   },
+   "home": {
+      "message": "בַּיִת"
+   },
+   "hour_minute_close": {
+      "message": "כל שעה דקה קרובה"
+   },
+   "hour_minute_open": {
+      "message": "כל שעה דקה פתוחה"
+   },
+   "how_to_use_tab": {
+      "message": "כיצד להשתמש בתזמון כרטיסיות?"
+   },
+   "import": {
+      "message": "יְבוּא"
+   },
+   "importClsTbDta": {
+      "message": "ייבא נתוני כרטיסייה סגורה"
+   },
+   "importExport": {
+      "message": "ייבוא/ייצוא"
+   },
+   "importOpenTbDt": {
+      "message": "ייבא נתוני כרטיסייה פתוחה"
+   },
+   "importedRecored": {
+      "message": ", מיובא מוקלט"
+   },
+   "inactivateScheduleTab": {
+      "message": "השבת את הכרטיסייה המתוזמנת."
+   },
+   "inactive": {
+      "message": "לֹא פָּעִיל"
+   },
+   "inactiveSch": {
+      "message": "8. כתובת אתר לא פעילה"
+   },
+   "inactiveSchExm1": {
+      "message": "בדוגמה לעיל כתובת ה-URL הנתונה נמצאת בכרטיסייה פתוחה או בכרטיסייה סגורה, אשר קובעת שכתובת ה-URL הנתונה אינה פעילה והיא לא תבצע שום פעולה."
+   },
+   "inactiveThisScheduledTabs": {
+      "message": "הפעל את הכרטיסייה המתוזמנת הזו"
+   },
+   "invalidDuplicate": {
+      "message": ", משוכפל או לא חוקי תועד"
+   },
+   "invldLicKy": {
+      "message": "מפתח רישיון לא חוקי!"
+   },
+   "isClose": {
+      "message": "קרובה"
+   },
+   "isOpen": {
+      "message": "פתוח"
+   },
+   "january": {
+      "message": "יָנוּאָר"
+   },
+   "july": {
+      "message": "יוּלִי"
+   },
+   "june": {
+      "message": "יוּנִי"
+   },
+   "licKeyDis": {
+      "message": "מפתח רישיון זה מושבת."
+   },
+   "listTitle": {
+      "message": "מתזמן כרטיסיות"
+   },
+   "loading": {
+      "message": "אנא המתן..."
+   },
+   "locale": {
+      "message": "he"
+   },
+   "march": {
+      "message": "מַרס"
+   },
+   "maxSchedule": {
+      "message": "4 מגבלת לוח זמנים מקסימלית"
+   },
+   "may": {
+      "message": "מַאִי"
+   },
+   "mintValid": {
+      "message": "נדרשת מינימום 1 דקה"
+   },
+   "minute": {
+      "message": "דַקָה"
+   },
+   "minutesNotLessThan1": {
+      "message": "דקות לא יפחת מ-1."
+   },
+   "monday": {
+      "message": "יוֹם שֵׁנִי"
+   },
+   "month": {
+      "message": "חוֹדֶשׁ"
+   },
+   "monthly": {
+      "message": "יַרחוֹן"
+   },
+   "more": {
+      "message": "יוֹתֵר"
+   },
+   "mostSubscribe": {
+      "message": "הכי נרשמים"
+   },
+   "no": {
+      "message": "לֹא"
+   },
+   "noDataToExport": {
+      "message": "אין נתונים לייצוא."
+   },
+   "noScheduledTabs": {
+      "message": "אין כרטיסיות מתוזמנות"
+   },
+   "noTimerSetAddNewTimer": {
+      "message": "לא הוגדר טיימר, לחץ על כפתור הוסף כדי להגדיר טיימר חדש"
+   },
+   "not_show_tutorial": {
+      "message": "אל תציג את המדריך הזה שוב"
+   },
+   "notificationOpenTab": {
+      "message": "13. הודעה בכתובת ה-URL של כרטיסיית פתיחה/סגירה"
+   },
+   "notificationOpenTabExm1": {
+      "message": "בדוגמה שלמעלה כתובת האתר הנתונה נמצאת בכרטיסייה פתוחה, מה שמציין שהיא תיתן הודעה ותפתח/סגור כתובת URL בכרטיסייה חדשה בכל 5 דקות."
+   },
+   "notifications": {
+      "message": "הוֹדָעָה"
+   },
+   "november": {
+      "message": "נוֹבֶמבֶּר"
+   },
+   "october": {
+      "message": "אוֹקְטוֹבֶּר"
+   },
+   "onTheExtensionDetailPage": {
+      "message": "בדף הפרטים של התוסף, גלול מטה ומצא את האפשרות \"אפשר בסתר\"."
+   },
+   "oneTime": {
+      "message": "פעם אחת"
+   },
+   "oneTmSch": {
+      "message": "1. לוח זמנים חד פעמי"
+   },
+   "oneTmSchExm1": {
+      "message": "בדוגמה שלמעלה כתובת האתר הנתונה נמצאת בכרטיסייה פתוחה, מה שאומר שהיא תיפתח בכרטיסייה חדשה פעם אחת בשעה 13:45 ב-21/1/2023"
+   },
+   "oneTmSchExm2": {
+      "message": "בדוגמה שלמעלה כתובת האתר הנתונה נמצאת בכרטיסייה סגורה, מה שאומר שהיא תסגור את כל כרטיסיות הכתובות התואמות הספציפיות בשעה 13:45 ב-21/1/2023"
+   },
+   "open": {
+      "message": "לִפְתוֹחַ"
+   },
+   "openBackground": {
+      "message": "אם כן, טעינת כתובת URL ברקע מבלי לפתוח אותה בלשונית חדשה"
+   },
+   "openDate": {
+      "message": "תאריך פתיחה"
+   },
+   "openDay": {
+      "message": "יום פתוח"
+   },
+   "openEveryDayOn": {
+      "message": "פתוח כל יום ב"
+   },
+   "openEveryMonthOn": {
+      "message": "פתוח כל חודש ביום"
+   },
+   "openEveryWeekOn": {
+      "message": "פתוח כל שבוע ב"
+   },
+   "openEveryYearOn": {
+      "message": "פתוח כל שנה ב"
+   },
+   "openGoogleChrome": {
+      "message": "פתח את Google Chrome."
+   },
+   "openInBackground": {
+      "message": "פתח את כתובת האתר ברקע"
+   },
+   "openInEvery": {
+      "message": "פתוח בכל"
+   },
+   "openInIncognito": {
+      "message": "פתח במצב גלישה בסתר"
+   },
+   "openMinute": {
+      "message": "דקה פתוחה"
+   },
+   "openOnDay": {
+      "message": "פתוח ביום"
+   },
+   "openOnEvery": {
+      "message": "פתוח בכל"
+   },
+   "openSecond": {
+      "message": "פתח שני"
+   },
+   "openSecondsMoreThan5": {
+      "message": "שניות פתוחות צריכות להיות יותר מ-5."
+   },
+   "openTabSchedule": {
+      "message": "פתח את לוח זמנים של כרטיסיות"
+   },
+   "openTabURL": {
+      "message": "פתח את כתובת האתר של Tab"
+   },
+   "openTime": {
+      "message": "זמן פתיחה"
+   },
+   "openUrl": {
+      "message": "פתח קישור לאתר"
+   },
+   "openWeek": {
+      "message": "שבוע פתוח"
+   },
+   "openWeeks": {
+      "message": "שבועות פתוחים"
+   },
+   "open_on": {
+      "message": "פתח ב"
+   },
+   "optional": {
+      "message": "אופציונלי"
+   },
+   "or": {
+      "message": "אוֹ"
+   },
+   "outof": {
+      "message": "מִתוֹך"
+   },
+   "pagePath": {
+      "message": "נתיב עמוד"
+   },
+   "paidFeature": {
+      "message": "תכונה בתשלום"
+   },
+   "pauseSchedule": {
+      "message": "התחל או הפסק את כל לוחות הזמנים"
+   },
+   "pauseTabScheduler": {
+      "message": "מתזמן כרטיסיות מושהה"
+   },
+   "pleaseAllowIncognitoMessage": {
+      "message": "אנא הפעל את האפשרות 'אפשר בסתר' בפרטי התוסף. להנחיות, עיין בדף ההדרכה."
+   },
+   "pleaseShareYourSuggestions": {
+      "message": "אנא שתף ​​את הצעתך."
+   },
+   "plsShreAnySugWithUs": {
+      "message": "בבקשה תן הצעה לשפר אותנו"
+   },
+   "powerMode": {
+      "message": "מצב כוח"
+   },
+   "premium": {
+      "message": "פּרֶמיָה"
+   },
+   "pricePlan": {
+      "message": "תמחור ותוכניות"
+   },
+   "privcyPolicy": {
+      "message": "מדיניות פרטיות"
+   },
+   "prowerModeTip": {
+      "message": "שמור על המערכת פעילה תמיד על ידי הפעלת מצב Power"
+   },
+   "put": {
+      "message": "לָשִׂים"
+   },
+   "rateUs": {
+      "message": "דרג אותנו"
+   },
+   "removeDuplicateEntry": {
+      "message": "נא להסיר ערך כפול"
+   },
+   "removeOpenTbURL": {
+      "message": "הסר את כתובת האתר של כרטיסייה פתוחה"
+   },
+   "repeat": {
+      "message": "לַחֲזוֹר עַל"
+   },
+   "requiredMsg": {
+      "message": "דָרוּשׁ"
+   },
+   "rmvClsTb": {
+      "message": "הסר את כתובת האתר של כרטיסיית סגור"
+   },
+   "sameTabs": {
+      "message": "רענן את הכרטיסייה אם כתובת האתר כבר פתוחה"
+   },
+   "sameTabsInfo": {
+      "message": "מנע פתיחה של מספר כרטיסיות עבור אותה כתובת אתר. לדוגמה, אם www.google.com כבר נפתח, אז הכרטיסייה הקיימת תבוצע רענון במקום לפתוח עבורה כרטיסייה חדשה."
+   },
+   "sampleCsvOpenPath": {
+      "message": "../sample_csv/en/open_tab_sample.csv"
+   },
+   "sampleFile": {
+      "message": "קובץ לדוגמה"
+   },
+   "saturday": {
+      "message": "שַׁבָּת"
+   },
+   "savOpnData": {
+      "message": "שמור נתוני כרטיסייה פתוחה"
+   },
+   "save": {
+      "message": "לְהַצִיל"
+   },
+   "saveClsTbData": {
+      "message": "שמור נתוני כרטיסייה סגורה"
+   },
+   "saveSchedule": {
+      "message": "שמור לוח זמנים"
+   },
+   "scheduleCloseTab": {
+      "message": "לוח זמנים סגור כרטיסייה"
+   },
+   "scheduleCurrentTab": {
+      "message": "תזמן את הכרטיסייה הנוכחית"
+   },
+   "scheduleOpenTab": {
+      "message": "לוח זמנים פתח כרטיסייה"
+   },
+   "scheduledTabIsAlreadyExistWithSameTimer": {
+      "message": "הכרטיסייה המתוזמנת הזו כבר קיימת עם אותו טיימר."
+   },
+   "scheduledTabList": {
+      "message": "רשימת כרטיסיות מתוזמנת"
+   },
+   "scheduledType": {
+      "message": "סוג לוח זמנים"
+   },
+   "search": {
+      "message": "לְחַפֵּשׂ"
+   },
+   "secValid": {
+      "message": "נדרשות מינימום 5 שניות"
+   },
+   "second": {
+      "message": "שְׁנִיָה"
+   },
+   "selectCloseDate": {
+      "message": "בחר תאריך סגירה"
+   },
+   "selectCloseDay": {
+      "message": "בחר יום סגור"
+   },
+   "selectCloseTime": {
+      "message": "בחר זמן סגירה"
+   },
+   "selectColumn": {
+      "message": "בחר עמודה"
+   },
+   "selectDateAndTime": {
+      "message": "בחר תאריך ושעה כדי לפתוח כרטיסייה חדשה"
+   },
+   "selectDateAndTimeClsTb": {
+      "message": "בחר תאריך ושעה לסגירת הכרטיסייה"
+   },
+   "selectDayToCloseSchTb": {
+      "message": "בחר יום לסגירת כרטיסיית לוח הזמנים."
+   },
+   "selectDayToClsTb": {
+      "message": "בחר יום לסגירת הכרטיסייה"
+   },
+   "selectDayToSchdule": {
+      "message": "בחר את הכרטיסייה יום לתזמון."
+   },
+   "selectDaysInWeek": {
+      "message": "בחר ימים בשבוע"
+   },
+   "selectDaysInWeekIClsTime": {
+      "message": "בחר ימים בשבוע בטיימר סגור."
+   },
+   "selectDaysInWeekIOpClsTime": {
+      "message": "בחר ימים בשבוע בטיימר פתיחה או סגירה."
+   },
+   "selectDaysInWeekIOpTime": {
+      "message": "בחר ימים בשבוע בטיימר פתוח."
+   },
+   "selectFrequency": {
+      "message": "בחר תדירות"
+   },
+   "selectFrequencyOfScheduleUrl": {
+      "message": "בחר תדירות של כתובת האתר המתוזמנת."
+   },
+   "selectOpenDate": {
+      "message": "בחר תאריך פתיחה"
+   },
+   "selectOpenDay": {
+      "message": "בחר יום פתוח"
+   },
+   "selectOpenOrClose": {
+      "message": "בחר זמן פתיחה וסגירה"
+   },
+   "selectOpenOrCloseDate": {
+      "message": "בחר תאריך פתיחה וסגירה"
+   },
+   "selectOpenOrCloseDay": {
+      "message": "בחר יום פתיחה וסגירה"
+   },
+   "selectOpenTime": {
+      "message": "בחר זמן פתיחה"
+   },
+   "selectPreferredLanguage": {
+      "message": "בחר את השפה המועדפת עליך."
+   },
+   "selectToOpenTab": {
+      "message": "בחר יום לפתיחת כרטיסייה חדשה"
+   },
+   "selectTypTimerClsTb": {
+      "message": "בחר סוג טיימר לסגירת הכרטיסייה"
+   },
+   "selectTypeOfSchedule": {
+      "message": "בחר סוג לוח זמנים, אם אתה רוצה גם לפתוח וגם לסגור, מאשר לבחור \"שניהם\"."
+   },
+   "selectTypeOfTimer": {
+      "message": "בחר סוג טיימר כדי לפתוח כרטיסייה חדשה"
+   },
+   "select_weeks": {
+      "message": "בחר שבועות"
+   },
+   "september": {
+      "message": "סֶפּטֶמבֶּר"
+   },
+   "settingSave": {
+      "message": "ההגדרות נשמרו בהצלחה"
+   },
+   "settingToClose": {
+      "message": "הגדרה לסגירת כרטיסייה במצב גלישה בסתר."
+   },
+   "shareYourSuggestionWithUs": {
+      "message": "שתף אותנו בהצעות שלך.."
+   },
+   "slectDayToScheduleWeekly": {
+      "message": "בחר ימים לתזמון כרטיסייה שבועית."
+   },
+   "slectMinute": {
+      "message": "בחר דקה"
+   },
+   "smthngWrng": {
+      "message": "משהו השתבש"
+   },
+   "softpulseInfotech": {
+      "message": "Softpulse Infotech"
+   },
+   "somethingWentWrong": {
+      "message": "משהו השתבש. רענן את הדף ונסה שוב."
+   },
+   "status": {
+      "message": "סטָטוּס"
+   },
+   "subcrKeyShldNEmpt": {
+      "message": "נא להזין מפתח מנוי."
+   },
+   "subdomain": {
+      "message": "תת-דומיין"
+   },
+   "subkeyInputTitle": {
+      "message": "הזן מפתח מנוי"
+   },
+   "submFeedBack": {
+      "message": "לְהַגִישׁ"
+   },
+   "suggForTbSch": {
+      "message": "הצעה למתזמן כרטיסיות"
+   },
+   "suggestionAndRateUs": {
+      "message": "הצע ודרג אותנו"
+   },
+   "sunday": {
+      "message": "יוֹם רִאשׁוֹן"
+   },
+   "tabCloseOneTime": {
+      "message": "הכרטיסייה תיסגר רק פעם אחת"
+   },
+   "tabSchTutorial": {
+      "message": "הדרכה של מתזמן כרטיסיות"
+   },
+   "tabScheduler": {
+      "message": "מתזמן כרטיסיות"
+   },
+   "tabSchedulerOptions": {
+      "message": "אפשרויות מתזמן כרטיסיות"
+   },
+   "tabWillOpenOneTime": {
+      "message": "הכרטיסייה תיפתח רק פעם אחת ב-"
+   },
+   "tabWillOpenWhenBrowserOpen": {
+      "message": "הכרטיסייה תיפתח כאשר הדפדפן ייפתח ב-"
+   },
+   "termCondition": {
+      "message": "תנאים והגבלות"
+   },
+   "thanksFrRev": {
+      "message": "תודה על הביקורת שלך"
+   },
+   "thnkUFeedBack": {
+      "message": "תודה על הצעתך"
+   },
+   "thnkUFrUsngTbSch": {
+      "message": "בבקשה תן הצעה לשפר אותנו"
+   },
+   "thursday": {
+      "message": "יוֹם חֲמִישִׁי"
+   },
+   "time": {
+      "message": "זְמַן"
+   },
+   "timeExpired": {
+      "message": "הזמן פג"
+   },
+   "timer": {
+      "message": "שָׁעוֹן עֶצֶר"
+   },
+   "title": {
+      "message": "כּוֹתֶרֶת"
+   },
+   "titleLengtWarn": {
+      "message": "אורך הכותרת לא יעלה על 200 תווים."
+   },
+   "toScheduledOpenTbMsg": {
+      "message": "לכרטיסייה פתוחה מתוזמנת, בטל את הסימון של סינון כתובות אתרים."
+   },
+   "toogleCloseTab": {
+      "message": "הפעל/עצור את אזעקת לוח הזמנים עבור כל כתובת האתר של כרטיסיות סגורות"
+   },
+   "toogleDarkmode": {
+      "message": "עבור בין מצב כהה למצב ברירת מחדל כדי להתאים אישית את חווית הצפייה שלך."
+   },
+   "toogleOff": {
+      "message": "כבוי"
+   },
+   "toogleOn": {
+      "message": "עַל"
+   },
+   "toogleOpenTab": {
+      "message": "הפעל/עצור את אזעקת לוח הזמנים עבור כל כתובת האתר של הכרטיסיות הפתוחות"
+   },
+   "topLevelDomain": {
+      "message": "דומיין ברמה העליונה"
+   },
+   "totalProcessed": {
+      "message": "סך כל ההקלטות עובדו"
+   },
+   "tuesday": {
+      "message": "יוֹם שְׁלִישִׁי"
+   },
+   "tutorialImg1": {
+      "message": "\u003Cimg src=\"../images/en/1.png\">"
+   },
+   "tutorialImg10": {
+      "message": "\u003Cimg src=\"../images/en/10.png\">"
+   },
+   "tutorialImg11": {
+      "message": "\u003Cimg src=\"../images/en/11.png\">"
+   },
+   "tutorialImg12": {
+      "message": "\u003Cimg src=\"../images/en/12.png\">"
+   },
+   "tutorialImg13": {
+      "message": "\u003Cimg src=\"../images/en/13.png\">"
+   },
+   "tutorialImg14": {
+      "message": "\u003Cimg src=\"../images/en/14.png\">"
+   },
+   "tutorialImg2": {
+      "message": "\u003Cimg src=\"../images/en/2.png\">"
+   },
+   "tutorialImg3": {
+      "message": "\u003Cimg src=\"../images/en/3.png\">"
+   },
+   "tutorialImg4": {
+      "message": "\u003Cimg src=\"../images/en/4.png\">"
+   },
+   "tutorialImg5": {
+      "message": "\u003Cimg src=\"../images/en/5.png\">"
+   },
+   "tutorialImg6": {
+      "message": "\u003Cimg src=\"../images/en/6.png\">"
+   },
+   "tutorialImg7": {
+      "message": "\u003Cimg src=\"../images/en/7.png\">"
+   },
+   "tutorialImg8": {
+      "message": "\u003Cimg src=\"../images/en/8.png\">"
+   },
+   "tutorialImg9": {
+      "message": "\u003Cimg src=\"../images/en/9.png\">"
+   },
+   "uncheckAll": {
+      "message": "בטל את הסימון של הכל"
+   },
+   "unlimitedSchedule": {
+      "message": "מגבלת לוח זמנים בלתי מוגבלת"
+   },
+   "unspecifiedURL": {
+      "message": "11. נתיב לא מוגדר של כתובת אתר"
+   },
+   "unspecifiedURLExm1": {
+      "message": "בדוגמה שלמעלה כתובת האתר הנתונה נמצאת בכרטיסייה סגורה, שמציינת שכתובת URL נתונה שנפתחה בלשונית חדשה ומתחילה ומסתיימת בכתובת אינטרנט לא ידועה תיסגר לאחר 5 דקות."
+   },
+   "upgradePlan": {
+      "message": "אנא קנה תוכנית או התחבר ושדרג את התוכנית שלך כדי לפתוח תכונות נוספות."
+   },
+   "upgradePlanUnlock": {
+      "message": "שדרג את התוכנית שלך כדי לפתוח תכונות נוספות."
+   },
+   "uploadValidFormat": {
+      "message": "נא להעלות פורמט חוקי"
+   },
+   "url": {
+      "message": "כתובת אתר"
+   },
+   "urlContExat": {
+      "message": "סינון כתובות אתרים"
+   },
+   "urlEndWithUnspesifiedPth": {
+      "message": "9. כתובת URL מסתיימת בנתיב לא מוגדר"
+   },
+   "urlEndWithUnspesifiedPthExm1": {
+      "message": "בדוגמה שלמעלה כתובת האתר הנתונה נמצאת בכרטיסייה סגורה, שמציינת שכתובת אתר נתונה שנפתחה בלשונית חדשה ומסתיימת בנתיב לא ידוע ייסגר לאחר 5 דקות."
+   },
+   "urlFilterInfo": {
+      "message": "מכיל כתובת אתר שנבדקת זקוק רק לחלק מכתובת האתר וכתובת האתר המדויקת הנבדקת חייבת להיות התאמה מדויקת לכתובת האתר שצוינה"
+   },
+   "urlFilterinCLoseTb": {
+      "message": "14. סינון כתובות אתרים בכתובת אתר של כרטיסייה סגורה"
+   },
+   "urlFilterinCLoseTbExample": {
+      "message": "בדוגמה שלמעלה כתובת ה-URL הנתונה נמצאת בכרטיסייה סגורה, שבה נכתב כי כתובת ה-URL של הכרטיסייה שכבר נפתחה תואמת חלק מהכתובת הנתונה, כך שהיא תסגור את הכרטיסייה הזו"
+   },
+   "urlIsRequired": {
+      "message": "נדרש קישור לאתר"
+   },
+   "urlNotvalid": {
+      "message": "כתובת האתר אינה חוקית"
+   },
+   "urlStartWithUnspesifiedPth": {
+      "message": "10. כתובת URL מתחילה בנתיב לא מוגדר"
+   },
+   "urlStartWithUnspesifiedPthExm1": {
+      "message": "בדוגמה שלמעלה כתובת האתר הנתונה נמצאת בכרטיסייה סגורה, שמציינת שכתובת אתר נתונה שנפתחה בלשונית חדשה ומתחילה בתת-דומיין לא ידוע \u003Cb>'www'\u003C/b> או \u003Cb>'בלוג'\u003C/b> תיסגר לאחר 5 דקות."
+   },
+   "useSpecificUrl": {
+      "message": "השתמש בקישור ספציפי לאתר"
+   },
+   "useSpecificUrl1": {
+      "message": "עליך לרשום את תת-הדומיין המדויק, הדומיין ברמה העליונה, שם הדומיין ונתיב הדף בשדה קישור לאתר ללשונית הדפדפן הסגורה."
+   },
+   "useSpecificUrl2": {
+      "message": "השתמש בכרטיסייה סגורה של כל הדפדפן"
+   },
+   "useSpecificUrl3": {
+      "message": "השתמש בקישור ספציפי ומלא לאתר"
+   },
+   "useUnSpecificUrl1": {
+      "message": "השתמש בקישור לאתר לא מוגדר"
+   },
+   "useUnSpecificUrl2": {
+      "message": "השתמש התחל עם קישור לאתר לא מוגדר"
+   },
+   "useUnSpecificUrl3": {
+      "message": "השתמש בסוף עם קישור לאתר לא מוגדר"
+   },
+   "used": {
+      "message": "השתמשת"
+   },
+   "validFormatCsv": {
+      "message": "מהו פורמט קובץ ה-CSV החוקי לייבוא?"
+   },
+   "websiteLink": {
+      "message": "קישור לאתר"
+   },
+   "websiteUrl": {
+      "message": "כתובת האתר"
+   },
+   "wednesday": {
+      "message": "יוֹם רְבִיעִי"
+   },
+   "weekName": {
+      "message": "שם השבוע"
+   },
+   "weekly": {
+      "message": "שְׁבוּעִי"
+   },
+   "whenExtensionTabAppears": {
+      "message": "כאשר הכרטיסייה הרחבות מופיעה, אתר את \"מתזמן כרטיסיות עם פתיחה וסגירה אוטומטית\" כדי להפעיל במצב גלישה בסתר ולחץ על כפתור \"פרטים\" לידו."
+   },
+   "whenMenuPopup": {
+      "message": "כאשר תפריט קופץ, בחר \"נהל הרחבות\"."
+   },
+   "withSignMustFill": {
+      "message": "עם סימן \u003Cspan>*\u003C/span> יש למלא או לבחור, בחר זמן פתיחה או סגירה או בשתי הפעמים."
+   },
+   "writeYourDescriptionAboutSchUrl": {
+      "message": "כתוב כאן את התיאור שלך לגבי כתובת האתר המתוזמנת."
+   },
+   "yes": {
+      "message": "כֵּן"
+   },
+   "yourEmailAddress": {
+      "message": "כתובת המייל שלך"
+   },
+   "yourScheduleUrl": {
+      "message": "כתובת האתר של לוח הזמנים שלך"
+   }
+}

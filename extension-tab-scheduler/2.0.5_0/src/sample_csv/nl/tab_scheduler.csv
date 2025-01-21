@@ -1,0 +1,4 @@
+﻿URL,Tijdklok,Staat,Open datum,Sluitingsdatum,Open Tijd,Sluitingstijd,Openweek,Sluiten Week,Bij openen browser,Open Dag,Sluitingsdag,Open minuut,Sluiten Minuut,Open tweede,Sluiten Tweede,Kennisgeving,Titel,Beschrijving,URL openen op de achtergrond,Openen in incognitomodus,Sluit geen vastgezette tabbladen,Alleen incognitotabbladen sluiten,URL-filtering,Schematype,Elk uur open minuut,Elk uur Sluiting Minuut,Tabblad vernieuwen als URL al open is
+https://www.google.com/,Elke minuut,Actief,,,,,"","","",,,,,,,Inactief,Close Every Minute,,Nee,Nee,Nee,Nee,Ja,Dichtbij,0,0,Ja
+http://www.w3schools.com/,Elke dag,Actief,,,16:31,,"","","",,,,,,,Inactief,Every Day Open,,Nee,Nee,Nee,Nee,Nee,Open,0,0,Nee
+https://www.flipkart.com/,Aangepaste minuut,Actief,,,,,"","","",,,120,5,,,Inactief,Open and Close,,Nee,Nee,Nee,Nee,Nee,Beide,0,0,Nee

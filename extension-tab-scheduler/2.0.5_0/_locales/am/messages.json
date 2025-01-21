@@ -1,0 +1,1448 @@
+{
+   "10_min": {
+      "message": "10 ደቂቃ"
+   },
+   "1_min": {
+      "message": "1 ደቂቃ"
+   },
+   "30_min": {
+      "message": "30 ደቂቃ"
+   },
+   "5_min": {
+      "message": "5 ደቂቃ"
+   },
+   "60_min": {
+      "message": "ሰአት"
+   },
+   "Dashboard": {
+      "message": "ዳሽቦርድ"
+   },
+   "Login": {
+      "message": "ግባ"
+   },
+   "Off": {
+      "message": "ጠፍቷል"
+   },
+   "On": {
+      "message": "በርቷል"
+   },
+   "Selected": {
+      "message": "ተመርጧል"
+   },
+   "Settings": {
+      "message": "ቅንብሮች"
+   },
+   "Tutorial": {
+      "message": "አጋዥ ስልጠና"
+   },
+   "action": {
+      "message": "ድርጊት"
+   },
+   "activateScheduleTab": {
+      "message": "መርሐግብር የተያዘለትን ትር ያግብሩ።"
+   },
+   "active": {
+      "message": "ንቁ"
+   },
+   "activeAllScheduleTab": {
+      "message": "አሂድ ትር መርሐግብር"
+   },
+   "activeStatus": {
+      "message": "ሁኔታ"
+   },
+   "actvInactvNotification": {
+      "message": "የጊዜ መርሐግብር ትር ሲከፈት ማሳወቂያ አሳይ"
+   },
+   "actvInactvOpnTb": {
+      "message": "ንቁ ወይም የቦዘነ ክፍት ትር"
+   },
+   "actvIntvClsTb": {
+      "message": "ንቁ ወይም የቦዘነ መዝጊያ ትር"
+   },
+   "add": {
+      "message": "አክል"
+   },
+   "addDescription": {
+      "message": "መግለጫ ያክሉ"
+   },
+   "addNew": {
+      "message": "አዲስ ያክሉ"
+   },
+   "addNewURlCls": {
+      "message": "ለመዝጋት አዲስ ዩአርኤል ያክሉ"
+   },
+   "addNewUrlToOpen": {
+      "message": "በአዲስ መስኮት ለመክፈት አዲስ ዩአርኤል ያክሉ"
+   },
+   "addTitle": {
+      "message": "ርዕስ ጨምር"
+   },
+   "addWebsite": {
+      "message": "ድር ጣቢያ ያክሉ"
+   },
+   "all": {
+      "message": "ሁሉም"
+   },
+   "allInputFieldReq": {
+      "message": "ሁሉም መስኮች ያስፈልጋሉ።"
+   },
+   "all_weeks": {
+      "message": "ሳምንቱን በሙሉ"
+   },
+   "alreadyPurchase": {
+      "message": "አስቀድመው ተገዝተዋል? ቁልፉን እዚህ ያስገቡ"
+   },
+   "andAt": {
+      "message": "እና በ"
+   },
+   "annually": {
+      "message": "በየዓመቱ"
+   },
+   "appDesc": {
+      "message": "የአሳሽ ትሮች በተመረጠው ጊዜ ይከፈታሉ እና በራስ-ሰር ይዘጋሉ። በፍላጎት ላይ በመመስረት ተጠቃሚ ዝርዝርን ማግበር/ማቦዘን ይችላል።"
+   },
+   "appName": {
+      "message": "የትር መርሐግብር በራስ-ሰር ክፍት እና መዝጋት"
+   },
+   "april": {
+      "message": "ሚያዚያ"
+   },
+   "at": {
+      "message": "በ"
+   },
+   "august": {
+      "message": "ነሐሴ"
+   },
+   "autoFocus": {
+      "message": "ራስ-ማተኮር ትር"
+   },
+   "autoFocustip": {
+      "message": "ከበራ አዲሱ ትር በንቃት/በትኩረት ሁኔታ ይከፈታል።"
+   },
+   "autofocustip": {
+      "message": "አዲስ የተከፈቱ ትሮች በራስ-ሰር ያተኩራሉ"
+   },
+   "basic": {
+      "message": "መሰረታዊ"
+   },
+   "billedAnnyally": {
+      "message": "በየአመቱ የሚከፈል"
+   },
+   "billedMonthly": {
+      "message": "በየወሩ የሚከፈል"
+   },
+   "both": {
+      "message": "ሁለቱም"
+   },
+   "browserOpen": {
+      "message": "በአሳሽ ክፈት"
+   },
+   "browserWebAddress": {
+      "message": "የአሳሹ ድረ-ገጽ ባልታወቀ የድር አድራሻ ተጀምሮ ያበቃል።በግብአትዎ ድር ጣቢያ አገናኝ መስክ በሁለቱም በኩል \u003Cb>* ያስቀምጡ።\u003C/b>"
+   },
+   "browserWebAddress2": {
+      "message": "የአሳሹ ድረ-ገጽ አድራሻው google.com የሚባል የጎራ ስም ይዟል፣ እሱም በተወሰነ ደቂቃ ውስጥ የትኛውም ንዑስ ጎራ እና የገጽ ዱካ ይዘጋል። በሁለቱም በኩል \u003Cb>*\u003C/b> የጎራ ስም እና TLD ያስቀምጡ"
+   },
+   "browserWebAddress3": {
+      "message": "የአሳሹ ድር አድራሻ በማይታወቅ የጎራ ስም ይጀምራል እና በማይታወቅ የገጽ መንገድ ያበቃል"
+   },
+   "browserWebAddress31": {
+      "message": "ከተሰጡት ደቂቃዎች በኋላ ይዘጋል, \u003Cb>*\u003C/b> በ TLD በሁለቱም በኩል ያስቀምጡ"
+   },
+   "browserWebAddress4": {
+      "message": "የአሳሹ ድር አድራሻ ባልታወቀ የድር አድራሻ ይጀምራል። \u003Cb>*\u003C/b> በዩአርኤልዎ መጀመሪያ ላይ ያስቀምጡ ። ያስታውሱ የአሳሹ ድር አድራሻ \u003Cb>*\u003C/b> ከጻፉ በኋላ ከእርስዎ ዩአርኤል ጋር መመሳሰል አለበት።"
+   },
+   "browserWebAddress41": {
+      "message": "የአሳሹ ድር አድራሻ ባልታወቀ ንዑስ ጎራ ይጀምራል"
+   },
+   "browserWebAddress42": {
+      "message": "በድር ጣቢያዎ አገናኝ መጀመሪያ ላይ"
+   },
+   "browserWebAddress5": {
+      "message": "የአሳሹ ድር አድራሻ በማይታወቅ የድር አድራሻ ያበቃል። \u003Cb>*\u003C/b> በዩአርኤልዎ መጨረሻ ላይ ያስቀምጡ ። ያስታውሱ የድር አድራሻዎ ከመፃፍዎ በፊት \u003Cb>* መመሳሰል አለበት።\u003C/b>"
+   },
+   "browserWebAddress51": {
+      "message": "የአሳሹ ድር አድራሻ ባልታወቀ የገጽ መንገድ ያበቃል። \u003Cb>*\u003C/b> በድር አድራሻዎ መጨረሻ ላይ ያስቀምጡ"
+   },
+   "browserWebAddress6": {
+      "message": "ሁሉንም የአሳሽ ትሮችን ለመዝጋት በድር ጣቢያው አድራሻ መስክ ውስጥ \u003Cb>*\u003C/b> ብቻ ያስቀምጡ ። ከተዘጋ በኋላ ሁሉም ትሮች አሳሽ በራስ-ሰር ይዘጋል።"
+   },
+   "browserWebAddress7": {
+      "message": "በዩአርኤል መስኩ ውስጥ ትክክለኛውን ንዑስ ጎራ፣ ከፍተኛ ደረጃ ጎራ፣ የጎራ ስም እና የገጽ ዱካ በአሳሽ ትር ውስጥ ወደተከፈተው ጽፈው መሆን አለበት።"
+   },
+   "browserWebAddress8": {
+      "message": "ዩአርኤልን በተወሰነ ቀን እና ሰዓት ፣ የተወሰነ ወር ፣ የተወሰነ ሳምንት ፣ የተወሰነ ዓመት እና መድገም ጊዜ መክፈት ይችላሉ።"
+   },
+   "buyPlan": {
+      "message": "እቅድ ይግዙ"
+   },
+   "buycofee": {
+      "message": "ቡና ግዛልኝ"
+   },
+   "cancel": {
+      "message": "ሰርዝ"
+   },
+   "changeLanguage": {
+      "message": "ቋንቋ ቀይር"
+   },
+   "checkAll": {
+      "message": "ሁሉንም ያረጋግጡ"
+   },
+   "checkThisOpToPreventClosePinTb": {
+      "message": "የታጠቁ ትሮች እንዳይዘጉ ለመከላከል ይህንን አማራጭ ያረጋግጡ።"
+   },
+   "checkThisOptionOnlyPartOfUrlMtch": {
+      "message": "የዩአርኤል አንድ ክፍል ብቻ መመሳሰል ካለበት ይህን አማራጭ ያረጋግጡ።"
+   },
+   "checkThisOptionToActivate": {
+      "message": "የታቀደለትን ዩአርኤል ለማንቃት ወይም ለማንቃት ይህን አማራጭ ያረጋግጡ።"
+   },
+   "checkThisOptionToCloseOnly": {
+      "message": "ማንነት የማያሳውቅ ትሮችን ብቻ ለመዝጋት ይህንን አማራጭ ያረጋግጡ። እንዲሁም በቅጥያው ዝርዝሮች ውስጥ 'ስውር ውስጥ ፍቀድ' የሚለውን አማራጭ ያንቁ። ለመመሪያዎች፣ እባክዎን የመማሪያውን ገጽ ይመልከቱ።"
+   },
+   "checkThisOptionToCloseOnlyInIncgnitoTb": {
+      "message": "ማንነት የማያሳውቅ ትሮችን ብቻ ለመዝጋት ይህንን አማራጭ ያረጋግጡ። እንዲሁም በቅጥያው ዝርዝሮች ውስጥ 'ስውር ውስጥ ፍቀድ' የሚለውን አማራጭ ያንቁ። ለመመሪያዎች፣ እባክዎን የመማሪያውን ገጽ ይመልከቱ።"
+   },
+   "checkThisOptionToInBg": {
+      "message": "ዩአርኤሉን በአዲስ ትር ውስጥ ሳይከፍቱ ከበስተጀርባ ለመክፈት ከፈለጉ ይህንን አማራጭ ያረጋግጡ"
+   },
+   "checkThisOptionToInactivNotification": {
+      "message": "በታቀደው ዩአርኤል ላይ የቦዘነ ማሳወቂያ ይህንን አማራጭ ያረጋግጡ"
+   },
+   "checkThisOptionToOpen": {
+      "message": "ዩአርኤልዎን ማንነትን በማያሳውቅ ሁነታ መክፈት ከፈለጉ ይህን አማራጭ ያረጋግጡ"
+   },
+   "checkThisOptionToOpenIncogito": {
+      "message": "ዩአርኤልዎን ማንነትን በማያሳውቅ ሁነታ መክፈት ከፈለጉ ይህን አማራጭ ያረጋግጡ"
+   },
+   "checkThisOptionToPrevent": {
+      "message": "የታጠቁ ትሮች እንዳይዘጉ ለመከላከል ይህንን አማራጭ ያረጋግጡ።"
+   },
+   "clickExtIcon": {
+      "message": "በመሳሪያ አሞሌው ውስጥ \"ቅጥያዎች\" አዶን ጠቅ ያድርጉ, እሱም የእንቆቅልሽ ቁራጭ ይመስላል."
+   },
+   "clickTheSwitch": {
+      "message": "እሱን ለማብራት ከጎኑ ያለውን መቀየሪያ ጠቅ ያድርጉ"
+   },
+   "close": {
+      "message": "ገጠመ"
+   },
+   "closeAllTab": {
+      "message": "12. ሁሉንም የአሳሽ ትርን ዝጋ"
+   },
+   "closeAllTabExm1": {
+      "message": "ከላይ ባለው ምሳሌ የተሰጠው ዩአርኤል በትር ቅርብ ነው፣ እሱም ሁሉንም ትሮች በ12:00 በ25/2/2023 እንደሚዘጋ ይገልጻል።"
+   },
+   "closeDate": {
+      "message": "የሚዘጋበት ቀን"
+   },
+   "closeDay": {
+      "message": "የመዝጊያ ቀን"
+   },
+   "closeEveryYear": {
+      "message": "በየአመቱ ዝጋ"
+   },
+   "closeInEvery": {
+      "message": "በእያንዳንዱ ውስጥ ዝጋ"
+   },
+   "closeIncognitoTab": {
+      "message": "ማንነት የማያሳውቅ ትሮችን ብቻ ዝጋ"
+   },
+   "closeMinute": {
+      "message": "ደቂቃ ዝጋ"
+   },
+   "closeOnDay": {
+      "message": "ቀን ላይ ዝጋ"
+   },
+   "closeOnEvery": {
+      "message": "በእያንዳንዱ ላይ ዝጋ"
+   },
+   "closeOnEveryDay": {
+      "message": "በየቀኑ ዝጋ"
+   },
+   "closeOnEveryMonth": {
+      "message": "በየወሩ በየቀኑ ይዝጉ"
+   },
+   "closeOnEveryWeek": {
+      "message": "በየሳምንቱ ዝጋ"
+   },
+   "closeSecond": {
+      "message": "ሁለተኛ ዝጋ"
+   },
+   "closeSeconsMoreThan5": {
+      "message": "የቅርብ ሰከንዶች ከ 5 በላይ መሆን አለባቸው."
+   },
+   "closeTabSchedule": {
+      "message": "የትር መርሐግብርን ዝጋ"
+   },
+   "closeTabURL": {
+      "message": "የትር URL ዝጋ"
+   },
+   "closeTime": {
+      "message": "ጊዜ መዝጊያ"
+   },
+   "closeUrl": {
+      "message": "የድር ጣቢያ አገናኝን ዝጋ"
+   },
+   "closeWeek": {
+      "message": "ሳምንት ዝጋ"
+   },
+   "closeWeeks": {
+      "message": "ሳምንታት ዝጋ"
+   },
+   "close_on": {
+      "message": "ዝጋ በርቷል።"
+   },
+   "cngrtsForSubcr": {
+      "message": "እንኳን ደስ አላችሁ! እቅድህ በተሳካ ሁኔታ ነቅቷል።"
+   },
+   "commonQuestionsAns": {
+      "message": "የተለመዱ ጥያቄዎች እና መልሶች"
+   },
+   "copySucessClose": {
+      "message": "የትር URL ውሂብ ዝጋ ወደ ትር ዩአርኤል ውሂብ ክፈት"
+   },
+   "createNewTimer": {
+      "message": "አዲስ የሰዓት ቆጣሪ ፍጠር"
+   },
+   "currentPlan": {
+      "message": "የአሁኑ እቅድ"
+   },
+   "currentTabSchedule": {
+      "message": "የአሁኑ ትር መርሐግብር"
+   },
+   "currentTbScheduleTimer": {
+      "message": "የአሁኑ ትር መርሐግብር የሰዓት ቆጣሪ።"
+   },
+   "cusSec": {
+      "message": "ብጁ ሁለተኛ"
+   },
+   "custMin": {
+      "message": "ብጁ ደቂቃ"
+   },
+   "custmMinSch": {
+      "message": "7.ብጁ ደቂቃ መርሐግብር"
+   },
+   "custmMinSchExm1": {
+      "message": "ከላይ ባለው ምሳሌ የተሰጠው ዩአርኤል በክፍት ትር ውስጥ አለ፣ እሱም በየ15 ደቂቃው በአዲስ ትር ውስጥ ዩአርኤል ይከፈታል ይላል።"
+   },
+   "custmMinSchExm2": {
+      "message": "ከላይ ባለው ምሳሌ የተሰጠው ዩአርኤል በቅርብ ትር ውስጥ አለ፣ ይህም በአዲስ ትር ውስጥ የተከፈተ ዩአርኤል ከ15 ደቂቃ በኋላ እንደሚዘጋ ይገልጻል።"
+   },
+   "customSecondWarning": {
+      "message": "ብጁ ሁለተኛ ተግባር የሙከራ ነው፣ እና ሰከንዶች ከ60 በታች ከተቀመጡ በትክክል ላይሰራ ይችላል።"
+   },
+   "darkMode": {
+      "message": "ጨለማ ሁነታ"
+   },
+   "datNotCopy": {
+      "message": "ትክክል ባልሆነ ዩአርኤል ምክንያት አንዳንድ ውሂብ አይገለበጥም።"
+   },
+   "dataSaved": {
+      "message": "የሰዓት ቆጣሪ ውሂብ በተሳካ ሁኔታ ተቀምጧል"
+   },
+   "date": {
+      "message": "ቀን"
+   },
+   "dateIsOutOfRange": {
+      "message": "ቀኑ ከክልል ውጭ ነው።"
+   },
+   "day": {
+      "message": "ቀን"
+   },
+   "december": {
+      "message": "ታህሳስ"
+   },
+   "delete": {
+      "message": "ሰርዝ"
+   },
+   "deleteScheduleTb": {
+      "message": "የታቀደውን ትር ሰርዝ።"
+   },
+   "description": {
+      "message": "መግለጫ"
+   },
+   "developedBy": {
+      "message": "የተገነባው በ፡"
+   },
+   "doNotCloseInPinnedTabs": {
+      "message": "የተሰኩ ትሮችን አይዝጉ"
+   },
+   "doNotShowNotification": {
+      "message": "ማሳወቂያ አታሳይ"
+   },
+   "domainName": {
+      "message": "የጎራ ስም"
+   },
+   "downloadCloseTbSampleCsv": {
+      "message": "የሚፈለገውን ቅርጸት ምሳሌ ለማየት የቅርብ ትር ናሙና CSV ያውርዱ"
+   },
+   "downloadOpenTbSampleCsv": {
+      "message": "የሚፈለገውን ቅርጸት ምሳሌ ለማየት ክፍት የትር ናሙና CSV ያውርዱ"
+   },
+   "editScheduleTb": {
+      "message": "የታቀደውን ትር ያርትዑ።"
+   },
+   "email": {
+      "message": "ኢሜይል"
+   },
+   "enterDateToCloseTab": {
+      "message": "የመርሃግብር ትርን ለመዝጋት ቀን እዚህ ያስገቡ።"
+   },
+   "enterDateToOpen": {
+      "message": "የመርሃግብር ትሩን ለመክፈት ቀን አስገባ።"
+   },
+   "enterMiniutesToCloseTb": {
+      "message": "ትሩን ለመዝጋት ደቂቃዎችን አስገባ።"
+   },
+   "enterMiniutesToOpen": {
+      "message": "የጊዜ ሰሌዳውን ለመክፈት ደቂቃዎችን አስገባ።"
+   },
+   "enterMinute": {
+      "message": "ደቂቃ አስገባ"
+   },
+   "enterSecond": {
+      "message": "ሁለተኛ አስገባ"
+   },
+   "enterSecondsToCloseTab": {
+      "message": "ትሩን ለመዝጋት ሰከንዶች አስገባ።"
+   },
+   "enterSecondsToOpen": {
+      "message": "የጊዜ ሰሌዳውን ለመክፈት ሰከንዶች አስገባ።"
+   },
+   "enterTilteOfScheduleUrl": {
+      "message": "የታቀደለትን URL ርዕስ አስገባ።"
+   },
+   "enterTimeToCloseTab": {
+      "message": "የመርሃግብር ትርን ለመዝጋት ጊዜ እዚህ ያስገቡ።"
+   },
+   "enterTimeToSchedule": {
+      "message": "የጊዜ ሰሌዳውን ለመክፈት ጊዜ ያስገቡ።"
+   },
+   "enterValidEmail": {
+      "message": "እባክዎ የሚሰራ ኢሜይል ያስገቡ"
+   },
+   "enterValidUrl": {
+      "message": "እባክህ የሚሰራ URL አስገባ"
+   },
+   "enterValueInCloseSec": {
+      "message": "በቅርብ ሰከንዶች ውስጥ ዋጋ ያስገቡ"
+   },
+   "enterValueInOpenCloseSec": {
+      "message": "በክፍት ወይም በቅርብ ሰከንዶች ውስጥ ዋጋ ያስገቡ"
+   },
+   "enterValueInOpenMinutes": {
+      "message": "በክፍት ደቂቃዎች ውስጥ ዋጋ ያስገቡ"
+   },
+   "enterVlaueInCloseMinutes": {
+      "message": "በቅርብ ደቂቃዎች ውስጥ ዋጋ ያስገቡ"
+   },
+   "enterVlaueInOpenCloseMin": {
+      "message": "በክፍት ወይም በቅርብ ደቂቃዎች ውስጥ ዋጋ ያስገቡ"
+   },
+   "enterVlaueInOpenSeconds": {
+      "message": "በክፍት ሰከንዶች ውስጥ ዋጋ ያስገቡ"
+   },
+   "enterYourURLToSchedule": {
+      "message": "መርሐግብር ለማስያዝ ዩአርኤልዎን ያስገቡ።"
+   },
+   "every": {
+      "message": "እያንዳንዱ"
+   },
+   "every10Min": {
+      "message": "በየ 10 ደቂቃው"
+   },
+   "every1Minute": {
+      "message": "በየ 1 ደቂቃው"
+   },
+   "every30Min": {
+      "message": "በየ 30 ደቂቃው"
+   },
+   "every5Min": {
+      "message": "በየ 5 ደቂቃው"
+   },
+   "everyDay": {
+      "message": "በየቀኑ"
+   },
+   "everyDayAt": {
+      "message": "በየቀኑ በ"
+   },
+   "everyHour": {
+      "message": "በየሰዓቱ"
+   },
+   "everyMinute": {
+      "message": "በየደቂቃው"
+   },
+   "everyMonth": {
+      "message": "በየወሩ"
+   },
+   "everyMonthOn": {
+      "message": "በየወሩ"
+   },
+   "everyMonthOnDay": {
+      "message": "በየወሩ በቀን"
+   },
+   "everyWeek": {
+      "message": "በየሳምንቱ"
+   },
+   "everyWeekOn": {
+      "message": "በየሳምንቱ"
+   },
+   "everyYear": {
+      "message": "በየአመቱ"
+   },
+   "everyYesrOn": {
+      "message": "በየዓመቱ በ"
+   },
+   "evr10MinSch": {
+      "message": "2.እያንዳንዱ 10 ደቂቃ መርሐግብር"
+   },
+   "evr10MinSchExm1": {
+      "message": "ከላይ ባለው ምሳሌ የተሰጠው ዩአርኤል በክፍት ትር ውስጥ ነው፣ ይህም ዩአርኤል የተሰጠው በየ10 ደቂቃው በአዲስ ትር ይከፈታል።"
+   },
+   "evr10MinSchExm2": {
+      "message": "ከላይ ባለው ምሳሌ የተሰጠው ዩአርኤል በቅርብ ትር ውስጥ አለ፣ ይህም በአዲስ ትር ውስጥ የተከፈተ ዩአርኤል ከ10 ደቂቃ በኋላ እንደሚዘጋ ይገልጻል።"
+   },
+   "evrDaySch": {
+      "message": "3.እያንዳንዱ ቀን መርሐግብር"
+   },
+   "evrDaySchExm1": {
+      "message": "ከላይ ባለው ምሳሌ የተሰጠው ዩአርኤል በክፍት ትር ውስጥ አለ፣ እሱም በየቀኑ በአዲስ ትር ውስጥ በየቀኑ 5፡27 ፒኤም ይከፈታል።"
+   },
+   "evrDaySchExm2": {
+      "message": "ከላይ ባለው ምሳሌ የተሰጠው ዩአርኤል በትር ቅርብ ነው፣ ይህም በየቀኑ 5፡27 ፒኤም ላይ የተከፈተውን ትር እንደሚዘጋ ይገልጻል።"
+   },
+   "evrMonthSch": {
+      "message": "5.በየወሩ መርሐግብር"
+   },
+   "evrMonthSchExm1": {
+      "message": "ከላይ ባለው ምሳሌ የተሰጠው ዩአርኤል በክፍት ትር ውስጥ አለ፣ እሱም በአዲስ ትር በየወሩ በ13፡45 በ25 ላይ ይከፈታል ይላል።"
+   },
+   "evrMonthSchExm2": {
+      "message": "ከላይ ባለው ምሳሌ የተሰጠው ዩአርኤል በትር ቅርብ ነው፣ እሱም አስቀድሞ የተከፈተውን ትር በየወሩ በ13፡45 በ25 ቀን እንደሚዘጋ ይገልጻል።"
+   },
+   "evrWeekSch": {
+      "message": "4.እያንዳንዱ ሳምንት መርሐግብር"
+   },
+   "evrWeekSchExm1": {
+      "message": "\u003Cb>ከላይ ባለው ምሳሌ፣ የተሰጠው ዩአርኤል በየሳምንቱ ሰኞ እና ማክሰኞ\u003C/b> 17፡00 ላይ በአዲስ ትር ውስጥ እንደሚከፈት የሚገልጽ ክፍት ትር ላይ ነው ።"
+   },
+   "evrWeekSchExm2": {
+      "message": "ከዚህ በላይ ባለው ምሳሌ፣ የተሰጠው ዩአርኤል በመዝጊያ ትር ውስጥ ነው፣ ይህም አስቀድሞ የተከፈተውን ትር በየሳምንቱ \u003Cb>ሰኞ እና ማክሰኞ\u003C/b> በ17፡00 እንደሚዘጋ ይገልጻል ።"
+   },
+   "evrWeekSchExm3": {
+      "message": "ከላይ ባለው ምሳሌ ውስጥ, በሳምንቱ ጊዜ ቆጣሪ ውስጥ ብዙ ቀናት ሊመረጡ ይችላሉ."
+   },
+   "evrYearSch": {
+      "message": "6.እያንዳንዱ ዓመት መርሐግብር"
+   },
+   "evrYearSchExm1": {
+      "message": "ከላይ ባለው ምሳሌ የተሰጠው ዩአርኤል በክፍት ትር ውስጥ አለ፣ እሱም በአዲስ ትር በየአመቱ በ13:35 ጃንዋሪ 1 ላይ ይከፈታል ይላል።"
+   },
+   "evrYearSchExm2": {
+      "message": "ከዚህ በላይ ባለው ምሳሌ የተሰጠው ዩአርኤል በትር ቅርብ ነው፣ እሱም አስቀድሞ የተከፈተውን ትር በየአመቱ በ13:35 ጥር 1 ይዘጋዋል ይላል።"
+   },
+   "exampleSort": {
+      "message": "ለምሳሌ"
+   },
+   "exdMaxLim": {
+      "message": "ከተፈቀደው ከፍተኛ መሣሪያዎች አልፏል!"
+   },
+   "exmpOpnClsTbSch": {
+      "message": "በትር መርሐግብር ውስጥ ትርን እንዴት መክፈት እና መዝጋት እንደሚቻል ምሳሌ"
+   },
+   "expLicKy": {
+      "message": "ይህ የፍቃድ ቁልፍ ጊዜው አልፎበታል።"
+   },
+   "export": {
+      "message": "ወደ ውጪ ላክ"
+   },
+   "exportBefore": {
+      "message": "አለህ\u003Cexday>\u003C/exday>ቀናት ይቀራሉ፣ እባክዎን በፕሪሚየም ባህሪ ለመቀጠል ለደንበኝነት ይመዝገቡ"
+   },
+   "exportClsTbDta": {
+      "message": "የተጠጋ ትር ውሂብ ወደ ውጭ ላክ"
+   },
+   "exportOpenTbDt": {
+      "message": "ክፍት የትር ውሂብ ወደ ውጭ ላክ"
+   },
+   "exportedData": {
+      "message": "የሰዓት ቆጣሪ ውሂብ በተሳካ ሁኔታ ወደ ውጭ ተልኳል።"
+   },
+   "extensionShouldAble": {
+      "message": "አሁን፣ ቅጥያው ማንነትን በማያሳውቅ ሁነታ ላይ ትሮችን መዝጋት መቻል አለበት።"
+   },
+   "faq": {
+      "message": "የሚጠየቁ ጥያቄዎች"
+   },
+   "faq_1": {
+      "message": "በራስ ክፈት እና ዝጋ የትር መርሐግብር ምንድነው?"
+   },
+   "faq_10": {
+      "message": "የታቀዱ ትሮችን እንዴት ማየት እችላለሁ?"
+   },
+   "faq_11": {
+      "message": "ሁለቱንም ክፍት እና የቅርብ ጊዜዎችን መሙላት ግዴታ ነው?"
+   },
+   "faq_12": {
+      "message": "የራስ-ማተኮር ትር፣ ሁሉንም የታቀዱ ትሮችን አግብር እና የኃይል ሁነታ ባህሪያት ምን ያደርጋሉ?"
+   },
+   "faq_13": {
+      "message": "በማያሳውቅ ትር ውስጥ የታቀደውን የድረ-ገጽ ማገናኛ መክፈት/መዝጋት እችላለሁ?"
+   },
+   "faq_14": {
+      "message": "ዩአርኤል አስቀድሞ ክፍት ከሆነ የማደስ ትር ምን ጥቅም አለው?"
+   },
+   "faq_2": {
+      "message": "የድር ጣቢያ ሊንክ ጥቅም ምንድነው?"
+   },
+   "faq_3": {
+      "message": "ትር መርሐግብርን በመጠቀም ዩአርኤልን እንዴት መርሐግብር ማስያዝ እችላለሁ?"
+   },
+   "faq_4": {
+      "message": "የ'Open URL in Background' አማራጭ ምንድነው?"
+   },
+   "faq_5": {
+      "message": "ቅጥያው የተሰኩ ትሮችን እንዳይዘጋ መከላከል እችላለሁ?"
+   },
+   "faq_6": {
+      "message": "የ'ሁለቱም' መርሐግብር ዓይነት ምን ማለት ነው?"
+   },
+   "faq_7": {
+      "message": "የ'URL ማጣሪያ' ባህሪ እንዴት ነው የሚሰራው?"
+   },
+   "faq_8": {
+      "message": "የታቀደውን ትር ሳልሰረዝ ማቦዘን እችላለሁ?"
+   },
+   "faq_9": {
+      "message": "የታቀዱ ትሮች ማሳወቂያዎች ይደርሰኛል?"
+   },
+   "faq_a_1": {
+      "message": "\u003Cp>የትር መርሐግብር በራስ-ሰር ክፈት እና መዝጋት ተጠቃሚዎች በተዘጋጁ ሰዓቶች በራስ-ሰር ለመክፈት እና ለመዝጋት መርሐግብር እንዲይዙ የሚያስችል የአሳሽ ቅጥያ ነው። ተጠቃሚዎች የአንድ ጊዜ መርሐግብር መምረጥ ወይም ተደጋጋሚ መርሃግብሮችን በተለያዩ የድግግሞሽ አማራጮች ማዘጋጀት ይችላሉ። ይህ ቅጥያ ለተጠቃሚዎች በርካታ ዓላማዎች አሉት እና ለእርስዎ ጠቃሚ የሆኑ ብዙ ባህሪያትን ይሰጣል።\u003C/p>"
+   },
+   "faq_a_10": {
+      "message": "ሁሉም የታቀዱ ትሮች ርዕሱን፣ የድር ጣቢያ አገናኝን፣ ክፍት እና መዝጊያ ጊዜን፣ ሁኔታን እና ሊወስዷቸው የሚችሏቸውን እርምጃዎች (ለምሳሌ ማግበር፣ ማረም፣ መሰረዝ) የሚያሳይ ዝርዝር ውስጥ ቀርቧል።"
+   },
+   "faq_a_11": {
+      "message": "አይ፣ ክፍት ጊዜ ወይም የቅርብ ጊዜ መርሐግብር ማስያዝ ይችላሉ። ነገር ግን፣ በኮከብ ምልክት (*)."
+   },
+   "faq_a_12": {
+      "message": "Auto Focus Tab መርሐግብር የተያዘለት ትር ሲከፈት ሁሉንም የታቀዱ ትሮችን አግብር በአንድ ጠቅታ ሁሉንም የታቀዱ ትሮችን በፍጥነት እንዲያበሩ ያስችልዎታል። የኃይል ሁነታ የአሳሽ ሀብቶችን በብቃት በማስተዳደር የኤክስቴንሽኑን አፈጻጸም ያመቻቻል።"
+   },
+   "faq_a_13": {
+      "message": "አዎ፣ \"ማንነትን በማያሳውቅ ሁነታ ክፈት\" የሚለውን አማራጭ በመምረጥ መርሐግብር የተያዘለትን ትርን ማንነትን በማያሳውቅ ሁነታ ለመክፈት መምረጥ ይችላሉ። በቅጥያ ቅንጅቶች ውስጥ \"ማንነት የማያሳውቅ ፍቀድ\" እስካልተቻለ ድረስ \"ማንነትን የማያሳውቅ ትሮችን ዝጋ\" የሚለውን አማራጭ በመምረጥ ማንነት የማያሳውቅ ትሮችን ብቻ መዝጋት ይችላሉ።"
+   },
+   "faq_a_14": {
+      "message": "ይህ አማራጭ ሲነቃ ተመሳሳይ ዩአርኤል በአሳሽዎ ውስጥ ከተከፈተ ቅጥያው ያለውን ትር በራስ ሰር ያድሳል። ይህ የተባዙ ትሮችን መክፈት ይከለክላል እና ሁልጊዜም የቅርብ ጊዜውን የገጹ ስሪት መጫኑን ያረጋግጣል።"
+   },
+   "faq_a_14_1": {
+      "message": "https://github.com/ ለመክፈት ከሞከሩ እና ቀድሞውኑ በሌላ ትር ውስጥ ከተከፈተ፣ ቅጥያው በቀላሉ አዲስ ከመክፈት ይልቅ ያንን ትር ያድሳል።"
+   },
+   "faq_a_14_2": {
+      "message": "https://github.com/ በሦስት ትሮች ውስጥ ከተከፈተ፣ ቅጥያው ሶስቱን ትሮች ያድሳል።"
+   },
+   "faq_a_2": {
+      "message": "የድረ-ገጽ ማገናኛ የአሳሽህ ክፍት ትር የድር ጣቢያ አድራሻ ነው። የድረ-ገጽ አድራሻን እንዴት መጠቀም እንደሚችሉ ከዚህ በታች ተጠቅሰዋል።"
+   },
+   "faq_a_3": {
+      "message": "ዩአርኤልን ለማቀድ የድረ-ገጹን ማገናኛ ያስገቡ፣ መርሐ ግብሩን ርዕስ ይስጡት፣ ድግግሞሹን (አንድ ጊዜ፣ በየደቂቃው፣ በየቀኑ፣ ወዘተ) ይምረጡ እና ክፍት እና የሚዘጋበትን ጊዜ ይምረጡ። እንዲሁም ትሩን ለመክፈት እና ለመዝጋት ቀን፣ ቀን ወይም ሰከንድ መግለጽ ይችላሉ።"
+   },
+   "faq_a_4": {
+      "message": "\u003Cp>ይህ አማራጭ አዲሱን ትር ወደ ትኩረት ሳያደርጉ ከበስተጀርባ ለመክፈት ዩአርኤልን መርሐግብር ለማስያዝ ሙሉ ቁጥጥር ይሰጥዎታል። በሌሎች ትሮች ላይ መስራትዎን በሚቀጥሉበት ጊዜ ዩአርኤሉ በጸጥታ ይከፈታል። በተለይም እንደ የGET API ጥያቄ ያለ በንቃት ሳያሳዩ ውሂብን ከዩአርኤል ለማምጣት አሳሹ ሲፈልጉ በጣም ጠቃሚ ነው።\u003C/p>\u003Cbr> \u003Cp>ለምሳሌ፣ ከኤፒአይ መጨረሻ ነጥብ ላይ በመደበኛነት መረጃ ማምጣት ከፈለጉ፣ ይህን ቀልጣፋ አማራጭ በመጠቀም አዲስ የሚታይ ትር ሳይከፍቱ ከበስተጀርባ ያለውን ጥያቄ ለማስኬድ ይችላሉ።\u003C/p>"
+   },
+   "faq_a_5": {
+      "message": "አዎ፣ የተሰኩ ትሮች እንዳይዘጉ ለመከላከል አንድ አማራጭ አለ። እነዚህ ትሮች ሌሎች የመዝጊያ መስፈርቶችን የሚያሟሉ ቢሆኑም ክፍት ሆነው መቆየታቸውን ለማረጋገጥ \"የተሰኩ ትሮችን አትዝጉ\" የሚለውን አማራጭ ያረጋግጡ።"
+   },
+   "faq_a_6": {
+      "message": "የ'ሁለቱም' መርሐግብር አይነት አንድ ትር ሲከፈት እና ሲዘጋ ሙሉ ቁጥጥር ይሰጥዎታል፣ ይህም ለሁለቱም ድርጊቶች የተወሰኑ ጊዜዎችን እንዲያዘጋጁ ያስችልዎታል።"
+   },
+   "faq_a_7": {
+      "message": "ዩአርኤል ማጣራት የታቀደው እርምጃ እንዲወሰድ የዩአርኤል የተወሰነ ክፍል ብቻ መመሳሰል እንዳለበት ያረጋግጣል። ከፊል ዩአርኤል ግጥሚያዎች ላይ ተመስርተው የተወሰኑ እርምጃዎችን በራስ ሰር ማድረግ ሲፈልጉ ይህ ጠቃሚ ነው። ለምሳሌ፣ ለዩአርኤል https://example.com/page URL ማጣሪያን ካረጋገጡ፣ እንደ https://example.com/page/123፣ https://example.com/ ባሉ ዩአርኤሎች ላይም ተፈጻሚ ይሆናል። ገጽ?query=example፣ እና https://subdomain.example.com/page።"
+   },
+   "faq_a_8": {
+      "message": "\"ይህን መርሐግብር የተያዘለትን ትር አግብር\" በሚለው አማራጭ የታቀዱ ትሮችን በቀላሉ ማግበር ወይም ማሰናከል ይችላሉ፣ ይህም መርሃግብሮችዎን ውቅረቶች ሳያጡ ለማስተዳደር ምቹነት ይሰጥዎታል።"
+   },
+   "faq_a_9": {
+      "message": "በነባሪነት ማሳወቂያዎች ይደርሰዎታል። ነገር ግን፣ ማሳወቂያዎችን ለማቆም ከመረጡ፣ እነሱን ለማሰናከል \"ማሳወቂያን አታሳይ\" የሚለውን አማራጭ ማረጋገጥ ይችላሉ።"
+   },
+   "february": {
+      "message": "የካቲት"
+   },
+   "filterTips": {
+      "message": "ማጣሪያ ከ'https://' ወይም 'www.'፣ Ex'github.com' በኋላ ይተገበራል።"
+   },
+   "for_exp": {
+      "message": "ለምሳሌ"
+   },
+   "freeForever": {
+      "message": "ለዘላለም ነፃ"
+   },
+   "freeSchedule": {
+      "message": "ነፃ የጊዜ ሰሌዳ"
+   },
+   "freeTral": {
+      "message": "ውድ ቀደምት ተጠቃሚ እንደመሆንዎ መጠን ይደሰቱዎታል\u003Crday>120\u003C/rday>ወደ አዲሱ የሚከፈልበት እቅዳችን ከመቀየርዎ በፊት የነጻ መዳረሻ ቀናት-ለቀጣይ ድጋፍዎ እናመሰግናለን!\u003Cp class=\"p-t-5\">አለህ\u003Cb>\u003Cspan>\u003C/span>\u003C/b>ከእርስዎ ውጭ ቀናት ይቀራሉ\u003Crday>120\u003C/rday>- ቀን ነፃ ጊዜ።\u003Cafex class=\"warning\">\u003Cafex>\u003C/afex>\u003C/afex>\u003C/p> "
+   },
+   "frequentlyAskedQuestions": {
+      "message": "በተደጋጋሚ የሚጠየቁ ጥያቄዎች"
+   },
+   "friday": {
+      "message": "አርብ"
+   },
+   "getThisPlan": {
+      "message": "ይህንን እቅድ ያግኙ"
+   },
+   "goToSettingsPageToSchedule": {
+      "message": "የዩአርኤሎችን ለመክፈት እና ለመዝጋት ወደ የቅንብሮች ገጽ ይሂዱ።"
+   },
+   "goURL": {
+      "message": "ወደ URL ይሂዱ"
+   },
+   "helpAccordion12": {
+      "message": "ይህ ቅጥያ በእንቅልፍ/በማገድ ሁነታ ይሰራል?"
+   },
+   "helpAccordion3": {
+      "message": "ማንነትን በማያሳውቅ ሁነታ ለመክፈት ትር መርሐግብር ማስያዝ እችላለሁ?"
+   },
+   "helpAccordion6": {
+      "message": "\"ጊዜ ያለፈበት\" ምንድን ነው?"
+   },
+   "helpAccordion7": {
+      "message": "የታቀደለትን URL ወደ ውጭ መላክ እችላለሁ?"
+   },
+   "helpAccordion8": {
+      "message": "ወደ URL መርሐግብር ማስመጣት እችላለሁ?"
+   },
+   "helpPanelBodyDesc12First": {
+      "message": "አይ፣ ይህ ቅጥያ በእንቅልፍ/በማገድ ሁነታ ላይ አይሰራም።"
+   },
+   "helpPanelBodyDesc12Second": {
+      "message": "ማንኛውም ዩአርኤል በክፍት ወይም መዝጊያ ትር ላይ የታቀደ ከሆነ፣ የእርስዎ ፒሲ በራስ-ሰር ወደ እንቅልፍ ወይም ማንጠልጠያ ሁነታ አይሄድም።"
+   },
+   "helpPanelBodyDesc3": {
+      "message": "አዎ፣ የ'ማንነትን በማያሳውቅ ሁነታ ክፈት' የሚለውን አማራጭ በመምረጥ መርሐግብር የተያዘለትን ትርን ማንነትን በማያሳውቅ ሁነታ ለመክፈት መምረጥ ይችላሉ። የቅጥያው 'ስውር ውስጥ ፍቀድ' የሚለው አማራጭ በአሳሹ ቅጥያ ቅንብሮች ውስጥ መንቃቱን ያረጋግጡ።"
+   },
+   "helpPanelBodyDesc6": {
+      "message": "- የተሰጠው ቀን እና ሰዓት ከአሁኑ ቀን እና ሰዓት ያልፋል ከዚያም \"ጊዜ ያለፈበት\" ጽሁፍ ይታያል."
+   },
+   "helpPanelBodyDesc7": {
+      "message": "አዎ፣ አስቀድሞ የታቀደውን ክፍት ትር ወደ ውጭ መላክ እና የትር URLን በ csv ቅርጸት መዝጋት እና ያንን ዩአርኤል ለማስመጣት ከሌላ ስርዓት ጋር መጠቀም ይችላሉ።"
+   },
+   "helpPanelBodyDesc8": {
+      "message": "አዎ፣ ልክ የሆነ ክፍት እና መዝጋት URLን በ csv ቅርጸት ማስመጣት ትችላለህ።የመጣው csv ቅርጸት በተወሰነ ጊዜ ውስጥ በራስ-ሰር መርሐግብር ይያዝለታል።"
+   },
+   "herAreStepsToAllow": {
+      "message": "በጎግል ክሮም ውስጥ \"ስውር በሆነ መልኩ ፍቀድ\" የሚሉት ደረጃዎች እነሆ"
+   },
+   "home": {
+      "message": "ቤት"
+   },
+   "hour_minute_close": {
+      "message": "እያንዳንዱ ሰዓት መዝጊያ ደቂቃ"
+   },
+   "hour_minute_open": {
+      "message": "በየሰዓቱ ክፍት ደቂቃ"
+   },
+   "how_to_use_tab": {
+      "message": "የትር መርማሪን እንዴት መጠቀም እንደሚቻል?"
+   },
+   "import": {
+      "message": "አስመጣ"
+   },
+   "importClsTbDta": {
+      "message": "የቅርብ ትር ውሂብ አስመጣ"
+   },
+   "importExport": {
+      "message": "አስመጣ/ላክ"
+   },
+   "importOpenTbDt": {
+      "message": "ክፍት የትር ውሂብ አስመጣ"
+   },
+   "importedRecored": {
+      "message": ", ከውጪ የመጣ ተመዝግቧል"
+   },
+   "inactivateScheduleTab": {
+      "message": "መርሐግብር የተያዘለት ትርን ያቦዝኑ።"
+   },
+   "inactive": {
+      "message": "እንቅስቃሴ-አልባ"
+   },
+   "inactiveSch": {
+      "message": "8.የቦዘነ ዩአርኤል"
+   },
+   "inactiveSchExm1": {
+      "message": "ከላይ ባለው ምሳሌ የተሰጠው ዩአርኤል በክፍት ትር ወይም መዝጊያ ትር ውስጥ አለ፣ ይህም ዩአርኤል የቦዘነ እና ምንም አይነት እርምጃ እንደማይወስድ ይገልጻል።"
+   },
+   "inactiveThisScheduledTabs": {
+      "message": "ይህን መርሐግብር የተያዘለትን ትር ያግብሩ"
+   },
+   "invalidDuplicate": {
+      "message": "፣ የተባዛ ወይም ልክ ያልሆነ የተቀዳ"
+   },
+   "invldLicKy": {
+      "message": "ልክ ያልሆነ የፍቃድ ቁልፍ!"
+   },
+   "isClose": {
+      "message": "ቅርብ ነው"
+   },
+   "isOpen": {
+      "message": "ክፍት ነው።"
+   },
+   "january": {
+      "message": "ጥር"
+   },
+   "july": {
+      "message": "ሀምሌ"
+   },
+   "june": {
+      "message": "ሰኔ"
+   },
+   "licKeyDis": {
+      "message": "ይህ የፍቃድ ቁልፍ ተሰናክሏል።"
+   },
+   "listTitle": {
+      "message": "ትር መርሐግብር"
+   },
+   "loading": {
+      "message": "እባክህ ጠብቅ..."
+   },
+   "locale": {
+      "message": "እ.ኤ.አ"
+   },
+   "march": {
+      "message": "መጋቢት"
+   },
+   "maxSchedule": {
+      "message": "4 ከፍተኛው የጊዜ ሰሌዳ ገደብ"
+   },
+   "may": {
+      "message": "ግንቦት"
+   },
+   "mintValid": {
+      "message": "ቢያንስ 1 ደቂቃ ያስፈልጋል"
+   },
+   "minute": {
+      "message": "ደቂቃ"
+   },
+   "minutesNotLessThan1": {
+      "message": "ደቂቃዎች ከ 1 በታች መሆን የለባቸውም."
+   },
+   "monday": {
+      "message": "ሰኞ"
+   },
+   "month": {
+      "message": "ወር"
+   },
+   "monthly": {
+      "message": "ወርሃዊ"
+   },
+   "more": {
+      "message": "ተጨማሪ"
+   },
+   "mostSubscribe": {
+      "message": "በብዛት ይመዝገቡ"
+   },
+   "no": {
+      "message": "አይ"
+   },
+   "noDataToExport": {
+      "message": "ወደ ውጭ የሚላክ ምንም ውሂብ የለም።"
+   },
+   "noScheduledTabs": {
+      "message": "ምንም የታቀዱ ትሮች የሉም"
+   },
+   "noTimerSetAddNewTimer": {
+      "message": "ምንም የሰዓት ቆጣሪ አልተዘጋጀም፣ አዲስ ሰዓት ቆጣሪ ለማዘጋጀት አክል የሚለውን ቁልፍ ጠቅ ያድርጉ"
+   },
+   "not_show_tutorial": {
+      "message": "ይህን አጋዥ ስልጠና እንደገና አታሳይ"
+   },
+   "notificationOpenTab": {
+      "message": "13. ክፍት/ዝጋ ትር URL ላይ ማሳወቂያ"
+   },
+   "notificationOpenTabExm1": {
+      "message": "ከላይ ባለው ምሳሌ የተሰጠው ዩአርኤል በየ5 ደቂቃው ውስጥ ማሳወቂያ እንደሚሰጥ እና በአዲስ ትር ውስጥ እንደሚዘጋ ይገልጻል።"
+   },
+   "notifications": {
+      "message": "ማስታወቂያ"
+   },
+   "november": {
+      "message": "ህዳር"
+   },
+   "october": {
+      "message": "ጥቅምት"
+   },
+   "onTheExtensionDetailPage": {
+      "message": "በቅጥያው ዝርዝሮች ገጽ ላይ ወደ ታች ይሸብልሉ እና “ማንነትን በማያሳውቅ ፍቀድ” የሚለውን አማራጭ ያግኙ።"
+   },
+   "oneTime": {
+      "message": "ኦነ ትመ"
+   },
+   "oneTmSch": {
+      "message": "1.አንድ ጊዜ መርሐግብር"
+   },
+   "oneTmSchExm1": {
+      "message": "ከላይ ባለው ምሳሌ የተሰጠው ዩአርኤል በክፍት ትር ውስጥ አለ፣ እሱም በአዲስ ትር አንድ ጊዜ በ13:45 በ21/1/2023 ይከፈታል ይላል።"
+   },
+   "oneTmSchExm2": {
+      "message": "ከላይ በምሳሌ የተሰጠው ዩአርኤል በትር ቅርብ ነው፣ይህም ሁሉንም የተዛመዱ የዩአርኤል ትሮችን በ13:45 በ21/1/2023 እንደሚዘጋ ይገልጻል።"
+   },
+   "open": {
+      "message": "ክፈት"
+   },
+   "openBackground": {
+      "message": "አዎ ከሆነ፣ በአዲስ ትር ሳይከፍቱ ዩአርኤልን ከበስተጀርባ በመጫን ላይ"
+   },
+   "openDate": {
+      "message": "የተከፈተ ቀን"
+   },
+   "openDay": {
+      "message": "ክፍት ቀን"
+   },
+   "openEveryDayOn": {
+      "message": "በየቀኑ ክፍት ነው።"
+   },
+   "openEveryMonthOn": {
+      "message": "በየቀኑ በየወሩ ክፍት ነው።"
+   },
+   "openEveryWeekOn": {
+      "message": "በየሳምንቱ ክፈት"
+   },
+   "openEveryYearOn": {
+      "message": "በየአመቱ ክፍት ነው።"
+   },
+   "openGoogleChrome": {
+      "message": "ጎግል ክሮምን ክፈት።"
+   },
+   "openInBackground": {
+      "message": "ዩአርኤልን ከበስተጀርባ ክፈት"
+   },
+   "openInEvery": {
+      "message": "በሁሉም ውስጥ ክፈት"
+   },
+   "openInIncognito": {
+      "message": "ማንነትን በማያሳውቅ ሁነታ ክፈት"
+   },
+   "openMinute": {
+      "message": "ክፍት ደቂቃ"
+   },
+   "openOnDay": {
+      "message": "በቀን ክፍት"
+   },
+   "openOnEvery": {
+      "message": "በእያንዳንዱ ላይ ክፈት"
+   },
+   "openSecond": {
+      "message": "ሁለተኛ ክፈት"
+   },
+   "openSecondsMoreThan5": {
+      "message": "ክፍት ሰከንዶች ከ 5 በላይ መሆን አለባቸው."
+   },
+   "openTabSchedule": {
+      "message": "የትር መርሐግብርን ክፈት"
+   },
+   "openTabURL": {
+      "message": "ትር URLን ክፈት"
+   },
+   "openTime": {
+      "message": "ክፍት ጊዜ"
+   },
+   "openUrl": {
+      "message": "የድር ጣቢያ አገናኝ ክፈት"
+   },
+   "openWeek": {
+      "message": "ክፍት ሳምንት"
+   },
+   "openWeeks": {
+      "message": "ክፍት ሳምንታት"
+   },
+   "open_on": {
+      "message": "ክፍት በርቷል።"
+   },
+   "optional": {
+      "message": "አማራጭ"
+   },
+   "or": {
+      "message": "ወይም"
+   },
+   "outof": {
+      "message": "ውጪ"
+   },
+   "pagePath": {
+      "message": "የገጽ መንገድ"
+   },
+   "paidFeature": {
+      "message": "የሚከፈልበት ባህሪ"
+   },
+   "pauseSchedule": {
+      "message": "ሁሉንም መርሃግብሮች ይጀምሩ ወይም ያቁሙ"
+   },
+   "pauseTabScheduler": {
+      "message": "ባለበት ቆሟል ትር መርሐግብር"
+   },
+   "pleaseAllowIncognitoMessage": {
+      "message": "እባክዎ በቅጥያው ዝርዝሮች ውስጥ 'ስውር ውስጥ ፍቀድ' የሚለውን አማራጭ ያንቁ። ለመመሪያዎች፣ እባክዎን የመማሪያውን ገጽ ይመልከቱ።"
+   },
+   "pleaseShareYourSuggestions": {
+      "message": "እባኮትን አስተያየት አካፍሉን።"
+   },
+   "plsShreAnySugWithUs": {
+      "message": "እባክዎን እኛን ለማሻሻል አስተያየት ይስጡን።"
+   },
+   "powerMode": {
+      "message": "የኃይል ሁነታ"
+   },
+   "premium": {
+      "message": "ፕሪሚየም"
+   },
+   "pricePlan": {
+      "message": "የዋጋ አሰጣጥ እና እቅዶች"
+   },
+   "privcyPolicy": {
+      "message": "የግላዊነት ፖሊሲ"
+   },
+   "prowerModeTip": {
+      "message": "የኃይል ሁነታን በማንቃት ስርዓቱ ሁልጊዜ ንቁ እንዲሆን ያድርጉ"
+   },
+   "put": {
+      "message": "አስቀምጥ"
+   },
+   "rateUs": {
+      "message": "ደረጃ ይስጡን።"
+   },
+   "removeDuplicateEntry": {
+      "message": "እባክዎ የተባዛ ግቤትን ያስወግዱ"
+   },
+   "removeOpenTbURL": {
+      "message": "ክፍት የትር ዩአርኤል ያስወግዱ"
+   },
+   "repeat": {
+      "message": "ይድገሙ"
+   },
+   "requiredMsg": {
+      "message": "ያስፈልጋል"
+   },
+   "rmvClsTb": {
+      "message": "የትር ዩአርኤልን አስወግድ"
+   },
+   "sameTabs": {
+      "message": "ዩአርኤል አስቀድሞ ክፍት ከሆነ ትር አድስ"
+   },
+   "sameTabsInfo": {
+      "message": "ለተመሳሳይ ዩአርኤል ብዙ ትሮችን መክፈት ይከልክሉ። ለምሳሌ፣ www.google.com አስቀድሞ ከተከፈተ፣ ያ አዲስ ትር ከመክፈት ይልቅ ያለው ትር ይታደሳል።"
+   },
+   "sampleCsvOpenPath": {
+      "message": "../sample_csv/am/open_tab_sample.csv"
+   },
+   "sampleFile": {
+      "message": "ናሙና ፋይል"
+   },
+   "saturday": {
+      "message": "ቅዳሜ"
+   },
+   "savOpnData": {
+      "message": "ክፍት የትር ውሂብ አስቀምጥ"
+   },
+   "save": {
+      "message": "አስቀምጥ"
+   },
+   "saveClsTbData": {
+      "message": "የዝጋ ትር ውሂብ አስቀምጥ"
+   },
+   "saveSchedule": {
+      "message": "መርሐግብር አስቀምጥ"
+   },
+   "scheduleCloseTab": {
+      "message": "ትር ዝጋ መርሐግብር"
+   },
+   "scheduleCurrentTab": {
+      "message": "የአሁኑን ትር ያቅዱ"
+   },
+   "scheduleOpenTab": {
+      "message": "ክፈት ትርን መርሐግብር ያውጡ"
+   },
+   "scheduledTabIsAlreadyExistWithSameTimer": {
+      "message": "ይህ መርሐግብር የተያዘለት ትር ከተመሳሳይ ሰዓት ቆጣሪ ጋር አለ።"
+   },
+   "scheduledTabList": {
+      "message": "የታቀደ የትር ዝርዝር"
+   },
+   "scheduledType": {
+      "message": "የመርሃግብር አይነት"
+   },
+   "search": {
+      "message": "ፈልግ"
+   },
+   "secValid": {
+      "message": "ቢያንስ 5 ሰከንድ ያስፈልጋል"
+   },
+   "second": {
+      "message": "ሁለተኛ"
+   },
+   "selectCloseDate": {
+      "message": "የሚዘጋበትን ቀን ይምረጡ"
+   },
+   "selectCloseDay": {
+      "message": "የቅርብ ቀን ይምረጡ"
+   },
+   "selectCloseTime": {
+      "message": "የቅርብ ጊዜ ይምረጡ"
+   },
+   "selectColumn": {
+      "message": "አምድ ይምረጡ"
+   },
+   "selectDateAndTime": {
+      "message": "አዲስ ትር ለመክፈት ቀን እና ሰዓት ይምረጡ"
+   },
+   "selectDateAndTimeClsTb": {
+      "message": "ትርን ለመዝጋት ቀን እና ሰዓት ይምረጡ"
+   },
+   "selectDayToCloseSchTb": {
+      "message": "መርሐግብር የሚዘጋበት ቀን ይምረጡ።"
+   },
+   "selectDayToClsTb": {
+      "message": "ትር የሚዘጋበት ቀን ይምረጡ"
+   },
+   "selectDayToSchdule": {
+      "message": "ትርን ለማስያዝ ቀንን ይምረጡ።"
+   },
+   "selectDaysInWeek": {
+      "message": "በሳምንት ውስጥ ቀናትን ይምረጡ"
+   },
+   "selectDaysInWeekIClsTime": {
+      "message": "በቅርብ ጊዜ ቆጣሪ ውስጥ በሳምንት ውስጥ ቀናትን ይምረጡ።"
+   },
+   "selectDaysInWeekIOpClsTime": {
+      "message": "በክፍት ወይም በቅርብ ጊዜ ቆጣሪ ውስጥ በሳምንት ውስጥ ቀናትን ይምረጡ።"
+   },
+   "selectDaysInWeekIOpTime": {
+      "message": "በክፍት ሰዓት ቆጣሪ ውስጥ በሳምንት ውስጥ ቀናትን ይምረጡ።"
+   },
+   "selectFrequency": {
+      "message": "ድግግሞሽ ይምረጡ"
+   },
+   "selectFrequencyOfScheduleUrl": {
+      "message": "የታቀደለትን URL ድግግሞሽ ምረጥ።"
+   },
+   "selectOpenDate": {
+      "message": "ክፍት ቀን ይምረጡ"
+   },
+   "selectOpenDay": {
+      "message": "ክፍት ቀን ይምረጡ"
+   },
+   "selectOpenOrClose": {
+      "message": "ክፍት እና መዝጊያ ጊዜን ይምረጡ"
+   },
+   "selectOpenOrCloseDate": {
+      "message": "ክፍት እና መዝጊያ ቀን ይምረጡ"
+   },
+   "selectOpenOrCloseDay": {
+      "message": "ክፍት እና መዝጊያ ቀን ይምረጡ"
+   },
+   "selectOpenTime": {
+      "message": "ክፍት ጊዜን ይምረጡ"
+   },
+   "selectPreferredLanguage": {
+      "message": "የሚመርጡትን ቋንቋ ይምረጡ።"
+   },
+   "selectToOpenTab": {
+      "message": "አዲስ ትር ለመክፈት ቀን ይምረጡ"
+   },
+   "selectTypTimerClsTb": {
+      "message": "ትርን ለመዝጋት የሰዓት ቆጣሪን አይነት ይምረጡ"
+   },
+   "selectTypeOfSchedule": {
+      "message": "ሁለቱንም ለመክፈት እና ለመዝጋት ከፈለጉ የመርሃግብር አይነትን ይምረጡ \"ሁለቱንም\" ይምረጡ።"
+   },
+   "selectTypeOfTimer": {
+      "message": "አዲስ ትር ለመክፈት የሰዓት ቆጣሪ አይነት ይምረጡ"
+   },
+   "select_weeks": {
+      "message": "ሳምንታትን ይምረጡ"
+   },
+   "september": {
+      "message": "መስከረም"
+   },
+   "settingSave": {
+      "message": "ቅንብሮች በተሳካ ሁኔታ ተቀምጠዋል"
+   },
+   "settingToClose": {
+      "message": "ማንነትን በማያሳውቅ ሁነታ ላይ ትርን ለመዝጋት በማዘጋጀት ላይ።"
+   },
+   "shareYourSuggestionWithUs": {
+      "message": "አስተያየትዎን ከእኛ ጋር ያካፍሉን.."
+   },
+   "slectDayToScheduleWeekly": {
+      "message": "ትርን በየሳምንቱ ለማስያዝ ቀናትን ይምረጡ።"
+   },
+   "slectMinute": {
+      "message": "ደቂቃ ይምረጡ"
+   },
+   "smthngWrng": {
+      "message": "የሆነ ችግር ተፈጥሯል።"
+   },
+   "softpulseInfotech": {
+      "message": "Softpulse Infotech"
+   },
+   "somethingWentWrong": {
+      "message": "የሆነ ችግር ተፈጥሯል። ገጹን ያድሱ እና እንደገና ይሞክሩ።"
+   },
+   "status": {
+      "message": "ሁኔታ"
+   },
+   "subcrKeyShldNEmpt": {
+      "message": "እባክዎ የደንበኝነት ምዝገባ ቁልፍ ያስገቡ።"
+   },
+   "subdomain": {
+      "message": "ንዑስ ጎራ"
+   },
+   "subkeyInputTitle": {
+      "message": "የደንበኝነት ምዝገባ ቁልፍ አስገባ"
+   },
+   "submFeedBack": {
+      "message": "አስገባ"
+   },
+   "suggForTbSch": {
+      "message": "ለትር መርሐግብር ጥቆማ"
+   },
+   "suggestionAndRateUs": {
+      "message": "አስተያየት ይስጡ እና ደረጃ ይስጡን።"
+   },
+   "sunday": {
+      "message": "እሁድ"
+   },
+   "tabCloseOneTime": {
+      "message": "ትር የሚዘጋው አንድ ጊዜ ብቻ ነው።"
+   },
+   "tabSchTutorial": {
+      "message": "የትር መርሐግብር አጋዥ ትምህርት"
+   },
+   "tabScheduler": {
+      "message": "ትር መርሐግብር"
+   },
+   "tabSchedulerOptions": {
+      "message": "የትር መርሐግብር አማራጮች"
+   },
+   "tabWillOpenOneTime": {
+      "message": "ትር የሚከፈተው አንድ ጊዜ ብቻ ነው።"
+   },
+   "tabWillOpenWhenBrowserOpen": {
+      "message": "አሳሽ ሲከፈት ትር ይከፈታል።"
+   },
+   "termCondition": {
+      "message": "ውሎች እና ሁኔታዎች"
+   },
+   "thanksFrRev": {
+      "message": "ለግምገማዎ እናመሰግናለን"
+   },
+   "thnkUFeedBack": {
+      "message": "ለአስተያየትዎ እናመሰግናለን"
+   },
+   "thnkUFrUsngTbSch": {
+      "message": "እባክዎን እኛን ለማሻሻል አስተያየት ይስጡን።"
+   },
+   "thursday": {
+      "message": "ሐሙስ"
+   },
+   "time": {
+      "message": "ጊዜ"
+   },
+   "timeExpired": {
+      "message": "ጊዜው አልፎበታል።"
+   },
+   "timer": {
+      "message": "ሰዓት ቆጣሪ"
+   },
+   "title": {
+      "message": "ርዕስ"
+   },
+   "titleLengtWarn": {
+      "message": "የርዕስ ርዝመት ከ200 ቁምፊዎች መብለጥ የለበትም።"
+   },
+   "toScheduledOpenTbMsg": {
+      "message": "መርሐግብር ለታቀደለት ክፍት ትር እባክዎ የዩአርኤል ማጣሪያን ያንሱ።"
+   },
+   "toogleCloseTab": {
+      "message": "ለሁሉም ቅርብ የትር ዩአርኤል የመርሃግብር ማንቂያውን ጀምር/አቁም"
+   },
+   "toogleDarkmode": {
+      "message": "የእይታ ተሞክሮዎን ለማበጀት በጨለማ ሁነታ እና በነባሪ ሁነታ መካከል ይቀያይሩ።"
+   },
+   "toogleOff": {
+      "message": "ጠፍቷል"
+   },
+   "toogleOn": {
+      "message": "በርቷል"
+   },
+   "toogleOpenTab": {
+      "message": "ለሁሉም ክፍት የትር ዩአርኤል የጊዜ ሰሌዳ ማንቂያውን ጀምር/አቁም"
+   },
+   "topLevelDomain": {
+      "message": "ከፍተኛ ደረጃ ጎራ"
+   },
+   "totalProcessed": {
+      "message": "አጠቃላይ የተቀዳ ሂደት"
+   },
+   "tuesday": {
+      "message": "ማክሰኞ"
+   },
+   "tutorialImg1": {
+      "message": "\u003Cimg src=\"../images/en/1.png\">"
+   },
+   "tutorialImg10": {
+      "message": "\u003Cimg src=\"../images/en/10.png\">"
+   },
+   "tutorialImg11": {
+      "message": "\u003Cimg src=\"../images/en/11.png\">"
+   },
+   "tutorialImg12": {
+      "message": "\u003Cimg src=\"../images/en/12.png\">"
+   },
+   "tutorialImg13": {
+      "message": "\u003Cimg src=\"../images/en/13.png\">"
+   },
+   "tutorialImg14": {
+      "message": "\u003Cimg src=\"../images/en/14.png\">"
+   },
+   "tutorialImg2": {
+      "message": "\u003Cimg src=\"../images/en/2.png\">"
+   },
+   "tutorialImg3": {
+      "message": "\u003Cimg src=\"../images/en/3.png\">"
+   },
+   "tutorialImg4": {
+      "message": "\u003Cimg src=\"../images/en/4.png\">"
+   },
+   "tutorialImg5": {
+      "message": "\u003Cimg src=\"../images/en/5.png\">"
+   },
+   "tutorialImg6": {
+      "message": "\u003Cimg src=\"../images/en/6.png\">"
+   },
+   "tutorialImg7": {
+      "message": "\u003Cimg src=\"../images/en/7.png\">"
+   },
+   "tutorialImg8": {
+      "message": "\u003Cimg src=\"../images/en/8.png\">"
+   },
+   "tutorialImg9": {
+      "message": "\u003Cimg src=\"../images/en/9.png\">"
+   },
+   "uncheckAll": {
+      "message": "ሁሉንም ምልክት ያንሱ"
+   },
+   "unlimitedSchedule": {
+      "message": "ያልተገደበ የጊዜ ሰሌዳ ገደብ"
+   },
+   "unspecifiedURL": {
+      "message": "11. URL ያልተገለጸ መንገድ"
+   },
+   "unspecifiedURLExm1": {
+      "message": "ከላይ ባለው ምሳሌ የተሰጠው ዩአርኤል በቅርብ ትር ውስጥ አለ፣ ይህም በአዲስ ትር ውስጥ የተከፈተ እና ባልታወቀ የድር አድራሻ የሚጀምር እና የሚያልቅ ዩአርኤል ከ5 ደቂቃ በኋላ እንደሚዘጋ ይገልጻል።"
+   },
+   "upgradePlan": {
+      "message": "እባክዎ እቅድ ይግዙ ወይም ይግቡ እና ተጨማሪ ባህሪያትን ለመክፈት እቅድዎን ያሻሽሉ።"
+   },
+   "upgradePlanUnlock": {
+      "message": "ተጨማሪ ባህሪያትን ለመክፈት እቅድዎን ያሻሽሉ።"
+   },
+   "uploadValidFormat": {
+      "message": "እባክዎ የሚሰራ ቅርጸት ይስቀሉ።"
+   },
+   "url": {
+      "message": "URL"
+   },
+   "urlContExat": {
+      "message": "URL ማጣራት።"
+   },
+   "urlEndWithUnspesifiedPth": {
+      "message": "9. ዩአርኤል መጨረሻው ባልተገለጸ መንገድ"
+   },
+   "urlEndWithUnspesifiedPthExm1": {
+      "message": "ከላይ ባለው ምሳሌ የተሰጠው ዩአርኤል በቅርብ ትር ውስጥ አለ፣ ይህም በአዲስ ትር ውስጥ የተከፈተ እና ያልታወቀ ዱካ የሚያልቅ ዩአርኤል ከ5 ደቂቃ በኋላ እንደሚዘጋ ይገልጻል።"
+   },
+   "urlFilterInfo": {
+      "message": "የሚጣራ ዩአርኤል የዩአርኤሉን አካል ብቻ ይፈልጋል እና ትክክለኛው ዩአርኤል መፈተሸ ከተጠቀሰው ዩአርኤል ጋር በትክክል መመሳሰል አለበት።"
+   },
+   "urlFilterinCLoseTb": {
+      "message": "14. URL በቅርብ ትር URL ላይ ማጣራት"
+   },
+   "urlFilterinCLoseTbExample": {
+      "message": "ከላይ ባለው ምሳሌ የተሰጠው ዩአርኤል በቅርብ ትር ውስጥ አለ፣ እሱም አስቀድሞ የተከፈተው ትር ዩአርኤል ከተሰጠው ዩአርኤል የተወሰነ ክፍል ጋር ይመሳሰላል ይላል ስለዚህ ያንን ትር ይዘጋል።"
+   },
+   "urlIsRequired": {
+      "message": "የድር ጣቢያ አገናኝ ያስፈልጋል"
+   },
+   "urlNotvalid": {
+      "message": "URL ልክ ያልሆነ ነው።"
+   },
+   "urlStartWithUnspesifiedPth": {
+      "message": "10. URL ባልተገለጸ መንገድ ይጀምራል"
+   },
+   "urlStartWithUnspesifiedPthExm1": {
+      "message": "ከላይ ባለው ምሳሌ የተሰጠው ዩአርኤል በቅርብ ትር ውስጥ አለ፣ ይህም በአዲስ ትር ውስጥ የተከፈተ እና ባልታወቀ ንዑስ ጎራ \u003Cb>'www'\u003C/b> ወይም \u003Cb>'ብሎግ'\u003C/b> የሚጀምር ዩአርኤል ከ5 ደቂቃ በኋላ ይዘጋል ይላል።"
+   },
+   "useSpecificUrl": {
+      "message": "የተወሰነ የድር ጣቢያ አገናኝ ይጠቀሙ"
+   },
+   "useSpecificUrl1": {
+      "message": "ትክክለኛውን ንዑስ ጎራ፣ ከፍተኛ ደረጃ ጎራ፣ የጎራ ስም እና የገጽ ዱካ በድረ-ገጽ አገናኝ መስክ ላይ ወደ ዝግ አሳሽ ትር ጽፈው መሆን አለበት።"
+   },
+   "useSpecificUrl2": {
+      "message": "ሁሉንም የተዘጋውን የአሳሽ ትር ይጠቀሙ"
+   },
+   "useSpecificUrl3": {
+      "message": "የተወሰነ እና ሙሉ የድር ጣቢያ ማገናኛን ይጠቀሙ"
+   },
+   "useUnSpecificUrl1": {
+      "message": "ያልተገለጸ የድር ጣቢያ አገናኝ ይጠቀሙ"
+   },
+   "useUnSpecificUrl2": {
+      "message": "ባልተገለጸ የድረ-ገጽ ማገናኛ ጀምርን ተጠቀም"
+   },
+   "useUnSpecificUrl3": {
+      "message": "መጨረሻውን ባልተገለጸ የድረ-ገጽ ማገናኛ ተጠቀም"
+   },
+   "used": {
+      "message": "ተጠቅመሃል"
+   },
+   "validFormatCsv": {
+      "message": "ለማስመጣት ትክክለኛው የCSV ፋይል ቅርጸት ምንድነው?"
+   },
+   "websiteLink": {
+      "message": "የድር ጣቢያ አገናኝ"
+   },
+   "websiteUrl": {
+      "message": "የድር ጣቢያ URL"
+   },
+   "wednesday": {
+      "message": "እሮብ"
+   },
+   "weekName": {
+      "message": "የሳምንት ስም"
+   },
+   "weekly": {
+      "message": "በየሳምንቱ"
+   },
+   "whenExtensionTabAppears": {
+      "message": "የኤክስቴንሽን ትሩ በሚታይበት ጊዜ ማንነትን በማያሳውቅ ሁነታ ለማንቃት \"Tab Scheduler with auto open and close\" የሚለውን ያግኙ እና ከጎኑ ያለውን \"ዝርዝሮች\" ቁልፍን ጠቅ ያድርጉ።"
+   },
+   "whenMenuPopup": {
+      "message": "አንድ ምናሌ ሲወጣ \"ቅጥያዎችን አስተዳድር\" ን ይምረጡ።"
+   },
+   "withSignMustFill": {
+      "message": "በ \u003Cspan>*\u003C/span> ምልክት መሙላት ወይም መምረጥ አለበት ፣ ክፍት ወይም መዝጋት ወይም ሁለቱንም ጊዜ ይምረጡ።"
+   },
+   "writeYourDescriptionAboutSchUrl": {
+      "message": "ስለ መርሐግብር የተያዘለት ዩአርኤል መግለጫዎን እዚህ ይጻፉ።"
+   },
+   "yes": {
+      "message": "አዎ"
+   },
+   "yourEmailAddress": {
+      "message": "የኢሜል አድራሻዎ"
+   },
+   "yourScheduleUrl": {
+      "message": "የእርስዎ መርሐግብር URL"
+   }
+}

@@ -1,0 +1,4 @@
+﻿Indirizzo URL,Timer,Stato,Data di apertura,Data di chiusura,Orario di apertura,Orario di chiusura,Settimana delle porte aperte,Settimana di chiusura,Nel browser aperto,Giornata delle porte aperte,Giorno di chiusura,Minuto aperto,Chiudi minuto,Aperto secondo,Chiudi Secondo,Notifica,Titolo,Descrizione,Apri URL in background,Apri in modalità di navigazione in incognito,Non chiudere le schede bloccate,Chiudi solo le schede in incognito,Filtraggio URL,Tipo di programma,Ogni ora aperto minuto,Ogni ora Chiudi minuto,Aggiorna la scheda se l'URL è già aperto
+https://www.google.com/,Ogni minuto,Attivo,,,,,"","","",,,,,,,Inattivo,Close Every Minute,,NO,NO,NO,NO,SÌ,Vicino,0,0,SÌ
+http://www.w3schools.com/,Ogni giorno,Attivo,,,16:31,,"","","",,,,,,,Inattivo,Every Day Open,,NO,NO,NO,NO,NO,Aprire,0,0,NO
+https://www.flipkart.com/,Minuto personalizzato,Attivo,,,,,"","","",,,120,5,,,Inattivo,Open and Close,,NO,NO,NO,NO,NO,Entrambi,0,0,NO

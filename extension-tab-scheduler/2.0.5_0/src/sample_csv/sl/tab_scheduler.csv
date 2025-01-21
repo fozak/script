@@ -1,0 +1,4 @@
+﻿URL,Časovnik,Stanje,Odprti datum,Zaključni datum,Odprti čas,Zapri čas,Teden odprtih vrat,Zapri teden,V brskalniku Odprto,Dan odprtih vrat,Dan zaprtja,Odprta minuta,Zapri minuto,Odprto drugo,Zapri drugo,Obvestilo,Naslov,Opis,Odpri URL v ozadju,Odpri v načinu brez beleženja zgodovine,Ne zapirajte pripetih zavihkov,Zapri samo zavihke brez beleženja zgodovine,Filtriranje URL-jev,Vrsta urnika,Odprta minuta vsako uro,Vsako uro Zapri Minuto,Osveži zavihek če je URL že odprt
+https://www.google.com/,Vsako minuto,Aktiven,,,,,"","","",,,,,,,Neaktiven,Close Every Minute,,št,št,št,št,ja,Zapri,0,0,ja
+http://www.w3schools.com/,Vsak dan,Aktiven,,,16:31,,"","","",,,,,,,Neaktiven,Every Day Open,,št,št,št,št,št,Odpri,0,0,št
+https://www.flipkart.com/,Minuta po meri,Aktiven,,,,,"","","",,,120,5,,,Neaktiven,Open and Close,,št,št,št,št,št,Oba,0,0,št

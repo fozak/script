@@ -1,0 +1,1448 @@
+{
+   "10_min": {
+      "message": "10 นาที"
+   },
+   "1_min": {
+      "message": "1 นาที"
+   },
+   "30_min": {
+      "message": "30 นาที"
+   },
+   "5_min": {
+      "message": "5 นาที"
+   },
+   "60_min": {
+      "message": "ชั่วโมง"
+   },
+   "Dashboard": {
+      "message": "แผงหน้าปัด"
+   },
+   "Login": {
+      "message": "เข้าสู่ระบบ"
+   },
+   "Off": {
+      "message": "ปิด"
+   },
+   "On": {
+      "message": "บน"
+   },
+   "Selected": {
+      "message": "เลือกแล้ว"
+   },
+   "Settings": {
+      "message": "การตั้งค่า"
+   },
+   "Tutorial": {
+      "message": "บทช่วยสอน"
+   },
+   "action": {
+      "message": "การกระทำ"
+   },
+   "activateScheduleTab": {
+      "message": "เปิดใช้งานแท็บกำหนดเวลา"
+   },
+   "active": {
+      "message": "คล่องแคล่ว"
+   },
+   "activeAllScheduleTab": {
+      "message": "การกำหนดเวลาแท็บการทำงาน"
+   },
+   "activeStatus": {
+      "message": "สถานะ"
+   },
+   "actvInactvNotification": {
+      "message": "แสดงการแจ้งเตือนเมื่อเปิดแท็บกำหนดการ"
+   },
+   "actvInactvOpnTb": {
+      "message": "แท็บเปิดใช้งานหรือไม่ใช้งาน"
+   },
+   "actvIntvClsTb": {
+      "message": "ปิดแท็บใช้งานหรือไม่ใช้งาน"
+   },
+   "add": {
+      "message": "เพิ่ม"
+   },
+   "addDescription": {
+      "message": "เพิ่มคำอธิบาย"
+   },
+   "addNew": {
+      "message": "เพิ่มใหม่"
+   },
+   "addNewURlCls": {
+      "message": "เพิ่ม URL ใหม่เพื่อปิด"
+   },
+   "addNewUrlToOpen": {
+      "message": "เพิ่ม URL ใหม่เพื่อเปิดในหน้าต่างใหม่"
+   },
+   "addTitle": {
+      "message": "เพิ่มชื่อเรื่อง"
+   },
+   "addWebsite": {
+      "message": "เพิ่มเว็บไซต์"
+   },
+   "all": {
+      "message": "ทั้งหมด"
+   },
+   "allInputFieldReq": {
+      "message": "ทุกช่องจำเป็นต้องกรอก"
+   },
+   "all_weeks": {
+      "message": "ตลอดสัปดาห์"
+   },
+   "alreadyPurchase": {
+      "message": "ซื้อแล้ว? ใส่รหัสที่นี่"
+   },
+   "andAt": {
+      "message": "และที่"
+   },
+   "annually": {
+      "message": "เป็นประจำทุกปี"
+   },
+   "appDesc": {
+      "message": "\u003Cfont class=\"\" style=\"vertical-align: inherit;\">แท็บเบราว์เซอร์จะเปิดและปิดโดยอัตโนมัติเมื่อถึงเวลาที่เลือก ผู้ใช้สามารถเปิดใช้งาน/ปิดใช้งานรายการตามความต้องการ"
+   },
+   "appName": {
+      "message": "ตัวกำหนดเวลาแท็บพร้อมเปิดและปิดอัตโนมัติ"
+   },
+   "april": {
+      "message": "เมษายน"
+   },
+   "at": {
+      "message": "ที่"
+   },
+   "august": {
+      "message": "สิงหาคม"
+   },
+   "autoFocus": {
+      "message": "แท็บโฟกัสอัตโนมัติ"
+   },
+   "autoFocustip": {
+      "message": "หากเปิด แท็บใหม่จะเปิดในสถานะใช้งานอยู่/โฟกัส"
+   },
+   "autofocustip": {
+      "message": "แท็บใหม่ที่เปิดจะโฟกัสโดยอัตโนมัติ"
+   },
+   "basic": {
+      "message": "พื้นฐาน"
+   },
+   "billedAnnyally": {
+      "message": "เรียกเก็บเงินเป็นรายปี"
+   },
+   "billedMonthly": {
+      "message": "เรียกเก็บเงินรายเดือน"
+   },
+   "both": {
+      "message": "ทั้งคู่"
+   },
+   "browserOpen": {
+      "message": "เมื่อเปิดเบราว์เซอร์"
+   },
+   "browserWebAddress": {
+      "message": "ที่อยู่เว็บของเบราว์เซอร์เริ่มต้นและสิ้นสุดด้วยที่อยู่เว็บที่ไม่รู้จัก ใส่\u003Cb>*\u003C/b>ไว้ทั้งสองด้านของช่องลิงก์เว็บไซต์ที่คุณป้อน"
+   },
+   "browserWebAddress2": {
+      "message": "ที่อยู่เว็บของเบราว์เซอร์มีชื่อโดเมน google.com ซึ่งจะถูกปิดภายในไม่กี่นาทีไม่ว่าโดเมนย่อยและเส้นทางของหน้าจะเป็นอะไรก็ตาม ใส่\u003Cb>*\u003C/b>ไว้ทั้งสองด้านของชื่อโดเมนและ TLD"
+   },
+   "browserWebAddress3": {
+      "message": "ที่อยู่เว็บของเบราว์เซอร์เริ่มต้นด้วยชื่อโดเมนที่ไม่รู้จักและสิ้นสุดด้วยเส้นทางหน้าที่ไม่รู้จัก"
+   },
+   "browserWebAddress31": {
+      "message": "จะปิดหลังจากนาทีที่กำหนด ให้ใส่\u003Cb>*\u003C/b>ไว้ทั้งสองด้านของ TLD"
+   },
+   "browserWebAddress4": {
+      "message": "ที่อยู่เว็บของเบราว์เซอร์เริ่มต้นด้วยที่อยู่เว็บที่ไม่รู้จัก ใส่\u003Cb>*\u003C/b> ไว้ ที่จุดเริ่มต้นของ URL ของคุณ โปรดจำไว้ว่าที่อยู่เว็บของเบราว์เซอร์จะต้องตรงกับ URL ของคุณหลังจาก\u003Cb>*\u003C/b>ที่คุณเขียน"
+   },
+   "browserWebAddress41": {
+      "message": "ที่อยู่เว็บของเบราว์เซอร์เริ่มต้นด้วยโดเมนย่อยที่ไม่รู้จัก"
+   },
+   "browserWebAddress42": {
+      "message": "ที่จุดเริ่มต้นของลิงค์เว็บไซต์ของคุณ"
+   },
+   "browserWebAddress5": {
+      "message": "ที่อยู่เว็บของเบราว์เซอร์ลงท้ายด้วยที่อยู่เว็บที่ไม่รู้จัก ใส่\u003Cb>*\u003C/b> ไว้ ที่ท้าย URL ของคุณ โปรดจำไว้ว่าที่อยู่เว็บของคุณจะต้องตรงกันก่อน\u003Cb>*\u003C/b>ที่คุณเขียน"
+   },
+   "browserWebAddress51": {
+      "message": "ที่อยู่เว็บของเบราว์เซอร์สิ้นสุดด้วยเส้นทางหน้าที่ไม่รู้จัก ใส่\u003Cb>*\u003C/b> ไว้ ที่ท้ายที่อยู่เว็บของคุณ"
+   },
+   "browserWebAddress6": {
+      "message": "ใส่\u003Cb>*\u003C/b>ในช่องที่อยู่เว็บไซต์เพื่อปิดแท็บเบราว์เซอร์ทั้งหมด หลังจากปิดแท็บทั้งหมดแล้ว เบราว์เซอร์จะถูกปิดโดยอัตโนมัติ"
+   },
+   "browserWebAddress7": {
+      "message": "คุณจะต้องเขียนชื่อโดเมนย่อย โดเมนระดับบนสุด ชื่อโดเมน และเส้นทางของหน้าในช่อง URL ไปยังแท็บที่เปิดในเบราว์เซอร์"
+   },
+   "browserWebAddress8": {
+      "message": "คุณสามารถเปิด url ตามวันและเวลาที่กำหนด เดือนที่กำหนด สัปดาห์ที่กำหนด ปีที่กำหนด และเวลาซ้ำ"
+   },
+   "buyPlan": {
+      "message": "ซื้อแผนการ"
+   },
+   "buycofee": {
+      "message": "ซื้อกาแฟให้ฉันหน่อย"
+   },
+   "cancel": {
+      "message": "ยกเลิก"
+   },
+   "changeLanguage": {
+      "message": "เปลี่ยนภาษา"
+   },
+   "checkAll": {
+      "message": "ตรวจสอบทั้งหมด"
+   },
+   "checkThisOpToPreventClosePinTb": {
+      "message": "เลือกตัวเลือกนี้เพื่อป้องกันการปิดแท็บที่ปักหมุด"
+   },
+   "checkThisOptionOnlyPartOfUrlMtch": {
+      "message": "เลือกตัวเลือกนี้หากจำเป็นต้องจับคู่ URL เพียงบางส่วนเท่านั้น"
+   },
+   "checkThisOptionToActivate": {
+      "message": "เลือกตัวเลือกนี้เพื่อเปิดใช้งานหรือปิดใช้งาน URL ที่คุณกำหนดเวลาไว้"
+   },
+   "checkThisOptionToCloseOnly": {
+      "message": "เลือกตัวเลือกนี้เพื่อปิดเฉพาะแท็บที่ไม่ระบุตัวตน นอกจากนี้ ให้เปิดใช้งานตัวเลือก \"อนุญาตในแท็บที่ไม่ระบุตัวตน\" ในรายละเอียดส่วนขยาย สำหรับคำแนะนำ โปรดดูที่หน้าบทช่วยสอน"
+   },
+   "checkThisOptionToCloseOnlyInIncgnitoTb": {
+      "message": "เลือกตัวเลือกนี้เพื่อปิดเฉพาะแท็บที่ไม่ระบุตัวตน นอกจากนี้ ให้เปิดใช้งานตัวเลือก \"อนุญาตในแท็บที่ไม่ระบุตัวตน\" ในรายละเอียดส่วนขยาย สำหรับคำแนะนำ โปรดดูที่หน้าบทช่วยสอน"
+   },
+   "checkThisOptionToInBg": {
+      "message": "เลือกตัวเลือกนี้หากคุณต้องการเปิด URL ในพื้นหลังโดยไม่ต้องเปิดในแท็บใหม่"
+   },
+   "checkThisOptionToInactivNotification": {
+      "message": "เลือกตัวเลือกนี้เพื่อปิดการแจ้งเตือนบน URL ที่กำหนดไว้"
+   },
+   "checkThisOptionToOpen": {
+      "message": "เลือกตัวเลือกนี้หากคุณต้องการเปิด URL ของคุณในโหมดไม่ระบุตัวตน"
+   },
+   "checkThisOptionToOpenIncogito": {
+      "message": "เลือกตัวเลือกนี้หากคุณต้องการเปิด URL ของคุณในโหมดไม่ระบุตัวตน"
+   },
+   "checkThisOptionToPrevent": {
+      "message": "เลือกตัวเลือกนี้เพื่อป้องกันการปิดแท็บที่ปักหมุด"
+   },
+   "clickExtIcon": {
+      "message": "คลิกไอคอน “ส่วนขยาย” ในแถบเครื่องมือ ซึ่งมีลักษณะเหมือนชิ้นส่วนปริศนา"
+   },
+   "clickTheSwitch": {
+      "message": "คลิกสวิตช์ข้างๆ เพื่อเปิด"
+   },
+   "close": {
+      "message": "ปิด"
+   },
+   "closeAllTab": {
+      "message": "12. ปิดแท็บทั้งหมดของเบราว์เซอร์"
+   },
+   "closeAllTabExm1": {
+      "message": "ในตัวอย่างด้านบน URL ที่ให้ไว้จะอยู่ในแท็บปิด ซึ่งระบุว่าจะปิดแท็บทั้งหมดในเวลา 12:00 น. ของวันที่ 25/2/2023"
+   },
+   "closeDate": {
+      "message": "วันที่ปิด"
+   },
+   "closeDay": {
+      "message": "วันปิดทำการ"
+   },
+   "closeEveryYear": {
+      "message": "ปิดทุก ๆ ปี"
+   },
+   "closeInEvery": {
+      "message": "ปิดในทุกๆ"
+   },
+   "closeIncognitoTab": {
+      "message": "ปิดเฉพาะแท็บไม่ระบุตัวตนเท่านั้น"
+   },
+   "closeMinute": {
+      "message": "ปิดนาที"
+   },
+   "closeOnDay": {
+      "message": "ปิดทำการในวัน"
+   },
+   "closeOnEvery": {
+      "message": "ปิดทุก ๆ"
+   },
+   "closeOnEveryDay": {
+      "message": "ปิดทุกวัน"
+   },
+   "closeOnEveryMonth": {
+      "message": "ปิดทุกเดือนในวันที่"
+   },
+   "closeOnEveryWeek": {
+      "message": "ปิดทุกสัปดาห์"
+   },
+   "closeSecond": {
+      "message": "ปิดที่สอง"
+   },
+   "closeSeconsMoreThan5": {
+      "message": "วินาทีที่ใกล้เคียงควรมากกว่า 5"
+   },
+   "closeTabSchedule": {
+      "message": "ปิดแท็บกำหนดการ"
+   },
+   "closeTabURL": {
+      "message": "ปิดแท็บ URL"
+   },
+   "closeTime": {
+      "message": "เวลาปิดทำการ"
+   },
+   "closeUrl": {
+      "message": "ปิดลิงค์เว็บไซต์"
+   },
+   "closeWeek": {
+      "message": "สัปดาห์ปิด"
+   },
+   "closeWeeks": {
+      "message": "สัปดาห์ปิด"
+   },
+   "close_on": {
+      "message": "ปิดต่อไป"
+   },
+   "cngrtsForSubcr": {
+      "message": "ขอแสดงความยินดี! แผนของคุณได้รับการเปิดใช้งานสำเร็จแล้ว"
+   },
+   "commonQuestionsAns": {
+      "message": "คำถามและคำตอบที่พบบ่อย"
+   },
+   "copySucessClose": {
+      "message": "คัดลอกข้อมูล URL ของแท็บปิดไปยังข้อมูล URL ของแท็บเปิด"
+   },
+   "createNewTimer": {
+      "message": "สร้างตัวจับเวลาใหม่"
+   },
+   "currentPlan": {
+      "message": "แผนปัจจุบัน"
+   },
+   "currentTabSchedule": {
+      "message": "ตารางแท็บปัจจุบัน"
+   },
+   "currentTbScheduleTimer": {
+      "message": "แท็บปัจจุบันตั้งเวลาไว้"
+   },
+   "cusSec": {
+      "message": "กำหนดเองที่สอง"
+   },
+   "custMin": {
+      "message": "นาทีที่กำหนดเอง"
+   },
+   "custmMinSch": {
+      "message": "7. กำหนดการนาทีที่กำหนดเอง"
+   },
+   "custmMinSchExm1": {
+      "message": "ในตัวอย่างด้านบน URL ที่ให้ไว้จะอยู่ในแท็บเปิด ซึ่งระบุว่า URL ที่ให้ไว้จะเปิดในแท็บใหม่ทุกๆ 15 นาที"
+   },
+   "custmMinSchExm2": {
+      "message": "ในตัวอย่างด้านบน URL ที่กำหนดไว้จะอยู่ในแท็บปิด ซึ่งระบุว่า URL ที่กำหนดซึ่งเปิดในแท็บใหม่จะถูกปิดหลังจากผ่านไป 15 นาที"
+   },
+   "customSecondWarning": {
+      "message": "ฟังก์ชันที่สองแบบกำหนดเองยังเป็นการทดลอง และอาจไม่ทำงานอย่างถูกต้องหากตั้งค่าวินาทีต่ำกว่า 60"
+   },
+   "darkMode": {
+      "message": "โหมดมืด"
+   },
+   "datNotCopy": {
+      "message": "ข้อมูลบางอย่างไม่ได้รับการคัดลอกเนื่องจาก URL ไม่ถูกต้อง"
+   },
+   "dataSaved": {
+      "message": "บันทึกข้อมูลตัวจับเวลาสำเร็จแล้ว"
+   },
+   "date": {
+      "message": "วันที่"
+   },
+   "dateIsOutOfRange": {
+      "message": "วันที่อยู่นอกช่วง"
+   },
+   "day": {
+      "message": "วัน"
+   },
+   "december": {
+      "message": "ธันวาคม"
+   },
+   "delete": {
+      "message": "ลบ"
+   },
+   "deleteScheduleTb": {
+      "message": "ลบแท็บที่กำหนดเวลาไว้"
+   },
+   "description": {
+      "message": "คำอธิบาย"
+   },
+   "developedBy": {
+      "message": "พัฒนาโดย:"
+   },
+   "doNotCloseInPinnedTabs": {
+      "message": "อย่าปิดแท็บที่ปักหมุดไว้"
+   },
+   "doNotShowNotification": {
+      "message": "อย่าแสดงการแจ้งเตือน"
+   },
+   "domainName": {
+      "message": "ชื่อโดเมน"
+   },
+   "downloadCloseTbSampleCsv": {
+      "message": "ดาวน์โหลดตัวอย่าง CSV แบบปิดแท็บเพื่อดูตัวอย่างรูปแบบที่ต้องการ"
+   },
+   "downloadOpenTbSampleCsv": {
+      "message": "ดาวน์โหลดตัวอย่าง CSV แท็บเปิดเพื่อดูตัวอย่างรูปแบบที่ต้องการ"
+   },
+   "editScheduleTb": {
+      "message": "แก้ไขแท็บที่กำหนดเวลาไว้"
+   },
+   "email": {
+      "message": "อีเมล"
+   },
+   "enterDateToCloseTab": {
+      "message": "กรอกวันที่ที่นี่เพื่อปิดแท็บกำหนดการ"
+   },
+   "enterDateToOpen": {
+      "message": "ป้อนวันที่เพื่อเปิดแท็บกำหนดการ"
+   },
+   "enterMiniutesToCloseTb": {
+      "message": "ป้อนเวลาเพื่อปิดแท็บ"
+   },
+   "enterMiniutesToOpen": {
+      "message": "ป้อนนาทีเพื่อเปิดแท็บกำหนดเวลา"
+   },
+   "enterMinute": {
+      "message": "เข้าสู่นาที"
+   },
+   "enterSecond": {
+      "message": "เข้าที่สอง"
+   },
+   "enterSecondsToCloseTab": {
+      "message": "ใส่วินาทีเพื่อปิดแท็บ"
+   },
+   "enterSecondsToOpen": {
+      "message": "ป้อนวินาทีเพื่อเปิดแท็บกำหนดเวลา"
+   },
+   "enterTilteOfScheduleUrl": {
+      "message": "กรอกชื่อ URL ที่กำหนด"
+   },
+   "enterTimeToCloseTab": {
+      "message": "กรอกเวลาที่นี่เพื่อปิดแท็บกำหนดเวลา"
+   },
+   "enterTimeToSchedule": {
+      "message": "ป้อนเวลาเพื่อเปิดแท็บตารางเวลา"
+   },
+   "enterValidEmail": {
+      "message": "กรุณากรอกอีเมล์ที่ถูกต้อง"
+   },
+   "enterValidUrl": {
+      "message": "กรุณากรอก URL ที่ถูกต้อง"
+   },
+   "enterValueInCloseSec": {
+      "message": "ป้อนค่าในไม่กี่วินาที"
+   },
+   "enterValueInOpenCloseSec": {
+      "message": "ป้อนค่าเป็นวินาทีเปิดหรือปิด"
+   },
+   "enterValueInOpenMinutes": {
+      "message": "ป้อนค่าในนาทีเปิด"
+   },
+   "enterVlaueInCloseMinutes": {
+      "message": "ป้อนค่าในนาทีที่ใกล้"
+   },
+   "enterVlaueInOpenCloseMin": {
+      "message": "ป้อนค่าในนาทีเปิดหรือปิด"
+   },
+   "enterVlaueInOpenSeconds": {
+      "message": "ป้อนค่าในเวลาไม่กี่วินาที"
+   },
+   "enterYourURLToSchedule": {
+      "message": "กรอก URL ของคุณเพื่อกำหนดเวลา"
+   },
+   "every": {
+      "message": "ทั้งหมด"
+   },
+   "every10Min": {
+      "message": "ทุก ๆ 10 นาที"
+   },
+   "every1Minute": {
+      "message": "ทุก ๆ 1 นาที"
+   },
+   "every30Min": {
+      "message": "ทุก ๆ 30 นาที"
+   },
+   "every5Min": {
+      "message": "ทุก ๆ 5 นาที"
+   },
+   "everyDay": {
+      "message": "ทุกวัน"
+   },
+   "everyDayAt": {
+      "message": "ทุกวันเวลา"
+   },
+   "everyHour": {
+      "message": "ทุกชั่วโมง"
+   },
+   "everyMinute": {
+      "message": "ทุกนาที"
+   },
+   "everyMonth": {
+      "message": "ทุกเดือน"
+   },
+   "everyMonthOn": {
+      "message": "ทุกเดือน"
+   },
+   "everyMonthOnDay": {
+      "message": "ทุกเดือนในวัน"
+   },
+   "everyWeek": {
+      "message": "ทุกสัปดาห์"
+   },
+   "everyWeekOn": {
+      "message": "ทุกสัปดาห์"
+   },
+   "everyYear": {
+      "message": "ทุกปี"
+   },
+   "everyYesrOn": {
+      "message": "ทุกปี"
+   },
+   "evr10MinSch": {
+      "message": "2.กำหนดการทุก ๆ 10 นาที"
+   },
+   "evr10MinSchExm1": {
+      "message": "ในตัวอย่างด้านบน URL ที่กำหนดไว้จะอยู่ในแท็บเปิด ซึ่งระบุว่า URL ที่กำหนดจะเปิดในแท็บใหม่ทุกๆ 10 นาที"
+   },
+   "evr10MinSchExm2": {
+      "message": "ในตัวอย่างด้านบน URL ที่กำหนดไว้จะอยู่ในแท็บปิด ซึ่งระบุว่า URL ที่กำหนดซึ่งเปิดในแท็บใหม่จะถูกปิดหลังจากผ่านไป 10 นาที"
+   },
+   "evrDaySch": {
+      "message": "3.ตารางงานประจำวัน"
+   },
+   "evrDaySchExm1": {
+      "message": "ในตัวอย่างด้านบน URL ที่ให้ไว้จะอยู่ในแท็บเปิด ซึ่งระบุว่าจะเปิดในแท็บใหม่ทุกวัน เวลา 17:27 น."
+   },
+   "evrDaySchExm2": {
+      "message": "ในตัวอย่างด้านบน URL ที่ให้ไว้จะอยู่ในแท็บปิด ซึ่งระบุว่าจะปิดแท็บที่เปิดอยู่แล้วในเวลา 17:27 น. ของทุกวัน"
+   },
+   "evrMonthSch": {
+      "message": "5.ตารางงานทุกเดือน"
+   },
+   "evrMonthSchExm1": {
+      "message": "ในตัวอย่างด้านบน URL ที่ให้ไว้จะอยู่ในแท็บเปิด ซึ่งระบุว่าจะเปิดในแท็บใหม่ทุกเดือน เวลา 13:45 น. ของวันที่ 25"
+   },
+   "evrMonthSchExm2": {
+      "message": "ในตัวอย่างด้านบน URL ที่ให้ไว้จะอยู่ในแท็บปิด ซึ่งระบุว่าจะปิดแท็บที่เปิดอยู่แล้วทุกเดือน เวลา 13:45 น. ของวันที่ 25"
+   },
+   "evrWeekSch": {
+      "message": "4.ตารางงานประจำสัปดาห์"
+   },
+   "evrWeekSchExm1": {
+      "message": "ในตัวอย่างข้างต้น URL ที่กำหนดจะอยู่ในแท็บเปิด ซึ่งระบุว่าจะเปิดในแท็บใหม่ทุกสัปดาห์เวลา 17:00 น. ในวัน\u003Cb>จันทร์และอังคาร\u003C/b>"
+   },
+   "evrWeekSchExm2": {
+      "message": "ในตัวอย่างข้างต้น URL ที่กำหนดจะอยู่ในแท็บปิด ซึ่งระบุว่าจะปิดแท็บที่เปิดอยู่แล้วทุกสัปดาห์เวลา 17:00 น. ในวัน\u003Cb>จันทร์และวันอังคาร\u003C/b>"
+   },
+   "evrWeekSchExm3": {
+      "message": "ในตัวอย่างข้างต้น สามารถเลือกหลายวันในตัวจับเวลาสัปดาห์ได้"
+   },
+   "evrYearSch": {
+      "message": "6.ตารางงานประจำปี"
+   },
+   "evrYearSchExm1": {
+      "message": "ในตัวอย่างด้านบน URL ที่ให้ไว้จะอยู่ในแท็บเปิด ซึ่งระบุว่าจะเปิดในแท็บใหม่ ทุกปี เวลา 13:35 น. ของวันที่ 1 มกราคม"
+   },
+   "evrYearSchExm2": {
+      "message": "ในตัวอย่างด้านบน URL ที่ให้ไว้จะอยู่ในแท็บปิด ซึ่งระบุว่าจะปิดแท็บที่เปิดอยู่แล้วในทุกปี เวลา 13:35 น. ของวันที่ 1 มกราคม"
+   },
+   "exampleSort": {
+      "message": "เช่น"
+   },
+   "exdMaxLim": {
+      "message": "เกินจำนวนอุปกรณ์สูงสุดที่ได้รับอนุญาต!"
+   },
+   "exmpOpnClsTbSch": {
+      "message": "ตัวอย่างการเปิดและปิดแท็บใน Tab Scheduler"
+   },
+   "expLicKy": {
+      "message": "รหัสลิขสิทธิ์นี้หมดอายุแล้ว"
+   },
+   "export": {
+      "message": "ส่งออก"
+   },
+   "exportBefore": {
+      "message": "คุณมี\u003Cexday>\u003C/exday>เหลือเวลาอีกไม่กี่วัน กรุณาสมัครสมาชิกเพื่อรับฟีเจอร์พิเศษเพิ่มเติม"
+   },
+   "exportClsTbDta": {
+      "message": "ส่งออกข้อมูลแท็บปิด"
+   },
+   "exportOpenTbDt": {
+      "message": "ส่งออกข้อมูลแท็บเปิด"
+   },
+   "exportedData": {
+      "message": "ข้อมูลตัวจับเวลาส่งออกสำเร็จแล้ว"
+   },
+   "extensionShouldAble": {
+      "message": "ตอนนี้ส่วนขยายน่าจะสามารถปิดแท็บในโหมดไม่ระบุตัวตนได้แล้ว"
+   },
+   "faq": {
+      "message": "คำถามที่พบบ่อย"
+   },
+   "faq_1": {
+      "message": "Tab Scheduler พร้อมเปิดและปิดอัตโนมัติคืออะไร?"
+   },
+   "faq_10": {
+      "message": "ฉันจะดูแท็บที่กำหนดเวลาไว้ของฉันได้อย่างไร?"
+   },
+   "faq_11": {
+      "message": "จำเป็นต้องกรอกทั้งเวลาเปิดและเวลาปิดหรือไม่?"
+   },
+   "faq_12": {
+      "message": "คุณสมบัติของแท็บโฟกัสอัตโนมัติ เปิดใช้งานแท็บตามกำหนดเวลาทั้งหมด และโหมดพลังงานทำอะไรได้บ้าง"
+   },
+   "faq_13": {
+      "message": "ฉันสามารถเปิด/ปิดลิงก์เว็บไซต์ที่กำหนดเวลาไว้ในแท็บไม่ระบุตัวตนได้หรือไม่"
+   },
+   "faq_14": {
+      "message": "แท็บ Refresh จะมีประโยชน์อะไรหาก URL เปิดอยู่แล้ว?"
+   },
+   "faq_2": {
+      "message": "ลิงค์เว็บไซต์มีประโยชน์อะไร?"
+   },
+   "faq_3": {
+      "message": "ฉันจะกำหนดเวลา URL โดยใช้ Tab Scheduler ได้อย่างไร?"
+   },
+   "faq_4": {
+      "message": "ตัวเลือก 'เปิด URL ในพื้นหลัง' คืออะไร?"
+   },
+   "faq_5": {
+      "message": "ฉันสามารถป้องกันไม่ให้ส่วนขยายปิดแท็บที่ปักหมุดไว้ได้หรือไม่"
+   },
+   "faq_6": {
+      "message": "ประเภทกำหนดการ 'ทั้งสอง' หมายถึงอะไร"
+   },
+   "faq_7": {
+      "message": "ฟีเจอร์ 'การกรอง URL' ทำงานอย่างไร"
+   },
+   "faq_8": {
+      "message": "ฉันสามารถปิดใช้งานแท็บที่กำหนดเวลาไว้โดยไม่ต้องลบแท็บนั้นได้ไหม"
+   },
+   "faq_9": {
+      "message": "ฉันจะได้รับการแจ้งเตือนสำหรับแท็บที่กำหนดเวลาไว้หรือไม่"
+   },
+   "faq_a_1": {
+      "message": "\u003Cp>Tab Scheduler with Auto Open and Close เป็นส่วนขยายของเบราว์เซอร์ที่ช่วยให้ผู้ใช้สามารถกำหนดเวลาให้แท็บเปิดและปิดโดยอัตโนมัติในเวลาที่กำหนด ผู้ใช้สามารถเลือกกำหนดเวลาแบบครั้งเดียวหรือตั้งค่ากำหนดเวลาซ้ำๆ ด้วยตัวเลือกความถี่ต่างๆ ได้ ส่วนขยายนี้มีวัตถุประสงค์หลายประการสำหรับผู้ใช้และมีคุณสมบัติมากมายที่เป็นประโยชน์ต่อคุณ\u003C/p>"
+   },
+   "faq_a_10": {
+      "message": "แท็บที่กำหนดเวลาทั้งหมดจะแสดงเป็นรายการโดยแสดงชื่อ ลิงก์เว็บไซต์ เวลาเปิดและปิด สถานะ และการดำเนินการที่คุณดำเนินการได้ (เช่น เปิดใช้งาน แก้ไข ลบ)"
+   },
+   "faq_a_11": {
+      "message": "ไม่ คุณสามารถกำหนดเวลาเปิดหรือปิดได้ อย่างไรก็ตาม คุณต้องกรอกข้อมูลหรือเลือกช่องที่จำเป็นที่มีเครื่องหมายดอกจัน (*)"
+   },
+   "faq_a_12": {
+      "message": "แท็บโฟกัสอัตโนมัติช่วยให้มั่นใจได้ว่าเมื่อแท็บที่กำหนดเวลาเปิดขึ้น การเปิดใช้งานแท็บที่กำหนดเวลาทั้งหมดจะช่วยให้คุณเปิดใช้งานแท็บที่กำหนดเวลาทั้งหมดได้อย่างรวดเร็วด้วยการคลิกเพียงครั้งเดียว โหมดพลังงานจะเพิ่มประสิทธิภาพการทำงานของส่วนขยายโดยจัดการทรัพยากรของเบราว์เซอร์อย่างมีประสิทธิภาพมากขึ้น"
+   },
+   "faq_a_13": {
+      "message": "ใช่ คุณสามารถเลือกเปิดแท็บที่กำหนดเวลาไว้ในโหมดไม่ระบุตัวตนได้โดยเลือกตัวเลือก \"เปิดในโหมดไม่ระบุตัวตน\" คุณสามารถเลือกปิดเฉพาะแท็บไม่ระบุตัวตนได้โดยเลือกตัวเลือก \"ปิดเฉพาะแท็บไม่ระบุตัวตน\" ตราบใดที่เปิดใช้งาน \"อนุญาตในโหมดไม่ระบุตัวตน\" ในการตั้งค่าส่วนขยาย"
+   },
+   "faq_a_14": {
+      "message": "เมื่อเปิดใช้งานตัวเลือกนี้ ส่วนขยายจะรีเฟรชแท็บที่มีอยู่โดยอัตโนมัติหากมีการเปิด URL เดียวกันในเบราว์เซอร์ของคุณอยู่แล้ว วิธีนี้จะช่วยป้องกันไม่ให้เปิดแท็บซ้ำ และช่วยให้คุณโหลดหน้าเวอร์ชันล่าสุดอยู่เสมอ"
+   },
+   "faq_a_14_1": {
+      "message": "หากคุณพยายามเปิด https://github.com/ และเปิดอยู่ในแท็บอื่นแล้ว ส่วนขยายจะรีเฟรชแท็บนั้นแทนที่จะเปิดแท็บใหม่"
+   },
+   "faq_a_14_2": {
+      "message": "หาก https://github.com/ เปิดอยู่ในสามแท็บแล้ว ส่วนขยายจะรีเฟรชทั้งสามแท็บ"
+   },
+   "faq_a_2": {
+      "message": "ลิงก์เว็บไซต์คือที่อยู่เว็บไซต์ในแท็บเปิดของเบราว์เซอร์ของคุณ วิธีใช้ที่อยู่เว็บไซต์มีระบุไว้ด้านล่าง"
+   },
+   "faq_a_3": {
+      "message": "หากต้องการกำหนดเวลา URL ให้ป้อนลิงก์เว็บไซต์ ตั้งชื่อกำหนดเวลา เลือกความถี่ (ครั้งเดียว ทุกนาที ทุกวัน เป็นต้น) และเลือกเวลาเปิดและปิด นอกจากนี้ คุณยังสามารถระบุวันที่ วัน หรือวินาทีเพื่อเปิดและปิดแท็บได้อีกด้วย"
+   },
+   "faq_a_4": {
+      "message": "\u003Cp>ตัวเลือกนี้ช่วยให้คุณควบคุมการกำหนดเวลาให้ URL เปิดในพื้นหลังได้อย่างเต็มที่โดยไม่ต้องเปิดแท็บใหม่ขึ้นมา URL จะเปิดขึ้นอย่างเงียบๆ ในขณะที่คุณทำงานบนแท็บอื่นๆ ต่อไป ตัวเลือกนี้มีประโยชน์อย่างยิ่งเมื่อคุณต้องการให้เบราว์เซอร์ดึงข้อมูลจาก URL ที่กำหนดเวลาไว้โดยไม่ต้องแสดงข้อมูลดังกล่าว เช่น ในกรณีของคำขอ GET API\u003C/p>\u003Cbr> \u003Cp>ตัวอย่างเช่น หากคุณต้องการดึงข้อมูลจากจุดสิ้นสุด API ในเวลาที่กำหนดเป็นประจำ คุณสามารถใช้ตัวเลือกที่มีประสิทธิภาพนี้เพื่อรันคำขอในพื้นหลังโดยไม่ต้องเปิดแท็บใหม่ที่มองเห็นได้\u003C/p>"
+   },
+   "faq_a_5": {
+      "message": "ใช่ มีตัวเลือกในการป้องกันการปิดแท็บที่ปักหมุด เลือกตัวเลือก \"อย่าปิดแท็บที่ปักหมุด\" เพื่อให้แน่ใจว่าแท็บเหล่านี้ยังคงเปิดอยู่ แม้ว่าจะตรงตามเกณฑ์การปิดอื่นๆ ก็ตาม"
+   },
+   "faq_a_6": {
+      "message": "ประเภทกำหนดการ 'ทั้งสอง' ช่วยให้คุณควบคุมได้อย่างสมบูรณ์ว่าแท็บจะเปิดและปิดเมื่อใด ทำให้คุณสามารถตั้งเวลาเฉพาะสำหรับทั้งสองการดำเนินการได้"
+   },
+   "faq_a_7": {
+      "message": "การกรอง URL ช่วยให้มั่นใจว่าเฉพาะส่วนที่เฉพาะเจาะจงของ URL เท่านั้นที่จะต้องตรงกันจึงจะดำเนินการตามกำหนดเวลาได้ ซึ่งมีประโยชน์ในกรณีที่คุณต้องการให้การดำเนินการบางอย่างเป็นแบบอัตโนมัติโดยอิงจากการจับคู่ URL บางส่วน ตัวอย่างเช่น หากคุณเลือกตัวเลือกการกรอง URL สำหรับ URL https://example.com/page ตัวเลือกนี้จะใช้กับ URL เช่น https://example.com/page/123, https://example.com/page?query=example และ https://subdomain.example.com/page ด้วย"
+   },
+   "faq_a_8": {
+      "message": "ด้วยตัวเลือก \"เปิดใช้งานแท็บที่กำหนดเวลาไว้\" คุณสามารถเปิดหรือปิดใช้งานแท็บที่กำหนดเวลาไว้ได้อย่างง่ายดาย ช่วยให้คุณมีความยืดหยุ่นในการจัดการตารางเวลาของคุณโดยไม่สูญเสียการกำหนดค่า"
+   },
+   "faq_a_9": {
+      "message": "โดยค่าเริ่มต้น คุณจะได้รับการแจ้งเตือน อย่างไรก็ตาม หากคุณต้องการหยุดการแจ้งเตือน คุณสามารถเลือกตัวเลือก \"ไม่แสดงการแจ้งเตือน\" เพื่อปิดการใช้งานได้"
+   },
+   "february": {
+      "message": "กุมภาพันธ์"
+   },
+   "filterTips": {
+      "message": "ตัวกรองใช้หลัง 'https://' หรือ 'www.' เช่น 'github.com'"
+   },
+   "for_exp": {
+      "message": "ตัวอย่างเช่น"
+   },
+   "freeForever": {
+      "message": "ฟรีตลอดไป"
+   },
+   "freeSchedule": {
+      "message": "ตารางงานฟรี"
+   },
+   "freeTral": {
+      "message": "ในฐานะผู้ใช้ในช่วงเริ่มต้นที่มีคุณค่า คุณจะเพลิดเพลินไปกับ\u003Crday>120\u003C/rday>สิทธิ์เข้าใช้งานฟรีหลายวันก่อนที่จะเปลี่ยนมาใช้แผนแบบชำระเงินใหม่ของเรา—ขอบคุณสำหรับการสนับสนุนอย่างต่อเนื่องของคุณ!\u003Cp class=\"p-t-5\">คุณมี\u003Cb>\u003Cspan>\u003C/span>\u003C/b>วันที่เหลืออยู่ของคุณ\u003Crday>120\u003C/rday>-ช่วงระยะเวลาฟรีวัน\u003Cafex class=\"warning\">\u003Cafex>\u003C/afex>\u003C/afex>\u003C/p> "
+   },
+   "frequentlyAskedQuestions": {
+      "message": "คำถามที่พบบ่อย"
+   },
+   "friday": {
+      "message": "วันศุกร์"
+   },
+   "getThisPlan": {
+      "message": "รับแผนนี้"
+   },
+   "goToSettingsPageToSchedule": {
+      "message": "ไปที่หน้าการตั้งค่าเพื่อกำหนดเวลาการเปิดและปิด URL"
+   },
+   "goURL": {
+      "message": "ไปที่ URL"
+   },
+   "helpAccordion12": {
+      "message": "ส่วนขยายนี้ทำงานในโหมดพักเครื่อง/ระงับการใช้งานหรือไม่"
+   },
+   "helpAccordion3": {
+      "message": "ฉันสามารถกำหนดเวลาให้แท็บเปิดในโหมดไม่ระบุตัวตนได้หรือไม่"
+   },
+   "helpAccordion6": {
+      "message": "\"เวลาหมดอายุ\" คืออะไร?"
+   },
+   "helpAccordion7": {
+      "message": "ฉันสามารถส่งออก URL ตามกำหนดการได้หรือไม่"
+   },
+   "helpAccordion8": {
+      "message": "ฉันสามารถนำเข้า URL กำหนดการได้หรือไม่"
+   },
+   "helpPanelBodyDesc12First": {
+      "message": "ไม่ ส่วนขยายนี้จะไม่ทำงานในโหมดพักเครื่อง/ระงับการใช้งาน"
+   },
+   "helpPanelBodyDesc12Second": {
+      "message": "หากมีการกำหนดเวลา URL ใดๆ ไว้ในแท็บเปิดหรือปิด พีซีของคุณจะไม่เข้าสู่โหมดพักเครื่องหรือระงับการใช้งานโดยอัตโนมัติ"
+   },
+   "helpPanelBodyDesc3": {
+      "message": "ใช่ คุณสามารถเลือกเปิดแท็บที่กำหนดเวลาไว้ในโหมดไม่ระบุตัวตนได้โดยเลือกตัวเลือก \"เปิดในโหมดไม่ระบุตัวตน\" ตรวจสอบให้แน่ใจว่าได้เปิดใช้งานตัวเลือก \"อนุญาตในโหมดไม่ระบุตัวตน\" ของส่วนขยายในการตั้งค่าส่วนขยายของเบราว์เซอร์"
+   },
+   "helpPanelBodyDesc6": {
+      "message": "- วันที่และเวลาที่ระบุนั้นจะส่งผ่านจากวันที่และเวลาปัจจุบัน จากนั้นจะปรากฏข้อความ \"เวลาหมดอายุ\""
+   },
+   "helpPanelBodyDesc7": {
+      "message": "ใช่ คุณสามารถส่งออก URL แท็บเปิดและปิดแท็บที่กำหนดเวลาไว้แล้วในรูปแบบ csv และใช้กับระบบอื่นเพื่อนำเข้า URL นั้นได้"
+   },
+   "helpPanelBodyDesc8": {
+      "message": "ใช่ คุณสามารถนำเข้า URL เปิดและปิดที่ถูกต้องในรูปแบบ CSV ได้ รูปแบบ CSV ที่นำเข้าจะถูกกำหนดเวลาโดยอัตโนมัติในเวลาที่กำหนด"
+   },
+   "herAreStepsToAllow": {
+      "message": "ต่อไปนี้เป็นขั้นตอนในการ \"อนุญาตในโหมดไม่ระบุตัวตน\" ใน Google Chrome:"
+   },
+   "home": {
+      "message": "บ้าน"
+   },
+   "hour_minute_close": {
+      "message": "ทุกชั่วโมงใกล้นาที"
+   },
+   "hour_minute_open": {
+      "message": "เปิดทุกชั่วโมง ทุกนาที"
+   },
+   "how_to_use_tab": {
+      "message": "วิธีการใช้ Tab Scheduler?"
+   },
+   "import": {
+      "message": "การนำเข้า"
+   },
+   "importClsTbDta": {
+      "message": "นำเข้าข้อมูลแท็บปิด"
+   },
+   "importExport": {
+      "message": "การนำเข้า/ส่งออก"
+   },
+   "importOpenTbDt": {
+      "message": "นำเข้าข้อมูลแท็บเปิด"
+   },
+   "importedRecored": {
+      "message": ", นำเข้าบันทึกแล้ว"
+   },
+   "inactivateScheduleTab": {
+      "message": "ปิดใช้งานแท็บที่กำหนดเวลาไว้"
+   },
+   "inactive": {
+      "message": "ไม่ทำงาน"
+   },
+   "inactiveSch": {
+      "message": "8. URL ที่ไม่ได้ใช้งาน"
+   },
+   "inactiveSchExm1": {
+      "message": "ในตัวอย่างด้านบน URL ที่กำหนดไว้จะอยู่ในแท็บเปิดหรือแท็บปิด ซึ่งระบุว่า URL ที่กำหนดไว้ไม่ได้ใช้งานและจะไม่ดำเนินการใดๆ"
+   },
+   "inactiveThisScheduledTabs": {
+      "message": "เปิดใช้งานแท็บกำหนดเวลานี้"
+   },
+   "invalidDuplicate": {
+      "message": ", บันทึกซ้ำหรือไม่ถูกต้อง"
+   },
+   "invldLicKy": {
+      "message": "รหัสลิขสิทธิ์ไม่ถูกต้อง!"
+   },
+   "isClose": {
+      "message": "ใกล้แล้ว"
+   },
+   "isOpen": {
+      "message": "เปิดอยู่"
+   },
+   "january": {
+      "message": "มกราคม"
+   },
+   "july": {
+      "message": "กรกฎาคม"
+   },
+   "june": {
+      "message": "มิถุนายน"
+   },
+   "licKeyDis": {
+      "message": "รหัสลิขสิทธิ์นี้ถูกปิดใช้งาน"
+   },
+   "listTitle": {
+      "message": "ตัวกำหนดเวลาแท็บ"
+   },
+   "loading": {
+      "message": "โปรดรอ..."
+   },
+   "locale": {
+      "message": "เอ็น"
+   },
+   "march": {
+      "message": "มีนาคม"
+   },
+   "maxSchedule": {
+      "message": "4 ขีดจำกัดตารางเวลาสูงสุด"
+   },
+   "may": {
+      "message": "อาจ"
+   },
+   "mintValid": {
+      "message": "ต้องมีเวลาอย่างน้อย 1 นาที"
+   },
+   "minute": {
+      "message": "นาที"
+   },
+   "minutesNotLessThan1": {
+      "message": "นาทีไม่ควรน้อยกว่า 1 นาที"
+   },
+   "monday": {
+      "message": "วันจันทร์"
+   },
+   "month": {
+      "message": "เดือน"
+   },
+   "monthly": {
+      "message": "รายเดือน"
+   },
+   "more": {
+      "message": "มากกว่า"
+   },
+   "mostSubscribe": {
+      "message": "สมัครสมาชิกมากที่สุด"
+   },
+   "no": {
+      "message": "เลขที่"
+   },
+   "noDataToExport": {
+      "message": "ไม่มีข้อมูลที่จะส่งออก"
+   },
+   "noScheduledTabs": {
+      "message": "ไม่มีแท็บที่กำหนดเวลาไว้"
+   },
+   "noTimerSetAddNewTimer": {
+      "message": "ไม่ได้ตั้งเวลา คลิกปุ่มเพิ่มเพื่อตั้งเวลาใหม่"
+   },
+   "not_show_tutorial": {
+      "message": "อย่าแสดงบทช่วยสอนนี้อีกครั้ง"
+   },
+   "notificationOpenTab": {
+      "message": "13. การแจ้งเตือนเมื่อเปิด/ปิดแท็บ URL"
+   },
+   "notificationOpenTabExm1": {
+      "message": "ในตัวอย่างข้างต้น URL ที่ให้ไว้จะอยู่ในแท็บที่เปิดอยู่ ซึ่งระบุว่าจะมีการแจ้งเตือนและเปิด/ปิด URL ในแท็บใหม่ทุก ๆ 5 นาที"
+   },
+   "notifications": {
+      "message": "การแจ้งเตือน"
+   },
+   "november": {
+      "message": "พฤศจิกายน"
+   },
+   "october": {
+      "message": "ตุลาคม"
+   },
+   "onTheExtensionDetailPage": {
+      "message": "ในหน้ารายละเอียดส่วนขยาย ให้เลื่อนลงไปและค้นหาตัวเลือก “อนุญาตในโหมดไม่ระบุตัวตน”"
+   },
+   "oneTime": {
+      "message": "ครั้งหนึ่ง"
+   },
+   "oneTmSch": {
+      "message": "1.ตารางเวลาครั้งเดียว"
+   },
+   "oneTmSchExm1": {
+      "message": "ในตัวอย่างด้านบน URL ที่ให้ไว้จะอยู่ในแท็บเปิด ซึ่งระบุว่าจะเปิดในแท็บใหม่ หนึ่งครั้งในเวลา 13:45 น. ของวันที่ 21/1/2023"
+   },
+   "oneTmSchExm2": {
+      "message": "ในตัวอย่างด้านบน URL ที่ระบุไว้จะอยู่ในแท็บปิด ซึ่งระบุว่าจะปิดแท็บ URL ที่ตรงกันทั้งหมดในเวลา 13:45 น. ของวันที่ 21/1/2023"
+   },
+   "open": {
+      "message": "เปิด"
+   },
+   "openBackground": {
+      "message": "หากใช่ ให้โหลด URL ในพื้นหลังโดยไม่เปิดในแท็บใหม่"
+   },
+   "openDate": {
+      "message": "วันที่เปิด"
+   },
+   "openDay": {
+      "message": "วันเปิดทำการ"
+   },
+   "openEveryDayOn": {
+      "message": "เปิดบริการทุกวัน"
+   },
+   "openEveryMonthOn": {
+      "message": "เปิดทุกเดือนทุกวัน"
+   },
+   "openEveryWeekOn": {
+      "message": "เปิดทุกสัปดาห์"
+   },
+   "openEveryYearOn": {
+      "message": "เปิดทำการทุกปี"
+   },
+   "openGoogleChrome": {
+      "message": "เปิด Google Chrome"
+   },
+   "openInBackground": {
+      "message": "เปิด URL ในพื้นหลัง"
+   },
+   "openInEvery": {
+      "message": "เปิดในทุก"
+   },
+   "openInIncognito": {
+      "message": "เปิดในโหมดไม่ระบุตัวตน"
+   },
+   "openMinute": {
+      "message": "เปิดนาที"
+   },
+   "openOnDay": {
+      "message": "เปิดทำการในวัน"
+   },
+   "openOnEvery": {
+      "message": "เปิดทุกวัน"
+   },
+   "openSecond": {
+      "message": "เปิดที่สอง"
+   },
+   "openSecondsMoreThan5": {
+      "message": "วินาทีเปิดควรมากกว่า 5"
+   },
+   "openTabSchedule": {
+      "message": "เปิดตารางแท็บ"
+   },
+   "openTabURL": {
+      "message": "เปิดแท็บ URL"
+   },
+   "openTime": {
+      "message": "เวลาเปิดทำการ"
+   },
+   "openUrl": {
+      "message": "เปิดลิงค์เว็บไซต์"
+   },
+   "openWeek": {
+      "message": "สัปดาห์เปิดทำการ"
+   },
+   "openWeeks": {
+      "message": "สัปดาห์เปิดทำการ"
+   },
+   "open_on": {
+      "message": "เปิดเมื่อ"
+   },
+   "optional": {
+      "message": "ไม่จำเป็น"
+   },
+   "or": {
+      "message": "หรือ"
+   },
+   "outof": {
+      "message": "ออกจาก"
+   },
+   "pagePath": {
+      "message": "เส้นทางหน้า"
+   },
+   "paidFeature": {
+      "message": "ฟีเจอร์แบบชำระเงิน"
+   },
+   "pauseSchedule": {
+      "message": "เริ่มหรือหยุดกำหนดการทั้งหมด"
+   },
+   "pauseTabScheduler": {
+      "message": "ตัวกำหนดเวลาแท็บหยุดชั่วคราว"
+   },
+   "pleaseAllowIncognitoMessage": {
+      "message": "โปรดเปิดใช้งานตัวเลือก 'อนุญาตในโหมดไม่ระบุตัวตน' ในรายละเอียดส่วนขยาย สำหรับคำแนะนำ โปรดดูที่หน้าบทช่วยสอน"
+   },
+   "pleaseShareYourSuggestions": {
+      "message": "กรุณาแบ่งปันข้อเสนอแนะของคุณ"
+   },
+   "plsShreAnySugWithUs": {
+      "message": "กรุณาให้ข้อเสนอแนะเพื่อพัฒนาเรา"
+   },
+   "powerMode": {
+      "message": "โหมดพลังงาน"
+   },
+   "premium": {
+      "message": "พรีเมี่ยม"
+   },
+   "pricePlan": {
+      "message": "ราคาและแผนการ"
+   },
+   "privcyPolicy": {
+      "message": "นโยบายความเป็นส่วนตัว"
+   },
+   "prowerModeTip": {
+      "message": "ให้ระบบทำงานอยู่เสมอโดยเปิดใช้งานโหมดพลังงาน"
+   },
+   "put": {
+      "message": "ใส่"
+   },
+   "rateUs": {
+      "message": "ให้คะแนนเรา"
+   },
+   "removeDuplicateEntry": {
+      "message": "กรุณาลบรายการที่ซ้ำกัน"
+   },
+   "removeOpenTbURL": {
+      "message": "ลบ URL แท็บที่เปิดอยู่"
+   },
+   "repeat": {
+      "message": "ทำซ้ำ"
+   },
+   "requiredMsg": {
+      "message": "ที่จำเป็น"
+   },
+   "rmvClsTb": {
+      "message": "ลบ URL ของแท็บที่ปิด"
+   },
+   "sameTabs": {
+      "message": "รีเฟรชแท็บหาก URL เปิดอยู่แล้ว"
+   },
+   "sameTabsInfo": {
+      "message": "ป้องกันการเปิดแท็บหลายแท็บสำหรับ URL เดียวกัน ตัวอย่างเช่น หากเปิด www.google.com อยู่แล้ว แท็บที่มีอยู่จะถูกรีเฟรชแทนที่จะเปิดแท็บใหม่สำหรับแท็บนั้น"
+   },
+   "sampleCsvOpenPath": {
+      "message": "../sample_csv/en/open_tab_sample.csv"
+   },
+   "sampleFile": {
+      "message": "ไฟล์ตัวอย่าง"
+   },
+   "saturday": {
+      "message": "วันเสาร์"
+   },
+   "savOpnData": {
+      "message": "บันทึกข้อมูลแท็บที่เปิดอยู่"
+   },
+   "save": {
+      "message": "บันทึก"
+   },
+   "saveClsTbData": {
+      "message": "บันทึกข้อมูลแท็บปิด"
+   },
+   "saveSchedule": {
+      "message": "บันทึกตารางเวลา"
+   },
+   "scheduleCloseTab": {
+      "message": "กำหนดการปิดแท็บ"
+   },
+   "scheduleCurrentTab": {
+      "message": "กำหนดเวลาแท็บปัจจุบัน"
+   },
+   "scheduleOpenTab": {
+      "message": "กำหนดการเปิดแท็บ"
+   },
+   "scheduledTabIsAlreadyExistWithSameTimer": {
+      "message": "แท็บที่กำหนดเวลาไว้มีอยู่แล้วโดยมีตัวจับเวลาแบบเดียวกัน"
+   },
+   "scheduledTabList": {
+      "message": "รายการแท็บที่กำหนดเวลา"
+   },
+   "scheduledType": {
+      "message": "ประเภทตารางเวลา"
+   },
+   "search": {
+      "message": "ค้นหา"
+   },
+   "secValid": {
+      "message": "ต้องมีเวลาอย่างน้อย 5 วินาที"
+   },
+   "second": {
+      "message": "ที่สอง"
+   },
+   "selectCloseDate": {
+      "message": "เลือกวันที่ปิด"
+   },
+   "selectCloseDay": {
+      "message": "เลือกวันปิดทำการ"
+   },
+   "selectCloseTime": {
+      "message": "เลือกเวลาปิด"
+   },
+   "selectColumn": {
+      "message": "เลือกคอลัมน์"
+   },
+   "selectDateAndTime": {
+      "message": "เลือกวันที่และเวลาที่จะเปิดแท็บใหม่"
+   },
+   "selectDateAndTimeClsTb": {
+      "message": "เลือกวันที่และเวลาในการปิดแท็บ"
+   },
+   "selectDayToCloseSchTb": {
+      "message": "เลือกวันที่จะปิดแท็บกำหนดเวลา"
+   },
+   "selectDayToClsTb": {
+      "message": "เลือกวันที่จะปิดแท็บ"
+   },
+   "selectDayToSchdule": {
+      "message": "เลือกวันที่จะกำหนดเวลาแท็บ"
+   },
+   "selectDaysInWeek": {
+      "message": "เลือกวันในสัปดาห์"
+   },
+   "selectDaysInWeekIClsTime": {
+      "message": "เลือกวันในสัปดาห์ในเวลาที่ปิด"
+   },
+   "selectDaysInWeekIOpClsTime": {
+      "message": "เลือกวันในสัปดาห์ในการตั้งเวลาเปิดหรือปิด"
+   },
+   "selectDaysInWeekIOpTime": {
+      "message": "เลือกวันในสัปดาห์ในเวลาเปิด"
+   },
+   "selectFrequency": {
+      "message": "เลือกความถี่"
+   },
+   "selectFrequencyOfScheduleUrl": {
+      "message": "เลือกความถี่ของ URL ที่จะกำหนดเวลาไว้"
+   },
+   "selectOpenDate": {
+      "message": "เลือกวันที่เปิด"
+   },
+   "selectOpenDay": {
+      "message": "เลือกวันเปิดทำการ"
+   },
+   "selectOpenOrClose": {
+      "message": "เลือกเวลาเปิดและปิด"
+   },
+   "selectOpenOrCloseDate": {
+      "message": "เลือกวันเปิดและปิด"
+   },
+   "selectOpenOrCloseDay": {
+      "message": "เลือกวันเปิดและปิด"
+   },
+   "selectOpenTime": {
+      "message": "เลือกเวลาเปิดทำการ"
+   },
+   "selectPreferredLanguage": {
+      "message": "เลือกภาษาที่คุณต้องการ"
+   },
+   "selectToOpenTab": {
+      "message": "เลือกวันเพื่อเปิดแท็บใหม่"
+   },
+   "selectTypTimerClsTb": {
+      "message": "เลือกประเภทของตัวจับเวลาเพื่อปิดแท็บ"
+   },
+   "selectTypeOfSchedule": {
+      "message": "เลือกประเภทของตารางเวลา หากคุณต้องการทั้งเปิดและปิด ให้เลือก \"ทั้งสองอย่าง\""
+   },
+   "selectTypeOfTimer": {
+      "message": "เลือกประเภทของตัวจับเวลาเพื่อเปิดแท็บใหม่"
+   },
+   "select_weeks": {
+      "message": "เลือกสัปดาห์"
+   },
+   "september": {
+      "message": "กันยายน"
+   },
+   "settingSave": {
+      "message": "บันทึกการตั้งค่าสำเร็จแล้ว"
+   },
+   "settingToClose": {
+      "message": "ตั้งค่าปิดแท็บในโหมดไม่ระบุตัวตน"
+   },
+   "shareYourSuggestionWithUs": {
+      "message": "แบ่งปันข้อเสนอแนะของคุณกับเรา.."
+   },
+   "slectDayToScheduleWeekly": {
+      "message": "เลือกวันที่จะกำหนดเวลาเป็นรายสัปดาห์"
+   },
+   "slectMinute": {
+      "message": "เลือกนาที"
+   },
+   "smthngWrng": {
+      "message": "มีบางอย่างผิดพลาดเกิดขึ้น"
+   },
+   "softpulseInfotech": {
+      "message": "ซอฟท์พัลส์ อินโฟเทค"
+   },
+   "somethingWentWrong": {
+      "message": "มีบางอย่างผิดพลาด โปรดรีเฟรชหน้าแล้วลองอีกครั้ง"
+   },
+   "status": {
+      "message": "สถานะ"
+   },
+   "subcrKeyShldNEmpt": {
+      "message": "กรุณากรอกรหัสสมัครสมาชิก"
+   },
+   "subdomain": {
+      "message": "โดเมนย่อย"
+   },
+   "subkeyInputTitle": {
+      "message": "กรอกรหัสสมัครสมาชิก"
+   },
+   "submFeedBack": {
+      "message": "ส่ง"
+   },
+   "suggForTbSch": {
+      "message": "ข้อเสนอแนะสำหรับตัวกำหนดเวลาแท็บ"
+   },
+   "suggestionAndRateUs": {
+      "message": "ข้อเสนอแนะ &amp; ให้คะแนนเรา"
+   },
+   "sunday": {
+      "message": "วันอาทิตย์"
+   },
+   "tabCloseOneTime": {
+      "message": "แท็บจะปิดเพียงครั้งเดียวเท่านั้น"
+   },
+   "tabSchTutorial": {
+      "message": "บทช่วยสอนเกี่ยวกับตัวกำหนดเวลาแท็บ"
+   },
+   "tabScheduler": {
+      "message": "ตัวกำหนดเวลาแท็บ"
+   },
+   "tabSchedulerOptions": {
+      "message": "ตัวเลือกตัวกำหนดเวลาแท็บ"
+   },
+   "tabWillOpenOneTime": {
+      "message": "แท็บจะเปิดเพียงครั้งเดียวเท่านั้น"
+   },
+   "tabWillOpenWhenBrowserOpen": {
+      "message": "แท็บจะเปิดขึ้นเมื่อเบราว์เซอร์เปิดขึ้น"
+   },
+   "termCondition": {
+      "message": "เงื่อนไขและข้อตกลง"
+   },
+   "thanksFrRev": {
+      "message": "ขอขอบคุณสำหรับการทบทวนของคุณ"
+   },
+   "thnkUFeedBack": {
+      "message": "ขอขอบคุณสำหรับข้อเสนอแนะของคุณ"
+   },
+   "thnkUFrUsngTbSch": {
+      "message": "กรุณาให้ข้อเสนอแนะเพื่อพัฒนาเรา"
+   },
+   "thursday": {
+      "message": "วันพฤหัสบดี"
+   },
+   "time": {
+      "message": "เวลา"
+   },
+   "timeExpired": {
+      "message": "เวลาหมดลงแล้ว"
+   },
+   "timer": {
+      "message": "ตัวจับเวลา"
+   },
+   "title": {
+      "message": "ชื่อ"
+   },
+   "titleLengtWarn": {
+      "message": "ความยาวของหัวข้อไม่ควรเกิน 200 ตัวอักษร"
+   },
+   "toScheduledOpenTbMsg": {
+      "message": "หากต้องการเปิดแท็บตามกำหนดเวลา โปรดยกเลิกการเลือกการกรอง URL"
+   },
+   "toogleCloseTab": {
+      "message": "เริ่ม/หยุดการกำหนดเวลาการแจ้งเตือนสำหรับ URL ปิดแท็บทั้งหมด"
+   },
+   "toogleDarkmode": {
+      "message": "สลับระหว่างโหมดมืดและโหมดเริ่มต้นเพื่อปรับแต่งประสบการณ์การรับชมของคุณ"
+   },
+   "toogleOff": {
+      "message": "ปิด"
+   },
+   "toogleOn": {
+      "message": "บน"
+   },
+   "toogleOpenTab": {
+      "message": "เริ่ม/หยุดการกำหนดเวลาการแจ้งเตือนสำหรับ URL แท็บที่เปิดทั้งหมด"
+   },
+   "topLevelDomain": {
+      "message": "โดเมนระดับบนสุด"
+   },
+   "totalProcessed": {
+      "message": "รวมการบันทึกที่ประมวลผลแล้ว"
+   },
+   "tuesday": {
+      "message": "วันอังคาร"
+   },
+   "tutorialImg1": {
+      "message": "\u003Cimg src=\"../images/en/1.png\">"
+   },
+   "tutorialImg10": {
+      "message": "\u003Cimg src=\"../images/en/10.png\">"
+   },
+   "tutorialImg11": {
+      "message": "\u003Cimg src=\"../images/en/11.png\">"
+   },
+   "tutorialImg12": {
+      "message": "\u003Cimg src=\"../images/en/12.png\">"
+   },
+   "tutorialImg13": {
+      "message": "\u003Cimg src=\"../images/en/13.png\">"
+   },
+   "tutorialImg14": {
+      "message": "\u003Cimg src=\"../images/en/14.png\">"
+   },
+   "tutorialImg2": {
+      "message": "\u003Cimg src=\"../images/en/2.png\">"
+   },
+   "tutorialImg3": {
+      "message": "\u003Cimg src=\"../images/en/3.png\">"
+   },
+   "tutorialImg4": {
+      "message": "\u003Cimg src=\"../images/en/4.png\">"
+   },
+   "tutorialImg5": {
+      "message": "\u003Cimg src=\"../images/en/5.png\">"
+   },
+   "tutorialImg6": {
+      "message": "\u003Cimg src=\"../images/en/6.png\">"
+   },
+   "tutorialImg7": {
+      "message": "\u003Cimg src=\"../images/en/7.png\">"
+   },
+   "tutorialImg8": {
+      "message": "\u003Cimg src=\"../images/en/8.png\">"
+   },
+   "tutorialImg9": {
+      "message": "\u003Cimg src=\"../images/en/9.png\">"
+   },
+   "uncheckAll": {
+      "message": "ยกเลิกการเลือกทั้งหมด"
+   },
+   "unlimitedSchedule": {
+      "message": "กำหนดการจำกัดแบบไม่จำกัด"
+   },
+   "unspecifiedURL": {
+      "message": "11. URL เส้นทางไม่ระบุ"
+   },
+   "unspecifiedURLExm1": {
+      "message": "ในตัวอย่างด้านบน URL ที่กำหนดไว้จะอยู่ในแท็บปิด ซึ่งระบุว่า URL ที่กำหนดซึ่งเปิดในแท็บใหม่และเริ่มต้นและสิ้นสุดด้วยที่อยู่เว็บที่ไม่รู้จัก จะถูกปิดหลังจากผ่านไป 5 นาที"
+   },
+   "upgradePlan": {
+      "message": "โปรดซื้อแผนหรือเข้าสู่ระบบและอัปเกรดแผนของคุณเพื่อปลดล็อคคุณสมบัติเพิ่มเติม"
+   },
+   "upgradePlanUnlock": {
+      "message": "อัพเกรดแผนของคุณเพื่อปลดล็อคคุณสมบัติเพิ่มเติม"
+   },
+   "uploadValidFormat": {
+      "message": "กรุณาอัพโหลดรูปแบบที่ถูกต้อง"
+   },
+   "url": {
+      "message": "ที่อยู่"
+   },
+   "urlContExat": {
+      "message": "การกรอง URL"
+   },
+   "urlEndWithUnspesifiedPth": {
+      "message": "9. URL ลงท้ายด้วยเส้นทางที่ไม่ระบุ"
+   },
+   "urlEndWithUnspesifiedPthExm1": {
+      "message": "ในตัวอย่างด้านบน URL ที่กำหนดไว้จะอยู่ในแท็บปิด ซึ่งระบุว่า URL ที่กำหนดซึ่งเปิดในแท็บใหม่และลงท้ายด้วยเส้นทางที่ไม่รู้จักจะถูกปิดหลังจากผ่านไป 5 นาที"
+   },
+   "urlFilterInfo": {
+      "message": "มี URL ที่กำลังตรวจสอบอยู่ซึ่งต้องการเพียงส่วนหนึ่งของ URL เท่านั้น และ URL ที่แน่นอนที่กำลังตรวจสอบจะต้องตรงกันกับ URL ที่ระบุ"
+   },
+   "urlFilterinCLoseTb": {
+      "message": "14. การกรอง URL เมื่อปิดแท็บ URL"
+   },
+   "urlFilterinCLoseTbExample": {
+      "message": "ในตัวอย่างด้านบน URL ที่ให้ไว้จะอยู่ในแท็บปิด ซึ่งระบุว่า URL ของแท็บที่เปิดอยู่แล้วนั้นตรงกับบางส่วนของ URL ที่ให้ไว้ ดังนั้นจึงจะปิดแท็บนั้น"
+   },
+   "urlIsRequired": {
+      "message": "จำเป็นต้องมีลิงค์เว็บไซต์"
+   },
+   "urlNotvalid": {
+      "message": "URL ไม่ถูกต้อง"
+   },
+   "urlStartWithUnspesifiedPth": {
+      "message": "10. URL เริ่มต้นด้วยเส้นทางที่ไม่ระบุ"
+   },
+   "urlStartWithUnspesifiedPthExm1": {
+      "message": "ในตัวอย่างด้านบน URL ที่กำหนดไว้จะอยู่ในแท็บปิด ซึ่งระบุว่า URL ที่กำหนดที่เปิดในแท็บใหม่และเริ่มต้นด้วยโดเมนย่อยที่ไม่รู้จัก\u003Cb>'www'\u003C/b>หรือ\u003Cb>'blog'\u003C/b>จะถูกปิดหลังจากผ่านไป 5 นาที"
+   },
+   "useSpecificUrl": {
+      "message": "ใช้ลิงค์เว็บไซต์เฉพาะ"
+   },
+   "useSpecificUrl1": {
+      "message": "คุณจะต้องเขียนชื่อโดเมนย่อย โดเมนระดับบนสุด ชื่อโดเมน และเส้นทางของหน้าในช่องลิงก์เว็บไซต์ไปยังแท็บของเบราว์เซอร์ที่ปิดอยู่"
+   },
+   "useSpecificUrl2": {
+      "message": "ใช้แท็บปิดของเบราว์เซอร์ทั้งหมด"
+   },
+   "useSpecificUrl3": {
+      "message": "ใช้ลิงค์เว็บไซต์ที่เฉพาะเจาะจงและครบถ้วน"
+   },
+   "useUnSpecificUrl1": {
+      "message": "ใช้ลิงค์เว็บไซต์ที่ไม่ระบุ"
+   },
+   "useUnSpecificUrl2": {
+      "message": "ใช้เริ่มต้นด้วยลิงค์เว็บไซต์ที่ไม่ระบุ"
+   },
+   "useUnSpecificUrl3": {
+      "message": "ใช้จบด้วยลิงค์เว็บไซต์ที่ไม่ระบุ"
+   },
+   "used": {
+      "message": "คุณใช้"
+   },
+   "validFormatCsv": {
+      "message": "รูปแบบไฟล์ CSV ที่ถูกต้องสำหรับการนำเข้าคืออะไร"
+   },
+   "websiteLink": {
+      "message": "ลิงค์เว็บไซต์"
+   },
+   "websiteUrl": {
+      "message": "ที่อยู่เว็บไซต์"
+   },
+   "wednesday": {
+      "message": "วันพุธ"
+   },
+   "weekName": {
+      "message": "ชื่อสัปดาห์"
+   },
+   "weekly": {
+      "message": "รายสัปดาห์"
+   },
+   "whenExtensionTabAppears": {
+      "message": "เมื่อแท็บส่วนขยายปรากฏขึ้น ให้ค้นหา \"ตัวกำหนดเวลาแท็บพร้อมเปิดและปิดอัตโนมัติ\" เพื่อเปิดใช้งานในโหมดไม่ระบุตัวตน และคลิกปุ่ม \"รายละเอียด\" ข้างๆ"
+   },
+   "whenMenuPopup": {
+      "message": "เมื่อเมนูปรากฏขึ้น ให้เลือก “จัดการส่วนขยาย”"
+   },
+   "withSignMustFill": {
+      "message": "ที่มี เครื่องหมาย \u003Cspan>*\u003C/span>จะต้องเติมหรือเลือก เลือกเวลาเปิดหรือปิดหรือทั้งสองเวลา"
+   },
+   "writeYourDescriptionAboutSchUrl": {
+      "message": "เขียนคำอธิบายของคุณเกี่ยวกับ URL ที่กำหนดไว้ที่นี่"
+   },
+   "yes": {
+      "message": "ใช่"
+   },
+   "yourEmailAddress": {
+      "message": "ที่อยู่อีเมล์ของคุณ"
+   },
+   "yourScheduleUrl": {
+      "message": "URL ตารางเวลาของคุณ"
+   }
+}

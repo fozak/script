@@ -1,0 +1,1448 @@
+{
+   "10_min": {
+      "message": "10 minuuttia"
+   },
+   "1_min": {
+      "message": "1 minuutti"
+   },
+   "30_min": {
+      "message": "30 minuuttia"
+   },
+   "5_min": {
+      "message": "5 minuuttia"
+   },
+   "60_min": {
+      "message": "tunnin"
+   },
+   "Dashboard": {
+      "message": "Kojelauta"
+   },
+   "Login": {
+      "message": "Kirjaudu sisään"
+   },
+   "Off": {
+      "message": "Pois"
+   },
+   "On": {
+      "message": "Päällä"
+   },
+   "Selected": {
+      "message": "Valittu"
+   },
+   "Settings": {
+      "message": "Asetukset"
+   },
+   "Tutorial": {
+      "message": "Opetusohjelma"
+   },
+   "action": {
+      "message": "Toiminta"
+   },
+   "activateScheduleTab": {
+      "message": "Aktivoi ajoitettu välilehti."
+   },
+   "active": {
+      "message": "Aktiivinen"
+   },
+   "activeAllScheduleTab": {
+      "message": "Käynnissä Tab-aikataulu"
+   },
+   "activeStatus": {
+      "message": "Status"
+   },
+   "actvInactvNotification": {
+      "message": "Näytä ilmoitus, kun aikataulu-välilehti avataan"
+   },
+   "actvInactvOpnTb": {
+      "message": "Aktiivinen tai ei-aktiivinen avoin välilehti"
+   },
+   "actvIntvClsTb": {
+      "message": "Aktiivinen tai ei-aktiivinen sulje välilehti"
+   },
+   "add": {
+      "message": "Lisätä"
+   },
+   "addDescription": {
+      "message": "Lisää kuvaus"
+   },
+   "addNew": {
+      "message": "Lisää Uusi"
+   },
+   "addNewURlCls": {
+      "message": "Lisää uusi URL-osoite sulkeaksesi"
+   },
+   "addNewUrlToOpen": {
+      "message": "Lisää uusi URL avataksesi uuteen ikkunaan"
+   },
+   "addTitle": {
+      "message": "Lisää otsikko"
+   },
+   "addWebsite": {
+      "message": "Lisää verkkosivusto"
+   },
+   "all": {
+      "message": "Kaikki"
+   },
+   "allInputFieldReq": {
+      "message": "Kaikki kentät ovat pakollisia"
+   },
+   "all_weeks": {
+      "message": "Koko viikko"
+   },
+   "alreadyPurchase": {
+      "message": "Oletko jo ostettu? Anna avain tähän"
+   },
+   "andAt": {
+      "message": "ja klo"
+   },
+   "annually": {
+      "message": "Vuosittain"
+   },
+   "appDesc": {
+      "message": "Selaimen välilehdet avautuvat ja sulkeutuvat automaattisesti valittuna aikana. Käyttäjä voi aktivoida/deaktivoida listan tarpeen mukaan"
+   },
+   "appName": {
+      "message": "Välilehtien ajoitus automaattisella avautumisella ja sulkemisella"
+   },
+   "april": {
+      "message": "huhtikuu"
+   },
+   "at": {
+      "message": "klo"
+   },
+   "august": {
+      "message": "elokuu"
+   },
+   "autoFocus": {
+      "message": "Automaattitarkennus-välilehti"
+   },
+   "autoFocustip": {
+      "message": "Jos käytössä, uusi välilehti avataan aktiivisena/tarkennettuna."
+   },
+   "autofocustip": {
+      "message": "Uudet avatut välilehdet tarkentuvat automaattisesti"
+   },
+   "basic": {
+      "message": "Perus"
+   },
+   "billedAnnyally": {
+      "message": "Laskutetaan vuosittain"
+   },
+   "billedMonthly": {
+      "message": "Laskutetaan kuukausittain"
+   },
+   "both": {
+      "message": "Molemmat"
+   },
+   "browserOpen": {
+      "message": "Avaa selain"
+   },
+   "browserWebAddress": {
+      "message": "Selaimen verkko-osoite alkaa ja päättyy tuntemattomaan verkko-osoitteeseen. Kirjoita \u003Cb>*\u003C/b> syöttämäsi Web-sivuston linkki -kentän molemmille puolille."
+   },
+   "browserWebAddress2": {
+      "message": "Selaimen verkko-osoite sisältää verkkotunnuksen google.com, joka suljetaan tietyissä minuuteissa aliverkkotunnuksesta ja sivupolusta riippumatta. Laita \u003Cb>*\u003C/b> molemmille puolille verkkotunnuksen nimi ja TLD"
+   },
+   "browserWebAddress3": {
+      "message": "Selaimen verkko-osoite alkaa tuntemattomalla verkkotunnuksella ja päättyy tuntemattomaan sivupolkuun"
+   },
+   "browserWebAddress31": {
+      "message": "sulkeutuu tietyn minuutin kuluttua, laita \u003Cb>*\u003C/b> TLD:n molemmille puolille"
+   },
+   "browserWebAddress4": {
+      "message": "Selaimen verkko-osoite alkaa tuntemattomalla verkko-osoitteella. Laita \u003Cb>*\u003C/b> URL-osoitteesi alkuun. Muista, että selaimen verkko-osoitteen on vastattava URL-osoitettasi kirjoittamasi \u003Cb>* jälkeen.\u003C/b>"
+   },
+   "browserWebAddress41": {
+      "message": "Selaimen verkko-osoite alkaa tuntemattomalla aliverkkotunnuksella"
+   },
+   "browserWebAddress42": {
+      "message": "Web-sivuston linkin alussa"
+   },
+   "browserWebAddress5": {
+      "message": "Selaimen web-osoite päättyy tuntemattomaan verkko-osoitteeseen. Laita \u003Cb>*\u003C/b> URL-osoitteesi loppuun. Muista, että verkko-osoitteesi on vastattava ennen \u003Cb>*\u003C/b> kirjoittamaasi."
+   },
+   "browserWebAddress51": {
+      "message": "Selaimen verkko-osoite päättyy tuntemattomaan sivupolkuun. Laita \u003Cb>*\u003C/b> verkko-osoitteesi loppuun"
+   },
+   "browserWebAddress6": {
+      "message": "Lisää vain \u003Cb>*\u003C/b> verkkosivuston osoitekenttään sulkeaksesi kaikki selaimen välilehdet. Suljettuasi kaikki välilehdet selain sulkeutuu automaattisesti."
+   },
+   "browserWebAddress7": {
+      "message": "Sinun on täytynyt kirjoittaa tarkka aliverkkotunnus, ylätason verkkotunnus, verkkotunnuksen nimi ja sivupolku URL-kenttään avautuvaan selaimen välilehteen."
+   },
+   "browserWebAddress8": {
+      "message": "Voit avata URL-osoitteen tiettynä päivänä ja kellonaikana, tietyn kuukauden, viikon, vuoden ja toistoajan mukaan"
+   },
+   "buyPlan": {
+      "message": "Osta suunnitelma"
+   },
+   "buycofee": {
+      "message": "Osta minulle kahvia"
+   },
+   "cancel": {
+      "message": "Peruuttaa"
+   },
+   "changeLanguage": {
+      "message": "Vaihda kieli"
+   },
+   "checkAll": {
+      "message": "Tarkista kaikki"
+   },
+   "checkThisOpToPreventClosePinTb": {
+      "message": "Valitse tämä vaihtoehto estääksesi kiinnitettyjen välilehtien sulkeutumisen."
+   },
+   "checkThisOptionOnlyPartOfUrlMtch": {
+      "message": "Valitse tämä vaihtoehto, jos vain osa URL-osoitteesta on täsmättävä."
+   },
+   "checkThisOptionToActivate": {
+      "message": "Valitse tämä vaihtoehto aktivoidaksesi tai deaktivoidaksesi ajoitetun URL-osoitteesi."
+   },
+   "checkThisOptionToCloseOnly": {
+      "message": "Valitse tämä vaihtoehto, jos haluat sulkea vain incognito-välilehdet. Ota myös käyttöön \"Salli incognito-tilassa\" -vaihtoehto laajennuksen tiedoissa. Katso ohjeet opetusohjelman sivulta."
+   },
+   "checkThisOptionToCloseOnlyInIncgnitoTb": {
+      "message": "Valitse tämä vaihtoehto, jos haluat sulkea vain incognito-välilehdet. Ota myös käyttöön \"Salli incognito-tilassa\" -vaihtoehto laajennuksen tiedoissa. Katso ohjeet opetusohjelman sivulta."
+   },
+   "checkThisOptionToInBg": {
+      "message": "Valitse tämä vaihtoehto, jos haluat avata URL-osoitteen taustalla avaamatta sitä uudessa välilehdessä"
+   },
+   "checkThisOptionToInactivNotification": {
+      "message": "Valitse tämä vaihtoehto, jos haluat ei-aktiivisen ilmoituksen ajoitetussa URL-osoitteessa"
+   },
+   "checkThisOptionToOpen": {
+      "message": "Valitse tämä vaihtoehto, jos haluat avata URL-osoitteesi incognito-tilassa"
+   },
+   "checkThisOptionToOpenIncogito": {
+      "message": "Valitse tämä vaihtoehto, jos haluat avata URL-osoitteesi incognito-tilassa"
+   },
+   "checkThisOptionToPrevent": {
+      "message": "Valitse tämä vaihtoehto estääksesi kiinnitettyjen välilehtien sulkeutumisen."
+   },
+   "clickExtIcon": {
+      "message": "Napsauta työkalupalkin \"Laajennukset\" -kuvaketta, joka näyttää palapelin palalta."
+   },
+   "clickTheSwitch": {
+      "message": "Napsauta sen vieressä olevaa kytkintä kytkeäksesi sen päälle"
+   },
+   "close": {
+      "message": "Lähellä"
+   },
+   "closeAllTab": {
+      "message": "12. Sulje kaikki selaimen välilehti"
+   },
+   "closeAllTabExm1": {
+      "message": "Yllä olevassa esimerkissä annettu URL-osoite on suljetussa välilehdessä, mikä ilmoittaa, että se sulkee kaikki välilehdet klo 12.00 25.2.2023"
+   },
+   "closeDate": {
+      "message": "Sulkemispäivämäärä"
+   },
+   "closeDay": {
+      "message": "Sulje päivä"
+   },
+   "closeEveryYear": {
+      "message": "Suljetaan joka vuosi"
+   },
+   "closeInEvery": {
+      "message": "Sulje jokaisessa"
+   },
+   "closeIncognitoTab": {
+      "message": "Sulje vain incognito-välilehdet"
+   },
+   "closeMinute": {
+      "message": "Sulje Minuutti"
+   },
+   "closeOnDay": {
+      "message": "Sulje päivä"
+   },
+   "closeOnEvery": {
+      "message": "Sulje jokaisessa"
+   },
+   "closeOnEveryDay": {
+      "message": "Suljetaan joka päivä"
+   },
+   "closeOnEveryMonth": {
+      "message": "Sulje joka kuukausi joka päivä"
+   },
+   "closeOnEveryWeek": {
+      "message": "Sulje joka viikko"
+   },
+   "closeSecond": {
+      "message": "Sulje Toinen"
+   },
+   "closeSeconsMoreThan5": {
+      "message": "Suljetun sekunnin tulee olla yli 5."
+   },
+   "closeTabSchedule": {
+      "message": "Sulje välilehtiaikataulu"
+   },
+   "closeTabURL": {
+      "message": "Sulje välilehden URL-osoite"
+   },
+   "closeTime": {
+      "message": "Sulkemisaika"
+   },
+   "closeUrl": {
+      "message": "Sulje Web-sivuston linkki"
+   },
+   "closeWeek": {
+      "message": "Sulje viikko"
+   },
+   "closeWeeks": {
+      "message": "Sulje Viikot"
+   },
+   "close_on": {
+      "message": "Lähes"
+   },
+   "cngrtsForSubcr": {
+      "message": "Onnittelut! Suunnitelmasi on aktivoitu onnistuneesti."
+   },
+   "commonQuestionsAns": {
+      "message": "Yleisiä kysymyksiä ja vastauksia"
+   },
+   "copySucessClose": {
+      "message": "Sulje välilehden URL-tiedot kopioitu Avaa välilehti -URL-tietoihin"
+   },
+   "createNewTimer": {
+      "message": "Luo uusi ajastin"
+   },
+   "currentPlan": {
+      "message": "Nykyinen suunnitelma"
+   },
+   "currentTabSchedule": {
+      "message": "Nykyinen välilehtien aikataulu"
+   },
+   "currentTbScheduleTimer": {
+      "message": "Nykyisen välilehden ajastettu ajastin."
+   },
+   "cusSec": {
+      "message": "Mukautettu Toinen"
+   },
+   "custMin": {
+      "message": "Mukautettu minuutti"
+   },
+   "custmMinSch": {
+      "message": "7. Mukautettu minuuttiaikataulu"
+   },
+   "custmMinSchExm1": {
+      "message": "Yllä olevassa esimerkissä annettu URL-osoite on avoimessa välilehdessä, mikä ilmoittaa, että annettu URL-osoite avautuu uudelle välilehdelle 15 minuutin välein."
+   },
+   "custmMinSchExm2": {
+      "message": "Yllä olevassa esimerkissä annettu URL-osoite on suljetussa välilehdessä, mikä kertoo, että uudessa välilehdessä avattu URL-osoite suljetaan 15 minuutin kuluttua."
+   },
+   "customSecondWarning": {
+      "message": "Muokattu kakkostoiminto on kokeellinen, eikä se välttämättä toimi oikein, jos sekunniksi on asetettu alle 60."
+   },
+   "darkMode": {
+      "message": "Tumma tila"
+   },
+   "datNotCopy": {
+      "message": "Joitakin tietoja ei kopioida virheellisen URL-osoitteen vuoksi."
+   },
+   "dataSaved": {
+      "message": "Ajastintietojen tallennus onnistui"
+   },
+   "date": {
+      "message": "Päivämäärä"
+   },
+   "dateIsOutOfRange": {
+      "message": "Päivämäärä on vaihteluvälin ulkopuolella"
+   },
+   "day": {
+      "message": "Päivä"
+   },
+   "december": {
+      "message": "joulukuu"
+   },
+   "delete": {
+      "message": "Poistaa"
+   },
+   "deleteScheduleTb": {
+      "message": "Poista ajoitettu välilehti."
+   },
+   "description": {
+      "message": "Kuvaus"
+   },
+   "developedBy": {
+      "message": "Kehittäjä:"
+   },
+   "doNotCloseInPinnedTabs": {
+      "message": "Älä sulje kiinnitettyjä välilehtiä"
+   },
+   "doNotShowNotification": {
+      "message": "Älä näytä ilmoitusta"
+   },
+   "domainName": {
+      "message": "Verkkotunnuksen nimi"
+   },
+   "downloadCloseTbSampleCsv": {
+      "message": "Lataa CSV-esimerkki, niin näet esimerkin vaaditusta muodosta"
+   },
+   "downloadOpenTbSampleCsv": {
+      "message": "Lataa avoimen välilehden CSV-esimerkki nähdäksesi esimerkin vaaditusta muodosta"
+   },
+   "editScheduleTb": {
+      "message": "Muokkaa ajoitettua välilehteä."
+   },
+   "email": {
+      "message": "Sähköposti"
+   },
+   "enterDateToCloseTab": {
+      "message": "Syötä päivämäärä tähän sulkeaksesi aikataulu-välilehden."
+   },
+   "enterDateToOpen": {
+      "message": "Anna päivämäärä avataksesi aikatauluvälilehden."
+   },
+   "enterMiniutesToCloseTb": {
+      "message": "Sulje välilehti antamalla minuutteja."
+   },
+   "enterMiniutesToOpen": {
+      "message": "Avaa aikatauluvälilehti syöttämällä minuutteja."
+   },
+   "enterMinute": {
+      "message": "Anna minuutti"
+   },
+   "enterSecond": {
+      "message": "Anna Toinen"
+   },
+   "enterSecondsToCloseTab": {
+      "message": "Sulje välilehti antamalla sekuntia."
+   },
+   "enterSecondsToOpen": {
+      "message": "Avaa aikatauluvälilehti antamalla sekuntia."
+   },
+   "enterTilteOfScheduleUrl": {
+      "message": "Anna ajoitetun URL-osoitteen otsikko."
+   },
+   "enterTimeToCloseTab": {
+      "message": "Syötä aika tähän sulkeaksesi aikataulu-välilehden."
+   },
+   "enterTimeToSchedule": {
+      "message": "Anna aika avata aikataulu -välilehti."
+   },
+   "enterValidEmail": {
+      "message": "Anna voimassa oleva sähköpostiosoite"
+   },
+   "enterValidUrl": {
+      "message": "Anna kelvollinen URL-osoite"
+   },
+   "enterValueInCloseSec": {
+      "message": "Syötä arvo lähisekunneissa"
+   },
+   "enterValueInOpenCloseSec": {
+      "message": "Syötä arvo auki- tai sulkemissekunteina"
+   },
+   "enterValueInOpenMinutes": {
+      "message": "Syötä arvo avoimina minuutteina"
+   },
+   "enterVlaueInCloseMinutes": {
+      "message": "Syötä arvo lähiminuutteina"
+   },
+   "enterVlaueInOpenCloseMin": {
+      "message": "Syötä arvo auki- tai sulkemisminuutteina"
+   },
+   "enterVlaueInOpenSeconds": {
+      "message": "Syötä arvo auki sekunneissa"
+   },
+   "enterYourURLToSchedule": {
+      "message": "Anna URL-osoite ajoittaaksesi."
+   },
+   "every": {
+      "message": "joka"
+   },
+   "every10Min": {
+      "message": "10 minuutin välein"
+   },
+   "every1Minute": {
+      "message": "1 minuutin välein"
+   },
+   "every30Min": {
+      "message": "30 minuutin välein"
+   },
+   "every5Min": {
+      "message": "5 minuutin välein"
+   },
+   "everyDay": {
+      "message": "Joka päivä"
+   },
+   "everyDayAt": {
+      "message": "joka päivä klo"
+   },
+   "everyHour": {
+      "message": "Joka tunti"
+   },
+   "everyMinute": {
+      "message": "Joka Minuutti"
+   },
+   "everyMonth": {
+      "message": "Joka kuukausi"
+   },
+   "everyMonthOn": {
+      "message": "joka kuukausi eteenpäin"
+   },
+   "everyMonthOnDay": {
+      "message": "joka kuukausi päivässä"
+   },
+   "everyWeek": {
+      "message": "Joka viikko"
+   },
+   "everyWeekOn": {
+      "message": "joka viikko eteenpäin"
+   },
+   "everyYear": {
+      "message": "Joka vuosi"
+   },
+   "everyYesrOn": {
+      "message": "joka vuosi"
+   },
+   "evr10MinSch": {
+      "message": "2. 10 minuutin välein"
+   },
+   "evr10MinSchExm1": {
+      "message": "Yllä olevassa esimerkissä annettu URL-osoite on avoimessa välilehdessä, mikä tarkoittaa, että annettu URL-osoite avautuu uudelle välilehdelle 10 minuutin välein."
+   },
+   "evr10MinSchExm2": {
+      "message": "Yllä olevassa esimerkissä annettu URL-osoite on suljetussa välilehdessä, mikä kertoo, että uudessa välilehdessä avattu URL-osoite suljetaan 10 minuutin kuluttua."
+   },
+   "evrDaySch": {
+      "message": "3. Joka päivä aikataulu"
+   },
+   "evrDaySchExm1": {
+      "message": "Yllä olevassa esimerkissä annettu URL-osoite on avoimessa välilehdessä, mikä kertoo, että se avautuu uudelle välilehdelle Joka päivä klo 17.27"
+   },
+   "evrDaySchExm2": {
+      "message": "Yllä olevassa esimerkissä annettu URL-osoite on sulje-välilehdellä, mikä sanoo, että se sulkee jo avatun välilehden klo 17.27 joka päivä"
+   },
+   "evrMonthSch": {
+      "message": "5. Joka kuukauden aikataulu"
+   },
+   "evrMonthSchExm1": {
+      "message": "Yllä olevassa esimerkissä annettu URL-osoite on avoimella välilehdellä, jossa lukee, että se avautuu uudelle välilehdelle Joka kuukausi kello 13:45 päivänä 25"
+   },
+   "evrMonthSchExm2": {
+      "message": "Yllä olevassa esimerkissä annettu URL-osoite on suljetussa välilehdessä, mikä ilmoittaa, että se sulkee jo avatun välilehden joka kuukausi kello 13.45 päivänä 25"
+   },
+   "evrWeekSch": {
+      "message": "4. Joka viikko aikataulu"
+   },
+   "evrWeekSchExm1": {
+      "message": "Yllä olevassa esimerkissä annettu URL-osoite on avoimessa välilehdessä, mikä ilmoittaa, että se avautuu uudelle välilehdelle joka viikko klo 17.00 maanantaisin \u003Cb>ja tiistaisin\u003C/b> ."
+   },
+   "evrWeekSchExm2": {
+      "message": "Yllä olevassa esimerkissä annettu URL-osoite on sulkemisvälilehdellä, mikä ilmoittaa, että se sulkee jo avatun välilehden joka viikko klo 17.00 maanantaisin \u003Cb>ja tiistaisin\u003C/b> ."
+   },
+   "evrWeekSchExm3": {
+      "message": "Yllä olevassa esimerkissä viikkoajastimeen voidaan valita useita päiviä."
+   },
+   "evrYearSch": {
+      "message": "6. Joka vuosi aikataulu"
+   },
+   "evrYearSchExm1": {
+      "message": "Yllä olevassa esimerkissä annettu URL-osoite on avoimessa välilehdessä, mikä ilmoittaa, että se avautuu uudelle välilehdelle Joka vuosi klo 13.35 1. tammikuuta"
+   },
+   "evrYearSchExm2": {
+      "message": "Yllä olevassa esimerkissä annettu URL-osoite on suljetussa välilehdessä, mikä ilmoittaa, että se sulkee jo avatun välilehden joka vuosi kello 13.35 1. tammikuuta"
+   },
+   "exampleSort": {
+      "message": "esim"
+   },
+   "exdMaxLim": {
+      "message": "Ylitetty laitteiden enimmäismäärä!"
+   },
+   "exmpOpnClsTbSch": {
+      "message": "Esimerkki välilehden avaamisesta ja sulkemisesta Tab Schedulerissa"
+   },
+   "expLicKy": {
+      "message": "Tämä lisenssiavain on vanhentunut."
+   },
+   "export": {
+      "message": "Viedä"
+   },
+   "exportBefore": {
+      "message": "Sinulla on\u003Cexday>\u003C/exday>päivää jäljellä, tilaa jatkaaksesi premium-ominaisuuden nauttimista"
+   },
+   "exportClsTbDta": {
+      "message": "Vie välilehden sulkemistiedot"
+   },
+   "exportOpenTbDt": {
+      "message": "Vie avoimen välilehden tiedot"
+   },
+   "exportedData": {
+      "message": "Ajastintietojen vienti onnistui"
+   },
+   "extensionShouldAble": {
+      "message": "Nyt laajennuksen pitäisi pystyä sulkemaan välilehtiä incognito-tilassa."
+   },
+   "faq": {
+      "message": "FAQ"
+   },
+   "faq_1": {
+      "message": "Mikä on välilehtien ajoitus, jossa on automaattinen avaaminen ja sulkeminen?"
+   },
+   "faq_10": {
+      "message": "Kuinka näen ajoitetut välilehdet?"
+   },
+   "faq_11": {
+      "message": "Onko sekä auki- että sulkemisajan täyttäminen pakollista?"
+   },
+   "faq_12": {
+      "message": "Mitä Auto Focus -välilehden, Aktivoi kaikki ajoitetut välilehdet ja Virtatila-toiminnot tekevät?"
+   },
+   "faq_13": {
+      "message": "Voinko avata/sulkea ajoitetun Web-sivustolinkin incognito-välilehdellä.?"
+   },
+   "faq_14": {
+      "message": "Mitä hyötyä Päivitä-välilehdestä on, jos URL-osoite on jo auki?"
+   },
+   "faq_2": {
+      "message": "Mitä hyötyä Web-sivustolinkistä on?"
+   },
+   "faq_3": {
+      "message": "Kuinka ajoitan URL-osoitteen Tab Schedulerin avulla?"
+   },
+   "faq_4": {
+      "message": "Mikä on \"Avaa URL-osoite taustalla\" -vaihtoehto?"
+   },
+   "faq_5": {
+      "message": "Voinko estää laajennusta sulkemasta kiinnitettyjä välilehtiä?"
+   },
+   "faq_6": {
+      "message": "Mitä \"Molemmat\" aikataulutyyppi tarkoittaa?"
+   },
+   "faq_7": {
+      "message": "Miten URL-suodatustoiminto toimii?"
+   },
+   "faq_8": {
+      "message": "Voinko poistaa ajoitetun välilehden käytöstä poistamatta sitä?"
+   },
+   "faq_9": {
+      "message": "Saanko ilmoituksia ajoitetuista välilehdistä?"
+   },
+   "faq_a_1": {
+      "message": "\u003Cp>Välilehtien ajoitus ja automaattinen avaus ja sulkeminen on selainlaajennus, jonka avulla käyttäjät voivat ajoittaa välilehtien avautumisen ja sulkeutumisen automaattisesti tiettyinä aikoina. Käyttäjät voivat valita kertaluonteisen aikataulun tai määrittää toistuvia aikatauluja eri taajuusvaihtoehdoilla. Tällä laajennuksella on useita käyttäjiä koskevia tarkoituksia, ja se tarjoaa monia sinulle hyödyllisiä ominaisuuksia.\u003C/p>"
+   },
+   "faq_a_10": {
+      "message": "Kaikki ajoitetut välilehdet näkyvät luettelossa, jossa näkyy otsikko, verkkosivustolinkki, aukiolo- ja sulkemisajat, tila ja toiminnot, joita voit tehdä (esim. aktivoida, muokata, poistaa)."
+   },
+   "faq_a_11": {
+      "message": "Ei, voit varata joko auki- tai sulkemisajan. Sinun on kuitenkin täytettävä tai valittava pakolliset tähdellä (*) merkityt kentät."
+   },
+   "faq_a_12": {
+      "message": "Automaattinen tarkennus -välilehti varmistaa, että kun ajoitettu välilehti avautuu, Aktivoi kaikki ajoitetut välilehdet -toiminnon avulla voit ottaa kaikki ajoitetut välilehdet nopeasti käyttöön yhdellä napsautuksella. Power Mode optimoi laajennuksen suorituskyvyn hallitsemalla selainresursseja tehokkaammin."
+   },
+   "faq_a_13": {
+      "message": "Kyllä, voit avata ajoitetun välilehden incognito-tilassa valitsemalla \"Avaa incognito-tilassa\" -vaihtoehdon. Voit sulkea vain incognito-välilehdet valitsemalla \"Sulje vain incognito-välilehdet\" -vaihtoehdon, kunhan \"Salli incognito-tilassa\" on käytössä laajennusasetuksissa."
+   },
+   "faq_a_14": {
+      "message": "Kun tämä vaihtoehto on käytössä, laajennus päivittää automaattisesti olemassa olevan välilehden, jos sama URL-osoite on jo auki selaimessasi. Tämä estää päällekkäisten välilehtien avaamisen ja varmistaa, että sivun uusin versio on aina ladattu."
+   },
+   "faq_a_14_1": {
+      "message": "Jos yrität avata https://github.com/ ja se on jo auki toisessa välilehdessä, laajennus yksinkertaisesti päivittää kyseisen välilehden uuden avaamisen sijaan."
+   },
+   "faq_a_14_2": {
+      "message": "Jos https://github.com/ on jo auki kolmella välilehdellä, laajennus päivittää kaikki kolme välilehteä."
+   },
+   "faq_a_2": {
+      "message": "Verkkosivustolinkki on selaimesi avoimen välilehden verkkosivuston osoite. Alla kerrotaan kuinka voit käyttää verkkosivuston osoitetta."
+   },
+   "faq_a_3": {
+      "message": "Ajoita URL-osoite kirjoittamalla verkkosivuston linkki, antamalla aikataululle otsikko, valitsemalla taajuus (kerran, minuutin välein, päivittäin jne.) ja valitsemalla avaus- ja sulkemisajat. Voit myös määrittää päivämäärän, päivän tai sekunnin välilehden avaamiseksi ja sulkemiseksi."
+   },
+   "faq_a_4": {
+      "message": "\u003Cp>Tämä vaihtoehto antaa sinulle täyden hallinnan ajastaa URL-osoite avautumaan taustalla ilman, että uusi välilehti tulee näkyviin. URL-osoite avautuu hiljaa, kun jatkat muiden välilehtien käsittelyä. Se on erityisen hyödyllinen, kun tarvitset selaimen noutamaan tiedot ajoitetusta URL-osoitteesta näyttämättä sitä aktiivisesti, kuten GET API -pyynnön tapauksessa.\u003C/p>\u003Cbr> \u003Cp>Jos esimerkiksi haluat hakea tietoja API-päätepisteestä säännöllisesti tiettyyn aikaan, voit käyttää tätä tehokasta vaihtoehtoa pyynnön suorittamiseen taustalla avaamatta uutta näkyvää välilehteä.\u003C/p>"
+   },
+   "faq_a_5": {
+      "message": "Kyllä, kiinnitettyjen välilehtien sulkemisen estäminen on mahdollista. Valitse \"Älä sulje kiinnitettyjä välilehtiä\" -vaihtoehto varmistaaksesi, että nämä välilehdet pysyvät auki, vaikka ne täyttäisivät muut sulkemisehdot."
+   },
+   "faq_a_6": {
+      "message": "Aikataulutyyppi \"Molemmat\" antaa sinulle täydellisen hallinnan siihen, milloin välilehti avautuu ja sulkeutuu, jolloin voit asettaa tietyt ajat molemmille toiminnoille."
+   },
+   "faq_a_7": {
+      "message": "URL-suodatus varmistaa, että vain tietyn osan URL-osoitteesta on vastattava ajoitettua toimintoa. Tästä on hyötyä, kun haluat automatisoida tiettyjä toimintoja osittaisten URL-osumien perusteella. Jos esimerkiksi valitset URL-osoitteen suodatusvaihtoehdon URL-osoitteelle https://example.com/page, se koskee myös URL-osoitteita, kuten https://example.com/page/123, https://example.com/ page?query=example ja https://subdomain.example.com/page."
+   },
+   "faq_a_8": {
+      "message": "\"Aktivoi tämä ajoitettu välilehti\" -vaihtoehdon avulla voit helposti aktivoida tai poistaa käytöstä ajoitettuja välilehtiä, jolloin voit hallita aikataulujasi joustavasti menettämättä määrityksiä."
+   },
+   "faq_a_9": {
+      "message": "Oletuksena saat ilmoituksia. Jos kuitenkin haluat lopettaa ilmoitukset, voit poistaa ne käytöstä valitsemalla Älä näytä ilmoituksia -vaihtoehdon."
+   },
+   "february": {
+      "message": "helmikuu"
+   },
+   "filterTips": {
+      "message": "Suodatin on voimassa \"https://\" tai \"www.\" jälkeen, esim. \"github.com\""
+   },
+   "for_exp": {
+      "message": "Esimerkiksi"
+   },
+   "freeForever": {
+      "message": "Ilmainen ikuisesti"
+   },
+   "freeSchedule": {
+      "message": "ilmainen aikataulu"
+   },
+   "freeTral": {
+      "message": "Arvostettuna varhaisena käyttäjänä nautit\u003Crday>120\u003C/rday>päivän ilmainen käyttöoikeus ennen kuin vaihdat uuteen maksulliseen sopimukseemme – kiitos jatkuvasta tuestanne!\u003Cp class=\"p-t-5\">Sinulla on\u003Cb>\u003Cspan>\u003C/span>\u003C/b>päivää jäljellä\u003Crday>120\u003C/rday>- vapaapäivä.\u003Cafex class=\"warning\">\u003Cafex>\u003C/afex>\u003C/afex>\u003C/p> "
+   },
+   "frequentlyAskedQuestions": {
+      "message": "Usein kysytyt kysymykset"
+   },
+   "friday": {
+      "message": "perjantai"
+   },
+   "getThisPlan": {
+      "message": "Hanki tämä suunnitelma"
+   },
+   "goToSettingsPageToSchedule": {
+      "message": "Siirry asetussivulle ja ajoita URL-osoitteiden avaaminen ja sulkeminen."
+   },
+   "goURL": {
+      "message": "Siirry URL-osoitteeseen"
+   },
+   "helpAccordion12": {
+      "message": "Toimiiko tämä laajennus lepotilassa/keskeytystilassa?"
+   },
+   "helpAccordion3": {
+      "message": "Voinko ajoittaa välilehden avautumaan incognito-tilassa?"
+   },
+   "helpAccordion6": {
+      "message": "Mikä on \"aika umpeutunut\"?"
+   },
+   "helpAccordion7": {
+      "message": "Voinko viedä ajoitetun URL-osoitteen?"
+   },
+   "helpAccordion8": {
+      "message": "Voinko tuoda aikatauluun URL-osoitteen?"
+   },
+   "helpPanelBodyDesc12First": {
+      "message": "Ei, tämä laajennus ei toimi lepotilassa/keskeytystilassa."
+   },
+   "helpPanelBodyDesc12Second": {
+      "message": "Jos jokin URL-osoite on ajoitettu avaa- tai sulkemisvälilehdelle, tietokoneesi ei mene automaattisesti lepotilaan tai keskeytystilaan."
+   },
+   "helpPanelBodyDesc3": {
+      "message": "Kyllä, voit avata ajoitetun välilehden incognito-tilassa valitsemalla Avaa incognito-tilassa -vaihtoehdon. Varmista, että laajennuksen Salli incognito-tilassa -vaihtoehto on otettu käyttöön selaimen laajennusasetuksissa."
+   },
+   "helpPanelBodyDesc6": {
+      "message": "- Annettu päivämäärä ja aika on kulunut nykyisestä päivämäärästä ja kellonajasta, jolloin \"Aika vanhentunut\" -teksti tulee näkyviin."
+   },
+   "helpPanelBodyDesc7": {
+      "message": "Kyllä, voit viedä jo ajoitetun avoimen välilehden ja suljetun välilehden URL-osoitteen csv-muodossa ja käyttää sitä toisessa järjestelmässä URL-osoitteen tuomiseen."
+   },
+   "helpPanelBodyDesc8": {
+      "message": "Kyllä, voit tuoda kelvollisen avoimen ja sulkevan URL-osoitteen csv-muodossa. Tuotu csv-muoto ajoitetaan automaattisesti tiettyyn aikaan"
+   },
+   "herAreStepsToAllow": {
+      "message": "Tässä ovat vaiheet salliaksesi incognito-tilassa Google Chromessa:"
+   },
+   "home": {
+      "message": "Kotiin"
+   },
+   "hour_minute_close": {
+      "message": "Joka tunti Sulje Minuutti"
+   },
+   "hour_minute_open": {
+      "message": "Joka tunti avoin minuutti"
+   },
+   "how_to_use_tab": {
+      "message": "Kuinka käyttää Tab-ajastinta?"
+   },
+   "import": {
+      "message": "Tuoda"
+   },
+   "importClsTbDta": {
+      "message": "Tuo sulje välilehden tiedot"
+   },
+   "importExport": {
+      "message": "Tuo/Vie"
+   },
+   "importOpenTbDt": {
+      "message": "Tuo avoimen välilehden tiedot"
+   },
+   "importedRecored": {
+      "message": ", tuotu tallennettuna"
+   },
+   "inactivateScheduleTab": {
+      "message": "Inaktivoi ajoitettu välilehti."
+   },
+   "inactive": {
+      "message": "Ei-aktiivinen"
+   },
+   "inactiveSch": {
+      "message": "8. Ei-aktiivinen URL-osoite"
+   },
+   "inactiveSchExm1": {
+      "message": "Yllä olevassa esimerkissä annettu URL-osoite on avoimessa tai suljetussa välilehdessä, mikä tarkoittaa, että annettu URL-osoite ei ole aktiivinen eikä se suorita mitään toimintoa."
+   },
+   "inactiveThisScheduledTabs": {
+      "message": "Aktivoi tämä ajoitettu välilehti"
+   },
+   "invalidDuplicate": {
+      "message": ", kaksoiskappale tai virheellinen tallennettu"
+   },
+   "invldLicKy": {
+      "message": "Virheellinen lisenssiavain!"
+   },
+   "isClose": {
+      "message": "on lähellä"
+   },
+   "isOpen": {
+      "message": "on auki"
+   },
+   "january": {
+      "message": "tammikuu"
+   },
+   "july": {
+      "message": "heinäkuu"
+   },
+   "june": {
+      "message": "kesäkuuta"
+   },
+   "licKeyDis": {
+      "message": "Tämä lisenssiavain on poistettu käytöstä."
+   },
+   "listTitle": {
+      "message": "Välilehtien ajoitus"
+   },
+   "loading": {
+      "message": "Ole hyvä ja odota..."
+   },
+   "locale": {
+      "message": "fi"
+   },
+   "march": {
+      "message": "maaliskuuta"
+   },
+   "maxSchedule": {
+      "message": "4 Aikataulun enimmäisraja"
+   },
+   "may": {
+      "message": "toukokuuta"
+   },
+   "mintValid": {
+      "message": "Vähintään 1 minuutti vaaditaan"
+   },
+   "minute": {
+      "message": "Minuutti"
+   },
+   "minutesNotLessThan1": {
+      "message": "Minuuttia ei saa olla vähemmän kuin 1."
+   },
+   "monday": {
+      "message": "maanantai"
+   },
+   "month": {
+      "message": "Kuukausi"
+   },
+   "monthly": {
+      "message": "Kuukausittain"
+   },
+   "more": {
+      "message": "lisää"
+   },
+   "mostSubscribe": {
+      "message": "Useimmat tilaajat"
+   },
+   "no": {
+      "message": "Ei"
+   },
+   "noDataToExport": {
+      "message": "Ei vietäviä tietoja."
+   },
+   "noScheduledTabs": {
+      "message": "Ei ajoitettuja välilehtiä"
+   },
+   "noTimerSetAddNewTimer": {
+      "message": "Ei ajastinta asetettu, napsauta Lisää-painiketta asettaaksesi uuden ajastimen"
+   },
+   "not_show_tutorial": {
+      "message": "Älä näytä tätä opetusohjelmaa uudelleen"
+   },
+   "notificationOpenTab": {
+      "message": "13. Ilmoitus välilehden avaamisen/sulkemisen URL-osoitteessa"
+   },
+   "notificationOpenTabExm1": {
+      "message": "Yllä olevassa esimerkissä annettu URL-osoite on avoimessa välilehdessä, mikä ilmoittaa, että se antaa ilmoituksen ja avaa/sulje URL-osoitteen uudessa välilehdessä 5 minuutin välein."
+   },
+   "notifications": {
+      "message": "Ilmoitus"
+   },
+   "november": {
+      "message": "marraskuu"
+   },
+   "october": {
+      "message": "lokakuu"
+   },
+   "onTheExtensionDetailPage": {
+      "message": "Vieritä alas laajennuksen tietosivulla ja etsi Salli incognito-vaihtoehto."
+   },
+   "oneTime": {
+      "message": "Kerran"
+   },
+   "oneTmSch": {
+      "message": "1. Kerran aikataulu"
+   },
+   "oneTmSchExm1": {
+      "message": "Yllä olevassa esimerkissä annettu URL-osoite on avoimella välilehdellä, mikä ilmoittaa, että se avautuu uudelle välilehdelle Kerran klo 13.45 21.1.2023"
+   },
+   "oneTmSchExm2": {
+      "message": "Yllä olevassa esimerkissä annettu URL-osoite on suljetussa välilehdessä, mikä tarkoittaa, että se sulkee kaikki tietyt osuvat URL-välilehdet klo 13.45 21.1.2023."
+   },
+   "open": {
+      "message": "Avata"
+   },
+   "openBackground": {
+      "message": "Jos kyllä, lataa URL-osoite taustalla avaamatta sitä uudelle välilehdelle"
+   },
+   "openDate": {
+      "message": "Avauspäivämäärä"
+   },
+   "openDay": {
+      "message": "Avointen ovien päivä"
+   },
+   "openEveryDayOn": {
+      "message": "Avoinna joka päivä"
+   },
+   "openEveryMonthOn": {
+      "message": "Avoinna joka kuukausi joka päivä"
+   },
+   "openEveryWeekOn": {
+      "message": "Avoinna joka viikko"
+   },
+   "openEveryYearOn": {
+      "message": "Avoinna joka vuosi"
+   },
+   "openGoogleChrome": {
+      "message": "Avaa Google Chrome."
+   },
+   "openInBackground": {
+      "message": "Avaa URL-osoite taustalla"
+   },
+   "openInEvery": {
+      "message": "Avoinna jokaisessa"
+   },
+   "openInIncognito": {
+      "message": "Avaa incognito-tilassa"
+   },
+   "openMinute": {
+      "message": "Avoin minuutti"
+   },
+   "openOnDay": {
+      "message": "Avoinna päivänä"
+   },
+   "openOnEvery": {
+      "message": "Avoinna joka päivä"
+   },
+   "openSecond": {
+      "message": "Avaa toinen"
+   },
+   "openSecondsMoreThan5": {
+      "message": "Avoimen sekunnin tulee olla yli 5."
+   },
+   "openTabSchedule": {
+      "message": "Avaa välilehden aikataulu"
+   },
+   "openTabURL": {
+      "message": "Avaa välilehden URL-osoite"
+   },
+   "openTime": {
+      "message": "Aukioloaika"
+   },
+   "openUrl": {
+      "message": "Avaa Web-sivuston linkki"
+   },
+   "openWeek": {
+      "message": "Avointen viikko"
+   },
+   "openWeeks": {
+      "message": "Avoinna viikot"
+   },
+   "open_on": {
+      "message": "Avaa päälle"
+   },
+   "optional": {
+      "message": "Valinnainen"
+   },
+   "or": {
+      "message": "tai"
+   },
+   "outof": {
+      "message": "ulos"
+   },
+   "pagePath": {
+      "message": "Sivun polku"
+   },
+   "paidFeature": {
+      "message": "Maksullinen ominaisuus"
+   },
+   "pauseSchedule": {
+      "message": "Aloita tai lopeta kaikki aikataulut"
+   },
+   "pauseTabScheduler": {
+      "message": "Keskeytetty välilehtien ajoitus"
+   },
+   "pleaseAllowIncognitoMessage": {
+      "message": "Ota käyttöön \"Salli incognito-tilassa\" -vaihtoehto laajennuksen tiedoissa. Katso ohjeet opetusohjelman sivulta."
+   },
+   "pleaseShareYourSuggestions": {
+      "message": "Jaa ehdotuksesi."
+   },
+   "plsShreAnySugWithUs": {
+      "message": "Anna ehdotus parantaaksemme toimintaamme"
+   },
+   "powerMode": {
+      "message": "Virtatila"
+   },
+   "premium": {
+      "message": "Premium"
+   },
+   "pricePlan": {
+      "message": "Hinnoittelu ja suunnitelmat"
+   },
+   "privcyPolicy": {
+      "message": "Tietosuojakäytäntö"
+   },
+   "prowerModeTip": {
+      "message": "Pidä järjestelmä aina aktiivisena ottamalla virtatila käyttöön"
+   },
+   "put": {
+      "message": "Laittaa"
+   },
+   "rateUs": {
+      "message": "Arvioi meidät"
+   },
+   "removeDuplicateEntry": {
+      "message": "Poista päällekkäinen merkintä"
+   },
+   "removeOpenTbURL": {
+      "message": "Poista avoimen välilehden URL-osoite"
+   },
+   "repeat": {
+      "message": "Toistaa"
+   },
+   "requiredMsg": {
+      "message": "Pakollinen"
+   },
+   "rmvClsTb": {
+      "message": "Poista sulje välilehden URL-osoite"
+   },
+   "sameTabs": {
+      "message": "Päivitä välilehti, jos URL-osoite on jo auki"
+   },
+   "sameTabsInfo": {
+      "message": "Estä useiden välilehtien avaaminen samalle URL-osoitteelle. Jos esimerkiksi www.google.com on jo avattu, olemassa oleva välilehti päivitetään sen sijaan, että sille avattaisiin uusi välilehti."
+   },
+   "sampleCsvOpenPath": {
+      "message": "../sample_csv/en/open_tab_sample.csv"
+   },
+   "sampleFile": {
+      "message": "Esimerkkitiedosto"
+   },
+   "saturday": {
+      "message": "lauantai"
+   },
+   "savOpnData": {
+      "message": "Tallenna avoimen välilehden tiedot"
+   },
+   "save": {
+      "message": "Tallentaa"
+   },
+   "saveClsTbData": {
+      "message": "Tallenna välilehden sulkemistiedot"
+   },
+   "saveSchedule": {
+      "message": "Tallenna aikataulu"
+   },
+   "scheduleCloseTab": {
+      "message": "Aikataulu Sulje välilehti"
+   },
+   "scheduleCurrentTab": {
+      "message": "Ajoita nykyinen välilehti"
+   },
+   "scheduleOpenTab": {
+      "message": "Aikataulu Avaa välilehti"
+   },
+   "scheduledTabIsAlreadyExistWithSameTimer": {
+      "message": "Tämä ajoitettu välilehti on jo olemassa samalla ajastimella."
+   },
+   "scheduledTabList": {
+      "message": "Ajoitettu välilehtiluettelo"
+   },
+   "scheduledType": {
+      "message": "Aikataulun tyyppi"
+   },
+   "search": {
+      "message": "Haku"
+   },
+   "secValid": {
+      "message": "Vähintään 5 sekuntia vaaditaan"
+   },
+   "second": {
+      "message": "Toinen"
+   },
+   "selectCloseDate": {
+      "message": "Valitse sulkemispäivä"
+   },
+   "selectCloseDay": {
+      "message": "Valitse sulkemispäivä"
+   },
+   "selectCloseTime": {
+      "message": "Valitse sulkemisaika"
+   },
+   "selectColumn": {
+      "message": "Valitse sarake"
+   },
+   "selectDateAndTime": {
+      "message": "Valitse päivämäärä ja aika avataksesi uuden välilehden"
+   },
+   "selectDateAndTimeClsTb": {
+      "message": "Sulje välilehti valitsemalla päivämäärä ja aika"
+   },
+   "selectDayToCloseSchTb": {
+      "message": "Valitse päivä sulkeaksesi aikataulu-välilehden."
+   },
+   "selectDayToClsTb": {
+      "message": "Valitse päivä sulkeaksesi välilehden"
+   },
+   "selectDayToSchdule": {
+      "message": "Valitse päivä ajoitettava välilehti."
+   },
+   "selectDaysInWeek": {
+      "message": "Valitse viikonpäivät"
+   },
+   "selectDaysInWeekIClsTime": {
+      "message": "Valitse viikonpäivät sulkemisajastimesta."
+   },
+   "selectDaysInWeekIOpClsTime": {
+      "message": "Valitse viikonpäivät auki- tai sulkemisajastimesta."
+   },
+   "selectDaysInWeekIOpTime": {
+      "message": "Valitse viikonpäivät avoimessa ajastimessa."
+   },
+   "selectFrequency": {
+      "message": "Valitse Taajuus"
+   },
+   "selectFrequencyOfScheduleUrl": {
+      "message": "Valitse ajoitetun URL-osoitteen tiheys."
+   },
+   "selectOpenDate": {
+      "message": "Valitse avauspäivämäärä"
+   },
+   "selectOpenDay": {
+      "message": "Valitse avointen ovien päivä"
+   },
+   "selectOpenOrClose": {
+      "message": "Valitse avaus- ja sulkemisaika"
+   },
+   "selectOpenOrCloseDate": {
+      "message": "Valitse avaus- ja sulkemispäivä"
+   },
+   "selectOpenOrCloseDay": {
+      "message": "Valitse auki- ja sulkemispäivä"
+   },
+   "selectOpenTime": {
+      "message": "Valitse aukioloaika"
+   },
+   "selectPreferredLanguage": {
+      "message": "Valitse haluamasi kieli."
+   },
+   "selectToOpenTab": {
+      "message": "Valitse päivä avataksesi uuden välilehden"
+   },
+   "selectTypTimerClsTb": {
+      "message": "Valitse ajastimen tyyppi sulkeaksesi välilehden"
+   },
+   "selectTypeOfSchedule": {
+      "message": "Valitse aikataulutyyppi, jos haluat sekä avata että sulkea, kuin valita \"Molemmat\"."
+   },
+   "selectTypeOfTimer": {
+      "message": "Valitse ajastimen tyyppi avataksesi uuden välilehden"
+   },
+   "select_weeks": {
+      "message": "Valitse Viikot"
+   },
+   "september": {
+      "message": "syyskuu"
+   },
+   "settingSave": {
+      "message": "Asetusten tallennus onnistui"
+   },
+   "settingToClose": {
+      "message": "Asetus sulkemaan välilehti incognito-tilassa."
+   },
+   "shareYourSuggestionWithUs": {
+      "message": "Jaa ehdotuksesi kanssamme.."
+   },
+   "slectDayToScheduleWeekly": {
+      "message": "Valitse päivät, jolloin välilehti ajoitetaan viikoittain."
+   },
+   "slectMinute": {
+      "message": "Valitse Minuutti"
+   },
+   "smthngWrng": {
+      "message": "Jotain meni pieleen"
+   },
+   "softpulseInfotech": {
+      "message": "Softpulse Infotech"
+   },
+   "somethingWentWrong": {
+      "message": "Jotain meni pieleen. Päivitä sivu ja yritä uudelleen."
+   },
+   "status": {
+      "message": "Status"
+   },
+   "subcrKeyShldNEmpt": {
+      "message": "Anna tilausavain."
+   },
+   "subdomain": {
+      "message": "Aliverkkotunnus"
+   },
+   "subkeyInputTitle": {
+      "message": "Anna tilausavain"
+   },
+   "submFeedBack": {
+      "message": "Lähetä"
+   },
+   "suggForTbSch": {
+      "message": "Ehdotus välilehtien ajoittajaksi"
+   },
+   "suggestionAndRateUs": {
+      "message": "Ehdota ja arvioi meitä"
+   },
+   "sunday": {
+      "message": "sunnuntai"
+   },
+   "tabCloseOneTime": {
+      "message": "Välilehti sulkeutuu vain kerran"
+   },
+   "tabSchTutorial": {
+      "message": "Välilehden ajoituksen opetusohjelma"
+   },
+   "tabScheduler": {
+      "message": "Välilehtien ajoitus"
+   },
+   "tabSchedulerOptions": {
+      "message": "Välilehden ajastimen asetukset"
+   },
+   "tabWillOpenOneTime": {
+      "message": "Välilehti avautuu vain kerran"
+   },
+   "tabWillOpenWhenBrowserOpen": {
+      "message": "Välilehti avautuu, kun selain avautuu"
+   },
+   "termCondition": {
+      "message": "Ehdot"
+   },
+   "thanksFrRev": {
+      "message": "Kiitos arvostelustasi"
+   },
+   "thnkUFeedBack": {
+      "message": "Kiitos ehdotuksestasi"
+   },
+   "thnkUFrUsngTbSch": {
+      "message": "Anna ehdotus parantaaksemme toimintaamme"
+   },
+   "thursday": {
+      "message": "torstai"
+   },
+   "time": {
+      "message": "Aika"
+   },
+   "timeExpired": {
+      "message": "Aika umpeutunut"
+   },
+   "timer": {
+      "message": "Ajastin"
+   },
+   "title": {
+      "message": "Otsikko"
+   },
+   "titleLengtWarn": {
+      "message": "Otsikon pituus saa olla enintään 200 merkkiä."
+   },
+   "toScheduledOpenTbMsg": {
+      "message": "Jos haluat ajoittaa avoimen välilehden, poista valinta osoitteen suodatuksesta."
+   },
+   "toogleCloseTab": {
+      "message": "Aloita/pysäytä kaikkien suljettavien välilehtien URL-osoitteiden aikatauluhälytys"
+   },
+   "toogleDarkmode": {
+      "message": "Vaihda tumman tilan ja oletustilan välillä mukauttaaksesi katselukokemustasi."
+   },
+   "toogleOff": {
+      "message": "Pois"
+   },
+   "toogleOn": {
+      "message": "Päällä"
+   },
+   "toogleOpenTab": {
+      "message": "Aloita/pysäytä kaikkien avointen välilehtien URL-osoitteiden aikatauluhälytys"
+   },
+   "topLevelDomain": {
+      "message": "Ylimmän tason verkkotunnus"
+   },
+   "totalProcessed": {
+      "message": "Käsitelty tallennettu yhteensä"
+   },
+   "tuesday": {
+      "message": "tiistai"
+   },
+   "tutorialImg1": {
+      "message": "\u003Cimg src=\"../images/en/1.png\">"
+   },
+   "tutorialImg10": {
+      "message": "\u003Cimg src=\"../images/en/10.png\">"
+   },
+   "tutorialImg11": {
+      "message": "\u003Cimg src=\"../images/en/11.png\">"
+   },
+   "tutorialImg12": {
+      "message": "\u003Cimg src=\"../images/en/12.png\">"
+   },
+   "tutorialImg13": {
+      "message": "\u003Cimg src=\"../images/en/13.png\">"
+   },
+   "tutorialImg14": {
+      "message": "\u003Cimg src=\"../images/en/14.png\">"
+   },
+   "tutorialImg2": {
+      "message": "\u003Cimg src=\"../images/en/2.png\">"
+   },
+   "tutorialImg3": {
+      "message": "\u003Cimg src=\"../images/en/3.png\">"
+   },
+   "tutorialImg4": {
+      "message": "\u003Cimg src=\"../images/en/4.png\">"
+   },
+   "tutorialImg5": {
+      "message": "\u003Cimg src=\"../images/en/5.png\">"
+   },
+   "tutorialImg6": {
+      "message": "\u003Cimg src=\"../images/en/6.png\">"
+   },
+   "tutorialImg7": {
+      "message": "\u003Cimg src=\"../images/en/7.png\">"
+   },
+   "tutorialImg8": {
+      "message": "\u003Cimg src=\"../images/en/8.png\">"
+   },
+   "tutorialImg9": {
+      "message": "\u003Cimg src=\"../images/en/9.png\">"
+   },
+   "uncheckAll": {
+      "message": "Poista valinta Kaikki"
+   },
+   "unlimitedSchedule": {
+      "message": "Rajoittamaton aikataulu"
+   },
+   "unspecifiedURL": {
+      "message": "11. URL-osoite määrittelemätön polku"
+   },
+   "unspecifiedURLExm1": {
+      "message": "Yllä olevassa esimerkissä annettu URL-osoite on suljetussa välilehdessä, mikä kertoo, että uudessa välilehdessä avattu URL-osoite, joka alkaa ja päättyy tuntemattomaan verkko-osoitteeseen, suljetaan 5 minuutin kuluttua."
+   },
+   "upgradePlan": {
+      "message": "Osta suunnitelma TAI kirjaudu ja päivitä suunnitelmasi saadaksesi lisää ominaisuuksia."
+   },
+   "upgradePlanUnlock": {
+      "message": "Päivitä suunnitelmasi saadaksesi lisää ominaisuuksia."
+   },
+   "uploadValidFormat": {
+      "message": "Lataa kelvollinen muoto"
+   },
+   "url": {
+      "message": "URL-osoite"
+   },
+   "urlContExat": {
+      "message": "URL-suodatus"
+   },
+   "urlEndWithUnspesifiedPth": {
+      "message": "9. URL-osoitteen lopussa on määrittelemätön polku"
+   },
+   "urlEndWithUnspesifiedPthExm1": {
+      "message": "Yllä olevassa esimerkissä annettu URL-osoite on suljetussa välilehdessä, mikä kertoo, että annettu URL-osoite, joka avattiin uudelle välilehdelle ja päättyy tuntemattomaan polkuun, suljetaan 5 minuutin kuluttua."
+   },
+   "urlFilterInfo": {
+      "message": "Sisältää tarkistettavan URL-osoitteen tarvitsee vain osan URL-osoitteesta ja tarkastettavan tarkan URL-osoitteen on vastattava tarkasti määritettyä URL-osoitetta"
+   },
+   "urlFilterinCLoseTb": {
+      "message": "14. URL-suodatus sulje välilehden URL-osoite"
+   },
+   "urlFilterinCLoseTbExample": {
+      "message": "Yllä olevassa esimerkissä annettu URL-osoite on suljetussa välilehdessä, jolloin jo avatun välilehden URL-osoite vastasi osaa annetun URL-osoitteen osaa, joten se sulkee välilehden"
+   },
+   "urlIsRequired": {
+      "message": "Verkkosivuston linkki vaaditaan"
+   },
+   "urlNotvalid": {
+      "message": "URL-osoite ei kelpaa"
+   },
+   "urlStartWithUnspesifiedPth": {
+      "message": "10. URL-osoite alkaa määrittelemättömällä polulla"
+   },
+   "urlStartWithUnspesifiedPthExm1": {
+      "message": "Yllä olevassa esimerkissä annettu URL-osoite on suljetussa välilehdessä, mikä kertoo, että uudessa välilehdessä avattu URL-osoite, joka alkaa tuntemattomalla aliverkkotunnuksella \u003Cb>'www'\u003C/b> tai \u003Cb>'blogi',\u003C/b> suljetaan 5 minuutin kuluttua."
+   },
+   "useSpecificUrl": {
+      "message": "Käytä tiettyä verkkosivustolinkkiä"
+   },
+   "useSpecificUrl1": {
+      "message": "Sinun on täytynyt kirjoittaa tarkka aliverkkotunnus, ylätason verkkotunnus, verkkotunnuksen nimi ja sivupolku Web-sivuston linkki -kenttään suljetun selaimen välilehdelle."
+   },
+   "useSpecificUrl2": {
+      "message": "Käytä suljettuja selaimen välilehtiä"
+   },
+   "useSpecificUrl3": {
+      "message": "Käytä erityistä ja täydellistä verkkosivustolinkkiä"
+   },
+   "useUnSpecificUrl1": {
+      "message": "Käytä määrittelemätöntä verkkosivustolinkkiä"
+   },
+   "useUnSpecificUrl2": {
+      "message": "Aloita käyttö määrittelemättömällä verkkosivustolinkillä"
+   },
+   "useUnSpecificUrl3": {
+      "message": "Käytä loppua määrittelemättömällä verkkosivustolinkillä"
+   },
+   "used": {
+      "message": "Käytit"
+   },
+   "validFormatCsv": {
+      "message": "Mikä on kelvollinen CSV-tiedostomuoto tuontia varten?"
+   },
+   "websiteLink": {
+      "message": "Verkkosivuston linkki"
+   },
+   "websiteUrl": {
+      "message": "Verkkosivuston URL-osoite"
+   },
+   "wednesday": {
+      "message": "keskiviikko"
+   },
+   "weekName": {
+      "message": "Viikon nimi"
+   },
+   "weekly": {
+      "message": "Viikoittain"
+   },
+   "whenExtensionTabAppears": {
+      "message": "Kun Laajennukset-välilehti tulee näkyviin, etsi \"Välilehtien ajoitus automaattisella avauksella ja sulkemisella\" ottaaksesi sen käyttöön incognito-tilassa ja napsauta sen vieressä olevaa \"Tiedot\" -painiketta."
+   },
+   "whenMenuPopup": {
+      "message": "Kun valikko avautuu, valitse \"Hallinnoi laajennuksia\"."
+   },
+   "withSignMustFill": {
+      "message": "Merkillä \u003Cspan>*\u003C/span> on oltava täytä tai valitse, Valitse joko avaus- tai sulkemisaika tai molemmat ajat."
+   },
+   "writeYourDescriptionAboutSchUrl": {
+      "message": "Kirjoita kuvaus ajoitetusta URL-osoitteesta tähän."
+   },
+   "yes": {
+      "message": "Kyllä"
+   },
+   "yourEmailAddress": {
+      "message": "Sähköpostiosoitteesi"
+   },
+   "yourScheduleUrl": {
+      "message": "Aikataulusi URL-osoite"
+   }
+}

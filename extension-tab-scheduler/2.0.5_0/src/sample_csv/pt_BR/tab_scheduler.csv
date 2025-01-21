@@ -1,0 +1,4 @@
+﻿URL,Temporizador,Status,Data de abertura,Data de encerramento,Horário Aberto,Hora de fechar,Semana Aberta,Fechar Semana,No navegador aberto,Dia Aberto,Dia de encerramento,Minuto aberto,Minuto próximo,Segundo aberto,Fechar segundo,Notificação,Título,Descrição,Abrir URL em segundo plano,Abrir no modo anônimo,Não feche abas fixadas,Feche apenas as abas anônimas,Filtragem de URL,Tipo de programação,A cada hora  minuto aberto,Cada hora perto de um minuto,Atualizar aba se o URL já estiver aberto
+https://www.google.com/,Cada minuto,Ativo,,,,,"","","",,,,,,,Inativo,Close Every Minute,,Não,Não,Não,Não,Sim,Fechar,0,0,Sim
+http://www.w3schools.com/,Diariamente,Ativo,,,16:31,,"","","",,,,,,,Inativo,Every Day Open,,Não,Não,Não,Não,Não,Abrir,0,0,Não
+https://www.flipkart.com/,Minuto personalizado,Ativo,,,,,"","","",,,120,5,,,Inativo,Open and Close,,Não,Não,Não,Não,Não,Ambos,0,0,Não

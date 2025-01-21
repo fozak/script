@@ -1,0 +1,1448 @@
+{
+   "10_min": {
+      "message": "10 minut"
+   },
+   "1_min": {
+      "message": "1 minuta"
+   },
+   "30_min": {
+      "message": "30 minut"
+   },
+   "5_min": {
+      "message": "5 minut"
+   },
+   "60_min": {
+      "message": "godzina"
+   },
+   "Dashboard": {
+      "message": "Panel"
+   },
+   "Login": {
+      "message": "Login"
+   },
+   "Off": {
+      "message": "Wyłączony"
+   },
+   "On": {
+      "message": "NA"
+   },
+   "Selected": {
+      "message": "Wybrany"
+   },
+   "Settings": {
+      "message": "Ustawienia"
+   },
+   "Tutorial": {
+      "message": "Seminarium"
+   },
+   "action": {
+      "message": "Działanie"
+   },
+   "activateScheduleTab": {
+      "message": "Aktywuj zaplanowaną kartę."
+   },
+   "active": {
+      "message": "Aktywny"
+   },
+   "activeAllScheduleTab": {
+      "message": "Uruchamianie harmonogramu kart"
+   },
+   "activeStatus": {
+      "message": "Status"
+   },
+   "actvInactvNotification": {
+      "message": "Wyświetl powiadomienie po otwarciu karty harmonogramu"
+   },
+   "actvInactvOpnTb": {
+      "message": "Aktywna lub nieaktywna otwarta karta"
+   },
+   "actvIntvClsTb": {
+      "message": "Aktywna lub nieaktywna zamknij kartę"
+   },
+   "add": {
+      "message": "Dodać"
+   },
+   "addDescription": {
+      "message": "Dodaj opis"
+   },
+   "addNew": {
+      "message": "Dodaj nowy"
+   },
+   "addNewURlCls": {
+      "message": "Dodaj nowy adres URL, aby zamknąć"
+   },
+   "addNewUrlToOpen": {
+      "message": "Dodaj nowy adres URL, aby otworzyć go w nowym oknie"
+   },
+   "addTitle": {
+      "message": "Dodaj tytuł"
+   },
+   "addWebsite": {
+      "message": "Dodaj witrynę"
+   },
+   "all": {
+      "message": "Wszystko"
+   },
+   "allInputFieldReq": {
+      "message": "Wszystkie pola są wymagane"
+   },
+   "all_weeks": {
+      "message": "Cały tydzień"
+   },
+   "alreadyPurchase": {
+      "message": "Już kupiłeś? Wprowadź klucz tutaj"
+   },
+   "andAt": {
+      "message": "i przy"
+   },
+   "annually": {
+      "message": "Rocznie"
+   },
+   "appDesc": {
+      "message": "Karty przeglądarki będą otwierane i zamykane automatycznie o wybranej porze. Użytkownik może aktywować/dezaktywować listę na podstawie wymagań"
+   },
+   "appName": {
+      "message": "Harmonogram zakładek z automatycznym otwieraniem i zamykaniem"
+   },
+   "april": {
+      "message": "Kwiecień"
+   },
+   "at": {
+      "message": "Na"
+   },
+   "august": {
+      "message": "Sierpień"
+   },
+   "autoFocus": {
+      "message": "Karta Auto Focus"
+   },
+   "autoFocustip": {
+      "message": "Jeśli opcja jest włączona, nowa karta zostanie otwarta w stanie aktywnym/aktywnym."
+   },
+   "autofocustip": {
+      "message": "Nowe otwarte karty będą automatycznie ustawiane na fokus"
+   },
+   "basic": {
+      "message": "Podstawowy"
+   },
+   "billedAnnyally": {
+      "message": "Rozliczane rocznie"
+   },
+   "billedMonthly": {
+      "message": "Rozliczane co miesiąc"
+   },
+   "both": {
+      "message": "Obydwa"
+   },
+   "browserOpen": {
+      "message": "Po otwarciu przeglądarki"
+   },
+   "browserWebAddress": {
+      "message": "Adres internetowy przeglądarki zaczyna się i kończy nieznanym adresem internetowym. Wpisz \u003Cb>*\u003C/b> po obu stronach pola Link do witryny."
+   },
+   "browserWebAddress2": {
+      "message": "Adres internetowy przeglądarki zawiera nazwę domeny google.com, która zostanie zamknięta w podanych minutach, niezależnie od subdomeny i ścieżki strony. Umieść \u003Cb>*\u003C/b> po obu stronach nazwy domeny i TLD"
+   },
+   "browserWebAddress3": {
+      "message": "Adres internetowy przeglądarki zaczyna się od nieznanej nazwy domeny i kończy się nieznaną ścieżką strony"
+   },
+   "browserWebAddress31": {
+      "message": "zostanie zamknięte po upływie podanych minut, umieść \u003Cb>*\u003C/b> po obu stronach TLD"
+   },
+   "browserWebAddress4": {
+      "message": "Adres internetowy przeglądarki zaczyna się od nieznanego adresu internetowego. Umieść \u003Cb>*\u003C/b> na początku swojego adresu URL. Pamiętaj, że adres internetowy przeglądarki musi być zgodny z Twoim adresem URL po wpisaniu \u003Cb>* .\u003C/b>"
+   },
+   "browserWebAddress41": {
+      "message": "Adres internetowy przeglądarki zaczyna się od nieznanej subdomeny"
+   },
+   "browserWebAddress42": {
+      "message": "na początku łącza do Twojej witryny"
+   },
+   "browserWebAddress5": {
+      "message": "Adres internetowy przeglądarki kończy się nieznanym adresem internetowym. Umieść \u003Cb>*\u003C/b> na końcu swojego adresu URL. Pamiętaj, że adres internetowy musi być taki sam, jak przed napisaniem \u003Cb>* .\u003C/b>"
+   },
+   "browserWebAddress51": {
+      "message": "Adres internetowy przeglądarki kończy się nieznaną ścieżką strony. Umieść \u003Cb>*\u003C/b> na końcu adresu internetowego"
+   },
+   "browserWebAddress6": {
+      "message": "Wpisz tylko \u003Cb>*\u003C/b> w polu adresu witryny, aby zamknąć wszystkie karty przeglądarki. Po zamknięciu wszystkich kart przeglądarka zostanie automatycznie zamknięta."
+   },
+   "browserWebAddress7": {
+      "message": "W polu adresu URL, aby otworzyć stronę w karcie przeglądarki, należy wpisać dokładną subdomenę, domenę najwyższego poziomu, nazwę domeny i ścieżkę strony."
+   },
+   "browserWebAddress8": {
+      "message": "Możesz otworzyć adres URL w określonym dniu i godzinie, określonym miesiącu, określonym tygodniu, określonym roku i powtarzać go w określonym czasie"
+   },
+   "buyPlan": {
+      "message": "Kup plan"
+   },
+   "buycofee": {
+      "message": "Kup mi kawę"
+   },
+   "cancel": {
+      "message": "Anulować"
+   },
+   "changeLanguage": {
+      "message": "Zmień język"
+   },
+   "checkAll": {
+      "message": "Zaznacz wszystko"
+   },
+   "checkThisOpToPreventClosePinTb": {
+      "message": "Zaznacz tę opcję, aby zapobiec zamykaniu przypiętych kart."
+   },
+   "checkThisOptionOnlyPartOfUrlMtch": {
+      "message": "Zaznacz tę opcję, jeśli chcesz dopasować tylko część adresu URL."
+   },
+   "checkThisOptionToActivate": {
+      "message": "Zaznacz tę opcję, aby aktywować lub dezaktywować zaplanowany adres URL."
+   },
+   "checkThisOptionToCloseOnly": {
+      "message": "Zaznacz tę opcję, aby zamknąć tylko karty incognito. Włącz również opcję „Allow in Incognito” w szczegółach rozszerzenia. Aby uzyskać instrukcje, zapoznaj się ze stroną samouczka."
+   },
+   "checkThisOptionToCloseOnlyInIncgnitoTb": {
+      "message": "Zaznacz tę opcję, aby zamknąć tylko karty incognito. Włącz również opcję „Allow in Incognito” w szczegółach rozszerzenia. Aby uzyskać instrukcje, zapoznaj się ze stroną samouczka."
+   },
+   "checkThisOptionToInBg": {
+      "message": "Zaznacz tę opcję, jeśli chcesz otworzyć adres URL w tle, bez otwierania go w nowej karcie"
+   },
+   "checkThisOptionToInactivNotification": {
+      "message": "Zaznacz tę opcję, aby dezaktywować powiadomienia na zaplanowanym adresie URL"
+   },
+   "checkThisOptionToOpen": {
+      "message": "Zaznacz tę opcję, jeśli chcesz otworzyć swój adres URL w trybie incognito"
+   },
+   "checkThisOptionToOpenIncogito": {
+      "message": "Zaznacz tę opcję, jeśli chcesz otworzyć swój adres URL w trybie incognito"
+   },
+   "checkThisOptionToPrevent": {
+      "message": "Zaznacz tę opcję, aby zapobiec zamykaniu przypiętych kart."
+   },
+   "clickExtIcon": {
+      "message": "Kliknij ikonę „Rozszerzenia” na pasku narzędzi, która wygląda jak element układanki."
+   },
+   "clickTheSwitch": {
+      "message": "Kliknij przełącznik obok, aby go włączyć"
+   },
+   "close": {
+      "message": "Zamknąć"
+   },
+   "closeAllTab": {
+      "message": "12. Zamknij wszystkie karty przeglądarki"
+   },
+   "closeAllTabExm1": {
+      "message": "W powyższym przykładzie podany adres URL znajduje się w zakładce Zamknij, która informuje, że wszystkie karty zostaną zamknięte o godzinie 12:00 dnia 25/2/2023"
+   },
+   "closeDate": {
+      "message": "Data zamknięcia"
+   },
+   "closeDay": {
+      "message": "Dzień zamknięcia"
+   },
+   "closeEveryYear": {
+      "message": "Zamknij co roku"
+   },
+   "closeInEvery": {
+      "message": "Blisko w każdym"
+   },
+   "closeIncognitoTab": {
+      "message": "Zamknij tylko karty incognito"
+   },
+   "closeMinute": {
+      "message": "Zamknij minutę"
+   },
+   "closeOnDay": {
+      "message": "Zamknięcie w dniu"
+   },
+   "closeOnEvery": {
+      "message": "Zamknij na każdym"
+   },
+   "closeOnEveryDay": {
+      "message": "Zamknij każdego dnia"
+   },
+   "closeOnEveryMonth": {
+      "message": "Zamknij każdego miesiąca w dniu"
+   },
+   "closeOnEveryWeek": {
+      "message": "Zamknij co tydzień"
+   },
+   "closeSecond": {
+      "message": "Zamknij Drugi"
+   },
+   "closeSeconsMoreThan5": {
+      "message": "Liczba sekund powinna być większa niż 5."
+   },
+   "closeTabSchedule": {
+      "message": "Zamknij harmonogram karty"
+   },
+   "closeTabURL": {
+      "message": "Zamknij adres URL karty"
+   },
+   "closeTime": {
+      "message": "Czas zamknięcia"
+   },
+   "closeUrl": {
+      "message": "Zamknij łącze do witryny"
+   },
+   "closeWeek": {
+      "message": "Zamknij tydzień"
+   },
+   "closeWeeks": {
+      "message": "Zamknij tygodnie"
+   },
+   "close_on": {
+      "message": "Zamknij na"
+   },
+   "cngrtsForSubcr": {
+      "message": "Gratulacje! Twój plan został pomyślnie aktywowany."
+   },
+   "commonQuestionsAns": {
+      "message": "Częste pytania i odpowiedzi"
+   },
+   "copySucessClose": {
+      "message": "Dane adresu URL zamkniętej karty skopiowano do danych adresu URL otwartej karty"
+   },
+   "createNewTimer": {
+      "message": "Utwórz nowy timer"
+   },
+   "currentPlan": {
+      "message": "Aktualny plan"
+   },
+   "currentTabSchedule": {
+      "message": "Aktualny harmonogram kart"
+   },
+   "currentTbScheduleTimer": {
+      "message": "Aktualny licznik czasu na karcie."
+   },
+   "cusSec": {
+      "message": "Niestandardowy drugi"
+   },
+   "custMin": {
+      "message": "Niestandardowa minuta"
+   },
+   "custmMinSch": {
+      "message": "7. Niestandardowy harmonogram minutowy"
+   },
+   "custmMinSchExm1": {
+      "message": "W powyższym przykładzie podany adres URL znajduje się w otwartej karcie, co oznacza, że ​​podany adres URL jest otwierany w nowej karcie co 15 minut."
+   },
+   "custmMinSchExm2": {
+      "message": "W powyższym przykładzie podany adres URL znajduje się w zakładce Zamknij, która informuje, że podany adres URL otwarty w nowej karcie zostanie zamknięty po 15 minutach."
+   },
+   "customSecondWarning": {
+      "message": "Funkcja niestandardowej sekundy jest eksperymentalna i może nie działać prawidłowo, jeśli liczba sekund będzie mniejsza niż 60."
+   },
+   "darkMode": {
+      "message": "Tryb ciemny"
+   },
+   "datNotCopy": {
+      "message": "Niektóre dane nie są kopiowane ze względu na nieprawidłowy adres URL."
+   },
+   "dataSaved": {
+      "message": "Dane timera zapisano pomyślnie"
+   },
+   "date": {
+      "message": "Data"
+   },
+   "dateIsOutOfRange": {
+      "message": "Data jest poza zakresem"
+   },
+   "day": {
+      "message": "Dzień"
+   },
+   "december": {
+      "message": "Grudzień"
+   },
+   "delete": {
+      "message": "Usuwać"
+   },
+   "deleteScheduleTb": {
+      "message": "Usuń zaplanowaną kartę."
+   },
+   "description": {
+      "message": "Opis"
+   },
+   "developedBy": {
+      "message": "Opracowane przez:"
+   },
+   "doNotCloseInPinnedTabs": {
+      "message": "Nie zamykaj przypiętych kart"
+   },
+   "doNotShowNotification": {
+      "message": "Nie pokazuj powiadomienia"
+   },
+   "domainName": {
+      "message": "Nazwa domeny"
+   },
+   "downloadCloseTbSampleCsv": {
+      "message": "Pobierz przykładowy plik CSV z zamkniętą zakładką, aby zobaczyć przykład wymaganego formatu"
+   },
+   "downloadOpenTbSampleCsv": {
+      "message": "Pobierz przykładowy plik CSV z otwartą kartą, aby zobaczyć przykład wymaganego formatu"
+   },
+   "editScheduleTb": {
+      "message": "Edytuj zaplanowaną kartę."
+   },
+   "email": {
+      "message": "E-mail"
+   },
+   "enterDateToCloseTab": {
+      "message": "Wprowadź datę, aby zamknąć kartę harmonogramu."
+   },
+   "enterDateToOpen": {
+      "message": "Wprowadź datę, aby otworzyć zakładkę harmonogramu."
+   },
+   "enterMiniutesToCloseTb": {
+      "message": "Wprowadź minuty, aby zamknąć kartę."
+   },
+   "enterMiniutesToOpen": {
+      "message": "Wprowadź minuty, aby otworzyć kartę harmonogramu."
+   },
+   "enterMinute": {
+      "message": "Wprowadź minutę"
+   },
+   "enterSecond": {
+      "message": "Wpisz drugie"
+   },
+   "enterSecondsToCloseTab": {
+      "message": "Wprowadź sekundy, aby zamknąć kartę."
+   },
+   "enterSecondsToOpen": {
+      "message": "Wprowadź sekundy, aby otworzyć kartę harmonogramu."
+   },
+   "enterTilteOfScheduleUrl": {
+      "message": "Wprowadź tytuł zaplanowanego adresu URL."
+   },
+   "enterTimeToCloseTab": {
+      "message": "Wprowadź godzinę, aby zamknąć kartę harmonogramu."
+   },
+   "enterTimeToSchedule": {
+      "message": "Wprowadź godzinę, aby otworzyć kartę harmonogramu."
+   },
+   "enterValidEmail": {
+      "message": "Proszę wpisać prawidłowy adres e-mail"
+   },
+   "enterValidUrl": {
+      "message": "Proszę wpisać prawidłowy adres URL"
+   },
+   "enterValueInCloseSec": {
+      "message": "Wprowadź wartość w ciągu kilku sekund"
+   },
+   "enterValueInOpenCloseSec": {
+      "message": "Wprowadź wartość w sekundach otwarcia lub zamknięcia"
+   },
+   "enterValueInOpenMinutes": {
+      "message": "Wprowadź wartość w minutach otwarcia"
+   },
+   "enterVlaueInCloseMinutes": {
+      "message": "Wprowadź wartość w ciągu kilku minut"
+   },
+   "enterVlaueInOpenCloseMin": {
+      "message": "Wprowadź wartość w minutach otwarcia lub zamknięcia"
+   },
+   "enterVlaueInOpenSeconds": {
+      "message": "Wprowadź wartość w sekundach otwarcia"
+   },
+   "enterYourURLToSchedule": {
+      "message": "Wprowadź adres URL, aby zaplanować."
+   },
+   "every": {
+      "message": "każdy"
+   },
+   "every10Min": {
+      "message": "Co 10 minut"
+   },
+   "every1Minute": {
+      "message": "co 1 minutę"
+   },
+   "every30Min": {
+      "message": "Co 30 minut"
+   },
+   "every5Min": {
+      "message": "Co 5 minut"
+   },
+   "everyDay": {
+      "message": "Codziennie"
+   },
+   "everyDayAt": {
+      "message": "każdego dnia o"
+   },
+   "everyHour": {
+      "message": "Co godzinę"
+   },
+   "everyMinute": {
+      "message": "Każda minuta"
+   },
+   "everyMonth": {
+      "message": "Każdego miesiąca"
+   },
+   "everyMonthOn": {
+      "message": "co miesiąc"
+   },
+   "everyMonthOnDay": {
+      "message": "każdego miesiąca w dniu"
+   },
+   "everyWeek": {
+      "message": "Tygodniowo"
+   },
+   "everyWeekOn": {
+      "message": "co tydzień"
+   },
+   "everyYear": {
+      "message": "Każdego roku"
+   },
+   "everyYesrOn": {
+      "message": "co roku"
+   },
+   "evr10MinSch": {
+      "message": "2. Harmonogram co 10 minut"
+   },
+   "evr10MinSchExm1": {
+      "message": "W powyższym przykładzie podany adres URL znajduje się w otwartej karcie, co oznacza, że ​​podany adres URL będzie otwierany w nowej karcie co 10 minut."
+   },
+   "evr10MinSchExm2": {
+      "message": "W powyższym przykładzie podany adres URL znajduje się w zakładce Zamknij, która informuje, że podany adres URL otwarty w nowej karcie zostanie zamknięty po 10 minutach."
+   },
+   "evrDaySch": {
+      "message": "3. Harmonogram na każdy dzień"
+   },
+   "evrDaySchExm1": {
+      "message": "W powyższym przykładzie podany adres URL znajduje się w otwartej karcie, co oznacza, że ​​będzie otwierany w nowej karcie każdego dnia o godzinie 17:27"
+   },
+   "evrDaySchExm2": {
+      "message": "W powyższym przykładzie podany adres URL znajduje się w zakładce Zamknij, która informuje, że otwarta już karta zostanie zamknięta o godzinie 17:27 każdego dnia"
+   },
+   "evrMonthSch": {
+      "message": "5. Harmonogram na każdy miesiąc"
+   },
+   "evrMonthSchExm1": {
+      "message": "W powyższym przykładzie podany adres URL znajduje się w otwartej karcie, która zawiera informację, że będzie otwierany w nowej karcie każdego miesiąca o godzinie 13:45 w dniu 25"
+   },
+   "evrMonthSchExm2": {
+      "message": "W powyższym przykładzie podany adres URL znajduje się w zakładce Zamknij, która informuje, że otwarta już zakładka zostanie zamknięta co miesiąc o godzinie 13:45 w dniu 25"
+   },
+   "evrWeekSch": {
+      "message": "4. Harmonogram tygodniowy"
+   },
+   "evrWeekSchExm1": {
+      "message": "W powyższym przykładzie podany adres URL znajduje się w otwartej karcie, która informuje, że będzie otwierana w nowej karcie co tydzień o godzinie 17:00 w \u003Cb>poniedziałek i wtorek\u003C/b> ."
+   },
+   "evrWeekSchExm2": {
+      "message": "W powyższym przykładzie podany adres URL znajduje się w zakładce Zamknij, która informuje, że otwarta już karta zostanie zamknięta w każdy \u003Cb>poniedziałek i wtorek\u003C/b> o godzinie 17:00 ."
+   },
+   "evrWeekSchExm3": {
+      "message": "W powyższym przykładzie w tygodniowym timerze można wybrać wiele dni."
+   },
+   "evrYearSch": {
+      "message": "6. Harmonogram na każdy rok"
+   },
+   "evrYearSchExm1": {
+      "message": "W powyższym przykładzie podany adres URL znajduje się w otwartej karcie, co oznacza, że ​​będzie otwierany w nowej karcie każdego roku o godzinie 13:35 1 stycznia"
+   },
+   "evrYearSchExm2": {
+      "message": "W powyższym przykładzie podany adres URL znajduje się w zakładce Zamknij, która informuje, że otwarta już zakładka zostanie zamknięta każdego roku o godzinie 13:35 1 stycznia"
+   },
+   "exampleSort": {
+      "message": "np"
+   },
+   "exdMaxLim": {
+      "message": "Przekroczono maksymalną liczbę dozwolonych urządzeń!"
+   },
+   "exmpOpnClsTbSch": {
+      "message": "Przykład otwierania i zamykania karty w harmonogramie kart"
+   },
+   "expLicKy": {
+      "message": "Ten klucz licencyjny wygasł."
+   },
+   "export": {
+      "message": "Eksport"
+   },
+   "exportBefore": {
+      "message": "Masz\u003Cexday>\u003C/exday>pozostało dni, zasubskrybuj, aby nadal korzystać z funkcji premium"
+   },
+   "exportClsTbDta": {
+      "message": "Eksportuj dane z zamkniętej karty"
+   },
+   "exportOpenTbDt": {
+      "message": "Eksportuj dane z otwartej karty"
+   },
+   "exportedData": {
+      "message": "Dane timera zostały pomyślnie wyeksportowane"
+   },
+   "extensionShouldAble": {
+      "message": "Rozszerzenie powinno teraz umożliwiać zamykanie kart w trybie incognito."
+   },
+   "faq": {
+      "message": "Często zadawane pytania"
+   },
+   "faq_1": {
+      "message": "Czym jest Harmonogram kart z automatycznym otwieraniem i zamykaniem?"
+   },
+   "faq_10": {
+      "message": "Jak mogę wyświetlić zaplanowane zakładki?"
+   },
+   "faq_11": {
+      "message": "Czy podanie godzin otwarcia i zamknięcia jest obowiązkowe?"
+   },
+   "faq_12": {
+      "message": "Do czego służą funkcje zakładki Auto Focus, Aktywuj wszystkie zaplanowane zakładki i Tryb zasilania?"
+   },
+   "faq_13": {
+      "message": "Czy mogę otworzyć/zamknąć zaplanowany link do witryny w trybie incognito?"
+   },
+   "faq_14": {
+      "message": "Do czego służy zakładka Odśwież, jeśli adres URL jest już otwarty?"
+   },
+   "faq_2": {
+      "message": "Do czego służy Link do Strony Internetowej?"
+   },
+   "faq_3": {
+      "message": "Jak zaplanować adres URL za pomocą Harmonogramu kart?"
+   },
+   "faq_4": {
+      "message": "Czym jest opcja „Otwórz adres URL w tle”?"
+   },
+   "faq_5": {
+      "message": "Czy mogę uniemożliwić rozszerzeniu zamykanie przypiętych kart?"
+   },
+   "faq_6": {
+      "message": "Co oznacza typ harmonogramu „Oba”?"
+   },
+   "faq_7": {
+      "message": "Jak działa funkcja filtrowania adresów URL?"
+   },
+   "faq_8": {
+      "message": "Czy mogę dezaktywować zaplanowaną kartę bez jej usuwania?"
+   },
+   "faq_9": {
+      "message": "Czy będę otrzymywać powiadomienia o zaplanowanych kartach?"
+   },
+   "faq_a_1": {
+      "message": "\u003Cp>Tab Scheduler with Auto Open and Close to rozszerzenie przeglądarki, które umożliwia użytkownikom zaplanowanie automatycznego otwierania i zamykania kart o określonych porach. Użytkownicy mogą wybrać jednorazowy harmonogram lub skonfigurować powtarzające się harmonogramy z różnymi opcjami częstotliwości. To rozszerzenie ma wiele zastosowań dla użytkowników i zapewnia wiele przydatnych funkcji.\u003C/p>"
+   },
+   "faq_a_10": {
+      "message": "Wszystkie zaplanowane karty są wyświetlane na liście zawierającej tytuł, link do strony internetowej, godziny otwarcia i zamknięcia, status oraz działania, które możesz podjąć (np. aktywować, edytować, usunąć)."
+   },
+   "faq_a_11": {
+      "message": "Nie, możesz zaplanować czas otwarcia lub czas zamknięcia. Musisz jednak wypełnić lub wybrać wymagane pola oznaczone gwiazdką (*)."
+   },
+   "faq_a_12": {
+      "message": "Auto Focus Tab zapewnia, że ​​po otwarciu zaplanowanej karty Activate All Scheduled Tabs umożliwia szybkie włączenie wszystkich zaplanowanych kart jednym kliknięciem. Power Mode optymalizuje wydajność rozszerzenia, skuteczniej zarządzając zasobami przeglądarki."
+   },
+   "faq_a_13": {
+      "message": "Tak, możesz wybrać otwieranie zaplanowanej karty w trybie incognito, wybierając opcję „Otwórz w trybie incognito”. Możesz wybrać zamykanie tylko kart incognito, wybierając opcję „Zamknij tylko karty incognito”, o ile opcja „Zezwól w trybie incognito” jest włączona w ustawieniach rozszerzenia"
+   },
+   "faq_a_14": {
+      "message": "Gdy ta opcja jest włączona, rozszerzenie automatycznie odświeży istniejącą kartę, jeśli ten sam adres URL jest już otwarty w Twojej przeglądarce. Zapobiega to otwieraniu zduplikowanych kart i zapewnia, że ​​zawsze masz załadowaną najnowszą wersję strony."
+   },
+   "faq_a_14_1": {
+      "message": "Jeśli spróbujesz otworzyć stronę https://github.com/ i będzie ona już otwarta w innej karcie, rozszerzenie po prostu odświeży tę kartę zamiast otwierać nową."
+   },
+   "faq_a_14_2": {
+      "message": "Jeśli strona https://github.com/ jest już otwarta w trzech kartach, rozszerzenie odświeży wszystkie trzy karty."
+   },
+   "faq_a_2": {
+      "message": "Link do strony internetowej to adres strony internetowej w otwartej karcie przeglądarki. Poniżej podano, jak możesz używać adresu strony internetowej."
+   },
+   "faq_a_3": {
+      "message": "Aby zaplanować adres URL, wprowadź link do witryny, nadaj harmonogramowi tytuł, wybierz częstotliwość (One Time, Every Minute, Daily itd.) i wybierz godziny otwarcia i zamknięcia. Możesz również określić datę, dzień lub sekundy otwarcia i zamknięcia karty."
+   },
+   "faq_a_4": {
+      "message": "\u003Cp>Ta opcja daje Ci pełną kontrolę nad planowaniem otwierania adresu URL w tle bez ustawiania ostrości na nową kartę. Adres URL zostanie otwarty cicho, podczas gdy Ty będziesz kontynuować pracę na innych kartach. Jest to szczególnie przydatne, gdy potrzebujesz, aby przeglądarka pobierała dane z zaplanowanego adresu URL bez aktywnego wyświetlania go, na przykład w przypadku żądania API GET.\u003C/p>\u003Cbr> \u003Cp>Na przykład, jeśli chcesz regularnie pobierać dane z punktu końcowego interfejsu API o określonej porze, możesz użyć tej wydajnej opcji, aby uruchomić żądanie w tle, bez konieczności otwierania nowej widocznej karty.\u003C/p>"
+   },
+   "faq_a_5": {
+      "message": "Tak, istnieje opcja zapobiegająca zamykaniu przypiętych kart. Zaznacz opcję „Nie zamykaj przypiętych kart”, aby upewnić się, że karty te pozostaną otwarte, nawet jeśli spełniają inne kryteria zamknięcia."
+   },
+   "faq_a_6": {
+      "message": "Harmonogram typu „Oba” daje Ci pełną kontrolę nad tym, kiedy dana karta ma się otwierać i zamykać, umożliwiając ustawienie konkretnych godzin dla obu działań."
+   },
+   "faq_a_7": {
+      "message": "Filtrowanie adresów URL zapewnia, że ​​tylko określona część adresu URL musi być zgodna, aby zaplanowane działanie mogło zostać wykonane. Jest to przydatne, gdy chcesz zautomatyzować określone działania na podstawie częściowych dopasowań adresów URL. Na przykład, jeśli zaznaczysz opcję Filtrowanie adresów URL dla adresu URL https://example.com/page, będzie ona również stosowana do adresów URL takich jak https://example.com/page/123, https://example.com/page?query=example i https://subdomain.example.com/page."
+   },
+   "faq_a_8": {
+      "message": "Opcja „Aktywuj tę zaplanowaną kartę” umożliwia łatwą aktywację lub dezaktywację zaplanowanych kart, co daje Ci elastyczność w zarządzaniu harmonogramami bez utraty konfiguracji."
+   },
+   "faq_a_9": {
+      "message": "Domyślnie będziesz otrzymywać powiadomienia. Jeśli jednak wolisz zatrzymać powiadomienia, możesz zaznaczyć opcję „Nie pokazuj powiadomień”, aby je wyłączyć."
+   },
+   "february": {
+      "message": "Luty"
+   },
+   "filterTips": {
+      "message": "Filtr stosuje się po 'https://' lub 'www.', np. 'github.com'"
+   },
+   "for_exp": {
+      "message": "Na przykład"
+   },
+   "freeForever": {
+      "message": "Wolny na zawsze"
+   },
+   "freeSchedule": {
+      "message": "wolny harmonogram"
+   },
+   "freeTral": {
+      "message": "Jako ceniony, wczesny użytkownik, będziesz cieszyć się\u003Crday>120\u003C/rday>dni bezpłatnego dostępu przed przejściem na nasz nowy płatny plan — dziękujemy za Wasze stałe wsparcie!\u003Cp class=\"p-t-5\">Masz\u003Cb>\u003Cspan>\u003C/span>\u003C/b>dni pozostałe do końca Twojego\u003Crday>120\u003C/rday>-dniowy okres wolny.\u003Cafex class=\"warning\">\u003Cafex>\u003C/afex>\u003C/afex>\u003C/p> "
+   },
+   "frequentlyAskedQuestions": {
+      "message": "Często zadawane pytania"
+   },
+   "friday": {
+      "message": "Piątek"
+   },
+   "getThisPlan": {
+      "message": "Zdobądź ten plan"
+   },
+   "goToSettingsPageToSchedule": {
+      "message": "Przejdź na stronę ustawień, aby zaplanować otwieranie i zamykanie adresów URL."
+   },
+   "goURL": {
+      "message": "Przejdź do adresu URL"
+   },
+   "helpAccordion12": {
+      "message": "Czy to rozszerzenie działa w trybie uśpienia/zawieszenia?"
+   },
+   "helpAccordion3": {
+      "message": "Czy mogę zaplanować otwarcie karty w trybie incognito?"
+   },
+   "helpAccordion6": {
+      "message": "Co oznacza „Czas upłynął”?"
+   },
+   "helpAccordion7": {
+      "message": "Czy mogę wyeksportować zaplanowany adres URL?"
+   },
+   "helpAccordion8": {
+      "message": "Czy mogę zaimportować do harmonogramu adres URL?"
+   },
+   "helpPanelBodyDesc12First": {
+      "message": "Nie, to rozszerzenie nie będzie działać w trybie uśpienia/wstrzymania."
+   },
+   "helpPanelBodyDesc12Second": {
+      "message": "Jeśli na karcie Otwórz lub Zamknij zaplanowano otwieranie lub zamykanie dowolnego adresu URL, komputer nie przejdzie automatycznie w tryb uśpienia lub wstrzymania."
+   },
+   "helpPanelBodyDesc3": {
+      "message": "Tak, możesz wybrać otwieranie zaplanowanej karty w trybie incognito, wybierając opcję „Otwórz w trybie incognito”. Upewnij się, że opcja „Zezwól w trybie incognito” rozszerzenia jest włączona w ustawieniach rozszerzenia przeglądarki."
+   },
+   "helpPanelBodyDesc6": {
+      "message": "- Podana data i godzina są liczone od daty i godziny bieżącej, a następnie wyświetla się tekst „Czas upłynął”."
+   },
+   "helpPanelBodyDesc7": {
+      "message": "Tak, możesz wyeksportować zaplanowane otwarcie i zamknięcie karty w formacie csv i użyć jej w innym systemie do zaimportowania tego adresu URL."
+   },
+   "helpPanelBodyDesc8": {
+      "message": "Tak, możesz importować prawidłowe adresy URL otwierania i zamykania w formacie csv. Importowany format csv zostanie automatycznie zaplanowany w określonym czasie"
+   },
+   "herAreStepsToAllow": {
+      "message": "Oto kroki umożliwiające włączenie opcji „Zezwalaj w trybie incognito” w przeglądarce Google Chrome:"
+   },
+   "home": {
+      "message": "Dom"
+   },
+   "hour_minute_close": {
+      "message": "Każda godzina, każda minuta"
+   },
+   "hour_minute_open": {
+      "message": "Każda godzina otwarta minuta"
+   },
+   "how_to_use_tab": {
+      "message": "Jak korzystać z harmonogramu kart?"
+   },
+   "import": {
+      "message": "Import"
+   },
+   "importClsTbDta": {
+      "message": "Importuj dane z zamkniętej karty"
+   },
+   "importExport": {
+      "message": "Import/Eksport"
+   },
+   "importOpenTbDt": {
+      "message": "Importuj dane z otwartej karty"
+   },
+   "importedRecored": {
+      "message": ", importowane nagrane"
+   },
+   "inactivateScheduleTab": {
+      "message": "Dezaktywuj zaplanowaną kartę."
+   },
+   "inactive": {
+      "message": "Nieaktywny"
+   },
+   "inactiveSch": {
+      "message": "8. Nieaktywny adres URL"
+   },
+   "inactiveSchExm1": {
+      "message": "W powyższym przykładzie podany adres URL znajduje się w otwartej lub zamkniętej karcie, co oznacza, że ​​podany adres URL jest nieaktywny i nie zostanie wykonana żadna akcja."
+   },
+   "inactiveThisScheduledTabs": {
+      "message": "Aktywuj tę zaplanowaną kartę"
+   },
+   "invalidDuplicate": {
+      "message": ", duplikat lub nieprawidłowy zapis"
+   },
+   "invldLicKy": {
+      "message": "Nieprawidłowy klucz licencyjny!"
+   },
+   "isClose": {
+      "message": "jest blisko"
+   },
+   "isOpen": {
+      "message": "jest otwarty"
+   },
+   "january": {
+      "message": "Styczeń"
+   },
+   "july": {
+      "message": "Lipiec"
+   },
+   "june": {
+      "message": "Czerwiec"
+   },
+   "licKeyDis": {
+      "message": "Ten klucz licencyjny jest wyłączony."
+   },
+   "listTitle": {
+      "message": "Harmonogram kart"
+   },
+   "loading": {
+      "message": "Proszę czekać..."
+   },
+   "locale": {
+      "message": "pl"
+   },
+   "march": {
+      "message": "marzec"
+   },
+   "maxSchedule": {
+      "message": "4 Maksymalny limit harmonogramu"
+   },
+   "may": {
+      "message": "Móc"
+   },
+   "mintValid": {
+      "message": "Wymagane jest minimum 1 minuta"
+   },
+   "minute": {
+      "message": "Chwila"
+   },
+   "minutesNotLessThan1": {
+      "message": "Minuta nie powinna być krótsza niż 1."
+   },
+   "monday": {
+      "message": "Poniedziałek"
+   },
+   "month": {
+      "message": "Miesiąc"
+   },
+   "monthly": {
+      "message": "Miesięczny"
+   },
+   "more": {
+      "message": "więcej"
+   },
+   "mostSubscribe": {
+      "message": "Najwięcej subskrypcji"
+   },
+   "no": {
+      "message": "NIE"
+   },
+   "noDataToExport": {
+      "message": "Brak danych do eksportu."
+   },
+   "noScheduledTabs": {
+      "message": "Brak zaplanowanych kart"
+   },
+   "noTimerSetAddNewTimer": {
+      "message": "Nie ustawiono timera. Kliknij przycisk Dodaj, aby ustawić nowy timer."
+   },
+   "not_show_tutorial": {
+      "message": "Nie pokazuj tego samouczka ponownie"
+   },
+   "notificationOpenTab": {
+      "message": "13. Powiadomienie o otwarciu/zamknięciu karty URL"
+   },
+   "notificationOpenTabExm1": {
+      "message": "W powyższym przykładzie podany adres URL znajduje się w otwartej karcie, co oznacza, że ​​powiadomienie oraz otwarcie/zamknięcie adresu URL w nowej karcie będą wysyłane co 5 minut."
+   },
+   "notifications": {
+      "message": "Powiadomienie"
+   },
+   "november": {
+      "message": "Listopad"
+   },
+   "october": {
+      "message": "Październik"
+   },
+   "onTheExtensionDetailPage": {
+      "message": "Na stronie ze szczegółami rozszerzenia przewiń w dół i znajdź opcję „Zezwalaj w trybie incognito”."
+   },
+   "oneTime": {
+      "message": "Pewnego razu"
+   },
+   "oneTmSch": {
+      "message": "1.Jednorazowy harmonogram"
+   },
+   "oneTmSchExm1": {
+      "message": "W powyższym przykładzie podany adres URL znajduje się w otwartej karcie, co oznacza, że ​​zostanie otwarty w nowej karcie jeden raz o godzinie 13:45 21/1/2023"
+   },
+   "oneTmSchExm2": {
+      "message": "W powyższym przykładzie podany adres URL znajduje się w zakładce Zamknij, co oznacza, że ​​wszystkie konkretne dopasowane karty adresu URL zostaną zamknięte o godzinie 13:45 dnia 21/1/2023"
+   },
+   "open": {
+      "message": "Otwarte"
+   },
+   "openBackground": {
+      "message": "Jeśli tak, ładowanie adresu URL w tle bez otwierania go w nowej karcie"
+   },
+   "openDate": {
+      "message": "Data otwarcia"
+   },
+   "openDay": {
+      "message": "Dzień Otwarty"
+   },
+   "openEveryDayOn": {
+      "message": "Otwarte codziennie w"
+   },
+   "openEveryMonthOn": {
+      "message": "Otwarte co miesiąc w dniu"
+   },
+   "openEveryWeekOn": {
+      "message": "Otwarte co tydzień"
+   },
+   "openEveryYearOn": {
+      "message": "Otwarte co roku"
+   },
+   "openGoogleChrome": {
+      "message": "Otwórz przeglądarkę Google Chrome."
+   },
+   "openInBackground": {
+      "message": "Otwórz adres URL w tle"
+   },
+   "openInEvery": {
+      "message": "Otwarte w każdy"
+   },
+   "openInIncognito": {
+      "message": "Otwórz w trybie incognito"
+   },
+   "openMinute": {
+      "message": "Otwarta minuta"
+   },
+   "openOnDay": {
+      "message": "Otwarte w dniu"
+   },
+   "openOnEvery": {
+      "message": "Otwarte każdego dnia"
+   },
+   "openSecond": {
+      "message": "Otwórz drugie"
+   },
+   "openSecondsMoreThan5": {
+      "message": "Otwartych sekund powinno być więcej niż 5."
+   },
+   "openTabSchedule": {
+      "message": "Otwórz harmonogram kart"
+   },
+   "openTabURL": {
+      "message": "Otwórz adres URL karty"
+   },
+   "openTime": {
+      "message": "Czas otwarcia"
+   },
+   "openUrl": {
+      "message": "Otwórz link do strony internetowej"
+   },
+   "openWeek": {
+      "message": "Tydzień Otwarty"
+   },
+   "openWeeks": {
+      "message": "Tygodnie Otwarte"
+   },
+   "open_on": {
+      "message": "Otwórz na"
+   },
+   "optional": {
+      "message": "Fakultatywny"
+   },
+   "or": {
+      "message": "Lub"
+   },
+   "outof": {
+      "message": "z"
+   },
+   "pagePath": {
+      "message": "Ścieżka strony"
+   },
+   "paidFeature": {
+      "message": "Funkcja płatna"
+   },
+   "pauseSchedule": {
+      "message": "Rozpocznij lub zatrzymaj wszystkie harmonogramy"
+   },
+   "pauseTabScheduler": {
+      "message": "Harmonogram wstrzymanych kart"
+   },
+   "pleaseAllowIncognitoMessage": {
+      "message": "Proszę włączyć opcję „Allow in Incognito” w szczegółach rozszerzenia. Instrukcje można znaleźć na stronie samouczka."
+   },
+   "pleaseShareYourSuggestions": {
+      "message": "Podziel się swoją sugestią."
+   },
+   "plsShreAnySugWithUs": {
+      "message": "Proszę o sugestie, jak nas ulepszyć"
+   },
+   "powerMode": {
+      "message": "Tryb zasilania"
+   },
+   "premium": {
+      "message": "Premia"
+   },
+   "pricePlan": {
+      "message": "Cennik i plany"
+   },
+   "privcyPolicy": {
+      "message": "Polityka prywatności"
+   },
+   "prowerModeTip": {
+      "message": "Utrzymuj system w ciągłej aktywności, włączając tryb zasilania"
+   },
+   "put": {
+      "message": "Umieścić"
+   },
+   "rateUs": {
+      "message": "Oceń nas"
+   },
+   "removeDuplicateEntry": {
+      "message": "Proszę usunąć duplikat wpisu"
+   },
+   "removeOpenTbURL": {
+      "message": "Usuń adres URL otwartej karty"
+   },
+   "repeat": {
+      "message": "Powtarzać"
+   },
+   "requiredMsg": {
+      "message": "Wymagany"
+   },
+   "rmvClsTb": {
+      "message": "Usuń adres URL zamykania karty"
+   },
+   "sameTabs": {
+      "message": "Odśwież kartę, jeśli adres URL jest już otwarty"
+   },
+   "sameTabsInfo": {
+      "message": "Zapobiegaj otwieraniu wielu kart dla tego samego adresu URL. Na przykład, jeśli www.google.com jest już otwarte, to istniejąca karta zostanie odświeżona zamiast otwierania nowej karty dla niej."
+   },
+   "sampleCsvOpenPath": {
+      "message": "../sample_csv/en/open_tab_sample.csv"
+   },
+   "sampleFile": {
+      "message": "Przykładowy plik"
+   },
+   "saturday": {
+      "message": "Sobota"
+   },
+   "savOpnData": {
+      "message": "Zapisz dane otwartej karty"
+   },
+   "save": {
+      "message": "Ratować"
+   },
+   "saveClsTbData": {
+      "message": "Zapisz dane zamkniętej karty"
+   },
+   "saveSchedule": {
+      "message": "Zapisz harmonogram"
+   },
+   "scheduleCloseTab": {
+      "message": "Zamknij kartę harmonogramu"
+   },
+   "scheduleCurrentTab": {
+      "message": "Zaplanuj bieżącą kartę"
+   },
+   "scheduleOpenTab": {
+      "message": "Harmonogram Otwórz kartę"
+   },
+   "scheduledTabIsAlreadyExistWithSameTimer": {
+      "message": "Ta zaplanowana karta już istnieje i ma taki sam timer."
+   },
+   "scheduledTabList": {
+      "message": "Lista zaplanowanych kart"
+   },
+   "scheduledType": {
+      "message": "Typ harmonogramu"
+   },
+   "search": {
+      "message": "Szukaj"
+   },
+   "secValid": {
+      "message": "Wymagane jest minimum 5 sekund"
+   },
+   "second": {
+      "message": "Drugi"
+   },
+   "selectCloseDate": {
+      "message": "Wybierz datę zamknięcia"
+   },
+   "selectCloseDay": {
+      "message": "Wybierz dzień zamknięcia"
+   },
+   "selectCloseTime": {
+      "message": "Wybierz godzinę zamknięcia"
+   },
+   "selectColumn": {
+      "message": "Wybierz kolumnę"
+   },
+   "selectDateAndTime": {
+      "message": "Wybierz datę i godzinę otwarcia nowej karty"
+   },
+   "selectDateAndTimeClsTb": {
+      "message": "Wybierz datę i godzinę zamknięcia karty"
+   },
+   "selectDayToCloseSchTb": {
+      "message": "Wybierz dzień, aby zamknąć kartę harmonogramu."
+   },
+   "selectDayToClsTb": {
+      "message": "Wybierz dzień, aby zamknąć kartę"
+   },
+   "selectDayToSchdule": {
+      "message": "Wybierz dzień, aby zaplanować zakładkę."
+   },
+   "selectDaysInWeek": {
+      "message": "Wybierz dni w tygodniu"
+   },
+   "selectDaysInWeekIClsTime": {
+      "message": "Wybierz dni tygodnia w liczniku czasu."
+   },
+   "selectDaysInWeekIOpClsTime": {
+      "message": "Wybierz dni tygodnia, w których chcesz otworzyć lub zamknąć timer."
+   },
+   "selectDaysInWeekIOpTime": {
+      "message": "Wybierz dni tygodnia w otwartym timerze."
+   },
+   "selectFrequency": {
+      "message": "Wybierz częstotliwość"
+   },
+   "selectFrequencyOfScheduleUrl": {
+      "message": "Wybierz częstotliwość zaplanowanego adresu URL."
+   },
+   "selectOpenDate": {
+      "message": "Wybierz datę otwarcia"
+   },
+   "selectOpenDay": {
+      "message": "Wybierz dzień otwarty"
+   },
+   "selectOpenOrClose": {
+      "message": "Wybierz czas otwarcia i zamknięcia"
+   },
+   "selectOpenOrCloseDate": {
+      "message": "Wybierz datę otwarcia i zamknięcia"
+   },
+   "selectOpenOrCloseDay": {
+      "message": "Wybierz dzień otwarcia i zamknięcia"
+   },
+   "selectOpenTime": {
+      "message": "Wybierz czas otwarcia"
+   },
+   "selectPreferredLanguage": {
+      "message": "Wybierz preferowany język."
+   },
+   "selectToOpenTab": {
+      "message": "Wybierz dzień, aby otworzyć nową kartę"
+   },
+   "selectTypTimerClsTb": {
+      "message": "Wybierz typ timera do zamknięcia karty"
+   },
+   "selectTypeOfSchedule": {
+      "message": "Wybierz typ harmonogramu. Jeżeli chcesz, aby zarówno otwieranie, jak i zamykanie odbywało się jednocześnie, wybierz „Oba”."
+   },
+   "selectTypeOfTimer": {
+      "message": "Wybierz typ timera, aby otworzyć nową kartę"
+   },
+   "select_weeks": {
+      "message": "Wybierz tygodnie"
+   },
+   "september": {
+      "message": "Wrzesień"
+   },
+   "settingSave": {
+      "message": "Ustawienia zostały pomyślnie zapisane"
+   },
+   "settingToClose": {
+      "message": "Ustawienie zamknięcia karty w trybie incognito."
+   },
+   "shareYourSuggestionWithUs": {
+      "message": "Podziel się z nami swoimi sugestiami."
+   },
+   "slectDayToScheduleWeekly": {
+      "message": "Wybierz dni, w których chcesz zaplanować zakładkę tygodniowo."
+   },
+   "slectMinute": {
+      "message": "Wybierz minutę"
+   },
+   "smthngWrng": {
+      "message": "Coś poszło nie tak"
+   },
+   "softpulseInfotech": {
+      "message": "Softpulse Infotech"
+   },
+   "somethingWentWrong": {
+      "message": "Coś poszło nie tak. Odśwież stronę i spróbuj ponownie."
+   },
+   "status": {
+      "message": "Status"
+   },
+   "subcrKeyShldNEmpt": {
+      "message": "Proszę wprowadzić klucz subskrypcji."
+   },
+   "subdomain": {
+      "message": "Poddomena"
+   },
+   "subkeyInputTitle": {
+      "message": "Wprowadź klucz subskrypcji"
+   },
+   "submFeedBack": {
+      "message": "Składać"
+   },
+   "suggForTbSch": {
+      "message": "Sugestia dotycząca harmonogramu kart"
+   },
+   "suggestionAndRateUs": {
+      "message": "Sugestie i oceń nas"
+   },
+   "sunday": {
+      "message": "Niedziela"
+   },
+   "tabCloseOneTime": {
+      "message": "Karta zostanie zamknięta tylko raz"
+   },
+   "tabSchTutorial": {
+      "message": "Samouczek dotyczący harmonogramu kart"
+   },
+   "tabScheduler": {
+      "message": "Harmonogram kart"
+   },
+   "tabSchedulerOptions": {
+      "message": "Opcje harmonogramu kart"
+   },
+   "tabWillOpenOneTime": {
+      "message": "Karta zostanie otwarta tylko raz"
+   },
+   "tabWillOpenWhenBrowserOpen": {
+      "message": "Karta zostanie otwarta po otwarciu przeglądarki"
+   },
+   "termCondition": {
+      "message": "Warunki i postanowienia"
+   },
+   "thanksFrRev": {
+      "message": "Dziękujemy za opinię"
+   },
+   "thnkUFeedBack": {
+      "message": "Dziękuję za sugestię"
+   },
+   "thnkUFrUsngTbSch": {
+      "message": "Proszę o sugestie, jak nas ulepszyć"
+   },
+   "thursday": {
+      "message": "Czwartek"
+   },
+   "time": {
+      "message": "Czas"
+   },
+   "timeExpired": {
+      "message": "Czas minął"
+   },
+   "timer": {
+      "message": "Regulator czasowy"
+   },
+   "title": {
+      "message": "Tytuł"
+   },
+   "titleLengtWarn": {
+      "message": "Długość tytułu nie powinna przekraczać 200 znaków."
+   },
+   "toScheduledOpenTbMsg": {
+      "message": "Aby zaplanować otwarcie karty proszę odznaczyć filtrowanie adresów URL."
+   },
+   "toogleCloseTab": {
+      "message": "Uruchom/zatrzymaj alarm harmonogramu dla wszystkich zamkniętych adresów URL kart"
+   },
+   "toogleDarkmode": {
+      "message": "Przełączaj się między trybem ciemnym a trybem domyślnym, aby dostosować sposób oglądania do swoich potrzeb."
+   },
+   "toogleOff": {
+      "message": "Wyłączony"
+   },
+   "toogleOn": {
+      "message": "NA"
+   },
+   "toogleOpenTab": {
+      "message": "Uruchom/zatrzymaj alarm harmonogramu dla wszystkich otwartych kart URL"
+   },
+   "topLevelDomain": {
+      "message": "Domena najwyższego poziomu"
+   },
+   "totalProcessed": {
+      "message": "Łączna liczba przetworzonych danych"
+   },
+   "tuesday": {
+      "message": "Wtorek"
+   },
+   "tutorialImg1": {
+      "message": "\u003Cimg src=\"../images/en/1.png\">"
+   },
+   "tutorialImg10": {
+      "message": "\u003Cimg src=\"../images/en/10.png\">"
+   },
+   "tutorialImg11": {
+      "message": "\u003Cimg src=\"../images/en/11.png\">"
+   },
+   "tutorialImg12": {
+      "message": "\u003Cimg src=\"../images/en/12.png\">"
+   },
+   "tutorialImg13": {
+      "message": "\u003Cimg src=\"../images/en/13.png\">"
+   },
+   "tutorialImg14": {
+      "message": "\u003Cimg src=\"../images/en/14.png\">"
+   },
+   "tutorialImg2": {
+      "message": "\u003Cimg src=\"../images/en/2.png\">"
+   },
+   "tutorialImg3": {
+      "message": "\u003Cimg src=\"../images/en/3.png\">"
+   },
+   "tutorialImg4": {
+      "message": "\u003Cimg src=\"../images/en/4.png\">"
+   },
+   "tutorialImg5": {
+      "message": "\u003Cimg src=\"../images/en/5.png\">"
+   },
+   "tutorialImg6": {
+      "message": "\u003Cimg src=\"../images/en/6.png\">"
+   },
+   "tutorialImg7": {
+      "message": "\u003Cimg src=\"../images/en/7.png\">"
+   },
+   "tutorialImg8": {
+      "message": "\u003Cimg src=\"../images/en/8.png\">"
+   },
+   "tutorialImg9": {
+      "message": "\u003Cimg src=\"../images/en/9.png\">"
+   },
+   "uncheckAll": {
+      "message": "Odznacz wszystko"
+   },
+   "unlimitedSchedule": {
+      "message": "Nieograniczony limit harmonogramu"
+   },
+   "unspecifiedURL": {
+      "message": "11. Nieokreślona ścieżka URL"
+   },
+   "unspecifiedURLExm1": {
+      "message": "W powyższym przykładzie podany adres URL znajduje się w zakładce Zamknij, która informuje, że dany adres URL, który został otwarty w nowej karcie i zaczyna się i kończy nieznanym adresem internetowym, zostanie zamknięty po 5 minutach."
+   },
+   "upgradePlan": {
+      "message": "Kup plan LUB zaloguj się i zaktualizuj swój plan, aby odblokować więcej funkcji."
+   },
+   "upgradePlanUnlock": {
+      "message": "Zaktualizuj swój plan, aby odblokować więcej funkcji."
+   },
+   "uploadValidFormat": {
+      "message": "Proszę przesłać prawidłowy format"
+   },
+   "url": {
+      "message": "Adres URL"
+   },
+   "urlContExat": {
+      "message": "Filtrowanie adresów URL"
+   },
+   "urlEndWithUnspesifiedPth": {
+      "message": "9. Koniec adresu URL z nieokreśloną ścieżką"
+   },
+   "urlEndWithUnspesifiedPthExm1": {
+      "message": "W powyższym przykładzie podany adres URL znajduje się w zakładce Zamknij, która informuje, że podany adres URL, który został otwarty w nowej karcie i kończy się nieznaną ścieżką, zostanie zamknięty po 5 minutach."
+   },
+   "urlFilterInfo": {
+      "message": "Zawiera sprawdzany adres URL, wymaga tylko części adresu URL i dokładnego sprawdzanego adresu URL, który musi dokładnie odpowiadać określonemu adresowi URL"
+   },
+   "urlFilterinCLoseTb": {
+      "message": "14. Filtrowanie adresów URL przy zamykaniu karty URL"
+   },
+   "urlFilterinCLoseTbExample": {
+      "message": "W powyższym przykładzie podany adres URL znajduje się w zamkniętej karcie, co oznacza, że ​​adres URL otwartej już karty pasuje do pewnej części podanego adresu URL, więc karta ta zostanie zamknięta"
+   },
+   "urlIsRequired": {
+      "message": "Wymagany jest link do strony internetowej"
+   },
+   "urlNotvalid": {
+      "message": "Adres URL jest nieprawidłowy"
+   },
+   "urlStartWithUnspesifiedPth": {
+      "message": "10. Adres URL zaczyna się od nieokreślonej ścieżki"
+   },
+   "urlStartWithUnspesifiedPthExm1": {
+      "message": "W powyższym przykładzie podany adres URL znajduje się w zakładce Zamknij, która informuje, że dany adres URL, który został otwarty w nowej karcie i zaczyna się nieznaną subdomeną \u003Cb>„www”\u003C/b> lub \u003Cb>„blog”,\u003C/b> zostanie zamknięty po 5 minutach."
+   },
+   "useSpecificUrl": {
+      "message": "Użyj konkretnego linku do witryny"
+   },
+   "useSpecificUrl1": {
+      "message": "Musisz wpisać dokładną subdomenę, domenę najwyższego poziomu, nazwę domeny i ścieżkę strony w polu Link do witryny na karcie zamkniętej przeglądarki."
+   },
+   "useSpecificUrl2": {
+      "message": "Zamknij wszystkie karty przeglądarki"
+   },
+   "useSpecificUrl3": {
+      "message": "Użyj konkretnego i pełnego linku do witryny"
+   },
+   "useUnSpecificUrl1": {
+      "message": "Użyj nieokreślonego łącza do witryny"
+   },
+   "useUnSpecificUrl2": {
+      "message": "Użyj opcji start z nieokreślonym linkiem do witryny"
+   },
+   "useUnSpecificUrl3": {
+      "message": "Użyj zakończenia z nieokreślonym linkiem do witryny"
+   },
+   "used": {
+      "message": "Użyłeś"
+   },
+   "validFormatCsv": {
+      "message": "Jaki jest prawidłowy format pliku CSV do importowania?"
+   },
+   "websiteLink": {
+      "message": "Link do strony internetowej"
+   },
+   "websiteUrl": {
+      "message": "Adres URL witryny"
+   },
+   "wednesday": {
+      "message": "Środa"
+   },
+   "weekName": {
+      "message": "Nazwa tygodnia"
+   },
+   "weekly": {
+      "message": "Tygodnik"
+   },
+   "whenExtensionTabAppears": {
+      "message": "Gdy pojawi się karta Rozszerzenia, znajdź opcję „Harmonogram kart z automatycznym otwieraniem i zamykaniem”, aby włączyć ją w trybie incognito, i kliknij przycisk „Szczegóły” znajdujący się obok niej."
+   },
+   "whenMenuPopup": {
+      "message": "Gdy pojawi się menu, wybierz „Zarządzaj rozszerzeniami”."
+   },
+   "withSignMustFill": {
+      "message": "Należy zaznaczyć pole wyboru ( \u003Cspan>*) , wybrać czas otwarcia lub zamknięcia, lub oba czasy.\u003C/span>"
+   },
+   "writeYourDescriptionAboutSchUrl": {
+      "message": "Wpisz tutaj opis zaplanowanego adresu URL."
+   },
+   "yes": {
+      "message": "Tak"
+   },
+   "yourEmailAddress": {
+      "message": "Twój adres e-mail"
+   },
+   "yourScheduleUrl": {
+      "message": "Twój adres URL harmonogramu"
+   }
+}

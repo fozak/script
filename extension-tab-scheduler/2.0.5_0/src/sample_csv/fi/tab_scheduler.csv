@@ -1,0 +1,4 @@
+﻿URL-osoite,Ajastin,Status,Avauspäivämäärä,Sulkemispäivämäärä,Aukioloaika,Sulkemisaika,Avointen viikko,Sulje viikko,Avaa selain,Avointen ovien päivä,Sulje päivä,Avoin minuutti,Sulje Minuutti,Avaa toinen,Sulje Toinen,Ilmoitus,Otsikko,Kuvaus,Avaa URL-osoite taustalla,Avaa incognito-tilassa,Älä sulje kiinnitettyjä välilehtiä,Sulje vain incognito-välilehdet,URL-suodatus,Aikataulun tyyppi,Joka tunti avoin minuutti,Joka tunti Sulje Minuutti,Päivitä välilehti jos URL-osoite on jo auki
+https://www.google.com/,Joka Minuutti,Aktiivinen,,,,,"","","",,,,,,,Ei-aktiivinen,Close Every Minute,,Ei,Ei,Ei,Ei,Kyllä,Lähellä,0,0,Kyllä
+http://www.w3schools.com/,Joka päivä,Aktiivinen,,,16:31,,"","","",,,,,,,Ei-aktiivinen,Every Day Open,,Ei,Ei,Ei,Ei,Ei,Avata,0,0,Ei
+https://www.flipkart.com/,Mukautettu minuutti,Aktiivinen,,,,,"","","",,,120,5,,,Ei-aktiivinen,Open and Close,,Ei,Ei,Ei,Ei,Ei,Molemmat,0,0,Ei

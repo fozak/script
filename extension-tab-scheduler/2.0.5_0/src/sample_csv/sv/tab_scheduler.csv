@@ -1,0 +1,4 @@
+﻿URL,Timer,Status,Öppet datum,Stängningsdatum,Öppen tid,Stängningstid,Öppen vecka,Stäng vecka,Öppna webbläsaren,Öppen dag,Stäng dag,Öppen minut,Stäng minut,Öppna andra,Stäng andra,Underrättelse,Titel,Beskrivning,Öppna URL i bakgrunden,Öppna i inkognitoläge,Stäng inte fastnålade flikar,Stäng endast inkognitoflikar,URL-filtrering,Schematyp,Varje timme öppet minut,Varje timme nära minut,Uppdatera fliken om webbadressen redan är öppen
+https://www.google.com/,Varje minut,Aktiv,,,,,"","","",,,,,,,Inaktiv,Close Every Minute,,Inga,Inga,Inga,Inga,Ja,Nära,0,0,Ja
+http://www.w3schools.com/,Varje dag,Aktiv,,,16:31,,"","","",,,,,,,Inaktiv,Every Day Open,,Inga,Inga,Inga,Inga,Inga,Öppna,0,0,Inga
+https://www.flipkart.com/,Anpassad minut,Aktiv,,,,,"","","",,,120,5,,,Inaktiv,Open and Close,,Inga,Inga,Inga,Inga,Inga,Både,0,0,Inga

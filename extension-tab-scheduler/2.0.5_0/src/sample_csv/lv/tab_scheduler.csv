@@ -1,0 +1,4 @@
+﻿URL,Taimeris,Statuss,Atvēršanas datums,Aizvēršanas datums,Atvēršanas laiks,Aizvēršanas laiks,Atvērto durvju nedēļa,Aizvērt nedēļu,Atveriet pārlūkprogrammu,Atvērto durvju diena,Aizvērt diena,Atvērtā minūte,Aizvērt minūte,Atvērt otro,Aizveriet otro,Paziņojums,Nosaukums,Apraksts,Atveriet URL fonā,Atvērt inkognito režīmā,Neaizveriet piespraustās cilnes,Aizveriet tikai inkognito režīma cilnes,URL filtrēšana,Grafika veids,Katru stundu atvērtā minūte,Katru stundu Tuvu minūti,Atsvaidzināt cilni ja URL jau ir atvērts
+https://www.google.com/,Katru minūti,Aktīvs,,,,,"","","",,,,,,,Neaktīvs,Close Every Minute,,Nē,Nē,Nē,Nē,Jā,Aizvērt,0,0,Jā
+http://www.w3schools.com/,Katru dienu,Aktīvs,,,16:31,,"","","",,,,,,,Neaktīvs,Every Day Open,,Nē,Nē,Nē,Nē,Nē,Atvērt,0,0,Nē
+https://www.flipkart.com/,Pielāgota minūte,Aktīvs,,,,,"","","",,,120,5,,,Neaktīvs,Open and Close,,Nē,Nē,Nē,Nē,Nē,Abi,0,0,Nē

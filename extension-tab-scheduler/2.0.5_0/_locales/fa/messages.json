@@ -1,0 +1,1448 @@
+{
+   "10_min": {
+      "message": "10 دقیقه"
+   },
+   "1_min": {
+      "message": "1 دقیقه"
+   },
+   "30_min": {
+      "message": "30 دقیقه"
+   },
+   "5_min": {
+      "message": "5 دقیقه"
+   },
+   "60_min": {
+      "message": "ساعت"
+   },
+   "Dashboard": {
+      "message": "داشبورد"
+   },
+   "Login": {
+      "message": "وارد شوید"
+   },
+   "Off": {
+      "message": "خاموش"
+   },
+   "On": {
+      "message": "روشن"
+   },
+   "Selected": {
+      "message": "انتخاب شده است"
+   },
+   "Settings": {
+      "message": "تنظیمات"
+   },
+   "Tutorial": {
+      "message": "آموزش"
+   },
+   "action": {
+      "message": "اقدام"
+   },
+   "activateScheduleTab": {
+      "message": "برگه schduled را فعال کنید."
+   },
+   "active": {
+      "message": "فعال"
+   },
+   "activeAllScheduleTab": {
+      "message": "در حال اجرا زمانبندی برگه"
+   },
+   "activeStatus": {
+      "message": "وضعیت"
+   },
+   "actvInactvNotification": {
+      "message": "نمایش اعلان هنگام باز شدن تب برنامه"
+   },
+   "actvInactvOpnTb": {
+      "message": "برگه باز فعال یا غیرفعال"
+   },
+   "actvIntvClsTb": {
+      "message": "فعال یا غیرفعال بستن برگه"
+   },
+   "add": {
+      "message": "اضافه کنید"
+   },
+   "addDescription": {
+      "message": "توضیحات اضافه کنید"
+   },
+   "addNew": {
+      "message": "افزودن جدید"
+   },
+   "addNewURlCls": {
+      "message": "URL جدید را برای بستن اضافه کنید"
+   },
+   "addNewUrlToOpen": {
+      "message": "URL جدید را برای باز کردن در پنجره جدید اضافه کنید"
+   },
+   "addTitle": {
+      "message": "عنوان اضافه کنید"
+   },
+   "addWebsite": {
+      "message": "اضافه کردن وب سایت"
+   },
+   "all": {
+      "message": "همه"
+   },
+   "allInputFieldReq": {
+      "message": "همه فیلدها الزامی است"
+   },
+   "all_weeks": {
+      "message": "تمام هفته"
+   },
+   "alreadyPurchase": {
+      "message": "قبلا خریده اید؟ کلید را در اینجا وارد کنید"
+   },
+   "andAt": {
+      "message": "و در"
+   },
+   "annually": {
+      "message": "سالانه"
+   },
+   "appDesc": {
+      "message": "برگه های مرورگر به طور خودکار در زمان انتخاب شده باز و بسته می شوند. کاربر می تواند لیست را بر اساس نیاز فعال / غیرفعال کند"
+   },
+   "appName": {
+      "message": "Tab Scheduler با باز و بسته شدن خودکار"
+   },
+   "april": {
+      "message": "آوریل"
+   },
+   "at": {
+      "message": "در"
+   },
+   "august": {
+      "message": "اوت"
+   },
+   "autoFocus": {
+      "message": "برگه فوکوس خودکار"
+   },
+   "autoFocustip": {
+      "message": "اگر روشن باشد، تب جدید در حالت فعال/فوکوس باز می شود."
+   },
+   "autofocustip": {
+      "message": "برگه های جدید باز شده به طور خودکار فوکوس می کنند"
+   },
+   "basic": {
+      "message": "اساسی"
+   },
+   "billedAnnyally": {
+      "message": "صورتحساب سالانه"
+   },
+   "billedMonthly": {
+      "message": "صورتحساب ماهانه"
+   },
+   "both": {
+      "message": "هر دو"
+   },
+   "browserOpen": {
+      "message": "در مرورگر باز است"
+   },
+   "browserWebAddress": {
+      "message": "آدرس وب مرورگر با یک آدرس وب ناشناخته شروع و به پایان می رسد. \u003Cb>* را\u003C/b> در دو طرف فیلد پیوند وب سایت ورودی خود قرار دهید."
+   },
+   "browserWebAddress2": {
+      "message": "آدرس وب مرورگر حاوی نام دامنه google.com است که در عرض چند دقیقه بسته خواهد شد. \u003Cb>*\u003C/b> در دو طرف نام دامنه و TLD قرار دهید"
+   },
+   "browserWebAddress3": {
+      "message": "آدرس وب مرورگر با نام دامنه ناشناخته شروع می شود و با یک مسیر صفحه ناشناخته به پایان می رسد"
+   },
+   "browserWebAddress31": {
+      "message": "پس از چند دقیقه بسته می شود، \u003Cb>* را\u003C/b> در دو طرف TLD قرار دهید"
+   },
+   "browserWebAddress4": {
+      "message": "آدرس وب مرورگر با یک آدرس وب ناشناخته شروع می شود. \u003Cb>* را\u003C/b> در ابتدای URL خود قرار دهید . به یاد داشته باشید که آدرس وب مرورگر باید پس از نوشتن \u003Cb>* با URL شما مطابقت داشته باشد.\u003C/b>"
+   },
+   "browserWebAddress41": {
+      "message": "آدرس وب مرورگر با یک زیر دامنه ناشناخته شروع می شود"
+   },
+   "browserWebAddress42": {
+      "message": "در ابتدای لینک وب سایت شما"
+   },
+   "browserWebAddress5": {
+      "message": "آدرس وب مرورگر با یک آدرس وب ناشناخته به پایان می رسد. \u003Cb>* را\u003C/b> در انتهای URL خود قرار دهید . به یاد داشته باشید که آدرس وب شما باید قبل از نوشتن \u003Cb>* مطابقت داشته باشد.\u003C/b>"
+   },
+   "browserWebAddress51": {
+      "message": "آدرس وب مرورگر با یک مسیر صفحه ناشناخته به پایان می رسد. \u003Cb>* را\u003C/b> در انتهای آدرس وب خود قرار دهید"
+   },
+   "browserWebAddress6": {
+      "message": "فقط \u003Cb>* را\u003C/b> در قسمت آدرس وب سایت قرار دهید تا تمام برگه های مرورگر بسته شود. پس از بسته شدن تمام برگه ها، مرورگر به طور خودکار بسته می شود."
+   },
+   "browserWebAddress7": {
+      "message": "شما باید ساب دامنه، دامنه سطح بالا، نام دامنه و مسیر صفحه را در قسمت URL برای باز کردن در تب مرورگر نوشته باشید."
+   },
+   "browserWebAddress8": {
+      "message": "شما می توانید URL را در تاریخ و زمان خاص، ماه خاص، هفته خاص، سال خاص و زمان تکرار باز کنید"
+   },
+   "buyPlan": {
+      "message": "خرید طرح"
+   },
+   "buycofee": {
+      "message": "برای من یک قهوه بخر"
+   },
+   "cancel": {
+      "message": "لغو کنید"
+   },
+   "changeLanguage": {
+      "message": "تغییر زبان"
+   },
+   "checkAll": {
+      "message": "همه را بررسی کنید"
+   },
+   "checkThisOpToPreventClosePinTb": {
+      "message": "برای جلوگیری از بسته شدن برگه های پین شده، این گزینه را علامت بزنید."
+   },
+   "checkThisOptionOnlyPartOfUrlMtch": {
+      "message": "اگر فقط بخشی از URL باید مطابقت داشته باشد، این گزینه را علامت بزنید."
+   },
+   "checkThisOptionToActivate": {
+      "message": "برای فعال یا غیرفعال کردن آدرس برنامه ریزی شده خود، این گزینه را علامت بزنید."
+   },
+   "checkThisOptionToCloseOnly": {
+      "message": "برای بستن فقط برگه‌های ناشناس، این گزینه را علامت بزنید. همچنین، گزینه \"Allow in Incognito\" را در جزئیات برنامه افزودنی فعال کنید. برای راهنمایی لطفا به صفحه آموزش مراجعه کنید."
+   },
+   "checkThisOptionToCloseOnlyInIncgnitoTb": {
+      "message": "برای بستن فقط برگه‌های ناشناس، این گزینه را علامت بزنید. همچنین، گزینه \"Allow in Incognito\" را در جزئیات برنامه افزودنی فعال کنید. برای راهنمایی لطفا به صفحه آموزش مراجعه کنید."
+   },
+   "checkThisOptionToInBg": {
+      "message": "اگر می‌خواهید URL را در پس‌زمینه بدون باز کردن آن در یک تب جدید باز کنید، این گزینه را علامت بزنید"
+   },
+   "checkThisOptionToInactivNotification": {
+      "message": "این گزینه را برای اعلان غیرفعال در نشانی اینترنتی برنامه ریزی شده علامت بزنید"
+   },
+   "checkThisOptionToOpen": {
+      "message": "اگر می‌خواهید آدرس اینترنتی خود را در حالت ناشناس باز کنید، این گزینه را علامت بزنید"
+   },
+   "checkThisOptionToOpenIncogito": {
+      "message": "اگر می‌خواهید آدرس اینترنتی خود را در حالت ناشناس باز کنید، این گزینه را علامت بزنید"
+   },
+   "checkThisOptionToPrevent": {
+      "message": "برای جلوگیری از بسته شدن برگه های پین شده، این گزینه را علامت بزنید."
+   },
+   "clickExtIcon": {
+      "message": "روی نماد «افزونه‌ها» در نوار ابزار کلیک کنید، که شبیه یک قطعه پازل است."
+   },
+   "clickTheSwitch": {
+      "message": "روی سوئیچ کنار آن کلیک کنید تا روشن شود"
+   },
+   "close": {
+      "message": "بستن"
+   },
+   "closeAllTab": {
+      "message": "12. تمام برگه های مرورگر را ببندید"
+   },
+   "closeAllTabExm1": {
+      "message": "در مثال بالا URL داده شده در برگه بسته است، که بیان می کند همه برگه ها در ساعت 12:00 در 25/2/2023 بسته می شود."
+   },
+   "closeDate": {
+      "message": "تاریخ بسته شدن"
+   },
+   "closeDay": {
+      "message": "روز تعطیل"
+   },
+   "closeEveryYear": {
+      "message": "هر سال تعطیل شود"
+   },
+   "closeInEvery": {
+      "message": "نزدیک در هر"
+   },
+   "closeIncognitoTab": {
+      "message": "فقط برگه‌های ناشناس را ببندید"
+   },
+   "closeMinute": {
+      "message": "دقیقه بستن"
+   },
+   "closeOnDay": {
+      "message": "روز تعطیل"
+   },
+   "closeOnEvery": {
+      "message": "روی هر بسته ببندید"
+   },
+   "closeOnEveryDay": {
+      "message": "هر روز ببند"
+   },
+   "closeOnEveryMonth": {
+      "message": "هر ماه در روز تعطیل کنید"
+   },
+   "closeOnEveryWeek": {
+      "message": "هر هفته تعطیل کنید"
+   },
+   "closeSecond": {
+      "message": "بستن دوم"
+   },
+   "closeSeconsMoreThan5": {
+      "message": "ثانیه های بسته باید بیشتر از 5 باشد."
+   },
+   "closeTabSchedule": {
+      "message": "بستن جدول زمانی"
+   },
+   "closeTabURL": {
+      "message": "URL Tab را ببندید"
+   },
+   "closeTime": {
+      "message": "زمان بسته شدن"
+   },
+   "closeUrl": {
+      "message": "لینک وب سایت را ببندید"
+   },
+   "closeWeek": {
+      "message": "تعطیلی هفته"
+   },
+   "closeWeeks": {
+      "message": "هفته های بسته"
+   },
+   "close_on": {
+      "message": "ببند"
+   },
+   "cngrtsForSubcr": {
+      "message": "تبریک می گویم! طرح شما با موفقیت فعال شد."
+   },
+   "commonQuestionsAns": {
+      "message": "پرسش و پاسخ متداول"
+   },
+   "copySucessClose": {
+      "message": "داده های URL برگه کپی شده در باز کردن داده های URL برگه را ببندید"
+   },
+   "createNewTimer": {
+      "message": "ایجاد تایمر جدید"
+   },
+   "currentPlan": {
+      "message": "طرح فعلی"
+   },
+   "currentTabSchedule": {
+      "message": "جدول زمانی فعلی"
+   },
+   "currentTbScheduleTimer": {
+      "message": "تایمر برنامه ریزی شده برگه فعلی."
+   },
+   "cusSec": {
+      "message": "سفارشی دوم"
+   },
+   "custMin": {
+      "message": "دقیقه سفارشی"
+   },
+   "custmMinSch": {
+      "message": "7. برنامه دقیقه سفارشی"
+   },
+   "custmMinSchExm1": {
+      "message": "در مثال بالا URL داده شده در برگه باز است، که بیان می کند URL داده شده در برگه جدید هر 15 دقیقه باز می شود."
+   },
+   "custmMinSchExm2": {
+      "message": "در مثال بالا URL داده شده در زبانه بسته است، که بیان می کند URL داده شده که در یک برگه جدید باز شده است پس از 15 دقیقه بسته می شود."
+   },
+   "customSecondWarning": {
+      "message": "عملکرد دوم سفارشی آزمایشی است و اگر ثانیه ها زیر 60 تنظیم شوند ممکن است به درستی کار نکند."
+   },
+   "darkMode": {
+      "message": "حالت تاریک"
+   },
+   "datNotCopy": {
+      "message": "برخی از داده ها به دلیل URL نامعتبر کپی نمی شوند."
+   },
+   "dataSaved": {
+      "message": "داده های تایمر با موفقیت ذخیره شد"
+   },
+   "date": {
+      "message": "تاریخ"
+   },
+   "dateIsOutOfRange": {
+      "message": "تاریخ خارج از محدوده است"
+   },
+   "day": {
+      "message": "روز"
+   },
+   "december": {
+      "message": "دسامبر"
+   },
+   "delete": {
+      "message": "حذف کنید"
+   },
+   "deleteScheduleTb": {
+      "message": "برگه برنامه ریزی شده را حذف کنید."
+   },
+   "description": {
+      "message": "توضیحات"
+   },
+   "developedBy": {
+      "message": "توسعه یافته توسط:"
+   },
+   "doNotCloseInPinnedTabs": {
+      "message": "برگه های پین شده را نبندید"
+   },
+   "doNotShowNotification": {
+      "message": "اعلان نمایش داده نشود"
+   },
+   "domainName": {
+      "message": "نام دامنه"
+   },
+   "downloadCloseTbSampleCsv": {
+      "message": "برای مشاهده نمونه ای از قالب مورد نیاز، یک نمونه CSV برگه بسته را دانلود کنید"
+   },
+   "downloadOpenTbSampleCsv": {
+      "message": "برای مشاهده نمونه ای از قالب مورد نیاز، یک نمونه CSV برگه باز را دانلود کنید"
+   },
+   "editScheduleTb": {
+      "message": "ویرایش برگه برنامه ریزی شده"
+   },
+   "email": {
+      "message": "ایمیل"
+   },
+   "enterDateToCloseTab": {
+      "message": "تاریخ را در اینجا وارد کنید تا برگه برنامه بسته شود."
+   },
+   "enterDateToOpen": {
+      "message": "تاریخ را وارد کنید تا برگه زمانبندی باز شود."
+   },
+   "enterMiniutesToCloseTb": {
+      "message": "دقیقه ها را برای بستن برگه وارد کنید."
+   },
+   "enterMiniutesToOpen": {
+      "message": "دقیقه ها را وارد کنید تا برگه برنامه باز شود."
+   },
+   "enterMinute": {
+      "message": "دقیقه را وارد کنید"
+   },
+   "enterSecond": {
+      "message": "دوم را وارد کنید"
+   },
+   "enterSecondsToCloseTab": {
+      "message": "ثانیه ها را وارد کنید تا برگه بسته شود."
+   },
+   "enterSecondsToOpen": {
+      "message": "ثانیه ها را وارد کنید تا برگه برنامه باز شود."
+   },
+   "enterTilteOfScheduleUrl": {
+      "message": "عنوان URL زمانبندی شده را وارد کنید."
+   },
+   "enterTimeToCloseTab": {
+      "message": "زمان را برای بستن برگه برنامه در اینجا وارد کنید."
+   },
+   "enterTimeToSchedule": {
+      "message": "زمان را برای باز کردن برگه برنامه زمانی وارد کنید."
+   },
+   "enterValidEmail": {
+      "message": "لطفا ایمیل معتبر وارد کنید"
+   },
+   "enterValidUrl": {
+      "message": "لطفا URL معتبر وارد کنید"
+   },
+   "enterValueInCloseSec": {
+      "message": "مقدار را در چند ثانیه نزدیک وارد کنید"
+   },
+   "enterValueInOpenCloseSec": {
+      "message": "مقدار را در ثانیه باز یا بسته وارد کنید"
+   },
+   "enterValueInOpenMinutes": {
+      "message": "مقدار را در دقیقه باز وارد کنید"
+   },
+   "enterVlaueInCloseMinutes": {
+      "message": "مقدار را در دقیقه نزدیک وارد کنید"
+   },
+   "enterVlaueInOpenCloseMin": {
+      "message": "مقدار را در دقیقه باز یا بسته وارد کنید"
+   },
+   "enterVlaueInOpenSeconds": {
+      "message": "مقدار را در ثانیه های باز وارد کنید"
+   },
+   "enterYourURLToSchedule": {
+      "message": "URL خود را برای زمان بندی وارد کنید."
+   },
+   "every": {
+      "message": "هر"
+   },
+   "every10Min": {
+      "message": "هر 10 دقیقه"
+   },
+   "every1Minute": {
+      "message": "هر 1 دقیقه"
+   },
+   "every30Min": {
+      "message": "هر 30 دقیقه"
+   },
+   "every5Min": {
+      "message": "هر 5 دقیقه"
+   },
+   "everyDay": {
+      "message": "هر روز"
+   },
+   "everyDayAt": {
+      "message": "هر روز در"
+   },
+   "everyHour": {
+      "message": "هر ساعت"
+   },
+   "everyMinute": {
+      "message": "هر دقیقه"
+   },
+   "everyMonth": {
+      "message": "هر ماه"
+   },
+   "everyMonthOn": {
+      "message": "هر ماه"
+   },
+   "everyMonthOnDay": {
+      "message": "هر ماه در روز"
+   },
+   "everyWeek": {
+      "message": "هر هفته"
+   },
+   "everyWeekOn": {
+      "message": "هر هفته"
+   },
+   "everyYear": {
+      "message": "هر سال"
+   },
+   "everyYesrOn": {
+      "message": "هر سال"
+   },
+   "evr10MinSch": {
+      "message": "2.هر 10 دقیقه برنامه"
+   },
+   "evr10MinSchExm1": {
+      "message": "در مثال بالا URL داده شده در برگه باز است، که بیان می کند URL داده شده هر 10 دقیقه در برگه جدید باز می شود."
+   },
+   "evr10MinSchExm2": {
+      "message": "در مثال بالا URL داده شده در زبانه بسته است، که بیان می کند URL داده شده که در یک برگه جدید باز شده است پس از 10 دقیقه بسته می شود."
+   },
+   "evrDaySch": {
+      "message": "3-برنامه هر روز"
+   },
+   "evrDaySchExm1": {
+      "message": "در مثال بالا URL داده شده در برگه باز است، که بیان می کند هر روز ساعت 5:27 بعد از ظهر در برگه جدید باز می شود."
+   },
+   "evrDaySchExm2": {
+      "message": "در مثال بالا نشانی اینترنتی داده شده در برگه بسته است، که بیان می‌کند هر روز در ساعت 5:27 بعد از ظهر برگه باز شده را می‌بندد."
+   },
+   "evrMonthSch": {
+      "message": "5-برنامه هر ماه"
+   },
+   "evrMonthSchExm1": {
+      "message": "در مثال بالا URL داده شده در برگه باز است که می گوید هر ماه در ساعت 13:45 روز 25 در برگه جدید باز می شود."
+   },
+   "evrMonthSchExm2": {
+      "message": "در مثال بالا URL داده شده در برگه بستن قرار دارد، که بیان می کند که برگه از قبل باز شده را هر ماه در ساعت 13:45 روز 25 می بندد."
+   },
+   "evrWeekSch": {
+      "message": "4-برنامه هر هفته"
+   },
+   "evrWeekSchExm1": {
+      "message": "در مثال بالا، URL داده شده در یک برگه باز است، که بیان می کند هر هفته در ساعت 17:00 \u003Cb>دوشنبه و سه شنبه\u003C/b> در یک برگه جدید باز می شود ."
+   },
+   "evrWeekSchExm2": {
+      "message": "در مثال بالا، URL داده شده در برگه بستن قرار دارد، که بیان می کند که برگه از قبل باز شده را در هر هفته در ساعت 17:00 \u003Cb>دوشنبه و سه شنبه\u003C/b> می بندد ."
+   },
+   "evrWeekSchExm3": {
+      "message": "در مثال بالا، چند روز را می توان در تایمر هفته انتخاب کرد."
+   },
+   "evrYearSch": {
+      "message": "6-برنامه هر ساله"
+   },
+   "evrYearSchExm1": {
+      "message": "در مثال بالا URL داده شده در برگه باز است، که بیان می کند هر سال در ساعت 13:35 در تاریخ 1 ژانویه در برگه جدید باز خواهد شد."
+   },
+   "evrYearSchExm2": {
+      "message": "در مثال بالا URL داده شده در برگه بسته است، که بیان می کند برگه باز شده را هر سال در ساعت 13:35 روز اول ژانویه می بندد."
+   },
+   "exampleSort": {
+      "message": "به عنوان مثال"
+   },
+   "exdMaxLim": {
+      "message": "بیش از حداکثر مجاز دستگاه ها!"
+   },
+   "exmpOpnClsTbSch": {
+      "message": "مثالی برای نحوه باز کردن و بستن برگه در Tab Scheduler"
+   },
+   "expLicKy": {
+      "message": "این کلید مجوز منقضی شده است."
+   },
+   "export": {
+      "message": "صادرات"
+   },
+   "exportBefore": {
+      "message": "شما دارید\u003Cexday>\u003C/exday>روز باقی مانده است، لطفا مشترک شوید تا از ویژگی ممتاز لذت ببرید"
+   },
+   "exportClsTbDta": {
+      "message": "صادر کردن داده های برگه بسته"
+   },
+   "exportOpenTbDt": {
+      "message": "داده های برگه باز را صادر کنید"
+   },
+   "exportedData": {
+      "message": "داده های تایمر با موفقیت صادر شد"
+   },
+   "extensionShouldAble": {
+      "message": "اکنون، برنامه افزودنی باید بتواند برگه‌ها را در حالت ناشناس ببندد."
+   },
+   "faq": {
+      "message": "سوالات متداول"
+   },
+   "faq_1": {
+      "message": "Tab Scheduler با باز و بسته شدن خودکار چیست؟"
+   },
+   "faq_10": {
+      "message": "چگونه برگه های برنامه ریزی شده خود را مشاهده کنم؟"
+   },
+   "faq_11": {
+      "message": "آیا پر کردن هر دو زمان باز و بسته اجباری است؟"
+   },
+   "faq_12": {
+      "message": "ویژگی های Tab Focus Auto، Activate All Scheduled Tabs و Power Mode چه کاری انجام می دهند؟"
+   },
+   "faq_13": {
+      "message": "آیا می توانم پیوند وب سایت برنامه ریزی شده را در برگه ناشناس باز یا ببندم؟"
+   },
+   "faq_14": {
+      "message": "اگر URL از قبل باز باشد، تب Refresh چه کاربردی دارد؟"
+   },
+   "faq_2": {
+      "message": "لینک وب سایت چه کاربردی دارد؟"
+   },
+   "faq_3": {
+      "message": "چگونه با استفاده از Tab Scheduler یک URL را زمانبندی کنم؟"
+   },
+   "faq_4": {
+      "message": "گزینه «باز کردن URL در پس‌زمینه» چیست؟"
+   },
+   "faq_5": {
+      "message": "آیا می توانم از بستن برگه های پین شده توسط برنامه افزودنی جلوگیری کنم؟"
+   },
+   "faq_6": {
+      "message": "نوع برنامه «هر دو» به چه معناست؟"
+   },
+   "faq_7": {
+      "message": "ویژگی «فیلتر کردن URL» چگونه کار می کند؟"
+   },
+   "faq_8": {
+      "message": "آیا می توانم یک برگه برنامه ریزی شده را بدون حذف آن غیرفعال کنم؟"
+   },
+   "faq_9": {
+      "message": "آیا برای برگه های برنامه ریزی شده اعلان دریافت خواهم کرد؟"
+   },
+   "faq_a_1": {
+      "message": "\u003Cp>Tab Scheduler with Auto Open and Close افزونه مرورگری است که به کاربران امکان می دهد برگه ها را برای باز و بسته شدن خودکار در زمان های تعیین شده برنامه ریزی کنند. کاربران می توانند یک برنامه زمانی یکباره انتخاب کنند یا برنامه های تکرار شونده را با گزینه های فرکانس مختلف تنظیم کنند. این برنامه افزودنی اهداف متعددی برای کاربران دارد و ویژگی های زیادی را ارائه می دهد که برای شما مفید است.\u003C/p>"
+   },
+   "faq_a_10": {
+      "message": "همه برگه های برنامه ریزی شده در لیستی نمایش داده می شوند که عنوان، پیوند وب سایت، زمان باز و بسته شدن، وضعیت، و اقداماتی که می توانید انجام دهید (به عنوان مثال، فعال کردن، ویرایش، حذف) را نشان می دهد."
+   },
+   "faq_a_11": {
+      "message": "نه، می توانید زمان باز یا بسته را برنامه ریزی کنید. با این حال، باید فیلدهای مورد نیاز را که با ستاره (*) مشخص شده اند پر کرده یا انتخاب کنید."
+   },
+   "faq_a_12": {
+      "message": "برگه فوکوس خودکار تضمین می کند که وقتی یک برگه برنامه ریزی شده باز می شود، Activate All Scheduled Tabs شما را قادر می سازد تا به سرعت همه برگه های برنامه ریزی شده خود را با یک کلیک روشن کنید. Power Mode با مدیریت کارآمدتر منابع مرورگر، عملکرد برنامه افزودنی را بهینه می کند."
+   },
+   "faq_a_13": {
+      "message": "بله، می‌توانید با انتخاب گزینه «باز کردن در حالت ناشناس»، برگه برنامه‌ریزی‌شده را در حالت ناشناس باز کنید. تا زمانی که «مجاز در حالت ناشناس» در تنظیمات برنامه افزودنی فعال باشد، می‌توانید با انتخاب گزینه «Close only incognito Tabs» فقط برگه‌های ناشناس را ببندید."
+   },
+   "faq_a_14": {
+      "message": "وقتی این گزینه فعال باشد، اگر همان URL از قبل در مرورگر شما باز باشد، برنامه افزودنی به طور خودکار یک برگه موجود را بازخوانی می کند. این از باز شدن برگه های تکراری جلوگیری می کند و تضمین می کند که همیشه آخرین نسخه صفحه بارگذاری شده است."
+   },
+   "faq_a_14_1": {
+      "message": "اگر سعی کنید https://github.com/ را باز کنید و در حال حاضر در برگه دیگری باز شده است، برنامه افزودنی به جای باز کردن یک برگه جدید، به سادگی آن برگه را تازه می کند."
+   },
+   "faq_a_14_2": {
+      "message": "اگر https://github.com/ از قبل در سه تب باز است، برنامه افزودنی هر سه برگه را بازخوانی می کند."
+   },
+   "faq_a_2": {
+      "message": "پیوند وب سایت آدرس وب سایت برگه باز مرورگر شما است. نحوه استفاده از آدرس وب سایت در زیر ذکر شده است."
+   },
+   "faq_a_3": {
+      "message": "برای برنامه‌ریزی URL، لینک وب‌سایت را وارد کنید، عنوانی را به زمان‌بندی بدهید، فرکانس (یک بار، هر دقیقه، روزانه و غیره) را انتخاب کنید و زمان باز و بسته شدن را انتخاب کنید. همچنین می توانید تاریخ، روز یا ثانیه را برای باز و بسته کردن برگه مشخص کنید."
+   },
+   "faq_a_4": {
+      "message": "\u003Cp>این گزینه به شما کنترل کامل برای برنامه ریزی یک URL برای باز شدن در پس زمینه بدون تمرکز بر برگه جدید می دهد. در حالی که شما به کار بر روی برگه های دیگر ادامه می دهید، URL به آرامی باز می شود. این به ویژه زمانی مفید است که به مرورگر نیاز دارید تا داده‌ها را از URL زمان‌بندی شده بدون نمایش فعال آن واکشی کند، مثلاً در مورد درخواست GET API.\u003C/p>\u003Cbr> \u003Cp>برای مثال، اگر می‌خواهید به طور منظم داده‌ها را از نقطه پایانی API واکشی کنید، می‌توانید از این گزینه کارآمد برای اجرای درخواست در پس‌زمینه بدون باز کردن یک برگه قابل مشاهده جدید استفاده کنید.\u003C/p>"
+   },
+   "faq_a_5": {
+      "message": "بله، گزینه ای برای جلوگیری از بسته شدن برگه های پین شده وجود دارد. برای اطمینان از اینکه این برگه ها حتی اگر معیارهای بسته شدن دیگر را داشته باشند، گزینه \"Do not close pinned Tab\" را علامت بزنید."
+   },
+   "faq_a_6": {
+      "message": "نوع زمان‌بندی «هر دو» به شما کنترل کامل بر باز و بسته شدن یک برگه را می‌دهد و به شما امکان می‌دهد زمان‌های خاصی را برای هر دو عمل تنظیم کنید."
+   },
+   "faq_a_7": {
+      "message": "فیلتر کردن URL تضمین می کند که فقط یک بخش خاص از URL باید مطابقت داشته باشد تا عمل برنامه ریزی شده انجام شود. این زمانی مفید است که می‌خواهید اقدامات خاصی را براساس تطابق جزئی URL انجام دهید. برای مثال، اگر گزینه URL Filtering را برای URL https://example.com/page علامت بزنید، این گزینه برای URL هایی مانند https://example.com/page/123، https://example.com/ نیز اعمال خواهد شد. page?query=example و https://subdomain.example.com/page."
+   },
+   "faq_a_8": {
+      "message": "با گزینه «فعال کردن این برگه زمان‌بندی شده»، می‌توانید به راحتی برگه‌های زمان‌بندی شده را فعال یا غیرفعال کنید و به شما این امکان را می‌دهد تا برنامه‌های خود را بدون از دست دادن تنظیمات مدیریت کنید."
+   },
+   "faq_a_9": {
+      "message": "به طور پیش فرض، اعلان هایی دریافت خواهید کرد. با این حال، اگر ترجیح می‌دهید اعلان‌ها را متوقف کنید، می‌توانید گزینه «اعلان نشان داده نشود» را علامت بزنید تا آنها را غیرفعال کنید."
+   },
+   "february": {
+      "message": "فوریه"
+   },
+   "filterTips": {
+      "message": "فیلتر بعد از «https://» یا «www.»، سابق «github.com» اعمال می‌شود"
+   },
+   "for_exp": {
+      "message": "به عنوان مثال"
+   },
+   "freeForever": {
+      "message": "رایگان برای همیشه"
+   },
+   "freeSchedule": {
+      "message": "برنامه رایگان"
+   },
+   "freeTral": {
+      "message": "به عنوان یک کاربر اولیه ارزشمند، از آن لذت خواهید برد\u003Crday>120\u003C/rday>چند روز دسترسی رایگان قبل از تغییر به طرح پولی جدید ما - از حمایت مداوم شما متشکریم!\u003Cp class=\"p-t-5\">شما دارید\u003Cb>\u003Cspan>\u003C/span>\u003C/b>روزهایی که از شما باقی مانده است\u003Crday>120\u003C/rday>-روز دوره رایگان.\u003Cafex class=\"warning\">\u003Cafex>\u003C/afex>\u003C/afex>\u003C/p> "
+   },
+   "frequentlyAskedQuestions": {
+      "message": "سوالات متداول"
+   },
+   "friday": {
+      "message": "جمعه"
+   },
+   "getThisPlan": {
+      "message": "این طرح را دریافت کنید"
+   },
+   "goToSettingsPageToSchedule": {
+      "message": "برای برنامه ریزی باز و بسته شدن URL ها به صفحه تنظیمات بروید."
+   },
+   "goURL": {
+      "message": "به URL بروید"
+   },
+   "helpAccordion12": {
+      "message": "آیا این افزونه در حالت خواب/تعلیق کار می کند؟"
+   },
+   "helpAccordion3": {
+      "message": "آیا می توانم یک برگه را برای باز کردن در حالت ناشناس برنامه ریزی کنم؟"
+   },
+   "helpAccordion6": {
+      "message": "\"زمان منقضی شده\" چیست؟"
+   },
+   "helpAccordion7": {
+      "message": "آیا می توانم URL برنامه ریزی شده را صادر کنم؟"
+   },
+   "helpAccordion8": {
+      "message": "آیا می توانم URL را برای زمانبندی وارد کنم؟"
+   },
+   "helpPanelBodyDesc12First": {
+      "message": "خیر، این برنامه افزودنی در حالت خواب/تعلیق کار نخواهد کرد."
+   },
+   "helpPanelBodyDesc12Second": {
+      "message": "اگر هر URL در برگه باز یا بسته برنامه ریزی شده باشد، رایانه شما به طور خودکار به حالت خواب یا تعلیق نمی رود."
+   },
+   "helpPanelBodyDesc3": {
+      "message": "بله، می‌توانید با انتخاب گزینه «باز کردن در حالت ناشناس»، برگه برنامه‌ریزی‌شده را در حالت ناشناس باز کنید. مطمئن شوید که گزینه «Allow in Incognito» برنامه افزودنی در تنظیمات برنامه افزودنی مرورگر فعال باشد."
+   },
+   "helpPanelBodyDesc6": {
+      "message": "- تاریخ و زمان داده شده از تاریخ و زمان فعلی گذشته است سپس متن \"Time Expired\" نشان داده می شود."
+   },
+   "helpPanelBodyDesc7": {
+      "message": "بله، شما می توانید برگه باز شده از قبل برنامه ریزی شده را صادر کنید و URL برگه را با فرمت csv ببندید و از آن با سیستم دیگری برای وارد کردن آن URL استفاده کنید."
+   },
+   "helpPanelBodyDesc8": {
+      "message": "بله، می‌توانید URL معتبر باز و بسته را در قالب csv وارد کنید. قالب csv وارد شده به‌طور خودکار در زمان معین برنامه‌ریزی می‌شود."
+   },
+   "herAreStepsToAllow": {
+      "message": "در اینجا مراحل «اجازه در حالت ناشناس» در Google Chrome آمده است:"
+   },
+   "home": {
+      "message": "صفحه اصلی"
+   },
+   "hour_minute_close": {
+      "message": "هر ساعت نزدیک دقیقه"
+   },
+   "hour_minute_open": {
+      "message": "هر ساعت دقیقه باز"
+   },
+   "how_to_use_tab": {
+      "message": "چگونه از برنامه زمانبندی Tab استفاده کنیم؟"
+   },
+   "import": {
+      "message": "واردات"
+   },
+   "importClsTbDta": {
+      "message": "وارد کردن داده های برگه بسته"
+   },
+   "importExport": {
+      "message": "واردات/صادرات"
+   },
+   "importOpenTbDt": {
+      "message": "داده های برگه باز را وارد کنید"
+   },
+   "importedRecored": {
+      "message": "، وارداتی ضبط شده است"
+   },
+   "inactivateScheduleTab": {
+      "message": "غیرفعال کردن برگه برنامه ریزی شده"
+   },
+   "inactive": {
+      "message": "غیر فعال"
+   },
+   "inactiveSch": {
+      "message": "8. URL غیرفعال"
+   },
+   "inactiveSchExm1": {
+      "message": "در مثال بالا URL داده شده در برگه باز یا بستن است، که بیان می کند URL داده شده غیرفعال است و هیچ عملی را انجام نمی دهد."
+   },
+   "inactiveThisScheduledTabs": {
+      "message": "این برگه برنامه ریزی شده را فعال کنید"
+   },
+   "invalidDuplicate": {
+      "message": "، تکراری یا نامعتبر ضبط شده است"
+   },
+   "invldLicKy": {
+      "message": "کلید مجوز نامعتبر است!"
+   },
+   "isClose": {
+      "message": "نزدیک است"
+   },
+   "isOpen": {
+      "message": "باز است"
+   },
+   "january": {
+      "message": "ژانویه"
+   },
+   "july": {
+      "message": "جولای"
+   },
+   "june": {
+      "message": "ژوئن"
+   },
+   "licKeyDis": {
+      "message": "این کلید مجوز غیرفعال است."
+   },
+   "listTitle": {
+      "message": "برنامه زمانبندی برگه ها"
+   },
+   "loading": {
+      "message": "لطفا صبر کنید..."
+   },
+   "locale": {
+      "message": "en"
+   },
+   "march": {
+      "message": "مارس"
+   },
+   "maxSchedule": {
+      "message": "4 حداکثر محدودیت برنامه"
+   },
+   "may": {
+      "message": "می"
+   },
+   "mintValid": {
+      "message": "حداقل 1 دقیقه لازم است"
+   },
+   "minute": {
+      "message": "دقیقه"
+   },
+   "minutesNotLessThan1": {
+      "message": "دقیقه نباید کمتر از 1 باشد."
+   },
+   "monday": {
+      "message": "دوشنبه"
+   },
+   "month": {
+      "message": "ماه"
+   },
+   "monthly": {
+      "message": "ماهانه"
+   },
+   "more": {
+      "message": "بیشتر"
+   },
+   "mostSubscribe": {
+      "message": "بیشترین اشتراک"
+   },
+   "no": {
+      "message": "خیر"
+   },
+   "noDataToExport": {
+      "message": "داده ای برای صادرات وجود ندارد."
+   },
+   "noScheduledTabs": {
+      "message": "هیچ برگه برنامه ریزی شده ای وجود ندارد"
+   },
+   "noTimerSetAddNewTimer": {
+      "message": "تایمر تنظیم نشده است، برای تنظیم تایمر جدید روی دکمه افزودن کلیک کنید"
+   },
+   "not_show_tutorial": {
+      "message": "این آموزش را دیگر نشان ندهید"
+   },
+   "notificationOpenTab": {
+      "message": "13. اطلاع رسانی در مورد باز کردن/بستن URL برگه"
+   },
+   "notificationOpenTabExm1": {
+      "message": "در مثال بالا URL داده شده در برگه باز است، که بیان می کند هر 5 دقیقه یک اعلان می دهد و URL را در برگه جدید باز/بسته می کند."
+   },
+   "notifications": {
+      "message": "اطلاع رسانی"
+   },
+   "november": {
+      "message": "نوامبر"
+   },
+   "october": {
+      "message": "اکتبر"
+   },
+   "onTheExtensionDetailPage": {
+      "message": "در صفحه جزئیات برنامه افزودنی، به پایین بروید و گزینه «Allow in incognito» را پیدا کنید."
+   },
+   "oneTime": {
+      "message": "یک بار"
+   },
+   "oneTmSch": {
+      "message": "1. برنامه یک بار"
+   },
+   "oneTmSchExm1": {
+      "message": "در مثال بالا URL داده شده در برگه باز است، که بیان می کند که در یک برگه جدید یک بار در ساعت 13:45 در تاریخ 21/1/2023 باز خواهد شد."
+   },
+   "oneTmSchExm2": {
+      "message": "در مثال بالا نشانی اینترنتی داده شده در برگه بسته است، که بیان می‌کند همه برگه‌های URL منطبق را در ساعت 13:45 در تاریخ 21/1/2023 می‌بندد."
+   },
+   "open": {
+      "message": "باز کنید"
+   },
+   "openBackground": {
+      "message": "اگر بله، بارگیری URL در پس‌زمینه بدون باز کردن آن در یک برگه جدید"
+   },
+   "openDate": {
+      "message": "باز کردن تاریخ"
+   },
+   "openDay": {
+      "message": "روز باز"
+   },
+   "openEveryDayOn": {
+      "message": "هر روز باز است"
+   },
+   "openEveryMonthOn": {
+      "message": "هر ماه در روز باز است"
+   },
+   "openEveryWeekOn": {
+      "message": "هر هفته باز است"
+   },
+   "openEveryYearOn": {
+      "message": "هر سال باز است"
+   },
+   "openGoogleChrome": {
+      "message": "گوگل کروم را باز کنید."
+   },
+   "openInBackground": {
+      "message": "URL را در پس زمینه باز کنید"
+   },
+   "openInEvery": {
+      "message": "باز در هر"
+   },
+   "openInIncognito": {
+      "message": "در حالت ناشناس باز کنید"
+   },
+   "openMinute": {
+      "message": "دقیقه باز"
+   },
+   "openOnDay": {
+      "message": "در روز باز است"
+   },
+   "openOnEvery": {
+      "message": "روی هر باز کنید"
+   },
+   "openSecond": {
+      "message": "دوم را باز کنید"
+   },
+   "openSecondsMoreThan5": {
+      "message": "ثانیه های باز باید بیشتر از 5 باشد."
+   },
+   "openTabSchedule": {
+      "message": "جدول زمانی را باز کنید"
+   },
+   "openTabURL": {
+      "message": "URL Tab را باز کنید"
+   },
+   "openTime": {
+      "message": "باز کردن زمان"
+   },
+   "openUrl": {
+      "message": "لینک وب سایت را باز کنید"
+   },
+   "openWeek": {
+      "message": "هفته باز"
+   },
+   "openWeeks": {
+      "message": "هفته های باز"
+   },
+   "open_on": {
+      "message": "باز کنید"
+   },
+   "optional": {
+      "message": "اختیاری"
+   },
+   "or": {
+      "message": "یا"
+   },
+   "outof": {
+      "message": "خارج از"
+   },
+   "pagePath": {
+      "message": "مسیر صفحه"
+   },
+   "paidFeature": {
+      "message": "ویژگی پولی"
+   },
+   "pauseSchedule": {
+      "message": "شروع یا توقف همه برنامه‌ها"
+   },
+   "pauseTabScheduler": {
+      "message": "زمانبندی برگه متوقف شد"
+   },
+   "pleaseAllowIncognitoMessage": {
+      "message": "لطفاً گزینه \"Allow in Incognito\" را در جزئیات برنامه افزودنی فعال کنید. برای راهنمایی لطفا به صفحه آموزش مراجعه کنید."
+   },
+   "pleaseShareYourSuggestions": {
+      "message": "لطفا پیشنهاد خود را به اشتراک بگذارید"
+   },
+   "plsShreAnySugWithUs": {
+      "message": "لطفا برای بهبود ما پیشنهادی بدهید"
+   },
+   "powerMode": {
+      "message": "حالت قدرت"
+   },
+   "premium": {
+      "message": "حق بیمه"
+   },
+   "pricePlan": {
+      "message": "قیمت گذاری و طرح ها"
+   },
+   "privcyPolicy": {
+      "message": "سیاست حفظ حریم خصوصی"
+   },
+   "prowerModeTip": {
+      "message": "با فعال کردن حالت Power Mode، سیستم را همیشه فعال نگه دارید"
+   },
+   "put": {
+      "message": "قرار دهید"
+   },
+   "rateUs": {
+      "message": "به ما امتیاز دهید"
+   },
+   "removeDuplicateEntry": {
+      "message": "لطفاً ورودی تکراری را حذف کنید"
+   },
+   "removeOpenTbURL": {
+      "message": "URL برگه باز را حذف کنید"
+   },
+   "repeat": {
+      "message": "تکرار کنید"
+   },
+   "requiredMsg": {
+      "message": "مورد نیاز"
+   },
+   "rmvClsTb": {
+      "message": "حذف URL زبانه بستن"
+   },
+   "sameTabs": {
+      "message": "اگر URL از قبل باز است، برگه را بازخوانی کنید"
+   },
+   "sameTabsInfo": {
+      "message": "از باز کردن چندین برگه برای یک URL جلوگیری کنید. به عنوان مثال، اگر www.google.com قبلاً باز شده باشد، آن برگه موجود به جای باز کردن یک برگه جدید برای آن، تازه سازی می شود."
+   },
+   "sampleCsvOpenPath": {
+      "message": "../sample_csv/en/open_tab_sample.csv"
+   },
+   "sampleFile": {
+      "message": "فایل نمونه"
+   },
+   "saturday": {
+      "message": "شنبه"
+   },
+   "savOpnData": {
+      "message": "داده های برگه باز را ذخیره کنید"
+   },
+   "save": {
+      "message": "ذخیره کنید"
+   },
+   "saveClsTbData": {
+      "message": "داده های زبانه بسته را ذخیره کنید"
+   },
+   "saveSchedule": {
+      "message": "ذخیره برنامه"
+   },
+   "scheduleCloseTab": {
+      "message": "زمانبندی بستن برگه"
+   },
+   "scheduleCurrentTab": {
+      "message": "برگه فعلی را برنامه ریزی کنید"
+   },
+   "scheduleOpenTab": {
+      "message": "برنامه باز کردن برگه"
+   },
+   "scheduledTabIsAlreadyExistWithSameTimer": {
+      "message": "این برگه زمان‌بندی‌شده قبلاً با همان تایمر وجود دارد."
+   },
+   "scheduledTabList": {
+      "message": "لیست برگه های برنامه ریزی شده"
+   },
+   "scheduledType": {
+      "message": "نوع زمانبندی"
+   },
+   "search": {
+      "message": "جستجو کنید"
+   },
+   "secValid": {
+      "message": "حداقل 5 ثانیه لازم است"
+   },
+   "second": {
+      "message": "دوم"
+   },
+   "selectCloseDate": {
+      "message": "تاریخ بسته را انتخاب کنید"
+   },
+   "selectCloseDay": {
+      "message": "روز بسته را انتخاب کنید"
+   },
+   "selectCloseTime": {
+      "message": "زمان بسته شدن را انتخاب کنید"
+   },
+   "selectColumn": {
+      "message": "ستون را انتخاب کنید"
+   },
+   "selectDateAndTime": {
+      "message": "تاریخ و زمان را برای باز کردن برگه جدید انتخاب کنید"
+   },
+   "selectDateAndTimeClsTb": {
+      "message": "تاریخ و زمان بستن برگه را انتخاب کنید"
+   },
+   "selectDayToCloseSchTb": {
+      "message": "روز بستن برگه برنامه را انتخاب کنید."
+   },
+   "selectDayToClsTb": {
+      "message": "روز بستن برگه را انتخاب کنید"
+   },
+   "selectDayToSchdule": {
+      "message": "برگه روز برای برنامه‌ریزی را انتخاب کنید."
+   },
+   "selectDaysInWeek": {
+      "message": "روزهای هفته را انتخاب کنید"
+   },
+   "selectDaysInWeekIClsTime": {
+      "message": "روزهای هفته را در تایمر نزدیک انتخاب کنید."
+   },
+   "selectDaysInWeekIOpClsTime": {
+      "message": "روزهای هفته را در تایمر باز یا بسته انتخاب کنید."
+   },
+   "selectDaysInWeekIOpTime": {
+      "message": "روزهای هفته را در تایمر باز انتخاب کنید."
+   },
+   "selectFrequency": {
+      "message": "فرکانس را انتخاب کنید"
+   },
+   "selectFrequencyOfScheduleUrl": {
+      "message": "فرکانس URL برنامه ریزی شده را انتخاب کنید."
+   },
+   "selectOpenDate": {
+      "message": "تاریخ باز را انتخاب کنید"
+   },
+   "selectOpenDay": {
+      "message": "روز باز را انتخاب کنید"
+   },
+   "selectOpenOrClose": {
+      "message": "زمان باز و بسته شدن را انتخاب کنید"
+   },
+   "selectOpenOrCloseDate": {
+      "message": "تاریخ باز و بسته شدن را انتخاب کنید"
+   },
+   "selectOpenOrCloseDay": {
+      "message": "روز باز و بسته را انتخاب کنید"
+   },
+   "selectOpenTime": {
+      "message": "زمان باز را انتخاب کنید"
+   },
+   "selectPreferredLanguage": {
+      "message": "زبان مورد نظر خود را انتخاب کنید."
+   },
+   "selectToOpenTab": {
+      "message": "روز را برای باز کردن برگه جدید انتخاب کنید"
+   },
+   "selectTypTimerClsTb": {
+      "message": "نوع تایمر را برای بستن برگه انتخاب کنید"
+   },
+   "selectTypeOfSchedule": {
+      "message": "اگر می‌خواهید هم باز و هم بسته شود، نوع زمان‌بندی را انتخاب کنید، «هر دو» را انتخاب کنید."
+   },
+   "selectTypeOfTimer": {
+      "message": "نوع تایمر را برای باز کردن برگه جدید انتخاب کنید"
+   },
+   "select_weeks": {
+      "message": "هفته ها را انتخاب کنید"
+   },
+   "september": {
+      "message": "سپتامبر"
+   },
+   "settingSave": {
+      "message": "تنظیمات با موفقیت ذخیره شد"
+   },
+   "settingToClose": {
+      "message": "تنظیم بستن برگه در حالت ناشناس."
+   },
+   "shareYourSuggestionWithUs": {
+      "message": "پیشنهادات خود را با ما در میان بگذارید.."
+   },
+   "slectDayToScheduleWeekly": {
+      "message": "روزهایی را برای برنامه‌ریزی هفتگی برگه انتخاب کنید."
+   },
+   "slectMinute": {
+      "message": "دقیقه را انتخاب کنید"
+   },
+   "smthngWrng": {
+      "message": "مشکلی پیش آمد"
+   },
+   "softpulseInfotech": {
+      "message": "Softpulse Infotech"
+   },
+   "somethingWentWrong": {
+      "message": "مشکلی پیش آمد. صفحه را بازخوانی کنید و دوباره امتحان کنید."
+   },
+   "status": {
+      "message": "وضعیت"
+   },
+   "subcrKeyShldNEmpt": {
+      "message": "لطفا کلید اشتراک را وارد کنید."
+   },
+   "subdomain": {
+      "message": "زیر دامنه"
+   },
+   "subkeyInputTitle": {
+      "message": "کلید اشتراک را وارد کنید"
+   },
+   "submFeedBack": {
+      "message": "ارسال کنید"
+   },
+   "suggForTbSch": {
+      "message": "پیشنهاد برای زمانبندی برگه"
+   },
+   "suggestionAndRateUs": {
+      "message": "پیشنهاد و به ما امتیاز دهید"
+   },
+   "sunday": {
+      "message": "یکشنبه"
+   },
+   "tabCloseOneTime": {
+      "message": "برگه فقط یک بار بسته می شود"
+   },
+   "tabSchTutorial": {
+      "message": "آموزش زمانبندی برگه ها"
+   },
+   "tabScheduler": {
+      "message": "برنامه زمانبندی برگه ها"
+   },
+   "tabSchedulerOptions": {
+      "message": "گزینه های زمانبندی برگه"
+   },
+   "tabWillOpenOneTime": {
+      "message": "برگه فقط یک بار باز می شود"
+   },
+   "tabWillOpenWhenBrowserOpen": {
+      "message": "وقتی مرورگر روشن شود، برگه باز می شود"
+   },
+   "termCondition": {
+      "message": "شرایط و ضوابط"
+   },
+   "thanksFrRev": {
+      "message": "با تشکر از شما برای بررسی شما"
+   },
+   "thnkUFeedBack": {
+      "message": "ممنون از پیشنهادتون"
+   },
+   "thnkUFrUsngTbSch": {
+      "message": "لطفا برای بهبود ما پیشنهادی بدهید"
+   },
+   "thursday": {
+      "message": "پنج شنبه"
+   },
+   "time": {
+      "message": "زمان"
+   },
+   "timeExpired": {
+      "message": "زمان منقضی شده است"
+   },
+   "timer": {
+      "message": "تایمر"
+   },
+   "title": {
+      "message": "عنوان"
+   },
+   "titleLengtWarn": {
+      "message": "طول عنوان نباید بیشتر از 200 کاراکتر باشد."
+   },
+   "toScheduledOpenTbMsg": {
+      "message": "برای برگه باز برنامه ریزی شده، لطفاً علامت فیلتر URL را بردارید."
+   },
+   "toogleCloseTab": {
+      "message": "شروع/توقف زنگ زمان‌بندی برای همه URL زبانه‌های بسته"
+   },
+   "toogleDarkmode": {
+      "message": "برای سفارشی کردن تجربه تماشای خود، بین حالت تاریک و حالت پیش فرض جابجا شوید."
+   },
+   "toogleOff": {
+      "message": "خاموش"
+   },
+   "toogleOn": {
+      "message": "روشن"
+   },
+   "toogleOpenTab": {
+      "message": "شروع/توقف زنگ برنامه برای همه URL برگه های باز"
+   },
+   "topLevelDomain": {
+      "message": "دامنه سطح بالا"
+   },
+   "totalProcessed": {
+      "message": "کل ضبط شده پردازش شده است"
+   },
+   "tuesday": {
+      "message": "سه شنبه"
+   },
+   "tutorialImg1": {
+      "message": "\u003Cimg src=\"../images/en/1.png\">"
+   },
+   "tutorialImg10": {
+      "message": "\u003Cimg src=\"../images/en/10.png\">"
+   },
+   "tutorialImg11": {
+      "message": "\u003Cimg src=\"../images/en/11.png\">"
+   },
+   "tutorialImg12": {
+      "message": "\u003Cimg src=\"../images/en/12.png\">"
+   },
+   "tutorialImg13": {
+      "message": "\u003Cimg src=\"../images/en/13.png\">"
+   },
+   "tutorialImg14": {
+      "message": "\u003Cimg src=\"../images/en/14.png\">"
+   },
+   "tutorialImg2": {
+      "message": "\u003Cimg src=\"../images/en/2.png\">"
+   },
+   "tutorialImg3": {
+      "message": "\u003Cimg src=\"../images/en/3.png\">"
+   },
+   "tutorialImg4": {
+      "message": "\u003Cimg src=\"../images/en/4.png\">"
+   },
+   "tutorialImg5": {
+      "message": "\u003Cimg src=\"../images/en/5.png\">"
+   },
+   "tutorialImg6": {
+      "message": "\u003Cimg src=\"../images/en/6.png\">"
+   },
+   "tutorialImg7": {
+      "message": "\u003Cimg src=\"../images/en/7.png\">"
+   },
+   "tutorialImg8": {
+      "message": "\u003Cimg src=\"../images/en/8.png\">"
+   },
+   "tutorialImg9": {
+      "message": "\u003Cimg src=\"../images/en/9.png\">"
+   },
+   "uncheckAll": {
+      "message": "علامت همه را بردارید"
+   },
+   "unlimitedSchedule": {
+      "message": "محدودیت زمانبندی نامحدود"
+   },
+   "unspecifiedURL": {
+      "message": "11. URL مسیر نامشخص"
+   },
+   "unspecifiedURLExm1": {
+      "message": "در مثال بالا URL داده شده در زبانه بسته است، که بیان می کند URL داده شده که در یک برگه جدید باز شده و با یک آدرس وب ناشناخته شروع و پایان می یابد، پس از 5 دقیقه بسته می شود."
+   },
+   "upgradePlan": {
+      "message": "لطفاً طرح را بخرید یا وارد شوید و برنامه خود را ارتقا دهید تا قفل ویژگی های بیشتر را باز کنید."
+   },
+   "upgradePlanUnlock": {
+      "message": "برای باز کردن قفل ویژگی های بیشتر، طرح خود را ارتقا دهید."
+   },
+   "uploadValidFormat": {
+      "message": "لطفا قالب معتبر آپلود کنید"
+   },
+   "url": {
+      "message": "URL"
+   },
+   "urlContExat": {
+      "message": "فیلتر کردن URL"
+   },
+   "urlEndWithUnspesifiedPth": {
+      "message": "9. پایان URL با مسیر نامشخص"
+   },
+   "urlEndWithUnspesifiedPthExm1": {
+      "message": "در مثال بالا URL داده شده در زبانه بسته است، که بیان می کند URL داده شده که در یک برگه جدید باز شده و به مسیر ناشناخته ختم می شود، پس از 5 دقیقه بسته می شود."
+   },
+   "urlFilterInfo": {
+      "message": "حاوی نشانی اینترنتی در حال بررسی است که فقط به بخشی از URL نیاز دارد و URL دقیقی که بررسی می شود باید دقیقاً با URL مشخص شده مطابقت داشته باشد."
+   },
+   "urlFilterinCLoseTb": {
+      "message": "14. فیلتر کردن URL در URL زبانه نزدیک"
+   },
+   "urlFilterinCLoseTbExample": {
+      "message": "در مثال بالا URL داده شده در زبانه بسته است، که بیان می کند URL برگه از قبل باز شده با بخشی از URL داده شده مطابقت دارد، بنابراین آن برگه را می بندد."
+   },
+   "urlIsRequired": {
+      "message": "لینک وب سایت مورد نیاز است"
+   },
+   "urlNotvalid": {
+      "message": "URL معتبر نیست"
+   },
+   "urlStartWithUnspesifiedPth": {
+      "message": "10. URL با مسیر نامشخص شروع می شود"
+   },
+   "urlStartWithUnspesifiedPthExm1": {
+      "message": "در مثال بالا URL داده شده در زبانه بسته است، که بیان می کند URL داده شده که در یک برگه جدید باز شده و با یک زیر دامنه ناشناخته \u003Cb>\"www\"\u003C/b> یا \u003Cb>\"blog\"\u003C/b> شروع می شود ، پس از 5 دقیقه بسته می شود."
+   },
+   "useSpecificUrl": {
+      "message": "از لینک وب سایت خاص استفاده کنید"
+   },
+   "useSpecificUrl1": {
+      "message": "شما باید زیر دامنه، دامنه سطح بالا، نام دامنه و مسیر صفحه را در قسمت Website Link در تب بسته مرورگر نوشته باشید."
+   },
+   "useSpecificUrl2": {
+      "message": "از برگه همه بسته مرورگر استفاده کنید"
+   },
+   "useSpecificUrl3": {
+      "message": "از لینک وب سایت خاص و کامل استفاده کنید"
+   },
+   "useUnSpecificUrl1": {
+      "message": "از لینک وب سایت نامشخص استفاده کنید"
+   },
+   "useUnSpecificUrl2": {
+      "message": "شروع با پیوند وب سایت نامشخص استفاده کنید"
+   },
+   "useUnSpecificUrl3": {
+      "message": "از پایان با پیوند وب سایت نامشخص استفاده کنید"
+   },
+   "used": {
+      "message": "استفاده کردی"
+   },
+   "validFormatCsv": {
+      "message": "فرمت فایل CSV معتبر برای وارد کردن چیست؟"
+   },
+   "websiteLink": {
+      "message": "لینک وب سایت"
+   },
+   "websiteUrl": {
+      "message": "آدرس وب سایت"
+   },
+   "wednesday": {
+      "message": "چهارشنبه"
+   },
+   "weekName": {
+      "message": "نام هفته"
+   },
+   "weekly": {
+      "message": "هفتگی"
+   },
+   "whenExtensionTabAppears": {
+      "message": "هنگامی که تب Extensions ظاهر شد، \"Tab Scheduler with auto open and close\" را پیدا کنید تا در حالت ناشناس فعال شود و روی دکمه \"Details\" در کنار آن کلیک کنید."
+   },
+   "whenMenuPopup": {
+      "message": "هنگامی که یک منو ظاهر شد، \"Manage extensions\" را انتخاب کنید."
+   },
+   "withSignMustFill": {
+      "message": "با علامت \u003Cspan>*\u003C/span> باید پر یا انتخاب کنید، زمان باز یا بسته یا هر دو زمان را انتخاب کنید."
+   },
+   "writeYourDescriptionAboutSchUrl": {
+      "message": "توضیحات خود را در مورد url برنامه ریزی شده اینجا بنویسید."
+   },
+   "yes": {
+      "message": "بله"
+   },
+   "yourEmailAddress": {
+      "message": "آدرس ایمیل شما"
+   },
+   "yourScheduleUrl": {
+      "message": "URL زمانبندی شما"
+   }
+}

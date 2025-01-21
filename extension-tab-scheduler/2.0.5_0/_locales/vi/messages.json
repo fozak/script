@@ -1,0 +1,1448 @@
+{
+   "10_min": {
+      "message": "10 phút"
+   },
+   "1_min": {
+      "message": "1 phút"
+   },
+   "30_min": {
+      "message": "30 phút"
+   },
+   "5_min": {
+      "message": "5 phút"
+   },
+   "60_min": {
+      "message": "giờ"
+   },
+   "Dashboard": {
+      "message": "Bảng điều khiển"
+   },
+   "Login": {
+      "message": "Đăng nhập"
+   },
+   "Off": {
+      "message": "Tắt"
+   },
+   "On": {
+      "message": "TRÊN"
+   },
+   "Selected": {
+      "message": "Đã chọn"
+   },
+   "Settings": {
+      "message": "Cài đặt"
+   },
+   "Tutorial": {
+      "message": "Hướng dẫn"
+   },
+   "action": {
+      "message": "Hoạt động"
+   },
+   "activateScheduleTab": {
+      "message": "Kích hoạt tab đã lên lịch."
+   },
+   "active": {
+      "message": "Tích cực"
+   },
+   "activeAllScheduleTab": {
+      "message": "Chạy trình lập lịch Tab"
+   },
+   "activeStatus": {
+      "message": "Trạng thái"
+   },
+   "actvInactvNotification": {
+      "message": "Hiển thị thông báo khi tab lịch trình được mở"
+   },
+   "actvInactvOpnTb": {
+      "message": "Tab đang mở hoạt động hoặc không hoạt động"
+   },
+   "actvIntvClsTb": {
+      "message": "Tab đóng đang hoạt động hoặc không hoạt động"
+   },
+   "add": {
+      "message": "Thêm vào"
+   },
+   "addDescription": {
+      "message": "Thêm mô tả"
+   },
+   "addNew": {
+      "message": "Thêm mới"
+   },
+   "addNewURlCls": {
+      "message": "Thêm URL mới để đóng"
+   },
+   "addNewUrlToOpen": {
+      "message": "Thêm URL mới để mở trong cửa sổ mới"
+   },
+   "addTitle": {
+      "message": "Thêm tiêu đề"
+   },
+   "addWebsite": {
+      "message": "Thêm trang web"
+   },
+   "all": {
+      "message": "Tất cả"
+   },
+   "allInputFieldReq": {
+      "message": "Tất cả các trường đều bắt buộc"
+   },
+   "all_weeks": {
+      "message": "Cả tuần"
+   },
+   "alreadyPurchase": {
+      "message": "Đã mua? Nhập khóa ở đây"
+   },
+   "andAt": {
+      "message": "và tại"
+   },
+   "annually": {
+      "message": "Hàng năm"
+   },
+   "appDesc": {
+      "message": "Các tab trình duyệt sẽ tự động mở và đóng tại thời điểm đã chọn. Người dùng có thể kích hoạt/hủy kích hoạt danh sách dựa trên yêu cầu"
+   },
+   "appName": {
+      "message": "Trình lập lịch tab với chức năng tự động mở và đóng"
+   },
+   "april": {
+      "message": "Tháng tư"
+   },
+   "at": {
+      "message": "Tại"
+   },
+   "august": {
+      "message": "Tháng tám"
+   },
+   "autoFocus": {
+      "message": "Tab Tự động lấy nét"
+   },
+   "autoFocustip": {
+      "message": "Nếu bật, tab mới sẽ được mở ở trạng thái hoạt động/tập trung."
+   },
+   "autofocustip": {
+      "message": "Các tab mới mở sẽ tự động tập trung"
+   },
+   "basic": {
+      "message": "Nền tảng"
+   },
+   "billedAnnyally": {
+      "message": "Thanh toán hàng năm"
+   },
+   "billedMonthly": {
+      "message": "Thanh toán hàng tháng"
+   },
+   "both": {
+      "message": "Cả hai"
+   },
+   "browserOpen": {
+      "message": "Trên trình duyệt mở"
+   },
+   "browserWebAddress": {
+      "message": "Địa chỉ web của trình duyệt bắt đầu và kết thúc bằng một địa chỉ web không xác định. Đặt \u003Cb>*\u003C/b> vào cả hai bên trường Liên kết trang web mà bạn nhập."
+   },
+   "browserWebAddress2": {
+      "message": "Địa chỉ web của trình duyệt chứa tên miền google.com, sẽ được đóng trong vài phút bất kể tên miền phụ và đường dẫn trang. Đặt \u003Cb>*\u003C/b> ở cả hai bên tên miền và TLD"
+   },
+   "browserWebAddress3": {
+      "message": "Địa chỉ web của trình duyệt bắt đầu bằng một tên miền không xác định và kết thúc bằng một đường dẫn trang không xác định"
+   },
+   "browserWebAddress31": {
+      "message": "sẽ đóng sau vài phút nhất định, đặt \u003Cb>*\u003C/b> vào cả hai bên của TLD"
+   },
+   "browserWebAddress4": {
+      "message": "Địa chỉ web của trình duyệt bắt đầu bằng một địa chỉ web không xác định. Đặt \u003Cb>*\u003C/b> vào đầu URL của bạn. Hãy nhớ rằng địa chỉ web của trình duyệt phải khớp với URL của bạn sau khi bạn viết \u003Cb>* .\u003C/b>"
+   },
+   "browserWebAddress41": {
+      "message": "Địa chỉ web của trình duyệt bắt đầu bằng một tên miền phụ không xác định"
+   },
+   "browserWebAddress42": {
+      "message": "ở đầu liên kết trang web của bạn"
+   },
+   "browserWebAddress5": {
+      "message": "Địa chỉ web của trình duyệt kết thúc bằng một địa chỉ web không xác định. Đặt \u003Cb>*\u003C/b> vào cuối URL của bạn. Hãy nhớ rằng địa chỉ web của bạn phải khớp trước khi \u003Cb>*\u003C/b> bạn viết."
+   },
+   "browserWebAddress51": {
+      "message": "Địa chỉ web của trình duyệt kết thúc bằng một đường dẫn trang không xác định. Đặt \u003Cb>*\u003C/b> vào cuối địa chỉ web của bạn"
+   },
+   "browserWebAddress6": {
+      "message": "Chỉ cần nhập \u003Cb>*\u003C/b> vào trường địa chỉ trang web để đóng tất cả các tab trình duyệt. Sau khi đóng tất cả các tab, trình duyệt sẽ tự động đóng lại."
+   },
+   "browserWebAddress7": {
+      "message": "Bạn phải viết chính xác tên miền phụ, tên miền cấp cao nhất, tên miền và đường dẫn trang trong trường URL để mở trong tab của trình duyệt."
+   },
+   "browserWebAddress8": {
+      "message": "Bạn có thể mở url theo ngày và giờ cụ thể, tháng cụ thể, tuần cụ thể, năm cụ thể và thời gian lặp lại"
+   },
+   "buyPlan": {
+      "message": "Mua Kế hoạch"
+   },
+   "buycofee": {
+      "message": "Mua cho tôi một cốc cà phê"
+   },
+   "cancel": {
+      "message": "Hủy bỏ"
+   },
+   "changeLanguage": {
+      "message": "Thay đổi ngôn ngữ"
+   },
+   "checkAll": {
+      "message": "Kiểm tra tất cả"
+   },
+   "checkThisOpToPreventClosePinTb": {
+      "message": "Chọn tùy chọn này để ngăn việc đóng các tab đã ghim."
+   },
+   "checkThisOptionOnlyPartOfUrlMtch": {
+      "message": "Chọn tùy chọn này nếu chỉ cần khớp một phần của URL."
+   },
+   "checkThisOptionToActivate": {
+      "message": "Chọn tùy chọn này để kích hoạt hoặc hủy kích hoạt url đã lên lịch của bạn."
+   },
+   "checkThisOptionToCloseOnly": {
+      "message": "Đánh dấu tùy chọn này để chỉ đóng các tab ẩn danh. Ngoài ra, hãy bật tùy chọn 'Cho phép ở chế độ ẩn danh' trong phần chi tiết tiện ích mở rộng. Để biết hướng dẫn, vui lòng tham khảo trang hướng dẫn."
+   },
+   "checkThisOptionToCloseOnlyInIncgnitoTb": {
+      "message": "Đánh dấu tùy chọn này để chỉ đóng các tab ẩn danh. Ngoài ra, hãy bật tùy chọn 'Cho phép ở chế độ ẩn danh' trong phần chi tiết tiện ích mở rộng. Để biết hướng dẫn, vui lòng tham khảo trang hướng dẫn."
+   },
+   "checkThisOptionToInBg": {
+      "message": "Kiểm tra tùy chọn này nếu bạn muốn mở URL ở chế độ nền mà không mở nó trong một tab mới"
+   },
+   "checkThisOptionToInactivNotification": {
+      "message": "Kiểm tra tùy chọn này để tắt thông báo trên url đã lên lịch"
+   },
+   "checkThisOptionToOpen": {
+      "message": "Kiểm tra tùy chọn này nếu bạn muốn mở url của mình ở chế độ ẩn danh"
+   },
+   "checkThisOptionToOpenIncogito": {
+      "message": "Kiểm tra tùy chọn này nếu bạn muốn mở url của mình ở chế độ ẩn danh"
+   },
+   "checkThisOptionToPrevent": {
+      "message": "Chọn tùy chọn này để ngăn việc đóng các tab đã ghim."
+   },
+   "clickExtIcon": {
+      "message": "Nhấp vào biểu tượng “Tiện ích mở rộng” trên thanh công cụ, trông giống như một mảnh ghép hình."
+   },
+   "clickTheSwitch": {
+      "message": "Nhấp vào công tắc bên cạnh để bật nó lên"
+   },
+   "close": {
+      "message": "Đóng"
+   },
+   "closeAllTab": {
+      "message": "12. Đóng tất cả các tab của trình duyệt"
+   },
+   "closeAllTabExm1": {
+      "message": "Trong ví dụ trên, URL được đưa ra ở tab đóng, điều này có nghĩa là nó sẽ đóng tất cả các tab vào lúc 12:00 ngày 25/2/2023"
+   },
+   "closeDate": {
+      "message": "Ngày đóng"
+   },
+   "closeDay": {
+      "message": "Ngày đóng cửa"
+   },
+   "closeEveryYear": {
+      "message": "Đóng cửa hàng năm vào"
+   },
+   "closeInEvery": {
+      "message": "Đóng trong mọi"
+   },
+   "closeIncognitoTab": {
+      "message": "Chỉ đóng các tab ẩn danh"
+   },
+   "closeMinute": {
+      "message": "Đóng phút"
+   },
+   "closeOnDay": {
+      "message": "Đóng cửa vào ngày"
+   },
+   "closeOnEvery": {
+      "message": "Đóng trên mọi"
+   },
+   "closeOnEveryDay": {
+      "message": "Đóng cửa vào mỗi ngày"
+   },
+   "closeOnEveryMonth": {
+      "message": "Đóng cửa mỗi tháng vào ngày"
+   },
+   "closeOnEveryWeek": {
+      "message": "Đóng cửa hàng tuần vào"
+   },
+   "closeSecond": {
+      "message": "Đóng thứ hai"
+   },
+   "closeSeconsMoreThan5": {
+      "message": "Giây đóng phải lớn hơn 5."
+   },
+   "closeTabSchedule": {
+      "message": "Đóng lịch tab"
+   },
+   "closeTabURL": {
+      "message": "Đóng URL Tab"
+   },
+   "closeTime": {
+      "message": "Thời gian đóng cửa"
+   },
+   "closeUrl": {
+      "message": "Đóng liên kết trang web"
+   },
+   "closeWeek": {
+      "message": "Tuần đóng cửa"
+   },
+   "closeWeeks": {
+      "message": "Tuần đóng cửa"
+   },
+   "close_on": {
+      "message": "Đóng trên"
+   },
+   "cngrtsForSubcr": {
+      "message": "Xin chúc mừng! Gói của bạn đã được kích hoạt thành công."
+   },
+   "commonQuestionsAns": {
+      "message": "Những câu hỏi và câu trả lời thường gặp"
+   },
+   "copySucessClose": {
+      "message": "Đóng tab URL dữ liệu được sao chép vào Mở tab URL dữ liệu"
+   },
+   "createNewTimer": {
+      "message": "Tạo bộ đếm thời gian mới"
+   },
+   "currentPlan": {
+      "message": "Kế hoạch hiện tại"
+   },
+   "currentTabSchedule": {
+      "message": "Lịch trình tab hiện tại"
+   },
+   "currentTbScheduleTimer": {
+      "message": "Tab hiện tại là bộ đếm thời gian đã lên lịch."
+   },
+   "cusSec": {
+      "message": "Tùy chỉnh thứ hai"
+   },
+   "custMin": {
+      "message": "Phút tùy chỉnh"
+   },
+   "custmMinSch": {
+      "message": "7. Lịch phút tùy chỉnh"
+   },
+   "custmMinSchExm1": {
+      "message": "Trong ví dụ trên, URL được đưa ra ở tab đang mở, điều này có nghĩa là URL được đưa ra sẽ mở ở tab mới sau mỗi 15 phút."
+   },
+   "custmMinSchExm2": {
+      "message": "Trong ví dụ trên, URL được đưa ra ở tab đóng, điều này có nghĩa là URL được mở trong tab mới sẽ bị đóng sau 15 phút."
+   },
+   "customSecondWarning": {
+      "message": "Chức năng tùy chỉnh giây đang trong giai đoạn thử nghiệm và có thể không hoạt động chính xác nếu giây được đặt dưới 60."
+   },
+   "darkMode": {
+      "message": "Chế độ tối"
+   },
+   "datNotCopy": {
+      "message": "Một số dữ liệu không được sao chép do URL không hợp lệ."
+   },
+   "dataSaved": {
+      "message": "Lưu dữ liệu hẹn giờ thành công"
+   },
+   "date": {
+      "message": "Ngày"
+   },
+   "dateIsOutOfRange": {
+      "message": "Ngày nằm ngoài phạm vi"
+   },
+   "day": {
+      "message": "Ngày"
+   },
+   "december": {
+      "message": "Tháng 12"
+   },
+   "delete": {
+      "message": "Xóa bỏ"
+   },
+   "deleteScheduleTb": {
+      "message": "Xóa tab đã lên lịch."
+   },
+   "description": {
+      "message": "Sự miêu tả"
+   },
+   "developedBy": {
+      "message": "Được phát triển bởi:"
+   },
+   "doNotCloseInPinnedTabs": {
+      "message": "Không đóng các tab đã ghim"
+   },
+   "doNotShowNotification": {
+      "message": "Không hiển thị thông báo"
+   },
+   "domainName": {
+      "message": "Tên miền"
+   },
+   "downloadCloseTbSampleCsv": {
+      "message": "Tải xuống mẫu CSV đóng tab để xem ví dụ về định dạng bắt buộc"
+   },
+   "downloadOpenTbSampleCsv": {
+      "message": "Tải xuống mẫu tab mở CSV để xem ví dụ về định dạng bắt buộc"
+   },
+   "editScheduleTb": {
+      "message": "Chỉnh sửa tab đã lên lịch."
+   },
+   "email": {
+      "message": "E-mail"
+   },
+   "enterDateToCloseTab": {
+      "message": "Nhập ngày vào đây để đóng tab lịch trình."
+   },
+   "enterDateToOpen": {
+      "message": "Nhập ngày để mở tab lịch trình."
+   },
+   "enterMiniutesToCloseTb": {
+      "message": "Nhập phút để đóng tab."
+   },
+   "enterMiniutesToOpen": {
+      "message": "Nhập phút để mở tab lịch trình."
+   },
+   "enterMinute": {
+      "message": "Nhập phút"
+   },
+   "enterSecond": {
+      "message": "Nhập thứ hai"
+   },
+   "enterSecondsToCloseTab": {
+      "message": "Nhập giây để đóng tab."
+   },
+   "enterSecondsToOpen": {
+      "message": "Nhập giây để mở tab lịch trình."
+   },
+   "enterTilteOfScheduleUrl": {
+      "message": "Nhập tiêu đề của URL đã lên lịch."
+   },
+   "enterTimeToCloseTab": {
+      "message": "Nhập thời gian ở đây để đóng tab lịch trình."
+   },
+   "enterTimeToSchedule": {
+      "message": "Nhập thời gian để mở tab lịch trình."
+   },
+   "enterValidEmail": {
+      "message": "Vui lòng nhập Email hợp lệ"
+   },
+   "enterValidUrl": {
+      "message": "Vui lòng nhập URL hợp lệ"
+   },
+   "enterValueInCloseSec": {
+      "message": "Nhập giá trị trong vài giây"
+   },
+   "enterValueInOpenCloseSec": {
+      "message": "Nhập giá trị theo giây mở hoặc đóng"
+   },
+   "enterValueInOpenMinutes": {
+      "message": "Nhập giá trị trong phút mở"
+   },
+   "enterVlaueInCloseMinutes": {
+      "message": "Nhập giá trị trong vòng vài phút"
+   },
+   "enterVlaueInOpenCloseMin": {
+      "message": "Nhập giá trị vào phút mở hoặc phút đóng"
+   },
+   "enterVlaueInOpenSeconds": {
+      "message": "Nhập giá trị trong giây mở"
+   },
+   "enterYourURLToSchedule": {
+      "message": "Nhập URL của bạn để lên lịch."
+   },
+   "every": {
+      "message": "mọi"
+   },
+   "every10Min": {
+      "message": "Mỗi 10 phút"
+   },
+   "every1Minute": {
+      "message": "mỗi 1 phút"
+   },
+   "every30Min": {
+      "message": "Mỗi 30 phút"
+   },
+   "every5Min": {
+      "message": "Mỗi 5 phút"
+   },
+   "everyDay": {
+      "message": "Mỗi ngày"
+   },
+   "everyDayAt": {
+      "message": "mỗi ngày tại"
+   },
+   "everyHour": {
+      "message": "Mỗi giờ"
+   },
+   "everyMinute": {
+      "message": "Mỗi phút"
+   },
+   "everyMonth": {
+      "message": "Mỗi tháng"
+   },
+   "everyMonthOn": {
+      "message": "mỗi tháng vào"
+   },
+   "everyMonthOnDay": {
+      "message": "mỗi tháng vào ngày"
+   },
+   "everyWeek": {
+      "message": "Mỗi tuần"
+   },
+   "everyWeekOn": {
+      "message": "mỗi tuần trên"
+   },
+   "everyYear": {
+      "message": "Hàng năm"
+   },
+   "everyYesrOn": {
+      "message": "hàng năm vào"
+   },
+   "evr10MinSch": {
+      "message": "2. Lịch trình 10 phút một lần"
+   },
+   "evr10MinSchExm1": {
+      "message": "Trong ví dụ trên, URL được cung cấp ở tab đang mở, điều này có nghĩa là URL được cung cấp sẽ mở ở tab mới sau mỗi 10 phút."
+   },
+   "evr10MinSchExm2": {
+      "message": "Trong ví dụ trên, URL được đưa ra ở tab đóng, điều này có nghĩa là URL được mở trong tab mới sẽ bị đóng sau 10 phút."
+   },
+   "evrDaySch": {
+      "message": "3. Lịch trình hàng ngày"
+   },
+   "evrDaySchExm1": {
+      "message": "Trong ví dụ trên, URL được đưa ra ở tab mở, điều này có nghĩa là nó sẽ mở ở tab mới vào lúc 5:27 chiều hàng ngày"
+   },
+   "evrDaySchExm2": {
+      "message": "Trong ví dụ trên, URL được đưa ra ở tab đóng, điều này có nghĩa là nó sẽ đóng tab đã mở vào lúc 5:27 chiều hàng ngày"
+   },
+   "evrMonthSch": {
+      "message": "5. Lịch trình hàng tháng"
+   },
+   "evrMonthSchExm1": {
+      "message": "Trong ví dụ trên, URL được đưa ra ở tab mở, có nội dung là Nó sẽ mở ở tab mới vào lúc 13:45 hàng tháng vào ngày 25"
+   },
+   "evrMonthSchExm2": {
+      "message": "Trong ví dụ trên, URL được đưa ra ở tab đóng, điều này có nghĩa là nó sẽ đóng tab đã mở vào Mỗi tháng lúc 13:45 ngày 25"
+   },
+   "evrWeekSch": {
+      "message": "4. Lịch trình hàng tuần"
+   },
+   "evrWeekSchExm1": {
+      "message": "Trong ví dụ trên, URL được cung cấp nằm trong một tab đang mở, có nghĩa là nó sẽ mở trong một tab mới vào lúc 17:00 \u003Cb>Thứ Hai và Thứ Ba\u003C/b> hàng tuần ."
+   },
+   "evrWeekSchExm2": {
+      "message": "Trong ví dụ trên, URL được cung cấp nằm trong tab đóng, có nghĩa là nó sẽ đóng tab đã mở vào Mỗi tuần lúc 17:00 \u003Cb>Thứ Hai và Thứ Ba\u003C/b> ."
+   },
+   "evrWeekSchExm3": {
+      "message": "Trong ví dụ trên, có thể chọn nhiều ngày trong bộ đếm thời gian trong tuần."
+   },
+   "evrYearSch": {
+      "message": "6. Lịch trình hàng năm"
+   },
+   "evrYearSchExm1": {
+      "message": "Trong ví dụ trên, URL được đưa ra trong tab mở, điều này có nghĩa là nó sẽ mở trong tab mới vào lúc 13:35 hàng năm vào ngày 1 tháng 1"
+   },
+   "evrYearSchExm2": {
+      "message": "Trong ví dụ trên, URL được đưa ra ở tab đóng, điều này có nghĩa là nó sẽ đóng tab đã mở vào Mỗi năm lúc 13:35 ngày 1 tháng 1"
+   },
+   "exampleSort": {
+      "message": "ví dụ"
+   },
+   "exdMaxLim": {
+      "message": "Vượt quá số lượng thiết bị được phép!"
+   },
+   "exmpOpnClsTbSch": {
+      "message": "Ví dụ về cách mở và đóng tab trong Tab Scheduler"
+   },
+   "expLicKy": {
+      "message": "Khóa cấp phép này đã hết hạn."
+   },
+   "export": {
+      "message": "Xuất khẩu"
+   },
+   "exportBefore": {
+      "message": "Bạn có\u003Cexday>\u003C/exday>còn lại ngày, vui lòng đăng ký để tiếp tục tận hưởng tính năng cao cấp"
+   },
+   "exportClsTbDta": {
+      "message": "Xuất dữ liệu tab đóng"
+   },
+   "exportOpenTbDt": {
+      "message": "Xuất dữ liệu tab đang mở"
+   },
+   "exportedData": {
+      "message": "Dữ liệu hẹn giờ đã được xuất thành công"
+   },
+   "extensionShouldAble": {
+      "message": "Bây giờ, tiện ích mở rộng sẽ có thể đóng các tab ở chế độ Ẩn danh."
+   },
+   "faq": {
+      "message": "Câu hỏi thường gặp"
+   },
+   "faq_1": {
+      "message": "Tab Scheduler có chức năng tự động mở và đóng là gì?"
+   },
+   "faq_10": {
+      "message": "Làm thế nào để xem các tab đã lên lịch của tôi?"
+   },
+   "faq_11": {
+      "message": "Có bắt buộc phải điền cả thời gian mở cửa và đóng cửa không?"
+   },
+   "faq_12": {
+      "message": "Các tính năng của Tab Tự động lấy nét, Kích hoạt tất cả các tab đã lên lịch và Chế độ nguồn có tác dụng gì?"
+   },
+   "faq_13": {
+      "message": "Tôi có thể mở/đóng liên kết trang web đã lên lịch trong tab ẩn danh không?"
+   },
+   "faq_14": {
+      "message": "Tab Làm mới có tác dụng gì nếu URL đã mở?"
+   },
+   "faq_2": {
+      "message": "Liên kết trang web có tác dụng gì?"
+   },
+   "faq_3": {
+      "message": "Làm thế nào để lên lịch URL bằng Tab Scheduler?"
+   },
+   "faq_4": {
+      "message": "Tùy chọn 'Mở URL ở chế độ nền' là gì?"
+   },
+   "faq_5": {
+      "message": "Tôi có thể ngăn tiện ích mở rộng đóng các tab đã ghim không?"
+   },
+   "faq_6": {
+      "message": "Loại lịch trình 'Cả hai' có nghĩa là gì?"
+   },
+   "faq_7": {
+      "message": "Tính năng 'Lọc URL' hoạt động như thế nào?"
+   },
+   "faq_8": {
+      "message": "Tôi có thể hủy kích hoạt một tab đã lên lịch mà không xóa nó không?"
+   },
+   "faq_9": {
+      "message": "Tôi có nhận được thông báo về các tab đã lên lịch không?"
+   },
+   "faq_a_1": {
+      "message": "\u003Cp>Tab Scheduler with Auto Open and Close là tiện ích mở rộng trình duyệt cho phép người dùng lên lịch các tab để mở và đóng tự động vào những thời điểm đã đặt. Người dùng có thể chọn lịch một lần hoặc thiết lập lịch định kỳ với nhiều tùy chọn tần suất khác nhau. Tiện ích mở rộng này có nhiều mục đích cho người dùng và cung cấp nhiều tính năng hữu ích cho bạn.\u003C/p>"
+   },
+   "faq_a_10": {
+      "message": "Tất cả các tab đã lên lịch sẽ được hiển thị trong danh sách hiển thị tiêu đề, liên kết trang web, thời gian mở và đóng, trạng thái và các hành động bạn có thể thực hiện (ví dụ: kích hoạt, chỉnh sửa, xóa)."
+   },
+   "faq_a_11": {
+      "message": "Không, bạn có thể lên lịch thời gian mở hoặc thời gian đóng. Tuy nhiên, bạn phải điền hoặc chọn các trường bắt buộc được đánh dấu bằng dấu hoa thị (*)."
+   },
+   "faq_a_12": {
+      "message": "Auto Focus Tab đảm bảo rằng khi một tab được lên lịch mở ra, Activate All Scheduled Tabs cho phép bạn nhanh chóng bật tất cả các tab được lên lịch chỉ bằng một cú nhấp chuột. Power Mode tối ưu hóa hiệu suất của tiện ích mở rộng bằng cách quản lý tài nguyên trình duyệt hiệu quả hơn."
+   },
+   "faq_a_13": {
+      "message": "Có, bạn có thể chọn mở một tab đã lên lịch ở chế độ ẩn danh bằng cách chọn tùy chọn \"Mở ở chế độ ẩn danh\". Bạn có thể chọn chỉ đóng các tab ẩn danh bằng cách chọn tùy chọn \"Chỉ đóng các tab ẩn danh\", miễn là \"Cho phép ở chế độ ẩn danh\" được bật trong cài đặt tiện ích mở rộng"
+   },
+   "faq_a_14": {
+      "message": "Khi tùy chọn này được bật, tiện ích mở rộng sẽ tự động làm mới một tab hiện có nếu cùng một URL đã mở trong trình duyệt của bạn. Điều này ngăn chặn việc mở các tab trùng lặp và đảm bảo rằng bạn luôn có phiên bản mới nhất của trang được tải."
+   },
+   "faq_a_14_1": {
+      "message": "Nếu bạn thử mở https://github.com/ và nó đã mở trong một tab khác, tiện ích mở rộng sẽ chỉ làm mới tab đó thay vì mở một tab mới."
+   },
+   "faq_a_14_2": {
+      "message": "Nếu https://github.com/ đã mở trong ba tab, tiện ích mở rộng sẽ làm mới cả ba tab."
+   },
+   "faq_a_2": {
+      "message": "Liên kết trang web là địa chỉ trang web tab mở của trình duyệt. Cách bạn có thể sử dụng địa chỉ trang web được đề cập bên dưới."
+   },
+   "faq_a_3": {
+      "message": "Để lên lịch cho URL, hãy nhập liên kết trang web, đặt tiêu đề cho lịch, chọn tần suất (Một lần, Mỗi phút, Hàng ngày, v.v.) và chọn thời gian mở và đóng. Bạn cũng có thể chỉ định ngày, ngày hoặc giây để mở và đóng tab."
+   },
+   "faq_a_4": {
+      "message": "\u003Cp>Tùy chọn này cho phép bạn kiểm soát hoàn toàn việc lên lịch cho URL mở ở chế độ nền mà không làm nổi bật tab mới. URL sẽ mở một cách lặng lẽ trong khi bạn tiếp tục làm việc trên các tab khác. Tùy chọn này đặc biệt hữu ích khi bạn cần trình duyệt lấy dữ liệu từ URL đã lên lịch mà không hiển thị dữ liệu đó một cách chủ động, chẳng hạn như trong trường hợp yêu cầu API GET.\u003C/p>\u003Cbr> \u003Cp>Ví dụ: nếu bạn muốn lấy dữ liệu từ điểm cuối API theo thời gian đã đặt một cách thường xuyên, bạn có thể sử dụng tùy chọn hiệu quả này để chạy yêu cầu ở chế độ nền mà không cần mở tab mới hiển thị.\u003C/p>"
+   },
+   "faq_a_5": {
+      "message": "Có, có tùy chọn để ngăn chặn việc đóng các tab đã ghim. Kiểm tra tùy chọn \"Không đóng các tab đã ghim\" để đảm bảo các tab này vẫn mở ngay cả khi chúng đáp ứng các tiêu chí đóng khác."
+   },
+   "faq_a_6": {
+      "message": "Kiểu lịch trình 'Cả hai' cho phép bạn kiểm soát hoàn toàn thời điểm mở và đóng một tab, cho phép bạn đặt thời gian cụ thể cho cả hai hành động."
+   },
+   "faq_a_7": {
+      "message": "Lọc URL đảm bảo rằng chỉ một phần cụ thể của URL cần khớp để hành động theo lịch trình diễn ra. Điều này hữu ích khi bạn muốn tự động hóa một số hành động nhất định dựa trên các URL khớp một phần. Ví dụ: nếu bạn kiểm tra tùy chọn Lọc URL cho URL https://example.com/page, tùy chọn này cũng sẽ áp dụng cho các URL như https://example.com/page/123, https://example.com/page?query=example và https://subdomain.example.com/page."
+   },
+   "faq_a_8": {
+      "message": "Với tùy chọn \"Kích hoạt tab đã lên lịch này\", bạn có thể dễ dàng kích hoạt hoặc hủy kích hoạt các tab đã lên lịch, giúp bạn linh hoạt quản lý lịch trình mà không làm mất cấu hình."
+   },
+   "faq_a_9": {
+      "message": "Theo mặc định, bạn sẽ nhận được thông báo. Tuy nhiên, nếu bạn muốn dừng thông báo, bạn có thể chọn tùy chọn \"Không hiển thị thông báo\" để tắt chúng."
+   },
+   "february": {
+      "message": "Tháng hai"
+   },
+   "filterTips": {
+      "message": "Bộ lọc áp dụng sau 'https://' hoặc 'www.', Ví dụ 'github.com'"
+   },
+   "for_exp": {
+      "message": "Ví dụ"
+   },
+   "freeForever": {
+      "message": "Miễn phí mãi mãi"
+   },
+   "freeSchedule": {
+      "message": "lịch trình miễn phí"
+   },
+   "freeTral": {
+      "message": "Là người dùng đầu tiên có giá trị, bạn sẽ được hưởng\u003Crday>120\u003C/rday>ngày truy cập miễn phí trước khi chuyển sang gói trả phí mới của chúng tôi—cảm ơn bạn đã tiếp tục ủng hộ!\u003Cp class=\"p-t-5\">Bạn có\u003Cb>\u003Cspan>\u003C/span>\u003C/b>ngày còn lại của bạn\u003Crday>120\u003C/rday>-ngày miễn phí.\u003Cafex class=\"warning\">\u003Cafex>\u003C/afex>\u003C/afex>\u003C/p> "
+   },
+   "frequentlyAskedQuestions": {
+      "message": "Những câu hỏi thường gặp"
+   },
+   "friday": {
+      "message": "Thứ sáu"
+   },
+   "getThisPlan": {
+      "message": "Nhận Kế hoạch Này"
+   },
+   "goToSettingsPageToSchedule": {
+      "message": "Vào trang cài đặt để lên lịch mở và đóng URL."
+   },
+   "goURL": {
+      "message": "Đi đến URL"
+   },
+   "helpAccordion12": {
+      "message": "Tiện ích mở rộng này có hoạt động ở chế độ ngủ/tạm dừng không?"
+   },
+   "helpAccordion3": {
+      "message": "Tôi có thể lên lịch mở một tab ở chế độ ẩn danh không?"
+   },
+   "helpAccordion6": {
+      "message": "\"Thời gian hết hạn\" là gì?"
+   },
+   "helpAccordion7": {
+      "message": "Tôi có thể xuất URL đã lên lịch không?"
+   },
+   "helpAccordion8": {
+      "message": "Tôi có thể nhập vào URL Lịch trình không?"
+   },
+   "helpPanelBodyDesc12First": {
+      "message": "Không, tiện ích mở rộng này sẽ không hoạt động ở chế độ ngủ/tạm dừng."
+   },
+   "helpPanelBodyDesc12Second": {
+      "message": "Nếu bất kỳ URL nào được lên lịch trong tab mở hoặc đóng, thì máy tính của bạn sẽ không tự động chuyển sang chế độ ngủ hoặc chế độ tạm dừng."
+   },
+   "helpPanelBodyDesc3": {
+      "message": "Có, bạn có thể chọn mở một tab đã lên lịch ở chế độ ẩn danh bằng cách chọn tùy chọn 'Mở ở chế độ ẩn danh'. Đảm bảo tùy chọn 'Cho phép ở chế độ ẩn danh' của tiện ích mở rộng được bật trong cài đặt tiện ích mở rộng của trình duyệt."
+   },
+   "helpPanelBodyDesc6": {
+      "message": "- Ngày và giờ được chỉ định là ngày và giờ hiện tại thì sẽ hiển thị dòng chữ \"Đã hết hạn\"."
+   },
+   "helpPanelBodyDesc7": {
+      "message": "Có, bạn có thể Xuất URL tab mở và tab đóng đã lên lịch ở định dạng csv và sử dụng nó với hệ thống khác để nhập URL đó."
+   },
+   "helpPanelBodyDesc8": {
+      "message": "Có, bạn có thể nhập URL mở và đóng hợp lệ ở định dạng csv. Định dạng csv đã nhập sẽ tự động lên lịch theo thời gian đã cho"
+   },
+   "herAreStepsToAllow": {
+      "message": "Sau đây là các bước để \"Cho phép ở chế độ ẩn danh\" trong Google Chrome:"
+   },
+   "home": {
+      "message": "Trang chủ"
+   },
+   "hour_minute_close": {
+      "message": "Mỗi giờ gần phút"
+   },
+   "hour_minute_open": {
+      "message": "Mỗi giờ mở phút"
+   },
+   "how_to_use_tab": {
+      "message": "Làm thế nào để sử dụng Tab Scheduler?"
+   },
+   "import": {
+      "message": "Nhập khẩu"
+   },
+   "importClsTbDta": {
+      "message": "Nhập dữ liệu tab đóng"
+   },
+   "importExport": {
+      "message": "Nhập/Xuất"
+   },
+   "importOpenTbDt": {
+      "message": "Nhập dữ liệu tab mở"
+   },
+   "importedRecored": {
+      "message": ", nhập khẩu ghi lại"
+   },
+   "inactivateScheduleTab": {
+      "message": "Hủy kích hoạt tab đã lên lịch."
+   },
+   "inactive": {
+      "message": "Không hoạt động"
+   },
+   "inactiveSch": {
+      "message": "8.URL không hoạt động"
+   },
+   "inactiveSchExm1": {
+      "message": "Trong ví dụ trên, URL được cung cấp ở dạng tab đang mở hoặc tab đang đóng, điều này cho biết URL này không hoạt động và sẽ không thực hiện bất kỳ hành động nào."
+   },
+   "inactiveThisScheduledTabs": {
+      "message": "Kích hoạt tab đã lên lịch này"
+   },
+   "invalidDuplicate": {
+      "message": ", trùng lặp hoặc ghi lại không hợp lệ"
+   },
+   "invldLicKy": {
+      "message": "Khóa cấp phép không hợp lệ!"
+   },
+   "isClose": {
+      "message": "gần rồi"
+   },
+   "isOpen": {
+      "message": "đang mở"
+   },
+   "january": {
+      "message": "Tháng Một"
+   },
+   "july": {
+      "message": "Tháng bảy"
+   },
+   "june": {
+      "message": "Tháng sáu"
+   },
+   "licKeyDis": {
+      "message": "Khóa cấp phép này đã bị vô hiệu hóa."
+   },
+   "listTitle": {
+      "message": "Trình lập lịch tab"
+   },
+   "loading": {
+      "message": "Vui lòng chờ..."
+   },
+   "locale": {
+      "message": "vi"
+   },
+   "march": {
+      "message": "Bước đều"
+   },
+   "maxSchedule": {
+      "message": "4 Giới hạn lịch trình tối đa"
+   },
+   "may": {
+      "message": "Có thể"
+   },
+   "mintValid": {
+      "message": "Yêu cầu tối thiểu 1 phút"
+   },
+   "minute": {
+      "message": "Phút"
+   },
+   "minutesNotLessThan1": {
+      "message": "Số phút không được ít hơn 1."
+   },
+   "monday": {
+      "message": "Thứ hai"
+   },
+   "month": {
+      "message": "Tháng"
+   },
+   "monthly": {
+      "message": "Hàng tháng"
+   },
+   "more": {
+      "message": "hơn"
+   },
+   "mostSubscribe": {
+      "message": "Đăng ký nhiều nhất"
+   },
+   "no": {
+      "message": "KHÔNG"
+   },
+   "noDataToExport": {
+      "message": "Không có dữ liệu để xuất."
+   },
+   "noScheduledTabs": {
+      "message": "Không có tab theo lịch trình"
+   },
+   "noTimerSetAddNewTimer": {
+      "message": "Không đặt bộ hẹn giờ, Nhấp vào nút Thêm để đặt bộ hẹn giờ mới"
+   },
+   "not_show_tutorial": {
+      "message": "Không hiển thị hướng dẫn này nữa"
+   },
+   "notificationOpenTab": {
+      "message": "13. Thông báo về URL mở/đóng tab"
+   },
+   "notificationOpenTabExm1": {
+      "message": "Trong ví dụ trên, URL được đưa ra trong tab đang mở, điều này có nghĩa là nó sẽ đưa ra thông báo và mở/đóng URL trong tab mới sau mỗi 5 phút."
+   },
+   "notifications": {
+      "message": "Thông báo"
+   },
+   "november": {
+      "message": "Tháng mười một"
+   },
+   "october": {
+      "message": "Tháng Mười"
+   },
+   "onTheExtensionDetailPage": {
+      "message": "Trên trang chi tiết của tiện ích mở rộng, cuộn xuống và tìm tùy chọn “Cho phép ở chế độ ẩn danh”."
+   },
+   "oneTime": {
+      "message": "Một lần"
+   },
+   "oneTmSch": {
+      "message": "1. Lịch trình một lần"
+   },
+   "oneTmSchExm1": {
+      "message": "Trong ví dụ trên, URL được đưa ra ở tab mở, điều này có nghĩa là nó sẽ mở ở tab mới Một lần lúc 13:45 ngày 21/1/2023"
+   },
+   "oneTmSchExm2": {
+      "message": "Trong ví dụ trên, URL được đưa ra ở tab đóng, điều này có nghĩa là nó sẽ đóng tất cả các tab URL khớp cụ thể vào lúc 13:45 ngày 21/1/2023"
+   },
+   "open": {
+      "message": "Mở"
+   },
+   "openBackground": {
+      "message": "Nếu có, Tải URL ở chế độ nền mà không mở nó trong một tab mới"
+   },
+   "openDate": {
+      "message": "Ngày mở cửa"
+   },
+   "openDay": {
+      "message": "Ngày mở cửa"
+   },
+   "openEveryDayOn": {
+      "message": "Mở cửa hàng ngày vào"
+   },
+   "openEveryMonthOn": {
+      "message": "Mở cửa hàng tháng vào ngày"
+   },
+   "openEveryWeekOn": {
+      "message": "Mở cửa hàng tuần vào"
+   },
+   "openEveryYearOn": {
+      "message": "Mở cửa hàng năm vào"
+   },
+   "openGoogleChrome": {
+      "message": "Mở Google Chrome."
+   },
+   "openInBackground": {
+      "message": "Mở URL trong nền"
+   },
+   "openInEvery": {
+      "message": "Mở trong mọi"
+   },
+   "openInIncognito": {
+      "message": "Mở ở chế độ ẩn danh"
+   },
+   "openMinute": {
+      "message": "Phút mở"
+   },
+   "openOnDay": {
+      "message": "Mở cửa vào ban ngày"
+   },
+   "openOnEvery": {
+      "message": "Mở cửa vào mọi lúc"
+   },
+   "openSecond": {
+      "message": "Mở thứ hai"
+   },
+   "openSecondsMoreThan5": {
+      "message": "Số giây mở phải lớn hơn 5."
+   },
+   "openTabSchedule": {
+      "message": "Mở lịch tab"
+   },
+   "openTabURL": {
+      "message": "Mở URL Tab"
+   },
+   "openTime": {
+      "message": "Giờ mở cửa"
+   },
+   "openUrl": {
+      "message": "Mở liên kết trang web"
+   },
+   "openWeek": {
+      "message": "Tuần lễ mở cửa"
+   },
+   "openWeeks": {
+      "message": "Tuần mở cửa"
+   },
+   "open_on": {
+      "message": "Mở trên"
+   },
+   "optional": {
+      "message": "Không bắt buộc"
+   },
+   "or": {
+      "message": "hoặc"
+   },
+   "outof": {
+      "message": "ra khỏi"
+   },
+   "pagePath": {
+      "message": "Đường dẫn trang"
+   },
+   "paidFeature": {
+      "message": "Tính năng trả phí"
+   },
+   "pauseSchedule": {
+      "message": "Bắt đầu hoặc dừng tất cả các lịch trình"
+   },
+   "pauseTabScheduler": {
+      "message": "Trình lập lịch Tab tạm dừng"
+   },
+   "pleaseAllowIncognitoMessage": {
+      "message": "Vui lòng bật tùy chọn 'Cho phép ở chế độ ẩn danh' trong phần chi tiết tiện ích mở rộng. Để biết hướng dẫn, vui lòng tham khảo trang hướng dẫn."
+   },
+   "pleaseShareYourSuggestions": {
+      "message": "Hãy chia sẻ gợi ý của bạn."
+   },
+   "plsShreAnySugWithUs": {
+      "message": "Xin vui lòng cho chúng tôi một gợi ý để cải thiện"
+   },
+   "powerMode": {
+      "message": "Chế độ nguồn"
+   },
+   "premium": {
+      "message": "Phần thưởng"
+   },
+   "pricePlan": {
+      "message": "Giá cả &amp; Kế hoạch"
+   },
+   "privcyPolicy": {
+      "message": "Chính sách bảo mật"
+   },
+   "prowerModeTip": {
+      "message": "Giữ hệ thống luôn hoạt động bằng cách bật Chế độ nguồn"
+   },
+   "put": {
+      "message": "Đặt"
+   },
+   "rateUs": {
+      "message": "Đánh giá chúng tôi"
+   },
+   "removeDuplicateEntry": {
+      "message": "Vui lòng xóa mục nhập trùng lặp"
+   },
+   "removeOpenTbURL": {
+      "message": "Xóa URL tab đang mở"
+   },
+   "repeat": {
+      "message": "Lặp lại"
+   },
+   "requiredMsg": {
+      "message": "Yêu cầu"
+   },
+   "rmvClsTb": {
+      "message": "Xóa URL tab đóng"
+   },
+   "sameTabs": {
+      "message": "Làm mới tab nếu URL đã mở"
+   },
+   "sameTabsInfo": {
+      "message": "Ngăn chặn việc mở nhiều tab cho cùng một URL. Ví dụ, nếu www.google.com đã được mở, thì tab hiện tại đó sẽ được làm mới thay vì mở một tab mới cho nó."
+   },
+   "sampleCsvOpenPath": {
+      "message": "../sample_csv/en/open_tab_sample.csv"
+   },
+   "sampleFile": {
+      "message": "Tệp mẫu"
+   },
+   "saturday": {
+      "message": "Thứ bảy"
+   },
+   "savOpnData": {
+      "message": "Lưu dữ liệu tab đang mở"
+   },
+   "save": {
+      "message": "Cứu"
+   },
+   "saveClsTbData": {
+      "message": "Lưu dữ liệu tab đóng"
+   },
+   "saveSchedule": {
+      "message": "Lưu Lịch Trình"
+   },
+   "scheduleCloseTab": {
+      "message": "Lịch trình Đóng Tab"
+   },
+   "scheduleCurrentTab": {
+      "message": "Lên lịch tab hiện tại"
+   },
+   "scheduleOpenTab": {
+      "message": "Lịch mở tab"
+   },
+   "scheduledTabIsAlreadyExistWithSameTimer": {
+      "message": "Tab theo lịch trình này đã tồn tại với cùng bộ đếm thời gian."
+   },
+   "scheduledTabList": {
+      "message": "Danh sách tab đã lên lịch"
+   },
+   "scheduledType": {
+      "message": "Loại lịch trình"
+   },
+   "search": {
+      "message": "Tìm kiếm"
+   },
+   "secValid": {
+      "message": "Yêu cầu tối thiểu 5 giây"
+   },
+   "second": {
+      "message": "Thứ hai"
+   },
+   "selectCloseDate": {
+      "message": "Chọn ngày đóng"
+   },
+   "selectCloseDay": {
+      "message": "Chọn ngày đóng"
+   },
+   "selectCloseTime": {
+      "message": "Chọn thời gian đóng"
+   },
+   "selectColumn": {
+      "message": "Chọn Cột"
+   },
+   "selectDateAndTime": {
+      "message": "Chọn ngày và giờ để mở tab mới"
+   },
+   "selectDateAndTimeClsTb": {
+      "message": "Chọn ngày và giờ để đóng tab"
+   },
+   "selectDayToCloseSchTb": {
+      "message": "Chọn ngày để đóng tab lịch trình."
+   },
+   "selectDayToClsTb": {
+      "message": "Chọn ngày để đóng tab"
+   },
+   "selectDayToSchdule": {
+      "message": "Chọn ngày để lên lịch tab."
+   },
+   "selectDaysInWeek": {
+      "message": "Chọn ngày trong tuần"
+   },
+   "selectDaysInWeekIClsTime": {
+      "message": "Chọn ngày trong tuần trong bộ đếm thời gian đóng."
+   },
+   "selectDaysInWeekIOpClsTime": {
+      "message": "Chọn ngày trong tuần để mở hoặc đóng bộ hẹn giờ."
+   },
+   "selectDaysInWeekIOpTime": {
+      "message": "Chọn ngày trong tuần trong bộ đếm thời gian mở."
+   },
+   "selectFrequency": {
+      "message": "Chọn tần số"
+   },
+   "selectFrequencyOfScheduleUrl": {
+      "message": "Chọn tần suất của URL theo lịch trình."
+   },
+   "selectOpenDate": {
+      "message": "Chọn ngày mở"
+   },
+   "selectOpenDay": {
+      "message": "Chọn ngày mở cửa"
+   },
+   "selectOpenOrClose": {
+      "message": "Chọn thời gian mở và đóng"
+   },
+   "selectOpenOrCloseDate": {
+      "message": "Chọn ngày mở và đóng"
+   },
+   "selectOpenOrCloseDay": {
+      "message": "Chọn ngày mở và đóng"
+   },
+   "selectOpenTime": {
+      "message": "Chọn thời gian mở"
+   },
+   "selectPreferredLanguage": {
+      "message": "Chọn ngôn ngữ bạn muốn."
+   },
+   "selectToOpenTab": {
+      "message": "Chọn ngày để mở tab mới"
+   },
+   "selectTypTimerClsTb": {
+      "message": "Chọn loại bộ đếm thời gian để đóng tab"
+   },
+   "selectTypeOfSchedule": {
+      "message": "Chọn loại lịch trình, nếu bạn muốn cả mở và đóng thì chọn \"Cả hai\"."
+   },
+   "selectTypeOfTimer": {
+      "message": "Chọn loại bộ đếm thời gian để mở tab mới"
+   },
+   "select_weeks": {
+      "message": "Chọn tuần"
+   },
+   "september": {
+      "message": "Tháng 9"
+   },
+   "settingSave": {
+      "message": "Cài đặt đã lưu thành công"
+   },
+   "settingToClose": {
+      "message": "Cài đặt đóng tab ở chế độ ẩn danh."
+   },
+   "shareYourSuggestionWithUs": {
+      "message": "Hãy chia sẻ những gợi ý của bạn với chúng tôi.."
+   },
+   "slectDayToScheduleWeekly": {
+      "message": "Chọn ngày để lên lịch tab hàng tuần."
+   },
+   "slectMinute": {
+      "message": "Chọn phút"
+   },
+   "smthngWrng": {
+      "message": "Có gì đó không ổn"
+   },
+   "softpulseInfotech": {
+      "message": "Công nghệ thông tin Softpulse"
+   },
+   "somethingWentWrong": {
+      "message": "Có lỗi xảy ra. Hãy làm mới trang và thử lại."
+   },
+   "status": {
+      "message": "Trạng thái"
+   },
+   "subcrKeyShldNEmpt": {
+      "message": "Vui lòng nhập mã đăng ký."
+   },
+   "subdomain": {
+      "message": "Tên miền phụ"
+   },
+   "subkeyInputTitle": {
+      "message": "Nhập mã đăng ký"
+   },
+   "submFeedBack": {
+      "message": "Nộp"
+   },
+   "suggForTbSch": {
+      "message": "Gợi ý cho trình lập lịch tab"
+   },
+   "suggestionAndRateUs": {
+      "message": "Gợi ý &amp; Đánh giá chúng tôi"
+   },
+   "sunday": {
+      "message": "Chủ nhật"
+   },
+   "tabCloseOneTime": {
+      "message": "Tab sẽ chỉ đóng một lần duy nhất"
+   },
+   "tabSchTutorial": {
+      "message": "Hướng dẫn lập lịch tab"
+   },
+   "tabScheduler": {
+      "message": "Trình lập lịch tab"
+   },
+   "tabSchedulerOptions": {
+      "message": "Tùy chọn lập lịch tab"
+   },
+   "tabWillOpenOneTime": {
+      "message": "Tab sẽ chỉ mở một lần trên"
+   },
+   "tabWillOpenWhenBrowserOpen": {
+      "message": "Tab sẽ mở khi trình duyệt mở trên"
+   },
+   "termCondition": {
+      "message": "Điều khoản &amp; Điều kiện"
+   },
+   "thanksFrRev": {
+      "message": "Cảm ơn bạn đã đánh giá"
+   },
+   "thnkUFeedBack": {
+      "message": "Cảm ơn vì gợi ý của bạn"
+   },
+   "thnkUFrUsngTbSch": {
+      "message": "Xin vui lòng cho chúng tôi một gợi ý để cải thiện"
+   },
+   "thursday": {
+      "message": "Thứ năm"
+   },
+   "time": {
+      "message": "Thời gian"
+   },
+   "timeExpired": {
+      "message": "Thời gian đã hết hạn"
+   },
+   "timer": {
+      "message": "Bộ đếm thời gian"
+   },
+   "title": {
+      "message": "Tiêu đề"
+   },
+   "titleLengtWarn": {
+      "message": "Độ dài tiêu đề không được quá 200 ký tự."
+   },
+   "toScheduledOpenTbMsg": {
+      "message": "Để lên lịch mở tab, vui lòng bỏ chọn lọc url."
+   },
+   "toogleCloseTab": {
+      "message": "Bắt đầu/Dừng báo thức theo lịch trình cho tất cả URL tab đóng"
+   },
+   "toogleDarkmode": {
+      "message": "Chuyển đổi giữa chế độ tối và chế độ mặc định để tùy chỉnh trải nghiệm xem của bạn."
+   },
+   "toogleOff": {
+      "message": "Tắt"
+   },
+   "toogleOn": {
+      "message": "TRÊN"
+   },
+   "toogleOpenTab": {
+      "message": "Bắt đầu/Dừng báo thức theo lịch trình cho tất cả URL tab đang mở"
+   },
+   "topLevelDomain": {
+      "message": "Tên miền cấp cao nhất"
+   },
+   "totalProcessed": {
+      "message": "Tổng số đã ghi lại được xử lý"
+   },
+   "tuesday": {
+      "message": "Thứ ba"
+   },
+   "tutorialImg1": {
+      "message": "\u003Cimg src=\"../images/en/1.png\">"
+   },
+   "tutorialImg10": {
+      "message": "\u003Cimg src=\"../images/en/10.png\">"
+   },
+   "tutorialImg11": {
+      "message": "\u003Cimg src=\"../images/en/11.png\">"
+   },
+   "tutorialImg12": {
+      "message": "\u003Cimg src=\"../images/en/12.png\">"
+   },
+   "tutorialImg13": {
+      "message": "\u003Cimg src=\"../images/en/13.png\">"
+   },
+   "tutorialImg14": {
+      "message": "\u003Cimg src=\"../images/en/14.png\">"
+   },
+   "tutorialImg2": {
+      "message": "\u003Cimg src=\"../images/en/2.png\">"
+   },
+   "tutorialImg3": {
+      "message": "\u003Cimg src=\"../images/en/3.png\">"
+   },
+   "tutorialImg4": {
+      "message": "\u003Cimg src=\"../images/en/4.png\">"
+   },
+   "tutorialImg5": {
+      "message": "\u003Cimg src=\"../images/en/5.png\">"
+   },
+   "tutorialImg6": {
+      "message": "\u003Cimg src=\"../images/en/6.png\">"
+   },
+   "tutorialImg7": {
+      "message": "\u003Cimg src=\"../images/en/7.png\">"
+   },
+   "tutorialImg8": {
+      "message": "\u003Cimg src=\"../images/en/8.png\">"
+   },
+   "tutorialImg9": {
+      "message": "\u003Cimg src=\"../images/en/9.png\">"
+   },
+   "uncheckAll": {
+      "message": "Bỏ chọn tất cả"
+   },
+   "unlimitedSchedule": {
+      "message": "Giới hạn lịch trình không giới hạn"
+   },
+   "unspecifiedURL": {
+      "message": "11. Đường dẫn URL không xác định"
+   },
+   "unspecifiedURLExm1": {
+      "message": "Trong ví dụ trên, URL được đưa ra ở tab đóng, điều này có nghĩa là URL được mở trong một tab mới và bắt đầu và kết thúc bằng một địa chỉ web không xác định sẽ bị đóng sau 5 phút."
+   },
+   "upgradePlan": {
+      "message": "Vui lòng Mua Gói HOẶC Đăng nhập &amp; Nâng cấp gói của bạn để mở khóa thêm nhiều tính năng."
+   },
+   "upgradePlanUnlock": {
+      "message": "Nâng cấp gói của bạn để mở khóa thêm nhiều tính năng."
+   },
+   "uploadValidFormat": {
+      "message": "Vui lòng tải lên định dạng hợp lệ"
+   },
+   "url": {
+      "message": "Địa chỉ URL"
+   },
+   "urlContExat": {
+      "message": "Lọc URL"
+   },
+   "urlEndWithUnspesifiedPth": {
+      "message": "9. URL kết thúc bằng đường dẫn không xác định"
+   },
+   "urlEndWithUnspesifiedPthExm1": {
+      "message": "Trong ví dụ trên, URL được đưa ra ở tab đóng, điều này có nghĩa là URL được mở trong một tab mới và kết thúc bằng đường dẫn không xác định sẽ bị đóng sau 5 phút."
+   },
+   "urlFilterInfo": {
+      "message": "Chỉ cần một phần URL được kiểm tra và URL chính xác được kiểm tra phải khớp chính xác với URL đã chỉ định"
+   },
+   "urlFilterinCLoseTb": {
+      "message": "14. Lọc URL trên URL tab đóng"
+   },
+   "urlFilterinCLoseTbExample": {
+      "message": "Trong ví dụ trên, URL được đưa ra đang ở trong tab đóng, điều này cho biết URL tab đã mở đã khớp với một số phần của URL được đưa ra nên nó sẽ đóng tab đó"
+   },
+   "urlIsRequired": {
+      "message": "Liên kết trang web là bắt buộc"
+   },
+   "urlNotvalid": {
+      "message": "URL không hợp lệ"
+   },
+   "urlStartWithUnspesifiedPth": {
+      "message": "10. URL bắt đầu bằng đường dẫn không xác định"
+   },
+   "urlStartWithUnspesifiedPthExm1": {
+      "message": "Trong ví dụ trên, URL được đưa ra ở tab đóng, điều này có nghĩa là URL được mở trong một tab mới và bắt đầu bằng tên miền phụ không xác định \u003Cb>'www'\u003C/b> hoặc \u003Cb>'blog'\u003C/b> sẽ bị đóng sau 5 phút."
+   },
+   "useSpecificUrl": {
+      "message": "Sử dụng liên kết trang web cụ thể"
+   },
+   "useSpecificUrl1": {
+      "message": "Bạn phải viết chính xác tên miền phụ, tên miền cấp cao nhất, tên miền và đường dẫn trang trong trường Liên kết trang web vào tab của trình duyệt đã đóng."
+   },
+   "useSpecificUrl2": {
+      "message": "Sử dụng đóng tất cả các tab của trình duyệt"
+   },
+   "useSpecificUrl3": {
+      "message": "Sử dụng liên kết trang web cụ thể và đầy đủ"
+   },
+   "useUnSpecificUrl1": {
+      "message": "Sử dụng liên kết trang web không xác định"
+   },
+   "useUnSpecificUrl2": {
+      "message": "Sử dụng bắt đầu bằng liên kết trang web không xác định"
+   },
+   "useUnSpecificUrl3": {
+      "message": "Sử dụng kết thúc với liên kết trang web không xác định"
+   },
+   "used": {
+      "message": "Bạn đã sử dụng"
+   },
+   "validFormatCsv": {
+      "message": "Định dạng tệp CSV hợp lệ để nhập là gì?"
+   },
+   "websiteLink": {
+      "message": "Liên kết trang web"
+   },
+   "websiteUrl": {
+      "message": "URL trang web"
+   },
+   "wednesday": {
+      "message": "Thứ Tư"
+   },
+   "weekName": {
+      "message": "Tên tuần"
+   },
+   "weekly": {
+      "message": "Hàng tuần"
+   },
+   "whenExtensionTabAppears": {
+      "message": "Khi tab Tiện ích mở rộng xuất hiện, hãy tìm \"Trình lập lịch tab với chức năng tự động mở và đóng\" để bật ở chế độ Ẩn danh và nhấp vào nút \"Chi tiết\" bên cạnh."
+   },
+   "whenMenuPopup": {
+      "message": "Khi menu bật lên, hãy chọn \"Quản lý tiện ích mở rộng\"."
+   },
+   "withSignMustFill": {
+      "message": "Dấu \u003Cspan>*\u003C/span> phải được điền hoặc chọn, Chọn thời gian mở hoặc đóng hoặc cả hai thời gian."
+   },
+   "writeYourDescriptionAboutSchUrl": {
+      "message": "Viết mô tả về url đã lên lịch tại đây."
+   },
+   "yes": {
+      "message": "Đúng"
+   },
+   "yourEmailAddress": {
+      "message": "Địa chỉ email của bạn"
+   },
+   "yourScheduleUrl": {
+      "message": "URL Lịch trình của bạn"
+   }
+}

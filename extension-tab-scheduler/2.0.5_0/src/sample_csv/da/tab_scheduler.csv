@@ -1,0 +1,4 @@
+﻿URL,Timer,Status,Åbningsdato,Luk dato,Åben tid,Lukketid,Åben uge,Luk uge,Åbn browseren,Åben dag,Lukkedag,Åbent minut,Luk minut,Åben anden,Luk anden,Notifikation,Titel,Beskrivelse,Åbn URL i baggrunden,Åbn i inkognitotilstand,Luk ikke fastgjorte faner,Luk kun inkognitofaner,URL-filtrering,Skematype,Hver time åbent minut,Hver time tæt minut,Opdater fanen hvis URL'en allerede er åben
+https://www.google.com/,Hvert minut,Aktiv,,,,,"","","",,,,,,,Inaktiv,Close Every Minute,,Ingen,Ingen,Ingen,Ingen,Ja,Tæt,0,0,Ja
+http://www.w3schools.com/,Hver dag,Aktiv,,,16:31,,"","","",,,,,,,Inaktiv,Every Day Open,,Ingen,Ingen,Ingen,Ingen,Ingen,Åben,0,0,Ingen
+https://www.flipkart.com/,Brugerdefineret minut,Aktiv,,,,,"","","",,,120,5,,,Inaktiv,Open and Close,,Ingen,Ingen,Ingen,Ingen,Ingen,Begge,0,0,Ingen

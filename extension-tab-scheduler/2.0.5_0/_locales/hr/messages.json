@@ -1,0 +1,1448 @@
+{
+   "10_min": {
+      "message": "10 minuta"
+   },
+   "1_min": {
+      "message": "1 minuta"
+   },
+   "30_min": {
+      "message": "30 minuta"
+   },
+   "5_min": {
+      "message": "5 minuta"
+   },
+   "60_min": {
+      "message": "sat"
+   },
+   "Dashboard": {
+      "message": "Nadzorna ploča"
+   },
+   "Login": {
+      "message": "Prijava"
+   },
+   "Off": {
+      "message": "Isključeno"
+   },
+   "On": {
+      "message": "Na"
+   },
+   "Selected": {
+      "message": "Odabrano"
+   },
+   "Settings": {
+      "message": "postavke"
+   },
+   "Tutorial": {
+      "message": "Tutorial"
+   },
+   "action": {
+      "message": "Akcijski"
+   },
+   "activateScheduleTab": {
+      "message": "Aktiviraj zakazanu karticu."
+   },
+   "active": {
+      "message": "Aktivan"
+   },
+   "activeAllScheduleTab": {
+      "message": "Pokretanje planera kartica"
+   },
+   "activeStatus": {
+      "message": "Status"
+   },
+   "actvInactvNotification": {
+      "message": "Prikaz obavijesti kada se otvori kartica rasporeda"
+   },
+   "actvInactvOpnTb": {
+      "message": "Aktivna ili neaktivna otvorena kartica"
+   },
+   "actvIntvClsTb": {
+      "message": "Aktivno ili neaktivno zatvaranje kartice"
+   },
+   "add": {
+      "message": "Dodati"
+   },
+   "addDescription": {
+      "message": "Dodajte opis"
+   },
+   "addNew": {
+      "message": "Dodaj novo"
+   },
+   "addNewURlCls": {
+      "message": "Dodajte novi URL za zatvaranje"
+   },
+   "addNewUrlToOpen": {
+      "message": "Dodajte novi URL za otvaranje u novom prozoru"
+   },
+   "addTitle": {
+      "message": "Dodajte naslov"
+   },
+   "addWebsite": {
+      "message": "Dodajte web stranicu"
+   },
+   "all": {
+      "message": "Sve"
+   },
+   "allInputFieldReq": {
+      "message": "Sva polja su obavezna"
+   },
+   "all_weeks": {
+      "message": "Cijeli tjedan"
+   },
+   "alreadyPurchase": {
+      "message": "Već ste kupili? Unesite ključ ovdje"
+   },
+   "andAt": {
+      "message": "i kod"
+   },
+   "annually": {
+      "message": "Godišnje"
+   },
+   "appDesc": {
+      "message": "Kartice preglednika automatski će se otvarati i zatvarati u odabrano vrijeme. Korisnik može aktivirati/deaktivirati popis na temelju zahtjeva"
+   },
+   "appName": {
+      "message": "Planer kartica s automatskim otvaranjem i zatvaranjem"
+   },
+   "april": {
+      "message": "travanj"
+   },
+   "at": {
+      "message": "na"
+   },
+   "august": {
+      "message": "kolovoz"
+   },
+   "autoFocus": {
+      "message": "Kartica Auto Fokus"
+   },
+   "autoFocustip": {
+      "message": "Ako je uključeno, nova će se kartica otvoriti u aktivnom/fokusnom stanju."
+   },
+   "autofocustip": {
+      "message": "Nove otvorene kartice automatski će se fokusirati"
+   },
+   "basic": {
+      "message": "Osnovno"
+   },
+   "billedAnnyally": {
+      "message": "Naplaćuje se godišnje"
+   },
+   "billedMonthly": {
+      "message": "Naplaćuje se mjesečno"
+   },
+   "both": {
+      "message": "Oba"
+   },
+   "browserOpen": {
+      "message": "Na Browser Open"
+   },
+   "browserWebAddress": {
+      "message": "Web adresa preglednika počinje i završava s nepoznatom web adresom. Stavite \u003Cb>*\u003C/b> s obje strane polja za unos veze na web mjesto."
+   },
+   "browserWebAddress2": {
+      "message": "Web adresa preglednika sadrži naziv domene google.com, koja će se zatvoriti za dane minute bez obzira na poddomenu i put stranice. Stavite \u003Cb>*\u003C/b> s obje strane imena domene i TLD-a"
+   },
+   "browserWebAddress3": {
+      "message": "Web-adresa preglednika počinje s nepoznatim nazivom domene i završava s nepoznatim putem stranice"
+   },
+   "browserWebAddress31": {
+      "message": "zatvorit će se nakon danih minuta, stavite \u003Cb>*\u003C/b> s obje strane TLD-a"
+   },
+   "browserWebAddress4": {
+      "message": "Web adresa preglednika počinje s nepoznatom web adresom. Stavite \u003Cb>*\u003C/b> na početak vašeg URL-a. Ne zaboravite da se web adresa preglednika mora podudarati s vašim URL-om nakon upisanog \u003Cb>* .\u003C/b>"
+   },
+   "browserWebAddress41": {
+      "message": "Web adresa preglednika počinje s nepoznatom poddomenom"
+   },
+   "browserWebAddress42": {
+      "message": "na početku veze vaše web stranice"
+   },
+   "browserWebAddress5": {
+      "message": "Web adresa preglednika završava s nepoznatom web adresom. Stavite \u003Cb>*\u003C/b> na kraj vašeg URL-a. Imajte na umu da vaša web adresa mora odgovarati prije nego što ste napisali \u003Cb>* .\u003C/b>"
+   },
+   "browserWebAddress51": {
+      "message": "Web adresa preglednika završava nepoznatom stazom stranice. Stavite \u003Cb>*\u003C/b> na kraju vaše web adrese"
+   },
+   "browserWebAddress6": {
+      "message": "Stavite samo \u003Cb>*\u003C/b> u polje adrese web stranice kako biste zatvorili sve kartice preglednika. Nakon zatvaranja sve kartice preglednika automatski će se zatvoriti."
+   },
+   "browserWebAddress7": {
+      "message": "Morate napisati točnu poddomenu, domenu najviše razine, naziv domene i putanju stranice u URL polje za otvaranje u kartici preglednika."
+   },
+   "browserWebAddress8": {
+      "message": "Možete otvoriti url na određeni datum i vrijeme, određeni mjesec, određeni tjedan, određenu godinu i vrijeme ponavljanja"
+   },
+   "buyPlan": {
+      "message": "Plan kupnje"
+   },
+   "buycofee": {
+      "message": "Kupi mi kavu"
+   },
+   "cancel": {
+      "message": "Otkazati"
+   },
+   "changeLanguage": {
+      "message": "Promjena jezika"
+   },
+   "checkAll": {
+      "message": "Označi sve"
+   },
+   "checkThisOpToPreventClosePinTb": {
+      "message": "Označite ovu opciju kako biste spriječili zatvaranje prikvačenih kartica."
+   },
+   "checkThisOptionOnlyPartOfUrlMtch": {
+      "message": "Označite ovu opciju ako se samo dio URL-a treba podudarati."
+   },
+   "checkThisOptionToActivate": {
+      "message": "Označite ovu opciju da aktivirate ili deaktivirate zakazani URL."
+   },
+   "checkThisOptionToCloseOnly": {
+      "message": "Označite ovu opciju da biste zatvorili samo anonimne kartice. Također, omogućite opciju \"Dopusti u anonimnom načinu\" u detaljima proširenja. Za upute pogledajte stranicu s uputama."
+   },
+   "checkThisOptionToCloseOnlyInIncgnitoTb": {
+      "message": "Označite ovu opciju da biste zatvorili samo anonimne kartice. Također, omogućite opciju \"Dopusti u anonimnom načinu\" u detaljima proširenja. Za upute pogledajte stranicu s uputama."
+   },
+   "checkThisOptionToInBg": {
+      "message": "Označite ovu opciju ako želite otvoriti URL u pozadini bez otvaranja u novoj kartici"
+   },
+   "checkThisOptionToInactivNotification": {
+      "message": "Označite ovu opciju za neaktivnu obavijest na zakazanom URL-u"
+   },
+   "checkThisOptionToOpen": {
+      "message": "Označite ovu opciju ako želite otvoriti svoj url u anonimnom načinu"
+   },
+   "checkThisOptionToOpenIncogito": {
+      "message": "Označite ovu opciju ako želite otvoriti svoj url u anonimnom načinu"
+   },
+   "checkThisOptionToPrevent": {
+      "message": "Označite ovu opciju kako biste spriječili zatvaranje prikvačenih kartica."
+   },
+   "clickExtIcon": {
+      "message": "Kliknite ikonu \"Proširenja\" na alatnoj traci, koja izgleda kao dio slagalice."
+   },
+   "clickTheSwitch": {
+      "message": "Pritisnite prekidač pored njega da biste ga uključili"
+   },
+   "close": {
+      "message": "Zatvoriti"
+   },
+   "closeAllTab": {
+      "message": "12. Zatvorite sve kartice preglednika"
+   },
+   "closeAllTabExm1": {
+      "message": "U gornjem primjeru navedeni URL nalazi se u kartici Zatvori, što navodi da će zatvoriti sve kartice u 12:00 25. 2. 2023."
+   },
+   "closeDate": {
+      "message": "Datum zatvaranja"
+   },
+   "closeDay": {
+      "message": "Dan zatvaranja"
+   },
+   "closeEveryYear": {
+      "message": "Zatvori svake godine"
+   },
+   "closeInEvery": {
+      "message": "Zatvori u svakom"
+   },
+   "closeIncognitoTab": {
+      "message": "Zatvori samo anonimne kartice"
+   },
+   "closeMinute": {
+      "message": "Zatvori Minutu"
+   },
+   "closeOnDay": {
+      "message": "Zatvori na dan"
+   },
+   "closeOnEvery": {
+      "message": "Zatvori na svaki"
+   },
+   "closeOnEveryDay": {
+      "message": "Zatvori svaki dan"
+   },
+   "closeOnEveryMonth": {
+      "message": "Zatvori svaki mjesec na dan"
+   },
+   "closeOnEveryWeek": {
+      "message": "Zatvori svaki tjedan"
+   },
+   "closeSecond": {
+      "message": "Zatvori drugi"
+   },
+   "closeSeconsMoreThan5": {
+      "message": "Završne sekunde trebaju biti više od 5."
+   },
+   "closeTabSchedule": {
+      "message": "Zatvori karticu Raspored"
+   },
+   "closeTabURL": {
+      "message": "Zatvori karticu URL"
+   },
+   "closeTime": {
+      "message": "Vrijeme zatvaranja"
+   },
+   "closeUrl": {
+      "message": "Zatvori vezu na web mjesto"
+   },
+   "closeWeek": {
+      "message": "Zatvori tjedan"
+   },
+   "closeWeeks": {
+      "message": "Zatvori tjedne"
+   },
+   "close_on": {
+      "message": "Zatvori"
+   },
+   "cngrtsForSubcr": {
+      "message": "čestitamo! Vaš plan je uspješno aktiviran."
+   },
+   "commonQuestionsAns": {
+      "message": "Uobičajena pitanja i odgovori"
+   },
+   "copySucessClose": {
+      "message": "Podaci o URL-u za zatvaranje kartice kopirani su za podatke o URL-u za otvaranje kartice"
+   },
+   "createNewTimer": {
+      "message": "Stvori novi mjerač vremena"
+   },
+   "currentPlan": {
+      "message": "Trenutni plan"
+   },
+   "currentTabSchedule": {
+      "message": "Trenutačni raspored kartica"
+   },
+   "currentTbScheduleTimer": {
+      "message": "Zakazano vrijeme za trenutnu karticu."
+   },
+   "cusSec": {
+      "message": "Custom Second"
+   },
+   "custMin": {
+      "message": "Prilagođena minuta"
+   },
+   "custmMinSch": {
+      "message": "7. Prilagođeni raspored minuta"
+   },
+   "custmMinSchExm1": {
+      "message": "U gornjem primjeru dani URL nalazi se u otvorenoj kartici, što navodi da se dani URL otvara u novoj kartici svakih 15 minuta."
+   },
+   "custmMinSchExm2": {
+      "message": "U gornjem primjeru navedeni URL nalazi se u kartici za zatvaranje, što navodi da će dati URL koji je otvoren u novoj kartici biti zatvoren nakon 15 minuta."
+   },
+   "customSecondWarning": {
+      "message": "Funkcija prilagođene sekunde je eksperimentalna i možda neće ispravno funkcionirati ako su sekunde postavljene ispod 60."
+   },
+   "darkMode": {
+      "message": "Tamni način rada"
+   },
+   "datNotCopy": {
+      "message": "Neki podaci nisu kopirani zbog nevažećeg URL-a."
+   },
+   "dataSaved": {
+      "message": "Podaci mjerača vremena uspješno su spremljeni"
+   },
+   "date": {
+      "message": "Datum"
+   },
+   "dateIsOutOfRange": {
+      "message": "Datum je izvan raspona"
+   },
+   "day": {
+      "message": "Dan"
+   },
+   "december": {
+      "message": "prosinac"
+   },
+   "delete": {
+      "message": "Izbrisati"
+   },
+   "deleteScheduleTb": {
+      "message": "Izbriši zakazanu karticu."
+   },
+   "description": {
+      "message": "Opis"
+   },
+   "developedBy": {
+      "message": "Razvio:"
+   },
+   "doNotCloseInPinnedTabs": {
+      "message": "Nemojte zatvarati prikvačene kartice"
+   },
+   "doNotShowNotification": {
+      "message": "Ne prikazuj obavijest"
+   },
+   "domainName": {
+      "message": "Naziv domene"
+   },
+   "downloadCloseTbSampleCsv": {
+      "message": "Preuzmite uzorak CSV-a za zatvaranje kartice kako biste vidjeli primjer potrebnog formata"
+   },
+   "downloadOpenTbSampleCsv": {
+      "message": "Preuzmite primjer CSV-a otvorene kartice da biste vidjeli primjer potrebnog formata"
+   },
+   "editScheduleTb": {
+      "message": "Uredi zakazanu karticu."
+   },
+   "email": {
+      "message": "E-mail"
+   },
+   "enterDateToCloseTab": {
+      "message": "Unesite datum ovdje da zatvorite karticu rasporeda."
+   },
+   "enterDateToOpen": {
+      "message": "Unesite datum za otvaranje kartice rasporeda."
+   },
+   "enterMiniutesToCloseTb": {
+      "message": "Unesite minute za zatvaranje kartice."
+   },
+   "enterMiniutesToOpen": {
+      "message": "Unesite minute za otvaranje kartice rasporeda."
+   },
+   "enterMinute": {
+      "message": "Unesite minute"
+   },
+   "enterSecond": {
+      "message": "Unesite drugi"
+   },
+   "enterSecondsToCloseTab": {
+      "message": "Unesite sekunde za zatvaranje kartice."
+   },
+   "enterSecondsToOpen": {
+      "message": "Unesite sekunde za otvaranje kartice rasporeda."
+   },
+   "enterTilteOfScheduleUrl": {
+      "message": "Unesite naslov zakazanog URL-a."
+   },
+   "enterTimeToCloseTab": {
+      "message": "Unesite vrijeme ovdje da zatvorite karticu rasporeda."
+   },
+   "enterTimeToSchedule": {
+      "message": "Unesite vrijeme za otvaranje kartice rasporeda."
+   },
+   "enterValidEmail": {
+      "message": "Unesite valjanu e-poštu"
+   },
+   "enterValidUrl": {
+      "message": "Unesite važeći URL"
+   },
+   "enterValueInCloseSec": {
+      "message": "Unesite vrijednost za nekoliko sekundi"
+   },
+   "enterValueInOpenCloseSec": {
+      "message": "Unesite vrijednost u sekundama otvaranja ili zatvaranja"
+   },
+   "enterValueInOpenMinutes": {
+      "message": "Unesite vrijednost u otvorene minute"
+   },
+   "enterVlaueInCloseMinutes": {
+      "message": "Unesite vrijednost za nekoliko minuta"
+   },
+   "enterVlaueInOpenCloseMin": {
+      "message": "Unesite vrijednost u minutama otvaranja ili zatvaranja"
+   },
+   "enterVlaueInOpenSeconds": {
+      "message": "Unesite vrijednost u otvorenim sekundama"
+   },
+   "enterYourURLToSchedule": {
+      "message": "Unesite svoj URL za raspored."
+   },
+   "every": {
+      "message": "svaki"
+   },
+   "every10Min": {
+      "message": "Svakih 10 minuta"
+   },
+   "every1Minute": {
+      "message": "svake 1 minute"
+   },
+   "every30Min": {
+      "message": "Svakih 30 minuta"
+   },
+   "every5Min": {
+      "message": "Svakih 5 minuta"
+   },
+   "everyDay": {
+      "message": "Svaki dan"
+   },
+   "everyDayAt": {
+      "message": "svaki dan u"
+   },
+   "everyHour": {
+      "message": "Svaki sat"
+   },
+   "everyMinute": {
+      "message": "Svake minute"
+   },
+   "everyMonth": {
+      "message": "Svaki mjesec"
+   },
+   "everyMonthOn": {
+      "message": "svaki mjesec dalje"
+   },
+   "everyMonthOnDay": {
+      "message": "svaki mjesec na dan"
+   },
+   "everyWeek": {
+      "message": "Svaki tjedan"
+   },
+   "everyWeekOn": {
+      "message": "svaki tjedan dalje"
+   },
+   "everyYear": {
+      "message": "Svake godine"
+   },
+   "everyYesrOn": {
+      "message": "svake godine"
+   },
+   "evr10MinSch": {
+      "message": "2. Raspored svakih 10 minuta"
+   },
+   "evr10MinSchExm1": {
+      "message": "U gornjem primjeru navedeni URL nalazi se u otvorenoj kartici, što navodi da će se navedeni URL otvarati u novoj kartici svakih 10 minuta."
+   },
+   "evr10MinSchExm2": {
+      "message": "U gornjem primjeru navedeni URL nalazi se u kartici za zatvaranje, što navodi da će dati URL koji je otvoren u novoj kartici biti zatvoren nakon 10 minuta."
+   },
+   "evrDaySch": {
+      "message": "3. Raspored za svaki dan"
+   },
+   "evrDaySchExm1": {
+      "message": "U gornjem primjeru navedeni URL nalazi se u otvorenoj kartici, što kaže da će se otvarati u novoj kartici svaki dan u 17:27"
+   },
+   "evrDaySchExm2": {
+      "message": "U gornjem primjeru navedeni URL nalazi se u kartici za zatvaranje, što znači da će zatvoriti već otvorenu karticu u 17:27 svaki dan"
+   },
+   "evrMonthSch": {
+      "message": "5. Raspored za svaki mjesec"
+   },
+   "evrMonthSchExm1": {
+      "message": "U gornjem primjeru dani URL nalazi se u otvorenoj kartici, što kaže Otvarat će se u novoj kartici svakog mjeseca u 13:45 25. dana"
+   },
+   "evrMonthSchExm2": {
+      "message": "U gornjem primjeru dani URL nalazi se u kartici za zatvaranje, što navodi da će zatvoriti već otvorenu karticu svakog mjeseca u 13:45 25. dana"
+   },
+   "evrWeekSch": {
+      "message": "4. Raspored za svaki tjedan"
+   },
+   "evrWeekSchExm1": {
+      "message": "U gornjem primjeru, dani URL nalazi se u otvorenoj kartici, što kaže da će se otvarati u novoj kartici svaki tjedan u 17:00 \u003Cb>ponedjeljkom i utorkom\u003C/b> ."
+   },
+   "evrWeekSchExm2": {
+      "message": "U gornjem primjeru, dani URL nalazi se u kartici za zatvaranje, koja navodi da će zatvoriti već otvorenu karticu svakog tjedna u 17:00 u \u003Cb>ponedjeljak i utorak\u003C/b> ."
+   },
+   "evrWeekSchExm3": {
+      "message": "U gornjem primjeru, u tjednom mjeraču vremena može se odabrati više dana."
+   },
+   "evrYearSch": {
+      "message": "6. Raspored svake godine"
+   },
+   "evrYearSchExm1": {
+      "message": "U gornjem primjeru dani URL je u otvorenoj kartici, što kaže da će se otvarati u novoj kartici svake godine u 13:35 1. siječnja"
+   },
+   "evrYearSchExm2": {
+      "message": "U gornjem primjeru navedeni URL nalazi se u kartici za zatvaranje, što navodi da će zatvoriti već otvorenu karticu svake godine u 13:35 1. siječnja"
+   },
+   "exampleSort": {
+      "message": "npr"
+   },
+   "exdMaxLim": {
+      "message": "Prekoračen maksimalan broj dopuštenih uređaja!"
+   },
+   "exmpOpnClsTbSch": {
+      "message": "Primjer kako otvoriti i zatvoriti karticu u Planeru kartica"
+   },
+   "expLicKy": {
+      "message": "Ovaj licencni ključ je istekao."
+   },
+   "export": {
+      "message": "Izvoz"
+   },
+   "exportBefore": {
+      "message": "imate\u003Cexday>\u003C/exday>preostalih dana, pretplatite se da biste nastavili uživati ​​u premium značajci"
+   },
+   "exportClsTbDta": {
+      "message": "Izvoz podataka za zatvaranje kartice"
+   },
+   "exportOpenTbDt": {
+      "message": "Izvoz podataka otvorene kartice"
+   },
+   "exportedData": {
+      "message": "Podaci mjerača vremena uspješno su izvezeni"
+   },
+   "extensionShouldAble": {
+      "message": "Sada bi proširenje trebalo moći zatvarati kartice u anonimnom načinu rada."
+   },
+   "faq": {
+      "message": "FAQ"
+   },
+   "faq_1": {
+      "message": "Što je planer kartica s automatskim otvaranjem i zatvaranjem?"
+   },
+   "faq_10": {
+      "message": "Kako mogu vidjeti svoje zakazane kartice?"
+   },
+   "faq_11": {
+      "message": "Je li obavezno popuniti vrijeme otvaranja i vremena zatvaranja?"
+   },
+   "faq_12": {
+      "message": "Čemu služe značajke kartice Auto Focus, Activate All Scheduled Tabs i Power Mode?"
+   },
+   "faq_13": {
+      "message": "Mogu li otvoriti/zatvoriti zakazanu vezu na web mjesto u anonimnoj kartici?"
+   },
+   "faq_14": {
+      "message": "Čemu služi kartica Osvježi ako je URL već otvoren?"
+   },
+   "faq_2": {
+      "message": "Čemu služi poveznica na web mjesto?"
+   },
+   "faq_3": {
+      "message": "Kako mogu zakazati URL pomoću Planera kartica?"
+   },
+   "faq_4": {
+      "message": "Što je opcija 'Otvori URL u pozadini'?"
+   },
+   "faq_5": {
+      "message": "Mogu li spriječiti proširenje da zatvori prikvačene kartice?"
+   },
+   "faq_6": {
+      "message": "Što znači vrsta rasporeda \"Oba\"?"
+   },
+   "faq_7": {
+      "message": "Kako funkcionira značajka 'URL Filtering'?"
+   },
+   "faq_8": {
+      "message": "Mogu li deaktivirati zakazanu karticu bez brisanja?"
+   },
+   "faq_9": {
+      "message": "Hoću li primati obavijesti za zakazane kartice?"
+   },
+   "faq_a_1": {
+      "message": "\u003Cp>Planer kartica s automatskim otvaranjem i zatvaranjem proširenje je preglednika koje korisnicima omogućuje zakazivanje automatskog otvaranja i zatvaranja kartica u postavljeno vrijeme. Korisnici mogu odabrati jednokratni raspored ili postaviti ponavljajuće rasporede s različitim opcijama učestalosti. Ovo proširenje ima višestruku namjenu za korisnike i pruža mnoge značajke koje su vam korisne.\u003C/p>"
+   },
+   "faq_a_10": {
+      "message": "Sve zakazane kartice prikazane su na popisu koji prikazuje naslov, vezu na web mjesto, vrijeme otvaranja i zatvaranja, status i radnje koje možete poduzeti (npr. aktiviranje, uređivanje, brisanje)."
+   },
+   "faq_a_11": {
+      "message": "Ne, možete zakazati ili otvoreno ili zatvoreno vrijeme. Međutim, morate ispuniti ili odabrati obavezna polja označena zvjezdicom (*)."
+   },
+   "faq_a_12": {
+      "message": "Kartica s automatskim fokusom osigurava da kada se otvori zakazana kartica, opcija Aktiviraj sve zakazane kartice omogućuje brzo uključivanje svih zakazanih kartica jednim klikom. Power Mode optimizira izvedbu ekstenzije učinkovitijim upravljanjem resursima preglednika."
+   },
+   "faq_a_13": {
+      "message": "Da, možete odabrati otvaranje zakazane kartice u anonimnom načinu odabirom opcije \"Otvori u anonimnom načinu\". Možete odabrati zatvaranje samo anonimnih kartica odabirom opcije \"Zatvori samo anonimne kartice\", sve dok je \"Dopusti u anonimnom načinu\" omogućeno u postavkama proširenja"
+   },
+   "faq_a_14": {
+      "message": "Kada je ova opcija omogućena, proširenje će automatski osvježiti postojeću karticu ako je isti URL već otvoren u vašem pregledniku. To sprječava otvaranje dvostrukih kartica i osigurava da uvijek imate učitanu najnoviju verziju stranice."
+   },
+   "faq_a_14_1": {
+      "message": "Ako pokušate otvoriti https://github.com/ i on je već otvoren na drugoj kartici, proširenje će jednostavno osvježiti tu karticu umjesto otvaranja nove."
+   },
+   "faq_a_14_2": {
+      "message": "Ako je https://github.com/ već otvoren u tri kartice, proširenje će osvježiti sve tri kartice."
+   },
+   "faq_a_2": {
+      "message": "Veza na web-mjesto adresa je otvorene kartice vašeg preglednika. U nastavku je navedeno kako možete koristiti adresu web stranice."
+   },
+   "faq_a_3": {
+      "message": "Da biste zakazali URL, unesite vezu na web mjesto, dajte rasporedu naslov, odaberite učestalost (Jedanput, Svake minute, Dnevno itd.) i odaberite vrijeme otvaranja i zatvaranja. Također možete odrediti datum, dan ili sekunde za otvaranje i zatvaranje kartice."
+   },
+   "faq_a_4": {
+      "message": "\u003Cp>Ova vam opcija daje potpunu kontrolu nad planiranjem otvaranja URL-a u pozadini bez stavljanja nove kartice u fokus. URL će se tiho otvoriti dok nastavljate raditi na drugim karticama. Osobito je korisno kada trebate da preglednik dohvati podatke s zakazanog URL-a bez aktivnog prikazivanja, kao u slučaju GET API zahtjeva.\u003C/p>\u003Cbr> \u003Cp>Na primjer, ako želite redovito dohvaćati podatke s krajnje točke API-ja u određeno vrijeme, možete koristiti ovu učinkovitu opciju za pokretanje zahtjeva u pozadini bez otvaranja nove vidljive kartice.\u003C/p>"
+   },
+   "faq_a_5": {
+      "message": "Da, postoji opcija za sprječavanje zatvaranja prikvačenih kartica. Označite opciju \"Ne zatvaraj prikvačene kartice\" kako biste bili sigurni da te kartice ostaju otvorene čak i ako zadovoljavaju druge kriterije zatvaranja."
+   },
+   "faq_a_6": {
+      "message": "Vrsta rasporeda 'Oboje' daje vam potpunu kontrolu nad otvaranjem i zatvaranjem kartice, omogućujući vam postavljanje određenog vremena za obje radnje."
+   },
+   "faq_a_7": {
+      "message": "Filtriranje URL-a osigurava da samo određeni dio URL-a mora odgovarati kako bi se izvršila zakazana radnja. Ovo je korisno kada želite automatizirati određene radnje na temelju djelomičnog podudaranja URL-a. Na primjer, ako označite opciju URL filtriranja za URL https://example.com/page, to će se također primijeniti na URL-ove kao što su https://example.com/page/123, https://example.com/ page?query=example i https://subdomain.example.com/page."
+   },
+   "faq_a_8": {
+      "message": "S opcijom \"Aktiviraj ovu zakazanu karticu\" možete jednostavno aktivirati ili deaktivirati zakazane kartice, što vam daje fleksibilnost upravljanja vašim rasporedima bez gubitka konfiguracija."
+   },
+   "faq_a_9": {
+      "message": "Prema zadanim postavkama primat ćete obavijesti. Međutim, ako želite zaustaviti obavijesti, možete označiti opciju \"Ne prikazuj obavijest\" da ih onemogućite."
+   },
+   "february": {
+      "message": "veljača"
+   },
+   "filterTips": {
+      "message": "Filtar se primjenjuje nakon 'https://' ili 'www.', npr. 'github.com'"
+   },
+   "for_exp": {
+      "message": "Na primjer"
+   },
+   "freeForever": {
+      "message": "Besplatno zauvijek"
+   },
+   "freeSchedule": {
+      "message": "slobodan raspored"
+   },
+   "freeTral": {
+      "message": "Kao cijenjeni rani korisnik, uživat ćete\u003Crday>120\u003C/rday>dana besplatnog pristupa prije prelaska na naš novi plaćeni plan—hvala vam na kontinuiranoj podršci!\u003Cp class=\"p-t-5\">imate\u003Cb>\u003Cspan>\u003C/span>\u003C/b>preostalih dana od vašeg\u003Crday>120\u003C/rday>- dan slobodnog razdoblja.\u003Cafex class=\"warning\">\u003Cafex>\u003C/afex>\u003C/afex>\u003C/p> "
+   },
+   "frequentlyAskedQuestions": {
+      "message": "Često postavljana pitanja"
+   },
+   "friday": {
+      "message": "petak"
+   },
+   "getThisPlan": {
+      "message": "Nabavite ovaj plan"
+   },
+   "goToSettingsPageToSchedule": {
+      "message": "Idite na stranicu s postavkama da biste zakazali otvaranje i zatvaranje URL-ova."
+   },
+   "goURL": {
+      "message": "Idite na URL"
+   },
+   "helpAccordion12": {
+      "message": "Radi li ovo proširenje u načinu mirovanja/obustave?"
+   },
+   "helpAccordion3": {
+      "message": "Mogu li zakazati otvaranje kartice u anonimnom načinu?"
+   },
+   "helpAccordion6": {
+      "message": "Što je \"Vrijeme isteklo\"?"
+   },
+   "helpAccordion7": {
+      "message": "Mogu li izvesti zakazani URL?"
+   },
+   "helpAccordion8": {
+      "message": "Mogu li uvesti u URL rasporeda?"
+   },
+   "helpPanelBodyDesc12First": {
+      "message": "Ne, ovo proširenje neće raditi u stanju mirovanja/obustave."
+   },
+   "helpPanelBodyDesc12Second": {
+      "message": "Ako je bilo koji URL zakazan u kartici za otvaranje ili zatvaranje, vaše računalo neće automatski prijeći u stanje mirovanja ili suspendiranja."
+   },
+   "helpPanelBodyDesc3": {
+      "message": "Da, možete odabrati otvaranje zakazane kartice u anonimnom načinu odabirom opcije \"Otvori u anonimnom načinu\". Provjerite je li opcija proširenja \"Dopusti u anonimnom načinu\" omogućena u postavkama proširenja preglednika."
+   },
+   "helpPanelBodyDesc6": {
+      "message": "- Zadani datum i vrijeme prelaze iz trenutnog datuma i vremena, a zatim će se prikazati tekst \"Vrijeme je isteklo\"."
+   },
+   "helpPanelBodyDesc7": {
+      "message": "Da, možete izvesti već planirani URL za otvaranje i zatvaranje kartice u csv formatu i koristiti ga s drugim sustavom za uvoz tog URL-a."
+   },
+   "helpPanelBodyDesc8": {
+      "message": "Da, možete uvesti važeći URL za otvaranje i zatvaranje u csv formatu. Uvezeni csv format automatski će se rasporediti u određeno vrijeme"
+   },
+   "herAreStepsToAllow": {
+      "message": "Evo koraka za \"Dopusti u anonimnom načinu\" u pregledniku Google Chrome:"
+   },
+   "home": {
+      "message": "Dom"
+   },
+   "hour_minute_close": {
+      "message": "Svaki sat Zatvori minutu"
+   },
+   "hour_minute_open": {
+      "message": "Otvorena minuta svakog sata"
+   },
+   "how_to_use_tab": {
+      "message": "Kako koristiti planer kartica?"
+   },
+   "import": {
+      "message": "Uvoz"
+   },
+   "importClsTbDta": {
+      "message": "Uvezi podatke o zatvaranju kartice"
+   },
+   "importExport": {
+      "message": "Uvoz/Izvoz"
+   },
+   "importOpenTbDt": {
+      "message": "Uvezi podatke otvorene kartice"
+   },
+   "importedRecored": {
+      "message": ", uvezeno snimljeno"
+   },
+   "inactivateScheduleTab": {
+      "message": "Deaktiviraj zakazanu karticu."
+   },
+   "inactive": {
+      "message": "Neaktivan"
+   },
+   "inactiveSch": {
+      "message": "8. Neaktivan URL"
+   },
+   "inactiveSchExm1": {
+      "message": "U gornjem primjeru navedeni URL nalazi se na otvorenoj ili zatvorenoj kartici, što znači da je navedeni URL neaktivan i neće izvršiti nikakvu radnju."
+   },
+   "inactiveThisScheduledTabs": {
+      "message": "Aktivirajte ovu zakazanu karticu"
+   },
+   "invalidDuplicate": {
+      "message": ", dvostruko ili nevažeće snimljeno"
+   },
+   "invldLicKy": {
+      "message": "Nevažeći licencni ključ!"
+   },
+   "isClose": {
+      "message": "je blizu"
+   },
+   "isOpen": {
+      "message": "je otvoren"
+   },
+   "january": {
+      "message": "siječnja"
+   },
+   "july": {
+      "message": "srpanj"
+   },
+   "june": {
+      "message": "lipanj"
+   },
+   "licKeyDis": {
+      "message": "Ovaj licencni ključ je onemogućen."
+   },
+   "listTitle": {
+      "message": "Planer kartica"
+   },
+   "loading": {
+      "message": "Molimo pričekajte..."
+   },
+   "locale": {
+      "message": "hr"
+   },
+   "march": {
+      "message": "ožujak"
+   },
+   "maxSchedule": {
+      "message": "4 Maksimalno ograničenje rasporeda"
+   },
+   "may": {
+      "message": "svibanj"
+   },
+   "mintValid": {
+      "message": "Potrebna je najmanje 1 minuta"
+   },
+   "minute": {
+      "message": "Minuta"
+   },
+   "minutesNotLessThan1": {
+      "message": "Minuta ne smije biti manja od 1."
+   },
+   "monday": {
+      "message": "ponedjeljak"
+   },
+   "month": {
+      "message": "Mjesec"
+   },
+   "monthly": {
+      "message": "Mjesečno"
+   },
+   "more": {
+      "message": "više"
+   },
+   "mostSubscribe": {
+      "message": "Većina Pretplatite se"
+   },
+   "no": {
+      "message": "Ne"
+   },
+   "noDataToExport": {
+      "message": "Nema podataka za izvoz."
+   },
+   "noScheduledTabs": {
+      "message": "Nema zakazanih kartica"
+   },
+   "noTimerSetAddNewTimer": {
+      "message": "Tajmer nije postavljen, kliknite gumb Dodaj za postavljanje novog mjerača vremena"
+   },
+   "not_show_tutorial": {
+      "message": "Ne prikazuj više ovaj vodič"
+   },
+   "notificationOpenTab": {
+      "message": "13. Obavijest o otvaranju/zatvaranju URL-a kartice"
+   },
+   "notificationOpenTabExm1": {
+      "message": "U gornjem primjeru navedeni URL je u otvorenoj kartici, što navodi da će dati obavijest i otvoriti/zatvoriti URL u novoj kartici svakih 5 minuta."
+   },
+   "notifications": {
+      "message": "Obavijest"
+   },
+   "november": {
+      "message": "studeni"
+   },
+   "october": {
+      "message": "listopad"
+   },
+   "onTheExtensionDetailPage": {
+      "message": "Na stranici s detaljima proširenja pomaknite se prema dolje i pronađite opciju \"Dopusti u anonimnom načinu\"."
+   },
+   "oneTime": {
+      "message": "Jedno vrijeme"
+   },
+   "oneTmSch": {
+      "message": "1. Jednokratni raspored"
+   },
+   "oneTmSchExm1": {
+      "message": "U gornjem primjeru navedeni URL je u otvorenoj kartici, što kaže da će se otvoriti u novoj kartici Jednom u 13:45 21. 1. 2023."
+   },
+   "oneTmSchExm2": {
+      "message": "U gornjem primjeru navedeni URL nalazi se u kartici za zatvaranje, što navodi da će zatvoriti sve određene podudarne kartice URL-a u 13:45 21. 1. 2023."
+   },
+   "open": {
+      "message": "Otvoriti"
+   },
+   "openBackground": {
+      "message": "Ako da, učitavanje URL-a u pozadini bez otvaranja u novoj kartici"
+   },
+   "openDate": {
+      "message": "Otvoreni datum"
+   },
+   "openDay": {
+      "message": "Dan otvorenih vrata"
+   },
+   "openEveryDayOn": {
+      "message": "Otvoreno svaki dan"
+   },
+   "openEveryMonthOn": {
+      "message": "Otvoreno svakog dana u mjesecu"
+   },
+   "openEveryWeekOn": {
+      "message": "Otvoreno svaki tjedan na"
+   },
+   "openEveryYearOn": {
+      "message": "Otvoren svake godine"
+   },
+   "openGoogleChrome": {
+      "message": "Otvorite Google Chrome."
+   },
+   "openInBackground": {
+      "message": "Otvori URL u pozadini"
+   },
+   "openInEvery": {
+      "message": "Otvoreno u svakom"
+   },
+   "openInIncognito": {
+      "message": "Otvori u anonimnom načinu"
+   },
+   "openMinute": {
+      "message": "Otvorena minuta"
+   },
+   "openOnDay": {
+      "message": "Otvoreno na dan"
+   },
+   "openOnEvery": {
+      "message": "Otvoreno na svaki"
+   },
+   "openSecond": {
+      "message": "Open Second"
+   },
+   "openSecondsMoreThan5": {
+      "message": "Otvorene sekunde trebaju biti više od 5."
+   },
+   "openTabSchedule": {
+      "message": "Otvorite karticu Raspored"
+   },
+   "openTabURL": {
+      "message": "Otvori URL kartice"
+   },
+   "openTime": {
+      "message": "Otvoreno vrijeme"
+   },
+   "openUrl": {
+      "message": "Otvori vezu na web mjesto"
+   },
+   "openWeek": {
+      "message": "Tjedan otvorenih vrata"
+   },
+   "openWeeks": {
+      "message": "Otvoreni tjedni"
+   },
+   "open_on": {
+      "message": "Otvoreno"
+   },
+   "optional": {
+      "message": "Neobavezno"
+   },
+   "or": {
+      "message": "ili"
+   },
+   "outof": {
+      "message": "od"
+   },
+   "pagePath": {
+      "message": "Putanja stranice"
+   },
+   "paidFeature": {
+      "message": "Plaćena značajka"
+   },
+   "pauseSchedule": {
+      "message": "Pokretanje ili zaustavljanje svih rasporeda"
+   },
+   "pauseTabScheduler": {
+      "message": "Pauziran planer kartica"
+   },
+   "pleaseAllowIncognitoMessage": {
+      "message": "Omogućite opciju \"Dopusti u anonimnom načinu\" u detaljima proširenja. Za upute pogledajte stranicu s uputama."
+   },
+   "pleaseShareYourSuggestions": {
+      "message": "Molimo podijelite svoj prijedlog."
+   },
+   "plsShreAnySugWithUs": {
+      "message": "Molimo dajte prijedlog da nas poboljšate"
+   },
+   "powerMode": {
+      "message": "Način napajanja"
+   },
+   "premium": {
+      "message": "Premija"
+   },
+   "pricePlan": {
+      "message": "Cijene i planovi"
+   },
+   "privcyPolicy": {
+      "message": "Politika privatnosti"
+   },
+   "prowerModeTip": {
+      "message": "Držite sustav uvijek aktivnim tako da omogućite Power Mode"
+   },
+   "put": {
+      "message": "Staviti"
+   },
+   "rateUs": {
+      "message": "Ocijenite nas"
+   },
+   "removeDuplicateEntry": {
+      "message": "Uklonite dvostruki unos"
+   },
+   "removeOpenTbURL": {
+      "message": "Ukloni URL otvorene kartice"
+   },
+   "repeat": {
+      "message": "Ponoviti"
+   },
+   "requiredMsg": {
+      "message": "Potreban"
+   },
+   "rmvClsTb": {
+      "message": "Ukloni URL za zatvaranje kartice"
+   },
+   "sameTabs": {
+      "message": "Osvježi karticu ako je URL već otvoren"
+   },
+   "sameTabsInfo": {
+      "message": "Spriječite otvaranje više kartica za isti URL. Na primjer, ako je www.google.com već otvorena, tada će se ta postojeća kartica osvježiti umjesto otvaranja nove kartice za nju."
+   },
+   "sampleCsvOpenPath": {
+      "message": "../sample_csv/en/open_tab_sample.csv"
+   },
+   "sampleFile": {
+      "message": "Uzorak datoteke"
+   },
+   "saturday": {
+      "message": "subota"
+   },
+   "savOpnData": {
+      "message": "Spremi podatke otvorene kartice"
+   },
+   "save": {
+      "message": "Uštedjeti"
+   },
+   "saveClsTbData": {
+      "message": "Spremi podatke za zatvaranje kartice"
+   },
+   "saveSchedule": {
+      "message": "Spremi raspored"
+   },
+   "scheduleCloseTab": {
+      "message": "Raspored Zatvori karticu"
+   },
+   "scheduleCurrentTab": {
+      "message": "Raspored trenutne kartice"
+   },
+   "scheduleOpenTab": {
+      "message": "Raspored Otvori karticu"
+   },
+   "scheduledTabIsAlreadyExistWithSameTimer": {
+      "message": "Ova zakazana kartica već postoji s istim timerom."
+   },
+   "scheduledTabList": {
+      "message": "Popis zakazanih kartica"
+   },
+   "scheduledType": {
+      "message": "Vrsta rasporeda"
+   },
+   "search": {
+      "message": "Pretraživanje"
+   },
+   "secValid": {
+      "message": "Potrebno je najmanje 5 sekundi"
+   },
+   "second": {
+      "message": "Drugi"
+   },
+   "selectCloseDate": {
+      "message": "Odaberite datum zatvaranja"
+   },
+   "selectCloseDay": {
+      "message": "Odaberite dan zatvaranja"
+   },
+   "selectCloseTime": {
+      "message": "Odaberite vrijeme zatvaranja"
+   },
+   "selectColumn": {
+      "message": "Odaberite stupac"
+   },
+   "selectDateAndTime": {
+      "message": "Odaberite datum i vrijeme za otvaranje nove kartice"
+   },
+   "selectDateAndTimeClsTb": {
+      "message": "Odaberite datum i vrijeme za zatvaranje kartice"
+   },
+   "selectDayToCloseSchTb": {
+      "message": "Odaberite dan za zatvaranje kartice s rasporedom."
+   },
+   "selectDayToClsTb": {
+      "message": "Odaberite dan za zatvaranje kartice"
+   },
+   "selectDayToSchdule": {
+      "message": "Odaberite dan za karticu rasporeda."
+   },
+   "selectDaysInWeek": {
+      "message": "Odaberite dane u tjednu"
+   },
+   "selectDaysInWeekIClsTime": {
+      "message": "Odaberite dane u tjednu u zatvaranju mjerača vremena."
+   },
+   "selectDaysInWeekIOpClsTime": {
+      "message": "Odaberite dane u tjednu u mjeraču vremena za otvaranje ili zatvaranje."
+   },
+   "selectDaysInWeekIOpTime": {
+      "message": "Odaberite dane u tjednu u otvorenom mjeraču vremena."
+   },
+   "selectFrequency": {
+      "message": "Odaberite Frekvencija"
+   },
+   "selectFrequencyOfScheduleUrl": {
+      "message": "Odaberite učestalost zakazanog URL-a."
+   },
+   "selectOpenDate": {
+      "message": "Odaberite datum otvaranja"
+   },
+   "selectOpenDay": {
+      "message": "Odaberite dan otvorenih vrata"
+   },
+   "selectOpenOrClose": {
+      "message": "Odaberite vrijeme otvaranja i zatvaranja"
+   },
+   "selectOpenOrCloseDate": {
+      "message": "Odaberite datum otvaranja i zatvaranja"
+   },
+   "selectOpenOrCloseDay": {
+      "message": "Odaberite dan otvaranja i zatvaranja"
+   },
+   "selectOpenTime": {
+      "message": "Odaberite vrijeme otvaranja"
+   },
+   "selectPreferredLanguage": {
+      "message": "Odaberite željeni jezik."
+   },
+   "selectToOpenTab": {
+      "message": "Odaberite dan za otvaranje nove kartice"
+   },
+   "selectTypTimerClsTb": {
+      "message": "Odaberite vrstu mjerača vremena za zatvaranje kartice"
+   },
+   "selectTypeOfSchedule": {
+      "message": "Odaberite vrstu rasporeda, ako želite i otvoriti i zatvoriti odaberite \"Oboje\"."
+   },
+   "selectTypeOfTimer": {
+      "message": "Odaberite vrstu mjerača vremena za otvaranje nove kartice"
+   },
+   "select_weeks": {
+      "message": "Odaberite Tjedni"
+   },
+   "september": {
+      "message": "rujan"
+   },
+   "settingSave": {
+      "message": "Postavke su uspješno spremljene"
+   },
+   "settingToClose": {
+      "message": "Postavka zatvaranja kartice u anonimnom načinu."
+   },
+   "shareYourSuggestionWithUs": {
+      "message": "Podijelite svoje prijedloge s nama.."
+   },
+   "slectDayToScheduleWeekly": {
+      "message": "Odaberite dane za tjedni raspored kartice."
+   },
+   "slectMinute": {
+      "message": "Odaberite Minuta"
+   },
+   "smthngWrng": {
+      "message": "Nešto nije u redu"
+   },
+   "softpulseInfotech": {
+      "message": "Softpulse Infotech"
+   },
+   "somethingWentWrong": {
+      "message": "Nešto nije u redu. Osvježite stranicu i pokušajte ponovno."
+   },
+   "status": {
+      "message": "Status"
+   },
+   "subcrKeyShldNEmpt": {
+      "message": "Unesite ključ pretplate."
+   },
+   "subdomain": {
+      "message": "Poddomena"
+   },
+   "subkeyInputTitle": {
+      "message": "Unesite ključ pretplate"
+   },
+   "submFeedBack": {
+      "message": "Pošalji"
+   },
+   "suggForTbSch": {
+      "message": "Prijedlog za planer kartica"
+   },
+   "suggestionAndRateUs": {
+      "message": "Predložite i ocijenite nas"
+   },
+   "sunday": {
+      "message": "nedjelja"
+   },
+   "tabCloseOneTime": {
+      "message": "Kartica će se zatvoriti samo jednom"
+   },
+   "tabSchTutorial": {
+      "message": "Vodič za planer kartica"
+   },
+   "tabScheduler": {
+      "message": "Planer kartica"
+   },
+   "tabSchedulerOptions": {
+      "message": "Mogućnosti planera kartica"
+   },
+   "tabWillOpenOneTime": {
+      "message": "Kartica će se otvoriti samo jednom"
+   },
+   "tabWillOpenWhenBrowserOpen": {
+      "message": "Kartica će se otvoriti kada se otvori preglednik"
+   },
+   "termCondition": {
+      "message": "Odredbe i uvjeti"
+   },
+   "thanksFrRev": {
+      "message": "Hvala vam na recenziji"
+   },
+   "thnkUFeedBack": {
+      "message": "Hvala vam na vašem prijedlogu"
+   },
+   "thnkUFrUsngTbSch": {
+      "message": "Molimo dajte prijedlog da nas poboljšate"
+   },
+   "thursday": {
+      "message": "četvrtak"
+   },
+   "time": {
+      "message": "Vrijeme"
+   },
+   "timeExpired": {
+      "message": "Vrijeme je isteklo"
+   },
+   "timer": {
+      "message": "Odbrojavanje vremena"
+   },
+   "title": {
+      "message": "Titula"
+   },
+   "titleLengtWarn": {
+      "message": "Dužina naslova ne smije biti veća od 200 znakova."
+   },
+   "toScheduledOpenTbMsg": {
+      "message": "Da biste zakazali otvorenu karticu, poništite filtriranje URL-a."
+   },
+   "toogleCloseTab": {
+      "message": "Pokretanje/zaustavljanje alarma rasporeda za sve URL-ove za zatvaranje kartica"
+   },
+   "toogleDarkmode": {
+      "message": "Prebacujte se između tamnog i zadanog načina kako biste prilagodili svoje iskustvo gledanja."
+   },
+   "toogleOff": {
+      "message": "Isključeno"
+   },
+   "toogleOn": {
+      "message": "Na"
+   },
+   "toogleOpenTab": {
+      "message": "Pokretanje/zaustavljanje alarma rasporeda za sve URL-ove otvorenih kartica"
+   },
+   "topLevelDomain": {
+      "message": "Domena najviše razine"
+   },
+   "totalProcessed": {
+      "message": "Ukupno snimljeno obrađeno"
+   },
+   "tuesday": {
+      "message": "utorak"
+   },
+   "tutorialImg1": {
+      "message": "\u003Cimg src=\"../images/en/1.png\">"
+   },
+   "tutorialImg10": {
+      "message": "\u003Cimg src=\"../images/en/10.png\">"
+   },
+   "tutorialImg11": {
+      "message": "\u003Cimg src=\"../images/en/11.png\">"
+   },
+   "tutorialImg12": {
+      "message": "\u003Cimg src=\"../images/en/12.png\">"
+   },
+   "tutorialImg13": {
+      "message": "\u003Cimg src=\"../images/en/13.png\">"
+   },
+   "tutorialImg14": {
+      "message": "\u003Cimg src=\"../images/en/14.png\">"
+   },
+   "tutorialImg2": {
+      "message": "\u003Cimg src=\"../images/en/2.png\">"
+   },
+   "tutorialImg3": {
+      "message": "\u003Cimg src=\"../images/en/3.png\">"
+   },
+   "tutorialImg4": {
+      "message": "\u003Cimg src=\"../images/en/4.png\">"
+   },
+   "tutorialImg5": {
+      "message": "\u003Cimg src=\"../images/en/5.png\">"
+   },
+   "tutorialImg6": {
+      "message": "\u003Cimg src=\"../images/en/6.png\">"
+   },
+   "tutorialImg7": {
+      "message": "\u003Cimg src=\"../images/en/7.png\">"
+   },
+   "tutorialImg8": {
+      "message": "\u003Cimg src=\"../images/en/8.png\">"
+   },
+   "tutorialImg9": {
+      "message": "\u003Cimg src=\"../images/en/9.png\">"
+   },
+   "uncheckAll": {
+      "message": "Odznačite sve"
+   },
+   "unlimitedSchedule": {
+      "message": "Neograničeno ograničenje rasporeda"
+   },
+   "unspecifiedURL": {
+      "message": "11. URL neodređeni put"
+   },
+   "unspecifiedURLExm1": {
+      "message": "U gornjem primjeru navedeni URL nalazi se u kartici za zatvaranje, što navodi da će dati URL koji je otvoren u novoj kartici i počinje i završava s nepoznatom web adresom biti zatvoren nakon 5 minuta."
+   },
+   "upgradePlan": {
+      "message": "Kupite plan ILI se prijavite i nadogradite svoj plan kako biste otključali više značajki."
+   },
+   "upgradePlanUnlock": {
+      "message": "Nadogradite svoj plan da otključate više značajki."
+   },
+   "uploadValidFormat": {
+      "message": "Molimo prenesite važeći format"
+   },
+   "url": {
+      "message": "URL"
+   },
+   "urlContExat": {
+      "message": "URL filtriranje"
+   },
+   "urlEndWithUnspesifiedPth": {
+      "message": "9. URL završava nespecificiranom stazom"
+   },
+   "urlEndWithUnspesifiedPthExm1": {
+      "message": "U gornjem primjeru navedeni URL nalazi se u kartici za zatvaranje, što navodi da će navedeni URL koji je otvoren u novoj kartici i završava nepoznatom stazom biti zatvoren nakon 5 minuta."
+   },
+   "urlFilterInfo": {
+      "message": "Sadrži URL koji se provjerava treba samo dio URL-a, a Točan URL koji se provjerava mora se točno podudarati s navedenim URL-om"
+   },
+   "urlFilterinCLoseTb": {
+      "message": "14. Filtriranje URL-a pri zatvaranju URL-a kartice"
+   },
+   "urlFilterinCLoseTbExample": {
+      "message": "U gornjem primjeru dani URL nalazi se u kartici za zatvaranje, što navodi da se URL već otvorene kartice podudara s nekim dijelom danog URL-a tako da će zatvoriti tu karticu"
+   },
+   "urlIsRequired": {
+      "message": "Veza na web stranicu je obavezna"
+   },
+   "urlNotvalid": {
+      "message": "URL nije valjan"
+   },
+   "urlStartWithUnspesifiedPth": {
+      "message": "10. URL počinje neodređenom stazom"
+   },
+   "urlStartWithUnspesifiedPthExm1": {
+      "message": "U gornjem primjeru navedeni URL nalazi se u kartici za zatvaranje, što navodi da će navedeni URL koji je otvoren u novoj kartici i počinje s nepoznatom poddomenom \u003Cb>'www'\u003C/b> ili \u003Cb>'blog'\u003C/b> biti zatvoren nakon 5 minuta."
+   },
+   "useSpecificUrl": {
+      "message": "Upotrijebite određenu poveznicu na web mjesto"
+   },
+   "useSpecificUrl1": {
+      "message": "Morate napisati točnu poddomenu, vršnu domenu, naziv domene i putanju stranice u polju Website Link do zatvorene kartice preglednika."
+   },
+   "useSpecificUrl2": {
+      "message": "Koristite zatvorene sve kartice preglednika"
+   },
+   "useSpecificUrl3": {
+      "message": "Upotrijebite konkretnu i potpunu vezu na web-mjesto"
+   },
+   "useUnSpecificUrl1": {
+      "message": "Koristite neodređenu vezu na web-mjesto"
+   },
+   "useUnSpecificUrl2": {
+      "message": "Koristite početak s neodređenom vezom na web mjesto"
+   },
+   "useUnSpecificUrl3": {
+      "message": "Koristite kraj s neodređenom vezom na web mjesto"
+   },
+   "used": {
+      "message": "Koristili ste"
+   },
+   "validFormatCsv": {
+      "message": "Koji je važeći format CSV datoteke za uvoz?"
+   },
+   "websiteLink": {
+      "message": "Link web stranice"
+   },
+   "websiteUrl": {
+      "message": "URL web stranice"
+   },
+   "wednesday": {
+      "message": "srijeda"
+   },
+   "weekName": {
+      "message": "Naziv tjedna"
+   },
+   "weekly": {
+      "message": "Tjedni"
+   },
+   "whenExtensionTabAppears": {
+      "message": "Kada se pojavi kartica Proširenja, pronađite \"Raspored kartica s automatskim otvaranjem i zatvaranjem\" da biste ga omogućili u anonimnom načinu rada i kliknite gumb \"Detalji\" pokraj njega."
+   },
+   "whenMenuPopup": {
+      "message": "Kada se pojavi izbornik, odaberite \"Upravljanje proširenjima\"."
+   },
+   "withSignMustFill": {
+      "message": "Sa znakom \u003Cspan>*\u003C/span> mora biti ispunjeno ili odabrano, Odaberite vrijeme otvaranja ili zatvaranja ili oba vremena."
+   },
+   "writeYourDescriptionAboutSchUrl": {
+      "message": "Ovdje napišite svoj opis zakazanog URL-a."
+   },
+   "yes": {
+      "message": "Da"
+   },
+   "yourEmailAddress": {
+      "message": "Vaša email adresa"
+   },
+   "yourScheduleUrl": {
+      "message": "Vaš URL rasporeda"
+   }
+}

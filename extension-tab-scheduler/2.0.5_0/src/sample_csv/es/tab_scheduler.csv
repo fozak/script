@@ -1,0 +1,4 @@
+﻿URL,Minutero,Estado,Fecha de apertura,Fecha de cierre,Tiempo abierto,Hora de cierre,Semana de puertas abiertas,Semana cerrada,Al abrir el navegador,Jornada de puertas abiertas,Día de cierre,Minuto abierto,Minuto de cierre,Abierto Segundo,Cerrar Segundo,Notificación,Título,Descripción,Abrir URL en segundo plano,Abrir en modo incógnito,No cerrar pestañas fijadas,Cerrar solo pestañas de incógnito,Filtrado de URL,Tipo de horario,Cada hora minuto abierto,Cada hora cerca de un minuto,Actualizar pestaña si la URL ya está abierta
+https://www.google.com/,Cada minuto,Activo,,,,,"","","",,,,,,,Inactivo,Close Every Minute,,No,No,No,No,Sí,Cerca,0,0,Sí
+http://www.w3schools.com/,Cada día,Activo,,,16:31,,"","","",,,,,,,Inactivo,Every Day Open,,No,No,No,No,No,Abierto,0,0,No
+https://www.flipkart.com/,Minuto personalizado,Activo,,,,,"","","",,,120,5,,,Inactivo,Open and Close,,No,No,No,No,No,Ambos,0,0,No

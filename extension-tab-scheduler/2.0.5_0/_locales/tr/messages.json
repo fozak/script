@@ -1,0 +1,1448 @@
+{
+   "10_min": {
+      "message": "10 dakika"
+   },
+   "1_min": {
+      "message": "1 dakika"
+   },
+   "30_min": {
+      "message": "30 dakika"
+   },
+   "5_min": {
+      "message": "5 dakika"
+   },
+   "60_min": {
+      "message": "saat"
+   },
+   "Dashboard": {
+      "message": "Gösterge Paneli"
+   },
+   "Login": {
+      "message": "Giriş yapmak"
+   },
+   "Off": {
+      "message": "Kapalı"
+   },
+   "On": {
+      "message": "Açık"
+   },
+   "Selected": {
+      "message": "Seçilmiş"
+   },
+   "Settings": {
+      "message": "Ayarlar"
+   },
+   "Tutorial": {
+      "message": "Eğitim"
+   },
+   "action": {
+      "message": "Aksiyon"
+   },
+   "activateScheduleTab": {
+      "message": "Planlanmış sekmeyi etkinleştir."
+   },
+   "active": {
+      "message": "Aktif"
+   },
+   "activeAllScheduleTab": {
+      "message": "Tab zamanlayıcısı çalıştırılıyor"
+   },
+   "activeStatus": {
+      "message": "Durum"
+   },
+   "actvInactvNotification": {
+      "message": "Program sekmesi açıldığında bildirim görüntüle"
+   },
+   "actvInactvOpnTb": {
+      "message": "Etkin veya etkin olmayan açık sekme"
+   },
+   "actvIntvClsTb": {
+      "message": "Etkin veya etkin olmayan sekmeyi kapat"
+   },
+   "add": {
+      "message": "Eklemek"
+   },
+   "addDescription": {
+      "message": "Açıklama ekle"
+   },
+   "addNew": {
+      "message": "Yeni Ekle"
+   },
+   "addNewURlCls": {
+      "message": "Kapatmak için yeni URL ekleyin"
+   },
+   "addNewUrlToOpen": {
+      "message": "Yeni pencerede açmak için yeni URL ekleyin"
+   },
+   "addTitle": {
+      "message": "Başlık Ekle"
+   },
+   "addWebsite": {
+      "message": "Web sitesi ekle"
+   },
+   "all": {
+      "message": "Tüm"
+   },
+   "allInputFieldReq": {
+      "message": "Tüm alanlar zorunludur"
+   },
+   "all_weeks": {
+      "message": "Tüm Hafta"
+   },
+   "alreadyPurchase": {
+      "message": "Zaten Satın Aldınız mı? Anahtarı Buraya Girin"
+   },
+   "andAt": {
+      "message": "ve de"
+   },
+   "annually": {
+      "message": "Yıllık"
+   },
+   "appDesc": {
+      "message": "Tarayıcı sekmeleri seçilen zamanda otomatik olarak açılıp kapanacaktır. Kullanıcı gereksinime göre listeyi etkinleştirebilir/devre dışı bırakabilir."
+   },
+   "appName": {
+      "message": "Otomatik açma ve kapatma özellikli Sekme Zamanlayıcı"
+   },
+   "april": {
+      "message": "Nisan"
+   },
+   "at": {
+      "message": "de"
+   },
+   "august": {
+      "message": "Ağustos"
+   },
+   "autoFocus": {
+      "message": "Otomatik Odaklama Sekmesi"
+   },
+   "autoFocustip": {
+      "message": "Açık ise yeni sekme etkin/odaklanmış durumda açılacaktır."
+   },
+   "autofocustip": {
+      "message": "Yeni sekmeler açıldığında otomatik olarak odaklanılır"
+   },
+   "basic": {
+      "message": "Temel"
+   },
+   "billedAnnyally": {
+      "message": "Yıllık Faturalandırılır"
+   },
+   "billedMonthly": {
+      "message": "Aylık Faturalandırılır"
+   },
+   "both": {
+      "message": "İkisi birden"
+   },
+   "browserOpen": {
+      "message": "Tarayıcı Açıkken"
+   },
+   "browserWebAddress": {
+      "message": "Tarayıcınızın web adresi bilinmeyen bir web adresiyle başlıyor ve bitiyor. Giriş Web Sitesi Bağlantısı alanınızın her iki tarafına \u003Cb>* koyun.\u003C/b>"
+   },
+   "browserWebAddress2": {
+      "message": "Tarayıcının web adresi, alt alan adı ve sayfa yolu ne olursa olsun, verilen dakikalar içinde kapatılacak olan google.com alan adını içerir. Alan adı ve TLD'nin her iki tarafına \u003Cb>* koyun\u003C/b>"
+   },
+   "browserWebAddress3": {
+      "message": "Tarayıcının web adresi bilinmeyen bir alan adıyla başlıyor ve bilinmeyen bir sayfa yoluyla bitiyor"
+   },
+   "browserWebAddress31": {
+      "message": "Belirtilen dakikadan sonra kapanacak, TLD'nin her iki tarafına \u003Cb>* koyun\u003C/b>"
+   },
+   "browserWebAddress4": {
+      "message": "Tarayıcınızın web adresi bilinmeyen bir web adresiyle başlıyor. URL'nizin başına \u003Cb>* koyun. Tarayıcınızın web adresinin, \u003C/b>\u003Cb>*\u003C/b> yazdıktan sonra URL'nizle eşleşmesi gerektiğini unutmayın."
+   },
+   "browserWebAddress41": {
+      "message": "Tarayıcının web adresi bilinmeyen bir alt alan adıyla başlıyor"
+   },
+   "browserWebAddress42": {
+      "message": "Web Sitenizin Bağlantısının başında"
+   },
+   "browserWebAddress5": {
+      "message": "Tarayıcınızın web adresi bilinmeyen bir web adresiyle bitiyor. URL'nizin sonuna \u003Cb>*\u003C/b> koyun. Web adresinizin yazdığınız \u003Cb>* ile eşleşmesi gerektiğini unutmayın.\u003C/b>"
+   },
+   "browserWebAddress51": {
+      "message": "Tarayıcının web adresi bilinmeyen bir sayfa yoluyla bitiyor. Web adresinizin sonuna \u003Cb>* koyun\u003C/b>"
+   },
+   "browserWebAddress6": {
+      "message": "\u003Cb>Tüm tarayıcı sekmelerini kapatmak için web sitesi adresi alanına yalnızca *\u003C/b> koyun . Tüm sekmeler kapatıldıktan sonra tarayıcı otomatik olarak kapanacaktır."
+   },
+   "browserWebAddress7": {
+      "message": "Tarayıcınızın sekmesinde açılan URL alanına mutlaka alt alan adını, üst seviye alan adını, alan adını ve sayfa yolunu tam olarak yazmış olmanız gerekmektedir."
+   },
+   "browserWebAddress8": {
+      "message": "URL'yi belirli bir tarih ve saatte, belirli bir ayda, belirli bir haftada, belirli bir yılda ve tekrarlanan zamanda açabilirsiniz"
+   },
+   "buyPlan": {
+      "message": "Satın Alma Planı"
+   },
+   "buycofee": {
+      "message": "Bana bir kahve al"
+   },
+   "cancel": {
+      "message": "İptal etmek"
+   },
+   "changeLanguage": {
+      "message": "Dili değiştir"
+   },
+   "checkAll": {
+      "message": "Tümünü Kontrol Et"
+   },
+   "checkThisOpToPreventClosePinTb": {
+      "message": "Sabitlenmiş sekmelerin kapanmasını engellemek için bu seçeneği işaretleyin."
+   },
+   "checkThisOptionOnlyPartOfUrlMtch": {
+      "message": "URL'nin yalnızca bir kısmının eşleştirilmesi gerekiyorsa bu seçeneği işaretleyin."
+   },
+   "checkThisOptionToActivate": {
+      "message": "Planlanmış URL'nizi etkinleştirmek veya devre dışı bırakmak için bu seçeneği işaretleyin."
+   },
+   "checkThisOptionToCloseOnly": {
+      "message": "Yalnızca gizli sekmeleri kapatmak için bu seçeneği işaretleyin. Ayrıca, uzantı ayrıntılarında 'Gizli modda izin ver' seçeneğini etkinleştirin. Talimatlar için lütfen öğretici sayfasına bakın."
+   },
+   "checkThisOptionToCloseOnlyInIncgnitoTb": {
+      "message": "Yalnızca gizli sekmeleri kapatmak için bu seçeneği işaretleyin. Ayrıca, uzantı ayrıntılarında 'Gizli modda izin ver' seçeneğini etkinleştirin. Talimatlar için lütfen öğretici sayfasına bakın."
+   },
+   "checkThisOptionToInBg": {
+      "message": "URL'yi yeni bir sekmede açmadan arka planda açmak istiyorsanız bu seçeneği işaretleyin"
+   },
+   "checkThisOptionToInactivNotification": {
+      "message": "Zamanlanmış URL'de bildirimi devre dışı bırakmak için bu seçeneği işaretleyin"
+   },
+   "checkThisOptionToOpen": {
+      "message": "URL'nizi gizli modda açmak istiyorsanız bu seçeneği işaretleyin"
+   },
+   "checkThisOptionToOpenIncogito": {
+      "message": "URL'nizi gizli modda açmak istiyorsanız bu seçeneği işaretleyin"
+   },
+   "checkThisOptionToPrevent": {
+      "message": "Sabitlenmiş sekmelerin kapanmasını engellemek için bu seçeneği işaretleyin."
+   },
+   "clickExtIcon": {
+      "message": "Araç çubuğunda bulmaca parçası gibi görünen “Eklentiler” simgesine tıklayın."
+   },
+   "clickTheSwitch": {
+      "message": "Açmak için yanındaki anahtara tıklayın"
+   },
+   "close": {
+      "message": "Kapalı"
+   },
+   "closeAllTab": {
+      "message": "12. Tarayıcının tüm sekmelerini kapatın"
+   },
+   "closeAllTabExm1": {
+      "message": "Yukarıdaki örnekte verilen URL, 25/2/2023 tarihinde saat 12:00'de tüm sekmelerin kapatılacağını belirten kapatma sekmesindedir."
+   },
+   "closeDate": {
+      "message": "Kapanış Tarihi"
+   },
+   "closeDay": {
+      "message": "Kapalı Gün"
+   },
+   "closeEveryYear": {
+      "message": "Her yıl kapatın"
+   },
+   "closeInEvery": {
+      "message": "Her tarafta yakın"
+   },
+   "closeIncognitoTab": {
+      "message": "Yalnızca gizli sekmeleri kapat"
+   },
+   "closeMinute": {
+      "message": "Yakın Dakika"
+   },
+   "closeOnDay": {
+      "message": "Günün sonunda kapanacak"
+   },
+   "closeOnEvery": {
+      "message": "Her yere yakın"
+   },
+   "closeOnEveryDay": {
+      "message": "Her gün kapalı"
+   },
+   "closeOnEveryMonth": {
+      "message": "Her ay günü kapatın"
+   },
+   "closeOnEveryWeek": {
+      "message": "Her hafta kapanış"
+   },
+   "closeSecond": {
+      "message": "İkinciyi Kapat"
+   },
+   "closeSeconsMoreThan5": {
+      "message": "Yakın saniyeler 5'ten fazla olmalı."
+   },
+   "closeTabSchedule": {
+      "message": "Sekme Programını Kapat"
+   },
+   "closeTabURL": {
+      "message": "Sekme URL'sini Kapat"
+   },
+   "closeTime": {
+      "message": "Kapanış Zamanı"
+   },
+   "closeUrl": {
+      "message": "Web Sitesi Bağlantısını Kapat"
+   },
+   "closeWeek": {
+      "message": "Haftayı Kapat"
+   },
+   "closeWeeks": {
+      "message": "Yakın Haftalar"
+   },
+   "close_on": {
+      "message": "Yakın"
+   },
+   "cngrtsForSubcr": {
+      "message": "Tebrikler! Planınız başarıyla etkinleştirildi."
+   },
+   "commonQuestionsAns": {
+      "message": "Sık sorulan sorular ve cevaplar"
+   },
+   "copySucessClose": {
+      "message": "Sekmeyi kapat URL verileri Açık sekme URL verilerine kopyalandı"
+   },
+   "createNewTimer": {
+      "message": "Yeni Zamanlayıcı Oluştur"
+   },
+   "currentPlan": {
+      "message": "Güncel Plan"
+   },
+   "currentTabSchedule": {
+      "message": "Mevcut sekme programı"
+   },
+   "currentTbScheduleTimer": {
+      "message": "Mevcut sekme planlı zamanlayıcı."
+   },
+   "cusSec": {
+      "message": "Özel İkinci"
+   },
+   "custMin": {
+      "message": "Özel Dakika"
+   },
+   "custmMinSch": {
+      "message": "7. Özel Dakika Programı"
+   },
+   "custmMinSchExm1": {
+      "message": "Yukarıdaki örnekte verilen URL açık sekmededir, bu da verilen URL'nin her 15 dakikada bir yeni sekmede açıldığını belirtir."
+   },
+   "custmMinSchExm2": {
+      "message": "Yukarıdaki örnekte verilen URL kapalı sekmededir, bu da yeni sekmede açılan verilen URL'nin 15 dakika sonra kapatılacağını belirtir."
+   },
+   "customSecondWarning": {
+      "message": "Özel saniye işlevi deneyseldir ve saniyeler 60'ın altına ayarlanırsa düzgün çalışmayabilir."
+   },
+   "darkMode": {
+      "message": "Karanlık Mod"
+   },
+   "datNotCopy": {
+      "message": "Geçersiz URL nedeniyle bazı veriler kopyalanamadı."
+   },
+   "dataSaved": {
+      "message": "Zamanlayıcı verileri başarıyla kaydedildi"
+   },
+   "date": {
+      "message": "Tarih"
+   },
+   "dateIsOutOfRange": {
+      "message": "Tarih aralık dışında"
+   },
+   "day": {
+      "message": "Gün"
+   },
+   "december": {
+      "message": "Aralık"
+   },
+   "delete": {
+      "message": "Silmek"
+   },
+   "deleteScheduleTb": {
+      "message": "Zamanlanmış sekmeyi sil."
+   },
+   "description": {
+      "message": "Tanım"
+   },
+   "developedBy": {
+      "message": "Geliştiren:"
+   },
+   "doNotCloseInPinnedTabs": {
+      "message": "Sabitlenmiş sekmeleri kapatmayın"
+   },
+   "doNotShowNotification": {
+      "message": "Bildirimi gösterme"
+   },
+   "domainName": {
+      "message": "Alan Adı"
+   },
+   "downloadCloseTbSampleCsv": {
+      "message": "Gerekli formatın bir örneğini görmek için bir sekmeyi kapat örneği CSV dosyasını indirin"
+   },
+   "downloadOpenTbSampleCsv": {
+      "message": "Gerekli formatın bir örneğini görmek için açık sekmeli bir CSV örneği indirin"
+   },
+   "editScheduleTb": {
+      "message": "Zamanlanmış sekmeyi düzenle."
+   },
+   "email": {
+      "message": "E-posta"
+   },
+   "enterDateToCloseTab": {
+      "message": "Program sekmesini kapatmak için buraya tarihi girin."
+   },
+   "enterDateToOpen": {
+      "message": "Program sekmesini açmak için tarihi girin."
+   },
+   "enterMiniutesToCloseTb": {
+      "message": "Sekmeyi kapatmak için dakika girin."
+   },
+   "enterMiniutesToOpen": {
+      "message": "Program sekmesini açmak için dakikaları girin."
+   },
+   "enterMinute": {
+      "message": "Dakikayı Girin"
+   },
+   "enterSecond": {
+      "message": "İkinciye Girin"
+   },
+   "enterSecondsToCloseTab": {
+      "message": "Sekmeyi kapatmak için saniye girin."
+   },
+   "enterSecondsToOpen": {
+      "message": "Program sekmesini açmak için saniye girin."
+   },
+   "enterTilteOfScheduleUrl": {
+      "message": "Planlanan URL'nin başlığını girin."
+   },
+   "enterTimeToCloseTab": {
+      "message": "Program sekmesini kapatmak için buraya zamanı girin."
+   },
+   "enterTimeToSchedule": {
+      "message": "Program sekmesini açmak için zaman girin."
+   },
+   "enterValidEmail": {
+      "message": "Lütfen geçerli bir e-posta girin"
+   },
+   "enterValidUrl": {
+      "message": "Lütfen geçerli bir URL girin"
+   },
+   "enterValueInCloseSec": {
+      "message": "Yakın saniyelerde değer girin"
+   },
+   "enterValueInOpenCloseSec": {
+      "message": "Açılış veya kapanış saniyelerinde değer girin"
+   },
+   "enterValueInOpenMinutes": {
+      "message": "Açık dakikalara değer girin"
+   },
+   "enterVlaueInCloseMinutes": {
+      "message": "Yakın dakikalarda değer girin"
+   },
+   "enterVlaueInOpenCloseMin": {
+      "message": "Açılış veya kapanış dakikalarında değer girin"
+   },
+   "enterVlaueInOpenSeconds": {
+      "message": "Açık saniyelerde değer girin"
+   },
+   "enterYourURLToSchedule": {
+      "message": "Planlamak için URL'nizi girin."
+   },
+   "every": {
+      "message": "Her"
+   },
+   "every10Min": {
+      "message": "Her 10 Dakikada Bir"
+   },
+   "every1Minute": {
+      "message": "her 1 dakikada bir"
+   },
+   "every30Min": {
+      "message": "Her 30 Dakikada Bir"
+   },
+   "every5Min": {
+      "message": "Her 5 Dakikada Bir"
+   },
+   "everyDay": {
+      "message": "Her gün"
+   },
+   "everyDayAt": {
+      "message": "her gün"
+   },
+   "everyHour": {
+      "message": "Her Saat"
+   },
+   "everyMinute": {
+      "message": "Her Dakika"
+   },
+   "everyMonth": {
+      "message": "Her Ay"
+   },
+   "everyMonthOn": {
+      "message": "her ay"
+   },
+   "everyMonthOnDay": {
+      "message": "her ay günde"
+   },
+   "everyWeek": {
+      "message": "Her hafta"
+   },
+   "everyWeekOn": {
+      "message": "her hafta"
+   },
+   "everyYear": {
+      "message": "Her yıl"
+   },
+   "everyYesrOn": {
+      "message": "her yıl"
+   },
+   "evr10MinSch": {
+      "message": "2.Her 10 Dakikalık Program"
+   },
+   "evr10MinSchExm1": {
+      "message": "Yukarıdaki örnekte verilen URL açık sekmededir, bu da verilen URL'nin Her 10 Dakikada Bir yeni sekmede açılacağını belirtir."
+   },
+   "evr10MinSchExm2": {
+      "message": "Yukarıdaki örnekte verilen URL kapalı sekmededir, bu da yeni sekmede açılan verilen URL'nin 10 dakika sonra kapatılacağını belirtir."
+   },
+   "evrDaySch": {
+      "message": "3.Her Gün Programı"
+   },
+   "evrDaySchExm1": {
+      "message": "Yukarıdaki örnekte verilen URL açık sekmededir ve her gün 17:27'de yeni sekmede açılacağını belirtir"
+   },
+   "evrDaySchExm2": {
+      "message": "Yukarıdaki örnekte verilen URL, her gün saat 17:27'de önceden açılmış sekmenin kapatılacağını belirten kapatma sekmesindedir."
+   },
+   "evrMonthSch": {
+      "message": "5.Her Aylık Program"
+   },
+   "evrMonthSchExm1": {
+      "message": "Yukarıdaki örnekte verilen URL açık sekmededir ve her ay 25. günde saat 13:45'te yeni sekmede açılacağını belirtir."
+   },
+   "evrMonthSchExm2": {
+      "message": "Yukarıdaki örnekte verilen URL, sekmeyi kapatıyor, bu da her ay 25. günde saat 13:45'te önceden açılmış sekmenin kapatılacağını belirtiyor"
+   },
+   "evrWeekSch": {
+      "message": "4.Her Hafta Programı"
+   },
+   "evrWeekSchExm1": {
+      "message": "\u003Cb>Yukarıdaki örnekte verilen URL açık bir sekmede yer alıyor ve her hafta Pazartesi ve Salı\u003C/b> günü saat 17:00'da yeni bir sekmede açılacağı belirtiliyor ."
+   },
+   "evrWeekSchExm2": {
+      "message": "\u003Cb>Yukarıdaki örnekte verilen URL kapatma sekmesinde yer alıyor ve bu da her hafta Pazartesi ve Salı\u003C/b> günü saat 17:00'da açık sekmenin kapatılacağını belirtiyor ."
+   },
+   "evrWeekSchExm3": {
+      "message": "Yukarıdaki örnekte haftalık zamanlayıcıda birden fazla gün seçilebilir."
+   },
+   "evrYearSch": {
+      "message": "6.Her Yıl Programı"
+   },
+   "evrYearSchExm1": {
+      "message": "Yukarıdaki örnekte verilen URL açık sekmededir ve her yıl 1 Ocak günü saat 13:35'te yeni sekmede açılacağını belirtir."
+   },
+   "evrYearSchExm2": {
+      "message": "Yukarıdaki örnekte verilen URL, her yıl 1 Ocak günü saat 13:35'te açık sekmenin kapatılacağını belirten kapatma sekmesindedir."
+   },
+   "exampleSort": {
+      "message": "örneğin"
+   },
+   "exdMaxLim": {
+      "message": "İzin verilen maksimum cihaz sayısı aşıldı!"
+   },
+   "exmpOpnClsTbSch": {
+      "message": "Sekme Zamanlayıcı'da sekmenin nasıl açılıp kapatılacağına dair örnek"
+   },
+   "expLicKy": {
+      "message": "Bu lisans anahtarının süresi dolmuştur."
+   },
+   "export": {
+      "message": "İhracat"
+   },
+   "exportBefore": {
+      "message": "Var\u003Cexday>\u003C/exday>kalan gün sayısı, Lütfen devam etmek için abone olun ve premium özelliğin keyfini çıkarın"
+   },
+   "exportClsTbDta": {
+      "message": "Kapatma sekmesi verilerini dışa aktar"
+   },
+   "exportOpenTbDt": {
+      "message": "Açık sekme verilerini dışa aktar"
+   },
+   "exportedData": {
+      "message": "Zamanlayıcı verileri başarıyla dışa aktarıldı"
+   },
+   "extensionShouldAble": {
+      "message": "Artık eklentinin Gizli modda sekmeleri kapatabilmesi gerekiyor."
+   },
+   "faq": {
+      "message": "SSS"
+   },
+   "faq_1": {
+      "message": "Otomatik Açma ve Kapatma Özellikli Sekme Zamanlayıcı Nedir?"
+   },
+   "faq_10": {
+      "message": "Planlanmış sekmelerimi nasıl görüntülerim?"
+   },
+   "faq_11": {
+      "message": "Hem açılış hem kapanış saatlerini doldurmak zorunlu mu?"
+   },
+   "faq_12": {
+      "message": "Otomatik Odaklama Sekmesi, Tüm Zamanlanmış Sekmeleri Etkinleştirme ve Güç Modu özellikleri ne işe yarar?"
+   },
+   "faq_13": {
+      "message": "Planlanmış Web Sitesi Bağlantısını gizli sekmede açıp/kapatabilir miyim?"
+   },
+   "faq_14": {
+      "message": "URL zaten açıksa Yenile sekmesinin ne faydası var?"
+   },
+   "faq_2": {
+      "message": "Website Link'in faydası nedir?"
+   },
+   "faq_3": {
+      "message": "Tab Scheduler'ı kullanarak bir URL'yi nasıl planlarım?"
+   },
+   "faq_4": {
+      "message": "'Arka Planda URL Aç' seçeneği nedir?"
+   },
+   "faq_5": {
+      "message": "Uzantının sabitlenmiş sekmeleri kapatmasını engelleyebilir miyim?"
+   },
+   "faq_6": {
+      "message": "'Her İkisi' zamanlama türü ne anlama geliyor?"
+   },
+   "faq_7": {
+      "message": "'URL Filtreleme' özelliği nasıl çalışır?"
+   },
+   "faq_8": {
+      "message": "Planlanmış bir sekmeyi silmeden devre dışı bırakabilir miyim?"
+   },
+   "faq_9": {
+      "message": "Planlanmış sekmeler için bildirim alacak mıyım?"
+   },
+   "faq_a_1": {
+      "message": "\u003Cp>Otomatik Açma ve Kapatma Özellikli Sekme Zamanlayıcı, kullanıcıların sekmeleri belirli zamanlarda otomatik olarak açmalarını ve kapatmalarını zamanlamalarına olanak tanıyan bir tarayıcı uzantısıdır. Kullanıcılar tek seferlik bir zamanlama seçebilir veya çeşitli sıklık seçenekleriyle tekrarlayan zamanlamalar ayarlayabilir. Bu uzantının kullanıcılar için birden fazla amacı vardır ve sizin için yararlı olan birçok özellik sunar.\u003C/p>"
+   },
+   "faq_a_10": {
+      "message": "Planlanan tüm sekmeler, başlığını, web sitesi bağlantısını, açılış ve kapanış saatlerini, durumunu ve gerçekleştirebileceğiniz eylemleri (örneğin etkinleştirme, düzenleme, silme) gösteren bir listede görüntülenir."
+   },
+   "faq_a_11": {
+      "message": "Hayır, açık veya kapalı bir zaman planlayabilirsiniz. Ancak, yıldız işaretiyle (*) işaretlenmiş zorunlu alanları doldurmanız veya seçmeniz gerekir."
+   },
+   "faq_a_12": {
+      "message": "Otomatik Odaklama Sekmesi, zamanlanmış bir sekme açıldığında, Tüm Zamanlanmış Sekmeleri Etkinleştirme, tüm zamanlanmış sekmelerinizi tek bir tıklamayla hızlı bir şekilde açmanızı sağlar. Güç Modu, tarayıcı kaynaklarını daha verimli bir şekilde yöneterek uzantının performansını optimize eder."
+   },
+   "faq_a_13": {
+      "message": "Evet, \"Gizli modda aç\" seçeneğini belirleyerek gizli modda zamanlanmış bir sekme açmayı seçebilirsiniz. Uzantı ayarlarında \"Gizli modda izin ver\" etkinleştirildiği sürece, \"Yalnızca gizli sekmeleri kapat\" seçeneğini belirleyerek yalnızca gizli sekmeleri kapatmayı seçebilirsiniz."
+   },
+   "faq_a_14": {
+      "message": "Bu seçenek etkinleştirildiğinde, aynı URL tarayıcınızda zaten açıksa, uzantı otomatik olarak mevcut bir sekmeyi yeniler. Bu, yinelenen sekmelerin açılmasını önler ve sayfanın her zaman en son sürümünün yüklendiğinden emin olmanızı sağlar."
+   },
+   "faq_a_14_1": {
+      "message": "Eğer https://github.com/ adresini açmaya çalışırsanız ve başka bir sekmede zaten açıksa, eklenti yeni bir sekme açmak yerine yalnızca o sekmeyi yeniler."
+   },
+   "faq_a_14_2": {
+      "message": "Eğer https://github.com/ adresi üç sekmede de açıksa, eklenti üç sekmeyi de yenileyecektir."
+   },
+   "faq_a_2": {
+      "message": "Website Link tarayıcınızın açık sekme website adresidir. Website adresini nasıl kullanabileceğiniz aşağıda belirtilmiştir."
+   },
+   "faq_a_3": {
+      "message": "Bir URL'yi zamanlamak için web sitesi bağlantısını girin, zamanlamaya bir başlık verin, sıklığı seçin (Tek Sefer, Her Dakika, Günlük, vb.) ve açılış ve kapanış saatlerini seçin. Ayrıca sekmeyi açmak ve kapatmak için bir tarih, gün veya saniye belirtebilirsiniz."
+   },
+   "faq_a_4": {
+      "message": "\u003Cp>Bu seçenek, yeni sekmeyi odak noktasına getirmeden arka planda açılacak bir URL planlamak için size tam kontrol sağlar. Diğer sekmelerde çalışmaya devam ederken URL sessizce açılır. Özellikle tarayıcının zamanlanmış URL'den verileri aktif olarak görüntülemeden almasını istediğinizde, örneğin bir GET API isteği durumunda, bu özellikle yararlıdır.\u003C/p>\u003Cbr> \u003Cp>Örneğin, bir API uç noktasından düzenli olarak belirli bir zamanda veri almak istiyorsanız, yeni bir görünür sekme açmadan isteği arka planda çalıştırmak için bu verimli seçeneği kullanabilirsiniz.\u003C/p>"
+   },
+   "faq_a_5": {
+      "message": "Evet, sabitlenmiş sekmelerin kapanmasını önlemek için bir seçenek var. Bu sekmelerin diğer kapatma kriterlerini karşılasalar bile açık kalmasını sağlamak için \"Sabitlenmiş sekmeleri kapatma\" seçeneğini işaretleyin."
+   },
+   "faq_a_6": {
+      "message": "'Her İkisi' zamanlama türü, bir sekmenin ne zaman açılıp kapanacağı üzerinde tam kontrol sahibi olmanızı sağlar ve her iki eylem için de belirli zamanlar ayarlamanıza olanak tanır."
+   },
+   "faq_a_7": {
+      "message": "URL Filtreleme, planlanan eylemin gerçekleşmesi için URL'nin yalnızca belirli bir bölümünün eşleşmesi gerektiğinden emin olur. Bu, kısmi URL eşleşmelerine dayalı belirli eylemleri otomatikleştirmek istediğinizde yararlıdır. Örneğin, https://example.com/page URL'si için URL Filtreleme seçeneğini işaretlerseniz, https://example.com/page/123, https://example.com/page?query=example ve https://subdomain.example.com/page gibi URL'ler için de geçerli olacaktır."
+   },
+   "faq_a_8": {
+      "message": "\"Bu planlanmış sekmeyi etkinleştir\" seçeneğiyle, planlanmış sekmeleri kolayca etkinleştirebilir veya devre dışı bırakabilir, böylece yapılandırmalarınızı kaybetmeden planlarınızı yönetme esnekliğine sahip olursunuz."
+   },
+   "faq_a_9": {
+      "message": "Varsayılan olarak bildirimler alacaksınız. Ancak bildirimleri durdurmayı tercih ederseniz, devre dışı bırakmak için \"Bildirim gösterme\" seçeneğini işaretleyebilirsiniz."
+   },
+   "february": {
+      "message": "Şubat"
+   },
+   "filterTips": {
+      "message": "Filtre 'https://' veya 'www.' sonrasında uygulanır, Örn 'github.com'"
+   },
+   "for_exp": {
+      "message": "Örneğin"
+   },
+   "freeForever": {
+      "message": "Sonsuza dek özgür"
+   },
+   "freeSchedule": {
+      "message": "serbest program"
+   },
+   "freeTral": {
+      "message": "Değerli bir erken kullanıcı olarak, keyfini çıkaracaksınız\u003Crday>120\u003C/rday>Yeni ücretli planımıza geçmeden önce ücretsiz erişim günlerimiz var—devam eden desteğiniz için teşekkür ederiz!\u003Cp class=\"p-t-5\">Var\u003Cb>\u003Cspan>\u003C/span>\u003C/b>kalan gün sayınız\u003Crday>120\u003C/rday>-gün serbest dönem.\u003Cafex class=\"warning\">\u003Cafex>\u003C/afex>\u003C/afex>\u003C/p> "
+   },
+   "frequentlyAskedQuestions": {
+      "message": "Sıkça sorulan sorular"
+   },
+   "friday": {
+      "message": "Cuma"
+   },
+   "getThisPlan": {
+      "message": "Bu Planı Alın"
+   },
+   "goToSettingsPageToSchedule": {
+      "message": "URL'lerin açılıp kapanmasını zamanlamak için ayarlar sayfasına gidin."
+   },
+   "goURL": {
+      "message": "URL'ye git"
+   },
+   "helpAccordion12": {
+      "message": "Bu eklenti uyku/askıya alma modunda çalışıyor mu?"
+   },
+   "helpAccordion3": {
+      "message": "Bir sekmeyi gizli modda açılacak şekilde zamanlayabilir miyim?"
+   },
+   "helpAccordion6": {
+      "message": "\"Zaman doldu\" nedir?"
+   },
+   "helpAccordion7": {
+      "message": "Zamanlanmış URL'yi dışa aktarabilir miyim?"
+   },
+   "helpAccordion8": {
+      "message": "Program URL'sine Aktarma Yapabilir miyim?"
+   },
+   "helpPanelBodyDesc12First": {
+      "message": "Hayır, bu eklenti uyku/askıya alma modunda çalışmayacaktır."
+   },
+   "helpPanelBodyDesc12Second": {
+      "message": "Herhangi bir URL açık veya kapalı sekmede zamanlanmışsa, bilgisayarınız otomatik olarak uyku veya askıya alma moduna geçmeyecektir."
+   },
+   "helpPanelBodyDesc3": {
+      "message": "Evet, 'Gizli modda aç' seçeneğini seçerek gizli modda zamanlanmış bir sekme açmayı seçebilirsiniz. Tarayıcının uzantı ayarlarında uzantının 'Gizli modda izin ver' seçeneğinin etkinleştirildiğinden emin olun."
+   },
+   "helpPanelBodyDesc6": {
+      "message": "- Verilen tarih ve saat, mevcut tarih ve saatten geçirilirse \"Süre Doldu\" yazısı gösterilecektir."
+   },
+   "helpPanelBodyDesc7": {
+      "message": "Evet, önceden planlanmış açık sekme ve kapalı sekme URL'lerini csv formatında dışarı aktarabilir ve bu URL'yi içe aktarmak için başka bir sistemle kullanabilirsiniz."
+   },
+   "helpPanelBodyDesc8": {
+      "message": "Evet, geçerli açma ve kapama URL'sini csv formatında içe aktarabilirsiniz. İçe aktarılan csv formatı, belirtilen zamanda otomatik olarak planlanacaktır."
+   },
+   "herAreStepsToAllow": {
+      "message": "Google Chrome'da \"Gizli Modda İzin Ver\" adımları şunlardır:"
+   },
+   "home": {
+      "message": "Ev"
+   },
+   "hour_minute_close": {
+      "message": "Her Saat Yakın Dakika"
+   },
+   "hour_minute_open": {
+      "message": "Her Saat Açık Dakika"
+   },
+   "how_to_use_tab": {
+      "message": "Sekme zamanlayıcısı nasıl kullanılır?"
+   },
+   "import": {
+      "message": "İçe aktarmak"
+   },
+   "importClsTbDta": {
+      "message": "Kapatma sekmesi verilerini içe aktar"
+   },
+   "importExport": {
+      "message": "İthalat/İhracat"
+   },
+   "importOpenTbDt": {
+      "message": "Açık sekme verilerini içe aktar"
+   },
+   "importedRecored": {
+      "message": ", ithal edilmiş kayıt"
+   },
+   "inactivateScheduleTab": {
+      "message": "Zamanlanmış sekmeyi devre dışı bırakın."
+   },
+   "inactive": {
+      "message": "Etkin değil"
+   },
+   "inactiveSch": {
+      "message": "8. Etkin Olmayan URL"
+   },
+   "inactiveSchExm1": {
+      "message": "Yukarıdaki örnekte verilen URL açık sekmede veya kapalı sekmededir, bu da verilen URL'nin etkin olmadığını ve herhangi bir işlem yapmayacağını belirtir."
+   },
+   "inactiveThisScheduledTabs": {
+      "message": "Bu planlanmış sekmeyi etkinleştir"
+   },
+   "invalidDuplicate": {
+      "message": ", yinelenen veya geçersiz kayıt"
+   },
+   "invldLicKy": {
+      "message": "Geçersiz lisans anahtarı!"
+   },
+   "isClose": {
+      "message": "yakın"
+   },
+   "isOpen": {
+      "message": "açık"
+   },
+   "january": {
+      "message": "Ocak"
+   },
+   "july": {
+      "message": "Temmuz"
+   },
+   "june": {
+      "message": "Haziran"
+   },
+   "licKeyDis": {
+      "message": "Bu lisans anahtarı devre dışı."
+   },
+   "listTitle": {
+      "message": "Sekme Zamanlayıcı"
+   },
+   "loading": {
+      "message": "Lütfen bekleyin..."
+   },
+   "locale": {
+      "message": "en"
+   },
+   "march": {
+      "message": "Mart"
+   },
+   "maxSchedule": {
+      "message": "4 Maksimum zamanlama limiti"
+   },
+   "may": {
+      "message": "Mayıs"
+   },
+   "mintValid": {
+      "message": "Minimum 1 dakika gereklidir"
+   },
+   "minute": {
+      "message": "Dakika"
+   },
+   "minutesNotLessThan1": {
+      "message": "Dakikalar 1'den az olmamalıdır."
+   },
+   "monday": {
+      "message": "Pazartesi"
+   },
+   "month": {
+      "message": "Ay"
+   },
+   "monthly": {
+      "message": "Aylık"
+   },
+   "more": {
+      "message": "Daha"
+   },
+   "mostSubscribe": {
+      "message": "En Çok Abone Olan"
+   },
+   "no": {
+      "message": "HAYIR"
+   },
+   "noDataToExport": {
+      "message": "Dışa aktarılacak veri yok."
+   },
+   "noScheduledTabs": {
+      "message": "Planlanmış sekme yok"
+   },
+   "noTimerSetAddNewTimer": {
+      "message": "Zamanlayıcı ayarlanmadı, yeni zamanlayıcı ayarlamak için Ekle düğmesine tıklayın"
+   },
+   "not_show_tutorial": {
+      "message": "Bu öğreticiyi bir daha gösterme"
+   },
+   "notificationOpenTab": {
+      "message": "13. Açık/kapalı sekme URL'sinde bildirim"
+   },
+   "notificationOpenTabExm1": {
+      "message": "Yukarıdaki örnekte verilen URL açık sekmededir, bu da her 5 dakikada bir bildirim vereceğini ve URL'yi yeni sekmede açıp/kapatacağını belirtir."
+   },
+   "notifications": {
+      "message": "Bildiri"
+   },
+   "november": {
+      "message": "Kasım"
+   },
+   "october": {
+      "message": "Ekim"
+   },
+   "onTheExtensionDetailPage": {
+      "message": "Uzantının ayrıntılar sayfasında aşağı kaydırın ve “Gizli modda izin ver” seçeneğini bulun."
+   },
+   "oneTime": {
+      "message": "Bir Zamanlar"
+   },
+   "oneTmSch": {
+      "message": "1.Tek Zamanlı Program"
+   },
+   "oneTmSchExm1": {
+      "message": "Yukarıdaki örnekte verilen URL açık sekmededir ve yeni sekmede açılacağını belirtir Tek Sekme 21/1/2023 13:45'te"
+   },
+   "oneTmSchExm2": {
+      "message": "Yukarıdaki örnekte verilen URL, 21/1/2023 tarihinde saat 13:45'te tüm belirli eşleşen URL sekmelerinin kapatılacağını belirten kapatma sekmesindedir."
+   },
+   "open": {
+      "message": "Açık"
+   },
+   "openBackground": {
+      "message": "Evet ise, yeni bir sekmede açmadan arka planda bir URL yükleme"
+   },
+   "openDate": {
+      "message": "Açık Tarih"
+   },
+   "openDay": {
+      "message": "Açık Gün"
+   },
+   "openEveryDayOn": {
+      "message": "Her gün açık"
+   },
+   "openEveryMonthOn": {
+      "message": "Her ay günü açıktır"
+   },
+   "openEveryWeekOn": {
+      "message": "Her hafta açık"
+   },
+   "openEveryYearOn": {
+      "message": "Her yıl açıktır"
+   },
+   "openGoogleChrome": {
+      "message": "Google Chrome’u açın."
+   },
+   "openInBackground": {
+      "message": "URL'yi Arkaplanda Aç"
+   },
+   "openInEvery": {
+      "message": "Her yerde açık"
+   },
+   "openInIncognito": {
+      "message": "Gizli modda aç"
+   },
+   "openMinute": {
+      "message": "Açık Dakika"
+   },
+   "openOnDay": {
+      "message": "Gün içinde açık"
+   },
+   "openOnEvery": {
+      "message": "Her gün açık"
+   },
+   "openSecond": {
+      "message": "İkinci Açık"
+   },
+   "openSecondsMoreThan5": {
+      "message": "Açık saniye 5'ten fazla olmalıdır."
+   },
+   "openTabSchedule": {
+      "message": "Açık Sekme Programı"
+   },
+   "openTabURL": {
+      "message": "Sekme URL'sini aç"
+   },
+   "openTime": {
+      "message": "Açık Zaman"
+   },
+   "openUrl": {
+      "message": "Web Sitesi Bağlantısını Aç"
+   },
+   "openWeek": {
+      "message": "Açık Hafta"
+   },
+   "openWeeks": {
+      "message": "Açık Haftalar"
+   },
+   "open_on": {
+      "message": "Açık"
+   },
+   "optional": {
+      "message": "İsteğe bağlı"
+   },
+   "or": {
+      "message": "veya"
+   },
+   "outof": {
+      "message": "dışında"
+   },
+   "pagePath": {
+      "message": "Sayfa Yolu"
+   },
+   "paidFeature": {
+      "message": "Ücretli Özellik"
+   },
+   "pauseSchedule": {
+      "message": "Tüm zamanlamaların başlatılması veya durdurulması"
+   },
+   "pauseTabScheduler": {
+      "message": "Duraklatılmış Sekme zamanlayıcısı"
+   },
+   "pleaseAllowIncognitoMessage": {
+      "message": "Lütfen uzantı ayrıntılarında 'Gizli modda izin ver' seçeneğini etkinleştirin. Talimatlar için lütfen öğretici sayfasına bakın."
+   },
+   "pleaseShareYourSuggestions": {
+      "message": "Önerinizi lütfen paylaşın."
+   },
+   "plsShreAnySugWithUs": {
+      "message": "Lütfen bizi geliştirmek için bir öneri verin"
+   },
+   "powerMode": {
+      "message": "Güç Modu"
+   },
+   "premium": {
+      "message": "prim"
+   },
+   "pricePlan": {
+      "message": "Fiyatlandırma ve Planlar"
+   },
+   "privcyPolicy": {
+      "message": "Gizlilik Politikası"
+   },
+   "prowerModeTip": {
+      "message": "Güç Modunu etkinleştirerek sistemi her zaman aktif tutun"
+   },
+   "put": {
+      "message": "Koymak"
+   },
+   "rateUs": {
+      "message": "Bizi Derecelendirin"
+   },
+   "removeDuplicateEntry": {
+      "message": "Lütfen yinelenen girişi kaldırın"
+   },
+   "removeOpenTbURL": {
+      "message": "Açık sekme URL'sini kaldır"
+   },
+   "repeat": {
+      "message": "Tekrarlamak"
+   },
+   "requiredMsg": {
+      "message": "Gerekli"
+   },
+   "rmvClsTb": {
+      "message": "Kapatma sekmesi URL'sini kaldır"
+   },
+   "sameTabs": {
+      "message": "URL zaten açıksa sekmeyi yenile"
+   },
+   "sameTabsInfo": {
+      "message": "Aynı URL için birden fazla sekme açılmasını önleyin. Örneğin, www.google.com zaten açıksa, yeni bir sekme açmak yerine mevcut sekme yenilenecektir."
+   },
+   "sampleCsvOpenPath": {
+      "message": "../sample_csv/en/open_tab_sample.csv"
+   },
+   "sampleFile": {
+      "message": "Örnek dosya"
+   },
+   "saturday": {
+      "message": "Cumartesi"
+   },
+   "savOpnData": {
+      "message": "Açık sekme verilerini kaydet"
+   },
+   "save": {
+      "message": "Kaydetmek"
+   },
+   "saveClsTbData": {
+      "message": "Yakın sekme verilerini kaydet"
+   },
+   "saveSchedule": {
+      "message": "Programı Kaydet"
+   },
+   "scheduleCloseTab": {
+      "message": "Program Sekmeyi Kapat"
+   },
+   "scheduleCurrentTab": {
+      "message": "Mevcut sekmeyi planla"
+   },
+   "scheduleOpenTab": {
+      "message": "Zamanlama Açık Sekme"
+   },
+   "scheduledTabIsAlreadyExistWithSameTimer": {
+      "message": "Bu planlanmış sekme aynı zamanlayıcıyla zaten mevcut."
+   },
+   "scheduledTabList": {
+      "message": "Zamanlanmış Sekme Listesi"
+   },
+   "scheduledType": {
+      "message": "Program Türü"
+   },
+   "search": {
+      "message": "Aramak"
+   },
+   "secValid": {
+      "message": "Minimum 5 saniye gereklidir"
+   },
+   "second": {
+      "message": "Saniye"
+   },
+   "selectCloseDate": {
+      "message": "Kapanış tarihini seçin"
+   },
+   "selectCloseDay": {
+      "message": "Kapanış gününü seçin"
+   },
+   "selectCloseTime": {
+      "message": "Kapanış saatini seçin"
+   },
+   "selectColumn": {
+      "message": "Sütun Seç"
+   },
+   "selectDateAndTime": {
+      "message": "Yeni sekme açmak için tarih ve saati seçin"
+   },
+   "selectDateAndTimeClsTb": {
+      "message": "Sekmeyi kapatmak için tarih ve saati seçin"
+   },
+   "selectDayToCloseSchTb": {
+      "message": "Program sekmesini kapatmak için günü seçin."
+   },
+   "selectDayToClsTb": {
+      "message": "Sekmeyi kapatmak için gün seçin"
+   },
+   "selectDayToSchdule": {
+      "message": "Zamanlama sekmesini seçmek için gün seçin."
+   },
+   "selectDaysInWeek": {
+      "message": "Haftada günleri seçin"
+   },
+   "selectDaysInWeekIClsTime": {
+      "message": "Kapanış zamanlayıcısında haftanın günlerini seçin."
+   },
+   "selectDaysInWeekIOpClsTime": {
+      "message": "Haftada açık veya kapalı zamanlayıcıda günleri seçin."
+   },
+   "selectDaysInWeekIOpTime": {
+      "message": "Açık zamanlayıcıda haftanın günlerini seçin."
+   },
+   "selectFrequency": {
+      "message": "Frekans Seçin"
+   },
+   "selectFrequencyOfScheduleUrl": {
+      "message": "Planlanan URL'nin sıklığını seçin."
+   },
+   "selectOpenDate": {
+      "message": "Açılış tarihini seçin"
+   },
+   "selectOpenDay": {
+      "message": "Açık gün seçin"
+   },
+   "selectOpenOrClose": {
+      "message": "Açılış ve kapanış saatini seçin"
+   },
+   "selectOpenOrCloseDate": {
+      "message": "Açılış ve kapanış tarihini seçin"
+   },
+   "selectOpenOrCloseDay": {
+      "message": "Açılış ve kapanış gününü seçin"
+   },
+   "selectOpenTime": {
+      "message": "Açık zamanı seçin"
+   },
+   "selectPreferredLanguage": {
+      "message": "Tercih ettiğiniz dili seçin."
+   },
+   "selectToOpenTab": {
+      "message": "Yeni sekme açmak için gün seçin"
+   },
+   "selectTypTimerClsTb": {
+      "message": "Sekmeyi kapatmak için zamanlayıcı türünü seçin"
+   },
+   "selectTypeOfSchedule": {
+      "message": "Program türünü seçin, hem açmak hem de kapatmak istiyorsanız \"Her ikisi de\" seçeneğini seçin."
+   },
+   "selectTypeOfTimer": {
+      "message": "Yeni sekme açmak için zamanlayıcı türünü seçin"
+   },
+   "select_weeks": {
+      "message": "Haftaları Seçin"
+   },
+   "september": {
+      "message": "Eylül"
+   },
+   "settingSave": {
+      "message": "Ayarlar başarıyla kaydedildi"
+   },
+   "settingToClose": {
+      "message": "Gizli modda sekmeyi kapatma ayarı."
+   },
+   "shareYourSuggestionWithUs": {
+      "message": "Önerilerinizi bizimle paylaşın."
+   },
+   "slectDayToScheduleWeekly": {
+      "message": "Haftalık olarak planlamak istediğiniz günleri seçin."
+   },
+   "slectMinute": {
+      "message": "Dakikayı Seçin"
+   },
+   "smthngWrng": {
+      "message": "Bir şeyler ters gitti"
+   },
+   "softpulseInfotech": {
+      "message": "Softpulse Bilişim"
+   },
+   "somethingWentWrong": {
+      "message": "Bir şeyler ters gitti. Sayfayı yenileyin ve tekrar deneyin."
+   },
+   "status": {
+      "message": "Durum"
+   },
+   "subcrKeyShldNEmpt": {
+      "message": "Lütfen abonelik anahtarınızı giriniz."
+   },
+   "subdomain": {
+      "message": "Alt alan adı"
+   },
+   "subkeyInputTitle": {
+      "message": "Abonelik anahtarını girin"
+   },
+   "submFeedBack": {
+      "message": "Göndermek"
+   },
+   "suggForTbSch": {
+      "message": "Sekme zamanlayıcısı için öneri"
+   },
+   "suggestionAndRateUs": {
+      "message": "Öneri &amp; Puanlama"
+   },
+   "sunday": {
+      "message": "Pazar"
+   },
+   "tabCloseOneTime": {
+      "message": "Sekme yalnızca bir kez kapanacak"
+   },
+   "tabSchTutorial": {
+      "message": "Sekme Zamanlayıcı Eğitimi"
+   },
+   "tabScheduler": {
+      "message": "Sekme Zamanlayıcı"
+   },
+   "tabSchedulerOptions": {
+      "message": "Sekme Zamanlayıcı Seçenekleri"
+   },
+   "tabWillOpenOneTime": {
+      "message": "Sekme yalnızca bir kez açılacak"
+   },
+   "tabWillOpenWhenBrowserOpen": {
+      "message": "Tarayıcı açıldığında sekme açılacaktır"
+   },
+   "termCondition": {
+      "message": "Şartlar ve Koşullar"
+   },
+   "thanksFrRev": {
+      "message": "Yorumunuz İçin Teşekkür Ederiz"
+   },
+   "thnkUFeedBack": {
+      "message": "Öneriniz için teşekkür ederim"
+   },
+   "thnkUFrUsngTbSch": {
+      "message": "Lütfen bizi geliştirmek için bir öneri verin"
+   },
+   "thursday": {
+      "message": "Perşembe"
+   },
+   "time": {
+      "message": "Zaman"
+   },
+   "timeExpired": {
+      "message": "Zaman Doldu"
+   },
+   "timer": {
+      "message": "Zamanlayıcı"
+   },
+   "title": {
+      "message": "Başlık"
+   },
+   "titleLengtWarn": {
+      "message": "Başlığın uzunluğu 200 karakteri geçmemelidir."
+   },
+   "toScheduledOpenTbMsg": {
+      "message": "Zamanlanmış sekme açmak için lütfen URL filtrelemesini kaldırın."
+   },
+   "toogleCloseTab": {
+      "message": "Tüm sekme URL'lerini kapat için zamanlanmış alarmı başlat/durdur"
+   },
+   "toogleDarkmode": {
+      "message": "Görüntüleme deneyiminizi özelleştirmek için karanlık mod ile varsayılan mod arasında geçiş yapın."
+   },
+   "toogleOff": {
+      "message": "Kapalı"
+   },
+   "toogleOn": {
+      "message": "Açık"
+   },
+   "toogleOpenTab": {
+      "message": "Tüm açık sekme URL'leri için zamanlanmış alarmı başlat/durdur"
+   },
+   "topLevelDomain": {
+      "message": "Üst Düzey Alan Adı"
+   },
+   "totalProcessed": {
+      "message": "Toplam kaydedilen işlenen"
+   },
+   "tuesday": {
+      "message": "Salı"
+   },
+   "tutorialImg1": {
+      "message": "\u003Cimg src=\"../images/en/1.png\">"
+   },
+   "tutorialImg10": {
+      "message": "\u003Cimg src=\"../images/en/10.png\">"
+   },
+   "tutorialImg11": {
+      "message": "\u003Cimg src=\"../images/en/11.png\">"
+   },
+   "tutorialImg12": {
+      "message": "\u003Cimg src=\"../images/en/12.png\">"
+   },
+   "tutorialImg13": {
+      "message": "\u003Cimg src=\"../images/en/13.png\">"
+   },
+   "tutorialImg14": {
+      "message": "\u003Cimg src=\"../images/en/14.png\">"
+   },
+   "tutorialImg2": {
+      "message": "\u003Cimg src=\"../images/en/2.png\">"
+   },
+   "tutorialImg3": {
+      "message": "\u003Cimg src=\"../images/en/3.png\">"
+   },
+   "tutorialImg4": {
+      "message": "\u003Cimg src=\"../images/en/4.png\">"
+   },
+   "tutorialImg5": {
+      "message": "\u003Cimg src=\"../images/en/5.png\">"
+   },
+   "tutorialImg6": {
+      "message": "\u003Cimg src=\"../images/en/6.png\">"
+   },
+   "tutorialImg7": {
+      "message": "\u003Cimg src=\"../images/en/7.png\">"
+   },
+   "tutorialImg8": {
+      "message": "\u003Cimg src=\"../images/en/8.png\">"
+   },
+   "tutorialImg9": {
+      "message": "\u003Cimg src=\"../images/en/9.png\">"
+   },
+   "uncheckAll": {
+      "message": "Tümünü İşaretle'yi Kaldır"
+   },
+   "unlimitedSchedule": {
+      "message": "Sınırsız zamanlama limiti"
+   },
+   "unspecifiedURL": {
+      "message": "11. URL belirtilmemiş yol"
+   },
+   "unspecifiedURLExm1": {
+      "message": "Yukarıdaki örnekte verilen URL, sekmeyi kapatıyor, yani yeni sekmede açılan ve bilinmeyen bir web adresiyle başlayıp biten verilen URL'nin 5 dakika sonra kapatılacağı belirtiliyor."
+   },
+   "upgradePlan": {
+      "message": "Lütfen Plan Satın Alın VEYA Giriş Yapın ve daha fazla özelliğin kilidini açmak için planınızı yükseltin."
+   },
+   "upgradePlanUnlock": {
+      "message": "Daha fazla özelliğin kilidini açmak için planınızı yükseltin."
+   },
+   "uploadValidFormat": {
+      "message": "Lütfen geçerli bir format yükleyin"
+   },
+   "url": {
+      "message": "URL"
+   },
+   "urlContExat": {
+      "message": "URL Filtreleme"
+   },
+   "urlEndWithUnspesifiedPth": {
+      "message": "9. URL belirtilmemiş yol ile bitiyor"
+   },
+   "urlEndWithUnspesifiedPthExm1": {
+      "message": "Yukarıdaki örnekte verilen URL, sekmeyi kapat konumundadır; bu, yeni sekmede açılan ve bilinmeyen bir yolla biten verilen URL'nin 5 dakika sonra kapatılacağını belirtir."
+   },
+   "urlFilterInfo": {
+      "message": "Kontrol edilen URL'yi içerir, yalnızca URL'nin bir kısmına ihtiyaç duyar ve kontrol edilen Tam URL, belirtilen URL ile tam olarak eşleşmelidir"
+   },
+   "urlFilterinCLoseTb": {
+      "message": "14. URL Filtreleme sekme URL'sini kapatma"
+   },
+   "urlFilterinCLoseTbExample": {
+      "message": "Yukarıdaki örnekte verilen URL, sekmeyi kapatıyor, bu da zaten açık olan sekme URL'sinin verilen URL'nin bir kısmıyla eşleştiğini ve bu nedenle o sekmenin kapatılacağını belirtiyor"
+   },
+   "urlIsRequired": {
+      "message": "Web Sitesi Bağlantısı gereklidir"
+   },
+   "urlNotvalid": {
+      "message": "URL geçerli değil"
+   },
+   "urlStartWithUnspesifiedPth": {
+      "message": "10. URL belirtilmemiş yol ile başlıyor"
+   },
+   "urlStartWithUnspesifiedPthExm1": {
+      "message": "Yukarıdaki örnekte verilen URL kapalı sekmededir, bu da yeni sekmede açılan ve bilinmeyen bir alt alan adı olan \u003Cb>'www'\u003C/b> veya \u003Cb>'blog'\u003C/b> ile başlayan verilen URL'nin 5 dakika sonra kapatılacağını belirtir."
+   },
+   "useSpecificUrl": {
+      "message": "Belirli Web Sitesi Bağlantısını Kullan"
+   },
+   "useSpecificUrl1": {
+      "message": "Kapatılan tarayıcının sekmesine Web Sitesi Bağlantısı alanına mutlaka alt alan adını, üst seviye alan adını, alan adını ve sayfa yolunu tam olarak yazmış olmanız gerekmektedir."
+   },
+   "useSpecificUrl2": {
+      "message": "Kullan tüm tarayıcı sekmelerini kapattı"
+   },
+   "useSpecificUrl3": {
+      "message": "Belirli ve tam Web Sitesi Bağlantısını kullanın"
+   },
+   "useUnSpecificUrl1": {
+      "message": "Belirtilmemiş Web Sitesi Bağlantısını Kullan"
+   },
+   "useUnSpecificUrl2": {
+      "message": "Belirtilmemiş Web Sitesi Bağlantısı ile başlayın"
+   },
+   "useUnSpecificUrl3": {
+      "message": "Belirtilmemiş Web Sitesi Bağlantısı ile son kullanın"
+   },
+   "used": {
+      "message": "Kullandın"
+   },
+   "validFormatCsv": {
+      "message": "İçe aktarma için geçerli CSV dosya biçimi nedir?"
+   },
+   "websiteLink": {
+      "message": "Web Sitesi Bağlantısı"
+   },
+   "websiteUrl": {
+      "message": "Web sitesi URL'si"
+   },
+   "wednesday": {
+      "message": "Çarşamba"
+   },
+   "weekName": {
+      "message": "Hafta Adı"
+   },
+   "weekly": {
+      "message": "Haftalık"
+   },
+   "whenExtensionTabAppears": {
+      "message": "Uzantılar sekmesi görüntülendiğinde, Gizli modda etkinleştirmek için \"Otomatik açma ve kapatma özellikli Sekme Zamanlayıcı\"yı bulun ve yanındaki \"Ayrıntılar\" düğmesine tıklayın."
+   },
+   "whenMenuPopup": {
+      "message": "Bir menü açıldığında \"Uzantıları yönet\" seçeneğini seçin."
+   },
+   "withSignMustFill": {
+      "message": "\u003Cspan>*\u003C/span> işareti ile doldurulması veya seçilmesi zorunludur. Açılış veya kapanış saatini veya her ikisini birden seçin."
+   },
+   "writeYourDescriptionAboutSchUrl": {
+      "message": "Zamanlanmış URL hakkında açıklamanızı buraya yazın."
+   },
+   "yes": {
+      "message": "Evet"
+   },
+   "yourEmailAddress": {
+      "message": "E-posta adresiniz"
+   },
+   "yourScheduleUrl": {
+      "message": "Program URL'niz"
+   }
+}

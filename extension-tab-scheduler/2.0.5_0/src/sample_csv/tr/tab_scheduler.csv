@@ -1,0 +1,4 @@
+﻿URL,Zamanlayıcı,Durum,Açık Tarih,Kapanış Tarihi,Açık Zaman,Kapanış Zamanı,Açık Hafta,Haftayı Kapat,Tarayıcı Açıkken,Açık Gün,Kapalı Gün,Açık Dakika,Yakın Dakika,İkinci Açık,İkinciyi Kapat,Bildiri,Başlık,Tanım,URL'yi Arkaplanda Aç,Gizli modda aç,Sabitlenmiş sekmeleri kapatmayın,Yalnızca gizli sekmeleri kapat,URL Filtreleme,Program Türü,Her Saat Açık Dakika,Her Saat Yakın Dakika,URL zaten açıksa sekmeyi yenile
+https://www.google.com/,Her Dakika,Aktif,,,,,"","","",,,,,,,Etkin değil,Close Every Minute,,HAYIR,HAYIR,HAYIR,HAYIR,Evet,Kapalı,0,0,Evet
+http://www.w3schools.com/,Her gün,Aktif,,,16:31,,"","","",,,,,,,Etkin değil,Every Day Open,,HAYIR,HAYIR,HAYIR,HAYIR,HAYIR,Açık,0,0,HAYIR
+https://www.flipkart.com/,Özel Dakika,Aktif,,,,,"","","",,,120,5,,,Etkin değil,Open and Close,,HAYIR,HAYIR,HAYIR,HAYIR,HAYIR,İkisi birden,0,0,HAYIR

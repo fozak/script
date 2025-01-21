@@ -1,0 +1,1448 @@
+{
+   "10_min": {
+      "message": "10 minutes"
+   },
+   "1_min": {
+      "message": "1 minute"
+   },
+   "30_min": {
+      "message": "30 minutes"
+   },
+   "5_min": {
+      "message": "5 minutes"
+   },
+   "60_min": {
+      "message": "heure"
+   },
+   "Dashboard": {
+      "message": "Tableau de bord"
+   },
+   "Login": {
+      "message": "Se connecter"
+   },
+   "Off": {
+      "message": "Désactivé"
+   },
+   "On": {
+      "message": "Sur"
+   },
+   "Selected": {
+      "message": "Choisi"
+   },
+   "Settings": {
+      "message": "Paramètres"
+   },
+   "Tutorial": {
+      "message": "Tutoriel"
+   },
+   "action": {
+      "message": "Action"
+   },
+   "activateScheduleTab": {
+      "message": "Activer l'onglet programmé."
+   },
+   "active": {
+      "message": "Actif"
+   },
+   "activeAllScheduleTab": {
+      "message": "Exécution du planificateur d'onglets"
+   },
+   "activeStatus": {
+      "message": "Statut"
+   },
+   "actvInactvNotification": {
+      "message": "Afficher une notification lorsque l'onglet de planification est ouvert"
+   },
+   "actvInactvOpnTb": {
+      "message": "Onglet ouvert actif ou inactif"
+   },
+   "actvIntvClsTb": {
+      "message": "Onglet de fermeture actif ou inactif"
+   },
+   "add": {
+      "message": "Ajouter"
+   },
+   "addDescription": {
+      "message": "Ajouter une description"
+   },
+   "addNew": {
+      "message": "Ajouter un nouveau"
+   },
+   "addNewURlCls": {
+      "message": "Ajouter une nouvelle URL pour fermer"
+   },
+   "addNewUrlToOpen": {
+      "message": "Ajouter une nouvelle URL pour ouvrir dans une nouvelle fenêtre"
+   },
+   "addTitle": {
+      "message": "Ajouter un titre"
+   },
+   "addWebsite": {
+      "message": "Ajouter un site Web"
+   },
+   "all": {
+      "message": "Tous"
+   },
+   "allInputFieldReq": {
+      "message": "Tous les champs sont obligatoires"
+   },
+   "all_weeks": {
+      "message": "Toute la semaine"
+   },
+   "alreadyPurchase": {
+      "message": "Vous avez déjà acheté ? Entrez la clé ici"
+   },
+   "andAt": {
+      "message": "et à"
+   },
+   "annually": {
+      "message": "Annuellement"
+   },
+   "appDesc": {
+      "message": "Les onglets du navigateur s'ouvriront et se fermeront automatiquement à l'heure sélectionnée. L'utilisateur peut activer/désactiver la liste en fonction des besoins"
+   },
+   "appName": {
+      "message": "Planificateur d'onglets avec ouverture et fermeture automatiques"
+   },
+   "april": {
+      "message": "Avril"
+   },
+   "at": {
+      "message": "à"
+   },
+   "august": {
+      "message": "Août"
+   },
+   "autoFocus": {
+      "message": "Onglet de mise au point automatique"
+   },
+   "autoFocustip": {
+      "message": "Si cette option est activée, le nouvel onglet sera ouvert dans un état actif/focus."
+   },
+   "autofocustip": {
+      "message": "Les nouveaux onglets ouverts seront automatiquement focalisés"
+   },
+   "basic": {
+      "message": "Basique"
+   },
+   "billedAnnyally": {
+      "message": "Facturé annuellement"
+   },
+   "billedMonthly": {
+      "message": "Facturé mensuellement"
+   },
+   "both": {
+      "message": "Les deux"
+   },
+   "browserOpen": {
+      "message": "Sur le navigateur ouvert"
+   },
+   "browserWebAddress": {
+      "message": "L'adresse Web du navigateur commence et se termine par une adresse Web inconnue. Mettez \u003Cb>*\u003C/b> des deux côtés de votre champ de lien de site Web de saisie."
+   },
+   "browserWebAddress2": {
+      "message": "L'adresse Web du navigateur contient le nom de domaine google.com, qui sera fermé dans quelques minutes quel que soit le sous-domaine et le chemin de la page. Mettez \u003Cb>*\u003C/b> des deux côtés du nom de domaine et du TLD"
+   },
+   "browserWebAddress3": {
+      "message": "L'adresse Web du navigateur commence par un nom de domaine inconnu et se termine par un chemin de page inconnu"
+   },
+   "browserWebAddress31": {
+      "message": "sera fermé après quelques minutes, mettez \u003Cb>*\u003C/b> des deux côtés du TLD"
+   },
+   "browserWebAddress4": {
+      "message": "L'adresse Web du navigateur commence par une adresse Web inconnue. Mettez \u003Cb>*\u003C/b> au début de votre URL. N'oubliez pas que l'adresse Web du navigateur doit correspondre à votre URL après avoir écrit \u003Cb>* .\u003C/b>"
+   },
+   "browserWebAddress41": {
+      "message": "L'adresse Web du navigateur commence par un sous-domaine inconnu"
+   },
+   "browserWebAddress42": {
+      "message": "au début de votre lien de site Web"
+   },
+   "browserWebAddress5": {
+      "message": "L'adresse Web du navigateur se termine par une adresse Web inconnue. Mettez \u003Cb>*\u003C/b> à la fin de votre URL. N'oubliez pas que votre adresse Web doit correspondre avant que vous ayez écrit \u003Cb>* .\u003C/b>"
+   },
+   "browserWebAddress51": {
+      "message": "L'adresse Web du navigateur se termine par un chemin de page inconnu. Mettez \u003Cb>*\u003C/b> à la fin de votre adresse Web"
+   },
+   "browserWebAddress6": {
+      "message": "Mettez uniquement \u003Cb>*\u003C/b> dans le champ d'adresse du site Web pour fermer tous les onglets du navigateur. Une fois tous les onglets fermés, le navigateur se fermera automatiquement."
+   },
+   "browserWebAddress7": {
+      "message": "Vous devez avoir écrit le sous-domaine exact, le domaine de premier niveau, le nom de domaine et le chemin de la page dans le champ URL pour l'ouvrir dans l'onglet du navigateur."
+   },
+   "browserWebAddress8": {
+      "message": "Vous pouvez ouvrir l'URL à une date et une heure spécifiques, un mois spécifique, une semaine spécifique, une année spécifique et répéter l'heure"
+   },
+   "buyPlan": {
+      "message": "Acheter un plan"
+   },
+   "buycofee": {
+      "message": "Offrez-moi un café"
+   },
+   "cancel": {
+      "message": "Annuler"
+   },
+   "changeLanguage": {
+      "message": "Changer la langue"
+   },
+   "checkAll": {
+      "message": "Tout vérifier"
+   },
+   "checkThisOpToPreventClosePinTb": {
+      "message": "Cochez cette option pour empêcher la fermeture des onglets épinglés."
+   },
+   "checkThisOptionOnlyPartOfUrlMtch": {
+      "message": "Cochez cette option si seule une partie de l'URL doit correspondre."
+   },
+   "checkThisOptionToActivate": {
+      "message": "Cochez cette option pour activer ou désactiver votre URL programmée."
+   },
+   "checkThisOptionToCloseOnly": {
+      "message": "Cochez cette option pour fermer uniquement les onglets en mode navigation privée. Activez également l'option « Autoriser en mode navigation privée » dans les détails de l'extension. Pour obtenir des instructions, veuillez vous référer à la page du didacticiel."
+   },
+   "checkThisOptionToCloseOnlyInIncgnitoTb": {
+      "message": "Cochez cette option pour fermer uniquement les onglets en mode navigation privée. Activez également l'option « Autoriser en mode navigation privée » dans les détails de l'extension. Pour obtenir des instructions, veuillez vous référer à la page du didacticiel."
+   },
+   "checkThisOptionToInBg": {
+      "message": "Cochez cette option si vous souhaitez ouvrir l'URL en arrière-plan sans l'ouvrir dans un nouvel onglet"
+   },
+   "checkThisOptionToInactivNotification": {
+      "message": "Cochez cette option pour désactiver la notification sur l'URL programmée"
+   },
+   "checkThisOptionToOpen": {
+      "message": "Cochez cette option si vous souhaitez ouvrir votre URL en mode navigation privée"
+   },
+   "checkThisOptionToOpenIncogito": {
+      "message": "Cochez cette option si vous souhaitez ouvrir votre URL en mode navigation privée"
+   },
+   "checkThisOptionToPrevent": {
+      "message": "Cochez cette option pour empêcher la fermeture des onglets épinglés."
+   },
+   "clickExtIcon": {
+      "message": "Cliquez sur l’icône «&nbsp;Extensions&nbsp;» dans la barre d’outils, qui ressemble à une pièce de puzzle."
+   },
+   "clickTheSwitch": {
+      "message": "Cliquez sur l'interrupteur à côté pour l'allumer"
+   },
+   "close": {
+      "message": "Fermer"
+   },
+   "closeAllTab": {
+      "message": "12. Fermez tous les onglets du navigateur"
+   },
+   "closeAllTabExm1": {
+      "message": "Dans l'exemple ci-dessus, l'URL donnée est dans l'onglet Fermer, ce qui indique qu'elle fermera tous les onglets à 12h00 le 25/02/2023"
+   },
+   "closeDate": {
+      "message": "Date de clôture"
+   },
+   "closeDay": {
+      "message": "Journée de fermeture"
+   },
+   "closeEveryYear": {
+      "message": "Fermé chaque année le"
+   },
+   "closeInEvery": {
+      "message": "Proche de tous"
+   },
+   "closeIncognitoTab": {
+      "message": "Fermer uniquement les onglets de navigation privée"
+   },
+   "closeMinute": {
+      "message": "Minute de clôture"
+   },
+   "closeOnDay": {
+      "message": "Fermé le jour même"
+   },
+   "closeOnEvery": {
+      "message": "Fermer sur chaque"
+   },
+   "closeOnEveryDay": {
+      "message": "Fermé tous les jours sur"
+   },
+   "closeOnEveryMonth": {
+      "message": "Clôture tous les mois le jour même"
+   },
+   "closeOnEveryWeek": {
+      "message": "Fermé chaque semaine le"
+   },
+   "closeSecond": {
+      "message": "Deuxième place proche"
+   },
+   "closeSeconsMoreThan5": {
+      "message": "Les secondes proches devraient être supérieures à 5."
+   },
+   "closeTabSchedule": {
+      "message": "Fermer l'onglet Calendrier"
+   },
+   "closeTabURL": {
+      "message": "Fermer l'URL de l'onglet"
+   },
+   "closeTime": {
+      "message": "Heure de fermeture"
+   },
+   "closeUrl": {
+      "message": "Fermer le lien vers le site Web"
+   },
+   "closeWeek": {
+      "message": "Semaine de fermeture"
+   },
+   "closeWeeks": {
+      "message": "Semaines de fermeture"
+   },
+   "close_on": {
+      "message": "Fermer sur"
+   },
+   "cngrtsForSubcr": {
+      "message": "Félicitations ! Votre forfait a été activé avec succès."
+   },
+   "commonQuestionsAns": {
+      "message": "Questions et réponses courantes"
+   },
+   "copySucessClose": {
+      "message": "Données URL de l'onglet Fermer copiées vers les données URL de l'onglet Ouvrir"
+   },
+   "createNewTimer": {
+      "message": "Créer une nouvelle minuterie"
+   },
+   "currentPlan": {
+      "message": "Plan actuel"
+   },
+   "currentTabSchedule": {
+      "message": "Calendrier des onglets actuels"
+   },
+   "currentTbScheduleTimer": {
+      "message": "Minuterie programmée de l'onglet actuel."
+   },
+   "cusSec": {
+      "message": "Deuxième personnalisé"
+   },
+   "custMin": {
+      "message": "Minute personnalisée"
+   },
+   "custmMinSch": {
+      "message": "7. Programme de minutes personnalisé"
+   },
+   "custmMinSchExm1": {
+      "message": "Dans l'exemple ci-dessus, l'URL donnée est dans l'onglet ouvert, ce qui indique que l'URL donnée s'ouvre dans un nouvel onglet toutes les 15 minutes."
+   },
+   "custmMinSchExm2": {
+      "message": "Dans l'exemple ci-dessus, l'URL donnée est dans l'onglet Fermer, ce qui indique que l'URL donnée qui s'est ouverte dans un nouvel onglet sera fermée après 15 minutes."
+   },
+   "customSecondWarning": {
+      "message": "La fonctionnalité de seconde personnalisée est expérimentale et peut ne pas fonctionner correctement si les secondes sont définies en dessous de 60."
+   },
+   "darkMode": {
+      "message": "Mode sombre"
+   },
+   "datNotCopy": {
+      "message": "Certaines données ne sont pas copiées en raison d'une URL non valide."
+   },
+   "dataSaved": {
+      "message": "Les données de la minuterie ont été enregistrées avec succès"
+   },
+   "date": {
+      "message": "Date"
+   },
+   "dateIsOutOfRange": {
+      "message": "La date est hors de portée"
+   },
+   "day": {
+      "message": "Jour"
+   },
+   "december": {
+      "message": "Décembre"
+   },
+   "delete": {
+      "message": "Supprimer"
+   },
+   "deleteScheduleTb": {
+      "message": "Supprimer l'onglet planifié."
+   },
+   "description": {
+      "message": "Description"
+   },
+   "developedBy": {
+      "message": "Développé par :"
+   },
+   "doNotCloseInPinnedTabs": {
+      "message": "Ne fermez pas les onglets épinglés"
+   },
+   "doNotShowNotification": {
+      "message": "Ne pas afficher la notification"
+   },
+   "domainName": {
+      "message": "Nom de domaine"
+   },
+   "downloadCloseTbSampleCsv": {
+      "message": "Téléchargez un exemple de fichier CSV avec onglet fermé pour voir un exemple du format requis"
+   },
+   "downloadOpenTbSampleCsv": {
+      "message": "Téléchargez un exemple d'onglet ouvert CSV pour voir un exemple du format requis"
+   },
+   "editScheduleTb": {
+      "message": "Modifier l'onglet planifié."
+   },
+   "email": {
+      "message": "E-mail"
+   },
+   "enterDateToCloseTab": {
+      "message": "Entrez la date ici pour fermer l'onglet de planification."
+   },
+   "enterDateToOpen": {
+      "message": "Entrez la date pour ouvrir l'onglet calendrier."
+   },
+   "enterMiniutesToCloseTb": {
+      "message": "Entrez les minutes pour fermer l'onglet."
+   },
+   "enterMiniutesToOpen": {
+      "message": "Entrez les minutes pour ouvrir l'onglet planning."
+   },
+   "enterMinute": {
+      "message": "Entrer les minutes"
+   },
+   "enterSecond": {
+      "message": "Entrez la deuxième"
+   },
+   "enterSecondsToCloseTab": {
+      "message": "Entrez les secondes pour fermer l'onglet."
+   },
+   "enterSecondsToOpen": {
+      "message": "Entrez les secondes pour ouvrir l'onglet de planification."
+   },
+   "enterTilteOfScheduleUrl": {
+      "message": "Entrez le titre de l'URL programmée."
+   },
+   "enterTimeToCloseTab": {
+      "message": "Entrez l'heure ici pour fermer l'onglet de planification."
+   },
+   "enterTimeToSchedule": {
+      "message": "Entrez l'heure pour ouvrir l'onglet planification."
+   },
+   "enterValidEmail": {
+      "message": "Veuillez saisir une adresse e-mail valide"
+   },
+   "enterValidUrl": {
+      "message": "Veuillez saisir une URL valide"
+   },
+   "enterValueInCloseSec": {
+      "message": "Entrez la valeur en quelques secondes"
+   },
+   "enterValueInOpenCloseSec": {
+      "message": "Entrez la valeur en secondes d'ouverture ou de fermeture"
+   },
+   "enterValueInOpenMinutes": {
+      "message": "Entrez la valeur en minutes ouvertes"
+   },
+   "enterVlaueInCloseMinutes": {
+      "message": "Entrez la valeur en quelques minutes"
+   },
+   "enterVlaueInOpenCloseMin": {
+      "message": "Entrez la valeur en minutes d'ouverture ou de fermeture"
+   },
+   "enterVlaueInOpenSeconds": {
+      "message": "Entrez la valeur en secondes ouvertes"
+   },
+   "enterYourURLToSchedule": {
+      "message": "Entrez votre URL pour planifier."
+   },
+   "every": {
+      "message": "chaque"
+   },
+   "every10Min": {
+      "message": "Toutes les 10 minutes"
+   },
+   "every1Minute": {
+      "message": "toutes les 1 minute"
+   },
+   "every30Min": {
+      "message": "Toutes les 30 minutes"
+   },
+   "every5Min": {
+      "message": "Toutes les 5 minutes"
+   },
+   "everyDay": {
+      "message": "Tous les jours"
+   },
+   "everyDayAt": {
+      "message": "tous les jours à"
+   },
+   "everyHour": {
+      "message": "Toutes les heures"
+   },
+   "everyMinute": {
+      "message": "Chaque minute"
+   },
+   "everyMonth": {
+      "message": "Chaque mois"
+   },
+   "everyMonthOn": {
+      "message": "chaque mois sur"
+   },
+   "everyMonthOnDay": {
+      "message": "chaque mois le jour"
+   },
+   "everyWeek": {
+      "message": "Chaque semaine"
+   },
+   "everyWeekOn": {
+      "message": "chaque semaine sur"
+   },
+   "everyYear": {
+      "message": "Chaque année"
+   },
+   "everyYesrOn": {
+      "message": "chaque année sur"
+   },
+   "evr10MinSch": {
+      "message": "2. Programme toutes les 10 minutes"
+   },
+   "evr10MinSchExm1": {
+      "message": "Dans l'exemple ci-dessus, l'URL donnée est dans un onglet ouvert, ce qui indique que l'URL donnée s'ouvrira dans un nouvel onglet toutes les 10 minutes."
+   },
+   "evr10MinSchExm2": {
+      "message": "Dans l'exemple ci-dessus, l'URL donnée est dans l'onglet Fermer, ce qui indique que l'URL donnée qui s'est ouverte dans un nouvel onglet sera fermée après 10 minutes."
+   },
+   "evrDaySch": {
+      "message": "3. Programme quotidien"
+   },
+   "evrDaySchExm1": {
+      "message": "Dans l'exemple ci-dessus, l'URL donnée est dans un onglet ouvert, ce qui indique qu'elle s'ouvrira dans un nouvel onglet tous les jours à 17h27"
+   },
+   "evrDaySchExm2": {
+      "message": "Dans l'exemple ci-dessus, l'URL donnée est dans l'onglet Fermer, ce qui indique qu'elle fermera l'onglet déjà ouvert à 17h27 tous les jours"
+   },
+   "evrMonthSch": {
+      "message": "5. Programme mensuel"
+   },
+   "evrMonthSchExm1": {
+      "message": "Dans l'exemple ci-dessus, l'URL donnée est dans l'onglet ouvert, ce qui indique qu'elle s'ouvrira dans un nouvel onglet tous les mois à 13h45 le jour 25"
+   },
+   "evrMonthSchExm2": {
+      "message": "Dans l'exemple ci-dessus, l'URL donnée est dans l'onglet Fermer, ce qui indique qu'elle fermera l'onglet déjà ouvert tous les mois à 13h45 le jour 25"
+   },
+   "evrWeekSch": {
+      "message": "4. Programme hebdomadaire"
+   },
+   "evrWeekSchExm1": {
+      "message": "Dans l'exemple ci-dessus, l'URL donnée se trouve dans un onglet ouvert, ce qui indique qu'elle s'ouvrira dans un nouvel onglet chaque semaine à 17h00 le \u003Cb>lundi et le mardi\u003C/b> ."
+   },
+   "evrWeekSchExm2": {
+      "message": "Dans l'exemple ci-dessus, l'URL donnée se trouve dans l'onglet de fermeture, qui indique qu'elle fermera l'onglet déjà ouvert chaque semaine à 17h00 le \u003Cb>lundi et le mardi\u003C/b> ."
+   },
+   "evrWeekSchExm3": {
+      "message": "Dans l'exemple ci-dessus, plusieurs jours peuvent être sélectionnés dans le minuteur hebdomadaire."
+   },
+   "evrYearSch": {
+      "message": "6. Programme annuel"
+   },
+   "evrYearSchExm1": {
+      "message": "Dans l'exemple ci-dessus, l'URL donnée est dans un onglet ouvert, ce qui indique qu'elle s'ouvrira dans un nouvel onglet chaque année à 13h35 le 1er janvier"
+   },
+   "evrYearSchExm2": {
+      "message": "Dans l'exemple ci-dessus, l'URL donnée est dans l'onglet Fermer, ce qui indique qu'elle fermera l'onglet déjà ouvert chaque année à 13h35 le 1er janvier"
+   },
+   "exampleSort": {
+      "message": "par exemple"
+   },
+   "exdMaxLim": {
+      "message": "Nombre maximal d'appareils autorisés dépassé !"
+   },
+   "exmpOpnClsTbSch": {
+      "message": "Exemple d'ouverture et de fermeture d'un onglet dans Tab Scheduler"
+   },
+   "expLicKy": {
+      "message": "Cette clé de licence est expirée."
+   },
+   "export": {
+      "message": "Exporter"
+   },
+   "exportBefore": {
+      "message": "Tu as\u003Cexday>\u003C/exday>jours restants, veuillez vous abonner pour continuer à profiter de la fonctionnalité premium"
+   },
+   "exportClsTbDta": {
+      "message": "Exporter les données de l'onglet fermé"
+   },
+   "exportOpenTbDt": {
+      "message": "Exporter les données de l’onglet ouvert"
+   },
+   "exportedData": {
+      "message": "Les données de la minuterie ont été exportées avec succès"
+   },
+   "extensionShouldAble": {
+      "message": "Désormais, l'extension devrait pouvoir fermer les onglets en mode navigation privée."
+   },
+   "faq": {
+      "message": "FAQ"
+   },
+   "faq_1": {
+      "message": "Qu'est-ce que Tab Scheduler avec ouverture et fermeture automatiques&nbsp;?"
+   },
+   "faq_10": {
+      "message": "Comment puis-je afficher mes onglets programmés&nbsp;?"
+   },
+   "faq_11": {
+      "message": "Est-il obligatoire de renseigner à la fois les heures d'ouverture et de fermeture ?"
+   },
+   "faq_12": {
+      "message": "À quoi servent les fonctionnalités Auto Focus Tab, Activer tous les onglets programmés et Mode d'alimentation&nbsp;?"
+   },
+   "faq_13": {
+      "message": "Puis-je ouvrir/fermer le lien du site Web programmé dans l'onglet navigation privée&nbsp;?"
+   },
+   "faq_14": {
+      "message": "À quoi sert l’onglet Actualiser si l’URL est déjà ouverte&nbsp;?"
+   },
+   "faq_2": {
+      "message": "Quelle est l’utilité d’un lien vers un site Web ?"
+   },
+   "faq_3": {
+      "message": "Comment planifier une URL à l’aide de Tab Scheduler&nbsp;?"
+   },
+   "faq_4": {
+      "message": "Qu'est-ce que l'option « Ouvrir l'URL en arrière-plan » ?"
+   },
+   "faq_5": {
+      "message": "Puis-je empêcher l’extension de fermer les onglets épinglés ?"
+   },
+   "faq_6": {
+      "message": "Que signifie le type de planification « Les deux » ?"
+   },
+   "faq_7": {
+      "message": "Comment fonctionne la fonctionnalité «&nbsp;Filtrage d'URL&nbsp;»&nbsp;?"
+   },
+   "faq_8": {
+      "message": "Puis-je désactiver un onglet programmé sans le supprimer ?"
+   },
+   "faq_9": {
+      "message": "Vais-je recevoir des notifications pour les onglets programmés ?"
+   },
+   "faq_a_1": {
+      "message": "\u003Cp>Tab Scheduler with Auto Open and Close est une extension de navigateur qui permet aux utilisateurs de programmer l'ouverture et la fermeture automatique des onglets à des heures définies. Les utilisateurs peuvent sélectionner un calendrier unique ou configurer des calendriers récurrents avec différentes options de fréquence. Cette extension a plusieurs objectifs pour les utilisateurs et fournit de nombreuses fonctionnalités qui vous sont utiles.\u003C/p>"
+   },
+   "faq_a_10": {
+      "message": "Tous les onglets planifiés sont affichés dans une liste indiquant le titre, le lien vers le site Web, les heures d'ouverture et de fermeture, le statut et les actions que vous pouvez effectuer (par exemple, activer, modifier, supprimer)."
+   },
+   "faq_a_11": {
+      "message": "Non, vous pouvez programmer soit une heure d'ouverture, soit une heure de fermeture. Vous devez cependant remplir ou sélectionner les champs obligatoires marqués d'un astérisque (*)."
+   },
+   "faq_a_12": {
+      "message": "L'onglet Auto Focus garantit que lorsqu'un onglet programmé s'ouvre, l'option Activer tous les onglets programmés vous permet d'activer rapidement tous vos onglets programmés en un seul clic. Le mode Power optimise les performances de l'extension en gérant les ressources du navigateur plus efficacement."
+   },
+   "faq_a_13": {
+      "message": "Oui, vous pouvez choisir d'ouvrir un onglet programmé en mode navigation privée en sélectionnant l'option « Ouvrir en mode navigation privée ». Vous pouvez choisir de fermer uniquement les onglets de navigation privée en sélectionnant l'option « Fermer uniquement les onglets de navigation privée », à condition que « Autoriser en mode navigation privée » soit activé dans les paramètres de l'extension."
+   },
+   "faq_a_14": {
+      "message": "Lorsque cette option est activée, l'extension actualise automatiquement un onglet existant si la même URL est déjà ouverte dans votre navigateur. Cela évite d'ouvrir des onglets en double et garantit que vous disposez toujours de la dernière version de la page chargée."
+   },
+   "faq_a_14_1": {
+      "message": "Si vous essayez d'ouvrir https://github.com/ et qu'il est déjà ouvert dans un autre onglet, l'extension actualisera simplement cet onglet au lieu d'en ouvrir un nouveau."
+   },
+   "faq_a_14_2": {
+      "message": "Si https://github.com/ est déjà ouvert dans trois onglets, l'extension actualisera les trois onglets."
+   },
+   "faq_a_2": {
+      "message": "Le lien vers le site Web correspond à l'adresse du site Web de l'onglet ouvert de votre navigateur. La manière dont vous pouvez utiliser l'adresse du site Web est mentionnée ci-dessous."
+   },
+   "faq_a_3": {
+      "message": "Pour planifier une URL, saisissez le lien du site Web, donnez un titre au planning, sélectionnez la fréquence (une fois, toutes les minutes, tous les jours, etc.) et choisissez les heures d'ouverture et de fermeture. Vous pouvez également spécifier une date, un jour ou des secondes pour ouvrir et fermer l'onglet."
+   },
+   "faq_a_4": {
+      "message": "\u003Cp>Cette option vous permet de programmer l'ouverture d'une URL en arrière-plan sans mettre le nouvel onglet en évidence. L'URL s'ouvrira silencieusement pendant que vous continuerez à travailler sur d'autres onglets. Elle est particulièrement utile lorsque vous avez besoin que le navigateur récupère des données à partir de l'URL programmée sans les afficher activement, comme dans le cas d'une requête API GET.\u003C/p>\u003Cbr> \u003Cp>Par exemple, si vous souhaitez récupérer régulièrement des données à partir d'un point de terminaison d'API à une heure définie, vous pouvez utiliser cette option efficace pour exécuter la requête en arrière-plan sans ouvrir un nouvel onglet visible.\u003C/p>"
+   },
+   "faq_a_5": {
+      "message": "Oui, il existe une option permettant d'empêcher la fermeture des onglets épinglés. Cochez l'option « Ne pas fermer les onglets épinglés » pour garantir que ces onglets restent ouverts même s'ils répondent à d'autres critères de fermeture."
+   },
+   "faq_a_6": {
+      "message": "Le type de planification «&nbsp;Les deux&nbsp;» vous donne un contrôle total sur le moment où un onglet s'ouvre et se ferme, vous permettant de définir des heures spécifiques pour les deux actions."
+   },
+   "faq_a_7": {
+      "message": "Le filtrage d'URL garantit que seule une partie spécifique de l'URL doit correspondre pour que l'action planifiée ait lieu. Cela est utile lorsque vous souhaitez automatiser certaines actions en fonction de correspondances d'URL partielles. Par exemple, si vous cochez l'option Filtrage d'URL pour l'URL https://example.com/page, elle s'appliquera également aux URL telles que https://example.com/page/123, https://example.com/page?query=example et https://subdomain.example.com/page."
+   },
+   "faq_a_8": {
+      "message": "Avec l'option «&nbsp;Activer cet onglet planifié&nbsp;», vous pouvez facilement activer ou désactiver les onglets planifiés, vous offrant ainsi la flexibilité de gérer vos plannings sans perdre de configurations."
+   },
+   "faq_a_9": {
+      "message": "Par défaut, vous recevrez des notifications. Cependant, si vous préférez arrêter les notifications, vous pouvez cocher l'option « Ne pas afficher les notifications » pour les désactiver."
+   },
+   "february": {
+      "message": "Février"
+   },
+   "filterTips": {
+      "message": "Le filtre s'applique après «&nbsp;https://&nbsp;» ou «&nbsp;www.&nbsp;», par exemple «&nbsp;github.com&nbsp;»"
+   },
+   "for_exp": {
+      "message": "Par exemple"
+   },
+   "freeForever": {
+      "message": "Libre pour toujours"
+   },
+   "freeSchedule": {
+      "message": "horaire libre"
+   },
+   "freeTral": {
+      "message": "En tant qu'utilisateur précoce apprécié, vous apprécierez\u003Crday>120\u003C/rday>jours d’accès gratuit avant de passer à notre nouveau forfait payant. Merci pour votre soutien continu&nbsp;!\u003Cp class=\"p-t-5\">Tu as\u003Cb>\u003Cspan>\u003C/span>\u003C/b>jours restants de votre\u003Crday>120\u003C/rday>-période libre d'un jour.\u003Cafex class=\"warning\">\u003Cafex>\u003C/afex>\u003C/afex>\u003C/p> "
+   },
+   "frequentlyAskedQuestions": {
+      "message": "Questions fréquemment posées"
+   },
+   "friday": {
+      "message": "Vendredi"
+   },
+   "getThisPlan": {
+      "message": "Obtenez ce plan"
+   },
+   "goToSettingsPageToSchedule": {
+      "message": "Accédez à la page des paramètres pour planifier l'ouverture et la fermeture des URL."
+   },
+   "goURL": {
+      "message": "Accéder à l'URL"
+   },
+   "helpAccordion12": {
+      "message": "Cette extension fonctionne-t-elle en mode veille/suspension ?"
+   },
+   "helpAccordion3": {
+      "message": "Puis-je programmer l’ouverture d’un onglet en mode navigation privée&nbsp;?"
+   },
+   "helpAccordion6": {
+      "message": "Qu'est-ce que «&nbsp;Temps expiré&nbsp;»&nbsp;?"
+   },
+   "helpAccordion7": {
+      "message": "Puis-je exporter une URL programmée ?"
+   },
+   "helpAccordion8": {
+      "message": "Puis-je importer vers l'URL du calendrier&nbsp;?"
+   },
+   "helpPanelBodyDesc12First": {
+      "message": "Non, cette extension ne fonctionnera pas en mode veille/suspension."
+   },
+   "helpPanelBodyDesc12Second": {
+      "message": "Si une URL est programmée dans l'onglet Ouvrir ou Fermer, votre PC ne passera pas automatiquement en mode veille ou suspension."
+   },
+   "helpPanelBodyDesc3": {
+      "message": "Oui, vous pouvez choisir d'ouvrir un onglet programmé en mode navigation privée en sélectionnant l'option « Ouvrir en mode navigation privée ». Assurez-vous que l'option « Autoriser en mode navigation privée » de l'extension est activée dans les paramètres d'extension du navigateur."
+   },
+   "helpPanelBodyDesc6": {
+      "message": "- La date et l'heure indiquées sont passées de la date et de l'heure actuelles, puis le texte «&nbsp;Heure expirée&nbsp;» s'affichera."
+   },
+   "helpPanelBodyDesc7": {
+      "message": "Oui, vous pouvez exporter l'URL d'ouverture et de fermeture d'onglet déjà planifiée au format csv et l'utiliser avec un autre système pour importer cette URL."
+   },
+   "helpPanelBodyDesc8": {
+      "message": "Oui, vous pouvez importer une URL d'ouverture et de fermeture valide au format csv. Le format csv importé sera automatiquement programmé à l'heure donnée"
+   },
+   "herAreStepsToAllow": {
+      "message": "Voici les étapes à suivre pour «&nbsp;Autoriser en mode navigation privée&nbsp;» dans Google Chrome&nbsp;:"
+   },
+   "home": {
+      "message": "Maison"
+   },
+   "hour_minute_close": {
+      "message": "Toutes les heures Fermer la minute"
+   },
+   "hour_minute_open": {
+      "message": "Toutes les heures, minutes d'ouverture"
+   },
+   "how_to_use_tab": {
+      "message": "Comment utiliser le planificateur d'onglets ?"
+   },
+   "import": {
+      "message": "Importer"
+   },
+   "importClsTbDta": {
+      "message": "Importer les données de l'onglet fermé"
+   },
+   "importExport": {
+      "message": "Importation/Exportation"
+   },
+   "importOpenTbDt": {
+      "message": "Importer les données de l'onglet ouvert"
+   },
+   "importedRecored": {
+      "message": ", enregistré importé"
+   },
+   "inactivateScheduleTab": {
+      "message": "Désactiver l'onglet programmé."
+   },
+   "inactive": {
+      "message": "Inactif"
+   },
+   "inactiveSch": {
+      "message": "8. URL inactive"
+   },
+   "inactiveSchExm1": {
+      "message": "Dans l'exemple ci-dessus, l'URL donnée est dans un onglet ouvert ou fermé, ce qui indique que l'URL donnée est inactive et qu'elle n'effectuera aucune action."
+   },
+   "inactiveThisScheduledTabs": {
+      "message": "Activer cet onglet programmé"
+   },
+   "invalidDuplicate": {
+      "message": ", enregistrement en double ou non valide"
+   },
+   "invldLicKy": {
+      "message": "Clé de licence non valide&nbsp;!"
+   },
+   "isClose": {
+      "message": "est proche"
+   },
+   "isOpen": {
+      "message": "est ouvert"
+   },
+   "january": {
+      "message": "Janvier"
+   },
+   "july": {
+      "message": "Juillet"
+   },
+   "june": {
+      "message": "Juin"
+   },
+   "licKeyDis": {
+      "message": "Cette clé de licence est désactivée."
+   },
+   "listTitle": {
+      "message": "Planificateur d'onglets"
+   },
+   "loading": {
+      "message": "S'il vous plaît, attendez..."
+   },
+   "locale": {
+      "message": "fr"
+   },
+   "march": {
+      "message": "Mars"
+   },
+   "maxSchedule": {
+      "message": "4 Limite maximale du programme"
+   },
+   "may": {
+      "message": "Peut"
+   },
+   "mintValid": {
+      "message": "Un minimum d'une minute est requis"
+   },
+   "minute": {
+      "message": "Minute"
+   },
+   "minutesNotLessThan1": {
+      "message": "Les minutes ne doivent pas être inférieures à 1."
+   },
+   "monday": {
+      "message": "Lundi"
+   },
+   "month": {
+      "message": "Mois"
+   },
+   "monthly": {
+      "message": "Mensuel"
+   },
+   "more": {
+      "message": "plus"
+   },
+   "mostSubscribe": {
+      "message": "La plupart des abonnés"
+   },
+   "no": {
+      "message": "Non"
+   },
+   "noDataToExport": {
+      "message": "Aucune donnée à exporter."
+   },
+   "noScheduledTabs": {
+      "message": "Aucun onglet programmé"
+   },
+   "noTimerSetAddNewTimer": {
+      "message": "Aucune minuterie définie, cliquez sur le bouton Ajouter pour définir une nouvelle minuterie"
+   },
+   "not_show_tutorial": {
+      "message": "Ne plus afficher ce tutoriel"
+   },
+   "notificationOpenTab": {
+      "message": "13. Notification sur l'URL d'ouverture/fermeture de l'onglet"
+   },
+   "notificationOpenTabExm1": {
+      "message": "Dans l'exemple ci-dessus, l'URL donnée est dans un onglet ouvert, ce qui indique qu'elle enverra une notification et ouvrira/fermera l'URL dans un nouvel onglet toutes les 5 minutes."
+   },
+   "notifications": {
+      "message": "Notification"
+   },
+   "november": {
+      "message": "Novembre"
+   },
+   "october": {
+      "message": "Octobre"
+   },
+   "onTheExtensionDetailPage": {
+      "message": "Sur la page des détails de l'extension, faites défiler vers le bas et recherchez l'option « Autoriser en mode navigation privée »."
+   },
+   "oneTime": {
+      "message": "Une fois"
+   },
+   "oneTmSch": {
+      "message": "1. Programme unique"
+   },
+   "oneTmSchExm1": {
+      "message": "Dans l'exemple ci-dessus, l'URL donnée est dans un onglet ouvert, ce qui indique qu'elle s'ouvrira dans un nouvel onglet une fois à 13h45 le 21/1/2023"
+   },
+   "oneTmSchExm2": {
+      "message": "Dans l'exemple ci-dessus, l'URL donnée est dans l'onglet Fermer, ce qui indique qu'elle fermera tous les onglets d'URL correspondants spécifiques à 13h45 le 21/1/2023"
+   },
+   "open": {
+      "message": "Ouvrir"
+   },
+   "openBackground": {
+      "message": "Si oui, charger une URL en arrière-plan sans l'ouvrir dans un nouvel onglet"
+   },
+   "openDate": {
+      "message": "Date d'ouverture"
+   },
+   "openDay": {
+      "message": "Journée portes ouvertes"
+   },
+   "openEveryDayOn": {
+      "message": "Ouvert tous les jours sur"
+   },
+   "openEveryMonthOn": {
+      "message": "Ouvert tous les mois le jour"
+   },
+   "openEveryWeekOn": {
+      "message": "Ouvert chaque semaine le"
+   },
+   "openEveryYearOn": {
+      "message": "Ouvert chaque année le"
+   },
+   "openGoogleChrome": {
+      "message": "Ouvrez Google Chrome."
+   },
+   "openInBackground": {
+      "message": "Ouvrir l'URL en arrière-plan"
+   },
+   "openInEvery": {
+      "message": "Ouvert dans tous les"
+   },
+   "openInIncognito": {
+      "message": "Ouvrir en mode navigation privée"
+   },
+   "openMinute": {
+      "message": "Minute ouverte"
+   },
+   "openOnDay": {
+      "message": "Ouvert le jour même"
+   },
+   "openOnEvery": {
+      "message": "Ouvert tous les jours"
+   },
+   "openSecond": {
+      "message": "Ouvrir la deuxième"
+   },
+   "openSecondsMoreThan5": {
+      "message": "Les secondes ouvertes doivent être supérieures à 5."
+   },
+   "openTabSchedule": {
+      "message": "Ouvrir le calendrier des onglets"
+   },
+   "openTabURL": {
+      "message": "Ouvrir l'URL de l'onglet"
+   },
+   "openTime": {
+      "message": "Horaires d'ouverture"
+   },
+   "openUrl": {
+      "message": "Ouvrir le lien du site Web"
+   },
+   "openWeek": {
+      "message": "Semaine portes ouvertes"
+   },
+   "openWeeks": {
+      "message": "Semaines portes ouvertes"
+   },
+   "open_on": {
+      "message": "Ouvert le"
+   },
+   "optional": {
+      "message": "Facultatif"
+   },
+   "or": {
+      "message": "ou"
+   },
+   "outof": {
+      "message": "de"
+   },
+   "pagePath": {
+      "message": "Chemin de la page"
+   },
+   "paidFeature": {
+      "message": "Fonctionnalité payante"
+   },
+   "pauseSchedule": {
+      "message": "Démarrer ou arrêter tous les programmes"
+   },
+   "pauseTabScheduler": {
+      "message": "Planificateur d'onglets en pause"
+   },
+   "pleaseAllowIncognitoMessage": {
+      "message": "Veuillez activer l'option « Autoriser en mode navigation privée » dans les détails de l'extension. Pour obtenir des instructions, veuillez vous référer à la page du didacticiel."
+   },
+   "pleaseShareYourSuggestions": {
+      "message": "S'il vous plaît, partagez votre suggestion."
+   },
+   "plsShreAnySugWithUs": {
+      "message": "S'il vous plaît donnez une suggestion pour nous améliorer"
+   },
+   "powerMode": {
+      "message": "Mode d'alimentation"
+   },
+   "premium": {
+      "message": "Prime"
+   },
+   "pricePlan": {
+      "message": "Tarifs et formules"
+   },
+   "privcyPolicy": {
+      "message": "politique de confidentialité"
+   },
+   "prowerModeTip": {
+      "message": "Gardez le système toujours actif en activant le mode d'alimentation"
+   },
+   "put": {
+      "message": "Mettre"
+   },
+   "rateUs": {
+      "message": "Évaluez-nous"
+   },
+   "removeDuplicateEntry": {
+      "message": "Veuillez supprimer l'entrée en double"
+   },
+   "removeOpenTbURL": {
+      "message": "Supprimer l'URL de l'onglet ouvert"
+   },
+   "repeat": {
+      "message": "Répéter"
+   },
+   "requiredMsg": {
+      "message": "Requis"
+   },
+   "rmvClsTb": {
+      "message": "Supprimer l'URL de fermeture de l'onglet"
+   },
+   "sameTabs": {
+      "message": "Actualiser l'onglet si l'URL est déjà ouverte"
+   },
+   "sameTabsInfo": {
+      "message": "Empêchez l'ouverture de plusieurs onglets pour la même URL. Par exemple, si www.google.com est déjà ouvert, cet onglet existant sera actualisé au lieu d'ouvrir un nouvel onglet pour celui-ci."
+   },
+   "sampleCsvOpenPath": {
+      "message": "../sample_csv/en/open_tab_sample.csv"
+   },
+   "sampleFile": {
+      "message": "Exemple de fichier"
+   },
+   "saturday": {
+      "message": "Samedi"
+   },
+   "savOpnData": {
+      "message": "Enregistrer les données de l'onglet ouvert"
+   },
+   "save": {
+      "message": "Sauvegarder"
+   },
+   "saveClsTbData": {
+      "message": "Enregistrer les données de l'onglet fermé"
+   },
+   "saveSchedule": {
+      "message": "Enregistrer le calendrier"
+   },
+   "scheduleCloseTab": {
+      "message": "Onglet Fermer le calendrier"
+   },
+   "scheduleCurrentTab": {
+      "message": "Onglet actuel du programme"
+   },
+   "scheduleOpenTab": {
+      "message": "Onglet Ouvrir le calendrier"
+   },
+   "scheduledTabIsAlreadyExistWithSameTimer": {
+      "message": "Cet onglet planifié existe déjà avec le même minuteur."
+   },
+   "scheduledTabList": {
+      "message": "Liste des onglets programmés"
+   },
+   "scheduledType": {
+      "message": "Type d'horaire"
+   },
+   "search": {
+      "message": "Recherche"
+   },
+   "secValid": {
+      "message": "Un minimum de 5 secondes est requis"
+   },
+   "second": {
+      "message": "Deuxième"
+   },
+   "selectCloseDate": {
+      "message": "Sélectionnez la date de clôture"
+   },
+   "selectCloseDay": {
+      "message": "Sélectionnez le jour de fermeture"
+   },
+   "selectCloseTime": {
+      "message": "Sélectionnez l'heure de fermeture"
+   },
+   "selectColumn": {
+      "message": "Sélectionner la colonne"
+   },
+   "selectDateAndTime": {
+      "message": "Sélectionnez la date et l'heure pour ouvrir un nouvel onglet"
+   },
+   "selectDateAndTimeClsTb": {
+      "message": "Sélectionnez la date et l'heure de fermeture de l'onglet"
+   },
+   "selectDayToCloseSchTb": {
+      "message": "Sélectionnez le jour pour fermer l'onglet de planification."
+   },
+   "selectDayToClsTb": {
+      "message": "Sélectionnez le jour pour fermer l'onglet"
+   },
+   "selectDayToSchdule": {
+      "message": "Sélectionnez le jour pour planifier l'onglet."
+   },
+   "selectDaysInWeek": {
+      "message": "Sélectionnez les jours de la semaine"
+   },
+   "selectDaysInWeekIClsTime": {
+      "message": "Sélectionnez les jours de la semaine dans le minuteur fermé."
+   },
+   "selectDaysInWeekIOpClsTime": {
+      "message": "Sélectionnez les jours de la semaine dans la minuterie d'ouverture ou de fermeture."
+   },
+   "selectDaysInWeekIOpTime": {
+      "message": "Sélectionnez les jours de la semaine dans le minuteur ouvert."
+   },
+   "selectFrequency": {
+      "message": "Sélectionner la fréquence"
+   },
+   "selectFrequencyOfScheduleUrl": {
+      "message": "Sélectionnez la fréquence de l'URL planifiée."
+   },
+   "selectOpenDate": {
+      "message": "Sélectionnez la date d'ouverture"
+   },
+   "selectOpenDay": {
+      "message": "Sélectionnez la journée portes ouvertes"
+   },
+   "selectOpenOrClose": {
+      "message": "Sélectionnez l'heure d'ouverture et de fermeture"
+   },
+   "selectOpenOrCloseDate": {
+      "message": "Sélectionnez la date d'ouverture et de fermeture"
+   },
+   "selectOpenOrCloseDay": {
+      "message": "Sélectionnez le jour d'ouverture et de fermeture"
+   },
+   "selectOpenTime": {
+      "message": "Sélectionnez l'heure d'ouverture"
+   },
+   "selectPreferredLanguage": {
+      "message": "Sélectionnez votre langue préférée."
+   },
+   "selectToOpenTab": {
+      "message": "Sélectionnez le jour pour ouvrir un nouvel onglet"
+   },
+   "selectTypTimerClsTb": {
+      "message": "Sélectionnez le type de minuterie pour fermer l'onglet"
+   },
+   "selectTypeOfSchedule": {
+      "message": "Sélectionnez le type de planning, si vous souhaitez ouvrir et fermer à la fois, sélectionnez « Les deux »."
+   },
+   "selectTypeOfTimer": {
+      "message": "Sélectionnez le type de minuterie pour ouvrir un nouvel onglet"
+   },
+   "select_weeks": {
+      "message": "Sélectionnez les semaines"
+   },
+   "september": {
+      "message": "Septembre"
+   },
+   "settingSave": {
+      "message": "Les paramètres ont été enregistrés avec succès"
+   },
+   "settingToClose": {
+      "message": "Paramètre pour fermer l'onglet en mode navigation privée."
+   },
+   "shareYourSuggestionWithUs": {
+      "message": "Partagez vos suggestions avec nous."
+   },
+   "slectDayToScheduleWeekly": {
+      "message": "Sélectionnez les jours à planifier chaque semaine."
+   },
+   "slectMinute": {
+      "message": "Sélectionnez la minute"
+   },
+   "smthngWrng": {
+      "message": "Quelque chose s'est mal passé"
+   },
+   "softpulseInfotech": {
+      "message": "Softpulse Infotech"
+   },
+   "somethingWentWrong": {
+      "message": "Une erreur s'est produite. Actualisez la page et réessayez."
+   },
+   "status": {
+      "message": "Statut"
+   },
+   "subcrKeyShldNEmpt": {
+      "message": "Veuillez entrer la clé d'abonnement."
+   },
+   "subdomain": {
+      "message": "Sous-domaine"
+   },
+   "subkeyInputTitle": {
+      "message": "Entrez la clé d'abonnement"
+   },
+   "submFeedBack": {
+      "message": "Soumettre"
+   },
+   "suggForTbSch": {
+      "message": "Suggestion pour le planificateur d'onglets"
+   },
+   "suggestionAndRateUs": {
+      "message": "Suggestion et notez-nous"
+   },
+   "sunday": {
+      "message": "Dimanche"
+   },
+   "tabCloseOneTime": {
+      "message": "L'onglet ne se fermera qu'une seule fois"
+   },
+   "tabSchTutorial": {
+      "message": "Tutoriel sur le planificateur d'onglets"
+   },
+   "tabScheduler": {
+      "message": "Planificateur d'onglets"
+   },
+   "tabSchedulerOptions": {
+      "message": "Options du planificateur d'onglets"
+   },
+   "tabWillOpenOneTime": {
+      "message": "L'onglet ne s'ouvrira qu'une seule fois sur"
+   },
+   "tabWillOpenWhenBrowserOpen": {
+      "message": "L'onglet s'ouvrira lorsque le navigateur s'ouvrira sur"
+   },
+   "termCondition": {
+      "message": "Conditions générales"
+   },
+   "thanksFrRev": {
+      "message": "Merci pour votre avis"
+   },
+   "thnkUFeedBack": {
+      "message": "Merci pour votre suggestion"
+   },
+   "thnkUFrUsngTbSch": {
+      "message": "S'il vous plaît donnez une suggestion pour nous améliorer"
+   },
+   "thursday": {
+      "message": "Jeudi"
+   },
+   "time": {
+      "message": "Temps"
+   },
+   "timeExpired": {
+      "message": "Le temps est expiré"
+   },
+   "timer": {
+      "message": "Minuteur"
+   },
+   "title": {
+      "message": "Titre"
+   },
+   "titleLengtWarn": {
+      "message": "La longueur du titre ne doit pas dépasser 200 caractères."
+   },
+   "toScheduledOpenTbMsg": {
+      "message": "Pour planifier l'ouverture de l'onglet, veuillez décocher le filtrage d'URL."
+   },
+   "toogleCloseTab": {
+      "message": "Démarrer/arrêter l'alarme de planification pour toutes les URL d'onglets fermés"
+   },
+   "toogleDarkmode": {
+      "message": "Basculez entre le mode sombre et le mode par défaut pour personnaliser votre expérience de visionnage."
+   },
+   "toogleOff": {
+      "message": "Désactivé"
+   },
+   "toogleOn": {
+      "message": "Sur"
+   },
+   "toogleOpenTab": {
+      "message": "Démarrer/arrêter l'alarme programmée pour toutes les URL d'onglets ouverts"
+   },
+   "topLevelDomain": {
+      "message": "Domaine de premier niveau"
+   },
+   "totalProcessed": {
+      "message": "Total enregistré traité"
+   },
+   "tuesday": {
+      "message": "Mardi"
+   },
+   "tutorialImg1": {
+      "message": "\u003Cimg src=\"../images/en/1.png\">"
+   },
+   "tutorialImg10": {
+      "message": "\u003Cimg src=\"../images/en/10.png\">"
+   },
+   "tutorialImg11": {
+      "message": "\u003Cimg src=\"../images/en/11.png\">"
+   },
+   "tutorialImg12": {
+      "message": "\u003Cimg src=\"../images/en/12.png\">"
+   },
+   "tutorialImg13": {
+      "message": "\u003Cimg src=\"../images/en/13.png\">"
+   },
+   "tutorialImg14": {
+      "message": "\u003Cimg src=\"../images/en/14.png\">"
+   },
+   "tutorialImg2": {
+      "message": "\u003Cimg src=\"../images/en/2.png\">"
+   },
+   "tutorialImg3": {
+      "message": "\u003Cimg src=\"../images/en/3.png\">"
+   },
+   "tutorialImg4": {
+      "message": "\u003Cimg src=\"../images/en/4.png\">"
+   },
+   "tutorialImg5": {
+      "message": "\u003Cimg src=\"../images/en/5.png\">"
+   },
+   "tutorialImg6": {
+      "message": "\u003Cimg src=\"../images/en/6.png\">"
+   },
+   "tutorialImg7": {
+      "message": "\u003Cimg src=\"../images/en/7.png\">"
+   },
+   "tutorialImg8": {
+      "message": "\u003Cimg src=\"../images/en/8.png\">"
+   },
+   "tutorialImg9": {
+      "message": "\u003Cimg src=\"../images/en/9.png\">"
+   },
+   "uncheckAll": {
+      "message": "Décocher tout"
+   },
+   "unlimitedSchedule": {
+      "message": "Limite de programmation illimitée"
+   },
+   "unspecifiedURL": {
+      "message": "11. Chemin d'accès non spécifié de l'URL"
+   },
+   "unspecifiedURLExm1": {
+      "message": "Dans l'exemple ci-dessus, l'URL donnée est dans l'onglet Fermer, ce qui indique que l'URL donnée qui s'est ouverte dans un nouvel onglet et commence et se termine par une adresse Web inconnue sera fermée après 5 minutes."
+   },
+   "upgradePlan": {
+      "message": "Veuillez acheter un plan OU connectez-vous et mettez à niveau votre plan pour débloquer plus de fonctionnalités."
+   },
+   "upgradePlanUnlock": {
+      "message": "Mettez à niveau votre forfait pour débloquer plus de fonctionnalités."
+   },
+   "uploadValidFormat": {
+      "message": "Veuillez télécharger un format valide"
+   },
+   "url": {
+      "message": "URL"
+   },
+   "urlContExat": {
+      "message": "Filtrage d'URL"
+   },
+   "urlEndWithUnspesifiedPth": {
+      "message": "9. L'URL se termine par un chemin non spécifié"
+   },
+   "urlEndWithUnspesifiedPthExm1": {
+      "message": "Dans l'exemple ci-dessus, l'URL donnée est dans l'onglet Fermer, ce qui indique que l'URL donnée qui s'est ouverte dans un nouvel onglet et se termine par un chemin inconnu sera fermée après 5 minutes."
+   },
+   "urlFilterInfo": {
+      "message": "Contient l'URL en cours de vérification, n'a besoin que d'une partie de l'URL et l'URL exacte en cours de vérification doit correspondre exactement à l'URL spécifiée"
+   },
+   "urlFilterinCLoseTb": {
+      "message": "14. Filtrage d'URL à la fermeture de l'onglet URL"
+   },
+   "urlFilterinCLoseTbExample": {
+      "message": "Dans l'exemple ci-dessus, l'URL donnée se trouve dans l'onglet Fermer, ce qui indique que l'URL de l'onglet déjà ouvert correspond à une partie de l'URL donnée, elle fermera donc cet onglet."
+   },
+   "urlIsRequired": {
+      "message": "Le lien vers le site Web est requis"
+   },
+   "urlNotvalid": {
+      "message": "L'URL n'est pas valide"
+   },
+   "urlStartWithUnspesifiedPth": {
+      "message": "10. L'URL commence par un chemin non spécifié"
+   },
+   "urlStartWithUnspesifiedPthExm1": {
+      "message": "Dans l'exemple ci-dessus, l'URL donnée se trouve dans l'onglet Fermer, ce qui indique que l'URL donnée qui s'est ouverte dans un nouvel onglet et commence par un sous-domaine inconnu \u003Cb>« www »\u003C/b> ou \u003Cb>« blog »\u003C/b> sera fermée après 5 minutes."
+   },
+   "useSpecificUrl": {
+      "message": "Utiliser un lien de site Web spécifique"
+   },
+   "useSpecificUrl1": {
+      "message": "Vous devez avoir écrit le sous-domaine exact, le domaine de premier niveau, le nom de domaine et le chemin de la page dans le champ Lien du site Web dans l'onglet du navigateur fermé."
+   },
+   "useSpecificUrl2": {
+      "message": "Utiliser tous les onglets du navigateur fermés"
+   },
+   "useSpecificUrl3": {
+      "message": "Utilisez un lien de site Web spécifique et complet"
+   },
+   "useUnSpecificUrl1": {
+      "message": "Utiliser un lien de site Web non spécifié"
+   },
+   "useUnSpecificUrl2": {
+      "message": "Utiliser le lien de démarrage avec un site Web non spécifié"
+   },
+   "useUnSpecificUrl3": {
+      "message": "Utiliser la fin avec un lien de site Web non spécifié"
+   },
+   "used": {
+      "message": "Vous avez utilisé"
+   },
+   "validFormatCsv": {
+      "message": "Quel est le format de fichier CSV valide pour l'importation ?"
+   },
+   "websiteLink": {
+      "message": "Lien vers le site Web"
+   },
+   "websiteUrl": {
+      "message": "URL du site Web"
+   },
+   "wednesday": {
+      "message": "Mercredi"
+   },
+   "weekName": {
+      "message": "Nom de la semaine"
+   },
+   "weekly": {
+      "message": "Hebdomadaire"
+   },
+   "whenExtensionTabAppears": {
+      "message": "Lorsque l'onglet Extensions apparaît, recherchez le « Planificateur d'onglets avec ouverture et fermeture automatiques » pour l'activer en mode navigation privée et cliquez sur le bouton « Détails » à côté."
+   },
+   "whenMenuPopup": {
+      "message": "Lorsqu'un menu apparaît, sélectionnez « Gérer les extensions »."
+   },
+   "withSignMustFill": {
+      "message": "Avec le signe \u003Cspan>*\u003C/span> , vous devez remplir ou sélectionner. Sélectionnez l'heure d'ouverture ou de fermeture ou les deux heures."
+   },
+   "writeYourDescriptionAboutSchUrl": {
+      "message": "Écrivez votre description sur l'URL programmée ici."
+   },
+   "yes": {
+      "message": "Oui"
+   },
+   "yourEmailAddress": {
+      "message": "Votre adresse e-mail"
+   },
+   "yourScheduleUrl": {
+      "message": "L'URL de votre programme"
+   }
+}

@@ -1,0 +1,4 @@
+﻿URL,Laikmatis,Būsena,Atidarymo data,Uždarymo data,Atidarymo laikas,Uždarymo laikas,Atvirų durų savaitė,Uždaryti savaitę,Atidarykite naršyklę,Atvirų durų diena,Uždarymo diena,Atviros minutės,Uždarymo minutė,Atidaryti antrą,Uždaryti Antra,Pranešimas,Pavadinimas,Aprašymas,Atidarykite URL fone,Atidaryti inkognito režimu,Neuždarykite prisegtų skirtukų,Uždarykite tik inkognito skirtukus,URL filtravimas,Tvarkaraščio tipas,Kiekvieną valandą atviros minutės,Kiekvieną valandą Uždaryti minutę,Atnaujinkite skirtuką jei URL jau atidarytas
+https://www.google.com/,Kiekvieną minutę,Aktyvus,,,,,"","","",,,,,,,Neaktyvus,Close Every Minute,,Nr,Nr,Nr,Nr,Taip,Uždaryti,0,0,Taip
+http://www.w3schools.com/,Kiekvieną dieną,Aktyvus,,,16:31,,"","","",,,,,,,Neaktyvus,Every Day Open,,Nr,Nr,Nr,Nr,Nr,Atidaryti,0,0,Nr
+https://www.flipkart.com/,Tinkinta minutė,Aktyvus,,,,,"","","",,,120,5,,,Neaktyvus,Open and Close,,Nr,Nr,Nr,Nr,Nr,Abu,0,0,Nr

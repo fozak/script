@@ -1,0 +1,1448 @@
+{
+   "10_min": {
+      "message": "10 minit"
+   },
+   "1_min": {
+      "message": "1 minit"
+   },
+   "30_min": {
+      "message": "30 minit"
+   },
+   "5_min": {
+      "message": "5 minit"
+   },
+   "60_min": {
+      "message": "jam"
+   },
+   "Dashboard": {
+      "message": "Papan pemuka"
+   },
+   "Login": {
+      "message": "Log masuk"
+   },
+   "Off": {
+      "message": "Mati"
+   },
+   "On": {
+      "message": "hidup"
+   },
+   "Selected": {
+      "message": "Dipilih"
+   },
+   "Settings": {
+      "message": "tetapan"
+   },
+   "Tutorial": {
+      "message": "Tutorial"
+   },
+   "action": {
+      "message": "Tindakan"
+   },
+   "activateScheduleTab": {
+      "message": "Aktifkan tab berjadual."
+   },
+   "active": {
+      "message": "Aktif"
+   },
+   "activeAllScheduleTab": {
+      "message": "Menjalankan penjadual Tab"
+   },
+   "activeStatus": {
+      "message": "Status"
+   },
+   "actvInactvNotification": {
+      "message": "Paparkan pemberitahuan apabila tab jadual dibuka"
+   },
+   "actvInactvOpnTb": {
+      "message": "Tab terbuka aktif atau tidak aktif"
+   },
+   "actvIntvClsTb": {
+      "message": "Tab tutup aktif atau tidak aktif"
+   },
+   "add": {
+      "message": "Tambah"
+   },
+   "addDescription": {
+      "message": "Tambah penerangan"
+   },
+   "addNew": {
+      "message": "Tambah Baru"
+   },
+   "addNewURlCls": {
+      "message": "Tambahkan URL baharu untuk ditutup"
+   },
+   "addNewUrlToOpen": {
+      "message": "Tambahkan URL baharu untuk dibuka dalam tetingkap baharu"
+   },
+   "addTitle": {
+      "message": "Tambah Tajuk"
+   },
+   "addWebsite": {
+      "message": "Tambah tapak web"
+   },
+   "all": {
+      "message": "Semua"
+   },
+   "allInputFieldReq": {
+      "message": "Semua medan diperlukan"
+   },
+   "all_weeks": {
+      "message": "Sepanjang Minggu"
+   },
+   "alreadyPurchase": {
+      "message": "Sudah Dibeli? Masukkan Kunci Di Sini"
+   },
+   "andAt": {
+      "message": "dan pada"
+   },
+   "annually": {
+      "message": "setiap tahun"
+   },
+   "appDesc": {
+      "message": "Tab penyemak imbas akan dibuka dan ditutup secara automatik pada masa yang dipilih. Pengguna boleh mengaktifkan/menyahaktifkan senarai berdasarkan keperluan"
+   },
+   "appName": {
+      "message": "Penjadual Tab dengan auto buka dan tutup"
+   },
+   "april": {
+      "message": "April"
+   },
+   "at": {
+      "message": "di"
+   },
+   "august": {
+      "message": "Ogos"
+   },
+   "autoFocus": {
+      "message": "Tab Auto Fokus"
+   },
+   "autoFocustip": {
+      "message": "Jika hidup, tab baharu akan dibuka dalam keadaan aktif/fokus."
+   },
+   "autofocustip": {
+      "message": "Tab baharu yang dibuka akan memfokus secara automatik"
+   },
+   "basic": {
+      "message": "asas"
+   },
+   "billedAnnyally": {
+      "message": "Dibilkan Setiap Tahun"
+   },
+   "billedMonthly": {
+      "message": "Dibilkan Bulanan"
+   },
+   "both": {
+      "message": "Kedua-duanya"
+   },
+   "browserOpen": {
+      "message": "Pada Pelayar Buka"
+   },
+   "browserWebAddress": {
+      "message": "Alamat web penyemak imbas bermula dan berakhir dengan alamat web yang tidak diketahui. Letakkan \u003Cb>*\u003C/b> pada kedua-dua belah medan Pautan Laman Web input anda."
+   },
+   "browserWebAddress2": {
+      "message": "Alamat web penyemak imbas mengandungi nama domain google.com, yang akan ditutup dalam beberapa minit tanpa mengira subdomain dan laluan halaman. Letakkan \u003Cb>*\u003C/b> pada kedua-dua belah nama domain dan TLD"
+   },
+   "browserWebAddress3": {
+      "message": "Alamat web penyemak imbas bermula dengan nama domain yang tidak diketahui dan berakhir dengan laluan halaman yang tidak diketahui"
+   },
+   "browserWebAddress31": {
+      "message": "akan ditutup selepas minit tertentu, letakkan \u003Cb>*\u003C/b> pada kedua-dua belah TLD"
+   },
+   "browserWebAddress4": {
+      "message": "Alamat web penyemak imbas bermula dengan alamat web yang tidak diketahui. Letakkan \u003Cb>*\u003C/b> pada permulaan URL anda. Ingat alamat web pelayar mesti sepadan dengan URL anda selepas \u003Cb>*\u003C/b> anda menulis."
+   },
+   "browserWebAddress41": {
+      "message": "Alamat web penyemak imbas bermula dengan subdomain yang tidak diketahui"
+   },
+   "browserWebAddress42": {
+      "message": "pada permulaan Pautan Laman Web anda"
+   },
+   "browserWebAddress5": {
+      "message": "Alamat web penyemak imbas berakhir dengan alamat web yang tidak diketahui. Letakkan \u003Cb>*\u003C/b> di hujung URL anda. Ingat alamat web anda mesti sepadan sebelum \u003Cb>*\u003C/b> anda menulis."
+   },
+   "browserWebAddress51": {
+      "message": "Alamat web penyemak imbas berakhir dengan laluan halaman yang tidak diketahui. Letakkan \u003Cb>*\u003C/b> di hujung alamat web anda"
+   },
+   "browserWebAddress6": {
+      "message": "Letakkan hanya \u003Cb>*\u003C/b> dalam medan alamat laman web untuk menutup semua tab penyemak imbas. Selepas ditutup semua pelayar tab akan ditutup secara automatik."
+   },
+   "browserWebAddress7": {
+      "message": "Anda mesti telah menulis subdomain yang tepat, domain peringkat atas, nama domain dan laluan halaman dalam medan URL ke buka dalam tab penyemak imbas."
+   },
+   "browserWebAddress8": {
+      "message": "Anda boleh membuka url dalam tarikh dan masa tertentu, bulan tertentu, minggu tertentu, tahun tertentu dan masa ulangan"
+   },
+   "buyPlan": {
+      "message": "Beli Pelan"
+   },
+   "buycofee": {
+      "message": "Belikan Saya Kopi"
+   },
+   "cancel": {
+      "message": "Batal"
+   },
+   "changeLanguage": {
+      "message": "Tukar Bahasa"
+   },
+   "checkAll": {
+      "message": "Semak Semua"
+   },
+   "checkThisOpToPreventClosePinTb": {
+      "message": "Semak pilihan ini untuk mengelakkan penutupan tab yang disematkan."
+   },
+   "checkThisOptionOnlyPartOfUrlMtch": {
+      "message": "Semak pilihan ini jika hanya sebahagian daripada URL yang perlu dipadankan."
+   },
+   "checkThisOptionToActivate": {
+      "message": "Semak pilihan ini untuk mengaktifkan atau menyahaktifkan url berjadual anda."
+   },
+   "checkThisOptionToCloseOnly": {
+      "message": "Semak pilihan ini untuk menutup tab inkognito sahaja. Juga, dayakan pilihan 'Benarkan dalam Inkognito' dalam butiran sambungan. Untuk arahan, sila rujuk halaman tutorial."
+   },
+   "checkThisOptionToCloseOnlyInIncgnitoTb": {
+      "message": "Semak pilihan ini untuk menutup tab inkognito sahaja. Juga, dayakan pilihan 'Benarkan dalam Inkognito' dalam butiran sambungan. Untuk arahan, sila rujuk halaman tutorial."
+   },
+   "checkThisOptionToInBg": {
+      "message": "Semak pilihan ini jika anda ingin membuka URL di latar belakang tanpa membukanya dalam tab baharu"
+   },
+   "checkThisOptionToInactivNotification": {
+      "message": "Semak pilihan ini untuk pemberitahuan tidak aktif pada url yang dijadualkan"
+   },
+   "checkThisOptionToOpen": {
+      "message": "Semak pilihan ini jika anda ingin membuka url anda dalam mod inkognito"
+   },
+   "checkThisOptionToOpenIncogito": {
+      "message": "Semak pilihan ini jika anda ingin membuka url anda dalam mod inkognito"
+   },
+   "checkThisOptionToPrevent": {
+      "message": "Semak pilihan ini untuk mengelakkan penutupan tab yang disematkan."
+   },
+   "clickExtIcon": {
+      "message": "Klik ikon \"Sambungan\" dalam bar alat, yang kelihatan seperti kepingan teka-teki."
+   },
+   "clickTheSwitch": {
+      "message": "Klik suis di sebelahnya untuk menghidupkannya"
+   },
+   "close": {
+      "message": "tutup"
+   },
+   "closeAllTab": {
+      "message": "12. Tutup semua tab pelayar"
+   },
+   "closeAllTabExm1": {
+      "message": "Dalam contoh di atas URL yang diberikan adalah dalam tab dekat, yang menyatakan ia akan menutup semua tab pada 12:00 pada 25/2/2023"
+   },
+   "closeDate": {
+      "message": "Tarikh Tutup"
+   },
+   "closeDay": {
+      "message": "Hari Tutup"
+   },
+   "closeEveryYear": {
+      "message": "Tutup setiap tahun pada"
+   },
+   "closeInEvery": {
+      "message": "Tutup dalam setiap"
+   },
+   "closeIncognitoTab": {
+      "message": "Tutup tab inkognito sahaja"
+   },
+   "closeMinute": {
+      "message": "Tutup Minit"
+   },
+   "closeOnDay": {
+      "message": "Tutup pada hari"
+   },
+   "closeOnEvery": {
+      "message": "Tutup pada setiap"
+   },
+   "closeOnEveryDay": {
+      "message": "Tutup pada setiap hari pada"
+   },
+   "closeOnEveryMonth": {
+      "message": "Tutup setiap bulan pada hari"
+   },
+   "closeOnEveryWeek": {
+      "message": "Tutup setiap minggu pada"
+   },
+   "closeSecond": {
+      "message": "Tutup Kedua"
+   },
+   "closeSeconsMoreThan5": {
+      "message": "Detik detik hendaklah lebih daripada 5."
+   },
+   "closeTabSchedule": {
+      "message": "Tutup Jadual Tab"
+   },
+   "closeTabURL": {
+      "message": "Tutup URL Tab"
+   },
+   "closeTime": {
+      "message": "Masa Tutup"
+   },
+   "closeUrl": {
+      "message": "Tutup Pautan Laman Web"
+   },
+   "closeWeek": {
+      "message": "Tutup Minggu"
+   },
+   "closeWeeks": {
+      "message": "Tutup Minggu"
+   },
+   "close_on": {
+      "message": "Tutup pada"
+   },
+   "cngrtsForSubcr": {
+      "message": "tahniah! Pelan anda telah berjaya diaktifkan."
+   },
+   "commonQuestionsAns": {
+      "message": "Soalan dan jawapan biasa"
+   },
+   "copySucessClose": {
+      "message": "Data URL tutup tab disalin ke data URL tab Buka"
+   },
+   "createNewTimer": {
+      "message": "Buat Pemasa Baharu"
+   },
+   "currentPlan": {
+      "message": "Rancangan Semasa"
+   },
+   "currentTabSchedule": {
+      "message": "Jadual tab semasa"
+   },
+   "currentTbScheduleTimer": {
+      "message": "Pemasa berjadual tab semasa."
+   },
+   "cusSec": {
+      "message": "Custom Second"
+   },
+   "custMin": {
+      "message": "Minit Tersuai"
+   },
+   "custmMinSch": {
+      "message": "7. Jadual Minit Tersuai"
+   },
+   "custmMinSchExm1": {
+      "message": "Dalam contoh di atas URL yang diberikan adalah dalam tab terbuka, yang menyatakan URL yang diberikan terbuka dalam tab baharu Setiap 15 Minit."
+   },
+   "custmMinSchExm2": {
+      "message": "Dalam contoh di atas URL yang diberikan adalah dalam tab tutup, yang menyatakan bahawa URL yang diberikan yang dibuka dalam tab baharu akan ditutup selepas 15 minit."
+   },
+   "customSecondWarning": {
+      "message": "Fungsi kedua tersuai adalah percubaan dan ia mungkin tidak berfungsi dengan betul jika saat ditetapkan di bawah 60."
+   },
+   "darkMode": {
+      "message": "Mod Gelap"
+   },
+   "datNotCopy": {
+      "message": "Sesetengah data tidak disalin kerana URL tidak sah."
+   },
+   "dataSaved": {
+      "message": "Data pemasa berjaya disimpan"
+   },
+   "date": {
+      "message": "tarikh"
+   },
+   "dateIsOutOfRange": {
+      "message": "Tarikh berada di luar julat"
+   },
+   "day": {
+      "message": "Hari"
+   },
+   "december": {
+      "message": "Disember"
+   },
+   "delete": {
+      "message": "Padam"
+   },
+   "deleteScheduleTb": {
+      "message": "Padamkan tab yang dijadualkan."
+   },
+   "description": {
+      "message": "Penerangan"
+   },
+   "developedBy": {
+      "message": "Dibangunkan oleh:"
+   },
+   "doNotCloseInPinnedTabs": {
+      "message": "Jangan tutup tab yang disematkan"
+   },
+   "doNotShowNotification": {
+      "message": "Jangan tunjukkan pemberitahuan"
+   },
+   "domainName": {
+      "message": "Nama Domain"
+   },
+   "downloadCloseTbSampleCsv": {
+      "message": "Muat turun sampel CSV tab tutup untuk melihat contoh format yang diperlukan"
+   },
+   "downloadOpenTbSampleCsv": {
+      "message": "Muat turun sampel CSV tab terbuka untuk melihat contoh format yang diperlukan"
+   },
+   "editScheduleTb": {
+      "message": "Edit tab berjadual."
+   },
+   "email": {
+      "message": "E-mel"
+   },
+   "enterDateToCloseTab": {
+      "message": "Masukkan tarikh di sini untuk menutup tab jadual."
+   },
+   "enterDateToOpen": {
+      "message": "Masukkan tarikh untuk membuka tab jadual."
+   },
+   "enterMiniutesToCloseTb": {
+      "message": "Masukkan miniut untuk menutup tab."
+   },
+   "enterMiniutesToOpen": {
+      "message": "Masukkan miniutes untuk membuka tab jadual."
+   },
+   "enterMinute": {
+      "message": "Masukkan Minit"
+   },
+   "enterSecond": {
+      "message": "Masukkan Kedua"
+   },
+   "enterSecondsToCloseTab": {
+      "message": "Masukkan saat untuk menutup tab."
+   },
+   "enterSecondsToOpen": {
+      "message": "Masukkan saat untuk membuka tab jadual."
+   },
+   "enterTilteOfScheduleUrl": {
+      "message": "Masukkan tajuk URL yang dijadualkan."
+   },
+   "enterTimeToCloseTab": {
+      "message": "Masukkan masa di sini untuk menutup tab jadual."
+   },
+   "enterTimeToSchedule": {
+      "message": "Masukkan masa untuk membuka tab jadual."
+   },
+   "enterValidEmail": {
+      "message": "Sila Masukkan E-mel yang Sah"
+   },
+   "enterValidUrl": {
+      "message": "Sila masukkan URL yang sah"
+   },
+   "enterValueInCloseSec": {
+      "message": "Masukkan nilai dalam beberapa saat"
+   },
+   "enterValueInOpenCloseSec": {
+      "message": "Masukkan nilai dalam saat buka atau tutup"
+   },
+   "enterValueInOpenMinutes": {
+      "message": "Masukkan nilai dalam minit terbuka"
+   },
+   "enterVlaueInCloseMinutes": {
+      "message": "Masukkan nilai dalam beberapa minit"
+   },
+   "enterVlaueInOpenCloseMin": {
+      "message": "Masukkan nilai dalam minit terbuka atau tutup"
+   },
+   "enterVlaueInOpenSeconds": {
+      "message": "Masukkan nilai dalam saat terbuka"
+   },
+   "enterYourURLToSchedule": {
+      "message": "Masukkan URL anda untuk dijadualkan."
+   },
+   "every": {
+      "message": "setiap"
+   },
+   "every10Min": {
+      "message": "Setiap 10 Minit"
+   },
+   "every1Minute": {
+      "message": "setiap 1 minit"
+   },
+   "every30Min": {
+      "message": "Setiap 30 Minit"
+   },
+   "every5Min": {
+      "message": "Setiap 5 Minit"
+   },
+   "everyDay": {
+      "message": "Setiap Hari"
+   },
+   "everyDayAt": {
+      "message": "setiap hari di"
+   },
+   "everyHour": {
+      "message": "Setiap Jam"
+   },
+   "everyMinute": {
+      "message": "Setiap Minit"
+   },
+   "everyMonth": {
+      "message": "Setiap Bulan"
+   },
+   "everyMonthOn": {
+      "message": "setiap bulan pada"
+   },
+   "everyMonthOnDay": {
+      "message": "setiap bulan pada hari"
+   },
+   "everyWeek": {
+      "message": "Setiap Minggu"
+   },
+   "everyWeekOn": {
+      "message": "setiap minggu pada"
+   },
+   "everyYear": {
+      "message": "Setiap Tahun"
+   },
+   "everyYesrOn": {
+      "message": "setiap tahun pada"
+   },
+   "evr10MinSch": {
+      "message": "2.Jadual Setiap 10 Minit"
+   },
+   "evr10MinSchExm1": {
+      "message": "Dalam contoh di atas URL yang diberikan adalah dalam tab terbuka, yang menyatakan URL yang diberikan akan dibuka dalam tab baharu Setiap 10 Minit."
+   },
+   "evr10MinSchExm2": {
+      "message": "Dalam contoh di atas URL yang diberikan adalah dalam tab tutup, yang menyatakan bahawa URL yang diberikan yang dibuka dalam tab baharu akan ditutup selepas 10 minit."
+   },
+   "evrDaySch": {
+      "message": "3.Jadual Setiap Hari"
+   },
+   "evrDaySchExm1": {
+      "message": "Dalam contoh di atas URL yang diberikan adalah dalam tab terbuka, yang menyatakan ia akan dibuka dalam tab baharu Setiap Hari pada 5:27 PTG"
+   },
+   "evrDaySchExm2": {
+      "message": "Dalam contoh di atas URL yang diberikan adalah dalam tab tutup, yang menyatakan ia akan menutup tab yang telah dibuka pada 5:27 PTG setiap hari"
+   },
+   "evrMonthSch": {
+      "message": "5.Jadual Setiap Bulan"
+   },
+   "evrMonthSchExm1": {
+      "message": "Dalam contoh di atas URL yang diberikan adalah dalam tab terbuka, yang menyatakan Ia akan dibuka dalam tab baharu Setiap Bulan pada 13:45 pada hari ke-25"
+   },
+   "evrMonthSchExm2": {
+      "message": "Dalam contoh di atas URL yang diberikan adalah dalam tab dekat, yang menyatakan ia akan menutup tab yang telah dibuka pada Setiap Bulan pada 13:45 pada hari ke-25"
+   },
+   "evrWeekSch": {
+      "message": "4.Jadual Setiap Minggu"
+   },
+   "evrWeekSchExm1": {
+      "message": "Dalam contoh di atas, URL yang diberikan adalah dalam tab terbuka, yang menyatakan ia akan dibuka dalam tab baharu setiap minggu pada jam 17:00 pada \u003Cb>hari Isnin &amp; Selasa\u003C/b> ."
+   },
+   "evrWeekSchExm2": {
+      "message": "Dalam contoh di atas, URL yang diberikan berada dalam tab tutup, yang menyatakan bahawa ia akan menutup tab yang telah dibuka pada Setiap Minggu pada pukul 17:00 pada \u003Cb>hari Isnin &amp; Selasa\u003C/b> ."
+   },
+   "evrWeekSchExm3": {
+      "message": "Dalam contoh di atas, beberapa hari boleh dipilih dalam pemasa minggu."
+   },
+   "evrYearSch": {
+      "message": "6.Jadual Setiap Tahun"
+   },
+   "evrYearSchExm1": {
+      "message": "Dalam contoh di atas URL yang diberikan adalah dalam tab terbuka, yang menyatakan ia akan dibuka dalam tab baharu Setiap Tahun pada 13:35 pada 1 Januari"
+   },
+   "evrYearSchExm2": {
+      "message": "Dalam contoh di atas URL yang diberikan adalah dalam tab tutup, yang menyatakan ia akan menutup tab yang telah dibuka pada Setiap Tahun pada 13:35 pada 1 Januari"
+   },
+   "exampleSort": {
+      "message": "cth"
+   },
+   "exdMaxLim": {
+      "message": "Melebihi peranti maksimum dibenarkan!"
+   },
+   "exmpOpnClsTbSch": {
+      "message": "Contoh cara membuka dan menutup tab dalam Penjadual Tab"
+   },
+   "expLicKy": {
+      "message": "Kunci lesen ini telah tamat tempoh."
+   },
+   "export": {
+      "message": "Eksport"
+   },
+   "exportBefore": {
+      "message": "awak ada\u003Cexday>\u003C/exday>hari lagi, Sila langgan untuk terus menikmati ciri premium"
+   },
+   "exportClsTbDta": {
+      "message": "Eksport data tab tutup"
+   },
+   "exportOpenTbDt": {
+      "message": "Eksport data tab terbuka"
+   },
+   "exportedData": {
+      "message": "Data pemasa berjaya dieksport"
+   },
+   "extensionShouldAble": {
+      "message": "Sekarang, sambungan itu sepatutnya dapat menutup tab dalam mod Inkognito."
+   },
+   "faq": {
+      "message": "Soalan Lazim"
+   },
+   "faq_1": {
+      "message": "Apakah Penjadual Tab dengan Auto Buka dan Tutup?"
+   },
+   "faq_10": {
+      "message": "Bagaimanakah saya melihat tab terjadual saya?"
+   },
+   "faq_11": {
+      "message": "Adakah wajib mengisi kedua-dua masa buka dan tutup?"
+   },
+   "faq_12": {
+      "message": "Apakah yang dilakukan oleh ciri Tab Auto Fokus, Aktifkan Semua Tab Berjadual dan Mod Kuasa?"
+   },
+   "faq_13": {
+      "message": "Bolehkah saya membuka/menutup Pautan Laman Web yang dijadualkan dalam tab inkognito.?"
+   },
+   "faq_14": {
+      "message": "Apakah kegunaan tab Refresh jika URL sudah dibuka?"
+   },
+   "faq_2": {
+      "message": "Apakah kegunaan Pautan Laman Web?"
+   },
+   "faq_3": {
+      "message": "Bagaimanakah saya menjadualkan URL menggunakan Penjadual Tab?"
+   },
+   "faq_4": {
+      "message": "Apakah pilihan 'Buka URL dalam Latar Belakang'?"
+   },
+   "faq_5": {
+      "message": "Bolehkah saya menghalang sambungan daripada menutup tab yang disematkan?"
+   },
+   "faq_6": {
+      "message": "Apakah maksud jenis jadual 'Kedua-dua'?"
+   },
+   "faq_7": {
+      "message": "Bagaimanakah ciri 'Penapisan URL' berfungsi?"
+   },
+   "faq_8": {
+      "message": "Bolehkah saya menyahaktifkan tab berjadual tanpa memadamkannya?"
+   },
+   "faq_9": {
+      "message": "Adakah saya akan menerima pemberitahuan untuk tab yang dijadualkan?"
+   },
+   "faq_a_1": {
+      "message": "\u003Cp>Penjadual Tab dengan Auto Buka dan Tutup ialah sambungan penyemak imbas yang membolehkan pengguna menjadualkan tab untuk dibuka dan ditutup secara automatik pada masa yang ditetapkan. Pengguna boleh memilih jadual satu kali atau menyediakan jadual berulang dengan pelbagai pilihan frekuensi. Sambungan ini mempunyai pelbagai tujuan untuk pengguna dan menyediakan banyak ciri yang berguna kepada anda.\u003C/p>"
+   },
+   "faq_a_10": {
+      "message": "Semua tab berjadual dipaparkan dalam senarai yang menunjukkan tajuk, pautan tapak web, masa buka dan tutup, status dan tindakan yang boleh anda ambil (cth, aktifkan, edit, padam)."
+   },
+   "faq_a_11": {
+      "message": "Tidak, anda boleh menjadualkan sama ada waktu buka atau waktu tutup. Walau bagaimanapun, anda mesti mengisi atau memilih medan yang diperlukan yang ditandakan dengan asterisk (*)."
+   },
+   "faq_a_12": {
+      "message": "Tab Auto Fokus memastikan bahawa apabila tab berjadual dibuka, Aktifkan Semua Tab Berjadual membolehkan anda menghidupkan semua tab berjadual anda dengan cepat dengan satu klik. Mod Kuasa mengoptimumkan prestasi sambungan dengan mengurus sumber penyemak imbas dengan lebih cekap."
+   },
+   "faq_a_13": {
+      "message": "Ya, anda boleh memilih untuk membuka tab berjadual dalam mod inkognito dengan memilih pilihan \"Buka dalam mod inkognito\". Anda boleh memilih untuk menutup tab inkognito sahaja dengan memilih pilihan \"Tutup tab inkognito sahaja\", selagi \"Benarkan dalam Inkognito\" didayakan dalam tetapan sambungan"
+   },
+   "faq_a_14": {
+      "message": "Apabila pilihan ini didayakan, sambungan akan memuat semula tab sedia ada secara automatik jika URL yang sama sudah dibuka dalam penyemak imbas anda. Ini menghalang membuka tab pendua dan memastikan anda sentiasa memuatkan versi terkini halaman."
+   },
+   "faq_a_14_1": {
+      "message": "Jika anda cuba membuka https://github.com/ dan ia sudah dibuka dalam tab lain, sambungan hanya akan memuatkan semula tab itu dan bukannya membuka yang baharu."
+   },
+   "faq_a_14_2": {
+      "message": "Jika https://github.com/ sudah dibuka dalam tiga tab, sambungan akan memuatkan semula ketiga-tiga tab."
+   },
+   "faq_a_2": {
+      "message": "Pautan Laman Web ialah alamat tapak web tab terbuka penyemak imbas anda. Bagaimana anda boleh menggunakan alamat tapak web dinyatakan di bawah."
+   },
+   "faq_a_3": {
+      "message": "Untuk menjadualkan URL, masukkan pautan tapak web, berikan tajuk jadual, pilih kekerapan (Satu Kali, Setiap Minit, Harian, dll.), dan pilih masa buka dan tutup. Anda juga boleh menentukan tarikh, hari atau saat untuk membuka dan menutup tab."
+   },
+   "faq_a_4": {
+      "message": "\u003Cp>Pilihan ini memberi anda kawalan penuh untuk menjadualkan URL untuk dibuka di latar belakang tanpa memfokuskan tab baharu. URL akan dibuka dengan senyap semasa anda meneruskan kerja pada tab lain. Ia amat berguna apabila anda memerlukan penyemak imbas untuk mengambil data daripada URL yang dijadualkan tanpa memaparkannya secara aktif, seperti dalam kes permintaan API GET.\u003C/p>\u003Cbr> \u003Cp>Contohnya, jika anda ingin mengambil data daripada titik akhir API pada masa yang ditetapkan dengan kerap, anda boleh menggunakan pilihan yang cekap ini untuk menjalankan permintaan di latar belakang tanpa membuka tab baharu yang boleh dilihat.\u003C/p>"
+   },
+   "faq_a_5": {
+      "message": "Ya, terdapat pilihan untuk menghalang penutupan tab yang disematkan. Semak pilihan \"Jangan tutup tab yang disematkan\" untuk memastikan tab ini kekal terbuka walaupun ia memenuhi kriteria penutupan yang lain."
+   },
+   "faq_a_6": {
+      "message": "Jenis jadual 'Kedua-dua' memberi anda kawalan sepenuhnya ke atas apabila tab dibuka dan ditutup, membolehkan anda menetapkan masa tertentu untuk kedua-dua tindakan."
+   },
+   "faq_a_7": {
+      "message": "Penapisan URL memastikan bahawa hanya bahagian tertentu URL perlu dipadankan untuk tindakan yang dijadualkan berlaku. Ini berguna apabila anda ingin mengautomasikan tindakan tertentu berdasarkan padanan URL separa. Sebagai contoh, jika anda menyemak pilihan Penapisan URL untuk URL https://example.com/page, ia juga akan digunakan pada URL seperti https://example.com/page/123, https://example.com/ page?query=example, dan https://subdomain.example.com/page."
+   },
+   "faq_a_8": {
+      "message": "Dengan pilihan \"Aktifkan tab berjadual ini\", anda boleh mengaktifkan atau menyahaktifkan tab berjadual dengan mudah, memberikan anda fleksibiliti untuk mengurus jadual anda tanpa kehilangan konfigurasi."
+   },
+   "faq_a_9": {
+      "message": "Secara lalai, anda akan menerima pemberitahuan. Walau bagaimanapun, jika anda memilih untuk menghentikan pemberitahuan, anda boleh menyemak pilihan \"Jangan tunjukkan pemberitahuan\" untuk melumpuhkannya."
+   },
+   "february": {
+      "message": "Februari"
+   },
+   "filterTips": {
+      "message": "Penapis digunakan selepas 'https://' atau 'www.', Ex 'github.com'"
+   },
+   "for_exp": {
+      "message": "Contohnya"
+   },
+   "freeForever": {
+      "message": "Percuma Selamanya"
+   },
+   "freeSchedule": {
+      "message": "jadual percuma"
+   },
+   "freeTral": {
+      "message": "Sebagai pengguna awal yang dihargai, anda akan menikmatinya\u003Crday>120\u003C/rday>hari akses percuma sebelum beralih kepada pelan berbayar baharu kami—terima kasih atas sokongan berterusan anda!\u003Cp class=\"p-t-5\">awak ada\u003Cb>\u003Cspan>\u003C/span>\u003C/b>hari yang tinggal daripada anda\u003Crday>120\u003C/rday>-hari tempoh percuma.\u003Cafex class=\"warning\">\u003Cafex>\u003C/afex>\u003C/afex>\u003C/p> "
+   },
+   "frequentlyAskedQuestions": {
+      "message": "Soalan lazim"
+   },
+   "friday": {
+      "message": "Jumaat"
+   },
+   "getThisPlan": {
+      "message": "Dapatkan Pelan Ini"
+   },
+   "goToSettingsPageToSchedule": {
+      "message": "Pergi ke halaman tetapan untuk menjadualkan pembukaan dan penutupan URL."
+   },
+   "goURL": {
+      "message": "Pergi ke URL"
+   },
+   "helpAccordion12": {
+      "message": "Adakah sambungan ini berfungsi dalam mod tidur/gantung?"
+   },
+   "helpAccordion3": {
+      "message": "Bolehkah saya menjadualkan tab untuk dibuka dalam mod inkognito?"
+   },
+   "helpAccordion6": {
+      "message": "Apakah itu \"Masa tamat tempoh\"?"
+   },
+   "helpAccordion7": {
+      "message": "Bolehkah saya mengeksport URL yang dijadualkan?"
+   },
+   "helpAccordion8": {
+      "message": "Bolehkah saya Mengimport ke URL Jadual?"
+   },
+   "helpPanelBodyDesc12First": {
+      "message": "Tidak, sambungan ini tidak akan berfungsi dalam mod tidur/gantung."
+   },
+   "helpPanelBodyDesc12Second": {
+      "message": "Jika mana-mana URL dijadualkan dalam tab buka atau tutup, maka PC anda tidak akan masuk secara automatik ke mod tidur atau gantung."
+   },
+   "helpPanelBodyDesc3": {
+      "message": "Ya, anda boleh memilih untuk membuka tab berjadual dalam mod inkognito dengan memilih pilihan 'Buka dalam mod inkognito'. Pastikan pilihan 'Benarkan dalam Inkognito' sambungan didayakan dalam tetapan sambungan penyemak imbas."
+   },
+   "helpPanelBodyDesc6": {
+      "message": "- Tarikh dan masa yang diberikan adalah berlalu dari tarikh dan masa semasa kemudian teks \"Masa Tamat Tempoh\" akan dipaparkan."
+   },
+   "helpPanelBodyDesc7": {
+      "message": "Ya, Anda boleh Eksport tab terbuka dan tutup URL tab yang telah dijadualkan dalam format csv dan gunakannya dengan sistem lain untuk mengimport URL tersebut."
+   },
+   "helpPanelBodyDesc8": {
+      "message": "Ya, Anda boleh Import URL buka dan tutup yang sah dalam format csv. Format csv yang diimport akan dijadualkan secara automatik dalam masa tertentu"
+   },
+   "herAreStepsToAllow": {
+      "message": "Berikut ialah langkah untuk \"Benarkan dalam Inkognito\" dalam Google Chrome:"
+   },
+   "home": {
+      "message": "Rumah"
+   },
+   "hour_minute_close": {
+      "message": "Setiap Jam Tutup Minit"
+   },
+   "hour_minute_open": {
+      "message": "Setiap Jam Minit Terbuka"
+   },
+   "how_to_use_tab": {
+      "message": "Bagaimana untuk menggunakan penjadual Tab?"
+   },
+   "import": {
+      "message": "Import"
+   },
+   "importClsTbDta": {
+      "message": "Import data tab tutup"
+   },
+   "importExport": {
+      "message": "Import/Eksport"
+   },
+   "importOpenTbDt": {
+      "message": "Import data tab terbuka"
+   },
+   "importedRecored": {
+      "message": ", diimport direkodkan"
+   },
+   "inactivateScheduleTab": {
+      "message": "Nyahaktifkan tab berjadual."
+   },
+   "inactive": {
+      "message": "Tidak aktif"
+   },
+   "inactiveSch": {
+      "message": "8.URL tidak aktif"
+   },
+   "inactiveSchExm1": {
+      "message": "Dalam contoh di atas URL yang diberikan berada dalam tab terbuka atau tab tutup, yang menyatakan URL yang diberikan tidak aktif dan ia tidak akan melakukan sebarang tindakan."
+   },
+   "inactiveThisScheduledTabs": {
+      "message": "Aktifkan tab berjadual ini"
+   },
+   "invalidDuplicate": {
+      "message": ", pendua atau tidak sah direkodkan"
+   },
+   "invldLicKy": {
+      "message": "Kunci lesen tidak sah!"
+   },
+   "isClose": {
+      "message": "sudah dekat"
+   },
+   "isOpen": {
+      "message": "terbuka"
+   },
+   "january": {
+      "message": "Januari"
+   },
+   "july": {
+      "message": "Julai"
+   },
+   "june": {
+      "message": "Jun"
+   },
+   "licKeyDis": {
+      "message": "Kunci lesen ini dilumpuhkan."
+   },
+   "listTitle": {
+      "message": "Penjadual Tab"
+   },
+   "loading": {
+      "message": "Sila Tunggu..."
+   },
+   "locale": {
+      "message": "en"
+   },
+   "march": {
+      "message": "Mac"
+   },
+   "maxSchedule": {
+      "message": "4 Had jadual maksimum"
+   },
+   "may": {
+      "message": "Mei"
+   },
+   "mintValid": {
+      "message": "Minimum 1 minit diperlukan"
+   },
+   "minute": {
+      "message": "minit"
+   },
+   "minutesNotLessThan1": {
+      "message": "Minit hendaklah tidak kurang daripada 1."
+   },
+   "monday": {
+      "message": "Isnin"
+   },
+   "month": {
+      "message": "bulan"
+   },
+   "monthly": {
+      "message": "Bulanan"
+   },
+   "more": {
+      "message": "lebih"
+   },
+   "mostSubscribe": {
+      "message": "Langgan Terbanyak"
+   },
+   "no": {
+      "message": "Tidak"
+   },
+   "noDataToExport": {
+      "message": "Tiada data untuk dieksport."
+   },
+   "noScheduledTabs": {
+      "message": "Tiada tab berjadual"
+   },
+   "noTimerSetAddNewTimer": {
+      "message": "Tiada pemasa ditetapkan, Klik butang Tambah untuk menetapkan pemasa baharu"
+   },
+   "not_show_tutorial": {
+      "message": "Jangan tunjukkan tutorial ini lagi"
+   },
+   "notificationOpenTab": {
+      "message": "13. Pemberitahuan pada URL tab buka/tutup"
+   },
+   "notificationOpenTabExm1": {
+      "message": "Dalam contoh di atas URL yang diberikan adalah dalam tab terbuka, yang menyatakan ia akan memberikan pemberitahuan dan membuka/menutup URL dalam tab baharu dalam setiap 5 minit."
+   },
+   "notifications": {
+      "message": "Pemberitahuan"
+   },
+   "november": {
+      "message": "November"
+   },
+   "october": {
+      "message": "Oktober"
+   },
+   "onTheExtensionDetailPage": {
+      "message": "Pada halaman butiran sambungan, tatal ke bawah dan cari pilihan \"Benarkan dalam inkognito\"."
+   },
+   "oneTime": {
+      "message": "Satu Kali"
+   },
+   "oneTmSch": {
+      "message": "1.Jadual Satu Masa"
+   },
+   "oneTmSchExm1": {
+      "message": "Dalam contoh di atas URL yang diberikan adalah dalam tab terbuka, yang menyatakan ia akan dibuka dalam tab baharu Sekali pada 13:45 pada 21/1/2023"
+   },
+   "oneTmSchExm2": {
+      "message": "Dalam contoh di atas URL yang diberikan adalah dalam tab dekat, yang menyatakan ia akan menutup semua tab URL dipadankan khusus pada 13:45 pada 21/1/2023"
+   },
+   "open": {
+      "message": "Buka"
+   },
+   "openBackground": {
+      "message": "Jika ya, Memuatkan URL di latar belakang tanpa membukanya dalam tab baharu"
+   },
+   "openDate": {
+      "message": "Tarikh Buka"
+   },
+   "openDay": {
+      "message": "Hari Terbuka"
+   },
+   "openEveryDayOn": {
+      "message": "Dibuka setiap hari pada"
+   },
+   "openEveryMonthOn": {
+      "message": "Dibuka setiap bulan pada hari"
+   },
+   "openEveryWeekOn": {
+      "message": "Dibuka setiap minggu pada"
+   },
+   "openEveryYearOn": {
+      "message": "Dibuka setiap tahun pada"
+   },
+   "openGoogleChrome": {
+      "message": "Buka Google Chrome."
+   },
+   "openInBackground": {
+      "message": "Buka URL dalam Latar Belakang"
+   },
+   "openInEvery": {
+      "message": "Terbuka dalam setiap"
+   },
+   "openInIncognito": {
+      "message": "Buka dalam mod inkognito"
+   },
+   "openMinute": {
+      "message": "Minit Terbuka"
+   },
+   "openOnDay": {
+      "message": "Dibuka pada Hari"
+   },
+   "openOnEvery": {
+      "message": "Terbuka pada setiap"
+   },
+   "openSecond": {
+      "message": "Buka Kedua"
+   },
+   "openSecondsMoreThan5": {
+      "message": "Saat terbuka hendaklah lebih daripada 5."
+   },
+   "openTabSchedule": {
+      "message": "Buka Jadual Tab"
+   },
+   "openTabURL": {
+      "message": "Buka URL Tab"
+   },
+   "openTime": {
+      "message": "Waktu Buka"
+   },
+   "openUrl": {
+      "message": "Buka Pautan Laman Web"
+   },
+   "openWeek": {
+      "message": "Minggu Terbuka"
+   },
+   "openWeeks": {
+      "message": "Minggu Terbuka"
+   },
+   "open_on": {
+      "message": "Buka pada"
+   },
+   "optional": {
+      "message": "Pilihan"
+   },
+   "or": {
+      "message": "atau"
+   },
+   "outof": {
+      "message": "daripada"
+   },
+   "pagePath": {
+      "message": "Laluan Halaman"
+   },
+   "paidFeature": {
+      "message": "Ciri Berbayar"
+   },
+   "pauseSchedule": {
+      "message": "Mulakan atau Hentikan semua jadual"
+   },
+   "pauseTabScheduler": {
+      "message": "Penjadual Tab dijeda"
+   },
+   "pleaseAllowIncognitoMessage": {
+      "message": "Sila dayakan pilihan 'Benarkan dalam Inkognito' dalam butiran sambungan. Untuk arahan, sila rujuk halaman tutorial."
+   },
+   "pleaseShareYourSuggestions": {
+      "message": "Sila kongsi cadangan anda."
+   },
+   "plsShreAnySugWithUs": {
+      "message": "Tolong beri cadangan untuk menambah baik kami"
+   },
+   "powerMode": {
+      "message": "Mod Kuasa"
+   },
+   "premium": {
+      "message": "Premium"
+   },
+   "pricePlan": {
+      "message": "Harga &amp; Pelan"
+   },
+   "privcyPolicy": {
+      "message": "Dasar Privasi"
+   },
+   "prowerModeTip": {
+      "message": "Pastikan sistem sentiasa aktif dengan mendayakan Mod Kuasa"
+   },
+   "put": {
+      "message": "letak"
+   },
+   "rateUs": {
+      "message": "Nilaikan Kami"
+   },
+   "removeDuplicateEntry": {
+      "message": "Sila alih keluar masukan pendua"
+   },
+   "removeOpenTbURL": {
+      "message": "Alih keluar URL tab terbuka"
+   },
+   "repeat": {
+      "message": "ulang"
+   },
+   "requiredMsg": {
+      "message": "Diperlukan"
+   },
+   "rmvClsTb": {
+      "message": "Alih keluar URL tab tutup"
+   },
+   "sameTabs": {
+      "message": "Muat semula tab jika URL sudah dibuka"
+   },
+   "sameTabsInfo": {
+      "message": "Elakkan membuka berbilang tab untuk URL yang sama. Contohnya, jika www.google.com telah dibuka, maka tab sedia ada itu akan dimuat semula dan bukannya membuka tab baharu untuknya."
+   },
+   "sampleCsvOpenPath": {
+      "message": "../sample_csv/en/open_tab_sample.csv"
+   },
+   "sampleFile": {
+      "message": "Contoh fail"
+   },
+   "saturday": {
+      "message": "Sabtu"
+   },
+   "savOpnData": {
+      "message": "Simpan data tab terbuka"
+   },
+   "save": {
+      "message": "Jimat"
+   },
+   "saveClsTbData": {
+      "message": "Simpan data tab tutup"
+   },
+   "saveSchedule": {
+      "message": "Simpan Jadual"
+   },
+   "scheduleCloseTab": {
+      "message": "Jadual Tutup Tab"
+   },
+   "scheduleCurrentTab": {
+      "message": "Jadualkan tab semasa"
+   },
+   "scheduleOpenTab": {
+      "message": "Jadual Buka Tab"
+   },
+   "scheduledTabIsAlreadyExistWithSameTimer": {
+      "message": "Tab berjadual ini telah pun wujud dengan pemasa yang sama."
+   },
+   "scheduledTabList": {
+      "message": "Senarai Tab Berjadual"
+   },
+   "scheduledType": {
+      "message": "Jenis Jadual"
+   },
+   "search": {
+      "message": "Cari"
+   },
+   "secValid": {
+      "message": "Minimum 5 saat diperlukan"
+   },
+   "second": {
+      "message": "Kedua"
+   },
+   "selectCloseDate": {
+      "message": "Pilih tarikh tutup"
+   },
+   "selectCloseDay": {
+      "message": "Pilih hari tutup"
+   },
+   "selectCloseTime": {
+      "message": "Pilih masa tutup"
+   },
+   "selectColumn": {
+      "message": "Pilih Lajur"
+   },
+   "selectDateAndTime": {
+      "message": "Pilih tarikh dan masa untuk membuka tab baharu"
+   },
+   "selectDateAndTimeClsTb": {
+      "message": "Pilih tarikh dan masa untuk menutup tab"
+   },
+   "selectDayToCloseSchTb": {
+      "message": "Pilih hari untuk menutup tab jadual."
+   },
+   "selectDayToClsTb": {
+      "message": "Pilih hari untuk menutup tab"
+   },
+   "selectDayToSchdule": {
+      "message": "Pilih tab hari untuk jadualkan."
+   },
+   "selectDaysInWeek": {
+      "message": "Pilih hari dalam minggu"
+   },
+   "selectDaysInWeekIClsTime": {
+      "message": "Pilih hari dalam minggu dalam pemasa dekat."
+   },
+   "selectDaysInWeekIOpClsTime": {
+      "message": "Pilih hari dalam minggu dalam pemasa terbuka atau tutup."
+   },
+   "selectDaysInWeekIOpTime": {
+      "message": "Pilih hari dalam minggu dalam pemasa terbuka."
+   },
+   "selectFrequency": {
+      "message": "Pilih Kekerapan"
+   },
+   "selectFrequencyOfScheduleUrl": {
+      "message": "Pilih kekerapan URL yang dijadualkan."
+   },
+   "selectOpenDate": {
+      "message": "Pilih tarikh buka"
+   },
+   "selectOpenDay": {
+      "message": "Pilih hari terbuka"
+   },
+   "selectOpenOrClose": {
+      "message": "Pilih masa buka dan tutup"
+   },
+   "selectOpenOrCloseDate": {
+      "message": "Pilih tarikh buka dan tutup"
+   },
+   "selectOpenOrCloseDay": {
+      "message": "Pilih hari buka dan tutup"
+   },
+   "selectOpenTime": {
+      "message": "Pilih masa buka"
+   },
+   "selectPreferredLanguage": {
+      "message": "Pilih bahasa pilihan anda."
+   },
+   "selectToOpenTab": {
+      "message": "Pilih hari untuk membuka tab baharu"
+   },
+   "selectTypTimerClsTb": {
+      "message": "Pilih jenis pemasa untuk menutup tab"
+   },
+   "selectTypeOfSchedule": {
+      "message": "Pilih jenis jadual, jika anda mahu kedua-duanya membuka dan menutup daripada pilih \"Kedua-duanya\"."
+   },
+   "selectTypeOfTimer": {
+      "message": "Pilih jenis pemasa untuk membuka tab baharu"
+   },
+   "select_weeks": {
+      "message": "Pilih Minggu"
+   },
+   "september": {
+      "message": "September"
+   },
+   "settingSave": {
+      "message": "Tetapan berjaya disimpan"
+   },
+   "settingToClose": {
+      "message": "Menetapkan untuk menutup tab dalam mod inkognito."
+   },
+   "shareYourSuggestionWithUs": {
+      "message": "Kongsikan cadangan anda dengan kami.."
+   },
+   "slectDayToScheduleWeekly": {
+      "message": "Pilih hari untuk jadualkan tab setiap minggu."
+   },
+   "slectMinute": {
+      "message": "Pilih Minit"
+   },
+   "smthngWrng": {
+      "message": "Sesuatu telah berlaku"
+   },
+   "softpulseInfotech": {
+      "message": "Softpulse Infotech"
+   },
+   "somethingWentWrong": {
+      "message": "Sesuatu telah berlaku. Muat semula halaman dan cuba lagi."
+   },
+   "status": {
+      "message": "Status"
+   },
+   "subcrKeyShldNEmpt": {
+      "message": "Sila masukkan kunci langganan."
+   },
+   "subdomain": {
+      "message": "Subdomain"
+   },
+   "subkeyInputTitle": {
+      "message": "Masukkan kunci langganan"
+   },
+   "submFeedBack": {
+      "message": "Hantar"
+   },
+   "suggForTbSch": {
+      "message": "Cadangan untuk penjadual tab"
+   },
+   "suggestionAndRateUs": {
+      "message": "Cadangan &amp; Nilaikan kami"
+   },
+   "sunday": {
+      "message": "Ahad"
+   },
+   "tabCloseOneTime": {
+      "message": "Tab akan ditutup sekali sahaja"
+   },
+   "tabSchTutorial": {
+      "message": "Tutorial Penjadual Tab"
+   },
+   "tabScheduler": {
+      "message": "Penjadual Tab"
+   },
+   "tabSchedulerOptions": {
+      "message": "Pilihan Penjadual Tab"
+   },
+   "tabWillOpenOneTime": {
+      "message": "Tab akan dibuka sekali sahaja"
+   },
+   "tabWillOpenWhenBrowserOpen": {
+      "message": "Tab akan dibuka apabila penyemak imbas akan dibuka"
+   },
+   "termCondition": {
+      "message": "Terma &amp; Syarat"
+   },
+   "thanksFrRev": {
+      "message": "Terima Kasih Atas Ulasan Anda"
+   },
+   "thnkUFeedBack": {
+      "message": "Terima kasih atas cadangan anda"
+   },
+   "thnkUFrUsngTbSch": {
+      "message": "Tolong beri cadangan untuk menambah baik kami"
+   },
+   "thursday": {
+      "message": "Khamis"
+   },
+   "time": {
+      "message": "Masa"
+   },
+   "timeExpired": {
+      "message": "Masa Tamat"
+   },
+   "timer": {
+      "message": "Pemasa"
+   },
+   "title": {
+      "message": "Tajuk"
+   },
+   "titleLengtWarn": {
+      "message": "Panjang tajuk tidak boleh melebihi 200 aksara."
+   },
+   "toScheduledOpenTbMsg": {
+      "message": "Untuk tab terbuka yang dijadualkan, sila nyahtanda penapisan url."
+   },
+   "toogleCloseTab": {
+      "message": "Mulakan/Hentikan penggera jadual untuk semua URL tab tutup"
+   },
+   "toogleDarkmode": {
+      "message": "Beralih antara mod gelap dan mod lalai untuk menyesuaikan pengalaman tontonan anda."
+   },
+   "toogleOff": {
+      "message": "Mati"
+   },
+   "toogleOn": {
+      "message": "hidup"
+   },
+   "toogleOpenTab": {
+      "message": "Mulakan/Hentikan penggera jadual untuk semua URL tab terbuka"
+   },
+   "topLevelDomain": {
+      "message": "Domain Peringkat Atas"
+   },
+   "totalProcessed": {
+      "message": "Jumlah rekod diproses"
+   },
+   "tuesday": {
+      "message": "Selasa"
+   },
+   "tutorialImg1": {
+      "message": "\u003Cimg src=\"../images/en/1.png\">"
+   },
+   "tutorialImg10": {
+      "message": "\u003Cimg src=\"../images/en/10.png\">"
+   },
+   "tutorialImg11": {
+      "message": "\u003Cimg src=\"../images/en/11.png\">"
+   },
+   "tutorialImg12": {
+      "message": "\u003Cimg src=\"../images/en/12.png\">"
+   },
+   "tutorialImg13": {
+      "message": "\u003Cimg src=\"../images/en/13.png\">"
+   },
+   "tutorialImg14": {
+      "message": "\u003Cimg src=\"../images/en/14.png\">"
+   },
+   "tutorialImg2": {
+      "message": "\u003Cimg src=\"../images/en/2.png\">"
+   },
+   "tutorialImg3": {
+      "message": "\u003Cimg src=\"../images/en/3.png\">"
+   },
+   "tutorialImg4": {
+      "message": "\u003Cimg src=\"../images/en/4.png\">"
+   },
+   "tutorialImg5": {
+      "message": "\u003Cimg src=\"../images/en/5.png\">"
+   },
+   "tutorialImg6": {
+      "message": "\u003Cimg src=\"../images/en/6.png\">"
+   },
+   "tutorialImg7": {
+      "message": "\u003Cimg src=\"../images/en/7.png\">"
+   },
+   "tutorialImg8": {
+      "message": "\u003Cimg src=\"../images/en/8.png\">"
+   },
+   "tutorialImg9": {
+      "message": "\u003Cimg src=\"../images/en/9.png\">"
+   },
+   "uncheckAll": {
+      "message": "Nyahtanda Semua"
+   },
+   "unlimitedSchedule": {
+      "message": "Had jadual tanpa had"
+   },
+   "unspecifiedURL": {
+      "message": "11. URL laluan tidak ditentukan"
+   },
+   "unspecifiedURLExm1": {
+      "message": "Dalam contoh di atas URL yang diberikan adalah dalam tab dekat, yang menyatakan bahawa URL yang diberikan yang dibuka dalam tab baharu dan bermula dan berakhir dengan alamat web yang tidak diketahui akan ditutup selepas 5 minit."
+   },
+   "upgradePlan": {
+      "message": "Sila Beli Pelan ATAU Log Masuk &amp; Tingkatkan pelan anda untuk membuka lebih banyak ciri."
+   },
+   "upgradePlanUnlock": {
+      "message": "Tingkatkan rancangan anda untuk membuka lebih banyak ciri."
+   },
+   "uploadValidFormat": {
+      "message": "Sila muat naik format yang sah"
+   },
+   "url": {
+      "message": "URL"
+   },
+   "urlContExat": {
+      "message": "Penapisan URL"
+   },
+   "urlEndWithUnspesifiedPth": {
+      "message": "9. URL berakhir dengan laluan yang tidak ditentukan"
+   },
+   "urlEndWithUnspesifiedPthExm1": {
+      "message": "Dalam contoh di atas URL yang diberikan adalah dalam tab dekat, yang menyatakan bahawa URL yang diberikan yang dibuka dalam tab baharu dan berakhir dengan laluan yang tidak diketahui akan ditutup selepas 5 minit."
+   },
+   "urlFilterInfo": {
+      "message": "Mengandungi URL yang disemak hanya memerlukan sebahagian daripada URL dan URL Tepat yang disemak mestilah padanan tepat dengan URL yang ditentukan"
+   },
+   "urlFilterinCLoseTb": {
+      "message": "14. Penapisan URL pada URL tab tutup"
+   },
+   "urlFilterinCLoseTbExample": {
+      "message": "Dalam contoh di atas URL yang diberikan adalah dalam tab dekat, yang menyatakan URL tab yang telah dibuka sepadan dengan beberapa bahagian URL yang diberikan supaya ia akan menutup tab itu"
+   },
+   "urlIsRequired": {
+      "message": "Pautan Laman Web diperlukan"
+   },
+   "urlNotvalid": {
+      "message": "URL tidak sah"
+   },
+   "urlStartWithUnspesifiedPth": {
+      "message": "10. URL bermula dengan laluan yang tidak ditentukan"
+   },
+   "urlStartWithUnspesifiedPthExm1": {
+      "message": "Dalam contoh di atas URL yang diberikan adalah dalam tab dekat, yang menyatakan bahawa URL yang diberikan yang dibuka dalam tab baharu dan bermula dengan subdomain \u003Cb>'www'\u003C/b> atau \u003Cb>'blog'\u003C/b> yang tidak diketahui akan ditutup selepas 5 minit."
+   },
+   "useSpecificUrl": {
+      "message": "Gunakan Pautan Laman Web tertentu"
+   },
+   "useSpecificUrl1": {
+      "message": "Anda mesti telah menulis subdomain yang tepat, domain peringkat atas, nama domain dan laluan halaman dalam medan Pautan Laman Web ke tab penyemak imbas tertutup."
+   },
+   "useSpecificUrl2": {
+      "message": "Gunakan tertutup semua tab penyemak imbas"
+   },
+   "useSpecificUrl3": {
+      "message": "Gunakan Pautan Laman Web khusus dan penuh"
+   },
+   "useUnSpecificUrl1": {
+      "message": "Gunakan Pautan Laman Web yang tidak ditentukan"
+   },
+   "useUnSpecificUrl2": {
+      "message": "Gunakan permulaan dengan Pautan Laman Web yang tidak ditentukan"
+   },
+   "useUnSpecificUrl3": {
+      "message": "Gunakan tamat dengan Pautan Laman Web yang tidak ditentukan"
+   },
+   "used": {
+      "message": "awak guna"
+   },
+   "validFormatCsv": {
+      "message": "Apakah format fail CSV yang sah untuk mengimport?"
+   },
+   "websiteLink": {
+      "message": "Pautan Laman Web"
+   },
+   "websiteUrl": {
+      "message": "URL tapak web"
+   },
+   "wednesday": {
+      "message": "Rabu"
+   },
+   "weekName": {
+      "message": "Nama Minggu"
+   },
+   "weekly": {
+      "message": "Mingguan"
+   },
+   "whenExtensionTabAppears": {
+      "message": "Apabila tab Sambungan muncul, cari \"Penjadual Tab dengan auto buka dan tutup\" untuk mendayakan dalam mod Inkognito dan klik butang \"Butiran\" di sebelahnya."
+   },
+   "whenMenuPopup": {
+      "message": "Apabila menu muncul, pilih \"Urus sambungan\"."
+   },
+   "withSignMustFill": {
+      "message": "Dengan tanda \u003Cspan>*\u003C/span> mesti diisi atau pilih, Pilih sama ada masa buka atau tutup atau kedua-dua masa."
+   },
+   "writeYourDescriptionAboutSchUrl": {
+      "message": "Tulis penerangan anda tentang url berjadual di sini."
+   },
+   "yes": {
+      "message": "ya"
+   },
+   "yourEmailAddress": {
+      "message": "alamat e-mel anda"
+   },
+   "yourScheduleUrl": {
+      "message": "URL Jadual anda"
+   }
+}

@@ -1,0 +1,1448 @@
+{
+   "10_min": {
+      "message": "10 minuto"
+   },
+   "1_min": {
+      "message": "1 minuto"
+   },
+   "30_min": {
+      "message": "30 minuto"
+   },
+   "5_min": {
+      "message": "5 minuto"
+   },
+   "60_min": {
+      "message": "oras"
+   },
+   "Dashboard": {
+      "message": "Dashboard"
+   },
+   "Login": {
+      "message": "Mag-login"
+   },
+   "Off": {
+      "message": "Naka-off"
+   },
+   "On": {
+      "message": "Naka-on"
+   },
+   "Selected": {
+      "message": "Napili"
+   },
+   "Settings": {
+      "message": "Mga setting"
+   },
+   "Tutorial": {
+      "message": "Tutorial"
+   },
+   "action": {
+      "message": "Aksyon"
+   },
+   "activateScheduleTab": {
+      "message": "I-activate ang naka-iskedyul na tab."
+   },
+   "active": {
+      "message": "Aktibo"
+   },
+   "activeAllScheduleTab": {
+      "message": "Pagpapatakbo ng Tab scheduler"
+   },
+   "activeStatus": {
+      "message": "Katayuan"
+   },
+   "actvInactvNotification": {
+      "message": "Ipakita ang notification kapag binuksan ang tab ng iskedyul"
+   },
+   "actvInactvOpnTb": {
+      "message": "Aktibo o hindi aktibong bukas na tab"
+   },
+   "actvIntvClsTb": {
+      "message": "Aktibo o hindi aktibong isara ang tab"
+   },
+   "add": {
+      "message": "Idagdag"
+   },
+   "addDescription": {
+      "message": "Magdagdag ng paglalarawan"
+   },
+   "addNew": {
+      "message": "Magdagdag ng Bago"
+   },
+   "addNewURlCls": {
+      "message": "Magdagdag ng bagong URL upang isara"
+   },
+   "addNewUrlToOpen": {
+      "message": "Magdagdag ng bagong URL na bubuksan sa bagong window"
+   },
+   "addTitle": {
+      "message": "Magdagdag ng Pamagat"
+   },
+   "addWebsite": {
+      "message": "Magdagdag ng website"
+   },
+   "all": {
+      "message": "Lahat"
+   },
+   "allInputFieldReq": {
+      "message": "Kinakailangan ang lahat ng field"
+   },
+   "all_weeks": {
+      "message": "Buong Linggo"
+   },
+   "alreadyPurchase": {
+      "message": "Nakabili na? Ipasok ang Susi Dito"
+   },
+   "andAt": {
+      "message": "at sa"
+   },
+   "annually": {
+      "message": "Taun-taon"
+   },
+   "appDesc": {
+      "message": "Awtomatikong magbubukas at magsasara ang mga tab ng browser sa napiling oras. Maaaring i-activate/deaktibo ng user ang listahan batay sa kinakailangan"
+   },
+   "appName": {
+      "message": "Tab Scheduler na may awtomatikong pagbukas at pagsasara"
+   },
+   "april": {
+      "message": "Abril"
+   },
+   "at": {
+      "message": "sa"
+   },
+   "august": {
+      "message": "Agosto"
+   },
+   "autoFocus": {
+      "message": "Tab na Auto Focus"
+   },
+   "autoFocustip": {
+      "message": "Kung naka-on, ang bagong tab ay mabubuksan sa isang aktibong/naka-focus na estado."
+   },
+   "autofocustip": {
+      "message": "Awtomatikong magpo-focus ang mga bagong tab na nakabukas"
+   },
+   "basic": {
+      "message": "Basic"
+   },
+   "billedAnnyally": {
+      "message": "Sinisingil Taun-taon"
+   },
+   "billedMonthly": {
+      "message": "Sinisingil Buwan-buwan"
+   },
+   "both": {
+      "message": "pareho"
+   },
+   "browserOpen": {
+      "message": "Sa Browser Open"
+   },
+   "browserWebAddress": {
+      "message": "Ang web address ng browser ay nagsisimula at nagtatapos sa isang hindi kilalang web address. Ilagay ang \u003Cb>*\u003C/b> sa magkabilang panig ng iyong input na field ng Website Link."
+   },
+   "browserWebAddress2": {
+      "message": "Ang web address ng browser ay naglalaman ng domain name na google.com, na isasara sa ilang minuto anuman ang subdomain, at page path. Ilagay \u003Cb>ang *\u003C/b> sa magkabilang panig ng domain name at TLD"
+   },
+   "browserWebAddress3": {
+      "message": "Ang web address ng browser ay nagsisimula sa hindi kilalang domain name at nagtatapos sa hindi kilalang page path"
+   },
+   "browserWebAddress31": {
+      "message": "ay magsasara pagkatapos ng ibinigay na minuto, ilagay ang \u003Cb>*\u003C/b> sa magkabilang panig ng TLD"
+   },
+   "browserWebAddress4": {
+      "message": "Ang web address ng browser ay nagsisimula sa isang hindi kilalang web address. Ilagay ang \u003Cb>*\u003C/b> sa simula ng iyong URL. Tandaan na ang web address ng browser ay dapat tumugma sa iyong URL pagkatapos mong \u003Cb>*\u003C/b> magsulat."
+   },
+   "browserWebAddress41": {
+      "message": "Nagsisimula ang web address ng browser sa isang hindi kilalang subdomain"
+   },
+   "browserWebAddress42": {
+      "message": "sa simula ng iyong Website Link"
+   },
+   "browserWebAddress5": {
+      "message": "Ang web address ng browser ay nagtatapos sa isang hindi kilalang web address. Ilagay ang \u003Cb>*\u003C/b> sa dulo ng iyong URL. Tandaan na dapat tumugma ang iyong web address bago \u003Cb>*\u003C/b> ka sumulat."
+   },
+   "browserWebAddress51": {
+      "message": "Ang web address ng browser ay nagtatapos sa isang hindi kilalang page path. Ilagay \u003Cb>ang *\u003C/b> sa dulo ng iyong web address"
+   },
+   "browserWebAddress6": {
+      "message": "Ilagay lamang ang \u003Cb>*\u003C/b> sa field ng address ng website upang isara ang lahat ng mga tab ng browser. Pagkatapos isara lahat ng tab na browser ay awtomatikong isasara."
+   },
+   "browserWebAddress7": {
+      "message": "Dapat ay naisulat mo ang eksaktong subdomain, pinakamataas na antas ng domain, domain name, at page path sa URL field sa bukas sa tab ng browser."
+   },
+   "browserWebAddress8": {
+      "message": "Maaari mong buksan ang url sa partikular na petsa at oras, partikular na buwan, partikular na linggo, partikular na taon at oras ng pag-uulit"
+   },
+   "buyPlan": {
+      "message": "Bumili ng Plano"
+   },
+   "buycofee": {
+      "message": "Bilhan Mo Ako ng Kape"
+   },
+   "cancel": {
+      "message": "Kanselahin"
+   },
+   "changeLanguage": {
+      "message": "Baguhin ang Wika"
+   },
+   "checkAll": {
+      "message": "Suriin Lahat"
+   },
+   "checkThisOpToPreventClosePinTb": {
+      "message": "Lagyan ng check ang opsyong ito upang maiwasan ang pagsasara ng mga naka-pin na tab."
+   },
+   "checkThisOptionOnlyPartOfUrlMtch": {
+      "message": "Suriin ang opsyong ito kung isang bahagi lang ng URL ang kailangang itugma."
+   },
+   "checkThisOptionToActivate": {
+      "message": "Lagyan ng check ang opsyong ito para i-activate o i-inactivate ang iyong naka-iskedyul na url."
+   },
+   "checkThisOptionToCloseOnly": {
+      "message": "Lagyan ng check ang opsyong ito upang isara lamang ang mga tab na incognito. Gayundin, paganahin ang opsyong 'Payagan sa Incognito' sa mga detalye ng extension. Para sa mga tagubilin, mangyaring sumangguni sa pahina ng tutorial."
+   },
+   "checkThisOptionToCloseOnlyInIncgnitoTb": {
+      "message": "Lagyan ng check ang opsyong ito upang isara lamang ang mga tab na incognito. Gayundin, paganahin ang opsyong 'Payagan sa Incognito' sa mga detalye ng extension. Para sa mga tagubilin, mangyaring sumangguni sa pahina ng tutorial."
+   },
+   "checkThisOptionToInBg": {
+      "message": "Lagyan ng check ang opsyong ito kung gusto mong buksan ang URL sa background nang hindi ito binubuksan sa bagong tab"
+   },
+   "checkThisOptionToInactivNotification": {
+      "message": "Lagyan ng check ang opsyong ito sa hindi aktibong notification sa naka-iskedyul na url"
+   },
+   "checkThisOptionToOpen": {
+      "message": "Lagyan ng check ang opsyong ito kung gusto mong buksan ang iyong url sa incognito mode"
+   },
+   "checkThisOptionToOpenIncogito": {
+      "message": "Lagyan ng check ang opsyong ito kung gusto mong buksan ang iyong url sa incognito mode"
+   },
+   "checkThisOptionToPrevent": {
+      "message": "Lagyan ng check ang opsyong ito upang maiwasan ang pagsasara ng mga naka-pin na tab."
+   },
+   "clickExtIcon": {
+      "message": "I-click ang icon na \"Mga Extension\" sa toolbar, na mukhang isang piraso ng puzzle."
+   },
+   "clickTheSwitch": {
+      "message": "I-click ang switch sa tabi nito para i-on ito"
+   },
+   "close": {
+      "message": "Isara"
+   },
+   "closeAllTab": {
+      "message": "12. Isara ang lahat ng tab ng browser"
+   },
+   "closeAllTabExm1": {
+      "message": "Sa halimbawa sa itaas, ang ibinigay na URL ay nasa malapit na tab, na nagsasaad na isasara nito ang lahat ng tab sa 12:00 sa 25/2/2023"
+   },
+   "closeDate": {
+      "message": "Petsa ng Pagsara"
+   },
+   "closeDay": {
+      "message": "Isara ang Araw"
+   },
+   "closeEveryYear": {
+      "message": "Isara bawat taon sa"
+   },
+   "closeInEvery": {
+      "message": "Isara sa bawat"
+   },
+   "closeIncognitoTab": {
+      "message": "Isara lang ang mga tab na incognito"
+   },
+   "closeMinute": {
+      "message": "Isara ang Minuto"
+   },
+   "closeOnDay": {
+      "message": "Isara sa araw"
+   },
+   "closeOnEvery": {
+      "message": "Isara sa bawat"
+   },
+   "closeOnEveryDay": {
+      "message": "Isara sa bawat araw sa"
+   },
+   "closeOnEveryMonth": {
+      "message": "Isara bawat buwan sa araw"
+   },
+   "closeOnEveryWeek": {
+      "message": "Isara bawat linggo sa"
+   },
+   "closeSecond": {
+      "message": "Isara Pangalawa"
+   },
+   "closeSeconsMoreThan5": {
+      "message": "Ang mga malapit na segundo ay dapat na higit sa 5."
+   },
+   "closeTabSchedule": {
+      "message": "Isara ang Iskedyul ng Tab"
+   },
+   "closeTabURL": {
+      "message": "Isara ang Tab URL"
+   },
+   "closeTime": {
+      "message": "Oras ng Isara"
+   },
+   "closeUrl": {
+      "message": "Isara ang Link ng Website"
+   },
+   "closeWeek": {
+      "message": "Isara ang Linggo"
+   },
+   "closeWeeks": {
+      "message": "Isara ang mga Linggo"
+   },
+   "close_on": {
+      "message": "Isara na"
+   },
+   "cngrtsForSubcr": {
+      "message": "Binabati kita! Ang iyong plano ay matagumpay na na-activate."
+   },
+   "commonQuestionsAns": {
+      "message": "Mga karaniwang tanong at sagot"
+   },
+   "copySucessClose": {
+      "message": "Nakopya ang data ng URL ng Close tab sa Open tab URL data"
+   },
+   "createNewTimer": {
+      "message": "Lumikha ng Bagong Timer"
+   },
+   "currentPlan": {
+      "message": "Kasalukuyang Plano"
+   },
+   "currentTabSchedule": {
+      "message": "Kasalukuyang iskedyul ng tab"
+   },
+   "currentTbScheduleTimer": {
+      "message": "Kasalukuyang tab na naka-iskedyul na timer."
+   },
+   "cusSec": {
+      "message": "Pasadyang Pangalawa"
+   },
+   "custMin": {
+      "message": "Custom na Minuto"
+   },
+   "custmMinSch": {
+      "message": "7. Pasadyang Iskedyul ng Minuto"
+   },
+   "custmMinSchExm1": {
+      "message": "Sa halimbawa sa itaas, ang ibinigay na URL ay nasa bukas na tab, na nagsasaad na ang ibinigay na URL ay bukas sa bagong tab Bawat 15 Minuto."
+   },
+   "custmMinSchExm2": {
+      "message": "Sa halimbawa sa itaas, ang ibinigay na URL ay nasa malapit na tab, na nagsasaad na ang ibinigay na URL na binuksan sa isang bagong tab ay isasara pagkalipas ng 15 minuto."
+   },
+   "customSecondWarning": {
+      "message": "Ang custom na pangalawang functionality ay eksperimental, at maaaring hindi ito gumana nang tama kung ang mga segundo ay nakatakda sa ibaba 60."
+   },
+   "darkMode": {
+      "message": "Dark Mode"
+   },
+   "datNotCopy": {
+      "message": "Ang ilang data ay hindi kinopya dahil sa isang di-wastong URL."
+   },
+   "dataSaved": {
+      "message": "Matagumpay na nai-save ang data ng timer"
+   },
+   "date": {
+      "message": "Petsa"
+   },
+   "dateIsOutOfRange": {
+      "message": "Ang petsa ay wala sa saklaw"
+   },
+   "day": {
+      "message": "Araw"
+   },
+   "december": {
+      "message": "Disyembre"
+   },
+   "delete": {
+      "message": "Tanggalin"
+   },
+   "deleteScheduleTb": {
+      "message": "Tanggalin ang naka-iskedyul na tab."
+   },
+   "description": {
+      "message": "Paglalarawan"
+   },
+   "developedBy": {
+      "message": "Binuo ni:"
+   },
+   "doNotCloseInPinnedTabs": {
+      "message": "Huwag isara ang mga naka-pin na tab"
+   },
+   "doNotShowNotification": {
+      "message": "Huwag magpakita ng abiso"
+   },
+   "domainName": {
+      "message": "Domain Name"
+   },
+   "downloadCloseTbSampleCsv": {
+      "message": "Mag-download ng malapit na tab na sample na CSV para makakita ng halimbawa ng kinakailangang format"
+   },
+   "downloadOpenTbSampleCsv": {
+      "message": "Mag-download ng open tab sample na CSV para makakita ng halimbawa ng kinakailangang format"
+   },
+   "editScheduleTb": {
+      "message": "I-edit ang naka-iskedyul na tab."
+   },
+   "email": {
+      "message": "Email"
+   },
+   "enterDateToCloseTab": {
+      "message": "Ilagay ang petsa dito upang isara ang tab ng iskedyul."
+   },
+   "enterDateToOpen": {
+      "message": "Maglagay ng petsa para buksan ang tab ng iskedyul."
+   },
+   "enterMiniutesToCloseTb": {
+      "message": "Magpasok ng mga miniutes upang isara ang tab."
+   },
+   "enterMiniutesToOpen": {
+      "message": "Magpasok ng mga miniutes upang buksan ang tab ng iskedyul."
+   },
+   "enterMinute": {
+      "message": "Ipasok ang Minuto"
+   },
+   "enterSecond": {
+      "message": "Ipasok ang Pangalawa"
+   },
+   "enterSecondsToCloseTab": {
+      "message": "Magpasok ng mga segundo upang isara ang tab."
+   },
+   "enterSecondsToOpen": {
+      "message": "Magpasok ng mga segundo upang buksan ang tab ng iskedyul."
+   },
+   "enterTilteOfScheduleUrl": {
+      "message": "Ilagay ang pamagat ng nakaiskedyul na URL."
+   },
+   "enterTimeToCloseTab": {
+      "message": "Maglagay ng oras dito para isara ang tab ng iskedyul."
+   },
+   "enterTimeToSchedule": {
+      "message": "Maglagay ng oras para buksan ang tab ng iskedyul."
+   },
+   "enterValidEmail": {
+      "message": "Mangyaring Maglagay ng Wastong Email"
+   },
+   "enterValidUrl": {
+      "message": "Mangyaring magpasok ng wastong URL"
+   },
+   "enterValueInCloseSec": {
+      "message": "Ipasok ang halaga sa malapit na mga segundo"
+   },
+   "enterValueInOpenCloseSec": {
+      "message": "Ipasok ang halaga sa bukas o malapit na mga segundo"
+   },
+   "enterValueInOpenMinutes": {
+      "message": "Maglagay ng halaga sa mga bukas na minuto"
+   },
+   "enterVlaueInCloseMinutes": {
+      "message": "Maglagay ng halaga sa malapit na minuto"
+   },
+   "enterVlaueInOpenCloseMin": {
+      "message": "Maglagay ng halaga sa bukas o malapit na minuto"
+   },
+   "enterVlaueInOpenSeconds": {
+      "message": "Ipasok ang halaga sa bukas na mga segundo"
+   },
+   "enterYourURLToSchedule": {
+      "message": "Ilagay ang iyong URL upang iiskedyul."
+   },
+   "every": {
+      "message": "bawat"
+   },
+   "every10Min": {
+      "message": "Bawat 10 Minuto"
+   },
+   "every1Minute": {
+      "message": "bawat 1 minuto"
+   },
+   "every30Min": {
+      "message": "Bawat 30 Minuto"
+   },
+   "every5Min": {
+      "message": "Bawat 5 Minuto"
+   },
+   "everyDay": {
+      "message": "Araw-araw"
+   },
+   "everyDayAt": {
+      "message": "araw-araw sa"
+   },
+   "everyHour": {
+      "message": "Bawat Oras"
+   },
+   "everyMinute": {
+      "message": "Bawat Minuto"
+   },
+   "everyMonth": {
+      "message": "Bawat Buwan"
+   },
+   "everyMonthOn": {
+      "message": "bawat buwan sa"
+   },
+   "everyMonthOnDay": {
+      "message": "bawat buwan sa araw"
+   },
+   "everyWeek": {
+      "message": "Bawat Linggo"
+   },
+   "everyWeekOn": {
+      "message": "bawat linggo sa"
+   },
+   "everyYear": {
+      "message": "Bawat Taon"
+   },
+   "everyYesrOn": {
+      "message": "bawat taon sa"
+   },
+   "evr10MinSch": {
+      "message": "2. Bawat 10 Minutong Iskedyul"
+   },
+   "evr10MinSchExm1": {
+      "message": "Sa halimbawa sa itaas, ang ibinigay na URL ay nasa bukas na tab, na nagsasaad na ang ibinigay na URL ay magbubukas sa bagong tab Bawat 10 Minuto."
+   },
+   "evr10MinSchExm2": {
+      "message": "Sa halimbawa sa itaas, ang ibinigay na URL ay nasa malapit na tab, na nagsasaad na ang ibinigay na URL na binuksan sa isang bagong tab ay isasara pagkatapos ng 10 minuto."
+   },
+   "evrDaySch": {
+      "message": "3. Araw-araw na Iskedyul"
+   },
+   "evrDaySchExm1": {
+      "message": "Sa halimbawa sa itaas, ang ibinigay na URL ay nasa bukas na tab, na nagsasaad na magbubukas ito sa bagong tab Araw-araw sa 5:27 PM"
+   },
+   "evrDaySchExm2": {
+      "message": "Sa halimbawa sa itaas, ang ibinigay na URL ay nasa malapit na tab, na nagsasaad na isasara nito ang nabuksan na tab sa 5:27 PM araw-araw"
+   },
+   "evrMonthSch": {
+      "message": "5. Bawat Buwan na Iskedyul"
+   },
+   "evrMonthSchExm1": {
+      "message": "Sa halimbawa sa itaas, ang ibinigay na URL ay nasa bukas na tab, na nagsasaad na Magbubukas ito sa bagong tab Bawat Buwan sa 13:45 sa araw 25"
+   },
+   "evrMonthSchExm2": {
+      "message": "Sa halimbawa sa itaas, ang ibinigay na URL ay nasa malapit na tab, na nagsasaad na isasara nito ang nabuksan na tab sa Bawat Buwan sa 13:45 sa araw na 25"
+   },
+   "evrWeekSch": {
+      "message": "4.Every Week Schedule"
+   },
+   "evrWeekSchExm1": {
+      "message": "Sa halimbawa sa itaas, ang ibinigay na URL ay nasa isang bukas na tab, na nagsasaad na ito ay magbubukas sa isang bagong tab bawat linggo sa 17:00 sa \u003Cb>Lunes at Martes\u003C/b> ."
+   },
+   "evrWeekSchExm2": {
+      "message": "Sa halimbawa sa itaas, ang ibinigay na URL ay nasa tab na malapit, na nagsasaad na isasara nito ang nabuksan nang tab tuwing Linggo ng 17:00 ng \u003Cb>Lunes at Martes\u003C/b> ."
+   },
+   "evrWeekSchExm3": {
+      "message": "Sa halimbawa sa itaas, maraming araw ang maaaring mapili sa timer ng linggo."
+   },
+   "evrYearSch": {
+      "message": "6.Every Year Schedule"
+   },
+   "evrYearSchExm1": {
+      "message": "Sa halimbawa sa itaas, ang ibinigay na URL ay nasa bukas na tab, na nagsasaad na magbubukas ito sa bagong tab Bawat Taon sa 13:35 sa ika-1 ng Enero"
+   },
+   "evrYearSchExm2": {
+      "message": "Sa halimbawa sa itaas, ang ibinigay na URL ay nasa malapit na tab, na nagsasaad na isasara nito ang nabuksan na tab sa Bawat Taon sa 13:35 sa ika-1 ng Enero"
+   },
+   "exampleSort": {
+      "message": "hal"
+   },
+   "exdMaxLim": {
+      "message": "Lampas sa maximum na mga device ang pinapayagan!"
+   },
+   "exmpOpnClsTbSch": {
+      "message": "Halimbawa para sa kung paano buksan at isara ang tab sa Tab Scheduler"
+   },
+   "expLicKy": {
+      "message": "Ang susi ng lisensya na ito ay nag-expire na."
+   },
+   "export": {
+      "message": "I-export"
+   },
+   "exportBefore": {
+      "message": "meron ka\u003Cexday>\u003C/exday>araw na natitira, Mangyaring mag-subscribe upang patuloy na ma-enjoy ang premium na tampok"
+   },
+   "exportClsTbDta": {
+      "message": "I-export ang data ng malapit na tab"
+   },
+   "exportOpenTbDt": {
+      "message": "I-export ang bukas na data ng tab"
+   },
+   "exportedData": {
+      "message": "Matagumpay na na-export ang data ng timer"
+   },
+   "extensionShouldAble": {
+      "message": "Ngayon, dapat na maisara ng extension ang mga tab sa Incognito mode."
+   },
+   "faq": {
+      "message": "FAQ"
+   },
+   "faq_1": {
+      "message": "Ano ang Tab Scheduler na may Auto Open and Close?"
+   },
+   "faq_10": {
+      "message": "Paano ko titingnan ang aking mga nakaiskedyul na tab?"
+   },
+   "faq_11": {
+      "message": "Sapilitan bang punan ang parehong bukas at oras ng pagsasara?"
+   },
+   "faq_12": {
+      "message": "Ano ang ginagawa ng mga feature ng Auto Focus Tab, Activate All Scheduled Tabs, at Power Mode?"
+   },
+   "faq_13": {
+      "message": "Maaari ko bang buksan/isara ang naka-iskedyul na Link ng Website sa tab na incognito.?"
+   },
+   "faq_14": {
+      "message": "Ano ang gamit ng Refresh tab kung nakabukas na ang URL?"
+   },
+   "faq_2": {
+      "message": "Ano ang gamit ng Website Link?"
+   },
+   "faq_3": {
+      "message": "Paano ako mag-iskedyul ng URL gamit ang Tab Scheduler?"
+   },
+   "faq_4": {
+      "message": "Ano ang opsyong 'Buksan ang URL sa Background'?"
+   },
+   "faq_5": {
+      "message": "Maaari ko bang pigilan ang extension na isara ang mga naka-pin na tab?"
+   },
+   "faq_6": {
+      "message": "Ano ang ibig sabihin ng uri ng iskedyul na 'Parehong'?"
+   },
+   "faq_7": {
+      "message": "Paano gumagana ang tampok na 'Pag-filter ng URL'?"
+   },
+   "faq_8": {
+      "message": "Maaari ko bang i-deactivate ang isang naka-iskedyul na tab nang hindi tinatanggal ito?"
+   },
+   "faq_9": {
+      "message": "Makakatanggap ba ako ng mga notification para sa mga naka-iskedyul na tab?"
+   },
+   "faq_a_1": {
+      "message": "\u003Cp>Ang Tab Scheduler na may Auto Open and Close ay isang extension ng browser na nagbibigay-daan sa mga user na mag-iskedyul ng mga tab na awtomatikong magbukas at magsara sa mga nakatakdang oras. Maaaring pumili ang mga user ng isang beses na iskedyul o mag-set up ng mga umuulit na iskedyul na may iba't ibang opsyon sa dalas. Ang extension na ito ay may maraming layunin para sa mga user at nagbibigay ng maraming feature na nakakatulong sa iyo.\u003C/p>"
+   },
+   "faq_a_10": {
+      "message": "Ang lahat ng naka-iskedyul na tab ay ipinapakita sa isang listahan na nagpapakita ng pamagat, link ng website, mga oras ng pagbubukas at pagsasara, katayuan, at mga aksyon na maaari mong gawin (hal., i-activate, i-edit, tanggalin)."
+   },
+   "faq_a_11": {
+      "message": "Hindi, maaari kang mag-iskedyul ng bukas na oras o malapit na oras. Gayunpaman, dapat mong punan o piliin ang mga kinakailangang field na minarkahan ng asterisk (*)."
+   },
+   "faq_a_12": {
+      "message": "Tinitiyak ng Auto Focus Tab na kapag nagbukas ang isang naka-iskedyul na tab, ang I-activate ang Lahat ng Mga Naka-iskedyul na Tab ay nagbibigay-daan sa iyong mabilis na i-on ang lahat ng iyong nakaiskedyul na tab sa isang pag-click. Ino-optimize ng Power Mode ang pagganap ng extension sa pamamagitan ng pamamahala sa mga mapagkukunan ng browser nang mas mahusay."
+   },
+   "faq_a_13": {
+      "message": "Oo, maaari mong piliing magbukas ng naka-iskedyul na tab sa incognito mode sa pamamagitan ng pagpili sa opsyong \"Buksan sa incognito mode.\" Maaari mong piliing isara lang ang mga tab na incognito sa pamamagitan ng pagpili sa opsyong \"Isara lang ang mga incognito na tab,\" hangga't naka-enable ang \"Pahintulutan sa Incognito\" sa mga setting ng extension"
+   },
+   "faq_a_14": {
+      "message": "Kapag pinagana ang opsyong ito, awtomatikong ire-refresh ng extension ang isang umiiral nang tab kung nakabukas na ang parehong URL sa iyong browser. Pinipigilan nito ang pagbubukas ng mga duplicate na tab at tinitiyak na palagi mong nilo-load ang pinakabagong bersyon ng page."
+   },
+   "faq_a_14_1": {
+      "message": "Kung susubukan mong buksan ang https://github.com/ at nakabukas na ito sa isa pang tab, ire-refresh lang ng extension ang tab na iyon sa halip na magbukas ng bago."
+   },
+   "faq_a_14_2": {
+      "message": "Kung bukas na ang https://github.com/ sa tatlong tab, ire-refresh ng extension ang lahat ng tatlong tab."
+   },
+   "faq_a_2": {
+      "message": "Ang Link ng Website ay ang bukas na tab na address ng website ng iyong browser. Kung paano mo magagamit ang address ng website ay binabanggit sa ibaba."
+   },
+   "faq_a_3": {
+      "message": "Upang mag-iskedyul ng URL, ilagay ang link ng website, bigyan ang iskedyul ng pamagat, piliin ang dalas (Isang Oras, Bawat Minuto, Araw-araw, atbp.), at piliin ang mga oras ng bukas at pagsasara. Maaari ka ring tumukoy ng petsa, araw, o mga segundo para buksan at isara ang tab."
+   },
+   "faq_a_4": {
+      "message": "\u003Cp>Binibigyan ka ng opsyong ito ng ganap na kontrol upang mag-iskedyul ng URL na bubuksan sa background nang hindi pinagtutuunan ng pansin ang bagong tab. Tahimik na magbubukas ang URL habang patuloy kang gumagawa sa iba pang mga tab. Ito ay partikular na kapaki-pakinabang kapag kailangan mo ang browser na kumuha ng data mula sa naka-iskedyul na URL nang hindi ito aktibong ipinapakita, tulad ng sa kaso ng isang kahilingan sa GET API.\u003C/p>\u003Cbr> \u003Cp>Halimbawa, kung gusto mong regular na kumuha ng data mula sa isang endpoint ng API sa isang nakatakdang oras, maaari mong gamitin ang mahusay na opsyong ito upang patakbuhin ang kahilingan sa background nang hindi nagbubukas ng bagong nakikitang tab.\u003C/p>"
+   },
+   "faq_a_5": {
+      "message": "Oo, mayroong isang opsyon upang pigilan ang pagsasara ng mga naka-pin na tab. Lagyan ng check ang opsyong \"Huwag isara ang mga naka-pin na tab\" upang matiyak na mananatiling bukas ang mga tab na ito kahit na nakakatugon ang mga ito sa iba pang pamantayan sa pagsasara."
+   },
+   "faq_a_6": {
+      "message": "Ang uri ng iskedyul na 'Parehong' ay nagbibigay sa iyo ng kumpletong kontrol sa kung kailan magbubukas at magsasara ang isang tab, na nagbibigay-daan sa iyong magtakda ng mga partikular na oras para sa parehong mga aksyon."
+   },
+   "faq_a_7": {
+      "message": "Tinitiyak ng Pag-filter ng URL na isang partikular na bahagi lamang ng URL ang kailangang tumugma para maganap ang nakaiskedyul na pagkilos. Ito ay kapaki-pakinabang kapag gusto mong i-automate ang ilang partikular na pagkilos batay sa mga bahagyang tugma ng URL. Halimbawa, kung titingnan mo ang opsyon sa Pag-filter ng URL para sa URL na https://example.com/page, malalapat din ito sa mga URL tulad ng https://example.com/page/123, https://example.com/ page?query=example, at https://subdomain.example.com/page."
+   },
+   "faq_a_8": {
+      "message": "Gamit ang opsyong \"I-activate ang naka-iskedyul na tab na ito,\" madali mong maa-activate o ma-deactivate ang mga naka-iskedyul na tab, na nagbibigay sa iyo ng flexibility na pamahalaan ang iyong mga iskedyul nang hindi nawawala ang mga configuration."
+   },
+   "faq_a_9": {
+      "message": "Bilang default, makakatanggap ka ng mga notification. Gayunpaman, kung mas gusto mong ihinto ang mga notification, maaari mong suriin ang opsyong \"Huwag ipakita ang notification\" upang i-disable ang mga ito."
+   },
+   "february": {
+      "message": "Pebrero"
+   },
+   "filterTips": {
+      "message": "Nalalapat ang filter pagkatapos ng 'https://' o 'www.', Ex 'github.com'"
+   },
+   "for_exp": {
+      "message": "Halimbawa"
+   },
+   "freeForever": {
+      "message": "Libre Magpakailanman"
+   },
+   "freeSchedule": {
+      "message": "libreng iskedyul"
+   },
+   "freeTral": {
+      "message": "Bilang isang pinahahalagahan na maagang gumagamit, mag-e-enjoy ka\u003Crday>120\u003C/rday>araw ng libreng pag-access bago lumipat sa aming bagong bayad na plano—salamat sa iyong patuloy na suporta!\u003Cp class=\"p-t-5\">meron ka\u003Cb>\u003Cspan>\u003C/span>\u003C/b>mga araw na natitira sa iyong\u003Crday>120\u003C/rday>-araw na libreng panahon.\u003Cafex class=\"warning\">\u003Cafex>\u003C/afex>\u003C/afex>\u003C/p> "
+   },
+   "frequentlyAskedQuestions": {
+      "message": "Mga madalas itanong"
+   },
+   "friday": {
+      "message": "Biyernes"
+   },
+   "getThisPlan": {
+      "message": "Kunin ang Planong Ito"
+   },
+   "goToSettingsPageToSchedule": {
+      "message": "Pumunta sa pahina ng mga setting upang iiskedyul ang pagbubukas at pagsasara ng mga URL."
+   },
+   "goURL": {
+      "message": "Pumunta sa URL"
+   },
+   "helpAccordion12": {
+      "message": "Gumagana ba ang extension na ito sa sleep/suspend mode?"
+   },
+   "helpAccordion3": {
+      "message": "Maaari ba akong mag-iskedyul ng tab na buksan sa incognito mode?"
+   },
+   "helpAccordion6": {
+      "message": "Ano ang \"Time expired\"?"
+   },
+   "helpAccordion7": {
+      "message": "Maaari ko bang i-export ang naka-iskedyul na URL?"
+   },
+   "helpAccordion8": {
+      "message": "Maaari ba akong Mag-import sa Iskedyul ng URL?"
+   },
+   "helpPanelBodyDesc12First": {
+      "message": "Hindi, hindi gagana ang extension na ito sa sleep/suspend mode."
+   },
+   "helpPanelBodyDesc12Second": {
+      "message": "Kung naka-iskedyul ang anumang URL sa open o close na tab, hindi awtomatikong mapupunta ang iyong PC sa sleep o suspend mode."
+   },
+   "helpPanelBodyDesc3": {
+      "message": "Oo, maaari mong piliing magbukas ng nakaiskedyul na tab sa incognito mode sa pamamagitan ng pagpili sa opsyong 'Buksan sa incognito mode'. Tiyaking naka-enable ang opsyong 'Allow in Incognito' ng extension sa mga setting ng extension ng browser."
+   },
+   "helpPanelBodyDesc6": {
+      "message": "- Ang ibinigay na petsa at oras ay lumipas mula sa kasalukuyang petsa at oras pagkatapos ay ipapakita ang \"Oras na Nag-expire\" na teksto."
+   },
+   "helpPanelBodyDesc7": {
+      "message": "Oo, Maaari mong I-export ang Naka-iskedyul na bukas na tab at isara ang URL ng tab sa format na csv at gamitin ito sa ibang system upang i-import ang URL na iyon."
+   },
+   "helpPanelBodyDesc8": {
+      "message": "Oo, Maaari kang Mag-import ng wastong open at close na URL sa csv format. Ang na-import na csv na format ay awtomatikong maiiskedyul sa ibinigay na oras"
+   },
+   "herAreStepsToAllow": {
+      "message": "Narito ang mga hakbang sa \"Payagan sa Incognito\" sa Google Chrome:"
+   },
+   "home": {
+      "message": "Bahay"
+   },
+   "hour_minute_close": {
+      "message": "Bawat Oras Close Minuto"
+   },
+   "hour_minute_open": {
+      "message": "Bawat Oras na Open Minute"
+   },
+   "how_to_use_tab": {
+      "message": "Paano gamitin ang Tab scheduler?"
+   },
+   "import": {
+      "message": "Mag-import"
+   },
+   "importClsTbDta": {
+      "message": "Mag-import ng malapit na data ng tab"
+   },
+   "importExport": {
+      "message": "Import/Export"
+   },
+   "importOpenTbDt": {
+      "message": "Mag-import ng bukas na data ng tab"
+   },
+   "importedRecored": {
+      "message": ", na-import na na-record"
+   },
+   "inactivateScheduleTab": {
+      "message": "Huwag paganahin ang naka-iskedyul na tab."
+   },
+   "inactive": {
+      "message": "Hindi aktibo"
+   },
+   "inactiveSch": {
+      "message": "8.Di-aktibong URL"
+   },
+   "inactiveSchExm1": {
+      "message": "Sa halimbawa sa itaas, ang ibinigay na URL ay nasa bukas na tab o malapit na tab, na nagsasaad na ang ibinigay na URL ay hindi aktibo at hindi ito magsasagawa ng anumang pagkilos."
+   },
+   "inactiveThisScheduledTabs": {
+      "message": "I-activate ang nakaiskedyul na tab na ito"
+   },
+   "invalidDuplicate": {
+      "message": ", doble o di-wastong na-record"
+   },
+   "invldLicKy": {
+      "message": "Di-wastong susi ng lisensya!"
+   },
+   "isClose": {
+      "message": "malapit na"
+   },
+   "isOpen": {
+      "message": "ay bukas"
+   },
+   "january": {
+      "message": "Enero"
+   },
+   "july": {
+      "message": "Hulyo"
+   },
+   "june": {
+      "message": "Hunyo"
+   },
+   "licKeyDis": {
+      "message": "Naka-disable ang license key na ito."
+   },
+   "listTitle": {
+      "message": "Tab Scheduler"
+   },
+   "loading": {
+      "message": "Mangyaring Maghintay..."
+   },
+   "locale": {
+      "message": "en"
+   },
+   "march": {
+      "message": "Marso"
+   },
+   "maxSchedule": {
+      "message": "4 Pinakamataas na limitasyon sa iskedyul"
+   },
+   "may": {
+      "message": "May"
+   },
+   "mintValid": {
+      "message": "Kinakailangan ang minimum na 1 minuto"
+   },
+   "minute": {
+      "message": "minuto"
+   },
+   "minutesNotLessThan1": {
+      "message": "Ang mga minuto ay hindi dapat mas mababa sa 1."
+   },
+   "monday": {
+      "message": "Lunes"
+   },
+   "month": {
+      "message": "buwan"
+   },
+   "monthly": {
+      "message": "Buwan-buwan"
+   },
+   "more": {
+      "message": "higit pa"
+   },
+   "mostSubscribe": {
+      "message": "Karamihan Subscribe"
+   },
+   "no": {
+      "message": "Hindi"
+   },
+   "noDataToExport": {
+      "message": "Walang data na ie-export."
+   },
+   "noScheduledTabs": {
+      "message": "Walang nakaiskedyul na mga tab"
+   },
+   "noTimerSetAddNewTimer": {
+      "message": "Walang nakatakdang timer, I-click ang Add button para magtakda ng bagong timer"
+   },
+   "not_show_tutorial": {
+      "message": "Huwag ipakita muli ang tutorial na ito"
+   },
+   "notificationOpenTab": {
+      "message": "13. Notification sa open/close tab URL"
+   },
+   "notificationOpenTabExm1": {
+      "message": "Sa halimbawa sa itaas, ang ibinigay na URL ay nasa bukas na tab, na nagsasaad na magbibigay ito ng abiso at buksan/isara ang URL sa bagong tab sa bawat 5 minuto."
+   },
+   "notifications": {
+      "message": "Abiso"
+   },
+   "november": {
+      "message": "Nobyembre"
+   },
+   "october": {
+      "message": "Oktubre"
+   },
+   "onTheExtensionDetailPage": {
+      "message": "Sa page ng mga detalye ng extension, mag-scroll pababa at hanapin ang opsyong “Payagan sa incognito.”"
+   },
+   "oneTime": {
+      "message": "Isang beses"
+   },
+   "oneTmSch": {
+      "message": "1.Isang Oras na Iskedyul"
+   },
+   "oneTmSchExm1": {
+      "message": "Sa halimbawa sa itaas, ang ibinigay na URL ay nasa bukas na tab, na nagsasaad na ito ay magbubukas sa bagong tab Isang Oras sa 13:45 sa 21/1/2023"
+   },
+   "oneTmSchExm2": {
+      "message": "Sa halimbawa sa itaas, ang ibinigay na URL ay nasa malapit na tab, na nagsasaad na isasara nito ang lahat ng partikular na katugmang mga tab ng URL sa 13:45 sa 21/1/2023"
+   },
+   "open": {
+      "message": "Bukas"
+   },
+   "openBackground": {
+      "message": "Kung oo, Naglo-load ng URL sa background nang hindi binubuksan ito sa bagong tab"
+   },
+   "openDate": {
+      "message": "Buksan ang Petsa"
+   },
+   "openDay": {
+      "message": "Bukas na Araw"
+   },
+   "openEveryDayOn": {
+      "message": "Bukas araw-araw sa"
+   },
+   "openEveryMonthOn": {
+      "message": "Bukas bawat buwan sa araw"
+   },
+   "openEveryWeekOn": {
+      "message": "Bukas bawat linggo sa"
+   },
+   "openEveryYearOn": {
+      "message": "Bukas bawat taon sa"
+   },
+   "openGoogleChrome": {
+      "message": "Buksan ang Google Chrome."
+   },
+   "openInBackground": {
+      "message": "Buksan ang URL sa Background"
+   },
+   "openInEvery": {
+      "message": "Bukas sa bawat"
+   },
+   "openInIncognito": {
+      "message": "Buksan sa incognito mode"
+   },
+   "openMinute": {
+      "message": "Buksan ang Minuto"
+   },
+   "openOnDay": {
+      "message": "Bukas sa Araw"
+   },
+   "openOnEvery": {
+      "message": "Bukas sa bawat"
+   },
+   "openSecond": {
+      "message": "Buksan ang Pangalawa"
+   },
+   "openSecondsMoreThan5": {
+      "message": "Ang mga bukas na segundo ay dapat na higit sa 5."
+   },
+   "openTabSchedule": {
+      "message": "Buksan ang Iskedyul ng Tab"
+   },
+   "openTabURL": {
+      "message": "Buksan ang URL ng Tab"
+   },
+   "openTime": {
+      "message": "Open Time"
+   },
+   "openUrl": {
+      "message": "Buksan ang Link ng Website"
+   },
+   "openWeek": {
+      "message": "Buksan ang Linggo"
+   },
+   "openWeeks": {
+      "message": "Bukas na Linggo"
+   },
+   "open_on": {
+      "message": "Buksan sa"
+   },
+   "optional": {
+      "message": "Opsyonal"
+   },
+   "or": {
+      "message": "o"
+   },
+   "outof": {
+      "message": "sa labas ng"
+   },
+   "pagePath": {
+      "message": "Landas ng Pahina"
+   },
+   "paidFeature": {
+      "message": "Bayad na Tampok"
+   },
+   "pauseSchedule": {
+      "message": "Simulan o Itigil ang lahat ng iskedyul"
+   },
+   "pauseTabScheduler": {
+      "message": "Naka-pause na Tab scheduler"
+   },
+   "pleaseAllowIncognitoMessage": {
+      "message": "Paki-enable ang opsyong 'Payagan sa Incognito' sa mga detalye ng extension. Para sa mga tagubilin, mangyaring sumangguni sa pahina ng tutorial."
+   },
+   "pleaseShareYourSuggestions": {
+      "message": "Mangyaring ibahagi ang iyong mungkahi."
+   },
+   "plsShreAnySugWithUs": {
+      "message": "Mangyaring magbigay ng mungkahi upang mapabuti kami"
+   },
+   "powerMode": {
+      "message": "Power Mode"
+   },
+   "premium": {
+      "message": "Premium"
+   },
+   "pricePlan": {
+      "message": "Pagpepresyo at Mga Plano"
+   },
+   "privcyPolicy": {
+      "message": "Patakaran sa Privacy"
+   },
+   "prowerModeTip": {
+      "message": "Panatilihing laging aktibo ang system sa pamamagitan ng pagpapagana ng Power Mode"
+   },
+   "put": {
+      "message": "Ilagay"
+   },
+   "rateUs": {
+      "message": "I-rate Kami"
+   },
+   "removeDuplicateEntry": {
+      "message": "Mangyaring alisin ang duplicate na entry"
+   },
+   "removeOpenTbURL": {
+      "message": "Alisin ang bukas na URL ng tab"
+   },
+   "repeat": {
+      "message": "Ulitin"
+   },
+   "requiredMsg": {
+      "message": "Kinakailangan"
+   },
+   "rmvClsTb": {
+      "message": "Alisin ang malapit na URL ng tab"
+   },
+   "sameTabs": {
+      "message": "I-refresh ang tab kung nakabukas na ang URL"
+   },
+   "sameTabsInfo": {
+      "message": "Pigilan ang pagbubukas ng maraming tab para sa parehong URL. Halimbawa, kung nabuksan na ang www.google.com, ire-refresh ang kasalukuyang tab na iyon sa halip na magbukas ng bagong tab para dito."
+   },
+   "sampleCsvOpenPath": {
+      "message": "../sample_csv/en/open_tab_sample.csv"
+   },
+   "sampleFile": {
+      "message": "Halimbawang file"
+   },
+   "saturday": {
+      "message": "Sabado"
+   },
+   "savOpnData": {
+      "message": "I-save ang bukas na data ng tab"
+   },
+   "save": {
+      "message": "I-save"
+   },
+   "saveClsTbData": {
+      "message": "I-save ang data ng malapit na tab"
+   },
+   "saveSchedule": {
+      "message": "I-save ang Iskedyul"
+   },
+   "scheduleCloseTab": {
+      "message": "Iskedyul Isara ang Tab"
+   },
+   "scheduleCurrentTab": {
+      "message": "Mag-iskedyul ng kasalukuyang tab"
+   },
+   "scheduleOpenTab": {
+      "message": "Iskedyul ang Open Tab"
+   },
+   "scheduledTabIsAlreadyExistWithSameTimer": {
+      "message": "Ang naka-iskedyul na tab na ito ay umiral na sa parehong timer."
+   },
+   "scheduledTabList": {
+      "message": "Naka-iskedyul na Listahan ng Tab"
+   },
+   "scheduledType": {
+      "message": "Uri ng Iskedyul"
+   },
+   "search": {
+      "message": "Maghanap"
+   },
+   "secValid": {
+      "message": "Kinakailangan ang minimum na 5 segundo"
+   },
+   "second": {
+      "message": "Pangalawa"
+   },
+   "selectCloseDate": {
+      "message": "Piliin ang petsa ng pagsasara"
+   },
+   "selectCloseDay": {
+      "message": "Piliin ang malapit na araw"
+   },
+   "selectCloseTime": {
+      "message": "Pumili ng oras ng pagsasara"
+   },
+   "selectColumn": {
+      "message": "Piliin ang Column"
+   },
+   "selectDateAndTime": {
+      "message": "Piliin ang petsa at oras para magbukas ng bagong tab"
+   },
+   "selectDateAndTimeClsTb": {
+      "message": "Piliin ang petsa at oras upang isara ang tab"
+   },
+   "selectDayToCloseSchTb": {
+      "message": "Piliin ang araw upang isara ang tab ng iskedyul."
+   },
+   "selectDayToClsTb": {
+      "message": "Pumili ng araw upang isara ang tab"
+   },
+   "selectDayToSchdule": {
+      "message": "Pumili ng tab na araw upang iiskedyul."
+   },
+   "selectDaysInWeek": {
+      "message": "Pumili ng mga araw sa linggo"
+   },
+   "selectDaysInWeekIClsTime": {
+      "message": "Pumili ng mga araw sa linggo sa malapit na timer."
+   },
+   "selectDaysInWeekIOpClsTime": {
+      "message": "Pumili ng mga araw sa linggo sa bukas o malapit na timer."
+   },
+   "selectDaysInWeekIOpTime": {
+      "message": "Pumili ng mga araw sa linggo sa bukas na timer."
+   },
+   "selectFrequency": {
+      "message": "Piliin ang Dalas"
+   },
+   "selectFrequencyOfScheduleUrl": {
+      "message": "Piliin ang dalas ng nakaiskedyul na URL."
+   },
+   "selectOpenDate": {
+      "message": "Piliin ang bukas na petsa"
+   },
+   "selectOpenDay": {
+      "message": "Piliin ang bukas na araw"
+   },
+   "selectOpenOrClose": {
+      "message": "Piliin ang oras ng bukas at pagsasara"
+   },
+   "selectOpenOrCloseDate": {
+      "message": "Piliin ang petsa ng bukas at pagsasara"
+   },
+   "selectOpenOrCloseDay": {
+      "message": "Piliin ang bukas at isara na araw"
+   },
+   "selectOpenTime": {
+      "message": "Pumili ng bukas na oras"
+   },
+   "selectPreferredLanguage": {
+      "message": "Piliin ang iyong gustong wika."
+   },
+   "selectToOpenTab": {
+      "message": "Pumili ng araw para magbukas ng bagong tab"
+   },
+   "selectTypTimerClsTb": {
+      "message": "Pumili ng uri ng timer upang isara ang tab"
+   },
+   "selectTypeOfSchedule": {
+      "message": "Pumili ng uri ng iskedyul, kung gusto mong parehong buksan at isara kaysa piliin ang \"Pareho\"."
+   },
+   "selectTypeOfTimer": {
+      "message": "Pumili ng uri ng timer para magbukas ng bagong tab"
+   },
+   "select_weeks": {
+      "message": "Piliin ang Linggo"
+   },
+   "september": {
+      "message": "Setyembre"
+   },
+   "settingSave": {
+      "message": "Matagumpay na nai-save ang mga setting"
+   },
+   "settingToClose": {
+      "message": "Pagtatakda upang isara ang tab sa incognito mode."
+   },
+   "shareYourSuggestionWithUs": {
+      "message": "Ibahagi ang iyong mga mungkahi sa amin.."
+   },
+   "slectDayToScheduleWeekly": {
+      "message": "Pumili ng mga araw upang mag-iskedyul ng tab linggu-linggo."
+   },
+   "slectMinute": {
+      "message": "Piliin ang Minuto"
+   },
+   "smthngWrng": {
+      "message": "Nagkaproblema"
+   },
+   "softpulseInfotech": {
+      "message": "Softpulse Infotech"
+   },
+   "somethingWentWrong": {
+      "message": "Nagkaproblema. I-refresh ang page at subukang muli."
+   },
+   "status": {
+      "message": "Katayuan"
+   },
+   "subcrKeyShldNEmpt": {
+      "message": "Pakipasok ang subscription key."
+   },
+   "subdomain": {
+      "message": "Subdomain"
+   },
+   "subkeyInputTitle": {
+      "message": "Ilagay ang subscription key"
+   },
+   "submFeedBack": {
+      "message": "Isumite"
+   },
+   "suggForTbSch": {
+      "message": "Mungkahi para sa scheduler ng tab"
+   },
+   "suggestionAndRateUs": {
+      "message": "Mungkahi at I-rate kami"
+   },
+   "sunday": {
+      "message": "Linggo"
+   },
+   "tabCloseOneTime": {
+      "message": "Isang beses lang magsasara ang tab"
+   },
+   "tabSchTutorial": {
+      "message": "Tutorial sa Tab Scheduler"
+   },
+   "tabScheduler": {
+      "message": "Tab Scheduler"
+   },
+   "tabSchedulerOptions": {
+      "message": "Mga Pagpipilian sa Tab Scheduler"
+   },
+   "tabWillOpenOneTime": {
+      "message": "Isang beses lang magbubukas ang tab sa"
+   },
+   "tabWillOpenWhenBrowserOpen": {
+      "message": "Magbubukas ang tab kapag naka-on ang browser"
+   },
+   "termCondition": {
+      "message": "Mga Tuntunin at Kundisyon"
+   },
+   "thanksFrRev": {
+      "message": "Salamat sa Iyong Pagsusuri"
+   },
+   "thnkUFeedBack": {
+      "message": "Salamat sa iyong mungkahi"
+   },
+   "thnkUFrUsngTbSch": {
+      "message": "Mangyaring magbigay ng mungkahi upang mapabuti kami"
+   },
+   "thursday": {
+      "message": "Huwebes"
+   },
+   "time": {
+      "message": "Oras"
+   },
+   "timeExpired": {
+      "message": "Time Expired"
+   },
+   "timer": {
+      "message": "Timer"
+   },
+   "title": {
+      "message": "Pamagat"
+   },
+   "titleLengtWarn": {
+      "message": "Ang haba ng pamagat ay hindi dapat lumampas sa 200 character."
+   },
+   "toScheduledOpenTbMsg": {
+      "message": "Upang naka-iskedyul na bukas na tab mangyaring alisin ang check sa pag-filter ng url."
+   },
+   "toogleCloseTab": {
+      "message": "Simulan/Ihinto ang alarma sa iskedyul para sa lahat ng URL ng malapit na tab"
+   },
+   "toogleDarkmode": {
+      "message": "Lumipat sa pagitan ng dark mode at default mode para i-customize ang iyong karanasan sa panonood."
+   },
+   "toogleOff": {
+      "message": "Naka-off"
+   },
+   "toogleOn": {
+      "message": "Naka-on"
+   },
+   "toogleOpenTab": {
+      "message": "Simulan/Ihinto ang alarma sa iskedyul para sa lahat ng bukas na URL ng tab"
+   },
+   "topLevelDomain": {
+      "message": "Nangungunang Antas na Domain"
+   },
+   "totalProcessed": {
+      "message": "Kabuuang na-record na naproseso"
+   },
+   "tuesday": {
+      "message": "Martes"
+   },
+   "tutorialImg1": {
+      "message": "\u003Cimg src=\"../images/en/1.png\">"
+   },
+   "tutorialImg10": {
+      "message": "\u003Cimg src=\"../images/en/10.png\">"
+   },
+   "tutorialImg11": {
+      "message": "\u003Cimg src=\"../images/en/11.png\">"
+   },
+   "tutorialImg12": {
+      "message": "\u003Cimg src=\"../images/en/12.png\">"
+   },
+   "tutorialImg13": {
+      "message": "\u003Cimg src=\"../images/en/13.png\">"
+   },
+   "tutorialImg14": {
+      "message": "\u003Cimg src=\"../images/en/14.png\">"
+   },
+   "tutorialImg2": {
+      "message": "\u003Cimg src=\"../images/en/2.png\">"
+   },
+   "tutorialImg3": {
+      "message": "\u003Cimg src=\"../images/en/3.png\">"
+   },
+   "tutorialImg4": {
+      "message": "\u003Cimg src=\"../images/en/4.png\">"
+   },
+   "tutorialImg5": {
+      "message": "\u003Cimg src=\"../images/en/5.png\">"
+   },
+   "tutorialImg6": {
+      "message": "\u003Cimg src=\"../images/en/6.png\">"
+   },
+   "tutorialImg7": {
+      "message": "\u003Cimg src=\"../images/en/7.png\">"
+   },
+   "tutorialImg8": {
+      "message": "\u003Cimg src=\"../images/en/8.png\">"
+   },
+   "tutorialImg9": {
+      "message": "\u003Cimg src=\"../images/en/9.png\">"
+   },
+   "uncheckAll": {
+      "message": "Alisan ng check ang Lahat"
+   },
+   "unlimitedSchedule": {
+      "message": "Walang limitasyong limitasyon sa iskedyul"
+   },
+   "unspecifiedURL": {
+      "message": "11. URL na hindi natukoy na landas"
+   },
+   "unspecifiedURLExm1": {
+      "message": "Sa halimbawa sa itaas, ang ibinigay na URL ay nasa malapit na tab, na nagsasaad na ang ibinigay na URL na nagbukas sa isang bagong tab at nagsisimula at nagtatapos sa isang hindi kilalang web address ay isasara pagkalipas ng 5 minuto."
+   },
+   "upgradePlan": {
+      "message": "Mangyaring Bumili ng Plano O Mag-login at I-upgrade ang iyong plano upang mag-unlock ng higit pang mga tampok."
+   },
+   "upgradePlanUnlock": {
+      "message": "I-upgrade ang iyong plano para mag-unlock ng higit pang mga feature."
+   },
+   "uploadValidFormat": {
+      "message": "Mangyaring mag-upload ng wastong format"
+   },
+   "url": {
+      "message": "URL"
+   },
+   "urlContExat": {
+      "message": "Pag-filter ng URL"
+   },
+   "urlEndWithUnspesifiedPth": {
+      "message": "9. Nagtatapos ang URL sa hindi natukoy na landas"
+   },
+   "urlEndWithUnspesifiedPthExm1": {
+      "message": "Sa halimbawa sa itaas, ang ibinigay na URL ay nasa malapit na tab, na nagsasaad na ang ibinigay na URL na nagbukas sa isang bagong tab at nagtatapos sa hindi kilalang landas ay isasara pagkalipas ng 5 minuto."
+   },
+   "urlFilterInfo": {
+      "message": "Naglalaman ng URL na sinusuri ay nangangailangan lamang ng bahagi ng URL at Eksaktong URL na sinusuri ay dapat na eksaktong tugma sa tinukoy na URL"
+   },
+   "urlFilterinCLoseTb": {
+      "message": "14. Pag-filter ng URL sa malapit na URL ng tab"
+   },
+   "urlFilterinCLoseTbExample": {
+      "message": "Sa halimbawa sa itaas, ang ibinigay na URL ay nasa malapit na tab, na nagsasaad na nabuksan na ang URL ng tab na tumugma sa ilan sa bahagi ng ibinigay na URL kaya isasara nito ang tab na iyon"
+   },
+   "urlIsRequired": {
+      "message": "Kailangan ang Link ng Website"
+   },
+   "urlNotvalid": {
+      "message": "Hindi wasto ang URL"
+   },
+   "urlStartWithUnspesifiedPth": {
+      "message": "10. Nagsisimula ang URL sa hindi natukoy na landas"
+   },
+   "urlStartWithUnspesifiedPthExm1": {
+      "message": "Sa halimbawa sa itaas, ang ibinigay na URL ay nasa malapit na tab, na nagsasaad na ang ibinigay na URL na nagbukas sa isang bagong tab at nagsisimula sa hindi kilalang subdomain \u003Cb>na 'www'\u003C/b> o \u003Cb>'blog'\u003C/b> ay isasara pagkalipas ng 5 minuto."
+   },
+   "useSpecificUrl": {
+      "message": "Gumamit ng partikular na Link ng Website"
+   },
+   "useSpecificUrl1": {
+      "message": "Dapat ay naisulat mo ang eksaktong subdomain, pinakamataas na antas ng domain, domain name, at page path sa patlang ng Link ng Website sa tab ng saradong browser."
+   },
+   "useSpecificUrl2": {
+      "message": "Gamitin ang saradong tab ng lahat ng browser"
+   },
+   "useSpecificUrl3": {
+      "message": "Gumamit ng partikular at buong Website Link"
+   },
+   "useUnSpecificUrl1": {
+      "message": "Gumamit ng hindi tinukoy na Link ng Website"
+   },
+   "useUnSpecificUrl2": {
+      "message": "Gamitin ang simula sa hindi natukoy na Link ng Website"
+   },
+   "useUnSpecificUrl3": {
+      "message": "Gamitin ang dulo na may hindi tinukoy na Link ng Website"
+   },
+   "used": {
+      "message": "Ginamit mo"
+   },
+   "validFormatCsv": {
+      "message": "Ano ang wastong format ng CSV file para sa pag-import?"
+   },
+   "websiteLink": {
+      "message": "Link ng Website"
+   },
+   "websiteUrl": {
+      "message": "URL ng website"
+   },
+   "wednesday": {
+      "message": "Miyerkules"
+   },
+   "weekName": {
+      "message": "Pangalan ng Linggo"
+   },
+   "weekly": {
+      "message": "Linggu-linggo"
+   },
+   "whenExtensionTabAppears": {
+      "message": "Kapag lumabas ang tab na Mga Extension, hanapin ang \"Tab Scheduler na may awtomatikong pagbukas at pagsasara\" upang paganahin sa Incognito mode at i-click ang button na \"Mga Detalye\" sa tabi nito."
+   },
+   "whenMenuPopup": {
+      "message": "Kapag nag-pop up ang isang menu, piliin ang \"Pamahalaan ang mga extension.\""
+   },
+   "withSignMustFill": {
+      "message": "Sa \u003Cspan>*\u003C/span> sign ay dapat na punan o piliin, Piliin ang alinman sa bukas o pagsasara ng oras o parehong oras."
+   },
+   "writeYourDescriptionAboutSchUrl": {
+      "message": "Isulat ang iyong paglalarawan tungkol sa naka-iskedyul na url dito."
+   },
+   "yes": {
+      "message": "Oo"
+   },
+   "yourEmailAddress": {
+      "message": "Ang iyong email address"
+   },
+   "yourScheduleUrl": {
+      "message": "Iyong URL ng Iskedyul"
+   }
+}

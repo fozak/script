@@ -1,0 +1,1448 @@
+{
+   "10_min": {
+      "message": "10 minutos"
+   },
+   "1_min": {
+      "message": "1 minuto"
+   },
+   "30_min": {
+      "message": "30 minutos"
+   },
+   "5_min": {
+      "message": "5 minutos"
+   },
+   "60_min": {
+      "message": "hora"
+   },
+   "Dashboard": {
+      "message": "Panel"
+   },
+   "Login": {
+      "message": "Acceso"
+   },
+   "Off": {
+      "message": "Apagado"
+   },
+   "On": {
+      "message": "En"
+   },
+   "Selected": {
+      "message": "Seleccionado"
+   },
+   "Settings": {
+      "message": "Ajustes"
+   },
+   "Tutorial": {
+      "message": "Tutorial"
+   },
+   "action": {
+      "message": "Acción"
+   },
+   "activateScheduleTab": {
+      "message": "Activar pestaña programada."
+   },
+   "active": {
+      "message": "Activo"
+   },
+   "activeAllScheduleTab": {
+      "message": "Programador de pestañas en ejecución"
+   },
+   "activeStatus": {
+      "message": "Estado"
+   },
+   "actvInactvNotification": {
+      "message": "Mostrar notificación cuando se abre la pestaña de programación"
+   },
+   "actvInactvOpnTb": {
+      "message": "Pestaña abierta activa o inactiva"
+   },
+   "actvIntvClsTb": {
+      "message": "Cerrar pestaña activa o inactiva"
+   },
+   "add": {
+      "message": "Agregar"
+   },
+   "addDescription": {
+      "message": "Añadir descripción"
+   },
+   "addNew": {
+      "message": "Agregar nuevo"
+   },
+   "addNewURlCls": {
+      "message": "Agregar nueva URL para cerrar"
+   },
+   "addNewUrlToOpen": {
+      "message": "Agregar nueva URL para abrir en nueva ventana"
+   },
+   "addTitle": {
+      "message": "Añadir título"
+   },
+   "addWebsite": {
+      "message": "Agregar sitio web"
+   },
+   "all": {
+      "message": "Todo"
+   },
+   "allInputFieldReq": {
+      "message": "Todos los campos son obligatorios"
+   },
+   "all_weeks": {
+      "message": "Toda la semana"
+   },
+   "alreadyPurchase": {
+      "message": "¿Ya has comprado? Introduce la clave aquí"
+   },
+   "andAt": {
+      "message": "y en"
+   },
+   "annually": {
+      "message": "Anualmente"
+   },
+   "appDesc": {
+      "message": "Las pestañas del navegador se abrirán y cerrarán automáticamente en el momento seleccionado. El usuario puede activar o desactivar la lista según sus necesidades."
+   },
+   "appName": {
+      "message": "Programador de pestañas con apertura y cierre automático"
+   },
+   "april": {
+      "message": "Abril"
+   },
+   "at": {
+      "message": "en"
+   },
+   "august": {
+      "message": "Agosto"
+   },
+   "autoFocus": {
+      "message": "Pestaña de enfoque automático"
+   },
+   "autoFocustip": {
+      "message": "Si está activado, la nueva pestaña se abrirá en un estado activo/con foco."
+   },
+   "autofocustip": {
+      "message": "Las nuevas pestañas abiertas se enfocarán automáticamente"
+   },
+   "basic": {
+      "message": "Básico"
+   },
+   "billedAnnyally": {
+      "message": "Facturación anual"
+   },
+   "billedMonthly": {
+      "message": "Facturación mensual"
+   },
+   "both": {
+      "message": "Ambos"
+   },
+   "browserOpen": {
+      "message": "Al abrir el navegador"
+   },
+   "browserWebAddress": {
+      "message": "La dirección web del navegador comienza y termina con una dirección web desconocida. Coloque \u003Cb>*\u003C/b> en ambos lados del campo de entrada Enlace al sitio web."
+   },
+   "browserWebAddress2": {
+      "message": "La dirección web del navegador contiene el nombre de dominio google.com, que se cerrará en unos minutos independientemente del subdominio, y la ruta de la página. Coloque \u003Cb>*\u003C/b> en ambos lados del nombre de dominio y del TLD."
+   },
+   "browserWebAddress3": {
+      "message": "La dirección web del navegador comienza con un nombre de dominio desconocido y termina con una ruta de página desconocida"
+   },
+   "browserWebAddress31": {
+      "message": "Se cerrará después de los minutos indicados, coloque \u003Cb>*\u003C/b> en ambos lados del TLD"
+   },
+   "browserWebAddress4": {
+      "message": "La dirección web del navegador comienza con una dirección web desconocida. Escriba \u003Cb>*\u003C/b> al principio de su URL. Recuerde que la dirección web del navegador debe coincidir con su URL después del \u003Cb>*\u003C/b> que haya escrito."
+   },
+   "browserWebAddress41": {
+      "message": "La dirección web del navegador comienza con un subdominio desconocido"
+   },
+   "browserWebAddress42": {
+      "message": "al principio del enlace de su sitio web"
+   },
+   "browserWebAddress5": {
+      "message": "La dirección web del navegador termina con una dirección web desconocida. Coloque \u003Cb>*\u003C/b> al final de su URL. Recuerde que su dirección web debe coincidir antes \u003Cb>del *\u003C/b> que ha escrito."
+   },
+   "browserWebAddress51": {
+      "message": "La dirección web del navegador termina con una ruta de página desconocida. Coloque \u003Cb>*\u003C/b> al final de su dirección web"
+   },
+   "browserWebAddress6": {
+      "message": "Coloque sólo \u003Cb>*\u003C/b> en el campo de dirección del sitio web para cerrar todas las pestañas del navegador. Una vez cerradas todas las pestañas, el navegador se cerrará automáticamente."
+   },
+   "browserWebAddress7": {
+      "message": "Debes haber escrito el subdominio exacto, el dominio de nivel superior, el nombre de dominio y la ruta de la página en el campo URL para abrirlo en la pestaña del navegador."
+   },
+   "browserWebAddress8": {
+      "message": "Puede abrir la URL en una fecha y hora específicas, un mes específico, una semana específica, un año específico y repetir la hora."
+   },
+   "buyPlan": {
+      "message": "Comprar plan"
+   },
+   "buycofee": {
+      "message": "Invítame a un café"
+   },
+   "cancel": {
+      "message": "Cancelar"
+   },
+   "changeLanguage": {
+      "message": "Cambiar idioma"
+   },
+   "checkAll": {
+      "message": "Marcar todo"
+   },
+   "checkThisOpToPreventClosePinTb": {
+      "message": "Marque esta opción para evitar el cierre de pestañas ancladas."
+   },
+   "checkThisOptionOnlyPartOfUrlMtch": {
+      "message": "Marque esta opción si solo es necesario hacer coincidir una parte de la URL."
+   },
+   "checkThisOptionToActivate": {
+      "message": "Marque esta opción para activar o inactivar su URL programada."
+   },
+   "checkThisOptionToCloseOnly": {
+      "message": "Marque esta opción para cerrar solo las pestañas de incógnito. Además, habilite la opción \"Permitir en modo incógnito\" en los detalles de la extensión. Para obtener instrucciones, consulte la página del tutorial."
+   },
+   "checkThisOptionToCloseOnlyInIncgnitoTb": {
+      "message": "Marque esta opción para cerrar solo las pestañas de incógnito. Además, habilite la opción \"Permitir en modo incógnito\" en los detalles de la extensión. Para obtener instrucciones, consulte la página del tutorial."
+   },
+   "checkThisOptionToInBg": {
+      "message": "Marque esta opción si desea abrir la URL en segundo plano sin abrirla en una nueva pestaña"
+   },
+   "checkThisOptionToInactivNotification": {
+      "message": "Marque esta opción para desactivar la notificación en la URL programada"
+   },
+   "checkThisOptionToOpen": {
+      "message": "Marque esta opción si desea abrir su URL en modo incógnito"
+   },
+   "checkThisOptionToOpenIncogito": {
+      "message": "Marque esta opción si desea abrir su URL en modo incógnito"
+   },
+   "checkThisOptionToPrevent": {
+      "message": "Marque esta opción para evitar el cierre de pestañas ancladas."
+   },
+   "clickExtIcon": {
+      "message": "Haga clic en el ícono “Extensiones” en la barra de herramientas, que parece una pieza de rompecabezas."
+   },
+   "clickTheSwitch": {
+      "message": "Haga clic en el interruptor que está al lado para encenderlo."
+   },
+   "close": {
+      "message": "Cerca"
+   },
+   "closeAllTab": {
+      "message": "12. Cierre todas las pestañas del navegador."
+   },
+   "closeAllTabExm1": {
+      "message": "En el ejemplo anterior, la URL dada está en la pestaña de cierre, lo que indica que cerrará todas las pestañas a las 12:00 el 25/2/2023."
+   },
+   "closeDate": {
+      "message": "Fecha de cierre"
+   },
+   "closeDay": {
+      "message": "Día de cierre"
+   },
+   "closeEveryYear": {
+      "message": "Cierra cada año el"
+   },
+   "closeInEvery": {
+      "message": "Cerca en todos los sentidos"
+   },
+   "closeIncognitoTab": {
+      "message": "Cerrar solo pestañas de incógnito"
+   },
+   "closeMinute": {
+      "message": "Minuto de cierre"
+   },
+   "closeOnDay": {
+      "message": "Cierre de día"
+   },
+   "closeOnEvery": {
+      "message": "Cierra en cada"
+   },
+   "closeOnEveryDay": {
+      "message": "Cerrado todos los días"
+   },
+   "closeOnEveryMonth": {
+      "message": "Cierra cada mes el día"
+   },
+   "closeOnEveryWeek": {
+      "message": "Cierra cada semana el"
+   },
+   "closeSecond": {
+      "message": "Cerrar Segundo"
+   },
+   "closeSeconsMoreThan5": {
+      "message": "Los segundos cercanos deben ser más de 5."
+   },
+   "closeTabSchedule": {
+      "message": "Cerrar pestaña Programación"
+   },
+   "closeTabURL": {
+      "message": "Cerrar URL de pestaña"
+   },
+   "closeTime": {
+      "message": "Hora de cierre"
+   },
+   "closeUrl": {
+      "message": "Cerrar enlace del sitio web"
+   },
+   "closeWeek": {
+      "message": "Semana cerrada"
+   },
+   "closeWeeks": {
+      "message": "Semanas cerradas"
+   },
+   "close_on": {
+      "message": "Cerrar"
+   },
+   "cngrtsForSubcr": {
+      "message": "¡Felicitaciones! Tu plan ha sido activado exitosamente."
+   },
+   "commonQuestionsAns": {
+      "message": "Preguntas y respuestas frecuentes"
+   },
+   "copySucessClose": {
+      "message": "Los datos de la URL de la pestaña Cerrar se copiaron a los datos de la URL de la pestaña Abrir"
+   },
+   "createNewTimer": {
+      "message": "Crear nuevo temporizador"
+   },
+   "currentPlan": {
+      "message": "Plan actual"
+   },
+   "currentTabSchedule": {
+      "message": "Programación de la pestaña actual"
+   },
+   "currentTbScheduleTimer": {
+      "message": "Temporizador programado de la pestaña actual."
+   },
+   "cusSec": {
+      "message": "Segundo personalizado"
+   },
+   "custMin": {
+      "message": "Minuto personalizado"
+   },
+   "custmMinSch": {
+      "message": "7. Programación de minutos personalizada"
+   },
+   "custmMinSchExm1": {
+      "message": "En el ejemplo anterior, la URL dada está en una pestaña abierta, lo que indica que la URL dada se abre en una nueva pestaña cada 15 minutos."
+   },
+   "custmMinSchExm2": {
+      "message": "En el ejemplo anterior, la URL dada está en una pestaña cerrada, lo que indica que la URL dada que se abrió en una nueva pestaña se cerrará después de 15 minutos."
+   },
+   "customSecondWarning": {
+      "message": "La funcionalidad de segundos personalizados es experimental y es posible que no funcione correctamente si los segundos se configuran por debajo de 60."
+   },
+   "darkMode": {
+      "message": "Modo oscuro"
+   },
+   "datNotCopy": {
+      "message": "Algunos datos no se copian debido a una URL no válida."
+   },
+   "dataSaved": {
+      "message": "Los datos del temporizador se guardaron correctamente"
+   },
+   "date": {
+      "message": "Fecha"
+   },
+   "dateIsOutOfRange": {
+      "message": "La fecha está fuera de rango"
+   },
+   "day": {
+      "message": "Día"
+   },
+   "december": {
+      "message": "Diciembre"
+   },
+   "delete": {
+      "message": "Borrar"
+   },
+   "deleteScheduleTb": {
+      "message": "Eliminar pestaña programada."
+   },
+   "description": {
+      "message": "Descripción"
+   },
+   "developedBy": {
+      "message": "Desarrollado por:"
+   },
+   "doNotCloseInPinnedTabs": {
+      "message": "No cerrar pestañas ancladas"
+   },
+   "doNotShowNotification": {
+      "message": "No mostrar notificación"
+   },
+   "domainName": {
+      "message": "Nombre de dominio"
+   },
+   "downloadCloseTbSampleCsv": {
+      "message": "Descargue un archivo CSV de muestra de cierre de pestaña para ver un ejemplo del formato requerido"
+   },
+   "downloadOpenTbSampleCsv": {
+      "message": "Descargue un archivo CSV de muestra de pestaña abierta para ver un ejemplo del formato requerido"
+   },
+   "editScheduleTb": {
+      "message": "Editar pestaña programada."
+   },
+   "email": {
+      "message": "Correo electrónico"
+   },
+   "enterDateToCloseTab": {
+      "message": "Introduzca la fecha aquí para cerrar la pestaña de programación."
+   },
+   "enterDateToOpen": {
+      "message": "Introduzca la fecha para abrir la pestaña de programación."
+   },
+   "enterMiniutesToCloseTb": {
+      "message": "Introduzca minutos para cerrar la pestaña."
+   },
+   "enterMiniutesToOpen": {
+      "message": "Introduzca minutos para abrir la pestaña de programación."
+   },
+   "enterMinute": {
+      "message": "Introducir minuto"
+   },
+   "enterSecond": {
+      "message": "Entrar Segundo"
+   },
+   "enterSecondsToCloseTab": {
+      "message": "Introduzca segundos para cerrar la pestaña."
+   },
+   "enterSecondsToOpen": {
+      "message": "Introduzca segundos para abrir la pestaña de programación."
+   },
+   "enterTilteOfScheduleUrl": {
+      "message": "Introduzca el título de la URL programada."
+   },
+   "enterTimeToCloseTab": {
+      "message": "Ingrese la hora aquí para cerrar la pestaña de programación."
+   },
+   "enterTimeToSchedule": {
+      "message": "Introduzca la hora para abrir la pestaña de programación."
+   },
+   "enterValidEmail": {
+      "message": "Por favor ingrese un correo electrónico válido"
+   },
+   "enterValidUrl": {
+      "message": "Por favor, introduzca una URL válida"
+   },
+   "enterValueInCloseSec": {
+      "message": "Introduzca el valor en segundos cercanos"
+   },
+   "enterValueInOpenCloseSec": {
+      "message": "Introduzca el valor en segundos de apertura o cierre"
+   },
+   "enterValueInOpenMinutes": {
+      "message": "Ingresar valor en minutos abiertos"
+   },
+   "enterVlaueInCloseMinutes": {
+      "message": "Introduzca el valor en minutos cercanos"
+   },
+   "enterVlaueInOpenCloseMin": {
+      "message": "Introduzca el valor en minutos de apertura o cierre"
+   },
+   "enterVlaueInOpenSeconds": {
+      "message": "Introduzca el valor en segundos abiertos"
+   },
+   "enterYourURLToSchedule": {
+      "message": "Introduzca su URL para programar."
+   },
+   "every": {
+      "message": "cada"
+   },
+   "every10Min": {
+      "message": "Cada 10 minutos"
+   },
+   "every1Minute": {
+      "message": "cada 1 minuto"
+   },
+   "every30Min": {
+      "message": "Cada 30 minutos"
+   },
+   "every5Min": {
+      "message": "Cada 5 minutos"
+   },
+   "everyDay": {
+      "message": "Cada día"
+   },
+   "everyDayAt": {
+      "message": "Todos los días a las"
+   },
+   "everyHour": {
+      "message": "Cada hora"
+   },
+   "everyMinute": {
+      "message": "Cada minuto"
+   },
+   "everyMonth": {
+      "message": "Cada mes"
+   },
+   "everyMonthOn": {
+      "message": "Cada mes en"
+   },
+   "everyMonthOnDay": {
+      "message": "Cada mes en el día"
+   },
+   "everyWeek": {
+      "message": "Cada semana"
+   },
+   "everyWeekOn": {
+      "message": "Cada semana en"
+   },
+   "everyYear": {
+      "message": "Cada año"
+   },
+   "everyYesrOn": {
+      "message": "Cada año en"
+   },
+   "evr10MinSch": {
+      "message": "2. Programación cada 10 minutos"
+   },
+   "evr10MinSchExm1": {
+      "message": "En el ejemplo anterior, la URL dada está en una pestaña abierta, lo que indica que la URL dada se abrirá en una nueva pestaña cada 10 minutos."
+   },
+   "evr10MinSchExm2": {
+      "message": "En el ejemplo anterior, la URL dada está en una pestaña cerrada, lo que indica que la URL dada que se abrió en una nueva pestaña se cerrará después de 10 minutos."
+   },
+   "evrDaySch": {
+      "message": "3. Horario diario"
+   },
+   "evrDaySchExm1": {
+      "message": "En el ejemplo anterior, la URL dada está en una pestaña abierta, lo que indica que se abrirá en una nueva pestaña todos los días a las 5:27 p. m."
+   },
+   "evrDaySchExm2": {
+      "message": "En el ejemplo anterior, la URL dada está en la pestaña de cierre, lo que indica que cerrará la pestaña ya abierta a las 5:27 p. m. todos los días."
+   },
+   "evrMonthSch": {
+      "message": "5. Programación mensual"
+   },
+   "evrMonthSchExm1": {
+      "message": "En el ejemplo anterior, la URL dada está en una pestaña abierta, lo que indica que se abrirá en una nueva pestaña todos los meses a las 13:45 el día 25."
+   },
+   "evrMonthSchExm2": {
+      "message": "En el ejemplo anterior, la URL dada está en la pestaña de cierre, lo que indica que cerrará la pestaña ya abierta todos los meses a las 13:45 del día 25."
+   },
+   "evrWeekSch": {
+      "message": "4. Programación semanal"
+   },
+   "evrWeekSchExm1": {
+      "message": "En el ejemplo anterior, la URL dada está en una pestaña abierta, lo que indica que se abrirá en una nueva pestaña cada semana a las 17:00 los \u003Cb>lunes y martes\u003C/b> ."
+   },
+   "evrWeekSchExm2": {
+      "message": "En el ejemplo anterior, la URL dada está en la pestaña de cierre, lo que indica que cerrará la pestaña ya abierta todas las semanas a las 17:00 los \u003Cb>lunes y martes\u003C/b> ."
+   },
+   "evrWeekSchExm3": {
+      "message": "En el ejemplo anterior, se pueden seleccionar varios días en el temporizador semanal."
+   },
+   "evrYearSch": {
+      "message": "6. Programación anual"
+   },
+   "evrYearSchExm1": {
+      "message": "En el ejemplo anterior, la URL dada está en una pestaña abierta, lo que indica que se abrirá en una nueva pestaña todos los años a las 13:35 el 1 de enero."
+   },
+   "evrYearSchExm2": {
+      "message": "En el ejemplo anterior, la URL dada está en la pestaña de cierre, lo que indica que cerrará la pestaña ya abierta todos los años a las 13:35 el 1 de enero."
+   },
+   "exampleSort": {
+      "message": "p.ej"
+   },
+   "exdMaxLim": {
+      "message": "¡Se superó el máximo de dispositivos permitidos!"
+   },
+   "exmpOpnClsTbSch": {
+      "message": "Ejemplo de cómo abrir y cerrar pestañas en el Programador de pestañas"
+   },
+   "expLicKy": {
+      "message": "Esta clave de licencia ha expirado."
+   },
+   "export": {
+      "message": "Exportar"
+   },
+   "exportBefore": {
+      "message": "Tienes\u003Cexday>\u003C/exday>Quedan días, suscríbete para seguir disfrutando de la función premium"
+   },
+   "exportClsTbDta": {
+      "message": "Exportar datos de la pestaña cerrada"
+   },
+   "exportOpenTbDt": {
+      "message": "Exportar datos de pestañas abiertas"
+   },
+   "exportedData": {
+      "message": "Los datos del temporizador se exportaron correctamente"
+   },
+   "extensionShouldAble": {
+      "message": "Ahora, la extensión debería poder cerrar pestañas en modo incógnito."
+   },
+   "faq": {
+      "message": "Preguntas frecuentes"
+   },
+   "faq_1": {
+      "message": "¿Qué es el Programador de pestañas con apertura y cierre automáticos?"
+   },
+   "faq_10": {
+      "message": "¿Cómo puedo ver mis pestañas programadas?"
+   },
+   "faq_11": {
+      "message": "¿Es obligatorio rellenar tanto el horario de apertura como el de cierre?"
+   },
+   "faq_12": {
+      "message": "¿Qué hacen las funciones Pestaña de enfoque automático, Activar todas las pestañas programadas y Modo de energía?"
+   },
+   "faq_13": {
+      "message": "¿Puedo abrir/cerrar el enlace del sitio web programado en la pestaña de incógnito?"
+   },
+   "faq_14": {
+      "message": "¿De qué sirve la pestaña Actualizar si la URL ya está abierta?"
+   },
+   "faq_2": {
+      "message": "¿Para qué sirve el enlace del sitio web?"
+   },
+   "faq_3": {
+      "message": "¿Cómo programo una URL usando Tab Scheduler?"
+   },
+   "faq_4": {
+      "message": "¿Qué es la opción 'Abrir URL en segundo plano'?"
+   },
+   "faq_5": {
+      "message": "¿Puedo evitar que la extensión cierre las pestañas ancladas?"
+   },
+   "faq_6": {
+      "message": "¿Qué significa el tipo de programación 'Ambos'?"
+   },
+   "faq_7": {
+      "message": "¿Cómo funciona la función 'Filtrado de URL'?"
+   },
+   "faq_8": {
+      "message": "¿Puedo desactivar una pestaña programada sin eliminarla?"
+   },
+   "faq_9": {
+      "message": "¿Recibiré notificaciones de las pestañas programadas?"
+   },
+   "faq_a_1": {
+      "message": "\u003Cp>Tab Scheduler with Auto Open and Close es una extensión del navegador que permite a los usuarios programar pestañas para que se abran y cierren automáticamente en horarios determinados. Los usuarios pueden seleccionar un programa único o configurar programas recurrentes con varias opciones de frecuencia. Esta extensión tiene múltiples propósitos para los usuarios y ofrece muchas funciones que le resultarán útiles.\u003C/p>"
+   },
+   "faq_a_10": {
+      "message": "Todas las pestañas programadas se muestran en una lista que muestra el título, el enlace del sitio web, los horarios de apertura y cierre, el estado y las acciones que puede realizar (por ejemplo, activar, editar, eliminar)."
+   },
+   "faq_a_11": {
+      "message": "No, puedes programar tanto una hora de apertura como una hora de cierre. Sin embargo, debes completar o seleccionar los campos obligatorios marcados con un asterisco (*)."
+   },
+   "faq_a_12": {
+      "message": "La pestaña de enfoque automático garantiza que, cuando se abre una pestaña programada, la opción Activar todas las pestañas programadas le permite activar rápidamente todas las pestañas programadas con un solo clic. El modo de energía optimiza el rendimiento de la extensión al administrar los recursos del navegador de manera más eficiente."
+   },
+   "faq_a_13": {
+      "message": "Sí, puedes elegir abrir una pestaña programada en modo incógnito seleccionando la opción \"Abrir en modo incógnito\". Puedes elegir cerrar solo las pestañas de incógnito seleccionando la opción \"Cerrar solo las pestañas de incógnito\", siempre que la opción \"Permitir en modo incógnito\" esté habilitada en la configuración de la extensión."
+   },
+   "faq_a_14": {
+      "message": "Cuando esta opción está habilitada, la extensión actualizará automáticamente una pestaña existente si la misma URL ya está abierta en su navegador. Esto evita que se abran pestañas duplicadas y garantiza que siempre tenga cargada la última versión de la página."
+   },
+   "faq_a_14_1": {
+      "message": "Si intenta abrir https://github.com/ y ya está abierto en otra pestaña, la extensión simplemente actualizará esa pestaña en lugar de abrir una nueva."
+   },
+   "faq_a_14_2": {
+      "message": "Si https://github.com/ ya está abierto en tres pestañas, la extensión actualizará las tres pestañas."
+   },
+   "faq_a_2": {
+      "message": "El enlace del sitio web es la dirección del sitio web en la pestaña abierta de su navegador. A continuación se indica cómo puede utilizar la dirección del sitio web."
+   },
+   "faq_a_3": {
+      "message": "Para programar una URL, ingrese el enlace del sitio web, asigne un título a la programación, seleccione la frecuencia (Una vez, Cada minuto, Diariamente, etc.) y elija las horas de apertura y cierre. También puede especificar una fecha, un día o segundos para abrir y cerrar la pestaña."
+   },
+   "faq_a_4": {
+      "message": "\u003Cp>Esta opción le brinda control total para programar una URL para que se abra en segundo plano sin poner el foco en la nueva pestaña. La URL se abrirá silenciosamente mientras continúa trabajando en otras pestañas. Es particularmente útil cuando necesita que el navegador obtenga datos de la URL programada sin mostrarlos activamente, como en el caso de una solicitud de API GET.\u003C/p>\u003Cbr> \u003Cp>Por ejemplo, si desea obtener datos de un punto final de API en un momento determinado de forma regular, puede utilizar esta opción eficiente para ejecutar la solicitud en segundo plano sin abrir una nueva pestaña visible.\u003C/p>"
+   },
+   "faq_a_5": {
+      "message": "Sí, existe una opción para evitar el cierre de pestañas fijadas. Marca la opción \"No cerrar pestañas fijadas\" para asegurarte de que estas pestañas permanezcan abiertas incluso si cumplen otros criterios de cierre."
+   },
+   "faq_a_6": {
+      "message": "El tipo de programación 'Ambos' le brinda control total sobre cuándo se abre y se cierra una pestaña, lo que le permite establecer horarios específicos para ambas acciones."
+   },
+   "faq_a_7": {
+      "message": "El filtrado de URL garantiza que solo una parte específica de la URL deba coincidir para que se realice la acción programada. Esto resulta útil cuando desea automatizar determinadas acciones en función de coincidencias de URL parciales. Por ejemplo, si marca la opción Filtrado de URL para la URL https://example.com/page, también se aplicará a URL como https://example.com/page/123, https://example.com/page?query=example y https://subdomain.example.com/page."
+   },
+   "faq_a_8": {
+      "message": "Con la opción \"Activar esta pestaña programada\", puedes activar o desactivar fácilmente las pestañas programadas, lo que te da la flexibilidad de administrar tus programaciones sin perder configuraciones."
+   },
+   "faq_a_9": {
+      "message": "De forma predeterminada, recibirás notificaciones. Sin embargo, si prefieres detenerlas, puedes marcar la opción “No mostrar notificaciones” para desactivarlas."
+   },
+   "february": {
+      "message": "Febrero"
+   },
+   "filterTips": {
+      "message": "El filtro se aplica después de 'https://' o 'www.', por ejemplo, 'github.com'"
+   },
+   "for_exp": {
+      "message": "Por ejemplo"
+   },
+   "freeForever": {
+      "message": "Libre para siempre"
+   },
+   "freeSchedule": {
+      "message": "horario libre"
+   },
+   "freeTral": {
+      "message": "Como usuario temprano valioso, disfrutará\u003Crday>120\u003C/rday>días de acceso gratuito antes de cambiar a nuestro nuevo plan pago. ¡Gracias por su continuo apoyo!\u003Cp class=\"p-t-5\">Tienes\u003Cb>\u003Cspan>\u003C/span>\u003C/b>días restantes de tu\u003Crday>120\u003C/rday>-día de periodo libre.\u003Cafex class=\"warning\">\u003Cafex>\u003C/afex>\u003C/afex>\u003C/p> "
+   },
+   "frequentlyAskedQuestions": {
+      "message": "Preguntas frecuentes"
+   },
+   "friday": {
+      "message": "Viernes"
+   },
+   "getThisPlan": {
+      "message": "Obtenga este plan"
+   },
+   "goToSettingsPageToSchedule": {
+      "message": "Vaya a la página de configuración para programar la apertura y el cierre de URL."
+   },
+   "goURL": {
+      "message": "Ir a la URL"
+   },
+   "helpAccordion12": {
+      "message": "¿Esta extensión funciona en modo de suspensión/suspensión?"
+   },
+   "helpAccordion3": {
+      "message": "¿Puedo programar una pestaña para que se abra en modo incógnito?"
+   },
+   "helpAccordion6": {
+      "message": "¿Qué es \"Tiempo expirado\"?"
+   },
+   "helpAccordion7": {
+      "message": "¿Puedo exportar la URL programada?"
+   },
+   "helpAccordion8": {
+      "message": "¿Puedo importar una URL a una agenda?"
+   },
+   "helpPanelBodyDesc12First": {
+      "message": "No, esta extensión no funcionará en modo de suspensión/suspensión."
+   },
+   "helpPanelBodyDesc12Second": {
+      "message": "Si alguna URL está programada en la pestaña de abrir o cerrar, entonces su PC no pasará automáticamente al modo de suspensión o suspensión."
+   },
+   "helpPanelBodyDesc3": {
+      "message": "Sí, puedes elegir abrir una pestaña programada en modo incógnito seleccionando la opción \"Abrir en modo incógnito\". Asegúrate de que la opción \"Permitir en modo incógnito\" de la extensión esté habilitada en la configuración de extensiones del navegador."
+   },
+   "helpPanelBodyDesc6": {
+      "message": "- La fecha y hora indicadas pasan de la fecha y hora actuales, entonces se mostrará el texto \"Tiempo expirado\"."
+   },
+   "helpPanelBodyDesc7": {
+      "message": "Sí, puede exportar la URL de apertura y cierre de pestañas ya programadas en formato csv y usarla con otro sistema para importar esa URL."
+   },
+   "helpPanelBodyDesc8": {
+      "message": "Sí, puede importar URL válidas de apertura y cierre en formato csv. El formato csv importado se programará automáticamente en el momento determinado."
+   },
+   "herAreStepsToAllow": {
+      "message": "Estos son los pasos para \"Permitir en incógnito\" en Google Chrome:"
+   },
+   "home": {
+      "message": "Hogar"
+   },
+   "hour_minute_close": {
+      "message": "Cada hora cerca de un minuto"
+   },
+   "hour_minute_open": {
+      "message": "Cada hora minuto abierto"
+   },
+   "how_to_use_tab": {
+      "message": "¿Cómo utilizar el Programador de pestañas?"
+   },
+   "import": {
+      "message": "Importar"
+   },
+   "importClsTbDta": {
+      "message": "Importar datos de la pestaña de cierre"
+   },
+   "importExport": {
+      "message": "Importación/exportación"
+   },
+   "importOpenTbDt": {
+      "message": "Importar datos de pestañas abiertas"
+   },
+   "importedRecored": {
+      "message": ", importado grabado"
+   },
+   "inactivateScheduleTab": {
+      "message": "Desactivar pestaña programada."
+   },
+   "inactive": {
+      "message": "Inactivo"
+   },
+   "inactiveSch": {
+      "message": "8.URL inactiva"
+   },
+   "inactiveSchExm1": {
+      "message": "En el ejemplo anterior, la URL dada está en una pestaña abierta o cerrada, lo que indica que la URL dada está inactiva y no realizará ninguna acción."
+   },
+   "inactiveThisScheduledTabs": {
+      "message": "Activar esta pestaña programada"
+   },
+   "invalidDuplicate": {
+      "message": ", registro duplicado o no válido"
+   },
+   "invldLicKy": {
+      "message": "¡Clave de licencia no válida!"
+   },
+   "isClose": {
+      "message": "está cerca"
+   },
+   "isOpen": {
+      "message": "está abierto"
+   },
+   "january": {
+      "message": "Enero"
+   },
+   "july": {
+      "message": "Julio"
+   },
+   "june": {
+      "message": "Junio"
+   },
+   "licKeyDis": {
+      "message": "Esta clave de licencia está deshabilitada."
+   },
+   "listTitle": {
+      "message": "Programador de pestañas"
+   },
+   "loading": {
+      "message": "Espere por favor..."
+   },
+   "locale": {
+      "message": "es"
+   },
+   "march": {
+      "message": "Marzo"
+   },
+   "maxSchedule": {
+      "message": "4 Límite máximo de programación"
+   },
+   "may": {
+      "message": "Puede"
+   },
+   "mintValid": {
+      "message": "Se requiere mínimo 1 minuto"
+   },
+   "minute": {
+      "message": "Minuto"
+   },
+   "minutesNotLessThan1": {
+      "message": "Los minutos no deben ser menores a 1."
+   },
+   "monday": {
+      "message": "Lunes"
+   },
+   "month": {
+      "message": "Mes"
+   },
+   "monthly": {
+      "message": "Mensual"
+   },
+   "more": {
+      "message": "más"
+   },
+   "mostSubscribe": {
+      "message": "La mayoría suscribete"
+   },
+   "no": {
+      "message": "No"
+   },
+   "noDataToExport": {
+      "message": "No hay datos para exportar."
+   },
+   "noScheduledTabs": {
+      "message": "No hay pestañas programadas"
+   },
+   "noTimerSetAddNewTimer": {
+      "message": "No hay temporizador configurado, haga clic en el botón Agregar para configurar un nuevo temporizador"
+   },
+   "not_show_tutorial": {
+      "message": "No volver a mostrar este tutorial"
+   },
+   "notificationOpenTab": {
+      "message": "13. Notificación al abrir o cerrar la URL de una pestaña"
+   },
+   "notificationOpenTabExm1": {
+      "message": "En el ejemplo anterior, la URL dada está en una pestaña abierta, lo que indica que enviará una notificación y abrirá o cerrará la URL en una nueva pestaña cada 5 minutos."
+   },
+   "notifications": {
+      "message": "Notificación"
+   },
+   "november": {
+      "message": "Noviembre"
+   },
+   "october": {
+      "message": "Octubre"
+   },
+   "onTheExtensionDetailPage": {
+      "message": "En la página de detalles de la extensión, desplácese hacia abajo y busque la opción “Permitir en modo incógnito”."
+   },
+   "oneTime": {
+      "message": "Una vez"
+   },
+   "oneTmSch": {
+      "message": "1. Programación única"
+   },
+   "oneTmSchExm1": {
+      "message": "En el ejemplo anterior, la URL dada está en una pestaña abierta, lo que indica que se abrirá en una nueva pestaña una vez a las 13:45 el 21/1/2023"
+   },
+   "oneTmSchExm2": {
+      "message": "En el ejemplo anterior, la URL dada está en la pestaña de cierre, lo que indica que cerrará todas las pestañas de URL coincidentes específicas a las 13:45 el 21/1/2023."
+   },
+   "open": {
+      "message": "Abierto"
+   },
+   "openBackground": {
+      "message": "Si es así, cargar una URL en segundo plano sin abrirla en una nueva pestaña"
+   },
+   "openDate": {
+      "message": "Fecha de apertura"
+   },
+   "openDay": {
+      "message": "Jornada de puertas abiertas"
+   },
+   "openEveryDayOn": {
+      "message": "Abierto todos los días en"
+   },
+   "openEveryMonthOn": {
+      "message": "Abierto todos los meses el día"
+   },
+   "openEveryWeekOn": {
+      "message": "Abierto todas las semanas en"
+   },
+   "openEveryYearOn": {
+      "message": "Abierto todos los años en"
+   },
+   "openGoogleChrome": {
+      "message": "Abra Google Chrome."
+   },
+   "openInBackground": {
+      "message": "Abrir URL en segundo plano"
+   },
+   "openInEvery": {
+      "message": "Abierto en todos los"
+   },
+   "openInIncognito": {
+      "message": "Abrir en modo incógnito"
+   },
+   "openMinute": {
+      "message": "Minuto abierto"
+   },
+   "openOnDay": {
+      "message": "Abierto el día"
+   },
+   "openOnEvery": {
+      "message": "Abierto en todos los"
+   },
+   "openSecond": {
+      "message": "Abierto Segundo"
+   },
+   "openSecondsMoreThan5": {
+      "message": "Los segundos abiertos deben ser más de 5."
+   },
+   "openTabSchedule": {
+      "message": "Horario de pestañas abiertas"
+   },
+   "openTabURL": {
+      "message": "Abrir URL de pestaña"
+   },
+   "openTime": {
+      "message": "Tiempo abierto"
+   },
+   "openUrl": {
+      "message": "Abrir enlace del sitio web"
+   },
+   "openWeek": {
+      "message": "Semana de puertas abiertas"
+   },
+   "openWeeks": {
+      "message": "Semanas de puertas abiertas"
+   },
+   "open_on": {
+      "message": "Abierto en"
+   },
+   "optional": {
+      "message": "Opcional"
+   },
+   "or": {
+      "message": "o"
+   },
+   "outof": {
+      "message": "fuera de"
+   },
+   "pagePath": {
+      "message": "Ruta de la página"
+   },
+   "paidFeature": {
+      "message": "Función de pago"
+   },
+   "pauseSchedule": {
+      "message": "Iniciar o detener todos los horarios"
+   },
+   "pauseTabScheduler": {
+      "message": "Programador de pestañas en pausa"
+   },
+   "pleaseAllowIncognitoMessage": {
+      "message": "Habilite la opción \"Permitir en modo incógnito\" en los detalles de la extensión. Para obtener instrucciones, consulte la página del tutorial."
+   },
+   "pleaseShareYourSuggestions": {
+      "message": "Por favor comparte tu sugerencia."
+   },
+   "plsShreAnySugWithUs": {
+      "message": "Por favor, denos una sugerencia para mejorarnos."
+   },
+   "powerMode": {
+      "message": "Modo de energía"
+   },
+   "premium": {
+      "message": "De primera calidad"
+   },
+   "pricePlan": {
+      "message": "Precios y planes"
+   },
+   "privcyPolicy": {
+      "message": "política de privacidad"
+   },
+   "prowerModeTip": {
+      "message": "Mantenga el sistema siempre activo habilitando el Modo Energía"
+   },
+   "put": {
+      "message": "Poner"
+   },
+   "rateUs": {
+      "message": "Calificanos"
+   },
+   "removeDuplicateEntry": {
+      "message": "Por favor elimine la entrada duplicada"
+   },
+   "removeOpenTbURL": {
+      "message": "Eliminar la URL de la pestaña abierta"
+   },
+   "repeat": {
+      "message": "Repetir"
+   },
+   "requiredMsg": {
+      "message": "Requerido"
+   },
+   "rmvClsTb": {
+      "message": "Eliminar la URL de cierre de pestaña"
+   },
+   "sameTabs": {
+      "message": "Actualizar pestaña si la URL ya está abierta"
+   },
+   "sameTabsInfo": {
+      "message": "Evitar que se abran varias pestañas para la misma URL. Por ejemplo, si ya está abierta www.google.com, se actualizará esa pestaña existente en lugar de abrir una nueva."
+   },
+   "sampleCsvOpenPath": {
+      "message": "../sample_csv/en/open_tab_sample.csv"
+   },
+   "sampleFile": {
+      "message": "Archivo de muestra"
+   },
+   "saturday": {
+      "message": "Sábado"
+   },
+   "savOpnData": {
+      "message": "Guardar datos de pestañas abiertas"
+   },
+   "save": {
+      "message": "Ahorrar"
+   },
+   "saveClsTbData": {
+      "message": "Guardar datos de la pestaña de cierre"
+   },
+   "saveSchedule": {
+      "message": "Guardar horario"
+   },
+   "scheduleCloseTab": {
+      "message": "Cerrar pestaña de programación"
+   },
+   "scheduleCurrentTab": {
+      "message": "Programar pestaña actual"
+   },
+   "scheduleOpenTab": {
+      "message": "Pestaña abierta del programa"
+   },
+   "scheduledTabIsAlreadyExistWithSameTimer": {
+      "message": "Esta pestaña programada ya existe con el mismo temporizador."
+   },
+   "scheduledTabList": {
+      "message": "Lista de pestañas programadas"
+   },
+   "scheduledType": {
+      "message": "Tipo de horario"
+   },
+   "search": {
+      "message": "Buscar"
+   },
+   "secValid": {
+      "message": "Se requiere un mínimo de 5 segundos."
+   },
+   "second": {
+      "message": "Segundo"
+   },
+   "selectCloseDate": {
+      "message": "Seleccione fecha de cierre"
+   },
+   "selectCloseDay": {
+      "message": "Seleccione el día de cierre"
+   },
+   "selectCloseTime": {
+      "message": "Seleccione hora de cierre"
+   },
+   "selectColumn": {
+      "message": "Seleccionar columna"
+   },
+   "selectDateAndTime": {
+      "message": "Seleccione fecha y hora para abrir nueva pestaña"
+   },
+   "selectDateAndTimeClsTb": {
+      "message": "Seleccione fecha y hora para cerrar la pestaña"
+   },
+   "selectDayToCloseSchTb": {
+      "message": "Seleccione el día para cerrar la pestaña de programación."
+   },
+   "selectDayToClsTb": {
+      "message": "Seleccione el día para cerrar la pestaña"
+   },
+   "selectDayToSchdule": {
+      "message": "Seleccione el día para programar la pestaña."
+   },
+   "selectDaysInWeek": {
+      "message": "Seleccionar días de la semana"
+   },
+   "selectDaysInWeekIClsTime": {
+      "message": "Seleccione los días de la semana en el temporizador de cierre."
+   },
+   "selectDaysInWeekIOpClsTime": {
+      "message": "Seleccione los días de la semana en que el temporizador estará abierto o cerrado."
+   },
+   "selectDaysInWeekIOpTime": {
+      "message": "Seleccione días de la semana en el temporizador abierto."
+   },
+   "selectFrequency": {
+      "message": "Seleccionar frecuencia"
+   },
+   "selectFrequencyOfScheduleUrl": {
+      "message": "Seleccione la frecuencia de la URL programada."
+   },
+   "selectOpenDate": {
+      "message": "Seleccione fecha de apertura"
+   },
+   "selectOpenDay": {
+      "message": "Seleccione jornada de puertas abiertas"
+   },
+   "selectOpenOrClose": {
+      "message": "Seleccionar hora de apertura y cierre"
+   },
+   "selectOpenOrCloseDate": {
+      "message": "Seleccione fecha de apertura y cierre"
+   },
+   "selectOpenOrCloseDay": {
+      "message": "Seleccione día de apertura y cierre"
+   },
+   "selectOpenTime": {
+      "message": "Seleccione el horario de apertura"
+   },
+   "selectPreferredLanguage": {
+      "message": "Seleccione su idioma preferido"
+   },
+   "selectToOpenTab": {
+      "message": "Seleccione el día para abrir una nueva pestaña"
+   },
+   "selectTypTimerClsTb": {
+      "message": "Seleccione el tipo de temporizador para cerrar la pestaña"
+   },
+   "selectTypeOfSchedule": {
+      "message": "Seleccione el tipo de programación, si desea abrir y cerrar seleccione \"Ambos\"."
+   },
+   "selectTypeOfTimer": {
+      "message": "Seleccione el tipo de temporizador para abrir una nueva pestaña"
+   },
+   "select_weeks": {
+      "message": "Seleccione semanas"
+   },
+   "september": {
+      "message": "Septiembre"
+   },
+   "settingSave": {
+      "message": "La configuración se guardó correctamente"
+   },
+   "settingToClose": {
+      "message": "Configuración para cerrar pestaña en modo incógnito."
+   },
+   "shareYourSuggestionWithUs": {
+      "message": "Comparte tus sugerencias con nosotros."
+   },
+   "slectDayToScheduleWeekly": {
+      "message": "Seleccione los días para programar la pestaña semanalmente."
+   },
+   "slectMinute": {
+      "message": "Seleccionar Minuto"
+   },
+   "smthngWrng": {
+      "message": "Algo salió mal"
+   },
+   "softpulseInfotech": {
+      "message": "Tecnología informática Softpulse"
+   },
+   "somethingWentWrong": {
+      "message": "Algo salió mal. Actualice la página y vuelva a intentarlo."
+   },
+   "status": {
+      "message": "Estado"
+   },
+   "subcrKeyShldNEmpt": {
+      "message": "Por favor, introduzca la clave de suscripción."
+   },
+   "subdomain": {
+      "message": "Subdominio"
+   },
+   "subkeyInputTitle": {
+      "message": "Introducir clave de suscripción"
+   },
+   "submFeedBack": {
+      "message": "Entregar"
+   },
+   "suggForTbSch": {
+      "message": "Sugerencia para el programador de pestañas"
+   },
+   "suggestionAndRateUs": {
+      "message": "Sugerencias y Calificaciones"
+   },
+   "sunday": {
+      "message": "Domingo"
+   },
+   "tabCloseOneTime": {
+      "message": "La pestaña se cerrará solo una vez"
+   },
+   "tabSchTutorial": {
+      "message": "Tutorial del programador de pestañas"
+   },
+   "tabScheduler": {
+      "message": "Programador de pestañas"
+   },
+   "tabSchedulerOptions": {
+      "message": "Opciones del programador de pestañas"
+   },
+   "tabWillOpenOneTime": {
+      "message": "La pestaña se abrirá solo una vez"
+   },
+   "tabWillOpenWhenBrowserOpen": {
+      "message": "La pestaña se abrirá cuando se abra el navegador."
+   },
+   "termCondition": {
+      "message": "Términos y condiciones"
+   },
+   "thanksFrRev": {
+      "message": "Gracias por tu reseña"
+   },
+   "thnkUFeedBack": {
+      "message": "Gracias por tu sugerencia"
+   },
+   "thnkUFrUsngTbSch": {
+      "message": "Por favor, denos una sugerencia para mejorarnos."
+   },
+   "thursday": {
+      "message": "Jueves"
+   },
+   "time": {
+      "message": "Tiempo"
+   },
+   "timeExpired": {
+      "message": "Tiempo expirado"
+   },
+   "timer": {
+      "message": "Minutero"
+   },
+   "title": {
+      "message": "Título"
+   },
+   "titleLengtWarn": {
+      "message": "La longitud del título no debe superar los 200 caracteres."
+   },
+   "toScheduledOpenTbMsg": {
+      "message": "Para programar la apertura de una pestaña, desmarque el filtrado de URL."
+   },
+   "toogleCloseTab": {
+      "message": "Iniciar/Detener la alarma programada para todas las URL de cierre de pestañas"
+   },
+   "toogleDarkmode": {
+      "message": "Cambia entre el modo oscuro y el modo predeterminado para personalizar tu experiencia de visualización."
+   },
+   "toogleOff": {
+      "message": "Apagado"
+   },
+   "toogleOn": {
+      "message": "En"
+   },
+   "toogleOpenTab": {
+      "message": "Iniciar/Detener la alarma programada para todas las URL de pestañas abiertas"
+   },
+   "topLevelDomain": {
+      "message": "Dominio de nivel superior"
+   },
+   "totalProcessed": {
+      "message": "Total registrado procesado"
+   },
+   "tuesday": {
+      "message": "Martes"
+   },
+   "tutorialImg1": {
+      "message": "\u003Cimg src=\"../images/en/1.png\">"
+   },
+   "tutorialImg10": {
+      "message": "\u003Cimg src=\"../images/en/10.png\">"
+   },
+   "tutorialImg11": {
+      "message": "\u003Cimg src=\"../images/en/11.png\">"
+   },
+   "tutorialImg12": {
+      "message": "\u003Cimg src=\"../images/en/12.png\">"
+   },
+   "tutorialImg13": {
+      "message": "\u003Cimg src=\"../images/en/13.png\">"
+   },
+   "tutorialImg14": {
+      "message": "\u003Cimg src=\"../images/en/14.png\">"
+   },
+   "tutorialImg2": {
+      "message": "\u003Cimg src=\"../images/en/2.png\">"
+   },
+   "tutorialImg3": {
+      "message": "\u003Cimg src=\"../images/en/3.png\">"
+   },
+   "tutorialImg4": {
+      "message": "\u003Cimg src=\"../images/en/4.png\">"
+   },
+   "tutorialImg5": {
+      "message": "\u003Cimg src=\"../images/en/5.png\">"
+   },
+   "tutorialImg6": {
+      "message": "\u003Cimg src=\"../images/en/6.png\">"
+   },
+   "tutorialImg7": {
+      "message": "\u003Cimg src=\"../images/en/7.png\">"
+   },
+   "tutorialImg8": {
+      "message": "\u003Cimg src=\"../images/en/8.png\">"
+   },
+   "tutorialImg9": {
+      "message": "\u003Cimg src=\"../images/en/9.png\">"
+   },
+   "uncheckAll": {
+      "message": "Desmarcar todo"
+   },
+   "unlimitedSchedule": {
+      "message": "Límite de horario ilimitado"
+   },
+   "unspecifiedURL": {
+      "message": "11. Ruta URL no especificada"
+   },
+   "unspecifiedURLExm1": {
+      "message": "En el ejemplo anterior, la URL dada está en una pestaña cerrada, lo que indica que la URL dada que se abrió en una nueva pestaña y comienza y termina con una dirección web desconocida se cerrará después de 5 minutos."
+   },
+   "upgradePlan": {
+      "message": "Compre el plan O inicie sesión y actualice su plan para desbloquear más funciones."
+   },
+   "upgradePlanUnlock": {
+      "message": "Actualice su plan para desbloquear más funciones."
+   },
+   "uploadValidFormat": {
+      "message": "Por favor cargue un formato válido"
+   },
+   "url": {
+      "message": "URL"
+   },
+   "urlContExat": {
+      "message": "Filtrado de URL"
+   },
+   "urlEndWithUnspesifiedPth": {
+      "message": "9. La URL termina con una ruta no especificada"
+   },
+   "urlEndWithUnspesifiedPthExm1": {
+      "message": "En el ejemplo anterior, la URL dada está en una pestaña cerrada, lo que indica que la URL dada que se abrió en una nueva pestaña y finaliza con una ruta desconocida se cerrará después de 5 minutos."
+   },
+   "urlFilterInfo": {
+      "message": "Contiene la URL que se está verificando, solo se necesita parte de la URL y la URL exacta que se está verificando debe coincidir exactamente con la URL especificada"
+   },
+   "urlFilterinCLoseTb": {
+      "message": "14. Filtrado de URL al cerrar la URL de la pestaña"
+   },
+   "urlFilterinCLoseTbExample": {
+      "message": "En el ejemplo anterior, la URL dada está en la pestaña cerrada, lo que indica que la URL de la pestaña ya abierta coincidió con alguna parte de la URL dada, por lo que cerrará esa pestaña."
+   },
+   "urlIsRequired": {
+      "message": "Se requiere el enlace del sitio web"
+   },
+   "urlNotvalid": {
+      "message": "La URL no es válida"
+   },
+   "urlStartWithUnspesifiedPth": {
+      "message": "10. La URL comienza con una ruta no especificada"
+   },
+   "urlStartWithUnspesifiedPthExm1": {
+      "message": "En el ejemplo anterior, la URL dada está en una pestaña cerrada, lo que indica que la URL dada que se abrió en una nueva pestaña y comienza con un subdominio desconocido \u003Cb>\"www\"\u003C/b> o \u003Cb>\"blog\"\u003C/b> se cerrará después de 5 minutos."
+   },
+   "useSpecificUrl": {
+      "message": "Utilice un enlace de sitio web específico"
+   },
+   "useSpecificUrl1": {
+      "message": "Debes haber escrito el subdominio exacto, el dominio de nivel superior, el nombre de dominio y la ruta de la página en el campo Enlace del sitio web de la pestaña cerrada del navegador."
+   },
+   "useSpecificUrl2": {
+      "message": "Utilice todas las pestañas cerradas del navegador"
+   },
+   "useSpecificUrl3": {
+      "message": "Utilice un enlace de sitio web específico y completo"
+   },
+   "useUnSpecificUrl1": {
+      "message": "Utilice un enlace de sitio web no especificado"
+   },
+   "useUnSpecificUrl2": {
+      "message": "Utilice el inicio con un enlace de sitio web no especificado"
+   },
+   "useUnSpecificUrl3": {
+      "message": "Utilice el final con un enlace de sitio web no especificado"
+   },
+   "used": {
+      "message": "Tú usaste"
+   },
+   "validFormatCsv": {
+      "message": "¿Cuál es el formato de archivo CSV válido para importar?"
+   },
+   "websiteLink": {
+      "message": "Enlace del sitio web"
+   },
+   "websiteUrl": {
+      "message": "URL del sitio web"
+   },
+   "wednesday": {
+      "message": "Miércoles"
+   },
+   "weekName": {
+      "message": "Nombre de la semana"
+   },
+   "weekly": {
+      "message": "Semanalmente"
+   },
+   "whenExtensionTabAppears": {
+      "message": "Cuando aparezca la pestaña Extensiones, busque el “Programador de pestañas con apertura y cierre automático” para habilitarlo en modo incógnito y haga clic en el botón “Detalles” que se encuentra junto a él."
+   },
+   "whenMenuPopup": {
+      "message": "Cuando aparezca un menú, seleccione \"Administrar extensiones\"."
+   },
+   "withSignMustFill": {
+      "message": "Con el signo \u003Cspan>*\u003C/span> se debe rellenar o seleccionar, seleccionar la hora de apertura o de cierre o ambas horas."
+   },
+   "writeYourDescriptionAboutSchUrl": {
+      "message": "Escriba aquí su descripción de la URL programada."
+   },
+   "yes": {
+      "message": "Sí"
+   },
+   "yourEmailAddress": {
+      "message": "Su dirección de correo electrónico"
+   },
+   "yourScheduleUrl": {
+      "message": "La URL de tu agenda"
+   }
+}

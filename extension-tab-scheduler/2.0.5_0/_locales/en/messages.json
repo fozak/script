@@ -1,0 +1,1448 @@
+{
+   "10_min": {
+      "message": "10 minute"
+   },
+   "1_min": {
+      "message": "1 minute"
+   },
+   "30_min": {
+      "message": "30 minute"
+   },
+   "5_min": {
+      "message": "5 minute"
+   },
+   "60_min": {
+      "message": "hour"
+   },
+   "Dashboard": {
+      "message": "Dashboard"
+   },
+   "Login": {
+      "message": "Login"
+   },
+   "Off": {
+      "message": "Off"
+   },
+   "On": {
+      "message": "On"
+   },
+   "Selected": {
+      "message": "Selected"
+   },
+   "Settings": {
+      "message": "Settings"
+   },
+   "Tutorial": {
+      "message": "Tutorial"
+   },
+   "action": {
+      "message": "Action"
+   },
+   "activateScheduleTab": {
+      "message": "Activate schduled tab."
+   },
+   "active": {
+      "message": "Active"
+   },
+   "activeAllScheduleTab": {
+      "message": "Running Tab scheduler"
+   },
+   "activeStatus": {
+      "message": "Status"
+   },
+   "actvInactvNotification": {
+      "message": "Display notification when schedule tab is opened"
+   },
+   "actvInactvOpnTb": {
+      "message": "Active or inactive open tab"
+   },
+   "actvIntvClsTb": {
+      "message": "Active or inactive close tab"
+   },
+   "add": {
+      "message": "Add"
+   },
+   "addDescription": {
+      "message": "Add description"
+   },
+   "addNew": {
+      "message": "Add New"
+   },
+   "addNewURlCls": {
+      "message": "Add new URL to close"
+   },
+   "addNewUrlToOpen": {
+      "message": "Add new URL to open in new window"
+   },
+   "addTitle": {
+      "message": "Add Title"
+   },
+   "addWebsite": {
+      "message": "Add website"
+   },
+   "all": {
+      "message": "All"
+   },
+   "allInputFieldReq": {
+      "message": "All fields are required"
+   },
+   "all_weeks": {
+      "message": "All Week"
+   },
+   "alreadyPurchase": {
+      "message": "Already Purchased? Enter Key Here"
+   },
+   "andAt": {
+      "message": "and at"
+   },
+   "annually": {
+      "message": "Annually"
+   },
+   "appDesc": {
+      "message": "Browser tabs will be open and close automatically at selected time. User can activate/deactive list based on requirement"
+   },
+   "appName": {
+      "message": "Tab Scheduler with auto open and close"
+   },
+   "april": {
+      "message": "April"
+   },
+   "at": {
+      "message": "at"
+   },
+   "august": {
+      "message": "August"
+   },
+   "autoFocus": {
+      "message": "Auto Focus Tab"
+   },
+   "autoFocustip": {
+      "message": "If on, the new tab will be opened in an active/focus state."
+   },
+   "autofocustip": {
+      "message": "New tabs open will automatically focus"
+   },
+   "basic": {
+      "message": "Basic"
+   },
+   "billedAnnyally": {
+      "message": "Billed Annually"
+   },
+   "billedMonthly": {
+      "message": "Billed Monthly"
+   },
+   "both": {
+      "message": "Both"
+   },
+   "browserOpen": {
+      "message": "On Browser Open"
+   },
+   "browserWebAddress": {
+      "message": "The browser's web address starts and ends with an unknown web address.Put \u003Cb>*\u003C/b> on both sides of your input Website Link field."
+   },
+   "browserWebAddress2": {
+      "message": "The browser's web address contains the domain name google.com, which will be closed in given minutes whatever the  subdomain, and page path. Put \u003Cb>*\u003C/b> on both sides domain name and TLD "
+   },
+   "browserWebAddress3": {
+      "message": "The browser's web address starts with an unknown domain name and ends with an unknown page path"
+   },
+   "browserWebAddress31": {
+      "message": " will closed after given minutes, put \u003Cb>*\u003C/b> on both sides of the TLD "
+   },
+   "browserWebAddress4": {
+      "message": "The browser's web address starts with an unknown web address. Put \u003Cb>*\u003C/b> at the beginning of your URL. Remember browser's web address must match with your URL after \u003Cb>*\u003C/b> you have written."
+   },
+   "browserWebAddress41": {
+      "message": "The browser's web address starts with an unknown subdomain"
+   },
+   "browserWebAddress42": {
+      "message": "at the beginning of your Website Link"
+   },
+   "browserWebAddress5": {
+      "message": "The browser's web address ends with an unknown web address. Put \u003Cb>*\u003C/b> at the end of your URL. Remember your web address must match before \u003Cb>*\u003C/b> you have written."
+   },
+   "browserWebAddress51": {
+      "message": "The browser's web address ends with an unknown page path. Put \u003Cb>*\u003C/b> at the end of your web address"
+   },
+   "browserWebAddress6": {
+      "message": "Put only \u003Cb>*\u003C/b> in the website address field to close all browser tabs. After closed all tabs browser will be closed automatically."
+   },
+   "browserWebAddress7": {
+      "message": "You must have written the exact subdomain, top level domain, domain name, and page path in the URL field to the open in browser's tab."
+   },
+   "browserWebAddress8": {
+      "message": "You can open url in specific date and time, specific month, specific week, specific year and repeat time"
+   },
+   "buyPlan": {
+      "message": "Buy Plan"
+   },
+   "buycofee": {
+      "message": "Buy Me a Coffee"
+   },
+   "cancel": {
+      "message": "Cancel"
+   },
+   "changeLanguage": {
+      "message": "Change Language"
+   },
+   "checkAll": {
+      "message": "Check All"
+   },
+   "checkThisOpToPreventClosePinTb": {
+      "message": "Check this option to prevent the closure of pinned tabs."
+   },
+   "checkThisOptionOnlyPartOfUrlMtch": {
+      "message": "Check this option if only a part of the URL needs to be matched."
+   },
+   "checkThisOptionToActivate": {
+      "message": "Check this option to activate or inactivate your scheduled url."
+   },
+   "checkThisOptionToCloseOnly": {
+      "message": "Check this option to close only incognito tabs. Also, enable the ‘Allow in Incognito’ option in the extension details. For instructions, please refer to the tutorial page."
+   },
+   "checkThisOptionToCloseOnlyInIncgnitoTb": {
+      "message": "Check this option to close only incognito tabs. Also, enable the ‘Allow in Incognito’ option in the extension details. For instructions, please refer to the tutorial page."
+   },
+   "checkThisOptionToInBg": {
+      "message": "Check this option if you want to open the URL in background without opening it in a new tab"
+   },
+   "checkThisOptionToInactivNotification": {
+      "message": "Check this option to inactive notification on the scheduled url"
+   },
+   "checkThisOptionToOpen": {
+      "message": "Check this option if you want to open your url in incognito mode"
+   },
+   "checkThisOptionToOpenIncogito": {
+      "message": "Check this option if you want to open your url in incognito mode"
+   },
+   "checkThisOptionToPrevent": {
+      "message": "Check this option to prevent the closure of pinned tabs."
+   },
+   "clickExtIcon": {
+      "message": "Click the “Extensions” icon in the toolbar, which looks like a puzzle piece."
+   },
+   "clickTheSwitch": {
+      "message": "Click the switch beside it to turn it on"
+   },
+   "close": {
+      "message": "Close"
+   },
+   "closeAllTab": {
+      "message": "12. Close all browser's tab"
+   },
+   "closeAllTabExm1": {
+      "message": "In above example given URL is in close tab, which states it will close all tabs at 12:00 on 25/2/2023"
+   },
+   "closeDate": {
+      "message": "Close Date"
+   },
+   "closeDay": {
+      "message": "Close Day"
+   },
+   "closeEveryYear": {
+      "message": "Close every year on"
+   },
+   "closeInEvery": {
+      "message": "Close in every"
+   },
+   "closeIncognitoTab": {
+      "message": "Close only incognito tabs"
+   },
+   "closeMinute": {
+      "message": "Close Minute"
+   },
+   "closeOnDay": {
+      "message": "Close on day"
+   },
+   "closeOnEvery": {
+      "message": "Close on every"
+   },
+   "closeOnEveryDay": {
+      "message": "Close on every day on"
+   },
+   "closeOnEveryMonth": {
+      "message": "Close every month on day"
+   },
+   "closeOnEveryWeek": {
+      "message": "Close every week on"
+   },
+   "closeSecond": {
+      "message": "Close Second"
+   },
+   "closeSeconsMoreThan5": {
+      "message": "Close seconds should more be than 5."
+   },
+   "closeTabSchedule": {
+      "message": "Close Tab Schedule"
+   },
+   "closeTabURL": {
+      "message": "Close Tab URL"
+   },
+   "closeTime": {
+      "message": "Close Time"
+   },
+   "closeUrl": {
+      "message": "Close Website Link"
+   },
+   "closeWeek": {
+      "message": "Close Week"
+   },
+   "closeWeeks": {
+      "message": "Close Weeks"
+   },
+   "close_on": {
+      "message": "Close on"
+   },
+   "cngrtsForSubcr": {
+      "message": "Congratulations! Your plan has been successfully activated."
+   },
+   "commonQuestionsAns": {
+      "message": "Common questions and answers"
+   },
+   "copySucessClose": {
+      "message": "Close tab URL data copied to Open tab URL data"
+   },
+   "createNewTimer": {
+      "message": "Create New Timer"
+   },
+   "currentPlan": {
+      "message": "Current Plan"
+   },
+   "currentTabSchedule": {
+      "message": "Current tab schedule"
+   },
+   "currentTbScheduleTimer": {
+      "message": "Current tab scheduled timer."
+   },
+   "cusSec": {
+      "message": "Custom Second"
+   },
+   "custMin": {
+      "message": "Custom Minute"
+   },
+   "custmMinSch": {
+      "message": "7.Custom Minute Schedule"
+   },
+   "custmMinSchExm1": {
+      "message": "In above example given URL is in open tab, which states given URL  open in new tab Every 15 Minutes."
+   },
+   "custmMinSchExm2": {
+      "message": "In above example given URL is in close tab, which states that given URL that opened in a new tab will be closed after 15 minutes."
+   },
+   "customSecondWarning": {
+      "message": "The custom second functionality is experimental, and it may not function correctly if seconds are set below 60."
+   },
+   "darkMode": {
+      "message": "Dark Mode"
+   },
+   "datNotCopy": {
+      "message": "Some data is not copied due to an invalid URL."
+   },
+   "dataSaved": {
+      "message": "Timer data save successfully"
+   },
+   "date": {
+      "message": "Date"
+   },
+   "dateIsOutOfRange": {
+      "message": "Date is out of range"
+   },
+   "day": {
+      "message": "Day"
+   },
+   "december": {
+      "message": "December"
+   },
+   "delete": {
+      "message": "Delete"
+   },
+   "deleteScheduleTb": {
+      "message": "Delete scheduled tab."
+   },
+   "description": {
+      "message": "Description"
+   },
+   "developedBy": {
+      "message": "Developed by:"
+   },
+   "doNotCloseInPinnedTabs": {
+      "message": "Do not close pinned tabs"
+   },
+   "doNotShowNotification": {
+      "message": "Do not show notification"
+   },
+   "domainName": {
+      "message": "Domain Name"
+   },
+   "downloadCloseTbSampleCsv": {
+      "message": "Download a close tab sample CSV to see an example of the required format"
+   },
+   "downloadOpenTbSampleCsv": {
+      "message": "Download an open tab sample CSV to see an example of the required format"
+   },
+   "editScheduleTb": {
+      "message": "Edit scheduled tab."
+   },
+   "email": {
+      "message": "Email"
+   },
+   "enterDateToCloseTab": {
+      "message": "Enter date here to close schedule tab."
+   },
+   "enterDateToOpen": {
+      "message": "Enter date to open the schdule tab."
+   },
+   "enterMiniutesToCloseTb": {
+      "message": "Enter miniutes to close the tab."
+   },
+   "enterMiniutesToOpen": {
+      "message": "Enter miniutes to open the schedule tab."
+   },
+   "enterMinute": {
+      "message": "Enter Minute"
+   },
+   "enterSecond": {
+      "message": "Enter Second"
+   },
+   "enterSecondsToCloseTab": {
+      "message": "Enter seconds to close the tab."
+   },
+   "enterSecondsToOpen": {
+      "message": "Enter seconds to open the schedule tab."
+   },
+   "enterTilteOfScheduleUrl": {
+      "message": "Enter title of schduled URL."
+   },
+   "enterTimeToCloseTab": {
+      "message": "Enter time here to close schedule tab."
+   },
+   "enterTimeToSchedule": {
+      "message": "Enter time to open the schedule tab."
+   },
+   "enterValidEmail": {
+      "message": "Please Enter Valid Email"
+   },
+   "enterValidUrl": {
+      "message": "Please enter valid URL"
+   },
+   "enterValueInCloseSec": {
+      "message": "Enter value in close seconds"
+   },
+   "enterValueInOpenCloseSec": {
+      "message": "Enter value in open or close seconds"
+   },
+   "enterValueInOpenMinutes": {
+      "message": "Enter value in open minutes"
+   },
+   "enterVlaueInCloseMinutes": {
+      "message": "Enter value in close minutes"
+   },
+   "enterVlaueInOpenCloseMin": {
+      "message": "Enter value in open or close minutes"
+   },
+   "enterVlaueInOpenSeconds": {
+      "message": "Enter value in open seconds"
+   },
+   "enterYourURLToSchedule": {
+      "message": "Enter your URL to schedule."
+   },
+   "every": {
+      "message": "every"
+   },
+   "every10Min": {
+      "message": "Every 10 Minute"
+   },
+   "every1Minute": {
+      "message": "every 1 minute"
+   },
+   "every30Min": {
+      "message": "Every 30 Minute"
+   },
+   "every5Min": {
+      "message": "Every 5 Minute"
+   },
+   "everyDay": {
+      "message": "Every Day"
+   },
+   "everyDayAt": {
+      "message": "every day at"
+   },
+   "everyHour": {
+      "message": "Every Hour"
+   },
+   "everyMinute": {
+      "message": "Every Minute"
+   },
+   "everyMonth": {
+      "message": "Every Month"
+   },
+   "everyMonthOn": {
+      "message": "every month on"
+   },
+   "everyMonthOnDay": {
+      "message": "every month on day"
+   },
+   "everyWeek": {
+      "message": "Every Week"
+   },
+   "everyWeekOn": {
+      "message": "every week on"
+   },
+   "everyYear": {
+      "message": "Every Year"
+   },
+   "everyYesrOn": {
+      "message": "every year on"
+   },
+   "evr10MinSch": {
+      "message": "2.Every 10 Minute Schedule"
+   },
+   "evr10MinSchExm1": {
+      "message": "In above example given URL is in open tab, which states given URL  will open in new tab Every 10 Minutes."
+   },
+   "evr10MinSchExm2": {
+      "message": "In above example given URL is in close tab, which states that given URL that opened in a new tab will be closed after 10 minutes."
+   },
+   "evrDaySch": {
+      "message": "3.Every Day Schedule"
+   },
+   "evrDaySchExm1": {
+      "message": "In above example given URL is in open tab, which states it will open in new tab Every Day at 5:27 P.M."
+   },
+   "evrDaySchExm2": {
+      "message": "In above example given URL is in close tab, which states it will close the already opened tab at 5:27 PM every day"
+   },
+   "evrMonthSch": {
+      "message": "5.Every Month Schedule"
+   },
+   "evrMonthSchExm1": {
+      "message": "In above example given URL is in open tab, which states  It will open in new tab Every Month at 13:45 on day 25"
+   },
+   "evrMonthSchExm2": {
+      "message": "In above example given URL is in close tab, which states it will close the already opened tab at Every Month at 13:45 on day 25"
+   },
+   "evrWeekSch": {
+      "message": "4.Every Week Schedule"
+   },
+   "evrWeekSchExm1": {
+      "message": " In the above example, the given URL is in an open tab, which states it will open in a new tab every week at 17:00 on \u003Cb>Monday & Tuesday\u003C/b>."
+   },
+   "evrWeekSchExm2": {
+      "message": "In the above example, the given URL is in the close tab, which states that it will close the already opened tab at Every Week at 17:00 on \u003Cb>Monday & Tuesday\u003C/b>."
+   },
+   "evrWeekSchExm3": {
+      "message": "In the above example, multiple days can be selected in the week timer."
+   },
+   "evrYearSch": {
+      "message": "6.Every Year Schedule"
+   },
+   "evrYearSchExm1": {
+      "message": "In above example given URL is in open tab, which states it will open in new tab Every Year at 13:35 on 1'st January"
+   },
+   "evrYearSchExm2": {
+      "message": "In above example given URL is in close tab, which states it will close the already opened tab at Every Year at 13:35 on 1'st January"
+   },
+   "exampleSort": {
+      "message": "e.g."
+   },
+   "exdMaxLim": {
+      "message": "Exceeded maximum devices allowed!"
+   },
+   "exmpOpnClsTbSch": {
+      "message": "Example for how to open and close tab in Tab Scheduler"
+   },
+   "expLicKy": {
+      "message": "This license key is expired."
+   },
+   "export": {
+      "message": "Export"
+   },
+   "exportBefore": {
+      "message": "You have \u003Cexday>\u003C/exday> days left, Please subscribe to continue enjoy premium feature"
+   },
+   "exportClsTbDta": {
+      "message": "Export close tab data"
+   },
+   "exportOpenTbDt": {
+      "message": "Export open tab data"
+   },
+   "exportedData": {
+      "message": "Timer data exported successfully"
+   },
+   "extensionShouldAble": {
+      "message": "Now, the extension should be able to close tabs in Incognito mode."
+   },
+   "faq": {
+      "message": "FAQ"
+   },
+   "faq_1": {
+      "message": " What is Tab Scheduler with Auto Open and Close?"
+   },
+   "faq_10": {
+      "message": "How do I view my scheduled tabs?"
+   },
+   "faq_11": {
+      "message": "Is it mandatory to fill in both the open and close times?"
+   },
+   "faq_12": {
+      "message": "What do the features of Auto Focus Tab, Activate All Scheduled Tabs, and Power Mode do?"
+   },
+   "faq_13": {
+      "message": "Can I open/close the schduled Website Link in incognito tab.?"
+   },
+   "faq_14": {
+      "message": "What is use of Refresh tab if URL is already open?"
+   },
+   "faq_2": {
+      "message": "What is the use of Website Link?"
+   },
+   "faq_3": {
+      "message": " How do I schedule a URL using Tab Scheduler?"
+   },
+   "faq_4": {
+      "message": "What is the 'Open URL in Background' option?"
+   },
+   "faq_5": {
+      "message": "Can I prevent the extension from closing pinned tabs?"
+   },
+   "faq_6": {
+      "message": "What does the 'Both' schedule type mean?"
+   },
+   "faq_7": {
+      "message": "How does the 'URL Filtering' feature work?"
+   },
+   "faq_8": {
+      "message": "Can I deactivate a scheduled tab without deleting it?"
+   },
+   "faq_9": {
+      "message": "Will I receive notifications for scheduled tabs?"
+   },
+   "faq_a_1": {
+      "message": "\u003Cp> Tab Scheduler with Auto Open and Close is a browser extension that allows users to schedule tabs to open and close automatically at set times. Users can select a one-time schedule or set up recurring schedules with various frequency options. This extension has multiple purposes for users and provides many features that are helpful to you.\u003C/p>"
+   },
+   "faq_a_10": {
+      "message": "All scheduled tabs are displayed in a list showing the title, website link, open and close times, status, and actions you can take (e.g., activate, edit, delete)."
+   },
+   "faq_a_11": {
+      "message": "No, you can schedule either an open time or a close time. However, you must fill out or select the required fields marked with an asterisk (*)."
+   },
+   "faq_a_12": {
+      "message": "Auto Focus Tab ensures that when a scheduled tab opens, Activate All Scheduled Tabs enables you to quickly turn on all your scheduled tabs with a single click. Power Mode optimizes the extension’s performance by managing browser resources more efficiently."
+   },
+   "faq_a_13": {
+      "message": "Yes, you can choose to open a scheduled tab in incognito mode by selecting the \"Open in incognito mode\" option. You can choose to close only incognito tabs by selecting the \"Close only incognito tabs\" option, as long as \"Allow in Incognito\" is enabled in the extension settings"
+   },
+   "faq_a_14": {
+      "message": "When this option is enabled, the extension will automatically refresh an existing tab if the same URL is already open in your browser. This prevents opening duplicate tabs and ensures that you always have the latest version of the page loaded."
+   },
+   "faq_a_14_1": {
+      "message": "If you try to open https://github.com/ and it’s already open in another tab, the extension will simply refresh that tab instead of opening a new one."
+   },
+   "faq_a_14_2": {
+      "message": "If  https://github.com/ is already open in three tabs, the extension will refresh all three tabs."
+   },
+   "faq_a_2": {
+      "message": "The Website Link is your browser's open tab website address. How you can use website address is mention below."
+   },
+   "faq_a_3": {
+      "message": "To schedule a URL, enter the website link, give the schedule a title, select the frequency (One Time, Every Minute, Daily, etc.), and choose the open and close times. You can also specify a date, day, or seconds to open and close the tab."
+   },
+   "faq_a_4": {
+      "message": "\u003Cp>This option gives you full control to schedule a URL to open in the background without bringing the new tab into focus. The URL will open quietly while you continue working on other tabs. It's particularly useful when you need the browser to fetch data from the scheduled URL without displaying it actively, such as in the case of a GET API request. \u003C/p>\u003Cbr> \u003Cp>For example, if you want to fetch data from an API endpoint at a set time regularly, you can use this efficient option to run the request in the background without opening a new visible tab.\u003C/p>"
+   },
+   "faq_a_5": {
+      "message": "Yes, there's an option to prevent the closure of pinned tabs. Check the \"Do not close pinned tabs\" option to ensure these tabs remain open even if they meet other closing criteria."
+   },
+   "faq_a_6": {
+      "message": "The 'Both' schedule type gives you complete control over when a tab opens and closes, allowing you to set specific times for both actions."
+   },
+   "faq_a_7": {
+      "message": "URL Filtering ensures that only a specific part of the URL needs to match for the scheduled action to take place. This is useful when you want to automate certain actions based on partial URL matches. For example, if you check the URL Filtering option for the URL https://example.com/page, it will also apply to URLs like https://example.com/page/123, https://example.com/page?query=example, and https://subdomain.example.com/page."
+   },
+   "faq_a_8": {
+      "message": "With the \"Activate this scheduled tab\" option, you can easily activate or deactivate scheduled tabs, giving you the flexibility to manage your schedules without losing configurations."
+   },
+   "faq_a_9": {
+      "message": "By default, you will receive notifications. However, if you prefer to stop notifications, you can check the \"Do not show notification\" option to disable them."
+   },
+   "february": {
+      "message": "February"
+   },
+   "filterTips": {
+      "message": "Filter applies after 'https://' or 'www.', Ex 'github.com'"
+   },
+   "for_exp": {
+      "message": "For example"
+   },
+   "freeForever": {
+      "message": "Free Forever"
+   },
+   "freeSchedule": {
+      "message": "free schedule"
+   },
+   "freeTral": {
+      "message": "As a valued early user, you’ll enjoy \u003Crday>120\u003C/rday> days of free access before switching to our new paid plan—thank you for your continued support! \u003Cp class=\"p-t-5\"> You have \u003Cb>\u003Cspan>\u003C/span>\u003C/b> days remaining out of your \u003Crday>120\u003C/rday>-day free period. \u003Cafex class=\"warning\">\u003Cafex>\u003C/p> "
+   },
+   "frequentlyAskedQuestions": {
+      "message": "Frequently asked questions"
+   },
+   "friday": {
+      "message": "Friday"
+   },
+   "getThisPlan": {
+      "message": "Get This Plan"
+   },
+   "goToSettingsPageToSchedule": {
+      "message": "Go to the settings page to schedule the opening and closing of URLs."
+   },
+   "goURL": {
+      "message": "Go to the URL"
+   },
+   "helpAccordion12": {
+      "message": "Does this extension work in sleep/suspend mode?"
+   },
+   "helpAccordion3": {
+      "message": "Can I schedule a tab to open in incognito mode?"
+   },
+   "helpAccordion6": {
+      "message": "What is &quot;Time expired&quot;?"
+   },
+   "helpAccordion7": {
+      "message": "Can I export scheduled URL?"
+   },
+   "helpAccordion8": {
+      "message": "Can I Import to Schedule URL?"
+   },
+   "helpPanelBodyDesc12First": {
+      "message": "No, this extension will not work in sleep/suspend mode."
+   },
+   "helpPanelBodyDesc12Second": {
+      "message": "If any URL is scheduled in the open or close tab, then your PC will not go automatically into sleep or suspend mode."
+   },
+   "helpPanelBodyDesc3": {
+      "message": "Yes, you can choose to open a scheduled tab in incognito mode by selecting the 'Open in incognito mode' option. Make sure the extension's 'Allow in Incognito' option is enabled in the browser's extension settings."
+   },
+   "helpPanelBodyDesc6": {
+      "message": "- The given date and time is pass from the current date and time then the &quot;Time Expired&quot; text will show."
+   },
+   "helpPanelBodyDesc7": {
+      "message": "Yes, You can Export already Scheduled open tab and close tab URL in csv format and use it with another system to import that URL."
+   },
+   "helpPanelBodyDesc8": {
+      "message": "Yes, You can Import valid open and close URL in csv format.The imported csv format will automatically scheduled in given time"
+   },
+   "herAreStepsToAllow": {
+      "message": "Here are the steps to \"Allow in Incognito\"  in Google Chrome:"
+   },
+   "home": {
+      "message": "Home"
+   },
+   "hour_minute_close": {
+      "message": "Every Hour Close Minute "
+   },
+   "hour_minute_open": {
+      "message": "Every Hour Open Minute "
+   },
+   "how_to_use_tab": {
+      "message": "How to use Tab scheduler?"
+   },
+   "import": {
+      "message": "Import"
+   },
+   "importClsTbDta": {
+      "message": "Import close tab data"
+   },
+   "importExport": {
+      "message": "Import/Export"
+   },
+   "importOpenTbDt": {
+      "message": "Import open tab data"
+   },
+   "importedRecored": {
+      "message": " , imported recored "
+   },
+   "inactivateScheduleTab": {
+      "message": "Inactivate scheduled tab."
+   },
+   "inactive": {
+      "message": "Inactive"
+   },
+   "inactiveSch": {
+      "message": "8.Inactive URL"
+   },
+   "inactiveSchExm1": {
+      "message": "In above example given URL is in open tab or close tab, which states given URL is inactive and it will not perform any action."
+   },
+   "inactiveThisScheduledTabs": {
+      "message": "Activate this scheduled tab"
+   },
+   "invalidDuplicate": {
+      "message": " , duplicate or invalid recored "
+   },
+   "invldLicKy": {
+      "message": "Invalid license key!"
+   },
+   "isClose": {
+      "message": "is close"
+   },
+   "isOpen": {
+      "message": "is open"
+   },
+   "january": {
+      "message": "January"
+   },
+   "july": {
+      "message": "July"
+   },
+   "june": {
+      "message": "June"
+   },
+   "licKeyDis": {
+      "message": "This license key is disabled."
+   },
+   "listTitle": {
+      "message": "Tab Scheduler"
+   },
+   "loading": {
+      "message": "Please Wait..."
+   },
+   "locale": {
+      "message": "en"
+   },
+   "march": {
+      "message": "March"
+   },
+   "maxSchedule": {
+      "message": "4 Maximum schedule limit"
+   },
+   "may": {
+      "message": "May"
+   },
+   "mintValid": {
+      "message": "Minimum 1 minute is required"
+   },
+   "minute": {
+      "message": "Minute"
+   },
+   "minutesNotLessThan1": {
+      "message": "Minutes should not less than 1."
+   },
+   "monday": {
+      "message": "Monday"
+   },
+   "month": {
+      "message": "Month"
+   },
+   "monthly": {
+      "message": "Monthly"
+   },
+   "more": {
+      "message": "more"
+   },
+   "mostSubscribe": {
+      "message": "Most Subscribe"
+   },
+   "no": {
+      "message": "No"
+   },
+   "noDataToExport": {
+      "message": "No data to export."
+   },
+   "noScheduledTabs": {
+      "message": "No scheduled tabs"
+   },
+   "noTimerSetAddNewTimer": {
+      "message": "No timer set, Click Add button to set new timer"
+   },
+   "not_show_tutorial": {
+      "message": "Do not show this tutorial again"
+   },
+   "notificationOpenTab": {
+      "message": "13. Notification on open/close tab URL"
+   },
+   "notificationOpenTabExm1": {
+      "message": "In above example given URL is in open tab, which states it will give notification and open/close URL in new tab in every 5 minutes."
+   },
+   "notifications": {
+      "message": "Notification"
+   },
+   "november": {
+      "message": "November"
+   },
+   "october": {
+      "message": "October"
+   },
+   "onTheExtensionDetailPage": {
+      "message": "On the extension’s details page, scroll down and locate the “Allow in incognito” option."
+   },
+   "oneTime": {
+      "message": "One Time"
+   },
+   "oneTmSch": {
+      "message": "1.One Time Schedule"
+   },
+   "oneTmSchExm1": {
+      "message": "In above example given URL is in open tab, which states it will open in new tab One Time at 13:45 on 21/1/2023"
+   },
+   "oneTmSchExm2": {
+      "message": "In above example given URL is in close tab,which states it will close all specific matched URL tabs at 13:45 on 21/1/2023"
+   },
+   "open": {
+      "message": "Open"
+   },
+   "openBackground": {
+      "message": "If yes, Loading a URL in the background without opening it in a new tab"
+   },
+   "openDate": {
+      "message": "Open Date"
+   },
+   "openDay": {
+      "message": "Open Day"
+   },
+   "openEveryDayOn": {
+      "message": "Open every day on"
+   },
+   "openEveryMonthOn": {
+      "message": "Open every month on day"
+   },
+   "openEveryWeekOn": {
+      "message": "Open every week on"
+   },
+   "openEveryYearOn": {
+      "message": "Open every year on"
+   },
+   "openGoogleChrome": {
+      "message": "Open Google Chrome."
+   },
+   "openInBackground": {
+      "message": "Open URL in Background"
+   },
+   "openInEvery": {
+      "message": "Open in every"
+   },
+   "openInIncognito": {
+      "message": "Open in incognito mode"
+   },
+   "openMinute": {
+      "message": "Open Minute"
+   },
+   "openOnDay": {
+      "message": "Open on Day"
+   },
+   "openOnEvery": {
+      "message": "Open on every"
+   },
+   "openSecond": {
+      "message": "Open Second"
+   },
+   "openSecondsMoreThan5": {
+      "message": "Open seconds should more be than 5."
+   },
+   "openTabSchedule": {
+      "message": "Open Tab Schedule"
+   },
+   "openTabURL": {
+      "message": "Open Tab URL"
+   },
+   "openTime": {
+      "message": "Open Time"
+   },
+   "openUrl": {
+      "message": "Open Website Link"
+   },
+   "openWeek": {
+      "message": "Open Week"
+   },
+   "openWeeks": {
+      "message": "Open Weeks"
+   },
+   "open_on": {
+      "message": "Open on"
+   },
+   "optional": {
+      "message": "Optional"
+   },
+   "or": {
+      "message": "or"
+   },
+   "outof": {
+      "message": "out of"
+   },
+   "pagePath": {
+      "message": "Page Path"
+   },
+   "paidFeature": {
+      "message": "Paid Feature"
+   },
+   "pauseSchedule": {
+      "message": "Start or Stop all schedules"
+   },
+   "pauseTabScheduler": {
+      "message": "Paused Tab scheduler"
+   },
+   "pleaseAllowIncognitoMessage": {
+      "message": "Please enable the ‘Allow in Incognito’ option in the extension details. For instructions, please refer to the tutorial page."
+   },
+   "pleaseShareYourSuggestions": {
+      "message": "Please share your suggestion."
+   },
+   "plsShreAnySugWithUs": {
+      "message": "Please give a suggestion to improve us"
+   },
+   "powerMode": {
+      "message": "Power Mode"
+   },
+   "premium": {
+      "message": "Premium"
+   },
+   "pricePlan": {
+      "message": "Pricing & Plans"
+   },
+   "privcyPolicy": {
+      "message": "Privacy Policy"
+   },
+   "prowerModeTip": {
+      "message": "Keep the system always active by enabling Power Mode"
+   },
+   "put": {
+      "message": "Put"
+   },
+   "rateUs": {
+      "message": "Rate Us"
+   },
+   "removeDuplicateEntry": {
+      "message": "Please remove duplicate entry"
+   },
+   "removeOpenTbURL": {
+      "message": "Remove open tab URL"
+   },
+   "repeat": {
+      "message": "Repeat"
+   },
+   "requiredMsg": {
+      "message": "Required"
+   },
+   "rmvClsTb": {
+      "message": "Remove close tab URL"
+   },
+   "sameTabs": {
+      "message": "Refresh tab if URL is already open"
+   },
+   "sameTabsInfo": {
+      "message": "Prevent opening multiple tabs for the same URL. For example, if www.google.com is already opened, then that existing tab will be refreshed instead of opening a new tab for it."
+   },
+   "sampleCsvOpenPath": {
+      "message": "../sample_csv/en/open_tab_sample.csv"
+   },
+   "sampleFile": {
+      "message": "Sample file"
+   },
+   "saturday": {
+      "message": "Saturday"
+   },
+   "savOpnData": {
+      "message": "Save open tab data"
+   },
+   "save": {
+      "message": "Save"
+   },
+   "saveClsTbData": {
+      "message": "Save close tab data"
+   },
+   "saveSchedule": {
+      "message": "Save Schedule"
+   },
+   "scheduleCloseTab": {
+      "message": "Schedule Close Tab"
+   },
+   "scheduleCurrentTab": {
+      "message": "Schedule current tab"
+   },
+   "scheduleOpenTab": {
+      "message": "Schedule Open Tab"
+   },
+   "scheduledTabIsAlreadyExistWithSameTimer": {
+      "message": "This scheduled tab is already existed with same timer."
+   },
+   "scheduledTabList": {
+      "message": "Scheduled Tab List"
+   },
+   "scheduledType": {
+      "message": "Schedule Type"
+   },
+   "search": {
+      "message": "Search"
+   },
+   "secValid": {
+      "message": "Minimum 5 second is required"
+   },
+   "second": {
+      "message": "Second"
+   },
+   "selectCloseDate": {
+      "message": "Select close date"
+   },
+   "selectCloseDay": {
+      "message": "Select close day"
+   },
+   "selectCloseTime": {
+      "message": "Select close time"
+   },
+   "selectColumn": {
+      "message": "Select Column"
+   },
+   "selectDateAndTime": {
+      "message": "Select date and time to open new tab"
+   },
+   "selectDateAndTimeClsTb": {
+      "message": "Select date and time to close tab"
+   },
+   "selectDayToCloseSchTb": {
+      "message": "Select day to close schedule tab."
+   },
+   "selectDayToClsTb": {
+      "message": "Select day to close tab"
+   },
+   "selectDayToSchdule": {
+      "message": "Select day to schedule tab."
+   },
+   "selectDaysInWeek": {
+      "message": "Select days in week"
+   },
+   "selectDaysInWeekIClsTime": {
+      "message": "Select days in week in close timer."
+   },
+   "selectDaysInWeekIOpClsTime": {
+      "message": "Select days in week in open or close timer."
+   },
+   "selectDaysInWeekIOpTime": {
+      "message": "Select days in week in open timer."
+   },
+   "selectFrequency": {
+      "message": "Select Frequency"
+   },
+   "selectFrequencyOfScheduleUrl": {
+      "message": "Select frequency of the scheduled URL."
+   },
+   "selectOpenDate": {
+      "message": "Select open date"
+   },
+   "selectOpenDay": {
+      "message": "Select open day"
+   },
+   "selectOpenOrClose": {
+      "message": "Select open and close time"
+   },
+   "selectOpenOrCloseDate": {
+      "message": "Select open and close date"
+   },
+   "selectOpenOrCloseDay": {
+      "message": "Select open and close day"
+   },
+   "selectOpenTime": {
+      "message": "Select open time"
+   },
+   "selectPreferredLanguage": {
+      "message": "Select your preferred language."
+   },
+   "selectToOpenTab": {
+      "message": "Select day to open new tab"
+   },
+   "selectTypTimerClsTb": {
+      "message": "Select type of timer to close tab"
+   },
+   "selectTypeOfSchedule": {
+      "message": "Select type of schedule, if you want to both open and close than select \"Both\"."
+   },
+   "selectTypeOfTimer": {
+      "message": "Select type of timer to open new tab"
+   },
+   "select_weeks": {
+      "message": "Select Weeks"
+   },
+   "september": {
+      "message": "September"
+   },
+   "settingSave": {
+      "message": "Settings save successfully"
+   },
+   "settingToClose": {
+      "message": "Setting to close tab in incognito mode."
+   },
+   "shareYourSuggestionWithUs": {
+      "message": "Share your suggestions with us.."
+   },
+   "slectDayToScheduleWeekly": {
+      "message": "Select days to schedule tab weekly."
+   },
+   "slectMinute": {
+      "message": "Select Minute"
+   },
+   "smthngWrng": {
+      "message": "Something went wrong"
+   },
+   "softpulseInfotech": {
+      "message": "Softpulse Infotech"
+   },
+   "somethingWentWrong": {
+      "message": "Something went wrong. Refresh the page and try again."
+   },
+   "status": {
+      "message": "Status"
+   },
+   "subcrKeyShldNEmpt": {
+      "message": "Please enter subscription key."
+   },
+   "subdomain": {
+      "message": "Subdomain"
+   },
+   "subkeyInputTitle": {
+      "message": "Enter subscription key"
+   },
+   "submFeedBack": {
+      "message": "Submit"
+   },
+   "suggForTbSch": {
+      "message": "Suggestion for tab scheduler"
+   },
+   "suggestionAndRateUs": {
+      "message": "Suggestion & Rate us"
+   },
+   "sunday": {
+      "message": "Sunday"
+   },
+   "tabCloseOneTime": {
+      "message": "Tab will close only one time on"
+   },
+   "tabSchTutorial": {
+      "message": "Tab Scheduler Tutorial"
+   },
+   "tabScheduler": {
+      "message": "Tab Scheduler"
+   },
+   "tabSchedulerOptions": {
+      "message": "Tab Scheduler Options"
+   },
+   "tabWillOpenOneTime": {
+      "message": "Tab will open only one time on"
+   },
+   "tabWillOpenWhenBrowserOpen": {
+      "message": "Tab will open when browser will open on"
+   },
+   "termCondition": {
+      "message": "Terms & Condition"
+   },
+   "thanksFrRev": {
+      "message": "Thank You For Your Review"
+   },
+   "thnkUFeedBack": {
+      "message": "Thank you for your suggestion"
+   },
+   "thnkUFrUsngTbSch": {
+      "message": "Please give a suggestion to improve us"
+   },
+   "thursday": {
+      "message": "Thursday"
+   },
+   "time": {
+      "message": "Time"
+   },
+   "timeExpired": {
+      "message": "Time Expired"
+   },
+   "timer": {
+      "message": "Timer"
+   },
+   "title": {
+      "message": "Title"
+   },
+   "titleLengtWarn": {
+      "message": "Title length should not more than 200 characters."
+   },
+   "toScheduledOpenTbMsg": {
+      "message": "To scheduled open tab please uncheck url filtering."
+   },
+   "toogleCloseTab": {
+      "message": "Start/Stop the schedule alarm for all close tab URL"
+   },
+   "toogleDarkmode": {
+      "message": "Switch between dark mode and default mode to customize your viewing experience."
+   },
+   "toogleOff": {
+      "message": "Off"
+   },
+   "toogleOn": {
+      "message": "On"
+   },
+   "toogleOpenTab": {
+      "message": "Start/Stop the schedule alarm for all open tab URL"
+   },
+   "topLevelDomain": {
+      "message": "Top Level Domain"
+   },
+   "totalProcessed": {
+      "message": "Total recored processed "
+   },
+   "tuesday": {
+      "message": "Tuesday"
+   },
+   "tutorialImg1": {
+      "message": "\u003Cimg src='../images/en/1.png'>"
+   },
+   "tutorialImg10": {
+      "message": "\u003Cimg src='../images/en/10.png'>"
+   },
+   "tutorialImg11": {
+      "message": "\u003Cimg src='../images/en/11.png'>"
+   },
+   "tutorialImg12": {
+      "message": "\u003Cimg src='../images/en/12.png'>"
+   },
+   "tutorialImg13": {
+      "message": "\u003Cimg src='../images/en/13.png'>"
+   },
+   "tutorialImg14": {
+      "message": "\u003Cimg src='../images/en/14.png'>"
+   },
+   "tutorialImg2": {
+      "message": "\u003Cimg src='../images/en/2.png'>"
+   },
+   "tutorialImg3": {
+      "message": "\u003Cimg src='../images/en/3.png'>"
+   },
+   "tutorialImg4": {
+      "message": "\u003Cimg src='../images/en/4.png'>"
+   },
+   "tutorialImg5": {
+      "message": "\u003Cimg src='../images/en/5.png'>"
+   },
+   "tutorialImg6": {
+      "message": "\u003Cimg src='../images/en/6.png'>"
+   },
+   "tutorialImg7": {
+      "message": "\u003Cimg src='../images/en/7.png'>"
+   },
+   "tutorialImg8": {
+      "message": "\u003Cimg src='../images/en/8.png'>"
+   },
+   "tutorialImg9": {
+      "message": "\u003Cimg src='../images/en/9.png'>"
+   },
+   "uncheckAll": {
+      "message": "Uncheck All"
+   },
+   "unlimitedSchedule": {
+      "message": "Unlimited schedule limit"
+   },
+   "unspecifiedURL": {
+      "message": "11. URL unspecified path"
+   },
+   "unspecifiedURLExm1": {
+      "message": "In above example given URL is in close tab, which states that given URL that opened in a new tab and  starts and ends with an unknown web address will be closed after 5 minutes."
+   },
+   "upgradePlan": {
+      "message": "Please Buy Plan OR Login & Upgrade your plan to unlock more features."
+   },
+   "upgradePlanUnlock": {
+      "message": "Upgrade your plan to unlock more features."
+   },
+   "uploadValidFormat": {
+      "message": "Please upload valid format"
+   },
+   "url": {
+      "message": "URL"
+   },
+   "urlContExat": {
+      "message": "URL Filtering"
+   },
+   "urlEndWithUnspesifiedPth": {
+      "message": "9. URL end with unspecified path"
+   },
+   "urlEndWithUnspesifiedPthExm1": {
+      "message": "In above example given URL is in close tab, which states that given URL that opened in a new tab and end with unknown path will be closed after 5 minutes."
+   },
+   "urlFilterInfo": {
+      "message": "Contains URL being checked only needs part of the URL and Exact URL \nbeing checked must be an exact match with the specified URL"
+   },
+   "urlFilterinCLoseTb": {
+      "message": "14. URL Filtering on close tab URL"
+   },
+   "urlFilterinCLoseTbExample": {
+      "message": "In above example given URL is in close tab, which states already opened tab URL matched some of the part of the given URL so it will close that tab"
+   },
+   "urlIsRequired": {
+      "message": "Website Link is required"
+   },
+   "urlNotvalid": {
+      "message": "URL is not valid"
+   },
+   "urlStartWithUnspesifiedPth": {
+      "message": "10. URL start with unspecified path"
+   },
+   "urlStartWithUnspesifiedPthExm1": {
+      "message": "In above example given URL is in close tab, which states that given URL that opened in a new tab and starts with an unknown subdomain \u003Cb>'www'\u003C/b> or \u003Cb>'blog'\u003C/b> will be closed after 5 minutes."
+   },
+   "useSpecificUrl": {
+      "message": "Use specific Website Link"
+   },
+   "useSpecificUrl1": {
+      "message": "You must have written the exact subdomain, top level domain, domain name, and page path in the Website Link field to the closed browser's tab."
+   },
+   "useSpecificUrl2": {
+      "message": "Use closed all browser's tab"
+   },
+   "useSpecificUrl3": {
+      "message": "Use specific and full Website Link"
+   },
+   "useUnSpecificUrl1": {
+      "message": "Use unspecified Website Link"
+   },
+   "useUnSpecificUrl2": {
+      "message": "Use start with unspecified Website Link"
+   },
+   "useUnSpecificUrl3": {
+      "message": "Use end with unspecified Website Link"
+   },
+   "used": {
+      "message": "You used"
+   },
+   "validFormatCsv": {
+      "message": "What is the valid CSV file format for importing?"
+   },
+   "websiteLink": {
+      "message": "Website Link"
+   },
+   "websiteUrl": {
+      "message": "Website URL"
+   },
+   "wednesday": {
+      "message": "Wednesday"
+   },
+   "weekName": {
+      "message": "Week Name"
+   },
+   "weekly": {
+      "message": "Weekly"
+   },
+   "whenExtensionTabAppears": {
+      "message": "When the Extensions tab appears, locate the \"Tab Scheduler with auto open and close\" to enable in Incognito mode and click the “Details” button beside it."
+   },
+   "whenMenuPopup": {
+      "message": "When a menu pops up, select \"Manage extensions\"."
+   },
+   "withSignMustFill": {
+      "message": "With \u003Cspan>*\u003C/span> sign must be fill or select, Select either open or close time or both time."
+   },
+   "writeYourDescriptionAboutSchUrl": {
+      "message": "Write your description about scheduled url here."
+   },
+   "yes": {
+      "message": "Yes"
+   },
+   "yourEmailAddress": {
+      "message": "Your email address"
+   },
+   "yourScheduleUrl": {
+      "message": "Your Schedule URL"
+   }
+}

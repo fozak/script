@@ -1,0 +1,1448 @@
+{
+   "10_min": {
+      "message": "10 minút"
+   },
+   "1_min": {
+      "message": "1 minúta"
+   },
+   "30_min": {
+      "message": "30 minút"
+   },
+   "5_min": {
+      "message": "5 minút"
+   },
+   "60_min": {
+      "message": "hodina"
+   },
+   "Dashboard": {
+      "message": "Dashboard"
+   },
+   "Login": {
+      "message": "Prihláste sa"
+   },
+   "Off": {
+      "message": "Vypnuté"
+   },
+   "On": {
+      "message": "Zapnuté"
+   },
+   "Selected": {
+      "message": "Vybrané"
+   },
+   "Settings": {
+      "message": "Nastavenia"
+   },
+   "Tutorial": {
+      "message": "Návod"
+   },
+   "action": {
+      "message": "Akcia"
+   },
+   "activateScheduleTab": {
+      "message": "Aktivovať kartu naplánované."
+   },
+   "active": {
+      "message": "Aktívne"
+   },
+   "activeAllScheduleTab": {
+      "message": "Spustený plánovač kariet"
+   },
+   "activeStatus": {
+      "message": "Stav"
+   },
+   "actvInactvNotification": {
+      "message": "Zobraziť upozornenie pri otvorení karty plánovania"
+   },
+   "actvInactvOpnTb": {
+      "message": "Aktívna alebo neaktívna otvorená karta"
+   },
+   "actvIntvClsTb": {
+      "message": "Aktívna alebo neaktívna karta zatvorenia"
+   },
+   "add": {
+      "message": "Pridať"
+   },
+   "addDescription": {
+      "message": "Pridajte popis"
+   },
+   "addNew": {
+      "message": "Pridať nový"
+   },
+   "addNewURlCls": {
+      "message": "Na zatvorenie pridajte novú webovú adresu"
+   },
+   "addNewUrlToOpen": {
+      "message": "Pridajte novú adresu URL na otvorenie v novom okne"
+   },
+   "addTitle": {
+      "message": "Pridať názov"
+   },
+   "addWebsite": {
+      "message": "Pridať webovú stránku"
+   },
+   "all": {
+      "message": "Všetky"
+   },
+   "allInputFieldReq": {
+      "message": "Všetky polia sú povinné"
+   },
+   "all_weeks": {
+      "message": "Celý týždeň"
+   },
+   "alreadyPurchase": {
+      "message": "Už ste si zakúpili? Tu zadajte kľúč"
+   },
+   "andAt": {
+      "message": "a pri"
+   },
+   "annually": {
+      "message": "Ročne"
+   },
+   "appDesc": {
+      "message": "Karty prehliadača sa automaticky otvoria a zatvoria vo vybranom čase. Používateľ môže zoznam aktivovať/deaktivovať na základe požiadavky"
+   },
+   "appName": {
+      "message": "Plánovač kariet s automatickým otváraním a zatváraním"
+   },
+   "april": {
+      "message": "apríla"
+   },
+   "at": {
+      "message": "pri"
+   },
+   "august": {
+      "message": "augusta"
+   },
+   "autoFocus": {
+      "message": "Karta Automatické zaostrovanie"
+   },
+   "autoFocustip": {
+      "message": "Ak je zapnutá, nová karta sa otvorí v aktívnom/zaostrenom stave."
+   },
+   "autofocustip": {
+      "message": "Nové otvorené karty sa automaticky zamerajú"
+   },
+   "basic": {
+      "message": "Základné"
+   },
+   "billedAnnyally": {
+      "message": "Fakturované ročne"
+   },
+   "billedMonthly": {
+      "message": "Fakturované mesačne"
+   },
+   "both": {
+      "message": "Obaja"
+   },
+   "browserOpen": {
+      "message": "Pri otvorení prehliadača"
+   },
+   "browserWebAddress": {
+      "message": "Webová adresa prehliadača začína a končí neznámou webovou adresou. Na obe strany vstupného poľa Odkaz na webovú stránku zadajte \u003Cb>* .\u003C/b>"
+   },
+   "browserWebAddress2": {
+      "message": "Webová adresa prehliadača obsahuje názov domény google.com, ktorá bude v daných minútach uzavretá bez ohľadu na subdoménu a cestu k stránke. Uveďte \u003Cb>*\u003C/b> na oboch stranách názov domény a TLD"
+   },
+   "browserWebAddress3": {
+      "message": "Webová adresa prehliadača začína neznámym názvom domény a končí neznámou cestou k stránke"
+   },
+   "browserWebAddress31": {
+      "message": "sa po daných minútach zatvorí, vložte \u003Cb>*\u003C/b> na obe strany TLD"
+   },
+   "browserWebAddress4": {
+      "message": "Webová adresa prehliadača začína neznámou webovou adresou. Na začiatok adresy URL vložte \u003Cb>*\u003C/b> . Pamätajte si, že webová adresa prehliadača sa musí zhodovať s vašou URL potom, čo ste napísali \u003Cb>* .\u003C/b>"
+   },
+   "browserWebAddress41": {
+      "message": "Webová adresa prehliadača začína neznámou subdoménou"
+   },
+   "browserWebAddress42": {
+      "message": "na začiatku odkazu na vašu webovú stránku"
+   },
+   "browserWebAddress5": {
+      "message": "Webová adresa prehliadača končí neznámou webovou adresou. Na koniec adresy URL vložte \u003Cb>*\u003C/b> . Pamätajte, že vaša webová adresa sa musí zhodovať skôr, ako ste napísali \u003Cb>* .\u003C/b>"
+   },
+   "browserWebAddress51": {
+      "message": "Webová adresa prehliadača končí neznámou cestou k stránke. Vložte \u003Cb>*\u003C/b> na koniec svojej webovej adresy"
+   },
+   "browserWebAddress6": {
+      "message": "Ak chcete zatvoriť všetky karty prehliadača, zadajte do poľa adresy webovej stránky iba \u003Cb>*\u003C/b> . Po zatvorení sa všetky karty prehliadača automaticky zatvoria."
+   },
+   "browserWebAddress7": {
+      "message": "Do poľa URL, ktoré sa otvorí na karte prehliadača, musíte zadať presnú subdoménu, doménu najvyššej úrovne, názov domény a cestu k stránke."
+   },
+   "browserWebAddress8": {
+      "message": "Môžete otvoriť adresu URL v konkrétnom dátume a čase, konkrétnom mesiaci, konkrétnom týždni, konkrétnom roku a čase opakovania"
+   },
+   "buyPlan": {
+      "message": "Kúpiť plán"
+   },
+   "buycofee": {
+      "message": "Kúp mi kávu"
+   },
+   "cancel": {
+      "message": "Zrušiť"
+   },
+   "changeLanguage": {
+      "message": "Zmeniť jazyk"
+   },
+   "checkAll": {
+      "message": "Začiarknite všetko"
+   },
+   "checkThisOpToPreventClosePinTb": {
+      "message": "Začiarknutím tejto možnosti zabránite zatvoreniu pripnutých úchytiek."
+   },
+   "checkThisOptionOnlyPartOfUrlMtch": {
+      "message": "Začiarknite túto možnosť, ak je potrebné zhodovať iba časť adresy URL."
+   },
+   "checkThisOptionToActivate": {
+      "message": "Začiarknutím tejto možnosti aktivujete alebo deaktivujete naplánovanú adresu URL."
+   },
+   "checkThisOptionToCloseOnly": {
+      "message": "Začiarknutím tejto možnosti zatvoríte iba karty inkognito. V podrobnostiach rozšírenia tiež povoľte možnosť „Povoliť v režime inkognito“. Pokyny nájdete na stránke s návodom."
+   },
+   "checkThisOptionToCloseOnlyInIncgnitoTb": {
+      "message": "Začiarknutím tejto možnosti zatvoríte iba karty inkognito. V podrobnostiach rozšírenia tiež povoľte možnosť „Povoliť v režime inkognito“. Pokyny nájdete na stránke s návodom."
+   },
+   "checkThisOptionToInBg": {
+      "message": "Začiarknite túto možnosť, ak chcete otvoriť adresu URL na pozadí bez toho, aby ste ju otvárali na novej karte"
+   },
+   "checkThisOptionToInactivNotification": {
+      "message": "Začiarknutím tejto možnosti bude upozornenie na naplánovanú adresu URL neaktívne"
+   },
+   "checkThisOptionToOpen": {
+      "message": "Začiarknite túto možnosť, ak chcete svoju adresu URL otvoriť v režime inkognito"
+   },
+   "checkThisOptionToOpenIncogito": {
+      "message": "Začiarknite túto možnosť, ak chcete svoju adresu URL otvoriť v režime inkognito"
+   },
+   "checkThisOptionToPrevent": {
+      "message": "Začiarknutím tejto možnosti zabránite zatvoreniu pripnutých úchytiek."
+   },
+   "clickExtIcon": {
+      "message": "Kliknite na ikonu „Rozšírenia“ na paneli s nástrojmi, ktorá vyzerá ako kúsok skladačky."
+   },
+   "clickTheSwitch": {
+      "message": "Kliknutím na prepínač vedľa neho ho zapnete"
+   },
+   "close": {
+      "message": "Zavrieť"
+   },
+   "closeAllTab": {
+      "message": "12. Zatvorte všetky karty prehliadača"
+   },
+   "closeAllTabExm1": {
+      "message": "Vo vyššie uvedenom príklade je daná adresa URL na karte zatvorenia, ktorá uvádza, že 25/2/2023 o 12:00 zatvorí všetky karty"
+   },
+   "closeDate": {
+      "message": "Dátum zatvorenia"
+   },
+   "closeDay": {
+      "message": "Deň zatvorenia"
+   },
+   "closeEveryYear": {
+      "message": "Zatvoriť každý rok"
+   },
+   "closeInEvery": {
+      "message": "Zatvorte v každom"
+   },
+   "closeIncognitoTab": {
+      "message": "Zatvorte iba karty inkognito"
+   },
+   "closeMinute": {
+      "message": "Zatvoriť minútu"
+   },
+   "closeOnDay": {
+      "message": "Zatvoriť v deň"
+   },
+   "closeOnEvery": {
+      "message": "Zavrieť na každom"
+   },
+   "closeOnEveryDay": {
+      "message": "Zatvorte každý deň"
+   },
+   "closeOnEveryMonth": {
+      "message": "Zatvorte každý mesiac v deň"
+   },
+   "closeOnEveryWeek": {
+      "message": "Zatvorte každý týždeň"
+   },
+   "closeSecond": {
+      "message": "Close Second"
+   },
+   "closeSeconsMoreThan5": {
+      "message": "Uzavreté sekundy by mali byť viac ako 5."
+   },
+   "closeTabSchedule": {
+      "message": "Zavrieť plán kariet"
+   },
+   "closeTabURL": {
+      "message": "Adresa URL zatvorenej karty"
+   },
+   "closeTime": {
+      "message": "Čas zatvorenia"
+   },
+   "closeUrl": {
+      "message": "Zavrieť odkaz na webovú stránku"
+   },
+   "closeWeek": {
+      "message": "Uzavretý týždeň"
+   },
+   "closeWeeks": {
+      "message": "Uzavreté týždne"
+   },
+   "close_on": {
+      "message": "Zatvorte"
+   },
+   "cngrtsForSubcr": {
+      "message": "Gratulujem! Váš plán bol úspešne aktivovaný."
+   },
+   "commonQuestionsAns": {
+      "message": "Bežné otázky a odpovede"
+   },
+   "copySucessClose": {
+      "message": "Údaje webovej adresy zatvorenej karty boli skopírované do údajov webovej adresy otvorenej karty"
+   },
+   "createNewTimer": {
+      "message": "Vytvoriť nový časovač"
+   },
+   "currentPlan": {
+      "message": "Aktuálny plán"
+   },
+   "currentTabSchedule": {
+      "message": "Aktuálny rozvrh kariet"
+   },
+   "currentTbScheduleTimer": {
+      "message": "Naplánovaný časovač aktuálnej karty."
+   },
+   "cusSec": {
+      "message": "Custom Second"
+   },
+   "custMin": {
+      "message": "Vlastná minúta"
+   },
+   "custmMinSch": {
+      "message": "7. Vlastný minútový plán"
+   },
+   "custmMinSchExm1": {
+      "message": "Vo vyššie uvedenom príklade je daná adresa URL na otvorenej karte, ktorá uvádza, že daná adresa URL je otvorená na novej karte každých 15 minút."
+   },
+   "custmMinSchExm2": {
+      "message": "Vo vyššie uvedenom príklade je daná adresa URL na karte zatvorenia, ktorá uvádza, že daná adresa URL, ktorá sa otvorila na novej karte, sa po 15 minútach zatvorí."
+   },
+   "customSecondWarning": {
+      "message": "Vlastná funkcia sekundy je experimentálna a nemusí fungovať správne, ak sú sekundy nastavené pod 60."
+   },
+   "darkMode": {
+      "message": "Tmavý režim"
+   },
+   "datNotCopy": {
+      "message": "Niektoré údaje sa neskopírujú z dôvodu neplatnej adresy URL."
+   },
+   "dataSaved": {
+      "message": "Údaje časovača boli úspešne uložené"
+   },
+   "date": {
+      "message": "Dátum"
+   },
+   "dateIsOutOfRange": {
+      "message": "Dátum je mimo rozsahu"
+   },
+   "day": {
+      "message": "deň"
+   },
+   "december": {
+      "message": "decembra"
+   },
+   "delete": {
+      "message": "Odstrániť"
+   },
+   "deleteScheduleTb": {
+      "message": "Odstrániť naplánovanú kartu."
+   },
+   "description": {
+      "message": "Popis"
+   },
+   "developedBy": {
+      "message": "Vyvinutý:"
+   },
+   "doNotCloseInPinnedTabs": {
+      "message": "Nezatvárajte pripnuté záložky"
+   },
+   "doNotShowNotification": {
+      "message": "Nezobrazovať upozornenie"
+   },
+   "domainName": {
+      "message": "Názov domény"
+   },
+   "downloadCloseTbSampleCsv": {
+      "message": "Stiahnite si vzorový súbor CSV na zatvorenie karty a pozrite si príklad požadovaného formátu"
+   },
+   "downloadOpenTbSampleCsv": {
+      "message": "Stiahnite si vzorový CSV otvorenej karty a pozrite si príklad požadovaného formátu"
+   },
+   "editScheduleTb": {
+      "message": "Upraviť plánovanú kartu."
+   },
+   "email": {
+      "message": "Email"
+   },
+   "enterDateToCloseTab": {
+      "message": "Ak chcete zatvoriť kartu plánovania, zadajte sem dátum."
+   },
+   "enterDateToOpen": {
+      "message": "Zadajte dátum na otvorenie karty plán."
+   },
+   "enterMiniutesToCloseTb": {
+      "message": "Zatvorte kartu zadaním minút."
+   },
+   "enterMiniutesToOpen": {
+      "message": "Zadaním minút otvorte kartu plánu."
+   },
+   "enterMinute": {
+      "message": "Zadajte minútu"
+   },
+   "enterSecond": {
+      "message": "Zadajte druhú"
+   },
+   "enterSecondsToCloseTab": {
+      "message": "Zadajte sekundy na zatvorenie karty."
+   },
+   "enterSecondsToOpen": {
+      "message": "Zadajte sekundy na otvorenie karty plánovania."
+   },
+   "enterTilteOfScheduleUrl": {
+      "message": "Zadajte názov plánovanej adresy URL."
+   },
+   "enterTimeToCloseTab": {
+      "message": "Tu zadajte čas na zatvorenie karty plánovania."
+   },
+   "enterTimeToSchedule": {
+      "message": "Zadajte čas na otvorenie karty plánu."
+   },
+   "enterValidEmail": {
+      "message": "Zadajte platný email"
+   },
+   "enterValidUrl": {
+      "message": "Zadajte platnú adresu URL"
+   },
+   "enterValueInCloseSec": {
+      "message": "Zadajte hodnotu v najbližších sekundách"
+   },
+   "enterValueInOpenCloseSec": {
+      "message": "Zadajte hodnotu v sekundách otvorenia alebo zatvorenia"
+   },
+   "enterValueInOpenMinutes": {
+      "message": "Zadajte hodnotu v otvorených minútach"
+   },
+   "enterVlaueInCloseMinutes": {
+      "message": "Zadajte hodnotu v blízkych minútach"
+   },
+   "enterVlaueInOpenCloseMin": {
+      "message": "Zadajte hodnotu v minútach otvorenia alebo zatvorenia"
+   },
+   "enterVlaueInOpenSeconds": {
+      "message": "Zadajte hodnotu v otvorených sekundách"
+   },
+   "enterYourURLToSchedule": {
+      "message": "Ak chcete naplánovať, zadajte svoju webovú adresu."
+   },
+   "every": {
+      "message": "každý"
+   },
+   "every10Min": {
+      "message": "Každých 10 minút"
+   },
+   "every1Minute": {
+      "message": "každú 1 minútu"
+   },
+   "every30Min": {
+      "message": "Každých 30 minút"
+   },
+   "every5Min": {
+      "message": "Každých 5 minút"
+   },
+   "everyDay": {
+      "message": "Každý deň"
+   },
+   "everyDayAt": {
+      "message": "každý deň o"
+   },
+   "everyHour": {
+      "message": "Každú hodinu"
+   },
+   "everyMinute": {
+      "message": "Každú minútu"
+   },
+   "everyMonth": {
+      "message": "Každý mesiac"
+   },
+   "everyMonthOn": {
+      "message": "každý mesiac"
+   },
+   "everyMonthOnDay": {
+      "message": "každý mesiac v deň"
+   },
+   "everyWeek": {
+      "message": "Každý týždeň"
+   },
+   "everyWeekOn": {
+      "message": "každý týždeň"
+   },
+   "everyYear": {
+      "message": "Každý rok"
+   },
+   "everyYesrOn": {
+      "message": "každý rok"
+   },
+   "evr10MinSch": {
+      "message": "2. Plán každých 10 minút"
+   },
+   "evr10MinSchExm1": {
+      "message": "Vo vyššie uvedenom príklade je daná adresa URL na otvorenej karte, ktorá uvádza, že daná adresa URL sa otvorí na novej karte každých 10 minút."
+   },
+   "evr10MinSchExm2": {
+      "message": "Vo vyššie uvedenom príklade je daná adresa URL na karte zatvorenia, ktorá uvádza, že daná adresa URL, ktorá sa otvorila na novej karte, sa po 10 minútach zatvorí."
+   },
+   "evrDaySch": {
+      "message": "3. Rozvrh na každý deň"
+   },
+   "evrDaySchExm1": {
+      "message": "Vo vyššie uvedenom príklade je daná adresa URL na otvorenej karte, ktorá uvádza, že sa otvorí na novej karte každý deň o 17:27"
+   },
+   "evrDaySchExm2": {
+      "message": "Vo vyššie uvedenom príklade je daná adresa URL na karte zatvorenia, ktorá uvádza, že zatvorí už otvorenú kartu každý deň o 17:27"
+   },
+   "evrMonthSch": {
+      "message": "5. Každý mesiac plán"
+   },
+   "evrMonthSchExm1": {
+      "message": "Vo vyššie uvedenom príklade je daná adresa URL na otvorenej karte, ktorá uvádza, že sa otvorí na novej karte každý mesiac o 13:45 dňa 25."
+   },
+   "evrMonthSchExm2": {
+      "message": "Vo vyššie uvedenom príklade je daná adresa URL na karte zatvorenia, ktorá uvádza, že zatvorí už otvorenú kartu každý mesiac o 13:45 dňa 25."
+   },
+   "evrWeekSch": {
+      "message": "4. Rozvrh na každý týždeň"
+   },
+   "evrWeekSchExm1": {
+      "message": "Vo vyššie uvedenom príklade je daná adresa URL na otvorenej karte, ktorá uvádza, že sa otvorí na novej karte každý týždeň o 17:00 v \u003Cb>pondelok a utorok\u003C/b> ."
+   },
+   "evrWeekSchExm2": {
+      "message": "Vo vyššie uvedenom príklade je daná adresa URL na karte zatvorenia, ktorá uvádza, že zatvorí už otvorenú kartu každý týždeň o 17:00 v \u003Cb>pondelok a utorok\u003C/b> ."
+   },
+   "evrWeekSchExm3": {
+      "message": "Vo vyššie uvedenom príklade možno v týždennom časovači vybrať viacero dní."
+   },
+   "evrYearSch": {
+      "message": "6. Každý rok plán"
+   },
+   "evrYearSchExm1": {
+      "message": "Vo vyššie uvedenom príklade je daná adresa URL na otvorenej karte, ktorá uvádza, že sa otvorí na novej karte Každý rok o 13:35 dňa 1. januára"
+   },
+   "evrYearSchExm2": {
+      "message": "Vo vyššie uvedenom príklade je daná adresa URL na karte zatvorenia, ktorá uvádza, že zatvorí už otvorenú kartu každý rok o 13:35 dňa 1. januára"
+   },
+   "exampleSort": {
+      "message": "napr"
+   },
+   "exdMaxLim": {
+      "message": "Prekročený maximálny povolený počet zariadení!"
+   },
+   "exmpOpnClsTbSch": {
+      "message": "Príklad, ako otvoriť a zatvoriť kartu v Plánovači kariet"
+   },
+   "expLicKy": {
+      "message": "Platnosť tohto licenčného kľúča vypršala."
+   },
+   "export": {
+      "message": "Exportovať"
+   },
+   "exportBefore": {
+      "message": "máš\u003Cexday>\u003C/exday>zostávajúcich dní, prihláste sa, aby ste si mohli naďalej užívať prémiovú funkciu"
+   },
+   "exportClsTbDta": {
+      "message": "Exportovať údaje o zatvorenej karte"
+   },
+   "exportOpenTbDt": {
+      "message": "Exportovať údaje otvorenej karty"
+   },
+   "exportedData": {
+      "message": "Údaje časovača boli úspešne exportované"
+   },
+   "extensionShouldAble": {
+      "message": "Teraz by rozšírenie malo byť schopné zatvárať karty v režime inkognito."
+   },
+   "faq": {
+      "message": "FAQ"
+   },
+   "faq_1": {
+      "message": "Čo je Plánovač kariet s automatickým otváraním a zatváraním?"
+   },
+   "faq_10": {
+      "message": "Ako zobrazím svoje naplánované karty?"
+   },
+   "faq_11": {
+      "message": "Je povinné vyplniť čas otvorenia aj zatvorenia?"
+   },
+   "faq_12": {
+      "message": "Čo robia funkcie karty Automatické zaostrenie, Aktivovať všetky naplánované karty a Režim napájania?"
+   },
+   "faq_13": {
+      "message": "Môžem otvoriť/zatvoriť naplánovaný odkaz na webovú stránku na karte inkognito?"
+   },
+   "faq_14": {
+      "message": "Na čo slúži karta Obnoviť, ak je adresa URL už otvorená?"
+   },
+   "faq_2": {
+      "message": "Aké je použitie odkazu na webovú stránku?"
+   },
+   "faq_3": {
+      "message": "Ako naplánujem adresu URL pomocou Plánovača kariet?"
+   },
+   "faq_4": {
+      "message": "Čo je to možnosť „Otvoriť adresu URL na pozadí“?"
+   },
+   "faq_5": {
+      "message": "Môžem zabrániť rozšíreniu v zatváraní pripnutých kariet?"
+   },
+   "faq_6": {
+      "message": "Čo znamená typ plánu „Obaja“?"
+   },
+   "faq_7": {
+      "message": "Ako funguje funkcia „Filtrovanie adries URL“?"
+   },
+   "faq_8": {
+      "message": "Môžem deaktivovať naplánovanú kartu bez jej odstránenia?"
+   },
+   "faq_9": {
+      "message": "Budem dostávať upozornenia na naplánované karty?"
+   },
+   "faq_a_1": {
+      "message": "\u003Cp>Plánovač kariet s automatickým otváraním a zatváraním je rozšírenie prehliadača, ktoré používateľom umožňuje naplánovať automatické otváranie a zatváranie kariet v nastavených časoch. Používatelia si môžu vybrať jednorazový plán alebo nastaviť opakujúce sa plány s rôznymi možnosťami frekvencie. Toto rozšírenie má pre používateľov viacero účelov a poskytuje množstvo funkcií, ktoré sú pre vás užitočné.\u003C/p>"
+   },
+   "faq_a_10": {
+      "message": "Všetky naplánované karty sa zobrazia v zozname s názvom, odkazom na webovú stránku, časmi otvorenia a zatvorenia, stavom a akciami, ktoré môžete vykonať (napr. aktivovať, upraviť, odstrániť)."
+   },
+   "faq_a_11": {
+      "message": "Nie, môžete naplánovať čas otvorenia alebo zatvorenia. Musíte však vyplniť alebo vybrať povinné polia označené hviezdičkou (*)."
+   },
+   "faq_a_12": {
+      "message": "Karta Auto Focus zabezpečuje, že keď sa otvorí naplánovaná karta, funkcia Aktivovať všetky naplánované karty vám umožní rýchlo zapnúť všetky naplánované karty jediným kliknutím. Režim napájania optimalizuje výkon rozšírenia efektívnejšou správou zdrojov prehliadača."
+   },
+   "faq_a_13": {
+      "message": "Áno, môžete si vybrať otvorenie naplánovanej karty v režime inkognito výberom možnosti „Otvoriť v režime inkognito“. Ak chcete zatvoriť iba karty inkognito, vyberte možnosť „Zavrieť iba karty inkognito“, pokiaľ je v nastaveniach rozšírenia povolená možnosť „Povoliť v režime inkognito“."
+   },
+   "faq_a_14": {
+      "message": "Keď je táto možnosť povolená, rozšírenie automaticky obnoví existujúcu kartu, ak je rovnaká adresa URL už otvorená vo vašom prehliadači. Tým sa zabráni otváraniu duplicitných kariet a zaistí sa, že budete mať vždy načítanú najnovšiu verziu stránky."
+   },
+   "faq_a_14_1": {
+      "message": "Ak sa pokúsite otvoriť https://github.com/ a už je otvorený na inej karte, rozšírenie jednoducho obnoví túto kartu namiesto otvorenia novej."
+   },
+   "faq_a_14_2": {
+      "message": "Ak je https://github.com/ už otvorený na troch kartách, rozšírenie obnoví všetky tri karty."
+   },
+   "faq_a_2": {
+      "message": "Odkaz na webovú stránku je adresa webovej lokality na otvorenej karte vášho prehliadača. Ako môžete použiť webovú adresu je uvedené nižšie."
+   },
+   "faq_a_3": {
+      "message": "Ak chcete naplánovať adresu URL, zadajte odkaz na webovú stránku, zadajte názov plánu, vyberte frekvenciu (jednorazovo, každú minútu, denne atď.) a vyberte čas otvorenia a zatvorenia. Môžete tiež zadať dátum, deň alebo sekundy na otvorenie a zatvorenie karty."
+   },
+   "faq_a_4": {
+      "message": "\u003Cp>Táto možnosť vám dáva plnú kontrolu nad naplánovaním otvárania adresy URL na pozadí bez toho, aby sa zaostrila na novú kartu. Adresa URL sa potichu otvorí, kým budete pokračovať v práci na iných kartách. Je to užitočné najmä vtedy, keď potrebujete, aby prehliadač načítal údaje z naplánovanej adresy URL bez toho, aby ju aktívne zobrazoval, ako napríklad v prípade požiadavky GET API.\u003C/p>\u003Cbr> \u003Cp>Napríklad, ak chcete pravidelne načítavať údaje z koncového bodu API v nastavenom čase, môžete použiť túto efektívnu možnosť na spustenie požiadavky na pozadí bez otvárania novej viditeľnej karty.\u003C/p>"
+   },
+   "faq_a_5": {
+      "message": "Áno, existuje možnosť zabrániť zatvoreniu pripnutých záložiek. Začiarknite možnosť „Nezatvárať pripnuté karty“, aby ste sa uistili, že tieto karty zostanú otvorené, aj keď spĺňajú iné kritériá zatvárania."
+   },
+   "faq_a_6": {
+      "message": "Typ plánu „Oboje“ vám dáva úplnú kontrolu nad tým, kedy sa karta otvára a zatvára, čo vám umožňuje nastaviť konkrétne časy pre obe akcie."
+   },
+   "faq_a_7": {
+      "message": "Filtrovanie adries URL zaisťuje, že na vykonanie naplánovanej akcie sa musí zhodovať iba konkrétna časť adresy URL. Je to užitočné, keď chcete automatizovať určité akcie na základe čiastočných zhôd URL. Ak napríklad začiarknete možnosť Filtrovanie adries URL pre webovú adresu https://example.com/page, bude sa vzťahovať aj na webové adresy ako https://example.com/page/123, https://example.com/ page?query=example a https://subdomain.example.com/page."
+   },
+   "faq_a_8": {
+      "message": "Pomocou možnosti „Aktivovať túto naplánovanú kartu“ môžete jednoducho aktivovať alebo deaktivovať naplánované karty, čo vám poskytne flexibilitu pri správe plánov bez straty konfigurácií."
+   },
+   "faq_a_9": {
+      "message": "V predvolenom nastavení budete dostávať upozornenia. Ak však chcete upozornenia zastaviť, môžete ich zakázať zaškrtnutím možnosti „Nezobrazovať upozornenia“."
+   },
+   "february": {
+      "message": "februára"
+   },
+   "filterTips": {
+      "message": "Filter sa použije po „https://“ alebo „www.“, napr. „github.com“"
+   },
+   "for_exp": {
+      "message": "Napríklad"
+   },
+   "freeForever": {
+      "message": "Navždy zadarmo"
+   },
+   "freeSchedule": {
+      "message": "voľný rozvrh"
+   },
+   "freeTral": {
+      "message": "Ako vážený prvý používateľ si to užijete\u003Crday>120\u003C/rday>dní bezplatného prístupu pred prechodom na náš nový platený plán – ďakujeme za vašu pokračujúcu podporu!\u003Cp class=\"p-t-5\">máš\u003Cb>\u003Cspan>\u003C/span>\u003C/b>zostávajúcich dní z vášho\u003Crday>120\u003C/rday>- deň voľna.\u003Cafex class=\"warning\">\u003Cafex>\u003C/afex>\u003C/afex>\u003C/p> "
+   },
+   "frequentlyAskedQuestions": {
+      "message": "Často kladené otázky"
+   },
+   "friday": {
+      "message": "piatok"
+   },
+   "getThisPlan": {
+      "message": "Získajte tento plán"
+   },
+   "goToSettingsPageToSchedule": {
+      "message": "Prejdite na stránku nastavení a naplánujte otváranie a zatváranie adries URL."
+   },
+   "goURL": {
+      "message": "Prejdite na adresu URL"
+   },
+   "helpAccordion12": {
+      "message": "Funguje toto rozšírenie v režime spánku/odstavenia?"
+   },
+   "helpAccordion3": {
+      "message": "Môžem naplánovať otvorenie karty v režime inkognito?"
+   },
+   "helpAccordion6": {
+      "message": "Čo je to „Čas vypršal“?"
+   },
+   "helpAccordion7": {
+      "message": "Môžem exportovať plánovanú adresu URL?"
+   },
+   "helpAccordion8": {
+      "message": "Môžem importovať do adresy URL plánu?"
+   },
+   "helpPanelBodyDesc12First": {
+      "message": "Nie, toto rozšírenie nebude fungovať v režime spánku/odstavenia."
+   },
+   "helpPanelBodyDesc12Second": {
+      "message": "Ak je na karte otvorenia alebo zatvorenia naplánovaná akákoľvek adresa URL, počítač neprejde automaticky do režimu spánku alebo pozastavenia."
+   },
+   "helpPanelBodyDesc3": {
+      "message": "Áno, môžete si vybrať otvorenie naplánovanej karty v režime inkognito výberom možnosti „Otvoriť v režime inkognito“. Uistite sa, že v nastaveniach rozšírenia prehliadača je povolená možnosť „Povoliť v režime inkognito“."
+   },
+   "helpPanelBodyDesc6": {
+      "message": "- Daný dátum a čas prechádzajú z aktuálneho dátumu a času, potom sa zobrazí text „Čas vypršal“."
+   },
+   "helpPanelBodyDesc7": {
+      "message": "Áno, môžete exportovať už naplánovanú otvorenú a zatvorenú adresu URL karty vo formáte csv a použiť ju s iným systémom na import tejto adresy URL."
+   },
+   "helpPanelBodyDesc8": {
+      "message": "Áno, môžete importovať platnú otvorenú a zatvorenú adresu URL vo formáte csv. Importovaný formát csv sa automaticky naplánuje v danom čase"
+   },
+   "herAreStepsToAllow": {
+      "message": "Tu sú kroky na „Povoliť v režime inkognito“ v prehliadači Google Chrome:"
+   },
+   "home": {
+      "message": "Domov"
+   },
+   "hour_minute_close": {
+      "message": "Každú hodinu zatvorená minúta"
+   },
+   "hour_minute_open": {
+      "message": "Každá hodina otvorená minúta"
+   },
+   "how_to_use_tab": {
+      "message": "Ako používať plánovač kariet?"
+   },
+   "import": {
+      "message": "Importovať"
+   },
+   "importClsTbDta": {
+      "message": "Importujte údaje zatvorenej karty"
+   },
+   "importExport": {
+      "message": "Import/Export"
+   },
+   "importOpenTbDt": {
+      "message": "Importujte údaje otvorenej karty"
+   },
+   "importedRecored": {
+      "message": ", importované zaznamenané"
+   },
+   "inactivateScheduleTab": {
+      "message": "Deaktivovať kartu naplánované."
+   },
+   "inactive": {
+      "message": "Neaktívne"
+   },
+   "inactiveSch": {
+      "message": "8. Neaktívna URL"
+   },
+   "inactiveSchExm1": {
+      "message": "Vo vyššie uvedenom príklade je daná adresa URL na karte Otvoriť alebo Zatvoriť, čo znamená, že daná adresa URL je neaktívna a nevykoná žiadnu akciu."
+   },
+   "inactiveThisScheduledTabs": {
+      "message": "Aktivujte túto naplánovanú kartu"
+   },
+   "invalidDuplicate": {
+      "message": ", duplicitné alebo neplatne zaznamenané"
+   },
+   "invldLicKy": {
+      "message": "Neplatný licenčný kľúč!"
+   },
+   "isClose": {
+      "message": "je blízko"
+   },
+   "isOpen": {
+      "message": "je otvorená"
+   },
+   "january": {
+      "message": "januára"
+   },
+   "july": {
+      "message": "júla"
+   },
+   "june": {
+      "message": "júna"
+   },
+   "licKeyDis": {
+      "message": "Tento licenčný kľúč je zakázaný."
+   },
+   "listTitle": {
+      "message": "Plánovač kariet"
+   },
+   "loading": {
+      "message": "Čakajte prosím..."
+   },
+   "locale": {
+      "message": "en"
+   },
+   "march": {
+      "message": "marca"
+   },
+   "maxSchedule": {
+      "message": "4 Maximálny časový limit"
+   },
+   "may": {
+      "message": "mája"
+   },
+   "mintValid": {
+      "message": "Vyžaduje sa minimálne 1 minúta"
+   },
+   "minute": {
+      "message": "Minúta"
+   },
+   "minutesNotLessThan1": {
+      "message": "Minúta by nemala byť kratšia ako 1."
+   },
+   "monday": {
+      "message": "pondelok"
+   },
+   "month": {
+      "message": "mesiac"
+   },
+   "monthly": {
+      "message": "Mesačne"
+   },
+   "more": {
+      "message": "viac"
+   },
+   "mostSubscribe": {
+      "message": "Väčšina Odoberať"
+   },
+   "no": {
+      "message": "Nie"
+   },
+   "noDataToExport": {
+      "message": "Žiadne údaje na export."
+   },
+   "noScheduledTabs": {
+      "message": "Žiadne naplánované karty"
+   },
+   "noTimerSetAddNewTimer": {
+      "message": "Nie je nastavený žiadny časovač, kliknutím na tlačidlo Pridať nastavte nový časovač"
+   },
+   "not_show_tutorial": {
+      "message": "Tento návod už nezobrazovať"
+   },
+   "notificationOpenTab": {
+      "message": "13. Upozornenie na otvorenie/zatvorenie karty URL"
+   },
+   "notificationOpenTabExm1": {
+      "message": "Vo vyššie uvedenom príklade je daná adresa URL na otvorenej karte, ktorá uvádza, že každých 5 minút poskytne upozornenie a otvorí / zatvorí adresu URL na novej karte."
+   },
+   "notifications": {
+      "message": "Oznámenie"
+   },
+   "november": {
+      "message": "novembra"
+   },
+   "october": {
+      "message": "októbra"
+   },
+   "onTheExtensionDetailPage": {
+      "message": "Na stránke podrobností rozšírenia sa posuňte nadol a nájdite možnosť „Povoliť v režime inkognito“."
+   },
+   "oneTime": {
+      "message": "Raz"
+   },
+   "oneTmSch": {
+      "message": "1. Jednorazový plán"
+   },
+   "oneTmSchExm1": {
+      "message": "Vo vyššie uvedenom príklade je daná adresa URL na otvorenej karte, ktorá uvádza, že sa otvorí na novej karte raz o 13:45 dňa 21.01.2023"
+   },
+   "oneTmSchExm2": {
+      "message": "Vo vyššie uvedenom príklade je daná adresa URL na karte zatvorenia, ktorá uvádza, že zatvorí všetky karty konkrétnych zhodných adries URL o 13:45 dňa 21.01.2023"
+   },
+   "open": {
+      "message": "OTVORENÉ"
+   },
+   "openBackground": {
+      "message": "Ak áno, načítava sa adresa URL na pozadí bez jej otvorenia na novej karte"
+   },
+   "openDate": {
+      "message": "Dátum otvorenia"
+   },
+   "openDay": {
+      "message": "Deň otvorených dverí"
+   },
+   "openEveryDayOn": {
+      "message": "Otvorené každý deň"
+   },
+   "openEveryMonthOn": {
+      "message": "Otvorené každý mesiac v deň"
+   },
+   "openEveryWeekOn": {
+      "message": "Otvorené každý týždeň"
+   },
+   "openEveryYearOn": {
+      "message": "Otvorené každý rok"
+   },
+   "openGoogleChrome": {
+      "message": "Otvorte Google Chrome."
+   },
+   "openInBackground": {
+      "message": "Otvoriť adresu URL na pozadí"
+   },
+   "openInEvery": {
+      "message": "Otvorené v každom"
+   },
+   "openInIncognito": {
+      "message": "Otvoriť v režime inkognito"
+   },
+   "openMinute": {
+      "message": "Otvorená minúta"
+   },
+   "openOnDay": {
+      "message": "Otvorené cez deň"
+   },
+   "openOnEvery": {
+      "message": "Otvorené na každom"
+   },
+   "openSecond": {
+      "message": "Otvorte druhý"
+   },
+   "openSecondsMoreThan5": {
+      "message": "Otvorených sekúnd by malo byť viac ako 5."
+   },
+   "openTabSchedule": {
+      "message": "Otvoriť plán kariet"
+   },
+   "openTabURL": {
+      "message": "Otvoriť adresu URL karty"
+   },
+   "openTime": {
+      "message": "Open Time"
+   },
+   "openUrl": {
+      "message": "Otvorte odkaz na webovú stránku"
+   },
+   "openWeek": {
+      "message": "Týždeň otvorených dverí"
+   },
+   "openWeeks": {
+      "message": "Týždne otvorených dverí"
+   },
+   "open_on": {
+      "message": "Otvoriť"
+   },
+   "optional": {
+      "message": "Voliteľné"
+   },
+   "or": {
+      "message": "alebo"
+   },
+   "outof": {
+      "message": "z"
+   },
+   "pagePath": {
+      "message": "Cesta stránky"
+   },
+   "paidFeature": {
+      "message": "Platená funkcia"
+   },
+   "pauseSchedule": {
+      "message": "Spustiť alebo zastaviť všetky plány"
+   },
+   "pauseTabScheduler": {
+      "message": "Pozastavený plánovač kariet"
+   },
+   "pleaseAllowIncognitoMessage": {
+      "message": "V podrobnostiach rozšírenia povoľte možnosť „Povoliť v režime inkognito“. Pokyny nájdete na stránke s návodom."
+   },
+   "pleaseShareYourSuggestions": {
+      "message": "Podeľte sa o svoj návrh."
+   },
+   "plsShreAnySugWithUs": {
+      "message": "Dajte nám návrh na zlepšenie"
+   },
+   "powerMode": {
+      "message": "Režim napájania"
+   },
+   "premium": {
+      "message": "Premium"
+   },
+   "pricePlan": {
+      "message": "Ceny a plány"
+   },
+   "privcyPolicy": {
+      "message": "Zásady ochrany osobných údajov"
+   },
+   "prowerModeTip": {
+      "message": "Udržujte systém vždy aktívny zapnutím režimu napájania"
+   },
+   "put": {
+      "message": "Dajte"
+   },
+   "rateUs": {
+      "message": "Ohodnoťte nás"
+   },
+   "removeDuplicateEntry": {
+      "message": "Odstráňte duplicitný záznam"
+   },
+   "removeOpenTbURL": {
+      "message": "Odstráňte adresu URL otvorenej karty"
+   },
+   "repeat": {
+      "message": "Opakujte"
+   },
+   "requiredMsg": {
+      "message": "Povinné"
+   },
+   "rmvClsTb": {
+      "message": "Odstráňte webovú adresu zatvorenej karty"
+   },
+   "sameTabs": {
+      "message": "Obnoviť kartu, ak je adresa URL už otvorená"
+   },
+   "sameTabsInfo": {
+      "message": "Zabráňte otváraniu viacerých kariet pre rovnakú adresu URL. Ak je napríklad stránka www.google.com už otvorená, táto existujúca karta sa obnoví namiesto otvorenia novej karty."
+   },
+   "sampleCsvOpenPath": {
+      "message": "../sample_csv/en/open_tab_sample.csv"
+   },
+   "sampleFile": {
+      "message": "Vzorový súbor"
+   },
+   "saturday": {
+      "message": "sobota"
+   },
+   "savOpnData": {
+      "message": "Uložte údaje otvorenej karty"
+   },
+   "save": {
+      "message": "Uložiť"
+   },
+   "saveClsTbData": {
+      "message": "Uložte údaje zatvorenej karty"
+   },
+   "saveSchedule": {
+      "message": "Uložiť plán"
+   },
+   "scheduleCloseTab": {
+      "message": "Plán Zatvoriť kartu"
+   },
+   "scheduleCurrentTab": {
+      "message": "Naplánovať aktuálnu kartu"
+   },
+   "scheduleOpenTab": {
+      "message": "Otvoriť kartu Plán"
+   },
+   "scheduledTabIsAlreadyExistWithSameTimer": {
+      "message": "Táto naplánovaná karta už existuje s rovnakým časovačom."
+   },
+   "scheduledTabList": {
+      "message": "Zoznam naplánovaných kariet"
+   },
+   "scheduledType": {
+      "message": "Typ rozvrhu"
+   },
+   "search": {
+      "message": "Hľadať"
+   },
+   "secValid": {
+      "message": "Vyžaduje sa minimálne 5 sekúnd"
+   },
+   "second": {
+      "message": "Po druhé"
+   },
+   "selectCloseDate": {
+      "message": "Vyberte dátum zatvorenia"
+   },
+   "selectCloseDay": {
+      "message": "Vyberte deň zatvorenia"
+   },
+   "selectCloseTime": {
+      "message": "Vyberte čas zatvorenia"
+   },
+   "selectColumn": {
+      "message": "Vyberte položku Stĺpec"
+   },
+   "selectDateAndTime": {
+      "message": "Vyberte dátum a čas na otvorenie novej karty"
+   },
+   "selectDateAndTimeClsTb": {
+      "message": "Vyberte dátum a čas na zatvorenie karty"
+   },
+   "selectDayToCloseSchTb": {
+      "message": "Vyberte deň na zatvorenie karty plánovania."
+   },
+   "selectDayToClsTb": {
+      "message": "Vyberte deň na zatvorenie karty"
+   },
+   "selectDayToSchdule": {
+      "message": "Vyberte deň, ktorý chcete naplánovať."
+   },
+   "selectDaysInWeek": {
+      "message": "Vyberte dni v týždni"
+   },
+   "selectDaysInWeekIClsTime": {
+      "message": "Vyberte dni v týždni v zatváracom časovači."
+   },
+   "selectDaysInWeekIOpClsTime": {
+      "message": "Vyberte dni v týždni v časovači otvorenia alebo zatvorenia."
+   },
+   "selectDaysInWeekIOpTime": {
+      "message": "Vyberte dni v týždni v otváracom časovači."
+   },
+   "selectFrequency": {
+      "message": "Vyberte položku Frekvencia"
+   },
+   "selectFrequencyOfScheduleUrl": {
+      "message": "Vyberte frekvenciu plánovanej adresy URL."
+   },
+   "selectOpenDate": {
+      "message": "Vyberte dátum otvorenia"
+   },
+   "selectOpenDay": {
+      "message": "Vyberte deň otvorených dverí"
+   },
+   "selectOpenOrClose": {
+      "message": "Vyberte čas otvorenia a zatvorenia"
+   },
+   "selectOpenOrCloseDate": {
+      "message": "Vyberte dátum otvorenia a zatvorenia"
+   },
+   "selectOpenOrCloseDay": {
+      "message": "Vyberte deň otvorenia a zatvorenia"
+   },
+   "selectOpenTime": {
+      "message": "Vyberte čas otvorenia"
+   },
+   "selectPreferredLanguage": {
+      "message": "Vyberte preferovaný jazyk."
+   },
+   "selectToOpenTab": {
+      "message": "Vyberte deň na otvorenie novej karty"
+   },
+   "selectTypTimerClsTb": {
+      "message": "Vyberte typ časovača na zatvorenie karty"
+   },
+   "selectTypeOfSchedule": {
+      "message": "Vyberte typ plánu, ak chcete otvárať aj zatvárať, vyberte možnosť „Oboje“."
+   },
+   "selectTypeOfTimer": {
+      "message": "Vyberte typ časovača na otvorenie novej karty"
+   },
+   "select_weeks": {
+      "message": "Vyberte Týždne"
+   },
+   "september": {
+      "message": "septembra"
+   },
+   "settingSave": {
+      "message": "Nastavenia boli úspešne uložené"
+   },
+   "settingToClose": {
+      "message": "Nastavenie zatvorenia karty v režime inkognito."
+   },
+   "shareYourSuggestionWithUs": {
+      "message": "Podeľte sa s nami o vaše návrhy.."
+   },
+   "slectDayToScheduleWeekly": {
+      "message": "Vyberte dni na plánovanie karty týždenne."
+   },
+   "slectMinute": {
+      "message": "Vyberte položku Minúta"
+   },
+   "smthngWrng": {
+      "message": "Niečo sa pokazilo"
+   },
+   "softpulseInfotech": {
+      "message": "Softpulse Infotech"
+   },
+   "somethingWentWrong": {
+      "message": "Niečo sa pokazilo. Obnovte stránku a skúste to znova."
+   },
+   "status": {
+      "message": "Stav"
+   },
+   "subcrKeyShldNEmpt": {
+      "message": "Zadajte kľúč predplatného."
+   },
+   "subdomain": {
+      "message": "Subdoména"
+   },
+   "subkeyInputTitle": {
+      "message": "Zadajte kľúč predplatného"
+   },
+   "submFeedBack": {
+      "message": "Odoslať"
+   },
+   "suggForTbSch": {
+      "message": "Návrh na plánovač kariet"
+   },
+   "suggestionAndRateUs": {
+      "message": "Navrhnite a ohodnoťte nás"
+   },
+   "sunday": {
+      "message": "nedeľu"
+   },
+   "tabCloseOneTime": {
+      "message": "Karta sa zatvorí iba raz"
+   },
+   "tabSchTutorial": {
+      "message": "Výukový program plánovača kariet"
+   },
+   "tabScheduler": {
+      "message": "Plánovač kariet"
+   },
+   "tabSchedulerOptions": {
+      "message": "Možnosti plánovača kariet"
+   },
+   "tabWillOpenOneTime": {
+      "message": "Karta sa otvorí iba raz"
+   },
+   "tabWillOpenWhenBrowserOpen": {
+      "message": "Karta sa otvorí pri spustení prehliadača"
+   },
+   "termCondition": {
+      "message": "Podmienky"
+   },
+   "thanksFrRev": {
+      "message": "Ďakujeme za Vašu recenziu"
+   },
+   "thnkUFeedBack": {
+      "message": "ďakujeme za váš návrh"
+   },
+   "thnkUFrUsngTbSch": {
+      "message": "Dajte nám návrh na zlepšenie"
+   },
+   "thursday": {
+      "message": "štvrtok"
+   },
+   "time": {
+      "message": "Čas"
+   },
+   "timeExpired": {
+      "message": "Čas vypršal"
+   },
+   "timer": {
+      "message": "Časovač"
+   },
+   "title": {
+      "message": "Názov"
+   },
+   "titleLengtWarn": {
+      "message": "Dĺžka názvu by nemala presiahnuť 200 znakov."
+   },
+   "toScheduledOpenTbMsg": {
+      "message": "Ak chcete naplánovať otvorenie karty, zrušte začiarknutie filtrovania adries URL."
+   },
+   "toogleCloseTab": {
+      "message": "Spustiť/zastaviť plánovanie budíka pre všetky adresy URL zatvorenej karty"
+   },
+   "toogleDarkmode": {
+      "message": "Prepínajte medzi tmavým a predvoleným režimom a prispôsobte si zážitok zo sledovania."
+   },
+   "toogleOff": {
+      "message": "Vypnuté"
+   },
+   "toogleOn": {
+      "message": "Zapnuté"
+   },
+   "toogleOpenTab": {
+      "message": "Spustiť/zastaviť plánovanie budíka pre všetky adresy URL otvorených kariet"
+   },
+   "topLevelDomain": {
+      "message": "Doména najvyššej úrovne"
+   },
+   "totalProcessed": {
+      "message": "Celkový počet zaznamenaných spracovaných"
+   },
+   "tuesday": {
+      "message": "utorok"
+   },
+   "tutorialImg1": {
+      "message": "\u003Cimg src=\"../images/en/1.png\">"
+   },
+   "tutorialImg10": {
+      "message": "\u003Cimg src=\"../images/en/10.png\">"
+   },
+   "tutorialImg11": {
+      "message": "\u003Cimg src=\"../images/en/11.png\">"
+   },
+   "tutorialImg12": {
+      "message": "\u003Cimg src=\"../images/en/12.png\">"
+   },
+   "tutorialImg13": {
+      "message": "\u003Cimg src=\"../images/en/13.png\">"
+   },
+   "tutorialImg14": {
+      "message": "\u003Cimg src=\"../images/en/14.png\">"
+   },
+   "tutorialImg2": {
+      "message": "\u003Cimg src=\"../images/en/2.png\">"
+   },
+   "tutorialImg3": {
+      "message": "\u003Cimg src=\"../images/en/3.png\">"
+   },
+   "tutorialImg4": {
+      "message": "\u003Cimg src=\"../images/en/4.png\">"
+   },
+   "tutorialImg5": {
+      "message": "\u003Cimg src=\"../images/en/5.png\">"
+   },
+   "tutorialImg6": {
+      "message": "\u003Cimg src=\"../images/en/6.png\">"
+   },
+   "tutorialImg7": {
+      "message": "\u003Cimg src=\"../images/en/7.png\">"
+   },
+   "tutorialImg8": {
+      "message": "\u003Cimg src=\"../images/en/8.png\">"
+   },
+   "tutorialImg9": {
+      "message": "\u003Cimg src=\"../images/en/9.png\">"
+   },
+   "uncheckAll": {
+      "message": "Zrušte začiarknutie všetkých"
+   },
+   "unlimitedSchedule": {
+      "message": "Neobmedzený časový limit"
+   },
+   "unspecifiedURL": {
+      "message": "11. URL nešpecifikovaná cesta"
+   },
+   "unspecifiedURLExm1": {
+      "message": "Vo vyššie uvedenom príklade je daná adresa URL na karte zatvorenia, ktorá uvádza, že daná adresa URL, ktorá sa otvorila na novej karte a začína a končí neznámou webovou adresou, sa po 5 minútach zatvorí."
+   },
+   "upgradePlan": {
+      "message": "Kúpte si plán ALEBO sa prihláste a inovujte svoj plán, aby ste odomkli ďalšie funkcie."
+   },
+   "upgradePlanUnlock": {
+      "message": "Inovujte svoj plán a odomknite ďalšie funkcie."
+   },
+   "uploadValidFormat": {
+      "message": "Nahrajte platný formát"
+   },
+   "url": {
+      "message": "URL"
+   },
+   "urlContExat": {
+      "message": "Filtrovanie adries URL"
+   },
+   "urlEndWithUnspesifiedPth": {
+      "message": "9. Koniec URL s nešpecifikovanou cestou"
+   },
+   "urlEndWithUnspesifiedPthExm1": {
+      "message": "Vo vyššie uvedenom príklade je daná adresa URL na karte zatvorenia, ktorá uvádza, že daná adresa URL, ktorá sa otvorila na novej karte a končí neznámou cestou, sa po 5 minútach zatvorí."
+   },
+   "urlFilterInfo": {
+      "message": "Obsahuje kontrolovanú adresu URL potrebuje iba časť adresy URL a presná adresa URL, ktorá sa kontroluje, sa musí presne zhodovať so zadanou adresou URL"
+   },
+   "urlFilterinCLoseTb": {
+      "message": "14. Filtrovanie adries URL na zatvorenej karte URL"
+   },
+   "urlFilterinCLoseTbExample": {
+      "message": "Vo vyššie uvedenom príklade je daná adresa URL na karte zatvorenia, ktorá uvádza, že adresa URL už otvorenej karty sa zhoduje s niektorou časťou danej adresy URL, takže túto kartu zatvorí"
+   },
+   "urlIsRequired": {
+      "message": "Vyžaduje sa odkaz na webovú stránku"
+   },
+   "urlNotvalid": {
+      "message": "Adresa URL nie je platná"
+   },
+   "urlStartWithUnspesifiedPth": {
+      "message": "10. URL začína nešpecifikovanou cestou"
+   },
+   "urlStartWithUnspesifiedPthExm1": {
+      "message": "Vo vyššie uvedenom príklade je daná adresa URL na karte zatvorenia, ktorá uvádza, že daná adresa URL, ktorá sa otvorila na novej karte a začína neznámou subdoménou \u003Cb>„www“\u003C/b> alebo \u003Cb>„blog“,\u003C/b> sa po 5 minútach zatvorí."
+   },
+   "useSpecificUrl": {
+      "message": "Použite konkrétny odkaz na webovú stránku"
+   },
+   "useSpecificUrl1": {
+      "message": "Musíte zadať presnú subdoménu, doménu najvyššej úrovne, názov domény a cestu k stránke do poľa Odkaz na webovú stránku na karte zatvoreného prehliadača."
+   },
+   "useSpecificUrl2": {
+      "message": "Použiť zatvorené všetky karty prehliadača"
+   },
+   "useSpecificUrl3": {
+      "message": "Použite konkrétny a úplný odkaz na webovú stránku"
+   },
+   "useUnSpecificUrl1": {
+      "message": "Použite nešpecifikovaný odkaz na webovú stránku"
+   },
+   "useUnSpecificUrl2": {
+      "message": "Použite začiatok s nešpecifikovaným odkazom na webovú stránku"
+   },
+   "useUnSpecificUrl3": {
+      "message": "Použite koniec s nešpecifikovaným odkazom na webovú stránku"
+   },
+   "used": {
+      "message": "Použil si"
+   },
+   "validFormatCsv": {
+      "message": "Aký je platný formát súboru CSV na importovanie?"
+   },
+   "websiteLink": {
+      "message": "Odkaz na webovú stránku"
+   },
+   "websiteUrl": {
+      "message": "URL webovej stránky"
+   },
+   "wednesday": {
+      "message": "streda"
+   },
+   "weekName": {
+      "message": "Názov týždňa"
+   },
+   "weekly": {
+      "message": "Týždenne"
+   },
+   "whenExtensionTabAppears": {
+      "message": "Keď sa zobrazí karta Rozšírenia, nájdite „Plánovač kariet s automatickým otváraním a zatváraním“, ktorý chcete povoliť v režime inkognito, a kliknite na tlačidlo „Podrobnosti“ vedľa neho."
+   },
+   "whenMenuPopup": {
+      "message": "Keď sa zobrazí ponuka, vyberte možnosť „Spravovať rozšírenia“."
+   },
+   "withSignMustFill": {
+      "message": "Pri znaku \u003Cspan>*\u003C/span> musí byť vyplnené alebo vybraté, vyberte čas otvorenia alebo zatvorenia alebo oba časy."
+   },
+   "writeYourDescriptionAboutSchUrl": {
+      "message": "Sem napíšte popis plánovanej adresy URL."
+   },
+   "yes": {
+      "message": "áno"
+   },
+   "yourEmailAddress": {
+      "message": "Vaša e-mailová adresa"
+   },
+   "yourScheduleUrl": {
+      "message": "Webová adresa vášho plánu"
+   }
+}

@@ -1,0 +1,1448 @@
+{
+   "10_min": {
+      "message": "10 دقيقة"
+   },
+   "1_min": {
+      "message": "1 دقيقة"
+   },
+   "30_min": {
+      "message": "30 دقيقة"
+   },
+   "5_min": {
+      "message": "5 دقائق"
+   },
+   "60_min": {
+      "message": "ساعة"
+   },
+   "Dashboard": {
+      "message": "لوحة القيادة"
+   },
+   "Login": {
+      "message": "تسجيل الدخول"
+   },
+   "Off": {
+      "message": "عن"
+   },
+   "On": {
+      "message": "على"
+   },
+   "Selected": {
+      "message": "تم اختياره"
+   },
+   "Settings": {
+      "message": "إعدادات"
+   },
+   "Tutorial": {
+      "message": "درس تعليمي"
+   },
+   "action": {
+      "message": "فعل"
+   },
+   "activateScheduleTab": {
+      "message": "تفعيل علامة التبويب المجدولة."
+   },
+   "active": {
+      "message": "نشيط"
+   },
+   "activeAllScheduleTab": {
+      "message": "تشغيل جدول علامات التبويب"
+   },
+   "activeStatus": {
+      "message": "حالة"
+   },
+   "actvInactvNotification": {
+      "message": "عرض الإشعارات عند فتح علامة التبويب الجدول الزمني"
+   },
+   "actvInactvOpnTb": {
+      "message": "علامة تبويب مفتوحة نشطة أو غير نشطة"
+   },
+   "actvIntvClsTb": {
+      "message": "إغلاق علامة التبويب النشطة أو غير النشطة"
+   },
+   "add": {
+      "message": "يضيف"
+   },
+   "addDescription": {
+      "message": "أضف وصفًا"
+   },
+   "addNew": {
+      "message": "إضافة جديد"
+   },
+   "addNewURlCls": {
+      "message": "أضف عنوان URL جديدًا للإغلاق"
+   },
+   "addNewUrlToOpen": {
+      "message": "أضف عنوان URL جديدًا لفتحه في نافذة جديدة"
+   },
+   "addTitle": {
+      "message": "أضف عنوان"
+   },
+   "addWebsite": {
+      "message": "إضافة موقع الويب"
+   },
+   "all": {
+      "message": "الجميع"
+   },
+   "allInputFieldReq": {
+      "message": "جميع الحقول مطلوبة"
+   },
+   "all_weeks": {
+      "message": "طوال الاسبوع"
+   },
+   "alreadyPurchase": {
+      "message": "هل قمت بالشراء بالفعل؟ أدخل المفتاح هنا"
+   },
+   "andAt": {
+      "message": "وعند"
+   },
+   "annually": {
+      "message": "سنويا"
+   },
+   "appDesc": {
+      "message": "سيتم فتح علامات تبويب المتصفح وإغلاقها تلقائيًا في الوقت المحدد. يمكن للمستخدم تنشيط/إلغاء تنشيط القائمة بناءً على المتطلبات"
+   },
+   "appName": {
+      "message": "جدولة علامات التبويب مع الفتح والإغلاق التلقائي"
+   },
+   "april": {
+      "message": "ابريل"
+   },
+   "at": {
+      "message": "في"
+   },
+   "august": {
+      "message": "أغسطس"
+   },
+   "autoFocus": {
+      "message": "علامة التبويب التركيز التلقائي"
+   },
+   "autoFocustip": {
+      "message": "إذا تم تشغيله، سيتم فتح علامة التبويب الجديدة في حالة نشطة/تركيز."
+   },
+   "autofocustip": {
+      "message": "سيتم التركيز تلقائيًا على علامات التبويب الجديدة المفتوحة"
+   },
+   "basic": {
+      "message": "أساسي"
+   },
+   "billedAnnyally": {
+      "message": "يتم دفعها سنويا"
+   },
+   "billedMonthly": {
+      "message": "يتم دفع الفاتورة شهريًا"
+   },
+   "both": {
+      "message": "كلاهما"
+   },
+   "browserOpen": {
+      "message": "عند فتح المتصفح"
+   },
+   "browserWebAddress": {
+      "message": "يبدأ عنوان الويب الخاص بالمتصفح وينتهي بعنوان ويب غير معروف. ضع \u003Cb>*\u003C/b> على جانبي حقل رابط موقع الويب المُدخل."
+   },
+   "browserWebAddress2": {
+      "message": "يحتوي عنوان الويب الخاص بالمتصفح على اسم المجال google.com، والذي سيتم إغلاقه في غضون دقائق معينة بغض النظر عن المجال الفرعي ومسار الصفحة. ضع \u003Cb>*\u003C/b> على جانبي اسم المجال وTLD"
+   },
+   "browserWebAddress3": {
+      "message": "يبدأ عنوان الويب الخاص بالمتصفح باسم نطاق غير معروف وينتهي بمسار صفحة غير معروف"
+   },
+   "browserWebAddress31": {
+      "message": "سيتم إغلاقه بعد الدقائق المحددة، ضع \u003Cb>*\u003C/b> على جانبي TLD"
+   },
+   "browserWebAddress4": {
+      "message": "يبدأ عنوان الويب الخاص بالمتصفح بعنوان ويب غير معروف. ضع \u003Cb>*\u003C/b> في بداية عنوان URL الخاص بك. تذكر أن عنوان الويب الخاص بالمتصفح يجب أن يتطابق مع عنوان URL الخاص بك بعد \u003Cb>*\u003C/b> الذي كتبته."
+   },
+   "browserWebAddress41": {
+      "message": "يبدأ عنوان الويب الخاص بالمتصفح بنطاق فرعي غير معروف"
+   },
+   "browserWebAddress42": {
+      "message": "في بداية رابط موقع الويب الخاص بك"
+   },
+   "browserWebAddress5": {
+      "message": "ينتهي عنوان الويب الخاص بالمتصفح بعنوان ويب غير معروف. ضع \u003Cb>*\u003C/b> في نهاية عنوان URL الخاص بك. تذكر أن عنوان الويب الخاص بك يجب أن يتطابق قبل \u003Cb>*\u003C/b> الذي كتبته."
+   },
+   "browserWebAddress51": {
+      "message": "ينتهي عنوان الويب الخاص بالمتصفح بمسار صفحة غير معروف. ضع \u003Cb>*\u003C/b> في نهاية عنوان الويب الخاص بك"
+   },
+   "browserWebAddress6": {
+      "message": "ضع فقط \u003Cb>*\u003C/b> في حقل عنوان الموقع الإلكتروني لإغلاق جميع علامات التبويب بالمتصفح. بعد إغلاق جميع علامات التبويب، سيتم إغلاق المتصفح تلقائيًا."
+   },
+   "browserWebAddress7": {
+      "message": "يجب عليك كتابة النطاق الفرعي الدقيق، والنطاق الأعلى مستوى، واسم النطاق، ومسار الصفحة في حقل عنوان URL لفتحه في علامة تبويب المتصفح."
+   },
+   "browserWebAddress8": {
+      "message": "يمكنك فتح عنوان URL في تاريخ ووقت محددين، أو شهر محدد، أو أسبوع محدد، أو سنة محددة، أو وقت متكرر"
+   },
+   "buyPlan": {
+      "message": "خطة الشراء"
+   },
+   "buycofee": {
+      "message": "اشتري لي قهوة"
+   },
+   "cancel": {
+      "message": "يلغي"
+   },
+   "changeLanguage": {
+      "message": "تغيير اللغة"
+   },
+   "checkAll": {
+      "message": "التحقق من الكل"
+   },
+   "checkThisOpToPreventClosePinTb": {
+      "message": "قم بتحديد هذا الخيار لمنع إغلاق علامات التبويب المثبتة."
+   },
+   "checkThisOptionOnlyPartOfUrlMtch": {
+      "message": "قم بتحديد هذا الخيار إذا كان هناك حاجة لمطابقة جزء فقط من عنوان URL."
+   },
+   "checkThisOptionToActivate": {
+      "message": "قم بتحديد هذا الخيار لتفعيل أو إلغاء تفعيل عنوان URL المجدول الخاص بك."
+   },
+   "checkThisOptionToCloseOnly": {
+      "message": "حدد هذا الخيار لإغلاق علامات التبويب المتخفية فقط. كما يمكنك تمكين خيار \"السماح بالتصفح المتخفي\" في تفاصيل الامتداد. للحصول على التعليمات، يرجى الرجوع إلى صفحة البرنامج التعليمي."
+   },
+   "checkThisOptionToCloseOnlyInIncgnitoTb": {
+      "message": "حدد هذا الخيار لإغلاق علامات التبويب المتخفية فقط. كما يمكنك تمكين خيار \"السماح بالتصفح المتخفي\" في تفاصيل الامتداد. للحصول على التعليمات، يرجى الرجوع إلى صفحة البرنامج التعليمي."
+   },
+   "checkThisOptionToInBg": {
+      "message": "حدد هذا الخيار إذا كنت تريد فتح عنوان URL في الخلفية دون فتحه في علامة تبويب جديدة"
+   },
+   "checkThisOptionToInactivNotification": {
+      "message": "حدد هذا الخيار لتعطيل الإشعارات على عنوان URL المجدول"
+   },
+   "checkThisOptionToOpen": {
+      "message": "حدد هذا الخيار إذا كنت تريد فتح عنوان URL الخاص بك في وضع التصفح المتخفي"
+   },
+   "checkThisOptionToOpenIncogito": {
+      "message": "حدد هذا الخيار إذا كنت تريد فتح عنوان URL الخاص بك في وضع التصفح المتخفي"
+   },
+   "checkThisOptionToPrevent": {
+      "message": "قم بتحديد هذا الخيار لمنع إغلاق علامات التبويب المثبتة."
+   },
+   "clickExtIcon": {
+      "message": "انقر على أيقونة \"الإضافات\" في شريط الأدوات، والتي تبدو وكأنها قطعة من اللغز."
+   },
+   "clickTheSwitch": {
+      "message": "انقر على المفتاح الموجود بجانبه لتشغيله"
+   },
+   "close": {
+      "message": "يغلق"
+   },
+   "closeAllTab": {
+      "message": "12. أغلق جميع علامات تبويب المتصفح"
+   },
+   "closeAllTabExm1": {
+      "message": "في المثال أعلاه، يوجد عنوان URL في علامة تبويب الإغلاق، مما يشير إلى أنه سيتم إغلاق جميع علامات التبويب في الساعة 12:00 يوم 25/2/2023"
+   },
+   "closeDate": {
+      "message": "تاريخ الإغلاق"
+   },
+   "closeDay": {
+      "message": "يوم الإغلاق"
+   },
+   "closeEveryYear": {
+      "message": "أغلق كل عام على"
+   },
+   "closeInEvery": {
+      "message": "أغلق في كل"
+   },
+   "closeIncognitoTab": {
+      "message": "إغلاق علامات التبويب المتخفية فقط"
+   },
+   "closeMinute": {
+      "message": "دقيقة إغلاق"
+   },
+   "closeOnDay": {
+      "message": "إغلاق في اليوم"
+   },
+   "closeOnEvery": {
+      "message": "اغلق كل شيء"
+   },
+   "closeOnEveryDay": {
+      "message": "إغلاق كل يوم على"
+   },
+   "closeOnEveryMonth": {
+      "message": "إغلاق كل شهر في يوم"
+   },
+   "closeOnEveryWeek": {
+      "message": "اغلاق كل اسبوع على"
+   },
+   "closeSecond": {
+      "message": "ثانياً إغلاق"
+   },
+   "closeSeconsMoreThan5": {
+      "message": "يجب أن تكون الثواني القريبة أكثر من 5."
+   },
+   "closeTabSchedule": {
+      "message": "إغلاق علامة التبويب الجدول الزمني"
+   },
+   "closeTabURL": {
+      "message": "إغلاق علامة التبويب URL"
+   },
+   "closeTime": {
+      "message": "وقت الإغلاق"
+   },
+   "closeUrl": {
+      "message": "اغلاق رابط الموقع"
+   },
+   "closeWeek": {
+      "message": "إغلاق الأسبوع"
+   },
+   "closeWeeks": {
+      "message": "إغلاق الأسابيع"
+   },
+   "close_on": {
+      "message": "إغلاق على"
+   },
+   "cngrtsForSubcr": {
+      "message": "مبروك! لقد تم تفعيل خطتك بنجاح."
+   },
+   "commonQuestionsAns": {
+      "message": "الأسئلة والأجوبة الشائعة"
+   },
+   "copySucessClose": {
+      "message": "تم نسخ بيانات عنوان URL لعلامة التبويب المغلقة إلى بيانات عنوان URL لعلامة التبويب المفتوحة"
+   },
+   "createNewTimer": {
+      "message": "إنشاء مؤقت جديد"
+   },
+   "currentPlan": {
+      "message": "الخطة الحالية"
+   },
+   "currentTabSchedule": {
+      "message": "جدول علامات التبويب الحالي"
+   },
+   "currentTbScheduleTimer": {
+      "message": "مؤقت علامة التبويب الحالية."
+   },
+   "cusSec": {
+      "message": "ثانياً مخصص"
+   },
+   "custMin": {
+      "message": "دقيقة مخصصة"
+   },
+   "custmMinSch": {
+      "message": "7. جدول الدقائق المخصص"
+   },
+   "custmMinSchExm1": {
+      "message": "في المثال أعلاه، تم وضع عنوان URL في علامة تبويب مفتوحة، مما يشير إلى فتح عنوان URL المحدد في علامة تبويب جديدة كل 15 دقيقة."
+   },
+   "custmMinSchExm2": {
+      "message": "في المثال أعلاه، تم وضع عنوان URL في علامة تبويب مغلقة، مما يعني أن عنوان URL الذي تم فتحه في علامة تبويب جديدة سيتم إغلاقه بعد 15 دقيقة."
+   },
+   "customSecondWarning": {
+      "message": "إن وظيفة الثانية المخصصة تجريبية، وقد لا تعمل بشكل صحيح إذا تم تعيين الثواني أقل من 60."
+   },
+   "darkMode": {
+      "message": "الوضع المظلم"
+   },
+   "datNotCopy": {
+      "message": "لم يتم نسخ بعض البيانات بسبب عنوان URL غير صالح."
+   },
+   "dataSaved": {
+      "message": "تم حفظ بيانات المؤقت بنجاح"
+   },
+   "date": {
+      "message": "تاريخ"
+   },
+   "dateIsOutOfRange": {
+      "message": "التاريخ خارج النطاق"
+   },
+   "day": {
+      "message": "يوم"
+   },
+   "december": {
+      "message": "ديسمبر"
+   },
+   "delete": {
+      "message": "يمسح"
+   },
+   "deleteScheduleTb": {
+      "message": "حذف علامة التبويب المجدولة."
+   },
+   "description": {
+      "message": "وصف"
+   },
+   "developedBy": {
+      "message": "تم التطوير بواسطة:"
+   },
+   "doNotCloseInPinnedTabs": {
+      "message": "لا تغلق علامات التبويب المثبتة"
+   },
+   "doNotShowNotification": {
+      "message": "لا تظهر الإشعار"
+   },
+   "domainName": {
+      "message": "اسم المجال"
+   },
+   "downloadCloseTbSampleCsv": {
+      "message": "قم بتنزيل نموذج لإغلاق علامة التبويب بصيغة CSV لرؤية مثال للتنسيق المطلوب"
+   },
+   "downloadOpenTbSampleCsv": {
+      "message": "قم بتنزيل نموذج CSV لعلامة تبويب مفتوحة لرؤية مثال للتنسيق المطلوب"
+   },
+   "editScheduleTb": {
+      "message": "تعديل علامة التبويب المجدولة."
+   },
+   "email": {
+      "message": "بريد إلكتروني"
+   },
+   "enterDateToCloseTab": {
+      "message": "أدخل التاريخ هنا لإغلاق علامة التبويب الجدول الزمني."
+   },
+   "enterDateToOpen": {
+      "message": "أدخل التاريخ لفتح علامة التبويب الجدول."
+   },
+   "enterMiniutesToCloseTb": {
+      "message": "أدخل الدقائق لإغلاق علامة التبويب."
+   },
+   "enterMiniutesToOpen": {
+      "message": "أدخل الدقائق لفتح علامة التبويب الجدول."
+   },
+   "enterMinute": {
+      "message": "أدخل الدقيقة"
+   },
+   "enterSecond": {
+      "message": "أدخل الثانية"
+   },
+   "enterSecondsToCloseTab": {
+      "message": "أدخل الثواني لإغلاق علامة التبويب."
+   },
+   "enterSecondsToOpen": {
+      "message": "أدخل الثواني لفتح علامة التبويب الجدول."
+   },
+   "enterTilteOfScheduleUrl": {
+      "message": "أدخل عنوان URL المجدول."
+   },
+   "enterTimeToCloseTab": {
+      "message": "أدخل الوقت هنا لإغلاق علامة التبويب الجدول الزمني."
+   },
+   "enterTimeToSchedule": {
+      "message": "أدخل الوقت لفتح علامة التبويب الجدول الزمني."
+   },
+   "enterValidEmail": {
+      "message": "الرجاء إدخال بريد إلكتروني صالح"
+   },
+   "enterValidUrl": {
+      "message": "الرجاء إدخال عنوان URL صالح"
+   },
+   "enterValueInCloseSec": {
+      "message": "أدخل القيمة في ثوانٍ قريبة"
+   },
+   "enterValueInOpenCloseSec": {
+      "message": "أدخل القيمة في ثوانٍ الفتح أو الإغلاق"
+   },
+   "enterValueInOpenMinutes": {
+      "message": "أدخل القيمة في الدقائق المفتوحة"
+   },
+   "enterVlaueInCloseMinutes": {
+      "message": "أدخل القيمة في الدقائق القريبة"
+   },
+   "enterVlaueInOpenCloseMin": {
+      "message": "أدخل القيمة في دقائق الفتح أو الإغلاق"
+   },
+   "enterVlaueInOpenSeconds": {
+      "message": "أدخل القيمة بالثواني المفتوحة"
+   },
+   "enterYourURLToSchedule": {
+      "message": "أدخل عنوان URL الخاص بك للجدولة."
+   },
+   "every": {
+      "message": "كل"
+   },
+   "every10Min": {
+      "message": "كل 10 دقائق"
+   },
+   "every1Minute": {
+      "message": "كل دقيقة"
+   },
+   "every30Min": {
+      "message": "كل 30 دقيقة"
+   },
+   "every5Min": {
+      "message": "كل 5 دقائق"
+   },
+   "everyDay": {
+      "message": "كل يوم"
+   },
+   "everyDayAt": {
+      "message": "كل يوم في"
+   },
+   "everyHour": {
+      "message": "كل ساعة"
+   },
+   "everyMinute": {
+      "message": "كل دقيقة"
+   },
+   "everyMonth": {
+      "message": "كل شهر"
+   },
+   "everyMonthOn": {
+      "message": "كل شهر على"
+   },
+   "everyMonthOnDay": {
+      "message": "كل شهر يوم"
+   },
+   "everyWeek": {
+      "message": "كل اسبوع"
+   },
+   "everyWeekOn": {
+      "message": "كل اسبوع على"
+   },
+   "everyYear": {
+      "message": "كل عام"
+   },
+   "everyYesrOn": {
+      "message": "كل عام على"
+   },
+   "evr10MinSch": {
+      "message": "2. جدول كل 10 دقائق"
+   },
+   "evr10MinSchExm1": {
+      "message": "في المثال أعلاه، تم إدخال عنوان URL في علامة تبويب مفتوحة، مما يعني أن عنوان URL المحدد سيتم فتحه في علامة تبويب جديدة كل 10 دقائق."
+   },
+   "evr10MinSchExm2": {
+      "message": "في المثال أعلاه، تم وضع عنوان URL في علامة تبويب مغلقة، مما يعني أن عنوان URL الذي تم فتحه في علامة تبويب جديدة سيتم إغلاقه بعد 10 دقائق."
+   },
+   "evrDaySch": {
+      "message": "3. جدول يومي"
+   },
+   "evrDaySchExm1": {
+      "message": "في المثال أعلاه، تم وضع عنوان URL في علامة تبويب مفتوحة، مما يعني أنه سيتم فتحه في علامة تبويب جديدة كل يوم في الساعة 5:27 مساءً"
+   },
+   "evrDaySchExm2": {
+      "message": "في المثال أعلاه، تم وضع عنوان URL في علامة تبويب مغلقة، مما يعني أنه سيتم إغلاق علامة التبويب المفتوحة بالفعل في الساعة 5:27 مساءً كل يوم"
+   },
+   "evrMonthSch": {
+      "message": "5. جدول كل شهر"
+   },
+   "evrMonthSchExm1": {
+      "message": "في المثال أعلاه، يوجد عنوان URL في علامة تبويب مفتوحة، مما يعني أنه سيتم فتحه في علامة تبويب جديدة كل شهر في الساعة 13:45 في اليوم 25"
+   },
+   "evrMonthSchExm2": {
+      "message": "في المثال أعلاه، يوجد عنوان URL في علامة تبويب الإغلاق، مما يشير إلى أنه سيتم إغلاق علامة التبويب المفتوحة بالفعل في كل شهر في الساعة 13:45 في اليوم 25"
+   },
+   "evrWeekSch": {
+      "message": "4. جدول كل اسبوع"
+   },
+   "evrWeekSchExm1": {
+      "message": "في المثال أعلاه، يوجد عنوان URL المحدد في علامة تبويب مفتوحة، مما يشير إلى أنه سيتم فتحه في علامة تبويب جديدة كل أسبوع في الساعة 17:00 يومي \u003Cb>الاثنين والثلاثاء\u003C/b> ."
+   },
+   "evrWeekSchExm2": {
+      "message": "في المثال أعلاه، يوجد عنوان URL المحدد في علامة التبويب \"إغلاق\"، مما يشير إلى أنه سيتم إغلاق علامة التبويب المفتوحة بالفعل في كل أسبوع في الساعة 17:00 يومي \u003Cb>الاثنين والثلاثاء\u003C/b> ."
+   },
+   "evrWeekSchExm3": {
+      "message": "في المثال أعلاه، يمكن تحديد أيام متعددة في مؤقت الأسبوع."
+   },
+   "evrYearSch": {
+      "message": "6. الجدول السنوي"
+   },
+   "evrYearSchExm1": {
+      "message": "في المثال أعلاه، يوجد عنوان URL في علامة تبويب مفتوحة، مما يعني أنه سيتم فتحه في علامة تبويب جديدة كل عام في الساعة 13:35 يوم 1 يناير"
+   },
+   "evrYearSchExm2": {
+      "message": "في المثال أعلاه، يوجد عنوان URL في علامة تبويب الإغلاق، مما يشير إلى أنه سيتم إغلاق علامة التبويب المفتوحة بالفعل في كل عام في الساعة 13:35 يوم 1 يناير"
+   },
+   "exampleSort": {
+      "message": "مثلا"
+   },
+   "exdMaxLim": {
+      "message": "تم تجاوز الحد الأقصى للأجهزة المسموح بها!"
+   },
+   "exmpOpnClsTbSch": {
+      "message": "مثال لكيفية فتح وإغلاق علامة التبويب في Tab Scheduler"
+   },
+   "expLicKy": {
+      "message": "انتهت صلاحية مفتاح الترخيص هذا."
+   },
+   "export": {
+      "message": "يصدّر"
+   },
+   "exportBefore": {
+      "message": "لديك\u003Cexday>\u003C/exday>الأيام المتبقية، يرجى الاشتراك لمواصلة الاستمتاع بالميزات المميزة"
+   },
+   "exportClsTbDta": {
+      "message": "تصدير بيانات علامة التبويب المغلقة"
+   },
+   "exportOpenTbDt": {
+      "message": "تصدير بيانات علامة التبويب المفتوحة"
+   },
+   "exportedData": {
+      "message": "تم تصدير بيانات المؤقت بنجاح"
+   },
+   "extensionShouldAble": {
+      "message": "الآن، يجب أن يكون الامتداد قادرًا على إغلاق علامات التبويب في وضع التصفح المتخفي."
+   },
+   "faq": {
+      "message": "التعليمات"
+   },
+   "faq_1": {
+      "message": "ما هو جدول علامات التبويب مع الفتح والإغلاق التلقائي؟"
+   },
+   "faq_10": {
+      "message": "كيف يمكنني عرض علامات التبويب المجدولة الخاصة بي؟"
+   },
+   "faq_11": {
+      "message": "هل من الضروري ملء وقت الفتح ووقت الإغلاق؟"
+   },
+   "faq_12": {
+      "message": "ماذا تفعل ميزات علامة التبويب التركيز التلقائي، وتنشيط جميع علامات التبويب المجدولة، ووضع الطاقة؟"
+   },
+   "faq_13": {
+      "message": "هل يمكنني فتح/إغلاق رابط موقع الويب المجدول في علامة تبويب التصفح المتخفي؟"
+   },
+   "faq_14": {
+      "message": "ما هي فائدة علامة التبويب \"تحديث\" إذا كان عنوان URL مفتوحًا بالفعل؟"
+   },
+   "faq_2": {
+      "message": "ما هي فائدة رابط الموقع؟"
+   },
+   "faq_3": {
+      "message": "كيف أقوم بجدولة عنوان URL باستخدام Tab Scheduler؟"
+   },
+   "faq_4": {
+      "message": "ما هو خيار \"فتح عنوان URL في الخلفية\"؟"
+   },
+   "faq_5": {
+      "message": "هل يمكنني منع الامتداد من إغلاق علامات التبويب المثبتة؟"
+   },
+   "faq_6": {
+      "message": "ماذا يعني نوع الجدول \"كلاهما\"؟"
+   },
+   "faq_7": {
+      "message": "كيف تعمل ميزة \"تصفية عناوين URL\"؟"
+   },
+   "faq_8": {
+      "message": "هل يمكنني إلغاء تنشيط علامة التبويب المجدولة دون حذفها؟"
+   },
+   "faq_9": {
+      "message": "هل سأتلقى إشعارات بشأن علامات التبويب المجدولة؟"
+   },
+   "faq_a_1": {
+      "message": "\u003Cp>Tab Scheduler with Auto Open and Close هو ملحق للمتصفح يسمح للمستخدمين بجدولة علامات التبويب لفتحها وإغلاقها تلقائيًا في أوقات محددة. يمكن للمستخدمين تحديد جدول زمني لمرة واحدة أو إعداد جداول متكررة مع خيارات تردد مختلفة. هذا الملحق له أغراض متعددة للمستخدمين ويوفر العديد من الميزات المفيدة لك.\u003C/p>"
+   },
+   "faq_a_10": {
+      "message": "يتم عرض جميع علامات التبويب المجدولة في قائمة تعرض العنوان ورابط موقع الويب وأوقات الفتح والإغلاق والحالة والإجراءات التي يمكنك اتخاذها (على سبيل المثال، التنشيط أو التحرير أو الحذف)."
+   },
+   "faq_a_11": {
+      "message": "لا، يمكنك تحديد وقت مفتوح أو وقت إغلاق. ومع ذلك، يجب عليك ملء الحقول المطلوبة أو تحديدها والتي تحمل علامة النجمة (*)."
+   },
+   "faq_a_12": {
+      "message": "تضمن ميزة Auto Focus Tab أنه عند فتح علامة تبويب مجدولة، يتيح لك خيار Activate All Scheduled Tabs تشغيل جميع علامات التبويب المجدولة بسرعة بنقرة واحدة. يعمل Power Mode على تحسين أداء الامتداد من خلال إدارة موارد المتصفح بكفاءة أكبر."
+   },
+   "faq_a_13": {
+      "message": "نعم، يمكنك اختيار فتح علامة تبويب مجدولة في وضع التصفح المتخفي من خلال تحديد خيار \"فتح في وضع التصفح المتخفي\". يمكنك اختيار إغلاق علامات التبويب في وضع التصفح المتخفي فقط من خلال تحديد خيار \"إغلاق علامات التبويب في وضع التصفح المتخفي فقط\"، طالما تم تمكين خيار \"السماح في وضع التصفح المتخفي\" في إعدادات الامتداد"
+   },
+   "faq_a_14": {
+      "message": "عند تمكين هذا الخيار، سيقوم الامتداد بتحديث علامة تبويب موجودة تلقائيًا إذا كان نفس عنوان URL مفتوحًا بالفعل في متصفحك. وهذا يمنع فتح علامات تبويب مكررة ويضمن حصولك دائمًا على أحدث إصدار من الصفحة المحملة."
+   },
+   "faq_a_14_1": {
+      "message": "إذا حاولت فتح https://github.com/ وكان مفتوحًا بالفعل في علامة تبويب أخرى، فسوف يقوم الامتداد ببساطة بتحديث علامة التبويب هذه بدلاً من فتح علامة تبويب جديدة."
+   },
+   "faq_a_14_2": {
+      "message": "إذا كان https://github.com/ مفتوحًا بالفعل في ثلاث علامات تبويب، فسوف يقوم الامتداد بتحديث علامات التبويب الثلاث."
+   },
+   "faq_a_2": {
+      "message": "رابط الموقع هو عنوان موقع الويب الذي تفتحه في علامة التبويب الخاصة بالمتصفح الخاص بك. كيفية استخدام عنوان الموقع مذكورة أدناه."
+   },
+   "faq_a_3": {
+      "message": "لجدولة عنوان URL، أدخل رابط الموقع الإلكتروني، وأعط الجدول عنوانًا، وحدد التردد (مرة واحدة، كل دقيقة، يوميًا، وما إلى ذلك)، واختر أوقات الفتح والإغلاق. يمكنك أيضًا تحديد تاريخ أو يوم أو ثوانٍ لفتح علامة التبويب وإغلاقها."
+   },
+   "faq_a_4": {
+      "message": "\u003Cp>يمنحك هذا الخيار التحكم الكامل في جدولة عنوان URL لفتحه في الخلفية دون التركيز على علامة التبويب الجديدة. سيتم فتح عنوان URL بهدوء أثناء استمرارك في العمل على علامات تبويب أخرى. إنه مفيد بشكل خاص عندما تحتاج إلى أن يقوم المتصفح بجلب البيانات من عنوان URL المجدول دون عرضها بنشاط، كما في حالة طلب واجهة برمجة التطبيقات GET.\u003C/p>\u003Cbr> \u003Cp>على سبيل المثال، إذا كنت تريد جلب البيانات من نقطة نهاية API في وقت محدد بانتظام، فيمكنك استخدام هذا الخيار الفعال لتشغيل الطلب في الخلفية دون فتح علامة تبويب مرئية جديدة.\u003C/p>"
+   },
+   "faq_a_5": {
+      "message": "نعم، هناك خيار لمنع إغلاق علامات التبويب المثبتة. حدد خيار \"عدم إغلاق علامات التبويب المثبتة\" للتأكد من بقاء علامات التبويب هذه مفتوحة حتى إذا كانت تلبي معايير الإغلاق الأخرى."
+   },
+   "faq_a_6": {
+      "message": "يمنحك نوع الجدول \"كلاهما\" التحكم الكامل في وقت فتح علامة التبويب وإغلاقها، مما يسمح لك بتعيين أوقات محددة لكلا الإجراءين."
+   },
+   "faq_a_7": {
+      "message": "تضمن تصفية عناوين URL ضرورة تطابق جزء معين فقط من عنوان URL حتى يتم تنفيذ الإجراء المجدول. وهذا مفيد عندما تريد أتمتة إجراءات معينة استنادًا إلى مطابقات جزئية لعناوين URL. على سبيل المثال، إذا قمت بتحديد خيار تصفية عناوين URL لعنوان URL https://example.com/page، فسوف ينطبق أيضًا على عناوين URL مثل https://example.com/page/123 وhttps://example.com/page?query=example وhttps://subdomain.example.com/page."
+   },
+   "faq_a_8": {
+      "message": "باستخدام خيار \"تنشيط علامة التبويب المجدولة هذه\"، يمكنك تنشيط علامات التبويب المجدولة أو إلغاء تنشيطها بسهولة، مما يمنحك المرونة اللازمة لإدارة جداولك دون فقدان التكوينات."
+   },
+   "faq_a_9": {
+      "message": "بشكل افتراضي، ستتلقى إشعارات. ومع ذلك، إذا كنت تفضل إيقاف الإشعارات، فيمكنك تحديد خيار \"عدم إظهار الإشعارات\" لتعطيلها."
+   },
+   "february": {
+      "message": "فبراير"
+   },
+   "filterTips": {
+      "message": "يتم تطبيق الفلتر بعد 'https://' أو 'www.'، على سبيل المثال 'github.com'"
+   },
+   "for_exp": {
+      "message": "على سبيل المثال"
+   },
+   "freeForever": {
+      "message": "مجاني للأبد"
+   },
+   "freeSchedule": {
+      "message": "جدول مجاني"
+   },
+   "freeTral": {
+      "message": "باعتبارك مستخدمًا مبكرًا ذا قيمة، سوف تستمتع\u003Crday>120\u003C/rday>أيام من الوصول المجاني قبل التبديل إلى خطتنا المدفوعة الجديدة - شكرًا لك على دعمك المستمر!\u003Cp class=\"p-t-5\">لديك\u003Cb>\u003Cspan>\u003C/span>\u003C/b>الأيام المتبقية من حسابك\u003Crday>120\u003C/rday>-فترة يوم مجاني.\u003Cafex class=\"warning\">\u003Cafex>\u003C/afex>\u003C/afex>\u003C/p> "
+   },
+   "frequentlyAskedQuestions": {
+      "message": "الأسئلة الشائعة"
+   },
+   "friday": {
+      "message": "جمعة"
+   },
+   "getThisPlan": {
+      "message": "احصل على هذه الخطة"
+   },
+   "goToSettingsPageToSchedule": {
+      "message": "انتقل إلى صفحة الإعدادات لجدولة فتح وإغلاق عناوين URL."
+   },
+   "goURL": {
+      "message": "انتقل إلى الرابط"
+   },
+   "helpAccordion12": {
+      "message": "هل يعمل هذا الامتداد في وضع السكون/الإيقاف المؤقت؟"
+   },
+   "helpAccordion3": {
+      "message": "هل يمكنني جدولة علامة تبويب لفتحها في وضع التصفح المتخفي؟"
+   },
+   "helpAccordion6": {
+      "message": "ما هو \"انتهى الوقت\"؟"
+   },
+   "helpAccordion7": {
+      "message": "هل يمكنني تصدير عنوان URL المجدول؟"
+   },
+   "helpAccordion8": {
+      "message": "هل يمكنني استيراد عنوان URL للجدول؟"
+   },
+   "helpPanelBodyDesc12First": {
+      "message": "لا، لن يعمل هذا الامتداد في وضع السكون/الإيقاف المؤقت."
+   },
+   "helpPanelBodyDesc12Second": {
+      "message": "إذا تم جدولة أي عنوان URL في علامة التبويب المفتوحة أو المغلقة، فلن ينتقل جهاز الكمبيوتر الخاص بك تلقائيًا إلى وضع السكون أو الإيقاف المؤقت."
+   },
+   "helpPanelBodyDesc3": {
+      "message": "نعم، يمكنك اختيار فتح علامة تبويب مجدولة في وضع التصفح المتخفي من خلال تحديد خيار \"فتح في وضع التصفح المتخفي\". تأكد من تمكين خيار \"السماح بالتصفح المتخفي\" في إعدادات ملحق المتصفح."
+   },
+   "helpPanelBodyDesc6": {
+      "message": "- إذا تجاوز التاريخ والوقت المحددين التاريخ والوقت الحاليين، سيظهر نص \"انتهى الوقت\"."
+   },
+   "helpPanelBodyDesc7": {
+      "message": "نعم، يمكنك تصدير علامة التبويب المفتوحة والمغلقة المجدولة بالفعل وعنوان URL بتنسيق csv واستخدامه مع نظام آخر لاستيراد هذا العنوان."
+   },
+   "helpPanelBodyDesc8": {
+      "message": "نعم، يمكنك استيراد عنوان URL صالح للفتح والإغلاق بتنسيق csv. سيتم جدولة تنسيق csv المستورد تلقائيًا في وقت محدد"
+   },
+   "herAreStepsToAllow": {
+      "message": "فيما يلي الخطوات اللازمة للسماح بالتصفح المتخفي في Google Chrome:"
+   },
+   "home": {
+      "message": "بيت"
+   },
+   "hour_minute_close": {
+      "message": "كل ساعة ودقيقة إغلاق"
+   },
+   "hour_minute_open": {
+      "message": "كل ساعة ودقيقة مفتوحة"
+   },
+   "how_to_use_tab": {
+      "message": "كيفية استخدام جدولة علامات التبويب؟"
+   },
+   "import": {
+      "message": "يستورد"
+   },
+   "importClsTbDta": {
+      "message": "استيراد بيانات علامة التبويب المغلقة"
+   },
+   "importExport": {
+      "message": "الاستيراد/التصدير"
+   },
+   "importOpenTbDt": {
+      "message": "استيراد بيانات علامة التبويب المفتوحة"
+   },
+   "importedRecored": {
+      "message": ", تم استيرادها مسجلة"
+   },
+   "inactivateScheduleTab": {
+      "message": "إلغاء تنشيط علامة التبويب المجدولة."
+   },
+   "inactive": {
+      "message": "غير نشط"
+   },
+   "inactiveSch": {
+      "message": "8. عنوان URL غير نشط"
+   },
+   "inactiveSchExm1": {
+      "message": "في المثال أعلاه، يوجد عنوان URL المعطى في علامة تبويب مفتوحة أو علامة تبويب مغلقة، مما يشير إلى أن عنوان URL المعطى غير نشط ولن يقوم بأي إجراء."
+   },
+   "inactiveThisScheduledTabs": {
+      "message": "قم بتفعيل علامة التبويب المجدولة هذه"
+   },
+   "invalidDuplicate": {
+      "message": "، مكرر أو مسجل بشكل غير صالح"
+   },
+   "invldLicKy": {
+      "message": "مفتاح الترخيص غير صالح!"
+   },
+   "isClose": {
+      "message": "هو قريب"
+   },
+   "isOpen": {
+      "message": "مفتوح"
+   },
+   "january": {
+      "message": "يناير"
+   },
+   "july": {
+      "message": "يوليو"
+   },
+   "june": {
+      "message": "يونيو"
+   },
+   "licKeyDis": {
+      "message": "تم تعطيل مفتاح الترخيص هذا."
+   },
+   "listTitle": {
+      "message": "جدولة علامات التبويب"
+   },
+   "loading": {
+      "message": "انتظر من فضلك..."
+   },
+   "locale": {
+      "message": "عربي"
+   },
+   "march": {
+      "message": "يمشي"
+   },
+   "maxSchedule": {
+      "message": "4 الحد الأقصى للجدول الزمني"
+   },
+   "may": {
+      "message": "يمكن"
+   },
+   "mintValid": {
+      "message": "الحد الأدنى المطلوب هو دقيقة واحدة"
+   },
+   "minute": {
+      "message": "دقيقة"
+   },
+   "minutesNotLessThan1": {
+      "message": "لا ينبغي أن يقل عدد المحاضر عن 1."
+   },
+   "monday": {
+      "message": "الاثنين"
+   },
+   "month": {
+      "message": "شهر"
+   },
+   "monthly": {
+      "message": "شهريا"
+   },
+   "more": {
+      "message": "أكثر"
+   },
+   "mostSubscribe": {
+      "message": "الأكثر اشتراكا"
+   },
+   "no": {
+      "message": "لا"
+   },
+   "noDataToExport": {
+      "message": "لا توجد بيانات للتصدير."
+   },
+   "noScheduledTabs": {
+      "message": "لا توجد علامات تبويب مجدولة"
+   },
+   "noTimerSetAddNewTimer": {
+      "message": "لم يتم ضبط المؤقت، انقر فوق زر \"إضافة\" لتعيين مؤقت جديد"
+   },
+   "not_show_tutorial": {
+      "message": "لا تعرض هذا البرنامج التعليمي مرة أخرى"
+   },
+   "notificationOpenTab": {
+      "message": "13. إشعار بشأن عنوان URL لفتح/إغلاق علامة التبويب"
+   },
+   "notificationOpenTabExm1": {
+      "message": "في المثال أعلاه، يوجد عنوان URL في علامة تبويب مفتوحة، مما يشير إلى أنه سيعطي إشعارًا ويفتح/يغلق عنوان URL في علامة تبويب جديدة كل 5 دقائق."
+   },
+   "notifications": {
+      "message": "إشعار"
+   },
+   "november": {
+      "message": "نوفمبر"
+   },
+   "october": {
+      "message": "أكتوبر"
+   },
+   "onTheExtensionDetailPage": {
+      "message": "في صفحة تفاصيل الامتداد، قم بالتمرير لأسفل وحدد خيار \"السماح بالتصفح المتخفي\"."
+   },
+   "oneTime": {
+      "message": "مرة واحدة"
+   },
+   "oneTmSch": {
+      "message": "1. جدول زمني واحد"
+   },
+   "oneTmSchExm1": {
+      "message": "في المثال أعلاه، يوجد عنوان URL في علامة تبويب مفتوحة، مما يشير إلى أنه سيتم فتحه في علامة تبويب جديدة مرة واحدة في الساعة 13:45 في 21/1/2023"
+   },
+   "oneTmSchExm2": {
+      "message": "في المثال أعلاه، تم وضع عنوان URL في علامة تبويب إغلاق، مما يشير إلى أنه سيتم إغلاق جميع علامات تبويب عناوين URL المطابقة المحددة في الساعة 13:45 في 21/1/2023"
+   },
+   "open": {
+      "message": "يفتح"
+   },
+   "openBackground": {
+      "message": "إذا كانت الإجابة بنعم، قم بتحميل عنوان URL في الخلفية دون فتحه في علامة تبويب جديدة"
+   },
+   "openDate": {
+      "message": "تاريخ الافتتاح"
+   },
+   "openDay": {
+      "message": "يوم مفتوح"
+   },
+   "openEveryDayOn": {
+      "message": "مفتوح كل يوم"
+   },
+   "openEveryMonthOn": {
+      "message": "مفتوح كل شهر في اليوم"
+   },
+   "openEveryWeekOn": {
+      "message": "مفتوح كل اسبوع"
+   },
+   "openEveryYearOn": {
+      "message": "مفتوح كل عام في"
+   },
+   "openGoogleChrome": {
+      "message": "افتح جوجل كروم."
+   },
+   "openInBackground": {
+      "message": "فتح عنوان URL في الخلفية"
+   },
+   "openInEvery": {
+      "message": "مفتوح في كل"
+   },
+   "openInIncognito": {
+      "message": "افتح في وضع التصفح المتخفي"
+   },
+   "openMinute": {
+      "message": "دقيقة مفتوحة"
+   },
+   "openOnDay": {
+      "message": "مفتوح في اليوم"
+   },
+   "openOnEvery": {
+      "message": "مفتوح في كل"
+   },
+   "openSecond": {
+      "message": "فتح الثانية"
+   },
+   "openSecondsMoreThan5": {
+      "message": "يجب أن تكون الثواني المفتوحة أكثر من 5."
+   },
+   "openTabSchedule": {
+      "message": "جدول علامات التبويب المفتوحة"
+   },
+   "openTabURL": {
+      "message": "فتح علامة التبويب URL"
+   },
+   "openTime": {
+      "message": "وقت مفتوح"
+   },
+   "openUrl": {
+      "message": "افتح رابط الموقع"
+   },
+   "openWeek": {
+      "message": "الاسبوع المفتوح"
+   },
+   "openWeeks": {
+      "message": "الأسابيع المفتوحة"
+   },
+   "open_on": {
+      "message": "مفتوح على"
+   },
+   "optional": {
+      "message": "خياري"
+   },
+   "or": {
+      "message": "أو"
+   },
+   "outof": {
+      "message": "خارج من"
+   },
+   "pagePath": {
+      "message": "مسار الصفحة"
+   },
+   "paidFeature": {
+      "message": "ميزة مدفوعة الأجر"
+   },
+   "pauseSchedule": {
+      "message": "بدء أو إيقاف كافة الجداول"
+   },
+   "pauseTabScheduler": {
+      "message": "جدولة علامات التبويب المتوقفة مؤقتًا"
+   },
+   "pleaseAllowIncognitoMessage": {
+      "message": "يرجى تفعيل خيار \"السماح بالتصفح المتخفي\" في تفاصيل الامتداد. للحصول على الإرشادات، يرجى الرجوع إلى صفحة البرنامج التعليمي."
+   },
+   "pleaseShareYourSuggestions": {
+      "message": "من فضلك شاركنا باقتراحك ."
+   },
+   "plsShreAnySugWithUs": {
+      "message": "يرجى تقديم اقتراح لتحسيننا"
+   },
+   "powerMode": {
+      "message": "وضع الطاقة"
+   },
+   "premium": {
+      "message": "غالي"
+   },
+   "pricePlan": {
+      "message": "التسعير والخطط"
+   },
+   "privcyPolicy": {
+      "message": "سياسة الخصوصية"
+   },
+   "prowerModeTip": {
+      "message": "حافظ على النظام نشطًا دائمًا عن طريق تمكين وضع الطاقة"
+   },
+   "put": {
+      "message": "يضع"
+   },
+   "rateUs": {
+      "message": "قيمنا"
+   },
+   "removeDuplicateEntry": {
+      "message": "الرجاء إزالة الإدخال المكرر"
+   },
+   "removeOpenTbURL": {
+      "message": "إزالة عنوان URL لعلامة التبويب المفتوحة"
+   },
+   "repeat": {
+      "message": "يكرر"
+   },
+   "requiredMsg": {
+      "message": "مطلوب"
+   },
+   "rmvClsTb": {
+      "message": "إزالة عنوان URL لإغلاق علامة التبويب"
+   },
+   "sameTabs": {
+      "message": "تحديث علامة التبويب إذا كان عنوان URL مفتوحًا بالفعل"
+   },
+   "sameTabsInfo": {
+      "message": "منع فتح علامات تبويب متعددة لنفس عنوان URL. على سبيل المثال، إذا تم فتح www.google.com بالفعل، فسيتم تحديث علامة التبويب الموجودة بدلاً من فتح علامة تبويب جديدة لها."
+   },
+   "sampleCsvOpenPath": {
+      "message": "../sample_csv/en/open_tab_sample.csv"
+   },
+   "sampleFile": {
+      "message": "ملف العينة"
+   },
+   "saturday": {
+      "message": "السبت"
+   },
+   "savOpnData": {
+      "message": "حفظ بيانات علامة التبويب المفتوحة"
+   },
+   "save": {
+      "message": "يحفظ"
+   },
+   "saveClsTbData": {
+      "message": "حفظ بيانات علامة التبويب المغلقة"
+   },
+   "saveSchedule": {
+      "message": "حفظ الجدول"
+   },
+   "scheduleCloseTab": {
+      "message": "جدولة إغلاق علامة التبويب"
+   },
+   "scheduleCurrentTab": {
+      "message": "جدولة علامة التبويب الحالية"
+   },
+   "scheduleOpenTab": {
+      "message": "جدولة علامة التبويب المفتوحة"
+   },
+   "scheduledTabIsAlreadyExistWithSameTimer": {
+      "message": "هذه علامة التبويب المجدولة موجودة بالفعل بنفس المؤقت."
+   },
+   "scheduledTabList": {
+      "message": "قائمة علامات التبويب المجدولة"
+   },
+   "scheduledType": {
+      "message": "نوع الجدول"
+   },
+   "search": {
+      "message": "يبحث"
+   },
+   "secValid": {
+      "message": "الحد الأدنى المطلوب هو 5 ثواني"
+   },
+   "second": {
+      "message": "ثانية"
+   },
+   "selectCloseDate": {
+      "message": "حدد تاريخ الإغلاق"
+   },
+   "selectCloseDay": {
+      "message": "حدد يوم الإغلاق"
+   },
+   "selectCloseTime": {
+      "message": "حدد وقت الإغلاق"
+   },
+   "selectColumn": {
+      "message": "حدد العمود"
+   },
+   "selectDateAndTime": {
+      "message": "حدد التاريخ والوقت لفتح علامة تبويب جديدة"
+   },
+   "selectDateAndTimeClsTb": {
+      "message": "حدد التاريخ والوقت لإغلاق علامة التبويب"
+   },
+   "selectDayToCloseSchTb": {
+      "message": "حدد اليوم لإغلاق علامة التبويب الجدول."
+   },
+   "selectDayToClsTb": {
+      "message": "حدد اليوم لإغلاق علامة التبويب"
+   },
+   "selectDayToSchdule": {
+      "message": "حدد اليوم لجدولة علامة التبويب."
+   },
+   "selectDaysInWeek": {
+      "message": "حدد أيامًا في الأسبوع"
+   },
+   "selectDaysInWeekIClsTime": {
+      "message": "حدد أيام الأسبوع في مؤقت الإغلاق."
+   },
+   "selectDaysInWeekIOpClsTime": {
+      "message": "حدد أيام الأسبوع في مؤقت الفتح أو الإغلاق."
+   },
+   "selectDaysInWeekIOpTime": {
+      "message": "حدد أيام الأسبوع في المؤقت المفتوح."
+   },
+   "selectFrequency": {
+      "message": "حدد التردد"
+   },
+   "selectFrequencyOfScheduleUrl": {
+      "message": "حدد تردد عنوان URL المجدول."
+   },
+   "selectOpenDate": {
+      "message": "حدد تاريخ الافتتاح"
+   },
+   "selectOpenDay": {
+      "message": "حدد اليوم المفتوح"
+   },
+   "selectOpenOrClose": {
+      "message": "حدد وقت الفتح والإغلاق"
+   },
+   "selectOpenOrCloseDate": {
+      "message": "حدد تاريخ الفتح والإغلاق"
+   },
+   "selectOpenOrCloseDay": {
+      "message": "حدد يوم الفتح والإغلاق"
+   },
+   "selectOpenTime": {
+      "message": "حدد وقت الفتح"
+   },
+   "selectPreferredLanguage": {
+      "message": "اختر اللغة المفضلة لديك."
+   },
+   "selectToOpenTab": {
+      "message": "حدد اليوم لفتح علامة تبويب جديدة"
+   },
+   "selectTypTimerClsTb": {
+      "message": "حدد نوع المؤقت لإغلاق علامة التبويب"
+   },
+   "selectTypeOfSchedule": {
+      "message": "حدد نوع الجدول، إذا كنت تريد الفتح والإغلاق، حدد \"كلاهما\"."
+   },
+   "selectTypeOfTimer": {
+      "message": "حدد نوع المؤقت لفتح علامة تبويب جديدة"
+   },
+   "select_weeks": {
+      "message": "حدد الأسابيع"
+   },
+   "september": {
+      "message": "سبتمبر"
+   },
+   "settingSave": {
+      "message": "تم حفظ الإعدادات بنجاح"
+   },
+   "settingToClose": {
+      "message": "الإعداد لإغلاق علامة التبويب في وضع التصفح المتخفي."
+   },
+   "shareYourSuggestionWithUs": {
+      "message": "شاركنا باقتراحاتك.."
+   },
+   "slectDayToScheduleWeekly": {
+      "message": "حدد الأيام لجدولة علامة التبويب أسبوعيًا."
+   },
+   "slectMinute": {
+      "message": "حدد الدقيقة"
+   },
+   "smthngWrng": {
+      "message": "لقد حدث خطأ ما"
+   },
+   "softpulseInfotech": {
+      "message": "سوفت بولس انفوتيك"
+   },
+   "somethingWentWrong": {
+      "message": "حدث خطأ ما. قم بتحديث الصفحة وحاول مرة أخرى."
+   },
+   "status": {
+      "message": "حالة"
+   },
+   "subcrKeyShldNEmpt": {
+      "message": "الرجاء إدخال مفتاح الاشتراك."
+   },
+   "subdomain": {
+      "message": "المجال الفرعي"
+   },
+   "subkeyInputTitle": {
+      "message": "أدخل مفتاح الاشتراك"
+   },
+   "submFeedBack": {
+      "message": "يُقدِّم"
+   },
+   "suggForTbSch": {
+      "message": "اقتراح لجدولة علامات التبويب"
+   },
+   "suggestionAndRateUs": {
+      "message": "إقتراح و تقييم لنا"
+   },
+   "sunday": {
+      "message": "الأحد"
+   },
+   "tabCloseOneTime": {
+      "message": "سيتم إغلاق علامة التبويب مرة واحدة فقط"
+   },
+   "tabSchTutorial": {
+      "message": "برنامج تعليمي لجدولة علامات التبويب"
+   },
+   "tabScheduler": {
+      "message": "جدولة علامات التبويب"
+   },
+   "tabSchedulerOptions": {
+      "message": "خيارات جدولة علامات التبويب"
+   },
+   "tabWillOpenOneTime": {
+      "message": "سيتم فتح علامة التبويب مرة واحدة فقط"
+   },
+   "tabWillOpenWhenBrowserOpen": {
+      "message": "سيتم فتح علامة التبويب عند فتح المتصفح"
+   },
+   "termCondition": {
+      "message": "الشروط والأحكام"
+   },
+   "thanksFrRev": {
+      "message": "شكرا لك على المراجعة الخاصة بك"
+   },
+   "thnkUFeedBack": {
+      "message": "شكرا على اقتراحك"
+   },
+   "thnkUFrUsngTbSch": {
+      "message": "يرجى تقديم اقتراح لتحسيننا"
+   },
+   "thursday": {
+      "message": "يوم الخميس"
+   },
+   "time": {
+      "message": "وقت"
+   },
+   "timeExpired": {
+      "message": "إنتهى الوقت"
+   },
+   "timer": {
+      "message": "الموقت"
+   },
+   "title": {
+      "message": "عنوان"
+   },
+   "titleLengtWarn": {
+      "message": "طول العنوان لا ينبغي أن يتجاوز 200 حرف."
+   },
+   "toScheduledOpenTbMsg": {
+      "message": "لجدولة علامة التبويب المفتوحة، يرجى إلغاء تحديد تصفية عنوان URL."
+   },
+   "toogleCloseTab": {
+      "message": "بدء/إيقاف تنبيه الجدول الزمني لجميع عناوين URL لعلامات التبويب المغلقة"
+   },
+   "toogleDarkmode": {
+      "message": "قم بالتبديل بين الوضع الداكن والوضع الافتراضي لتخصيص تجربة المشاهدة الخاصة بك."
+   },
+   "toogleOff": {
+      "message": "عن"
+   },
+   "toogleOn": {
+      "message": "على"
+   },
+   "toogleOpenTab": {
+      "message": "بدء/إيقاف تنبيه الجدول الزمني لجميع عناوين URL المفتوحة"
+   },
+   "topLevelDomain": {
+      "message": "نطاق المستوى الأعلى"
+   },
+   "totalProcessed": {
+      "message": "إجمالي المسجل المعالج"
+   },
+   "tuesday": {
+      "message": "يوم الثلاثاء"
+   },
+   "tutorialImg1": {
+      "message": "\u003Cimg src=\"../images/en/1.png\">"
+   },
+   "tutorialImg10": {
+      "message": "\u003Cimg src=\"../images/en/10.png\">"
+   },
+   "tutorialImg11": {
+      "message": "\u003Cimg src=\"../images/en/11.png\">"
+   },
+   "tutorialImg12": {
+      "message": "\u003Cimg src=\"../images/en/12.png\">"
+   },
+   "tutorialImg13": {
+      "message": "\u003Cimg src=\"../images/en/13.png\">"
+   },
+   "tutorialImg14": {
+      "message": "\u003Cimg src=\"../images/en/14.png\">"
+   },
+   "tutorialImg2": {
+      "message": "\u003Cimg src=\"../images/en/2.png\">"
+   },
+   "tutorialImg3": {
+      "message": "\u003Cimg src=\"../images/en/3.png\">"
+   },
+   "tutorialImg4": {
+      "message": "\u003Cimg src=\"../images/en/4.png\">"
+   },
+   "tutorialImg5": {
+      "message": "\u003Cimg src=\"../images/en/5.png\">"
+   },
+   "tutorialImg6": {
+      "message": "\u003Cimg src=\"../images/en/6.png\">"
+   },
+   "tutorialImg7": {
+      "message": "\u003Cimg src=\"../images/en/7.png\">"
+   },
+   "tutorialImg8": {
+      "message": "\u003Cimg src=\"../images/en/8.png\">"
+   },
+   "tutorialImg9": {
+      "message": "\u003Cimg src=\"../images/en/9.png\">"
+   },
+   "uncheckAll": {
+      "message": "إلغاء تحديد الكل"
+   },
+   "unlimitedSchedule": {
+      "message": "حد الجدول الزمني غير محدود"
+   },
+   "unspecifiedURL": {
+      "message": "11. مسار URL غير محدد"
+   },
+   "unspecifiedURLExm1": {
+      "message": "في المثال أعلاه، تم وضع عنوان URL في علامة تبويب مغلقة، مما يعني أن عنوان URL الذي تم فتحه في علامة تبويب جديدة ويبدأ وينتهي بعنوان ويب غير معروف سيتم إغلاقه بعد 5 دقائق."
+   },
+   "upgradePlan": {
+      "message": "يرجى شراء الخطة أو تسجيل الدخول وترقية خطتك لفتح المزيد من الميزات."
+   },
+   "upgradePlanUnlock": {
+      "message": "قم بترقية خطتك لفتح المزيد من الميزات."
+   },
+   "uploadValidFormat": {
+      "message": "يرجى تحميل تنسيق صالح"
+   },
+   "url": {
+      "message": "عنوان URL"
+   },
+   "urlContExat": {
+      "message": "تصفية عناوين URL"
+   },
+   "urlEndWithUnspesifiedPth": {
+      "message": "9. ينتهي عنوان URL بمسار غير محدد"
+   },
+   "urlEndWithUnspesifiedPthExm1": {
+      "message": "في المثال أعلاه، تم وضع عنوان URL في علامة تبويب مغلقة، مما يشير إلى أن عنوان URL الذي تم فتحه في علامة تبويب جديدة وينتهي بمسار غير معروف سيتم إغلاقه بعد 5 دقائق."
+   },
+   "urlFilterInfo": {
+      "message": "يحتوي عنوان URL الذي يتم التحقق منه على جزء فقط من عنوان URL ويجب أن يكون عنوان URL الدقيق الذي يتم التحقق منه مطابقًا تمامًا لعنوان URL المحدد"
+   },
+   "urlFilterinCLoseTb": {
+      "message": "14. تصفية عناوين URL عند إغلاق علامة التبويب URL"
+   },
+   "urlFilterinCLoseTbExample": {
+      "message": "في المثال أعلاه، يوجد عنوان URL في علامة تبويب مغلقة، مما يشير إلى أن عنوان URL لعلامة التبويب المفتوحة بالفعل يتطابق مع جزء من عنوان URL المحدد، وبالتالي سيتم إغلاق علامة التبويب هذه"
+   },
+   "urlIsRequired": {
+      "message": "رابط الموقع مطلوب"
+   },
+   "urlNotvalid": {
+      "message": "عنوان URL غير صالح"
+   },
+   "urlStartWithUnspesifiedPth": {
+      "message": "10. يبدأ عنوان URL بمسار غير محدد"
+   },
+   "urlStartWithUnspesifiedPthExm1": {
+      "message": "في المثال أعلاه، تم وضع عنوان URL في علامة تبويب مغلقة، مما يعني أن عنوان URL الذي تم فتحه في علامة تبويب جديدة ويبدأ بنطاق فرعي غير معروف \u003Cb>\"www\"\u003C/b> أو \u003Cb>\"blog\"\u003C/b> سيتم إغلاقه بعد 5 دقائق."
+   },
+   "useSpecificUrl": {
+      "message": "استخدم رابط موقع ويب محدد"
+   },
+   "useSpecificUrl1": {
+      "message": "يجب عليك كتابة النطاق الفرعي الدقيق، والنطاق الأعلى مستوى، واسم النطاق، ومسار الصفحة في حقل رابط موقع الويب في علامة التبويب المغلقة في المتصفح."
+   },
+   "useSpecificUrl2": {
+      "message": "استخدم علامة التبويب المغلقة لجميع المتصفحات"
+   },
+   "useSpecificUrl3": {
+      "message": "استخدم رابط الموقع المحدد والكامل"
+   },
+   "useUnSpecificUrl1": {
+      "message": "استخدم رابط موقع ويب غير محدد"
+   },
+   "useUnSpecificUrl2": {
+      "message": "استخدم البدء برابط موقع ويب غير محدد"
+   },
+   "useUnSpecificUrl3": {
+      "message": "استخدم النهاية مع رابط موقع ويب غير محدد"
+   },
+   "used": {
+      "message": "لقد استخدمت"
+   },
+   "validFormatCsv": {
+      "message": "ما هو تنسيق ملف CSV الصحيح للاستيراد؟"
+   },
+   "websiteLink": {
+      "message": "رابط الموقع"
+   },
+   "websiteUrl": {
+      "message": "عنوان الموقع"
+   },
+   "wednesday": {
+      "message": "الأربعاء"
+   },
+   "weekName": {
+      "message": "اسم الاسبوع"
+   },
+   "weekly": {
+      "message": "أسبوعي"
+   },
+   "whenExtensionTabAppears": {
+      "message": "عندما تظهر علامة التبويب \"الإضافات\"، حدد موقع \"جدول علامات التبويب مع الفتح والإغلاق التلقائي\" لتمكينه في وضع التصفح المتخفي وانقر فوق الزر \"التفاصيل\" بجواره."
+   },
+   "whenMenuPopup": {
+      "message": "عندما تظهر القائمة، حدد \"إدارة الملحقات\"."
+   },
+   "withSignMustFill": {
+      "message": "مع علامة \u003Cspan>*\u003C/span> يجب تعبئة أو تحديد، حدد وقت الفتح أو الإغلاق أو كليهما."
+   },
+   "writeYourDescriptionAboutSchUrl": {
+      "message": "اكتب وصفك حول عنوان URL المجدول هنا."
+   },
+   "yes": {
+      "message": "نعم"
+   },
+   "yourEmailAddress": {
+      "message": "عنوان بريدك  الإلكتروني"
+   },
+   "yourScheduleUrl": {
+      "message": "رابط جدولك"
+   }
+}

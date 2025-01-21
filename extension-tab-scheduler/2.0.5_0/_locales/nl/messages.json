@@ -1,0 +1,1448 @@
+{
+   "10_min": {
+      "message": "10 minuten"
+   },
+   "1_min": {
+      "message": "1 minuut"
+   },
+   "30_min": {
+      "message": "30 minuten"
+   },
+   "5_min": {
+      "message": "5 minuten"
+   },
+   "60_min": {
+      "message": "uur"
+   },
+   "Dashboard": {
+      "message": "Dashboard"
+   },
+   "Login": {
+      "message": "Login"
+   },
+   "Off": {
+      "message": "Uit"
+   },
+   "On": {
+      "message": "Op"
+   },
+   "Selected": {
+      "message": "Gekozen"
+   },
+   "Settings": {
+      "message": "Instellingen"
+   },
+   "Tutorial": {
+      "message": "Handleiding"
+   },
+   "action": {
+      "message": "Actie"
+   },
+   "activateScheduleTab": {
+      "message": "Activeer het geplande tabblad."
+   },
+   "active": {
+      "message": "Actief"
+   },
+   "activeAllScheduleTab": {
+      "message": "Tabbladplanner uitvoeren"
+   },
+   "activeStatus": {
+      "message": "Staat"
+   },
+   "actvInactvNotification": {
+      "message": "Melding weergeven wanneer het tabblad Planning wordt geopend"
+   },
+   "actvInactvOpnTb": {
+      "message": "Actief of inactief open tabblad"
+   },
+   "actvIntvClsTb": {
+      "message": "Actief of inactief tabblad sluiten"
+   },
+   "add": {
+      "message": "Toevoegen"
+   },
+   "addDescription": {
+      "message": "Beschrijving toevoegen"
+   },
+   "addNew": {
+      "message": "Nieuw toevoegen"
+   },
+   "addNewURlCls": {
+      "message": "Voeg een nieuwe URL toe om te sluiten"
+   },
+   "addNewUrlToOpen": {
+      "message": "Nieuwe URL toevoegen om in een nieuw venster te openen"
+   },
+   "addTitle": {
+      "message": "Titel toevoegen"
+   },
+   "addWebsite": {
+      "message": "Website toevoegen"
+   },
+   "all": {
+      "message": "Alle"
+   },
+   "allInputFieldReq": {
+      "message": "Alle velden zijn verplicht"
+   },
+   "all_weeks": {
+      "message": "Hele week"
+   },
+   "alreadyPurchase": {
+      "message": "Al gekocht? Voer hier de sleutel in"
+   },
+   "andAt": {
+      "message": "en bij"
+   },
+   "annually": {
+      "message": "Jaarlijks"
+   },
+   "appDesc": {
+      "message": "Browsertabbladen worden automatisch geopend en gesloten op de geselecteerde tijd. De gebruiker kan de lijst activeren/deactiveren op basis van de vereiste"
+   },
+   "appName": {
+      "message": "Tabbladplanner met automatisch openen en sluiten"
+   },
+   "april": {
+      "message": "april"
+   },
+   "at": {
+      "message": "bij"
+   },
+   "august": {
+      "message": "augustus"
+   },
+   "autoFocus": {
+      "message": "Tabblad Autofocus"
+   },
+   "autoFocustip": {
+      "message": "Als deze optie is ingeschakeld, wordt het nieuwe tabblad geopend in een actieve/focusstatus."
+   },
+   "autofocustip": {
+      "message": "Nieuwe tabbladen die worden geopend, krijgen automatisch de focus"
+   },
+   "basic": {
+      "message": "Basis"
+   },
+   "billedAnnyally": {
+      "message": "Jaarlijks gefactureerd"
+   },
+   "billedMonthly": {
+      "message": "Maandelijks gefactureerd"
+   },
+   "both": {
+      "message": "Beide"
+   },
+   "browserOpen": {
+      "message": "Bij openen browser"
+   },
+   "browserWebAddress": {
+      "message": "Het webadres van de browser begint en eindigt met een onbekend webadres. Plaats \u003Cb>*\u003C/b> aan beide kanten van het invoerveld Website Link."
+   },
+   "browserWebAddress2": {
+      "message": "Het webadres van de browser bevat de domeinnaam google.com, die binnen enkele minuten wordt gesloten, ongeacht het subdomein en het pad van de pagina. Zet \u003Cb>*\u003C/b> aan beide kanten van de domeinnaam en TLD"
+   },
+   "browserWebAddress3": {
+      "message": "Het webadres van de browser begint met een onbekende domeinnaam en eindigt met een onbekend paginapad"
+   },
+   "browserWebAddress31": {
+      "message": "zal na bepaalde minuten gesloten worden, zet \u003Cb>*\u003C/b> aan beide kanten van de TLD"
+   },
+   "browserWebAddress4": {
+      "message": "Het webadres van de browser begint met een onbekend webadres. Zet \u003Cb>*\u003C/b> aan het begin van uw URL. Vergeet niet dat het webadres van de browser moet overeenkomen met uw URL na \u003Cb>*\u003C/b> die u hebt geschreven."
+   },
+   "browserWebAddress41": {
+      "message": "Het webadres van de browser begint met een onbekend subdomein"
+   },
+   "browserWebAddress42": {
+      "message": "aan het begin van uw websitelink"
+   },
+   "browserWebAddress5": {
+      "message": "Het webadres van de browser eindigt met een onbekend webadres. Zet \u003Cb>*\u003C/b> aan het einde van uw URL. Vergeet niet dat uw webadres moet overeenkomen met vóór u \u003Cb>*\u003C/b> hebt geschreven."
+   },
+   "browserWebAddress51": {
+      "message": "Het webadres van de browser eindigt met een onbekend paginapad. Zet \u003Cb>*\u003C/b> aan het einde van uw webadres"
+   },
+   "browserWebAddress6": {
+      "message": "Plaats alleen \u003Cb>*\u003C/b> in het adresveld van de website om alle browsertabbladen te sluiten. Na het sluiten van alle tabbladen wordt de browser automatisch gesloten."
+   },
+   "browserWebAddress7": {
+      "message": "U moet het exacte subdomein, het topleveldomein, de domeinnaam en het paginapad in het URL-veld invoeren om het te openen in het tabblad van de browser."
+   },
+   "browserWebAddress8": {
+      "message": "U kunt de URL openen op een specifieke datum en tijd, een specifieke maand, een specifieke week, een specifiek jaar en een herhaaltijd"
+   },
+   "buyPlan": {
+      "message": "Koop plan"
+   },
+   "buycofee": {
+      "message": "Koop mij een koffie"
+   },
+   "cancel": {
+      "message": "Annuleren"
+   },
+   "changeLanguage": {
+      "message": "Taal wijzigen"
+   },
+   "checkAll": {
+      "message": "Controleer alles"
+   },
+   "checkThisOpToPreventClosePinTb": {
+      "message": "Selecteer deze optie om te voorkomen dat vastgezette tabbladen worden gesloten."
+   },
+   "checkThisOptionOnlyPartOfUrlMtch": {
+      "message": "Selecteer deze optie als slechts een deel van de URL moet worden gevonden."
+   },
+   "checkThisOptionToActivate": {
+      "message": "Selecteer deze optie om uw geplande URL te activeren of inactiveren."
+   },
+   "checkThisOptionToCloseOnly": {
+      "message": "Selecteer deze optie om alleen incognitotabbladen te sluiten. Schakel ook de optie 'Toestaan ​​in incognito' in de extensiedetails in. Raadpleeg de tutorialpagina voor instructies."
+   },
+   "checkThisOptionToCloseOnlyInIncgnitoTb": {
+      "message": "Selecteer deze optie om alleen incognitotabbladen te sluiten. Schakel ook de optie 'Toestaan ​​in incognito' in de extensiedetails in. Raadpleeg de tutorialpagina voor instructies."
+   },
+   "checkThisOptionToInBg": {
+      "message": "Selecteer deze optie als u de URL op de achtergrond wilt openen zonder deze in een nieuw tabblad te openen"
+   },
+   "checkThisOptionToInactivNotification": {
+      "message": "Selecteer deze optie om de melding op de geplande URL uit te schakelen"
+   },
+   "checkThisOptionToOpen": {
+      "message": "Selecteer deze optie als u uw url in de incognitomodus wilt openen"
+   },
+   "checkThisOptionToOpenIncogito": {
+      "message": "Selecteer deze optie als u uw url in de incognitomodus wilt openen"
+   },
+   "checkThisOptionToPrevent": {
+      "message": "Selecteer deze optie om te voorkomen dat vastgezette tabbladen worden gesloten."
+   },
+   "clickExtIcon": {
+      "message": "Klik op het pictogram 'Extensies' in de werkbalk. Dit pictogram ziet eruit als een puzzelstukje."
+   },
+   "clickTheSwitch": {
+      "message": "Klik op de schakelaar ernaast om het in te schakelen"
+   },
+   "close": {
+      "message": "Dichtbij"
+   },
+   "closeAllTab": {
+      "message": "12. Sluit alle tabbladen van de browser"
+   },
+   "closeAllTabExm1": {
+      "message": "In bovenstaand voorbeeld staat de URL in het tabblad Sluiten, wat aangeeft dat alle tabbladen om 12:00 uur op 25/2/2023 worden gesloten."
+   },
+   "closeDate": {
+      "message": "Sluitingsdatum"
+   },
+   "closeDay": {
+      "message": "Sluitingsdag"
+   },
+   "closeEveryYear": {
+      "message": "Sluit elk jaar op"
+   },
+   "closeInEvery": {
+      "message": "Sluit in elk geval"
+   },
+   "closeIncognitoTab": {
+      "message": "Alleen incognitotabbladen sluiten"
+   },
+   "closeMinute": {
+      "message": "Sluiten Minuut"
+   },
+   "closeOnDay": {
+      "message": "Sluiten op dag"
+   },
+   "closeOnEvery": {
+      "message": "Sluit op elke"
+   },
+   "closeOnEveryDay": {
+      "message": "Sluit elke dag op"
+   },
+   "closeOnEveryMonth": {
+      "message": "Sluit elke maand op dag"
+   },
+   "closeOnEveryWeek": {
+      "message": "Elke week gesloten op"
+   },
+   "closeSecond": {
+      "message": "Sluiten Tweede"
+   },
+   "closeSeconsMoreThan5": {
+      "message": "Het aantal seconden dat het dichtst bij elkaar ligt, moet meer dan 5 zijn."
+   },
+   "closeTabSchedule": {
+      "message": "Tabblad sluiten Schema"
+   },
+   "closeTabURL": {
+      "message": "Sluit tabblad URL"
+   },
+   "closeTime": {
+      "message": "Sluitingstijd"
+   },
+   "closeUrl": {
+      "message": "Sluit websitelink"
+   },
+   "closeWeek": {
+      "message": "Sluiten Week"
+   },
+   "closeWeeks": {
+      "message": "Sluiten Weken"
+   },
+   "close_on": {
+      "message": "Dichtbij"
+   },
+   "cngrtsForSubcr": {
+      "message": "Gefeliciteerd! Uw abonnement is succesvol geactiveerd."
+   },
+   "commonQuestionsAns": {
+      "message": "Veelgestelde vragen en antwoorden"
+   },
+   "copySucessClose": {
+      "message": "Sluit tabblad URL-gegevens gekopieerd naar Open tabblad URL-gegevens"
+   },
+   "createNewTimer": {
+      "message": "Nieuwe timer maken"
+   },
+   "currentPlan": {
+      "message": "Huidig ​​plan"
+   },
+   "currentTabSchedule": {
+      "message": "Huidig ​​tabblad schema"
+   },
+   "currentTbScheduleTimer": {
+      "message": "Huidige tabblad geplande timer."
+   },
+   "cusSec": {
+      "message": "Aangepaste tweede"
+   },
+   "custMin": {
+      "message": "Aangepaste minuut"
+   },
+   "custmMinSch": {
+      "message": "7. Aangepast minutenschema"
+   },
+   "custmMinSchExm1": {
+      "message": "In bovenstaand voorbeeld staat de URL in een open tabblad, wat betekent dat de URL elke 15 minuten in een nieuw tabblad moet worden geopend."
+   },
+   "custmMinSchExm2": {
+      "message": "In bovenstaand voorbeeld staat de URL in het tabblad 'Sluiten', wat aangeeft dat de URL die in een nieuw tabblad wordt geopend, na 15 minuten wordt gesloten."
+   },
+   "customSecondWarning": {
+      "message": "De functionaliteit voor aangepaste seconden is experimenteel en functioneert mogelijk niet correct als de seconden lager zijn dan 60."
+   },
+   "darkMode": {
+      "message": "Donkere modus"
+   },
+   "datNotCopy": {
+      "message": "Sommige gegevens worden niet gekopieerd vanwege een ongeldige URL."
+   },
+   "dataSaved": {
+      "message": "Timergegevens succesvol opgeslagen"
+   },
+   "date": {
+      "message": "Datum"
+   },
+   "dateIsOutOfRange": {
+      "message": "Datum is buiten bereik"
+   },
+   "day": {
+      "message": "Dag"
+   },
+   "december": {
+      "message": "December"
+   },
+   "delete": {
+      "message": "Verwijderen"
+   },
+   "deleteScheduleTb": {
+      "message": "Gepland tabblad verwijderen."
+   },
+   "description": {
+      "message": "Beschrijving"
+   },
+   "developedBy": {
+      "message": "Ontwikkeld door:"
+   },
+   "doNotCloseInPinnedTabs": {
+      "message": "Sluit geen vastgezette tabbladen"
+   },
+   "doNotShowNotification": {
+      "message": "Toon geen melding"
+   },
+   "domainName": {
+      "message": "Domeinnaam"
+   },
+   "downloadCloseTbSampleCsv": {
+      "message": "Download een voorbeeld van een CSV-bestand met een gesloten tabblad om een ​​voorbeeld van de vereiste indeling te zien"
+   },
+   "downloadOpenTbSampleCsv": {
+      "message": "Download een voorbeeld van een open tabblad in een CSV-bestand om een ​​voorbeeld te zien van de vereiste indeling"
+   },
+   "editScheduleTb": {
+      "message": "Tabblad Gepland bewerken."
+   },
+   "email": {
+      "message": "E-mail"
+   },
+   "enterDateToCloseTab": {
+      "message": "Voer hier een datum in om het tabblad Planning te sluiten."
+   },
+   "enterDateToOpen": {
+      "message": "Voer een datum in om het tabblad Planning te openen."
+   },
+   "enterMiniutesToCloseTb": {
+      "message": "Voer minuten in om het tabblad te sluiten."
+   },
+   "enterMiniutesToOpen": {
+      "message": "Voer minuten in om het tabblad Planning te openen."
+   },
+   "enterMinute": {
+      "message": "Voer minuut in"
+   },
+   "enterSecond": {
+      "message": "Voer tweede in"
+   },
+   "enterSecondsToCloseTab": {
+      "message": "Voer seconden in om het tabblad te sluiten."
+   },
+   "enterSecondsToOpen": {
+      "message": "Voer seconden in om het tabblad Planning te openen."
+   },
+   "enterTilteOfScheduleUrl": {
+      "message": "Voer de titel van de geplande URL in."
+   },
+   "enterTimeToCloseTab": {
+      "message": "Voer hier de tijd in om het tabblad 'Schema' te sluiten."
+   },
+   "enterTimeToSchedule": {
+      "message": "Voer de tijd in om het tabblad Planning te openen."
+   },
+   "enterValidEmail": {
+      "message": "Voer een geldig e-mailadres in"
+   },
+   "enterValidUrl": {
+      "message": "Voer een geldige URL in"
+   },
+   "enterValueInCloseSec": {
+      "message": "Voer waarde in binnen enkele seconden"
+   },
+   "enterValueInOpenCloseSec": {
+      "message": "Voer waarde in open of gesloten seconden in"
+   },
+   "enterValueInOpenMinutes": {
+      "message": "Voer waarde in open minuten in"
+   },
+   "enterVlaueInCloseMinutes": {
+      "message": "Voer waarde in binnen enkele minuten"
+   },
+   "enterVlaueInOpenCloseMin": {
+      "message": "Voer een waarde in open of gesloten minuten in"
+   },
+   "enterVlaueInOpenSeconds": {
+      "message": "Voer waarde in open seconden in"
+   },
+   "enterYourURLToSchedule": {
+      "message": "Voer uw URL in om te plannen."
+   },
+   "every": {
+      "message": "elk"
+   },
+   "every10Min": {
+      "message": "Elke 10 minuten"
+   },
+   "every1Minute": {
+      "message": "elke 1 minuut"
+   },
+   "every30Min": {
+      "message": "Elke 30 minuten"
+   },
+   "every5Min": {
+      "message": "Elke 5 minuten"
+   },
+   "everyDay": {
+      "message": "Elke dag"
+   },
+   "everyDayAt": {
+      "message": "elke dag bij"
+   },
+   "everyHour": {
+      "message": "Elk uur"
+   },
+   "everyMinute": {
+      "message": "Elke minuut"
+   },
+   "everyMonth": {
+      "message": "Elke maand"
+   },
+   "everyMonthOn": {
+      "message": "elke maand op"
+   },
+   "everyMonthOnDay": {
+      "message": "elke maand op dag"
+   },
+   "everyWeek": {
+      "message": "Elke week"
+   },
+   "everyWeekOn": {
+      "message": "elke week op"
+   },
+   "everyYear": {
+      "message": "Elk jaar"
+   },
+   "everyYesrOn": {
+      "message": "elk jaar op"
+   },
+   "evr10MinSch": {
+      "message": "2. Schema van elke 10 minuten"
+   },
+   "evr10MinSchExm1": {
+      "message": "In bovenstaand voorbeeld staat de URL in een open tabblad, wat betekent dat de URL elke 10 minuten in een nieuw tabblad wordt geopend."
+   },
+   "evr10MinSchExm2": {
+      "message": "In bovenstaand voorbeeld staat de URL in het tabblad 'Sluiten', wat aangeeft dat de URL die in een nieuw tabblad wordt geopend, na 10 minuten wordt gesloten."
+   },
+   "evrDaySch": {
+      "message": "3. Dagelijks schema"
+   },
+   "evrDaySchExm1": {
+      "message": "In bovenstaand voorbeeld staat de URL in een open tabblad, wat aangeeft dat deze elke dag om 17:27 uur in een nieuw tabblad wordt geopend."
+   },
+   "evrDaySchExm2": {
+      "message": "In bovenstaand voorbeeld staat de URL in het tabblad Sluiten, wat aangeeft dat het reeds geopende tabblad elke dag om 17:27 uur wordt gesloten"
+   },
+   "evrMonthSch": {
+      "message": "5. Maandelijks schema"
+   },
+   "evrMonthSchExm1": {
+      "message": "In bovenstaand voorbeeld staat de URL in een open tabblad, wat aangeeft dat deze elke maand om 13:45 uur op dag 25 in een nieuw tabblad wordt geopend."
+   },
+   "evrMonthSchExm2": {
+      "message": "In bovenstaand voorbeeld staat de URL in het tabblad Sluiten, wat aangeeft dat het reeds geopende tabblad elke maand om 13:45 op dag 25 wordt gesloten."
+   },
+   "evrWeekSch": {
+      "message": "4. Elke week schema"
+   },
+   "evrWeekSchExm1": {
+      "message": "In het bovenstaande voorbeeld bevindt de opgegeven URL zich in een open tabblad. Er staat dat de URL elke week op \u003Cb>maandag en dinsdag\u003C/b> om 17:00 uur in een nieuw tabblad wordt geopend ."
+   },
+   "evrWeekSchExm2": {
+      "message": "In het bovenstaande voorbeeld staat de opgegeven URL in het tabblad Sluiten, waarin staat dat het reeds geopende tabblad elke week om 17:00 op \u003Cb>maandag en dinsdag\u003C/b> wordt gesloten ."
+   },
+   "evrWeekSchExm3": {
+      "message": "In het bovenstaande voorbeeld kunnen meerdere dagen in de weektimer worden geselecteerd."
+   },
+   "evrYearSch": {
+      "message": "6. Jaarlijks schema"
+   },
+   "evrYearSchExm1": {
+      "message": "In bovenstaand voorbeeld staat de URL in een open tabblad, wat aangeeft dat deze elk jaar om 13:35 op 1 januari in een nieuw tabblad wordt geopend."
+   },
+   "evrYearSchExm2": {
+      "message": "In bovenstaand voorbeeld staat de URL in het tabblad Sluiten, wat aangeeft dat het reeds geopende tabblad elk jaar om 13:35 op 1 januari wordt gesloten."
+   },
+   "exampleSort": {
+      "message": "bijv."
+   },
+   "exdMaxLim": {
+      "message": "Maximaal toegestane apparaten overschreden!"
+   },
+   "exmpOpnClsTbSch": {
+      "message": "Voorbeeld van hoe u een tabblad in Tab Scheduler kunt openen en sluiten"
+   },
+   "expLicKy": {
+      "message": "Deze licentiesleutel is verlopen."
+   },
+   "export": {
+      "message": "Exporteren"
+   },
+   "exportBefore": {
+      "message": "Je hebt\u003Cexday>\u003C/exday>dagen resterend, abonneer u om te blijven genieten van de premiumfunctie"
+   },
+   "exportClsTbDta": {
+      "message": "Exporteer gegevens van gesloten tabbladen"
+   },
+   "exportOpenTbDt": {
+      "message": "Exporteer geopende tabbladgegevens"
+   },
+   "exportedData": {
+      "message": "Timergegevens succesvol geëxporteerd"
+   },
+   "extensionShouldAble": {
+      "message": "Nu zou de extensie tabbladen in de incognitomodus moeten kunnen sluiten."
+   },
+   "faq": {
+      "message": "Veelgestelde vragen"
+   },
+   "faq_1": {
+      "message": "Wat is Tab Scheduler met Automatisch Openen en Sluiten?"
+   },
+   "faq_10": {
+      "message": "Hoe bekijk ik mijn geplande tabbladen?"
+   },
+   "faq_11": {
+      "message": "Is het verplicht om zowel de openings- als sluitingstijden in te vullen?"
+   },
+   "faq_12": {
+      "message": "Wat doen de functies Auto Focus Tab, Activeer alle geplande tabbladen en Energiemodus?"
+   },
+   "faq_13": {
+      "message": "Kan ik de geplande websitelink openen/sluiten in het incognitotabblad?"
+   },
+   "faq_14": {
+      "message": "Wat is het nut van het tabblad Vernieuwen als de URL al open is?"
+   },
+   "faq_2": {
+      "message": "Wat is het nut van een websitelink?"
+   },
+   "faq_3": {
+      "message": "Hoe plan ik een URL met Tab Scheduler?"
+   },
+   "faq_4": {
+      "message": "Wat is de optie 'URL op de achtergrond openen'?"
+   },
+   "faq_5": {
+      "message": "Kan ik voorkomen dat de extensie vastgezette tabbladen sluit?"
+   },
+   "faq_6": {
+      "message": "Wat betekent het schematype 'Beide'?"
+   },
+   "faq_7": {
+      "message": "Hoe werkt de functie 'URL-filtering'?"
+   },
+   "faq_8": {
+      "message": "Kan ik een gepland tabblad deactiveren zonder het te verwijderen?"
+   },
+   "faq_9": {
+      "message": "Ontvang ik meldingen voor geplande tabbladen?"
+   },
+   "faq_a_1": {
+      "message": "\u003Cp>Tab Scheduler met automatisch openen en sluiten is een browserextensie waarmee gebruikers tabbladen kunnen plannen om automatisch te openen en sluiten op ingestelde tijden. Gebruikers kunnen een eenmalig schema selecteren of terugkerende schema's instellen met verschillende frequentieopties. Deze extensie heeft meerdere doeleinden voor gebruikers en biedt veel functies die nuttig voor u zijn.\u003C/p>"
+   },
+   "faq_a_10": {
+      "message": "Alle geplande tabbladen worden weergegeven in een lijst met de titel, de websitelink, de openings- en sluitingstijden, de status en de acties die u kunt uitvoeren (bijvoorbeeld activeren, bewerken, verwijderen)."
+   },
+   "faq_a_11": {
+      "message": "Nee, u kunt een open tijd of een sluittijd plannen. U moet echter de vereiste velden met een sterretje (*) invullen of selecteren."
+   },
+   "faq_a_12": {
+      "message": "Auto Focus Tab zorgt ervoor dat wanneer een gepland tabblad wordt geopend, Activate All Scheduled Tabs u in staat stelt om snel al uw geplande tabbladen in te schakelen met één klik. Power Mode optimaliseert de prestaties van de extensie door browserbronnen efficiënter te beheren."
+   },
+   "faq_a_13": {
+      "message": "Ja, u kunt ervoor kiezen om een ​​gepland tabblad in de incognitomodus te openen door de optie 'Openen in incognitomodus' te selecteren. U kunt ervoor kiezen om alleen incognitotabbladen te sluiten door de optie 'Alleen incognitotabbladen sluiten' te selecteren, zolang 'Toestaan ​​in incognito' is ingeschakeld in de extensie-instellingen."
+   },
+   "faq_a_14": {
+      "message": "Wanneer deze optie is ingeschakeld, vernieuwt de extensie automatisch een bestaand tabblad als dezelfde URL al in uw browser is geopend. Dit voorkomt het openen van dubbele tabbladen en zorgt ervoor dat u altijd de nieuwste versie van de pagina hebt geladen."
+   },
+   "faq_a_14_1": {
+      "message": "Als u https://github.com/ probeert te openen en deze is al geopend in een ander tabblad, zal de extensie alleen dat tabblad vernieuwen in plaats van een nieuw tabblad te openen."
+   },
+   "faq_a_14_2": {
+      "message": "Als https://github.com/ al in drie tabbladen is geopend, vernieuwt de extensie alle drie de tabbladen."
+   },
+   "faq_a_2": {
+      "message": "De Website Link is het open tabblad website adres van uw browser. Hoe u het website adres kunt gebruiken staat hieronder vermeld."
+   },
+   "faq_a_3": {
+      "message": "Om een ​​URL te plannen, voert u de websitelink in, geeft u het schema een titel, selecteert u de frequentie (One Time, Every Minute, Daily, etc.) en kiest u de open- en sluittijden. U kunt ook een datum, dag of seconden opgeven om het tabblad te openen en te sluiten."
+   },
+   "faq_a_4": {
+      "message": "\u003Cp>Met deze optie hebt u volledige controle over het plannen van een URL om op de achtergrond te openen zonder het nieuwe tabblad in focus te brengen. De URL wordt stilletjes geopend terwijl u doorwerkt op andere tabbladen. Het is vooral handig als u wilt dat de browser gegevens ophaalt van de geplande URL zonder deze actief weer te geven, zoals in het geval van een GET API-aanvraag.\u003C/p>\u003Cbr> \u003Cp>Als u bijvoorbeeld regelmatig en op een vast tijdstip gegevens van een API-eindpunt wilt ophalen, kunt u deze efficiënte optie gebruiken om de aanvraag op de achtergrond uit te voeren zonder dat u een nieuw zichtbaar tabblad hoeft te openen.\u003C/p>"
+   },
+   "faq_a_5": {
+      "message": "Ja, er is een optie om het sluiten van vastgezette tabbladen te voorkomen. Selecteer de optie \"Niet vastgezette tabbladen sluiten\" om ervoor te zorgen dat deze tabbladen open blijven, zelfs als ze voldoen aan andere sluitingscriteria."
+   },
+   "faq_a_6": {
+      "message": "Met het schematype 'Beide' hebt u volledige controle over wanneer een tabblad wordt geopend en gesloten. U kunt specifieke tijden voor beide acties instellen."
+   },
+   "faq_a_7": {
+      "message": "URL Filtering zorgt ervoor dat alleen een specifiek deel van de URL hoeft te matchen om de geplande actie te laten plaatsvinden. Dit is handig als u bepaalde acties wilt automatiseren op basis van gedeeltelijke URL-matches. Als u bijvoorbeeld de optie URL Filtering aanvinkt voor de URL https://example.com/page, wordt deze ook toegepast op URL's zoals https://example.com/page/123, https://example.com/page?query=example en https://subdomain.example.com/page."
+   },
+   "faq_a_8": {
+      "message": "Met de optie 'Activeer dit geplande tabblad' kunt u eenvoudig geplande tabbladen activeren of deactiveren, zodat u uw schema's flexibel kunt beheren zonder dat er configuraties verloren gaan."
+   },
+   "faq_a_9": {
+      "message": "Standaard ontvangt u meldingen. Als u echter liever geen meldingen wilt ontvangen, kunt u de optie 'Melding niet weergeven' aanvinken om ze uit te schakelen."
+   },
+   "february": {
+      "message": "Februari"
+   },
+   "filterTips": {
+      "message": "Filter wordt toegepast na 'https://' of 'www.', bijvoorbeeld 'github.com'"
+   },
+   "for_exp": {
+      "message": "Bijvoorbeeld"
+   },
+   "freeForever": {
+      "message": "Gratis voor altijd"
+   },
+   "freeSchedule": {
+      "message": "gratis schema"
+   },
+   "freeTral": {
+      "message": "Als gewaardeerde vroege gebruiker zult u genieten van\u003Crday>120\u003C/rday>dagen gratis toegang voordat u overstapt naar ons nieuwe betaalde abonnement. Bedankt voor uw voortdurende steun!\u003Cp class=\"p-t-5\">Je hebt\u003Cb>\u003Cspan>\u003C/span>\u003C/b>resterende dagen van uw\u003Crday>120\u003C/rday>-dag vrije periode.\u003Cafex class=\"warning\">\u003Cafex>\u003C/afex>\u003C/afex>\u003C/p> "
+   },
+   "frequentlyAskedQuestions": {
+      "message": "Veelgestelde vragen"
+   },
+   "friday": {
+      "message": "Vrijdag"
+   },
+   "getThisPlan": {
+      "message": "Ontvang dit plan"
+   },
+   "goToSettingsPageToSchedule": {
+      "message": "Ga naar de instellingenpagina om het openen en sluiten van URL's te plannen."
+   },
+   "goURL": {
+      "message": "Ga naar de URL"
+   },
+   "helpAccordion12": {
+      "message": "Werkt deze extensie in de slaapstand?"
+   },
+   "helpAccordion3": {
+      "message": "Kan ik plannen dat een tabblad in de incognitomodus wordt geopend?"
+   },
+   "helpAccordion6": {
+      "message": "Wat is \"Tijd verstreken\"?"
+   },
+   "helpAccordion7": {
+      "message": "Kan ik een geplande URL exporteren?"
+   },
+   "helpAccordion8": {
+      "message": "Kan ik importeren naar een schema-URL?"
+   },
+   "helpPanelBodyDesc12First": {
+      "message": "Nee, deze extensie werkt niet in de slaapstand."
+   },
+   "helpPanelBodyDesc12Second": {
+      "message": "Als er een URL is gepland in het tabblad Openen of Sluiten, gaat uw pc niet automatisch in de slaapstand of stand-bymodus."
+   },
+   "helpPanelBodyDesc3": {
+      "message": "Ja, u kunt ervoor kiezen om een ​​gepland tabblad in de incognitomodus te openen door de optie 'Openen in incognitomodus' te selecteren. Zorg ervoor dat de optie 'Toestaan ​​in incognito' van de extensie is ingeschakeld in de extensie-instellingen van de browser."
+   },
+   "helpPanelBodyDesc6": {
+      "message": "- De opgegeven datum en tijd zijn verstreken ten opzichte van de huidige datum en tijd. Vervolgens wordt de tekst 'Tijd verlopen' weergegeven."
+   },
+   "helpPanelBodyDesc7": {
+      "message": "Ja, u kunt reeds geplande URL's voor het openen en sluiten van tabbladen exporteren naar csv-formaat en deze gebruiken met een ander systeem om die URL te importeren."
+   },
+   "helpPanelBodyDesc8": {
+      "message": "Ja, u kunt een geldige openings- en sluitings-URL importeren in csv-formaat. Het geïmporteerde csv-formaat wordt automatisch gepland op de opgegeven tijd"
+   },
+   "herAreStepsToAllow": {
+      "message": "Hier volgen de stappen om 'Toestaan ​​in Incognito' in Google Chrome:"
+   },
+   "home": {
+      "message": "Thuis"
+   },
+   "hour_minute_close": {
+      "message": "Elk uur Sluiting Minuut"
+   },
+   "hour_minute_open": {
+      "message": "Elk uur open minuut"
+   },
+   "how_to_use_tab": {
+      "message": "Hoe gebruik ik de tabbladplanner?"
+   },
+   "import": {
+      "message": "Importeren"
+   },
+   "importClsTbDta": {
+      "message": "Importeer gegevens van gesloten tabbladen"
+   },
+   "importExport": {
+      "message": "Importeren/Exporteren"
+   },
+   "importOpenTbDt": {
+      "message": "Open tabbladgegevens importeren"
+   },
+   "importedRecored": {
+      "message": ", geïmporteerd opgenomen"
+   },
+   "inactivateScheduleTab": {
+      "message": "Gepland tabblad deactiveren."
+   },
+   "inactive": {
+      "message": "Inactief"
+   },
+   "inactiveSch": {
+      "message": "8. Inactieve URL"
+   },
+   "inactiveSchExm1": {
+      "message": "In bovenstaand voorbeeld staat de opgegeven URL in een geopend of gesloten tabblad, wat aangeeft dat de opgegeven URL inactief is en dat er geen actie wordt uitgevoerd."
+   },
+   "inactiveThisScheduledTabs": {
+      "message": "Activeer dit geplande tabblad"
+   },
+   "invalidDuplicate": {
+      "message": ", duplicaat of ongeldig geregistreerd"
+   },
+   "invldLicKy": {
+      "message": "Ongeldige licentiesleutel!"
+   },
+   "isClose": {
+      "message": "is dichtbij"
+   },
+   "isOpen": {
+      "message": "is geopend"
+   },
+   "january": {
+      "message": "Januari"
+   },
+   "july": {
+      "message": "juli"
+   },
+   "june": {
+      "message": "juni"
+   },
+   "licKeyDis": {
+      "message": "Deze licentiesleutel is uitgeschakeld."
+   },
+   "listTitle": {
+      "message": "Tabbladplanner"
+   },
+   "loading": {
+      "message": "Even geduld..."
+   },
+   "locale": {
+      "message": "en"
+   },
+   "march": {
+      "message": "Maart"
+   },
+   "maxSchedule": {
+      "message": "4 Maximale planningslimiet"
+   },
+   "may": {
+      "message": "Kunnen"
+   },
+   "mintValid": {
+      "message": "Minimaal 1 minuut is vereist"
+   },
+   "minute": {
+      "message": "Minuut"
+   },
+   "minutesNotLessThan1": {
+      "message": "Minuten mogen niet korter zijn dan 1."
+   },
+   "monday": {
+      "message": "Maandag"
+   },
+   "month": {
+      "message": "Maand"
+   },
+   "monthly": {
+      "message": "Maandelijks"
+   },
+   "more": {
+      "message": "meer"
+   },
+   "mostSubscribe": {
+      "message": "Meest geabonneerd"
+   },
+   "no": {
+      "message": "Nee"
+   },
+   "noDataToExport": {
+      "message": "Geen gegevens om te exporteren."
+   },
+   "noScheduledTabs": {
+      "message": "Geen geplande tabbladen"
+   },
+   "noTimerSetAddNewTimer": {
+      "message": "Er is geen timer ingesteld. Klik op de knop Toevoegen om een ​​nieuwe timer in te stellen."
+   },
+   "not_show_tutorial": {
+      "message": "Toon deze tutorial niet meer"
+   },
+   "notificationOpenTab": {
+      "message": "13. Melding bij openen/sluiten tabblad URL"
+   },
+   "notificationOpenTabExm1": {
+      "message": "In bovenstaand voorbeeld staat de URL in een open tabblad, wat betekent dat er elke 5 minuten een melding wordt gegeven en de URL in een nieuw tabblad wordt geopend/gesloten."
+   },
+   "notifications": {
+      "message": "Kennisgeving"
+   },
+   "november": {
+      "message": "November"
+   },
+   "october": {
+      "message": "oktober"
+   },
+   "onTheExtensionDetailPage": {
+      "message": "Scroll op de pagina met details van de extensie naar beneden en zoek de optie 'Toestaan ​​in incognitomodus'."
+   },
+   "oneTime": {
+      "message": "Eén keer"
+   },
+   "oneTmSch": {
+      "message": "1. Eenmalig schema"
+   },
+   "oneTmSchExm1": {
+      "message": "In bovenstaand voorbeeld staat de URL in een open tabblad, wat aangeeft dat deze eenmalig om 13:45 op 21/1/2023 in een nieuw tabblad wordt geopend"
+   },
+   "oneTmSchExm2": {
+      "message": "In bovenstaand voorbeeld staat de URL in het tabblad Sluiten, wat aangeeft dat alle specifieke overeenkomende URL-tabbladen om 13:45 op 21/1/2023 worden gesloten."
+   },
+   "open": {
+      "message": "Open"
+   },
+   "openBackground": {
+      "message": "Indien ja, een URL op de achtergrond laden zonder deze in een nieuw tabblad te openen"
+   },
+   "openDate": {
+      "message": "Open datum"
+   },
+   "openDay": {
+      "message": "Open Dag"
+   },
+   "openEveryDayOn": {
+      "message": "Elke dag geopend op"
+   },
+   "openEveryMonthOn": {
+      "message": "Elke maand geopend op dag"
+   },
+   "openEveryWeekOn": {
+      "message": "Elke week geopend op"
+   },
+   "openEveryYearOn": {
+      "message": "Elk jaar geopend op"
+   },
+   "openGoogleChrome": {
+      "message": "Open Google Chrome."
+   },
+   "openInBackground": {
+      "message": "URL openen op de achtergrond"
+   },
+   "openInEvery": {
+      "message": "Open in elke"
+   },
+   "openInIncognito": {
+      "message": "Openen in incognitomodus"
+   },
+   "openMinute": {
+      "message": "Open minuut"
+   },
+   "openOnDay": {
+      "message": "Open op dag"
+   },
+   "openOnEvery": {
+      "message": "Open op elke"
+   },
+   "openSecond": {
+      "message": "Open tweede"
+   },
+   "openSecondsMoreThan5": {
+      "message": "Open seconden moeten meer dan 5 zijn."
+   },
+   "openTabSchedule": {
+      "message": "Open tabblad Schema"
+   },
+   "openTabURL": {
+      "message": "Open tabblad-URL"
+   },
+   "openTime": {
+      "message": "Open Tijd"
+   },
+   "openUrl": {
+      "message": "Website-link openen"
+   },
+   "openWeek": {
+      "message": "Openweek"
+   },
+   "openWeeks": {
+      "message": "Open weken"
+   },
+   "open_on": {
+      "message": "Open op"
+   },
+   "optional": {
+      "message": "Optioneel"
+   },
+   "or": {
+      "message": "of"
+   },
+   "outof": {
+      "message": "uit"
+   },
+   "pagePath": {
+      "message": "Pagina pad"
+   },
+   "paidFeature": {
+      "message": "Betaalde functie"
+   },
+   "pauseSchedule": {
+      "message": "Start of stop alle schema's"
+   },
+   "pauseTabScheduler": {
+      "message": "Gepauzeerde tabbladplanner"
+   },
+   "pleaseAllowIncognitoMessage": {
+      "message": "Schakel de optie 'Toestaan ​​in Incognito' in de extensiedetails in. Raadpleeg de tutorialpagina voor instructies."
+   },
+   "pleaseShareYourSuggestions": {
+      "message": "Deel uw suggestie met ons."
+   },
+   "plsShreAnySugWithUs": {
+      "message": "Geef een suggestie om ons te verbeteren"
+   },
+   "powerMode": {
+      "message": "Power-modus"
+   },
+   "premium": {
+      "message": "Premie"
+   },
+   "pricePlan": {
+      "message": "Prijzen en abonnementen"
+   },
+   "privcyPolicy": {
+      "message": "Privacybeleid"
+   },
+   "prowerModeTip": {
+      "message": "Houd het systeem altijd actief door de Power-modus in te schakelen"
+   },
+   "put": {
+      "message": "Neerzetten"
+   },
+   "rateUs": {
+      "message": "Beoordeel ons"
+   },
+   "removeDuplicateEntry": {
+      "message": "Verwijder dubbele invoer"
+   },
+   "removeOpenTbURL": {
+      "message": "Open tabblad-URL verwijderen"
+   },
+   "repeat": {
+      "message": "Herhalen"
+   },
+   "requiredMsg": {
+      "message": "Vereist"
+   },
+   "rmvClsTb": {
+      "message": "Verwijder URL voor sluiten tabblad"
+   },
+   "sameTabs": {
+      "message": "Tabblad vernieuwen als URL al open is"
+   },
+   "sameTabsInfo": {
+      "message": "Voorkom dat meerdere tabbladen voor dezelfde URL worden geopend. Als www.google.com bijvoorbeeld al is geopend, wordt dat bestaande tabblad vernieuwd in plaats van dat er een nieuw tabblad voor wordt geopend."
+   },
+   "sampleCsvOpenPath": {
+      "message": "../sample_csv/en/open_tab_sample.csv"
+   },
+   "sampleFile": {
+      "message": "Voorbeeld bestand"
+   },
+   "saturday": {
+      "message": "Zaterdag"
+   },
+   "savOpnData": {
+      "message": "Gegevens van geopende tabbladen opslaan"
+   },
+   "save": {
+      "message": "Redden"
+   },
+   "saveClsTbData": {
+      "message": "Sluit tabbladgegevens opslaan"
+   },
+   "saveSchedule": {
+      "message": "Schema opslaan"
+   },
+   "scheduleCloseTab": {
+      "message": "Schema Sluiten Tabblad"
+   },
+   "scheduleCurrentTab": {
+      "message": "Huidige tabblad plannen"
+   },
+   "scheduleOpenTab": {
+      "message": "Schema Open tabblad"
+   },
+   "scheduledTabIsAlreadyExistWithSameTimer": {
+      "message": "Dit geplande tabblad bestaat al met dezelfde timer."
+   },
+   "scheduledTabList": {
+      "message": "Geplande tabbladlijst"
+   },
+   "scheduledType": {
+      "message": "Schematype"
+   },
+   "search": {
+      "message": "Zoekopdracht"
+   },
+   "secValid": {
+      "message": "Minimaal 5 seconden is vereist"
+   },
+   "second": {
+      "message": "Seconde"
+   },
+   "selectCloseDate": {
+      "message": "Selecteer sluitingsdatum"
+   },
+   "selectCloseDay": {
+      "message": "Selecteer sluitingsdag"
+   },
+   "selectCloseTime": {
+      "message": "Selecteer sluitingstijd"
+   },
+   "selectColumn": {
+      "message": "Selecteer kolom"
+   },
+   "selectDateAndTime": {
+      "message": "Selecteer datum en tijd om een ​​nieuw tabblad te openen"
+   },
+   "selectDateAndTimeClsTb": {
+      "message": "Selecteer datum en tijd om tabblad te sluiten"
+   },
+   "selectDayToCloseSchTb": {
+      "message": "Selecteer een dag om het tabblad Planning te sluiten."
+   },
+   "selectDayToClsTb": {
+      "message": "Selecteer dag om tabblad te sluiten"
+   },
+   "selectDayToSchdule": {
+      "message": "Selecteer de dag voor het tabblad Planning."
+   },
+   "selectDaysInWeek": {
+      "message": "Selecteer dagen in de week"
+   },
+   "selectDaysInWeekIClsTime": {
+      "message": "Selecteer dagen in de week in de afsluittimer."
+   },
+   "selectDaysInWeekIOpClsTime": {
+      "message": "Selecteer dagen in de week voor het openen of sluiten van de timer."
+   },
+   "selectDaysInWeekIOpTime": {
+      "message": "Selecteer dagen in de week in de open timer."
+   },
+   "selectFrequency": {
+      "message": "Selecteer frequentie"
+   },
+   "selectFrequencyOfScheduleUrl": {
+      "message": "Selecteer de frequentie van de geplande URL."
+   },
+   "selectOpenDate": {
+      "message": "Selecteer open datum"
+   },
+   "selectOpenDay": {
+      "message": "Selecteer open dag"
+   },
+   "selectOpenOrClose": {
+      "message": "Selecteer openings- en sluitingstijd"
+   },
+   "selectOpenOrCloseDate": {
+      "message": "Selecteer openings- en sluitingsdatum"
+   },
+   "selectOpenOrCloseDay": {
+      "message": "Selecteer openings- en sluitingsdag"
+   },
+   "selectOpenTime": {
+      "message": "Selecteer open tijd"
+   },
+   "selectPreferredLanguage": {
+      "message": "Selecteer uw voorkeurstaal."
+   },
+   "selectToOpenTab": {
+      "message": "Selecteer dag om nieuw tabblad te openen"
+   },
+   "selectTypTimerClsTb": {
+      "message": "Selecteer het type timer om het tabblad te sluiten"
+   },
+   "selectTypeOfSchedule": {
+      "message": "Selecteer het type schema. Als u zowel wilt openen als sluiten, selecteert u 'Beide'."
+   },
+   "selectTypeOfTimer": {
+      "message": "Selecteer het type timer om een ​​nieuw tabblad te openen"
+   },
+   "select_weeks": {
+      "message": "Selecteer weken"
+   },
+   "september": {
+      "message": "september"
+   },
+   "settingSave": {
+      "message": "Instellingen succesvol opgeslagen"
+   },
+   "settingToClose": {
+      "message": "Instellen om tabblad te sluiten in de incognitomodus."
+   },
+   "shareYourSuggestionWithUs": {
+      "message": "Deel uw suggesties met ons."
+   },
+   "slectDayToScheduleWeekly": {
+      "message": "Selecteer dagen om het tabblad wekelijks te plannen."
+   },
+   "slectMinute": {
+      "message": "Selecteer Minuut"
+   },
+   "smthngWrng": {
+      "message": "Er is iets fout gegaan"
+   },
+   "softpulseInfotech": {
+      "message": "Softpulse-infotech"
+   },
+   "somethingWentWrong": {
+      "message": "Er is iets misgegaan. Vernieuw de pagina en probeer het opnieuw."
+   },
+   "status": {
+      "message": "Staat"
+   },
+   "subcrKeyShldNEmpt": {
+      "message": "Voer uw abonnementscode in."
+   },
+   "subdomain": {
+      "message": "Subdomein"
+   },
+   "subkeyInputTitle": {
+      "message": "Voer abonnementssleutel in"
+   },
+   "submFeedBack": {
+      "message": "Indienen"
+   },
+   "suggForTbSch": {
+      "message": "Suggestie voor tabbladplanner"
+   },
+   "suggestionAndRateUs": {
+      "message": "Suggestie &amp; Beoordeel ons"
+   },
+   "sunday": {
+      "message": "Zondag"
+   },
+   "tabCloseOneTime": {
+      "message": "Tabblad wordt slechts één keer gesloten"
+   },
+   "tabSchTutorial": {
+      "message": "Zelfstudie voor tabbladplanner"
+   },
+   "tabScheduler": {
+      "message": "Tabbladplanner"
+   },
+   "tabSchedulerOptions": {
+      "message": "Tabblad Scheduler-opties"
+   },
+   "tabWillOpenOneTime": {
+      "message": "Tabblad wordt slechts één keer geopend"
+   },
+   "tabWillOpenWhenBrowserOpen": {
+      "message": "Tabblad wordt geopend wanneer de browser wordt geopend"
+   },
+   "termCondition": {
+      "message": "Algemene voorwaarden"
+   },
+   "thanksFrRev": {
+      "message": "Bedankt voor uw beoordeling"
+   },
+   "thnkUFeedBack": {
+      "message": "Bedankt voor je suggestie"
+   },
+   "thnkUFrUsngTbSch": {
+      "message": "Geef een suggestie om ons te verbeteren"
+   },
+   "thursday": {
+      "message": "Donderdag"
+   },
+   "time": {
+      "message": "Tijd"
+   },
+   "timeExpired": {
+      "message": "Tijd verstreken"
+   },
+   "timer": {
+      "message": "Tijdklok"
+   },
+   "title": {
+      "message": "Titel"
+   },
+   "titleLengtWarn": {
+      "message": "De titel mag niet langer zijn dan 200 tekens."
+   },
+   "toScheduledOpenTbMsg": {
+      "message": "Om een ​​gepland open tabblad te openen, schakelt u URL-filtering uit."
+   },
+   "toogleCloseTab": {
+      "message": "Start/stop het schema-alarm voor alle gesloten tabblad-URL's"
+   },
+   "toogleDarkmode": {
+      "message": "Schakel tussen de donkere modus en de standaardmodus om uw kijkervaring aan te passen."
+   },
+   "toogleOff": {
+      "message": "Uit"
+   },
+   "toogleOn": {
+      "message": "Op"
+   },
+   "toogleOpenTab": {
+      "message": "Start/stop het schema-alarm voor alle open tabblad-URL's"
+   },
+   "topLevelDomain": {
+      "message": "Topleveldomein"
+   },
+   "totalProcessed": {
+      "message": "Totaal verwerkt geregistreerd"
+   },
+   "tuesday": {
+      "message": "Dinsdag"
+   },
+   "tutorialImg1": {
+      "message": "\u003Cimg src=\"../images/en/1.png\">"
+   },
+   "tutorialImg10": {
+      "message": "\u003Cimg src=\"../images/en/10.png\">"
+   },
+   "tutorialImg11": {
+      "message": "\u003Cimg src=\"../images/en/11.png\">"
+   },
+   "tutorialImg12": {
+      "message": "\u003Cimg src=\"../images/en/12.png\">"
+   },
+   "tutorialImg13": {
+      "message": "\u003Cimg src=\"../images/en/13.png\">"
+   },
+   "tutorialImg14": {
+      "message": "\u003Cimg src=\"../images/en/14.png\">"
+   },
+   "tutorialImg2": {
+      "message": "\u003Cimg src=\"../images/en/2.png\">"
+   },
+   "tutorialImg3": {
+      "message": "\u003Cimg src=\"../images/en/3.png\">"
+   },
+   "tutorialImg4": {
+      "message": "\u003Cimg src=\"../images/en/4.png\">"
+   },
+   "tutorialImg5": {
+      "message": "\u003Cimg src=\"../images/en/5.png\">"
+   },
+   "tutorialImg6": {
+      "message": "\u003Cimg src=\"../images/en/6.png\">"
+   },
+   "tutorialImg7": {
+      "message": "\u003Cimg src=\"../images/en/7.png\">"
+   },
+   "tutorialImg8": {
+      "message": "\u003Cimg src=\"../images/en/8.png\">"
+   },
+   "tutorialImg9": {
+      "message": "\u003Cimg src=\"../images/en/9.png\">"
+   },
+   "uncheckAll": {
+      "message": "Alles deselecteren"
+   },
+   "unlimitedSchedule": {
+      "message": "Onbeperkte planningslimiet"
+   },
+   "unspecifiedURL": {
+      "message": "11. URL niet-gespecificeerd pad"
+   },
+   "unspecifiedURLExm1": {
+      "message": "In bovenstaand voorbeeld staat de URL in het tabblad 'Gesloten', wat betekent dat de URL die in een nieuw tabblad wordt geopend en begint en eindigt met een onbekend webadres, na 5 minuten wordt gesloten."
+   },
+   "upgradePlan": {
+      "message": "Koop een abonnement OF log in en upgrade uw abonnement om meer functies te ontgrendelen."
+   },
+   "upgradePlanUnlock": {
+      "message": "Upgrade uw abonnement om meer functies te ontgrendelen."
+   },
+   "uploadValidFormat": {
+      "message": "Upload een geldig formaat"
+   },
+   "url": {
+      "message": "URL"
+   },
+   "urlContExat": {
+      "message": "URL-filtering"
+   },
+   "urlEndWithUnspesifiedPth": {
+      "message": "9. URL eindigt met een niet-gespecificeerd pad"
+   },
+   "urlEndWithUnspesifiedPthExm1": {
+      "message": "In bovenstaand voorbeeld staat de URL in het tabblad 'Sluiten', wat betekent dat de URL die in een nieuw tabblad wordt geopend en eindigt met een onbekend pad, na 5 minuten wordt gesloten."
+   },
+   "urlFilterInfo": {
+      "message": "Bevat URL die wordt gecontroleerd, heeft slechts een deel van de URL nodig en de exacte URL die wordt gecontroleerd, moet exact overeenkomen met de opgegeven URL."
+   },
+   "urlFilterinCLoseTb": {
+      "message": "14. URL-filtering bij het sluiten van de URL van het tabblad"
+   },
+   "urlFilterinCLoseTbExample": {
+      "message": "In bovenstaand voorbeeld staat de gegeven URL in het tabblad Sluiten, wat aangeeft dat de URL van het reeds geopende tabblad overeenkomt met een deel van de gegeven URL, zodat dat tabblad wordt gesloten."
+   },
+   "urlIsRequired": {
+      "message": "Website-link is vereist"
+   },
+   "urlNotvalid": {
+      "message": "URL is niet geldig"
+   },
+   "urlStartWithUnspesifiedPth": {
+      "message": "10. URL begint met een niet-gespecificeerd pad"
+   },
+   "urlStartWithUnspesifiedPthExm1": {
+      "message": "In bovenstaand voorbeeld staat de URL in het tabblad 'sluiten', wat betekent dat de URL die in een nieuw tabblad wordt geopend en begint met een onbekend subdomein \u003Cb>('www'\u003C/b> of \u003Cb>'blog')\u003C/b> na 5 minuten wordt gesloten."
+   },
+   "useSpecificUrl": {
+      "message": "Gebruik specifieke websitelink"
+   },
+   "useSpecificUrl1": {
+      "message": "U moet het exacte subdomein, het topleveldomein, de domeinnaam en het paginapad in het veld Websitekoppeling naar het tabblad van de gesloten browser hebben ingevoerd."
+   },
+   "useSpecificUrl2": {
+      "message": "Gebruik alle tabbladen van de browser gesloten"
+   },
+   "useSpecificUrl3": {
+      "message": "Gebruik een specifieke en volledige websitelink"
+   },
+   "useUnSpecificUrl1": {
+      "message": "Gebruik niet-gespecificeerde websitelink"
+   },
+   "useUnSpecificUrl2": {
+      "message": "Gebruik start met niet-gespecificeerde websitelink"
+   },
+   "useUnSpecificUrl3": {
+      "message": "Gebruik einde met niet-gespecificeerde websitelink"
+   },
+   "used": {
+      "message": "Je hebt gebruikt"
+   },
+   "validFormatCsv": {
+      "message": "Wat is het geldige CSV-bestandsformaat voor importeren?"
+   },
+   "websiteLink": {
+      "message": "Website-link"
+   },
+   "websiteUrl": {
+      "message": "Website-URL"
+   },
+   "wednesday": {
+      "message": "Woensdag"
+   },
+   "weekName": {
+      "message": "Weeknaam"
+   },
+   "weekly": {
+      "message": "Wekelijks"
+   },
+   "whenExtensionTabAppears": {
+      "message": "Wanneer het tabblad Extensies verschijnt, zoekt u naar 'Tabbladplanner met automatisch openen en sluiten' om deze in te schakelen in de incognitomodus en klikt u op de knop 'Details' ernaast."
+   },
+   "whenMenuPopup": {
+      "message": "Wanneer er een menu verschijnt, selecteert u 'Extensies beheren'."
+   },
+   "withSignMustFill": {
+      "message": "Met het \u003Cspan>*\u003C/span> teken moet u invullen of selecteren. Selecteer de openings- of sluitingstijd of beide."
+   },
+   "writeYourDescriptionAboutSchUrl": {
+      "message": "Schrijf hier uw beschrijving over de geplande URL."
+   },
+   "yes": {
+      "message": "Ja"
+   },
+   "yourEmailAddress": {
+      "message": "Uw e-mailadres"
+   },
+   "yourScheduleUrl": {
+      "message": "Uw schema-URL"
+   }
+}

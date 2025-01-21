@@ -1,0 +1,1448 @@
+{
+   "10_min": {
+      "message": "Dakika 10"
+   },
+   "1_min": {
+      "message": "Dakika 1"
+   },
+   "30_min": {
+      "message": "Dakika 30"
+   },
+   "5_min": {
+      "message": "Dakika 5"
+   },
+   "60_min": {
+      "message": "saa"
+   },
+   "Dashboard": {
+      "message": "Dashibodi"
+   },
+   "Login": {
+      "message": "Ingia"
+   },
+   "Off": {
+      "message": "Imezimwa"
+   },
+   "On": {
+      "message": "Washa"
+   },
+   "Selected": {
+      "message": "Imechaguliwa"
+   },
+   "Settings": {
+      "message": "Mipangilio"
+   },
+   "Tutorial": {
+      "message": "Mafunzo"
+   },
+   "action": {
+      "message": "Kitendo"
+   },
+   "activateScheduleTab": {
+      "message": "Washa kichupo kilichoratibiwa."
+   },
+   "active": {
+      "message": "Inayotumika"
+   },
+   "activeAllScheduleTab": {
+      "message": "Kipanga Kichupo kinachoendesha"
+   },
+   "activeStatus": {
+      "message": "Hali"
+   },
+   "actvInactvNotification": {
+      "message": "Onyesha arifa wakati kichupo cha ratiba kinafunguliwa"
+   },
+   "actvInactvOpnTb": {
+      "message": "Kichupo cha wazi kinachotumika au kisichotumika"
+   },
+   "actvIntvClsTb": {
+      "message": "Kichupo cha kufunga kinachotumika au kisichotumika"
+   },
+   "add": {
+      "message": "Ongeza"
+   },
+   "addDescription": {
+      "message": "Ongeza maelezo"
+   },
+   "addNew": {
+      "message": "Ongeza Mpya"
+   },
+   "addNewURlCls": {
+      "message": "Ongeza URL mpya ili kufunga"
+   },
+   "addNewUrlToOpen": {
+      "message": "Ongeza URL mpya ili kufungua katika dirisha jipya"
+   },
+   "addTitle": {
+      "message": "Ongeza Kichwa"
+   },
+   "addWebsite": {
+      "message": "Ongeza tovuti"
+   },
+   "all": {
+      "message": "Wote"
+   },
+   "allInputFieldReq": {
+      "message": "Sehemu zote zinahitajika"
+   },
+   "all_weeks": {
+      "message": "Wiki Yote"
+   },
+   "alreadyPurchase": {
+      "message": "Tayari Umenunua? Ingiza Ufunguo Hapa"
+   },
+   "andAt": {
+      "message": "na kwa"
+   },
+   "annually": {
+      "message": "Kila mwaka"
+   },
+   "appDesc": {
+      "message": "Vichupo vya kivinjari vitafunguliwa na kufungwa kiotomatiki kwa wakati uliochaguliwa. Mtumiaji anaweza kuamilisha/kuacha orodha kulingana na mahitaji"
+   },
+   "appName": {
+      "message": "Kipanga Kichupo kilichofunguliwa na kufungwa kiotomatiki"
+   },
+   "april": {
+      "message": "Aprili"
+   },
+   "at": {
+      "message": "saa"
+   },
+   "august": {
+      "message": "Agosti"
+   },
+   "autoFocus": {
+      "message": "Kichupo cha Kuzingatia Otomatiki"
+   },
+   "autoFocustip": {
+      "message": "Ikiwashwa, kichupo kipya kitafunguliwa katika hali amilifu/makini."
+   },
+   "autofocustip": {
+      "message": "Vichupo vipya vinavyofunguliwa vitalenga kiotomatiki"
+   },
+   "basic": {
+      "message": "Msingi"
+   },
+   "billedAnnyally": {
+      "message": "Hutozwa Kila Mwaka"
+   },
+   "billedMonthly": {
+      "message": "Hutozwa Kila Mwezi"
+   },
+   "both": {
+      "message": "Zote mbili"
+   },
+   "browserOpen": {
+      "message": "Kwenye Kivinjari Fungua"
+   },
+   "browserWebAddress": {
+      "message": "Anwani ya wavuti ya kivinjari huanza na kuishia na anwani ya wavuti isiyojulikana. Weka \u003Cb>*\u003C/b> pande zote mbili za sehemu yako ya Kiungo cha Tovuti."
+   },
+   "browserWebAddress2": {
+      "message": "Anwani ya wavuti ya kivinjari ina jina la kikoa la google.com, ambalo litafungwa kwa dakika chache bila kujali kikoa kidogo, na njia ya ukurasa. Weka \u003Cb>*\u003C/b> kwa pande zote mbili jina la kikoa na TLD"
+   },
+   "browserWebAddress3": {
+      "message": "Anwani ya wavuti ya kivinjari huanza na jina la kikoa lisilojulikana na kuishia na njia isiyojulikana ya ukurasa"
+   },
+   "browserWebAddress31": {
+      "message": "itafungwa baada ya dakika fulani, weka \u003Cb>*\u003C/b> pande zote za TLD"
+   },
+   "browserWebAddress4": {
+      "message": "Anwani ya wavuti ya kivinjari huanza na anwani ya wavuti isiyojulikana. Weka \u003Cb>*\u003C/b> mwanzoni mwa URL yako. Kumbuka anwani ya wavuti ya kivinjari lazima ilingane na URL yako baada ya \u003Cb>*\u003C/b> kuandika."
+   },
+   "browserWebAddress41": {
+      "message": "Anwani ya wavuti ya kivinjari huanza na kikoa kidogo kisichojulikana"
+   },
+   "browserWebAddress42": {
+      "message": "mwanzoni mwa Kiungo chako cha Tovuti"
+   },
+   "browserWebAddress5": {
+      "message": "Anwani ya wavuti ya kivinjari inaisha na anwani ya wavuti isiyojulikana. Weka \u003Cb>*\u003C/b> mwishoni mwa URL yako. Kumbuka anwani yako ya wavuti lazima ilingane kabla ya \u003Cb>*\u003C/b> hujaandika."
+   },
+   "browserWebAddress51": {
+      "message": "Anwani ya wavuti ya kivinjari inaisha na njia isiyojulikana ya ukurasa. Weka \u003Cb>*\u003C/b> mwishoni mwa anwani yako ya wavuti"
+   },
+   "browserWebAddress6": {
+      "message": "Weka tu \u003Cb>*\u003C/b> katika uga wa anwani ya tovuti ili kufunga tabo zote za kivinjari. Baada ya kufungwa vichupo vyote, kivinjari kitafungwa kiotomatiki."
+   },
+   "browserWebAddress7": {
+      "message": "Lazima uwe umeandika kikoa kidogo, kikoa cha kiwango cha juu, jina la kikoa, na njia ya ukurasa katika uga wa URL ili kufungua kichupo cha kivinjari."
+   },
+   "browserWebAddress8": {
+      "message": "Unaweza kufungua url katika tarehe na wakati mahususi, mwezi mahususi, wiki mahususi, mwaka mahususi na muda wa kurudia"
+   },
+   "buyPlan": {
+      "message": "Nunua Mpango"
+   },
+   "buycofee": {
+      "message": "Ninunulie Kahawa"
+   },
+   "cancel": {
+      "message": "Ghairi"
+   },
+   "changeLanguage": {
+      "message": "Badilisha Lugha"
+   },
+   "checkAll": {
+      "message": "Angalia Zote"
+   },
+   "checkThisOpToPreventClosePinTb": {
+      "message": "Angalia chaguo hili ili kuzuia kufungwa kwa vichupo vilivyobandikwa."
+   },
+   "checkThisOptionOnlyPartOfUrlMtch": {
+      "message": "Angalia chaguo hili ikiwa ni sehemu tu ya URL inayohitaji kulinganishwa."
+   },
+   "checkThisOptionToActivate": {
+      "message": "Angalia chaguo hili ili kuamilisha au kuzima url yako iliyoratibiwa."
+   },
+   "checkThisOptionToCloseOnly": {
+      "message": "Angalia chaguo hili ili kufunga vichupo fiche pekee. Pia, washa chaguo la 'Ruhusu katika hali fiche' katika maelezo ya kiendelezi. Kwa maagizo, tafadhali rejelea ukurasa wa mafunzo."
+   },
+   "checkThisOptionToCloseOnlyInIncgnitoTb": {
+      "message": "Angalia chaguo hili ili kufunga vichupo fiche pekee. Pia, washa chaguo la 'Ruhusu katika hali fiche' katika maelezo ya kiendelezi. Kwa maagizo, tafadhali rejelea ukurasa wa mafunzo."
+   },
+   "checkThisOptionToInBg": {
+      "message": "Angalia chaguo hili ikiwa unataka kufungua URL chinichini bila kuifungua kwenye kichupo kipya"
+   },
+   "checkThisOptionToInactivNotification": {
+      "message": "Angalia chaguo hili ili kutoa arifa isiyotumika kwenye url iliyoratibiwa"
+   },
+   "checkThisOptionToOpen": {
+      "message": "Angalia chaguo hili ikiwa ungependa kufungua url yako katika hali fiche"
+   },
+   "checkThisOptionToOpenIncogito": {
+      "message": "Angalia chaguo hili ikiwa ungependa kufungua url yako katika hali fiche"
+   },
+   "checkThisOptionToPrevent": {
+      "message": "Angalia chaguo hili ili kuzuia kufungwa kwa vichupo vilivyobandikwa."
+   },
+   "clickExtIcon": {
+      "message": "Bofya aikoni ya \"Viendelezi\" kwenye upau wa vidhibiti, ambayo inaonekana kama kipande cha mafumbo."
+   },
+   "clickTheSwitch": {
+      "message": "Bofya swichi iliyo kando yake ili kuiwasha"
+   },
+   "close": {
+      "message": "Funga"
+   },
+   "closeAllTab": {
+      "message": "12. Funga tabo zote za kivinjari"
+   },
+   "closeAllTabExm1": {
+      "message": "Katika mfano uliopewa hapo juu, URL iko kwenye kichupo cha karibu, ambacho kinasema kuwa itafunga tabo zote saa 12:00 mnamo 25/2/2023."
+   },
+   "closeDate": {
+      "message": "Tarehe ya Kufunga"
+   },
+   "closeDay": {
+      "message": "Siku ya Kufunga"
+   },
+   "closeEveryYear": {
+      "message": "Funga kila mwaka"
+   },
+   "closeInEvery": {
+      "message": "Funga katika kila"
+   },
+   "closeIncognitoTab": {
+      "message": "Funga vichupo fiche pekee"
+   },
+   "closeMinute": {
+      "message": "Funga Dakika"
+   },
+   "closeOnDay": {
+      "message": "Funga siku"
+   },
+   "closeOnEvery": {
+      "message": "Funga kila"
+   },
+   "closeOnEveryDay": {
+      "message": "Funga kila siku"
+   },
+   "closeOnEveryMonth": {
+      "message": "Funga kila mwezi kwa siku"
+   },
+   "closeOnEveryWeek": {
+      "message": "Funga kila wiki"
+   },
+   "closeSecond": {
+      "message": "Funga Pili"
+   },
+   "closeSeconsMoreThan5": {
+      "message": "Sekunde za kufunga zinapaswa kuwa zaidi ya 5."
+   },
+   "closeTabSchedule": {
+      "message": "Funga Ratiba ya Kichupo"
+   },
+   "closeTabURL": {
+      "message": "Funga URL ya Kichupo"
+   },
+   "closeTime": {
+      "message": "Muda wa Kufunga"
+   },
+   "closeUrl": {
+      "message": "Funga Kiungo cha Tovuti"
+   },
+   "closeWeek": {
+      "message": "Funga Wiki"
+   },
+   "closeWeeks": {
+      "message": "Funga Wiki"
+   },
+   "close_on": {
+      "message": "Funga"
+   },
+   "cngrtsForSubcr": {
+      "message": "Hongera! Mpango wako umeamilishwa."
+   },
+   "commonQuestionsAns": {
+      "message": "Maswali na majibu ya kawaida"
+   },
+   "copySucessClose": {
+      "message": "Funga data ya kichupo cha URL iliyonakiliwa kwa Fungua data ya URL ya kichupo"
+   },
+   "createNewTimer": {
+      "message": "Unda Kipima Muda Kipya"
+   },
+   "currentPlan": {
+      "message": "Mpango wa Sasa"
+   },
+   "currentTabSchedule": {
+      "message": "Ratiba ya kichupo cha sasa"
+   },
+   "currentTbScheduleTimer": {
+      "message": "Kipima muda kilichoratibiwa kichupo cha sasa."
+   },
+   "cusSec": {
+      "message": "Desturi ya Pili"
+   },
+   "custMin": {
+      "message": "Dakika Maalum"
+   },
+   "custmMinSch": {
+      "message": "7.Ratiba ya Dakika Maalum"
+   },
+   "custmMinSchExm1": {
+      "message": "Katika mfano uliopewa hapo juu, URL iko kwenye kichupo wazi, ambacho kinasema URL iliyopewa kufunguliwa katika kichupo kipya Kila Dakika 15."
+   },
+   "custmMinSchExm2": {
+      "message": "Katika mfano uliotolewa hapo juu, URL iko kwenye kichupo cha karibu, ambacho kinasema kwamba URL iliyotolewa iliyofunguliwa kwenye kichupo kipya itafungwa baada ya dakika 15."
+   },
+   "customSecondWarning": {
+      "message": "Utendaji maalum wa pili ni wa majaribio, na huenda usifanye kazi ipasavyo ikiwa sekunde zimewekwa chini ya 60."
+   },
+   "darkMode": {
+      "message": "Hali ya Giza"
+   },
+   "datNotCopy": {
+      "message": "Baadhi ya data haijanakiliwa kwa sababu ya URL isiyo sahihi."
+   },
+   "dataSaved": {
+      "message": "Data ya kipima muda imefanikiwa"
+   },
+   "date": {
+      "message": "Tarehe"
+   },
+   "dateIsOutOfRange": {
+      "message": "Tarehe iko nje ya anuwai"
+   },
+   "day": {
+      "message": "Siku"
+   },
+   "december": {
+      "message": "Desemba"
+   },
+   "delete": {
+      "message": "Futa"
+   },
+   "deleteScheduleTb": {
+      "message": "Futa kichupo kilichoratibiwa."
+   },
+   "description": {
+      "message": "Maelezo"
+   },
+   "developedBy": {
+      "message": "Imetengenezwa na:"
+   },
+   "doNotCloseInPinnedTabs": {
+      "message": "Usifunge vichupo vilivyobandikwa"
+   },
+   "doNotShowNotification": {
+      "message": "Usionyeshe arifa"
+   },
+   "domainName": {
+      "message": "Jina la Kikoa"
+   },
+   "downloadCloseTbSampleCsv": {
+      "message": "Pakua sampuli ya kichupo cha karibu cha CSV ili kuona mfano wa umbizo linalohitajika"
+   },
+   "downloadOpenTbSampleCsv": {
+      "message": "Pakua sampuli ya kichupo wazi cha CSV ili kuona mfano wa umbizo linalohitajika"
+   },
+   "editScheduleTb": {
+      "message": "Badilisha kichupo kilichoratibiwa."
+   },
+   "email": {
+      "message": "Barua pepe"
+   },
+   "enterDateToCloseTab": {
+      "message": "Weka tarehe hapa ili kufunga kichupo cha ratiba."
+   },
+   "enterDateToOpen": {
+      "message": "Weka tarehe ili kufungua kichupo cha ratiba."
+   },
+   "enterMiniutesToCloseTb": {
+      "message": "Weka dakika ili kufunga kichupo."
+   },
+   "enterMiniutesToOpen": {
+      "message": "Weka dakika ili kufungua kichupo cha ratiba."
+   },
+   "enterMinute": {
+      "message": "Ingiza Dakika"
+   },
+   "enterSecond": {
+      "message": "Ingiza ya Pili"
+   },
+   "enterSecondsToCloseTab": {
+      "message": "Weka sekunde ili kufunga kichupo."
+   },
+   "enterSecondsToOpen": {
+      "message": "Weka sekunde ili kufungua kichupo cha ratiba."
+   },
+   "enterTilteOfScheduleUrl": {
+      "message": "Weka jina la URL iliyoratibiwa."
+   },
+   "enterTimeToCloseTab": {
+      "message": "Weka saa hapa ili kufunga kichupo cha ratiba."
+   },
+   "enterTimeToSchedule": {
+      "message": "Weka muda ili kufungua kichupo cha ratiba."
+   },
+   "enterValidEmail": {
+      "message": "Tafadhali Weka Barua Pepe Sahihi"
+   },
+   "enterValidUrl": {
+      "message": "Tafadhali weka URL halali"
+   },
+   "enterValueInCloseSec": {
+      "message": "Ingiza thamani katika sekunde za karibu"
+   },
+   "enterValueInOpenCloseSec": {
+      "message": "Weka thamani katika sekunde wazi au funga"
+   },
+   "enterValueInOpenMinutes": {
+      "message": "Weka thamani katika dakika wazi"
+   },
+   "enterVlaueInCloseMinutes": {
+      "message": "Weka thamani katika dakika za karibu"
+   },
+   "enterVlaueInOpenCloseMin": {
+      "message": "Weka thamani katika dakika za wazi au za kufunga"
+   },
+   "enterVlaueInOpenSeconds": {
+      "message": "Ingiza thamani katika sekunde wazi"
+   },
+   "enterYourURLToSchedule": {
+      "message": "Weka URL yako ili kuratibu."
+   },
+   "every": {
+      "message": "kila"
+   },
+   "every10Min": {
+      "message": "Kila Dakika 10"
+   },
+   "every1Minute": {
+      "message": "kila dakika 1"
+   },
+   "every30Min": {
+      "message": "Kila Dakika 30"
+   },
+   "every5Min": {
+      "message": "Kila Dakika 5"
+   },
+   "everyDay": {
+      "message": "Kila Siku"
+   },
+   "everyDayAt": {
+      "message": "kila siku saa"
+   },
+   "everyHour": {
+      "message": "Kila Saa"
+   },
+   "everyMinute": {
+      "message": "Kila Dakika"
+   },
+   "everyMonth": {
+      "message": "Kila Mwezi"
+   },
+   "everyMonthOn": {
+      "message": "kila mwezi"
+   },
+   "everyMonthOnDay": {
+      "message": "kila mwezi kwa siku"
+   },
+   "everyWeek": {
+      "message": "Kila Wiki"
+   },
+   "everyWeekOn": {
+      "message": "kila wiki"
+   },
+   "everyYear": {
+      "message": "Kila Mwaka"
+   },
+   "everyYesrOn": {
+      "message": "kila mwaka"
+   },
+   "evr10MinSch": {
+      "message": "2.Ratiba ya Kila Dakika 10"
+   },
+   "evr10MinSchExm1": {
+      "message": "Katika mfano uliopewa hapo juu, URL iko kwenye kichupo wazi, ambacho kinasema URL itafunguliwa kwenye kichupo kipya Kila Dakika 10."
+   },
+   "evr10MinSchExm2": {
+      "message": "Katika mfano uliotolewa hapo juu, URL iko kwenye kichupo cha karibu, ambacho kinasema kwamba URL iliyotolewa iliyofunguliwa kwenye kichupo kipya itafungwa baada ya dakika 10."
+   },
+   "evrDaySch": {
+      "message": "3.Ratiba ya Kila Siku"
+   },
+   "evrDaySchExm1": {
+      "message": "Katika mfano uliotolewa hapo juu, URL iko kwenye kichupo wazi, ambacho kinasema kuwa itafunguliwa katika kichupo kipya Kila Siku saa 5:27 PM"
+   },
+   "evrDaySchExm2": {
+      "message": "Katika mfano uliopewa hapo juu, URL iko kwenye kichupo cha karibu, ambacho kinasema kuwa itafunga kichupo ambacho tayari kimefunguliwa saa 5:27 PM kila siku."
+   },
+   "evrMonthSch": {
+      "message": "5.Ratiba ya Kila Mwezi"
+   },
+   "evrMonthSchExm1": {
+      "message": "Katika mfano uliopewa hapo juu, URL iko kwenye kichupo wazi, kinachosema Itafunguliwa katika kichupo kipya Kila Mwezi saa 13:45 siku ya 25."
+   },
+   "evrMonthSchExm2": {
+      "message": "Katika mfano uliopewa hapo juu, URL iko kwenye kichupo cha karibu, ambacho kinasema kuwa itafunga kichupo kilichofunguliwa tayari kila Mwezi saa 13:45 siku ya 25."
+   },
+   "evrWeekSch": {
+      "message": "4.Ratiba ya Kila Wiki"
+   },
+   "evrWeekSchExm1": {
+      "message": "Katika mfano ulio hapo juu, URL uliyopewa iko kwenye kichupo wazi, ambacho kinasema kuwa itafunguliwa katika kichupo kipya kila wiki saa 17:00 \u003Cb>Jumatatu na Jumanne\u003C/b> ."
+   },
+   "evrWeekSchExm2": {
+      "message": "Katika mfano ulio hapo juu, URL uliyopewa iko kwenye kichupo cha karibu, ambacho kinasema kwamba itafunga kichupo ambacho tayari kimefunguliwa kila Wiki saa 17:00 \u003Cb>Jumatatu na Jumanne\u003C/b> ."
+   },
+   "evrWeekSchExm3": {
+      "message": "Katika mfano ulio hapo juu, siku nyingi zinaweza kuchaguliwa katika kipima saa cha wiki."
+   },
+   "evrYearSch": {
+      "message": "6.Ratiba ya Kila Mwaka"
+   },
+   "evrYearSchExm1": {
+      "message": "Katika mfano uliopewa hapo juu, URL iko kwenye kichupo wazi, ambacho kinasema kuwa itafunguliwa katika kichupo kipya Kila Mwaka saa 13:35 tarehe 1 Januari."
+   },
+   "evrYearSchExm2": {
+      "message": "Katika mfano uliopewa hapo juu, URL iko kwenye kichupo cha karibu, ambacho kinasema kuwa itafunga kichupo kilichofunguliwa kila mwaka saa 13:35 tarehe 1 Januari."
+   },
+   "exampleSort": {
+      "message": "km"
+   },
+   "exdMaxLim": {
+      "message": "Umezidisha upeo wa vifaa vinavyoruhusiwa!"
+   },
+   "exmpOpnClsTbSch": {
+      "message": "Mfano wa jinsi ya kufungua na kufunga kichupo katika Kipanga Kichupo"
+   },
+   "expLicKy": {
+      "message": "Ufunguo huu wa leseni umekwisha muda wake."
+   },
+   "export": {
+      "message": "Hamisha"
+   },
+   "exportBefore": {
+      "message": "Umewahi\u003Cexday>\u003C/exday>siku zimesalia, Tafadhali jiandikishe ili kuendelea kufurahia kipengele kinacholipiwa"
+   },
+   "exportClsTbDta": {
+      "message": "Hamisha data ya kichupo cha kufunga"
+   },
+   "exportOpenTbDt": {
+      "message": "Hamisha data ya kichupo wazi"
+   },
+   "exportedData": {
+      "message": "Data ya kipima muda imetumwa kwa mafanikio"
+   },
+   "extensionShouldAble": {
+      "message": "Sasa, kiendelezi kinapaswa kuwa na uwezo wa kufunga vichupo katika hali fiche."
+   },
+   "faq": {
+      "message": "Maswali Yanayoulizwa Mara kwa Mara"
+   },
+   "faq_1": {
+      "message": "Je! Kipanga Kichupo chenye Kufungua na Kufunga Kiotomatiki ni nini?"
+   },
+   "faq_10": {
+      "message": "Je, ninatazama vipi vichupo vyangu vilivyoratibiwa?"
+   },
+   "faq_11": {
+      "message": "Je, ni lazima kujaza nyakati za wazi na za kufunga?"
+   },
+   "faq_12": {
+      "message": "Je, vipengele vya Kichupo cha Kuzingatia Otomatiki, Washa Vichupo Vyote Vilivyoratibiwa, na Hali ya Nishati hufanya nini?"
+   },
+   "faq_13": {
+      "message": "Je, ninaweza kufungua/kufunga Kiungo cha Tovuti kilichoratibiwa katika kichupo fiche.?"
+   },
+   "faq_14": {
+      "message": "Je, ni matumizi gani ya kichupo cha Onyesha upya ikiwa URL tayari imefunguliwa?"
+   },
+   "faq_2": {
+      "message": "Je, matumizi ya Kiungo cha Tovuti ni nini?"
+   },
+   "faq_3": {
+      "message": "Je, ninawezaje kuratibu URL kwa kutumia Kipanga Kichupo?"
+   },
+   "faq_4": {
+      "message": "Chaguo la 'Fungua URL katika Mandharinyuma' ni nini?"
+   },
+   "faq_5": {
+      "message": "Je, ninaweza kuzuia kiendelezi kufunga vichupo vilivyobandikwa?"
+   },
+   "faq_6": {
+      "message": "Je, aina ya ratiba ya 'Zote mbili' inamaanisha nini?"
+   },
+   "faq_7": {
+      "message": "Je, kipengele cha 'Kuchuja URL' kinafanya kazi vipi?"
+   },
+   "faq_8": {
+      "message": "Je, ninaweza kulemaza kichupo kilichoratibiwa bila kukifuta?"
+   },
+   "faq_9": {
+      "message": "Je, nitapokea arifa za vichupo vilivyoratibiwa?"
+   },
+   "faq_a_1": {
+      "message": "\u003Cp>Kipanga Kichupo chenye Kufungua na Kufunga Kiotomatiki ni kiendelezi cha kivinjari ambacho huruhusu watumiaji kuratibu vichupo kufungua na kufunga kiotomatiki kwa nyakati zilizowekwa. Watumiaji wanaweza kuchagua ratiba ya mara moja au kusanidi ratiba zinazojirudia kwa chaguo mbalimbali za masafa. Kiendelezi hiki kina madhumuni mengi kwa watumiaji na hutoa vipengele vingi ambavyo ni muhimu kwako.\u003C/p>"
+   },
+   "faq_a_10": {
+      "message": "Vichupo vyote vilivyoratibiwa vinaonyeshwa katika orodha inayoonyesha kichwa, kiungo cha tovuti, saa za kufungua na kufunga, hali na hatua unazoweza kuchukua (kwa mfano, kuwezesha, kuhariri, kufuta)."
+   },
+   "faq_a_11": {
+      "message": "Hapana, unaweza kuratibu ama wakati wazi au wakati wa kufunga. Hata hivyo, ni lazima ujaze au uchague sehemu zinazohitajika zilizo na alama ya nyota (*)."
+   },
+   "faq_a_12": {
+      "message": "Kichupo cha Kuzingatia Otomatiki huhakikisha kuwa kichupo kilichoratibiwa kinapofunguliwa, Washa Vichupo Vyote Vilivyoratibiwa hukuwezesha kuwasha haraka vichupo vyako vyote vilivyoratibiwa kwa kubofya mara moja. Hali ya Nguvu huboresha utendaji wa kiendelezi kwa kudhibiti rasilimali za kivinjari kwa ufanisi zaidi."
+   },
+   "faq_a_13": {
+      "message": "Ndiyo, unaweza kuchagua kufungua kichupo kilichoratibiwa katika hali fiche kwa kuchagua chaguo la \"Fungua katika hali fiche\". Unaweza kuchagua kufunga vichupo fiche pekee kwa kuchagua chaguo la \"Funga vichupo fiche pekee\", mradi tu \"Ruhusu katika hali fiche\" imewashwa katika mipangilio ya viendelezi."
+   },
+   "faq_a_14": {
+      "message": "Chaguo hili likiwashwa, kiendelezi kitaonyesha upya kichupo kilichopo kiotomatiki ikiwa URL sawa tayari imefunguliwa kwenye kivinjari chako. Hii huzuia kufungua vichupo rudufu na huhakikisha kuwa kila mara una toleo jipya zaidi la ukurasa lililopakiwa."
+   },
+   "faq_a_14_1": {
+      "message": "Ukijaribu kufungua https://github.com/ na tayari imefunguliwa kwenye kichupo kingine, kiendelezi kitaonyesha upya kichupo hicho badala ya kufungua kipya."
+   },
+   "faq_a_14_2": {
+      "message": "Ikiwa https://github.com/ tayari imefunguliwa katika vichupo vitatu, kiendelezi kitaonyesha upya vichupo vyote vitatu."
+   },
+   "faq_a_2": {
+      "message": "Kiungo cha Tovuti ni anwani ya tovuti ya kichupo wazi cha kivinjari chako. Jinsi unavyoweza kutumia anwani ya tovuti imetajwa hapa chini."
+   },
+   "faq_a_3": {
+      "message": "Ili kuratibu URL, weka kiungo cha tovuti, ipe ratiba jina, chagua marudio (Saa Moja, Kila Dakika, Kila Siku, n.k.), na uchague saa za kufungua na kufunga. Unaweza pia kubainisha tarehe, siku au sekunde ili kufungua na kufunga kichupo."
+   },
+   "faq_a_4": {
+      "message": "\u003Cp>Chaguo hili hukupa udhibiti kamili wa kuratibu URL kufunguka chinichini bila kulenga kichupo kipya. URL itafunguka kwa utulivu huku ukiendelea kufanyia kazi vichupo vingine. Ni muhimu sana unapohitaji kivinjari kuleta data kutoka kwa URL iliyoratibiwa bila kuionyesha kikamilifu, kama vile ombi la GET API.\u003C/p>\u003Cbr> \u003Cp>Kwa mfano, ikiwa ungependa kuleta data kutoka sehemu ya mwisho ya API kwa muda uliowekwa mara kwa mara, unaweza kutumia chaguo hili bora kutekeleza ombi chinichini bila kufungua kichupo kipya kinachoonekana.\u003C/p>"
+   },
+   "faq_a_5": {
+      "message": "Ndiyo, kuna chaguo la kuzuia kufungwa kwa vichupo vilivyobandikwa. Angalia chaguo la \"Usifunge vichupo vilivyobandikwa\" ili kuhakikisha vichupo hivi vinasalia wazi hata kama vinakidhi vigezo vingine vya kufunga."
+   },
+   "faq_a_6": {
+      "message": "Aina ya ratiba ya 'Zote mbili' hukupa udhibiti kamili wa wakati kichupo kinapofungua na kufungwa, huku kuruhusu kuweka saa mahususi za vitendo vyote viwili."
+   },
+   "faq_a_7": {
+      "message": "Uchujaji wa URL huhakikisha kuwa ni sehemu mahususi pekee ya URL inayohitaji kulingana ili hatua iliyoratibiwa kufanyika. Hii ni muhimu unapotaka kufanyia vitendo fulani kiotomatiki kulingana na ulinganifu wa sehemu za URL. Kwa mfano, ukiangalia chaguo la Kuchuja URL kwa URL https://example.com/page, itatumika pia kwa URL kama vile https://example.com/page/123, https://example.com/ page?query=example, na https://subdomain.example.com/page."
+   },
+   "faq_a_8": {
+      "message": "Ukiwa na chaguo la \"Amilisha kichupo hiki kilichoratibiwa\", unaweza kuwezesha au kuzima vichupo vilivyoratibiwa kwa urahisi, kukupa urahisi wa kudhibiti ratiba zako bila kupoteza usanidi."
+   },
+   "faq_a_9": {
+      "message": "Kwa chaguo-msingi, utapokea arifa. Hata hivyo, ikiwa ungependa kusimamisha arifa, unaweza kuangalia chaguo la \"Usionyeshe arifa\" ili kuzizima."
+   },
+   "february": {
+      "message": "Februari"
+   },
+   "filterTips": {
+      "message": "Kichujio kinatumika baada ya 'https://' au 'www.', Ex 'github.com'"
+   },
+   "for_exp": {
+      "message": "Kwa mfano"
+   },
+   "freeForever": {
+      "message": "Bure Milele"
+   },
+   "freeSchedule": {
+      "message": "ratiba ya bure"
+   },
+   "freeTral": {
+      "message": "Kama mtumiaji wa mapema aliyethaminiwa, utafurahia\u003Crday>120\u003C/rday>siku za ufikiaji bila malipo kabla ya kubadili mpango wetu mpya wa kulipia—asante kwa usaidizi wako unaoendelea!\u003Cp class=\"p-t-5\">Umewahi\u003Cb>\u003Cspan>\u003C/span>\u003C/b>siku zilizosalia nje ya yako\u003Crday>120\u003C/rday>- siku ya bure.\u003Cafex class=\"warning\">\u003Cafex>\u003C/afex>\u003C/afex>\u003C/p> "
+   },
+   "frequentlyAskedQuestions": {
+      "message": "Maswali yanayoulizwa mara kwa mara"
+   },
+   "friday": {
+      "message": "Ijumaa"
+   },
+   "getThisPlan": {
+      "message": "Pata Mpango Huu"
+   },
+   "goToSettingsPageToSchedule": {
+      "message": "Nenda kwenye ukurasa wa mipangilio ili kuratibu ufunguzi na kufungwa kwa URL."
+   },
+   "goURL": {
+      "message": "Nenda kwenye URL"
+   },
+   "helpAccordion12": {
+      "message": "Je, kiendelezi hiki kinafanya kazi katika hali ya kulala/kusimamisha?"
+   },
+   "helpAccordion3": {
+      "message": "Je, ninaweza kuratibu kichupo kufungua katika hali fiche?"
+   },
+   "helpAccordion6": {
+      "message": "\"Muda umekwisha\" ni nini?"
+   },
+   "helpAccordion7": {
+      "message": "Je, ninaweza kuhamisha URL iliyoratibiwa?"
+   },
+   "helpAccordion8": {
+      "message": "Je, ninaweza Kuingiza Ili Kuratibu URL?"
+   },
+   "helpPanelBodyDesc12First": {
+      "message": "Hapana, kiendelezi hiki hakitafanya kazi katika hali ya kulala/kusimamisha."
+   },
+   "helpPanelBodyDesc12Second": {
+      "message": "Ikiwa URL yoyote imeratibiwa katika kichupo wazi au cha kufunga, basi Kompyuta yako haitaingia kiotomatiki katika hali ya kulala au kusimamisha."
+   },
+   "helpPanelBodyDesc3": {
+      "message": "Ndiyo, unaweza kuchagua kufungua kichupo kilichoratibiwa katika hali fiche kwa kuchagua chaguo la 'Fungua katika hali fiche'. Hakikisha chaguo la kiendelezi la 'Ruhusu katika hali fiche' limewashwa katika mipangilio ya kiendelezi ya kivinjari."
+   },
+   "helpPanelBodyDesc6": {
+      "message": "- Tarehe na wakati uliotolewa ni kupita kutoka tarehe na saa ya sasa kisha maandishi ya \"Muda Uliopita\" yataonyeshwa."
+   },
+   "helpPanelBodyDesc7": {
+      "message": "Ndiyo, Unaweza Kuhamisha Kichupo wazi kilichoratibiwa tayari na ufunge URL ya kichupo katika umbizo la csv na uitumie pamoja na mfumo mwingine kuleta URL hiyo."
+   },
+   "helpPanelBodyDesc8": {
+      "message": "Ndiyo, Unaweza Leta URL halali iliyofunguliwa na funga katika umbizo la csv. Umbizo la csv lililoingizwa litaratibiwa kiotomatiki kwa muda uliotolewa."
+   },
+   "herAreStepsToAllow": {
+      "message": "Hapa kuna hatua za \"Ruhusu katika hali fiche\" katika Google Chrome:"
+   },
+   "home": {
+      "message": "Nyumbani"
+   },
+   "hour_minute_close": {
+      "message": "Kila Saa Dakika ya Kufunga"
+   },
+   "hour_minute_open": {
+      "message": "Kila Saa Fungua Dakika"
+   },
+   "how_to_use_tab": {
+      "message": "Jinsi ya kutumia kipanga kichupo?"
+   },
+   "import": {
+      "message": "Ingiza"
+   },
+   "importClsTbDta": {
+      "message": "Ingiza data ya kichupo cha kufunga"
+   },
+   "importExport": {
+      "message": "Ingiza/Hamisha"
+   },
+   "importOpenTbDt": {
+      "message": "Ingiza data ya kichupo wazi"
+   },
+   "importedRecored": {
+      "message": ", iliyoingizwa imerekodiwa"
+   },
+   "inactivateScheduleTab": {
+      "message": "Washa kichupo kilichoratibiwa."
+   },
+   "inactive": {
+      "message": "Isiyotumika"
+   },
+   "inactiveSch": {
+      "message": "8.URL isiyotumika"
+   },
+   "inactiveSchExm1": {
+      "message": "Katika mfano uliopewa hapo juu, URL iko kwenye kichupo wazi au kichupo cha kufunga, ambacho kinasema kuwa URL iliyopewa haifanyi kazi na haitafanya kitendo chochote."
+   },
+   "inactiveThisScheduledTabs": {
+      "message": "Washa kichupo hiki kilichoratibiwa"
+   },
+   "invalidDuplicate": {
+      "message": ", nakala au batili iliyorekodiwa"
+   },
+   "invldLicKy": {
+      "message": "Ufunguo batili wa leseni!"
+   },
+   "isClose": {
+      "message": "iko karibu"
+   },
+   "isOpen": {
+      "message": "iko wazi"
+   },
+   "january": {
+      "message": "Januari"
+   },
+   "july": {
+      "message": "Julai"
+   },
+   "june": {
+      "message": "Juni"
+   },
+   "licKeyDis": {
+      "message": "Ufunguo huu wa leseni umezimwa."
+   },
+   "listTitle": {
+      "message": "Kipanga Kichupo"
+   },
+   "loading": {
+      "message": "Tafadhali Subiri..."
+   },
+   "locale": {
+      "message": "sw"
+   },
+   "march": {
+      "message": "Machi"
+   },
+   "maxSchedule": {
+      "message": "4 Kiwango cha juu cha kikomo cha ratiba"
+   },
+   "may": {
+      "message": "Mei"
+   },
+   "mintValid": {
+      "message": "Inahitajika angalau dakika 1"
+   },
+   "minute": {
+      "message": "Dakika"
+   },
+   "minutesNotLessThan1": {
+      "message": "Dakika zisipungue 1."
+   },
+   "monday": {
+      "message": "Jumatatu"
+   },
+   "month": {
+      "message": "Mwezi"
+   },
+   "monthly": {
+      "message": "Kila mwezi"
+   },
+   "more": {
+      "message": "zaidi"
+   },
+   "mostSubscribe": {
+      "message": "Wengi Subscribe"
+   },
+   "no": {
+      "message": "Hapana"
+   },
+   "noDataToExport": {
+      "message": "Hakuna data ya kusafirisha."
+   },
+   "noScheduledTabs": {
+      "message": "Hakuna vichupo vilivyoratibiwa"
+   },
+   "noTimerSetAddNewTimer": {
+      "message": "Hakuna kipima saa kilichowekwa, Bofya kitufe cha Ongeza ili kuweka kipima saa kipya"
+   },
+   "not_show_tutorial": {
+      "message": "Usionyeshe mafunzo haya tena"
+   },
+   "notificationOpenTab": {
+      "message": "13. Arifa kwenye URL ya kichupo fungua/funga"
+   },
+   "notificationOpenTabExm1": {
+      "message": "Katika mfano uliopewa hapo juu, URL iko kwenye kichupo wazi, ambacho kinasema kwamba itatoa arifa na kufungua/kufunga URL katika kichupo kipya katika kila dakika 5."
+   },
+   "notifications": {
+      "message": "Taarifa"
+   },
+   "november": {
+      "message": "Novemba"
+   },
+   "october": {
+      "message": "Oktoba"
+   },
+   "onTheExtensionDetailPage": {
+      "message": "Kwenye ukurasa wa maelezo ya kiendelezi, sogeza chini na utafute chaguo la \"Ruhusu katika hali fiche\"."
+   },
+   "oneTime": {
+      "message": "Mara Moja"
+   },
+   "oneTmSch": {
+      "message": "1.Ratiba ya Wakati Mmoja"
+   },
+   "oneTmSchExm1": {
+      "message": "Katika mfano uliopewa hapo juu, URL iko kwenye kichupo wazi, ambacho kinasema kuwa itafunguliwa katika kichupo kipya Mara moja saa 13:45 mnamo 21/1/2023."
+   },
+   "oneTmSchExm2": {
+      "message": "Katika mfano uliopewa hapo juu, URL iko kwenye kichupo cha karibu, ambacho kinasema kuwa itafunga vichupo vyote maalum vya URL vilivyolingana saa 13:45 mnamo 21/1/2023."
+   },
+   "open": {
+      "message": "Fungua"
+   },
+   "openBackground": {
+      "message": "Kama ndiyo, Inapakia URL chinichini bila kuifungua kwenye kichupo kipya"
+   },
+   "openDate": {
+      "message": "Tarehe ya kufunguliwa"
+   },
+   "openDay": {
+      "message": "Siku ya wazi"
+   },
+   "openEveryDayOn": {
+      "message": "Fungua kila siku"
+   },
+   "openEveryMonthOn": {
+      "message": "Fungua kila mwezi kwa siku"
+   },
+   "openEveryWeekOn": {
+      "message": "Fungua kila wiki"
+   },
+   "openEveryYearOn": {
+      "message": "Fungua kila mwaka"
+   },
+   "openGoogleChrome": {
+      "message": "Fungua Google Chrome."
+   },
+   "openInBackground": {
+      "message": "Fungua URL katika Mandharinyuma"
+   },
+   "openInEvery": {
+      "message": "Fungua katika kila"
+   },
+   "openInIncognito": {
+      "message": "Fungua katika hali fiche"
+   },
+   "openMinute": {
+      "message": "Fungua Dakika"
+   },
+   "openOnDay": {
+      "message": "Fungua Siku"
+   },
+   "openOnEvery": {
+      "message": "Fungua kila"
+   },
+   "openSecond": {
+      "message": "Fungua Pili"
+   },
+   "openSecondsMoreThan5": {
+      "message": "Sekunde zilizofunguliwa zinapaswa kuwa zaidi ya 5."
+   },
+   "openTabSchedule": {
+      "message": "Fungua Ratiba ya Kichupo"
+   },
+   "openTabURL": {
+      "message": "Fungua URL ya Kichupo"
+   },
+   "openTime": {
+      "message": "Wakati wa Kufungua"
+   },
+   "openUrl": {
+      "message": "Fungua Kiungo cha Tovuti"
+   },
+   "openWeek": {
+      "message": "Fungua Wiki"
+   },
+   "openWeeks": {
+      "message": "Wiki za wazi"
+   },
+   "open_on": {
+      "message": "Fungua"
+   },
+   "optional": {
+      "message": "Hiari"
+   },
+   "or": {
+      "message": "au"
+   },
+   "outof": {
+      "message": "nje ya"
+   },
+   "pagePath": {
+      "message": "Njia ya Ukurasa"
+   },
+   "paidFeature": {
+      "message": "Kipengele kilicholipwa"
+   },
+   "pauseSchedule": {
+      "message": "Anzisha au Acha ratiba zote"
+   },
+   "pauseTabScheduler": {
+      "message": "Kiratibu Kichupo Kimesitishwa"
+   },
+   "pleaseAllowIncognitoMessage": {
+      "message": "Tafadhali washa chaguo la 'Ruhusu katika hali fiche' katika maelezo ya kiendelezi. Kwa maagizo, tafadhali rejelea ukurasa wa mafunzo."
+   },
+   "pleaseShareYourSuggestions": {
+      "message": "Tafadhali shiriki pendekezo lako."
+   },
+   "plsShreAnySugWithUs": {
+      "message": "Tafadhali toa pendekezo ili kutuboresha"
+   },
+   "powerMode": {
+      "message": "Hali ya Nguvu"
+   },
+   "premium": {
+      "message": "Premium"
+   },
+   "pricePlan": {
+      "message": "Bei na Mipango"
+   },
+   "privcyPolicy": {
+      "message": "Sera ya Faragha"
+   },
+   "prowerModeTip": {
+      "message": "Weka mfumo amilifu kila wakati kwa kuwezesha Hali ya Nishati"
+   },
+   "put": {
+      "message": "Weka"
+   },
+   "rateUs": {
+      "message": "Tukadirie"
+   },
+   "removeDuplicateEntry": {
+      "message": "Tafadhali ondoa nakala rudufu"
+   },
+   "removeOpenTbURL": {
+      "message": "Ondoa URL ya kichupo wazi"
+   },
+   "repeat": {
+      "message": "Rudia"
+   },
+   "requiredMsg": {
+      "message": "Inahitajika"
+   },
+   "rmvClsTb": {
+      "message": "Ondoa URL ya kichupo cha kufunga"
+   },
+   "sameTabs": {
+      "message": "Onyesha upya kichupo ikiwa URL tayari imefunguliwa"
+   },
+   "sameTabsInfo": {
+      "message": "Zuia kufungua vichupo vingi kwa URL sawa. Kwa mfano, ikiwa www.google.com tayari imefunguliwa, basi kichupo hicho kilichopo kitaonyeshwa upya badala ya kukifungulia kichupo kipya."
+   },
+   "sampleCsvOpenPath": {
+      "message": "../sample_csv/en/open_tab_sample.csv"
+   },
+   "sampleFile": {
+      "message": "Sampuli ya faili"
+   },
+   "saturday": {
+      "message": "Jumamosi"
+   },
+   "savOpnData": {
+      "message": "Hifadhi data ya kichupo wazi"
+   },
+   "save": {
+      "message": "Hifadhi"
+   },
+   "saveClsTbData": {
+      "message": "Hifadhi data ya kichupo cha kufunga"
+   },
+   "saveSchedule": {
+      "message": "Hifadhi Ratiba"
+   },
+   "scheduleCloseTab": {
+      "message": "Ratibu Funga Kichupo"
+   },
+   "scheduleCurrentTab": {
+      "message": "Panga kichupo cha sasa"
+   },
+   "scheduleOpenTab": {
+      "message": "Ratibu Fungua Tabo"
+   },
+   "scheduledTabIsAlreadyExistWithSameTimer": {
+      "message": "Kichupo hiki kilichoratibiwa tayari kipo na kipima muda sawa."
+   },
+   "scheduledTabList": {
+      "message": "Orodha ya Vichupo Iliyoratibiwa"
+   },
+   "scheduledType": {
+      "message": "Aina ya Ratiba"
+   },
+   "search": {
+      "message": "Tafuta"
+   },
+   "secValid": {
+      "message": "Angalau sekunde 5 inahitajika"
+   },
+   "second": {
+      "message": "Pili"
+   },
+   "selectCloseDate": {
+      "message": "Chagua tarehe ya kufunga"
+   },
+   "selectCloseDay": {
+      "message": "Chagua siku ya kufunga"
+   },
+   "selectCloseTime": {
+      "message": "Chagua wakati wa kufunga"
+   },
+   "selectColumn": {
+      "message": "Chagua Safu"
+   },
+   "selectDateAndTime": {
+      "message": "Chagua tarehe na saa ili kufungua kichupo kipya"
+   },
+   "selectDateAndTimeClsTb": {
+      "message": "Chagua tarehe na wakati wa kufunga kichupo"
+   },
+   "selectDayToCloseSchTb": {
+      "message": "Chagua siku ya kufunga kichupo cha ratiba."
+   },
+   "selectDayToClsTb": {
+      "message": "Chagua siku ya kufunga kichupo"
+   },
+   "selectDayToSchdule": {
+      "message": "Chagua siku ya kuratibu kichupo."
+   },
+   "selectDaysInWeek": {
+      "message": "Chagua siku katika wiki"
+   },
+   "selectDaysInWeekIClsTime": {
+      "message": "Chagua siku katika wiki katika kipima saa cha karibu."
+   },
+   "selectDaysInWeekIOpClsTime": {
+      "message": "Chagua siku katika wiki katika kipima saa kilichofunguliwa au cha karibu."
+   },
+   "selectDaysInWeekIOpTime": {
+      "message": "Chagua siku katika wiki katika kipima muda wazi."
+   },
+   "selectFrequency": {
+      "message": "Chagua Frequency"
+   },
+   "selectFrequencyOfScheduleUrl": {
+      "message": "Chagua marudio ya URL iliyoratibiwa."
+   },
+   "selectOpenDate": {
+      "message": "Chagua tarehe iliyofunguliwa"
+   },
+   "selectOpenDay": {
+      "message": "Chagua siku ya wazi"
+   },
+   "selectOpenOrClose": {
+      "message": "Chagua wakati wa kufungua na kufunga"
+   },
+   "selectOpenOrCloseDate": {
+      "message": "Chagua tarehe ya kufungua na kufunga"
+   },
+   "selectOpenOrCloseDay": {
+      "message": "Chagua siku ya wazi na ya kufunga"
+   },
+   "selectOpenTime": {
+      "message": "Chagua wakati wa kufungua"
+   },
+   "selectPreferredLanguage": {
+      "message": "Chagua lugha unayopendelea."
+   },
+   "selectToOpenTab": {
+      "message": "Chagua siku ili kufungua kichupo kipya"
+   },
+   "selectTypTimerClsTb": {
+      "message": "Chagua aina ya kipima muda ili kufunga kichupo"
+   },
+   "selectTypeOfSchedule": {
+      "message": "Chagua aina ya ratiba, ikiwa unataka kufungua na kufunga kuliko kuchagua \"Zote mbili\"."
+   },
+   "selectTypeOfTimer": {
+      "message": "Chagua aina ya kipima muda ili kufungua kichupo kipya"
+   },
+   "select_weeks": {
+      "message": "Chagua Wiki"
+   },
+   "september": {
+      "message": "Septemba"
+   },
+   "settingSave": {
+      "message": "Mipangilio imehifadhiwa"
+   },
+   "settingToClose": {
+      "message": "Inaweka ili kufunga kichupo katika hali fiche."
+   },
+   "shareYourSuggestionWithUs": {
+      "message": "Shiriki nasi mapendekezo yako.."
+   },
+   "slectDayToScheduleWeekly": {
+      "message": "Chagua siku za kuratibu kichupo kila wiki."
+   },
+   "slectMinute": {
+      "message": "Chagua Dakika"
+   },
+   "smthngWrng": {
+      "message": "Hitilafu fulani imetokea"
+   },
+   "softpulseInfotech": {
+      "message": "Softpulse Infotech"
+   },
+   "somethingWentWrong": {
+      "message": "Hitilafu fulani imetokea. Onyesha upya ukurasa na ujaribu tena."
+   },
+   "status": {
+      "message": "Hali"
+   },
+   "subcrKeyShldNEmpt": {
+      "message": "Tafadhali weka ufunguo wa usajili."
+   },
+   "subdomain": {
+      "message": "Kikoa kidogo"
+   },
+   "subkeyInputTitle": {
+      "message": "Ingiza ufunguo wa usajili"
+   },
+   "submFeedBack": {
+      "message": "Wasilisha"
+   },
+   "suggForTbSch": {
+      "message": "Pendekezo la kipanga kichupo"
+   },
+   "suggestionAndRateUs": {
+      "message": "Pendekeza &amp; Ukadirie"
+   },
+   "sunday": {
+      "message": "Jumapili"
+   },
+   "tabCloseOneTime": {
+      "message": "Kichupo kitafungwa mara moja tu"
+   },
+   "tabSchTutorial": {
+      "message": "Mafunzo ya Kipanga Kichupo"
+   },
+   "tabScheduler": {
+      "message": "Kipanga Kichupo"
+   },
+   "tabSchedulerOptions": {
+      "message": "Chaguzi za Kipanga Kichupo"
+   },
+   "tabWillOpenOneTime": {
+      "message": "Kichupo kitafunguliwa mara moja tu"
+   },
+   "tabWillOpenWhenBrowserOpen": {
+      "message": "Kichupo kitafunguliwa wakati kivinjari kitafunguliwa"
+   },
+   "termCondition": {
+      "message": "Sheria na Masharti"
+   },
+   "thanksFrRev": {
+      "message": "Asante Kwa Maoni Yako"
+   },
+   "thnkUFeedBack": {
+      "message": "Asante kwa pendekezo lako"
+   },
+   "thnkUFrUsngTbSch": {
+      "message": "Tafadhali toa pendekezo ili kutuboresha"
+   },
+   "thursday": {
+      "message": "Alhamisi"
+   },
+   "time": {
+      "message": "Muda"
+   },
+   "timeExpired": {
+      "message": "Muda Umeisha"
+   },
+   "timer": {
+      "message": "Kipima muda"
+   },
+   "title": {
+      "message": "Kichwa"
+   },
+   "titleLengtWarn": {
+      "message": "Urefu wa kichwa haupaswi kuzidi herufi 200."
+   },
+   "toScheduledOpenTbMsg": {
+      "message": "Ili kichupo wazi kilichoratibiwa tafadhali batilisha uteuzi wa uchujaji wa url."
+   },
+   "toogleCloseTab": {
+      "message": "Anzisha/Simamisha kengele ya ratiba kwa URL zote za vichupo vya karibu"
+   },
+   "toogleDarkmode": {
+      "message": "Badili kati ya hali nyeusi na modi chaguo-msingi ili kubinafsisha utazamaji wako."
+   },
+   "toogleOff": {
+      "message": "Imezimwa"
+   },
+   "toogleOn": {
+      "message": "Washa"
+   },
+   "toogleOpenTab": {
+      "message": "Anzisha/Simamisha kengele ya ratiba kwa URL zote za vichupo vilivyofunguliwa"
+   },
+   "topLevelDomain": {
+      "message": "Kikoa cha Kiwango cha Juu"
+   },
+   "totalProcessed": {
+      "message": "Jumla iliyorekodiwa imechakatwa"
+   },
+   "tuesday": {
+      "message": "Jumanne"
+   },
+   "tutorialImg1": {
+      "message": "\u003Cimg src=\"../images/en/1.png\">"
+   },
+   "tutorialImg10": {
+      "message": "\u003Cimg src=\"../images/en/10.png\">"
+   },
+   "tutorialImg11": {
+      "message": "\u003Cimg src=\"../images/en/11.png\">"
+   },
+   "tutorialImg12": {
+      "message": "\u003Cimg src=\"../images/en/12.png\">"
+   },
+   "tutorialImg13": {
+      "message": "\u003Cimg src=\"../images/en/13.png\">"
+   },
+   "tutorialImg14": {
+      "message": "\u003Cimg src=\"../images/en/14.png\">"
+   },
+   "tutorialImg2": {
+      "message": "\u003Cimg src=\"../images/en/2.png\">"
+   },
+   "tutorialImg3": {
+      "message": "\u003Cimg src=\"../images/en/3.png\">"
+   },
+   "tutorialImg4": {
+      "message": "\u003Cimg src=\"../images/en/4.png\">"
+   },
+   "tutorialImg5": {
+      "message": "\u003Cimg src=\"../images/en/5.png\">"
+   },
+   "tutorialImg6": {
+      "message": "\u003Cimg src=\"../images/en/6.png\">"
+   },
+   "tutorialImg7": {
+      "message": "\u003Cimg src=\"../images/en/7.png\">"
+   },
+   "tutorialImg8": {
+      "message": "\u003Cimg src=\"../images/en/8.png\">"
+   },
+   "tutorialImg9": {
+      "message": "\u003Cimg src=\"../images/en/9.png\">"
+   },
+   "uncheckAll": {
+      "message": "Ondoa Uteuzi Wote"
+   },
+   "unlimitedSchedule": {
+      "message": "Kikomo cha ratiba isiyo na kikomo"
+   },
+   "unspecifiedURL": {
+      "message": "11. Njia ya URL ambayo haijabainishwa"
+   },
+   "unspecifiedURLExm1": {
+      "message": "Katika mfano uliotolewa hapo juu, URL iko kwenye kichupo cha karibu, ambacho kinasema kwamba URL iliyotolewa iliyofunguliwa kwenye kichupo kipya na inayoanza na kuisha na anwani ya wavuti isiyojulikana itafungwa baada ya dakika 5."
+   },
+   "upgradePlan": {
+      "message": "Tafadhali Nunua Mpango AU Ingia na Uboreshe mpango wako ili kufungua vipengele zaidi."
+   },
+   "upgradePlanUnlock": {
+      "message": "Boresha mpango wako ili ufungue vipengele zaidi."
+   },
+   "uploadValidFormat": {
+      "message": "Tafadhali pakia umbizo sahihi"
+   },
+   "url": {
+      "message": "URL"
+   },
+   "urlContExat": {
+      "message": "Uchujaji wa URL"
+   },
+   "urlEndWithUnspesifiedPth": {
+      "message": "9. Mwisho wa URL kwa njia ambayo haijabainishwa"
+   },
+   "urlEndWithUnspesifiedPthExm1": {
+      "message": "Katika mfano uliopewa hapo juu, URL iko kwenye kichupo cha karibu, ambacho kinasema kwamba URL iliyotolewa iliyofunguliwa kwenye kichupo kipya na kuishia na njia isiyojulikana itafungwa baada ya dakika 5."
+   },
+   "urlFilterInfo": {
+      "message": "Ina URL inayoangaliwa inahitaji tu sehemu ya URL na URL Halisi inayoangaliwa lazima ilingane kabisa na URL iliyobainishwa."
+   },
+   "urlFilterinCLoseTb": {
+      "message": "14. URL Kuchuja kwenye kichupo cha karibu cha URL"
+   },
+   "urlFilterinCLoseTbExample": {
+      "message": "Katika mfano uliopewa hapo juu, URL iko kwenye kichupo cha karibu, ambacho kinasema kwamba kichupo kilichofunguliwa tayari kinalingana na sehemu fulani ya URL uliyopewa kwa hivyo itafunga kichupo hicho."
+   },
+   "urlIsRequired": {
+      "message": "Kiungo cha Tovuti kinahitajika"
+   },
+   "urlNotvalid": {
+      "message": "URL si halali"
+   },
+   "urlStartWithUnspesifiedPth": {
+      "message": "10. URL anza na njia ambayo haijabainishwa"
+   },
+   "urlStartWithUnspesifiedPthExm1": {
+      "message": "Katika mfano uliotolewa hapo juu, URL iko kwenye kichupo cha karibu, ambacho kinasema kwamba URL iliyotolewa iliyofunguliwa kwenye kichupo kipya na inayoanza na kikoa kidogo kisichojulikana \u003Cb>'www'\u003C/b> au \u003Cb>'blog'\u003C/b> itafungwa baada ya dakika 5."
+   },
+   "useSpecificUrl": {
+      "message": "Tumia Kiungo maalum cha Tovuti"
+   },
+   "useSpecificUrl1": {
+      "message": "Lazima uwe umeandika kikoa kidogo, kikoa cha kiwango cha juu, jina la kikoa, na njia ya ukurasa katika sehemu ya Kiungo cha Tovuti kwenye kichupo cha kivinjari kilichofungwa."
+   },
+   "useSpecificUrl2": {
+      "message": "Tumia vichupo vyote vya kivinjari vilivyofungwa"
+   },
+   "useSpecificUrl3": {
+      "message": "Tumia Kiungo maalum na kamili cha Tovuti"
+   },
+   "useUnSpecificUrl1": {
+      "message": "Tumia Kiungo cha Tovuti ambacho hakijabainishwa"
+   },
+   "useUnSpecificUrl2": {
+      "message": "Tumia anza na Kiungo cha Tovuti ambacho hakijabainishwa"
+   },
+   "useUnSpecificUrl3": {
+      "message": "Tumia mwisho na Kiungo cha Tovuti ambacho hakijabainishwa"
+   },
+   "used": {
+      "message": "Umetumia"
+   },
+   "validFormatCsv": {
+      "message": "Je, ni umbizo halali la faili ya CSV kwa ajili ya kuleta?"
+   },
+   "websiteLink": {
+      "message": "Kiungo cha Tovuti"
+   },
+   "websiteUrl": {
+      "message": "URL ya tovuti"
+   },
+   "wednesday": {
+      "message": "Jumatano"
+   },
+   "weekName": {
+      "message": "Jina la Wiki"
+   },
+   "weekly": {
+      "message": "Kila wiki"
+   },
+   "whenExtensionTabAppears": {
+      "message": "Kichupo cha Viendelezi kinapoonekana, tafuta \"Kipanga Kichupo kilicho na kufungua na kufunga kiotomatiki\" ili kuwasha katika Hali Fiche na ubofye kitufe cha \"Maelezo\" kando yake."
+   },
+   "whenMenuPopup": {
+      "message": "Menyu inapotokea, chagua \"Dhibiti viendelezi\"."
+   },
+   "withSignMustFill": {
+      "message": "Na \u003Cspan>*\u003C/span> ishara lazima ujaze au uchague, Chagua wakati wa kufungua au kufunga au saa zote mbili."
+   },
+   "writeYourDescriptionAboutSchUrl": {
+      "message": "Andika maelezo yako kuhusu url iliyoratibiwa hapa."
+   },
+   "yes": {
+      "message": "Ndiyo"
+   },
+   "yourEmailAddress": {
+      "message": "Barua pepe yako"
+   },
+   "yourScheduleUrl": {
+      "message": "URL yako ya Ratiba"
+   }
+}

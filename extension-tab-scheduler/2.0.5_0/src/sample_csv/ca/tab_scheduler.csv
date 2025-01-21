@@ -1,0 +1,4 @@
+﻿URL,Temporitzador,Estat,Data d'obertura,Data de tancament,Temps Obert,Temps de tancament,Setmana de portes obertes,Tanca setmana,Al navegador obert,Jornada de portes obertes,Dia de tancament,Minut Obert,Minut de tancament,Obre segon,Tancar segon,Notificació,Títol,Descripció,Obre l'URL en segon pla,Obre en mode d'incògnit,No tanqueu les pestanyes fixades,Tanqueu només les pestanyes d'incògnit,Filtrat d'URL,Tipus d'horari,Cada hora Minut obert,Cada hora Minut de tancament,Actualitza la pestanya si l'URL ja està obert
+https://www.google.com/,Cada Minut,Actius,,,,,"","","",,,,,,,Inactiu,Close Every Minute,,No,No,No,No,Sí,Tancar,0,0,Sí
+http://www.w3schools.com/,Cada dia,Actius,,,16:31,,"","","",,,,,,,Inactiu,Every Day Open,,No,No,No,No,No,Obert,0,0,No
+https://www.flipkart.com/,Minut personalitzat,Actius,,,,,"","","",,,120,5,,,Inactiu,Open and Close,,No,No,No,No,No,Tots dos,0,0,No

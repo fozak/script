@@ -1,0 +1,4 @@
+﻿Địa chỉ URL,Bộ đếm thời gian,Trạng thái,Ngày mở cửa,Ngày đóng,Giờ mở cửa,Thời gian đóng cửa,Tuần lễ mở cửa,Tuần đóng cửa,Trên trình duyệt mở,Ngày mở cửa,Ngày đóng cửa,Phút mở,Đóng phút,Mở thứ hai,Đóng thứ hai,Thông báo,Tiêu đề,Sự miêu tả,Mở URL trong nền,Mở ở chế độ ẩn danh,Không đóng các tab đã ghim,Chỉ đóng các tab ẩn danh,Lọc URL,Loại lịch trình,Mỗi giờ mở phút,Mỗi giờ gần phút,Làm mới tab nếu URL đã mở
+https://www.google.com/,Mỗi phút,Tích cực,,,,,"","","",,,,,,,Không hoạt động,Close Every Minute,,KHÔNG,KHÔNG,KHÔNG,KHÔNG,Đúng,Đóng,0,0,Đúng
+http://www.w3schools.com/,Mỗi ngày,Tích cực,,,16:31,,"","","",,,,,,,Không hoạt động,Every Day Open,,KHÔNG,KHÔNG,KHÔNG,KHÔNG,KHÔNG,Mở,0,0,KHÔNG
+https://www.flipkart.com/,Phút tùy chỉnh,Tích cực,,,,,"","","",,,120,5,,,Không hoạt động,Open and Close,,KHÔNG,KHÔNG,KHÔNG,KHÔNG,KHÔNG,Cả hai,0,0,KHÔNG

@@ -1,0 +1,1448 @@
+{
+   "10_min": {
+      "message": "10 perc"
+   },
+   "1_min": {
+      "message": "1 perc"
+   },
+   "30_min": {
+      "message": "30 perc"
+   },
+   "5_min": {
+      "message": "5 perc"
+   },
+   "60_min": {
+      "message": "óra"
+   },
+   "Dashboard": {
+      "message": "Műszerfal"
+   },
+   "Login": {
+      "message": "Bejelentkezés"
+   },
+   "Off": {
+      "message": "Le"
+   },
+   "On": {
+      "message": "On"
+   },
+   "Selected": {
+      "message": "Kiválasztott"
+   },
+   "Settings": {
+      "message": "Beállítások elemre"
+   },
+   "Tutorial": {
+      "message": "Oktatóanyag"
+   },
+   "action": {
+      "message": "Akció"
+   },
+   "activateScheduleTab": {
+      "message": "Ütemezett lap aktiválása."
+   },
+   "active": {
+      "message": "Aktív"
+   },
+   "activeAllScheduleTab": {
+      "message": "Tab ütemező futtatása"
+   },
+   "activeStatus": {
+      "message": "Állapot"
+   },
+   "actvInactvNotification": {
+      "message": "Értesítés megjelenítése az ütemezés lap megnyitásakor"
+   },
+   "actvInactvOpnTb": {
+      "message": "Aktív vagy inaktív nyitott lap"
+   },
+   "actvIntvClsTb": {
+      "message": "Aktív vagy inaktív bezárja a lapot"
+   },
+   "add": {
+      "message": "Hozzáadás"
+   },
+   "addDescription": {
+      "message": "Leírás hozzáadása"
+   },
+   "addNew": {
+      "message": "Új hozzáadása"
+   },
+   "addNewURlCls": {
+      "message": "Új URL hozzáadása a bezáráshoz"
+   },
+   "addNewUrlToOpen": {
+      "message": "Új URL hozzáadása az új ablakban való megnyitáshoz"
+   },
+   "addTitle": {
+      "message": "Cím hozzáadása"
+   },
+   "addWebsite": {
+      "message": "Webhely hozzáadása"
+   },
+   "all": {
+      "message": "Minden"
+   },
+   "allInputFieldReq": {
+      "message": "Minden mező kitöltése kötelező"
+   },
+   "all_weeks": {
+      "message": "Egész héten"
+   },
+   "alreadyPurchase": {
+      "message": "Már megvásárolta? Írja be ide a kulcsot"
+   },
+   "andAt": {
+      "message": "és at"
+   },
+   "annually": {
+      "message": "Évente"
+   },
+   "appDesc": {
+      "message": "A böngésző lapjai a kiválasztott időpontban automatikusan megnyílnak és bezáródnak. A felhasználó igény szerint aktiválhatja/deaktiválhatja a listát"
+   },
+   "appName": {
+      "message": "Lapütemező automatikus nyitással és bezárással"
+   },
+   "april": {
+      "message": "április"
+   },
+   "at": {
+      "message": "at"
+   },
+   "august": {
+      "message": "augusztus"
+   },
+   "autoFocus": {
+      "message": "Autofókusz fül"
+   },
+   "autoFocustip": {
+      "message": "Ha be van kapcsolva, az új lap aktív/fókuszált állapotban nyílik meg."
+   },
+   "autofocustip": {
+      "message": "Az újonnan megnyitott lapok automatikusan fókuszba kerülnek"
+   },
+   "basic": {
+      "message": "Alapvető"
+   },
+   "billedAnnyally": {
+      "message": "Évente számlázva"
+   },
+   "billedMonthly": {
+      "message": "Havi számlázás"
+   },
+   "both": {
+      "message": "Mindkét"
+   },
+   "browserOpen": {
+      "message": "A böngésző megnyitásakor"
+   },
+   "browserWebAddress": {
+      "message": "A böngésző webcíme ismeretlen webcímmel kezdődik és végződik. Írja be a \u003Cb>*-ot\u003C/b> a Webhely hivatkozás mezőjének mindkét oldalára."
+   },
+   "browserWebAddress2": {
+      "message": "A böngésző webcíme tartalmazza a google.com domain nevet, amely adott perceken belül bezár az aldomaintől és az oldal elérési útjától függetlenül. Tegye \u003Cb>*\u003C/b> a domain név és a TLD mindkét oldalára"
+   },
+   "browserWebAddress3": {
+      "message": "A böngésző webcíme ismeretlen domain névvel kezdődik, és ismeretlen oldal elérési úttal végződik"
+   },
+   "browserWebAddress31": {
+      "message": "adott perc után bezárul, tegye \u003Cb>a * jelet\u003C/b> a TLD mindkét oldalára"
+   },
+   "browserWebAddress4": {
+      "message": "A böngésző webcíme ismeretlen webcímmel kezdődik. Írja be \u003Cb>a *-ot\u003C/b> az URL elejére. Ne feledje, hogy \u003Cb>a *\u003C/b> beírása után a böngésző webcímének meg kell egyeznie az URL-címével ."
+   },
+   "browserWebAddress41": {
+      "message": "A böngésző webcíme ismeretlen aldomainnel kezdődik"
+   },
+   "browserWebAddress42": {
+      "message": "a Webhely hivatkozásának elején"
+   },
+   "browserWebAddress5": {
+      "message": "A böngésző webcíme ismeretlen webcímmel végződik. Írja be \u003Cb>a *-ot\u003C/b> az URL végére. Ne feledje, hogy a webcímnek meg kell egyeznie \u003Cb>a *\u003C/b> beírása előtt."
+   },
+   "browserWebAddress51": {
+      "message": "A böngésző webcíme ismeretlen oldalútvonallal végződik. Tegye \u003Cb>*\u003C/b> a webcím végére"
+   },
+   "browserWebAddress6": {
+      "message": "A böngésző összes lapjának bezárásához írjon csak \u003Cb>*-ot\u003C/b> a webhely címe mezőbe. Az összes lap bezárása után a böngésző automatikusan bezárul."
+   },
+   "browserWebAddress7": {
+      "message": "Meg kell adnia a pontos aldomaint, legfelső szintű domaint, domain nevet és az oldal elérési útját az URL mezőben a megnyitott böngésző lapon."
+   },
+   "browserWebAddress8": {
+      "message": "Megnyithatja az URL-t adott dátummal és időponttal, adott hónapban, adott héten, adott évben és ismétlési időben"
+   },
+   "buyPlan": {
+      "message": "Vásárlási terv"
+   },
+   "buycofee": {
+      "message": "Vegyél nekem egy kávét"
+   },
+   "cancel": {
+      "message": "Mégsem"
+   },
+   "changeLanguage": {
+      "message": "Nyelv módosítása"
+   },
+   "checkAll": {
+      "message": "Ellenőrizze az összeset"
+   },
+   "checkThisOpToPreventClosePinTb": {
+      "message": "Jelölje be ezt a lehetőséget, hogy megakadályozza a rögzített fülek bezárását."
+   },
+   "checkThisOptionOnlyPartOfUrlMtch": {
+      "message": "Jelölje be ezt a lehetőséget, ha az URL-nek csak egy részét kell egyeznie."
+   },
+   "checkThisOptionToActivate": {
+      "message": "Jelölje be ezt a lehetőséget az ütemezett URL aktiválásához vagy inaktiválásához."
+   },
+   "checkThisOptionToCloseOnly": {
+      "message": "Jelölje be ezt a lehetőséget, ha csak az inkognitólapokat szeretné bezárni. Ezenkívül engedélyezze az „Engedélyezés inkognitómódban” lehetőséget a bővítmény részleteinél. Az utasításokért tekintse meg az oktatóanyag oldalát."
+   },
+   "checkThisOptionToCloseOnlyInIncgnitoTb": {
+      "message": "Jelölje be ezt a lehetőséget, ha csak az inkognitólapokat szeretné bezárni. Ezenkívül engedélyezze az „Engedélyezés inkognitómódban” lehetőséget a bővítmény részleteinél. Az utasításokért tekintse meg az oktatóanyag oldalát."
+   },
+   "checkThisOptionToInBg": {
+      "message": "Jelölje be ezt a lehetőséget, ha az URL-t a háttérben szeretné megnyitni anélkül, hogy új lapon nyitná meg"
+   },
+   "checkThisOptionToInactivNotification": {
+      "message": "Jelölje be ezt a lehetőséget, ha inaktív értesítést szeretne kapni az ütemezett URL-ről"
+   },
+   "checkThisOptionToOpen": {
+      "message": "Jelölje be ezt a lehetőséget, ha inkognitó módban szeretné megnyitni az URL-t"
+   },
+   "checkThisOptionToOpenIncogito": {
+      "message": "Jelölje be ezt a lehetőséget, ha inkognitó módban szeretné megnyitni az URL-t"
+   },
+   "checkThisOptionToPrevent": {
+      "message": "Jelölje be ezt a lehetőséget, hogy megakadályozza a rögzített fülek bezárását."
+   },
+   "clickExtIcon": {
+      "message": "Kattintson az eszköztár „Bővítmények” ikonjára, amely úgy néz ki, mint egy puzzle-darab."
+   },
+   "clickTheSwitch": {
+      "message": "Kattintson a mellette lévő kapcsolóra a bekapcsoláshoz"
+   },
+   "close": {
+      "message": "Közeli"
+   },
+   "closeAllTab": {
+      "message": "12. Zárja be az összes böngésző lapot"
+   },
+   "closeAllTabExm1": {
+      "message": "A fenti példában az adott URL a bezárás lapon van, ami azt mondja, hogy 2023.02.25-én 12:00-kor bezárja az összes lapot."
+   },
+   "closeDate": {
+      "message": "Bezárás dátuma"
+   },
+   "closeDay": {
+      "message": "Záró nap"
+   },
+   "closeEveryYear": {
+      "message": "Minden évben bezárni"
+   },
+   "closeInEvery": {
+      "message": "Zárja be mindegyikbe"
+   },
+   "closeIncognitoTab": {
+      "message": "Csak az inkognitólapokat zárja be"
+   },
+   "closeMinute": {
+      "message": "Bezárási perc"
+   },
+   "closeOnDay": {
+      "message": "Napi zárás"
+   },
+   "closeOnEvery": {
+      "message": "Zárja be mindegyiket"
+   },
+   "closeOnEveryDay": {
+      "message": "Zárja be minden nap"
+   },
+   "closeOnEveryMonth": {
+      "message": "Minden hónap napján zárja be"
+   },
+   "closeOnEveryWeek": {
+      "message": "Minden héten zárva"
+   },
+   "closeSecond": {
+      "message": "Bezárás Második"
+   },
+   "closeSeconsMoreThan5": {
+      "message": "A bezárási másodpercnek többnek kell lennie 5-nél."
+   },
+   "closeTabSchedule": {
+      "message": "Lap ütemezésének bezárása"
+   },
+   "closeTabURL": {
+      "message": "Lap bezárása URL"
+   },
+   "closeTime": {
+      "message": "Bezárási idő"
+   },
+   "closeUrl": {
+      "message": "Webhely hivatkozás bezárása"
+   },
+   "closeWeek": {
+      "message": "Zárja be a hetet"
+   },
+   "closeWeeks": {
+      "message": "Hetek bezárása"
+   },
+   "close_on": {
+      "message": "Zárja be"
+   },
+   "cngrtsForSubcr": {
+      "message": "Gratulálok! Tervét sikeresen aktiváltuk."
+   },
+   "commonQuestionsAns": {
+      "message": "Gyakori kérdések és válaszok"
+   },
+   "copySucessClose": {
+      "message": "Lap bezárása URL-adatok átmásolva a Lap megnyitása URL-adatok közé"
+   },
+   "createNewTimer": {
+      "message": "Új időzítő létrehozása"
+   },
+   "currentPlan": {
+      "message": "Jelenlegi terv"
+   },
+   "currentTabSchedule": {
+      "message": "A lapok aktuális ütemezése"
+   },
+   "currentTbScheduleTimer": {
+      "message": "Az aktuális lap ütemezett időzítője."
+   },
+   "cusSec": {
+      "message": "Egyedi Második"
+   },
+   "custMin": {
+      "message": "Egyedi perc"
+   },
+   "custmMinSch": {
+      "message": "7. Egyedi percbeosztás"
+   },
+   "custmMinSchExm1": {
+      "message": "A fenti példában az adott URL a nyitott lapon van, ami azt jelzi, hogy az adott URL új lapon nyílik meg 15 percenként."
+   },
+   "custmMinSchExm2": {
+      "message": "A fenti példában az adott URL a bezárás fülön van, ami azt mondja, hogy az új lapon megnyitott URL 15 perc után bezárul."
+   },
+   "customSecondWarning": {
+      "message": "Az egyéni második funkció kísérleti jellegű, és előfordulhat, hogy nem működik megfelelően, ha a másodpercek 60 alá vannak állítva."
+   },
+   "darkMode": {
+      "message": "Sötét mód"
+   },
+   "datNotCopy": {
+      "message": "Egyes adatok nem kerülnek másolásra érvénytelen URL-cím miatt."
+   },
+   "dataSaved": {
+      "message": "Az időzítő adatok mentése sikeres volt"
+   },
+   "date": {
+      "message": "Dátum"
+   },
+   "dateIsOutOfRange": {
+      "message": "A dátum kívül esik a tartományon"
+   },
+   "day": {
+      "message": "Nap"
+   },
+   "december": {
+      "message": "december"
+   },
+   "delete": {
+      "message": "Töröl"
+   },
+   "deleteScheduleTb": {
+      "message": "Ütemezett lap törlése."
+   },
+   "description": {
+      "message": "Leírás"
+   },
+   "developedBy": {
+      "message": "Fejlesztője:"
+   },
+   "doNotCloseInPinnedTabs": {
+      "message": "Ne zárja be a rögzített füleket"
+   },
+   "doNotShowNotification": {
+      "message": "Ne mutasson értesítést"
+   },
+   "domainName": {
+      "message": "Domain név"
+   },
+   "downloadCloseTbSampleCsv": {
+      "message": "Töltsön le egy lap bezárása CSV-mintát a szükséges formátum példájának megtekintéséhez"
+   },
+   "downloadOpenTbSampleCsv": {
+      "message": "Töltsön le egy nyitott lap minta CSV-fájlt a szükséges formátum példájának megtekintéséhez"
+   },
+   "editScheduleTb": {
+      "message": "Ütemezett lap szerkesztése."
+   },
+   "email": {
+      "message": "Email"
+   },
+   "enterDateToCloseTab": {
+      "message": "Írja be ide a dátumot az ütemezés lap bezárásához."
+   },
+   "enterDateToOpen": {
+      "message": "Adja meg a dátumot az ütemezés lap megnyitásához."
+   },
+   "enterMiniutesToCloseTb": {
+      "message": "Írjon be perceket a lap bezárásához."
+   },
+   "enterMiniutesToOpen": {
+      "message": "Írjon be perceket az ütemezés lap megnyitásához."
+   },
+   "enterMinute": {
+      "message": "Írja be a percet"
+   },
+   "enterSecond": {
+      "message": "Enter Second"
+   },
+   "enterSecondsToCloseTab": {
+      "message": "A lap bezárásához írja be a másodperceket."
+   },
+   "enterSecondsToOpen": {
+      "message": "Adja meg a másodperceket az ütemezés lap megnyitásához."
+   },
+   "enterTilteOfScheduleUrl": {
+      "message": "Adja meg az ütemezett URL címét."
+   },
+   "enterTimeToCloseTab": {
+      "message": "Ide írja be az időt az ütemezés lap bezárásához."
+   },
+   "enterTimeToSchedule": {
+      "message": "Adja meg az időpontot az ütemezés lap megnyitásához."
+   },
+   "enterValidEmail": {
+      "message": "Kérjük, adjon meg érvényes e-mail címet"
+   },
+   "enterValidUrl": {
+      "message": "Kérjük, érvényes URL-t adjon meg"
+   },
+   "enterValueInCloseSec": {
+      "message": "Adja meg az értéket rövid másodpercekben"
+   },
+   "enterValueInOpenCloseSec": {
+      "message": "Adja meg az értéket nyitási vagy zárási másodpercben"
+   },
+   "enterValueInOpenMinutes": {
+      "message": "Adja meg az értéket nyitott percekben"
+   },
+   "enterVlaueInCloseMinutes": {
+      "message": "Adja meg az értéket közeli percekben"
+   },
+   "enterVlaueInOpenCloseMin": {
+      "message": "Adja meg az értéket nyitott vagy zárási percekben"
+   },
+   "enterVlaueInOpenSeconds": {
+      "message": "Adja meg az értéket nyitott másodpercben"
+   },
+   "enterYourURLToSchedule": {
+      "message": "Az ütemezéshez adja meg URL-jét."
+   },
+   "every": {
+      "message": "minden"
+   },
+   "every10Min": {
+      "message": "10 percenként"
+   },
+   "every1Minute": {
+      "message": "1 percenként"
+   },
+   "every30Min": {
+      "message": "30 percenként"
+   },
+   "every5Min": {
+      "message": "5 percenként"
+   },
+   "everyDay": {
+      "message": "Minden nap"
+   },
+   "everyDayAt": {
+      "message": "minden nap at"
+   },
+   "everyHour": {
+      "message": "Minden órában"
+   },
+   "everyMinute": {
+      "message": "Minden percben"
+   },
+   "everyMonth": {
+      "message": "Minden hónapban"
+   },
+   "everyMonthOn": {
+      "message": "minden hónapban tovább"
+   },
+   "everyMonthOnDay": {
+      "message": "minden hónap napján"
+   },
+   "everyWeek": {
+      "message": "Minden héten"
+   },
+   "everyWeekOn": {
+      "message": "minden héten tovább"
+   },
+   "everyYear": {
+      "message": "Minden évben"
+   },
+   "everyYesrOn": {
+      "message": "minden évben"
+   },
+   "evr10MinSch": {
+      "message": "2. 10 percenkénti ütemezés"
+   },
+   "evr10MinSchExm1": {
+      "message": "A fenti példában az adott URL a nyitott lapon van, ami azt jelenti, hogy az adott URL új lapon nyílik meg 10 percenként."
+   },
+   "evr10MinSchExm2": {
+      "message": "A fenti példában az adott URL a bezárás fülön található, ami azt mondja, hogy az új lapon megnyitott URL 10 perc elteltével bezárul."
+   },
+   "evrDaySch": {
+      "message": "3. Minden nap ütemezése"
+   },
+   "evrDaySchExm1": {
+      "message": "A fenti példában az adott URL a nyitott lapon van, ami azt mondja, hogy minden nap 17:27-kor új lapon nyílik meg."
+   },
+   "evrDaySchExm2": {
+      "message": "A fenti példában az adott URL a bezárás lapon van, ami azt írja, hogy minden nap 17:27-kor bezárja a már megnyitott lapot."
+   },
+   "evrMonthSch": {
+      "message": "5. Minden hónap ütemezése"
+   },
+   "evrMonthSchExm1": {
+      "message": "A fenti példában az adott URL a nyitott lapon van, ami azt írja, hogy új lapon nyílik meg minden hónapban 13:45-kor a 25. napon"
+   },
+   "evrMonthSchExm2": {
+      "message": "A fenti példában az adott URL a bezárás lapon van, ami azt mondja, hogy a már megnyitott lapot minden hónapban 13:45-kor, a 25. napon bezárja."
+   },
+   "evrWeekSch": {
+      "message": "4. Minden heti ütemezés"
+   },
+   "evrWeekSchExm1": {
+      "message": "\u003Cb>A fenti példában az adott URL egy nyitott lapon van, ami azt írja ki, hogy minden héten hétfőn és kedden\u003C/b> 17:00-kor nyílik meg egy új lapon ."
+   },
+   "evrWeekSchExm2": {
+      "message": "\u003Cb>A fenti példában az adott URL a bezárás lapon található, ami azt jelzi, hogy a már megnyitott lapot minden héten hétfőn és kedden\u003C/b> 17:00-kor bezárja ."
+   },
+   "evrWeekSchExm3": {
+      "message": "A fenti példában több nap is kiválasztható a heti időzítőben."
+   },
+   "evrYearSch": {
+      "message": "6. Minden év ütemezése"
+   },
+   "evrYearSchExm1": {
+      "message": "A fenti példában az adott URL a nyitott lapon van, ami azt írja, hogy új lapon nyílik meg minden évben január 1-jén 13:35-kor."
+   },
+   "evrYearSchExm2": {
+      "message": "A fenti példában az adott URL a bezárás lapon van, ami azt írja, hogy a már megnyitott lapot minden évben január 1-jén 13:35-kor bezárja."
+   },
+   "exampleSort": {
+      "message": "például"
+   },
+   "exdMaxLim": {
+      "message": "Túllépte a megengedett maximális készülékszámot!"
+   },
+   "exmpOpnClsTbSch": {
+      "message": "Példa a lap megnyitására és bezárására a Tab Schedulerben"
+   },
+   "expLicKy": {
+      "message": "Ez a licenckulcs lejárt."
+   },
+   "export": {
+      "message": "Export"
+   },
+   "exportBefore": {
+      "message": "Megvan\u003Cexday>\u003C/exday>nap van hátra, fizessen elő, hogy továbbra is élvezhesse a prémium szolgáltatást"
+   },
+   "exportClsTbDta": {
+      "message": "Lap bezárási adatainak exportálása"
+   },
+   "exportOpenTbDt": {
+      "message": "Exportálja a megnyitott lap adatait"
+   },
+   "exportedData": {
+      "message": "Az időzítő adatai sikeresen exportálva"
+   },
+   "extensionShouldAble": {
+      "message": "Mostantól a bővítménynek képesnek kell lennie a lapok bezárására inkognitó módban."
+   },
+   "faq": {
+      "message": "GYIK"
+   },
+   "faq_1": {
+      "message": "Mi az a Tab Scheduler automatikus nyitással és bezárással?"
+   },
+   "faq_10": {
+      "message": "Hogyan tekinthetem meg az ütemezett lapjaimat?"
+   },
+   "faq_11": {
+      "message": "Kötelező a nyitási és zárási időpontot is kitölteni?"
+   },
+   "faq_12": {
+      "message": "Mire jók az Autofókusz lap, az Összes ütemezett lap aktiválása és az Energiagazdálkodási mód funkciói?"
+   },
+   "faq_13": {
+      "message": "Meg tudom nyitni/bezárni az ütemezett webhelylinket inkognitólapon?"
+   },
+   "faq_14": {
+      "message": "Mire használható a Frissítés lap, ha az URL már meg van nyitva?"
+   },
+   "faq_2": {
+      "message": "Mire használható a Weboldal linkje?"
+   },
+   "faq_3": {
+      "message": "Hogyan ütemezhetek be egy URL-t a Tabulátorral?"
+   },
+   "faq_4": {
+      "message": "Mi az \"URL megnyitása a háttérben\" opció?"
+   },
+   "faq_5": {
+      "message": "Megakadályozhatom, hogy a bővítmény bezárja a rögzített lapokat?"
+   },
+   "faq_6": {
+      "message": "Mit jelent a „Mindkettő” ütemezési típus?"
+   },
+   "faq_7": {
+      "message": "Hogyan működik az „URL-szűrő” funkció?"
+   },
+   "faq_8": {
+      "message": "Deaktiválhatok egy ütemezett lapot törlés nélkül?"
+   },
+   "faq_9": {
+      "message": "Kapok értesítést az ütemezett lapokról?"
+   },
+   "faq_a_1": {
+      "message": "\u003Cp>A Lapütemező automatikus megnyitással és bezárással egy böngészőbővítmény, amely lehetővé teszi a felhasználók számára, hogy ütemezzék a lapok automatikus megnyitását és bezárását meghatározott időpontokban. A felhasználók választhatnak egy egyszeri ütemezést, vagy beállíthatnak ismétlődő ütemezéseket különböző gyakorisági opciókkal. Ennek a bővítménynek több célja is van a felhasználók számára, és számos olyan funkciót kínál, amelyek hasznosak az Ön számára.\u003C/p>"
+   },
+   "faq_a_10": {
+      "message": "Az összes ütemezett lap megjelenik egy listában, amely tartalmazza a címet, a webhely hivatkozását, a nyitási és bezárási időpontokat, az állapotot és a végrehajtható műveleteket (pl. aktiválás, szerkesztés, törlés)."
+   },
+   "faq_a_11": {
+      "message": "Nem, beállíthat nyitva vagy zárási időt. Azonban ki kell töltenie vagy ki kell választania a csillaggal (*) jelölt kötelező mezőket."
+   },
+   "faq_a_12": {
+      "message": "Az Auto Focus Tab gondoskodik arról, hogy amikor egy ütemezett lap megnyílik, az Összes ütemezett lap aktiválása lehetővé teszi, hogy egyetlen kattintással gyorsan bekapcsolja az összes ütemezett lapot. A Power Mode optimalizálja a bővítmény teljesítményét a böngésző erőforrásainak hatékonyabb kezelésével."
+   },
+   "faq_a_13": {
+      "message": "Igen, választhat egy ütemezett lap megnyitását inkognitómódban a „Megnyitás inkognitó módban” lehetőség kiválasztásával. Dönthet úgy, hogy csak az inkognitólapokat zárja be a „Csak inkognitólapok bezárása” lehetőség kiválasztásával, mindaddig, amíg az „Engedélyezés inkognitómódban” engedélyezve van a bővítmény beállításaiban."
+   },
+   "faq_a_14": {
+      "message": "Ha ez az opció engedélyezve van, a bővítmény automatikusan frissít egy meglévő lapot, ha ugyanaz az URL már meg van nyitva a böngészőben. Ez megakadályozza az ismétlődő lapok megnyitását, és biztosítja, hogy mindig az oldal legújabb verziója legyen betöltve."
+   },
+   "faq_a_14_1": {
+      "message": "Ha megpróbálja megnyitni a https://github.com/ oldalt, és az már meg van nyitva egy másik lapon, a bővítmény egyszerűen frissíti azt a lapot, ahelyett, hogy újat nyitna meg."
+   },
+   "faq_a_14_2": {
+      "message": "Ha a https://github.com/ már meg van nyitva három lapon, a bővítmény mindhárom lapot frissíti."
+   },
+   "faq_a_2": {
+      "message": "A Webhely hivatkozás a böngészője nyitott lapján található webhely címe. Az alábbiakban megtudhatja, hogyan használhatja a webhely címét."
+   },
+   "faq_a_3": {
+      "message": "URL ütemezéséhez adja meg a webhely hivatkozását, adjon címet az ütemezésnek, válassza ki a gyakoriságot (Egyszer, Percenként, Naponta stb.), és válassza ki a nyitási és zárási időpontokat. A lap megnyitásához és bezárásához dátumot, napot vagy másodpercet is megadhat."
+   },
+   "faq_a_4": {
+      "message": "\u003Cp>Ezzel az opcióval teljes mértékben szabályozhatja az URL-ek háttérben történő megnyitását anélkül, hogy az új lapra kerülne a fókusz. Az URL csendesen megnyílik, miközben Ön más lapokon dolgozik. Ez különösen akkor hasznos, ha a böngészőnek adatokat kell lekérnie az ütemezett URL-ről anélkül, hogy azt aktívan megjelenítené, például egy GET API kérés esetén.\u003C/p>\u003Cbr> \u003Cp>Ha például rendszeresen szeretne adatokat lekérni egy API-végpontról egy meghatározott időpontban, akkor ezzel a hatékony lehetőséggel futtassa le a kérést a háttérben anélkül, hogy új látható lapot nyitna meg.\u003C/p>"
+   },
+   "faq_a_5": {
+      "message": "Igen, van lehetőség a rögzített lapok bezárásának megakadályozására. Jelölje be a „Ne zárja be a rögzített lapokat” lehetőséget, hogy megbizonyosodjon arról, hogy ezek a lapok nyitva maradnak még akkor is, ha megfelelnek más bezárási feltételeknek."
+   },
+   "faq_a_6": {
+      "message": "A „Mindkettő” ütemezési típus teljes körű szabályozást biztosít a lapok nyitásának és bezárásának idején, így mindkét művelethez beállíthat konkrét időpontokat."
+   },
+   "faq_a_7": {
+      "message": "Az URL-szűrés biztosítja, hogy az ütemezett művelet végrehajtásához az URL-nek csak egy meghatározott részének kell egyeznie. Ez akkor hasznos, ha bizonyos műveleteket részleges URL-egyezések alapján szeretne automatizálni. Ha például bejelöli az URL-szűrés beállítást a https://example.com/page URL-nél, az olyan URL-ekre is vonatkozik, mint a https://example.com/page/123, https://example.com/ page?query=example és https://subdomain.example.com/page."
+   },
+   "faq_a_8": {
+      "message": "Az \"Ütemezett lap aktiválása\" opcióval egyszerűen aktiválhatja vagy deaktiválhatja az ütemezett lapokat, így rugalmasan kezelheti ütemezését a konfigurációk elvesztése nélkül."
+   },
+   "faq_a_9": {
+      "message": "Alapértelmezés szerint értesítéseket fog kapni. Ha azonban inkább le szeretné állítani az értesítéseket, jelölje be a „Ne jelenjen meg értesítést” opciót a letiltásához."
+   },
+   "february": {
+      "message": "február"
+   },
+   "filterTips": {
+      "message": "A szűrő a „https://” vagy „www.” után érvényes, pl. „github.com”"
+   },
+   "for_exp": {
+      "message": "Például"
+   },
+   "freeForever": {
+      "message": "Ingyenes Forever"
+   },
+   "freeSchedule": {
+      "message": "szabad menetrend"
+   },
+   "freeTral": {
+      "message": "Értékes korai felhasználóként élvezni fogja\u003Crday>120\u003C/rday>napokig ingyenes hozzáférés, mielőtt új fizetős csomagunkra váltana – köszönjük folyamatos támogatását!\u003Cp class=\"p-t-5\">Megvan\u003Cb>\u003Cspan>\u003C/span>\u003C/b>napok vannak hátra a tiédből\u003Crday>120\u003C/rday>-napos szabadidőszak.\u003Cafex class=\"warning\">\u003Cafex>\u003C/afex>\u003C/afex>\u003C/p> "
+   },
+   "frequentlyAskedQuestions": {
+      "message": "Gyakran ismételt kérdések"
+   },
+   "friday": {
+      "message": "péntek"
+   },
+   "getThisPlan": {
+      "message": "Szerezd meg ezt a tervet"
+   },
+   "goToSettingsPageToSchedule": {
+      "message": "Az URL-ek megnyitásának és bezárásának ütemezéséhez lépjen a beállítások oldalra."
+   },
+   "goURL": {
+      "message": "Lépjen az URL-re"
+   },
+   "helpAccordion12": {
+      "message": "Ez a bővítmény alvó/felfüggesztett módban működik?"
+   },
+   "helpAccordion3": {
+      "message": "Ütemezhetem egy lap megnyitását inkognitómódban?"
+   },
+   "helpAccordion6": {
+      "message": "Mi az, hogy \"lejárt az idő\"?"
+   },
+   "helpAccordion7": {
+      "message": "Exportálhatom az ütemezett URL-t?"
+   },
+   "helpAccordion8": {
+      "message": "Importálhatom az ütemezési URL-t?"
+   },
+   "helpPanelBodyDesc12First": {
+      "message": "Nem, ez a bővítmény nem fog működni alvó/felfüggesztett módban."
+   },
+   "helpPanelBodyDesc12Second": {
+      "message": "Ha bármely URL be van ütemezve a megnyitás vagy bezárás lapon, akkor a számítógép nem lép automatikusan alvó vagy felfüggesztett módba."
+   },
+   "helpPanelBodyDesc3": {
+      "message": "Igen, választhat egy ütemezett lap megnyitását inkognitómódban a „Megnyitás inkognitó módban” lehetőség kiválasztásával. Győződjön meg arról, hogy a bővítmény \"Engedélyezés inkognitómódban\" opciója engedélyezve van a böngésző bővítmény beállításaiban."
+   },
+   "helpPanelBodyDesc6": {
+      "message": "- A megadott dátum és idő eltelt az aktuális dátumtól és időponttól, ekkor a \"Lejárt idő\" szöveg jelenik meg."
+   },
+   "helpPanelBodyDesc7": {
+      "message": "Igen, exportálhatja a már ütemezett nyitott és bezárt lap URL-jét csv formátumban, és használhatja egy másik rendszerrel az URL importálásához."
+   },
+   "helpPanelBodyDesc8": {
+      "message": "Igen, importálhat érvényes nyitási és bezárási URL-t csv formátumban. Az importált csv formátumot a rendszer automatikusan ütemezi a megadott időben"
+   },
+   "herAreStepsToAllow": {
+      "message": "Íme az „Engedélyezés inkognitómódban” lépései a Google Chrome-ban:"
+   },
+   "home": {
+      "message": "Otthon"
+   },
+   "hour_minute_close": {
+      "message": "Minden óra Záró Perc"
+   },
+   "hour_minute_open": {
+      "message": "Minden óra Nyitott perc"
+   },
+   "how_to_use_tab": {
+      "message": "Hogyan kell használni a Tab ütemezőt?"
+   },
+   "import": {
+      "message": "Importálás"
+   },
+   "importClsTbDta": {
+      "message": "Lap bezárási adatainak importálása"
+   },
+   "importExport": {
+      "message": "Import/Export"
+   },
+   "importOpenTbDt": {
+      "message": "Nyitott lap adatainak importálása"
+   },
+   "importedRecored": {
+      "message": ", importált rögzített"
+   },
+   "inactivateScheduleTab": {
+      "message": "Inaktiválja az ütemezett lapot."
+   },
+   "inactive": {
+      "message": "Inaktív"
+   },
+   "inactiveSch": {
+      "message": "8.Inaktív URL"
+   },
+   "inactiveSchExm1": {
+      "message": "A fenti példában az adott URL nyitott lapon vagy bezáráson van, ami azt jelenti, hogy az adott URL inaktív, és nem hajt végre semmilyen műveletet."
+   },
+   "inactiveThisScheduledTabs": {
+      "message": "Aktiválja ezt az ütemezett lapot"
+   },
+   "invalidDuplicate": {
+      "message": ", ismétlődő vagy érvénytelen rögzítve"
+   },
+   "invldLicKy": {
+      "message": "Érvénytelen licenckulcs!"
+   },
+   "isClose": {
+      "message": "közel van"
+   },
+   "isOpen": {
+      "message": "nyitva van"
+   },
+   "january": {
+      "message": "január"
+   },
+   "july": {
+      "message": "július"
+   },
+   "june": {
+      "message": "június"
+   },
+   "licKeyDis": {
+      "message": "Ez a licenckulcs le van tiltva."
+   },
+   "listTitle": {
+      "message": "Lapütemező"
+   },
+   "loading": {
+      "message": "Kérem, várjon..."
+   },
+   "locale": {
+      "message": "hu"
+   },
+   "march": {
+      "message": "március"
+   },
+   "maxSchedule": {
+      "message": "4 Maximális ütemezési korlát"
+   },
+   "may": {
+      "message": "május"
+   },
+   "mintValid": {
+      "message": "Minimum 1 perc szükséges"
+   },
+   "minute": {
+      "message": "Perc"
+   },
+   "minutesNotLessThan1": {
+      "message": "A perc nem lehet kevesebb 1-nél."
+   },
+   "monday": {
+      "message": "hétfő"
+   },
+   "month": {
+      "message": "Hónap"
+   },
+   "monthly": {
+      "message": "Havi"
+   },
+   "more": {
+      "message": "több"
+   },
+   "mostSubscribe": {
+      "message": "A legtöbb Feliratkozás"
+   },
+   "no": {
+      "message": "Nem"
+   },
+   "noDataToExport": {
+      "message": "Nincs exportálandó adat."
+   },
+   "noScheduledTabs": {
+      "message": "Nincsenek ütemezett lapok"
+   },
+   "noTimerSetAddNewTimer": {
+      "message": "Nincs időzítő beállítva, kattintson a Hozzáadás gombra az új időzítő beállításához"
+   },
+   "not_show_tutorial": {
+      "message": "Ne jelenítse meg újra ezt az oktatóanyagot"
+   },
+   "notificationOpenTab": {
+      "message": "13. Értesítés a lap megnyitásának/bezárásának URL-jéről"
+   },
+   "notificationOpenTabExm1": {
+      "message": "A fenti példában az adott URL a nyitott lapon van, ami azt írja ki, hogy 5 percenként értesítést ad és új lapon nyit/zár be URL-t."
+   },
+   "notifications": {
+      "message": "Bejelentés"
+   },
+   "november": {
+      "message": "november"
+   },
+   "october": {
+      "message": "október"
+   },
+   "onTheExtensionDetailPage": {
+      "message": "A bővítmény részleteinek oldalán görgessen lefelé, és keresse meg az „Engedélyezés inkognitóban” lehetőséget."
+   },
+   "oneTime": {
+      "message": "Egyszer"
+   },
+   "oneTmSch": {
+      "message": "1. Egyszeri ütemezés"
+   },
+   "oneTmSchExm1": {
+      "message": "A fenti példában az adott URL a nyitott lapon van, ami azt írja, hogy egyszer, 2023.01.21-én 13:45-kor új lapon nyílik meg."
+   },
+   "oneTmSchExm2": {
+      "message": "A fenti példában az adott URL a bezárás lapon van, ami azt jelenti, hogy 2023.01.21-én 13:45-kor bezárja az összes konkrét egyező URL-lapot."
+   },
+   "open": {
+      "message": "Nyitott"
+   },
+   "openBackground": {
+      "message": "Ha igen, egy URL betöltése a háttérben anélkül, hogy új lapon nyitná meg"
+   },
+   "openDate": {
+      "message": "Megnyitás dátuma"
+   },
+   "openDay": {
+      "message": "Nyílt nap"
+   },
+   "openEveryDayOn": {
+      "message": "Nyitva minden nap"
+   },
+   "openEveryMonthOn": {
+      "message": "Nyitva minden hónapban minden nap"
+   },
+   "openEveryWeekOn": {
+      "message": "Nyitva minden héten"
+   },
+   "openEveryYearOn": {
+      "message": "Nyitva minden évben"
+   },
+   "openGoogleChrome": {
+      "message": "Nyissa meg a Google Chrome-ot."
+   },
+   "openInBackground": {
+      "message": "Nyissa meg az URL-t a háttérben"
+   },
+   "openInEvery": {
+      "message": "Nyitva mindenben"
+   },
+   "openInIncognito": {
+      "message": "Megnyitás inkognitó módban"
+   },
+   "openMinute": {
+      "message": "Nyitott perc"
+   },
+   "openOnDay": {
+      "message": "napon nyitva"
+   },
+   "openOnEvery": {
+      "message": "Nyitva minden"
+   },
+   "openSecond": {
+      "message": "Második megnyitás"
+   },
+   "openSecondsMoreThan5": {
+      "message": "A nyitott másodpercnek többnek kell lennie 5-nél."
+   },
+   "openTabSchedule": {
+      "message": "Nyissa meg a lap ütemezését"
+   },
+   "openTabURL": {
+      "message": "Nyissa meg a lap URL-címét"
+   },
+   "openTime": {
+      "message": "Nyitva tartás"
+   },
+   "openUrl": {
+      "message": "Nyissa meg a Webhely hivatkozását"
+   },
+   "openWeek": {
+      "message": "Nyílt hét"
+   },
+   "openWeeks": {
+      "message": "Nyitott hét"
+   },
+   "open_on": {
+      "message": "Nyissa meg"
+   },
+   "optional": {
+      "message": "Választható"
+   },
+   "or": {
+      "message": "vagy"
+   },
+   "outof": {
+      "message": "ki"
+   },
+   "pagePath": {
+      "message": "Oldal útvonala"
+   },
+   "paidFeature": {
+      "message": "Fizetett funkció"
+   },
+   "pauseSchedule": {
+      "message": "Minden ütemezés indítása vagy leállítása"
+   },
+   "pauseTabScheduler": {
+      "message": "Szüneteltetett lapütemező"
+   },
+   "pleaseAllowIncognitoMessage": {
+      "message": "Kérjük, engedélyezze az \"Engedélyezés inkognitómódban\" lehetőséget a bővítmény részleteinél. Az utasításokért tekintse meg az oktatóanyag oldalát."
+   },
+   "pleaseShareYourSuggestions": {
+      "message": "Kérjük, ossza meg javaslatát."
+   },
+   "plsShreAnySugWithUs": {
+      "message": "Kérjük, tegyen javaslatot a fejlesztésünkre"
+   },
+   "powerMode": {
+      "message": "Energiagazdálkodási mód"
+   },
+   "premium": {
+      "message": "Prémium"
+   },
+   "pricePlan": {
+      "message": "Árak és tervek"
+   },
+   "privcyPolicy": {
+      "message": "Adatvédelmi szabályzat"
+   },
+   "prowerModeTip": {
+      "message": "Tartsa a rendszert mindig aktív állapotban az energiaellátási mód engedélyezésével"
+   },
+   "put": {
+      "message": "Tedd"
+   },
+   "rateUs": {
+      "message": "Értékeljen minket"
+   },
+   "removeDuplicateEntry": {
+      "message": "Kérjük, távolítsa el az ismétlődő bejegyzést"
+   },
+   "removeOpenTbURL": {
+      "message": "Távolítsa el a megnyitott lap URL-jét"
+   },
+   "repeat": {
+      "message": "Ismétlés"
+   },
+   "requiredMsg": {
+      "message": "Kívánt"
+   },
+   "rmvClsTb": {
+      "message": "Távolítsa el a bezárási lap URL-jét"
+   },
+   "sameTabs": {
+      "message": "Frissítse a lapot, ha az URL már meg van nyitva"
+   },
+   "sameTabsInfo": {
+      "message": "Megakadályozza több lap megnyitását ugyanahhoz az URL-hez. Például, ha a www.google.com már meg van nyitva, akkor a meglévő lap frissül ahelyett, hogy új lapot nyitna meg számára."
+   },
+   "sampleCsvOpenPath": {
+      "message": "../sample_csv/en/open_tab_sample.csv"
+   },
+   "sampleFile": {
+      "message": "Mintafájl"
+   },
+   "saturday": {
+      "message": "szombat"
+   },
+   "savOpnData": {
+      "message": "Mentse a megnyitott lap adatait"
+   },
+   "save": {
+      "message": "Megtakarítás"
+   },
+   "saveClsTbData": {
+      "message": "Lap bezárási adatainak mentése"
+   },
+   "saveSchedule": {
+      "message": "Ütemezés mentése"
+   },
+   "scheduleCloseTab": {
+      "message": "Ütemezés Lap bezárása"
+   },
+   "scheduleCurrentTab": {
+      "message": "Az aktuális lap ütemezése"
+   },
+   "scheduleOpenTab": {
+      "message": "Nyitott lap ütemezése"
+   },
+   "scheduledTabIsAlreadyExistWithSameTimer": {
+      "message": "Ez az ütemezett lap már létezik ugyanazzal az időzítővel."
+   },
+   "scheduledTabList": {
+      "message": "Ütemezett lapok listája"
+   },
+   "scheduledType": {
+      "message": "Ütemezés típusa"
+   },
+   "search": {
+      "message": "Keresés"
+   },
+   "secValid": {
+      "message": "Minimum 5 másodperc szükséges"
+   },
+   "second": {
+      "message": "Második"
+   },
+   "selectCloseDate": {
+      "message": "Válassza ki a bezárás dátumát"
+   },
+   "selectCloseDay": {
+      "message": "Válassza ki a bezárási napot"
+   },
+   "selectCloseTime": {
+      "message": "Válassza ki a bezárási időt"
+   },
+   "selectColumn": {
+      "message": "Válassza az Oszlop lehetőséget"
+   },
+   "selectDateAndTime": {
+      "message": "Válassza ki a dátumot és az időt az új lap megnyitásához"
+   },
+   "selectDateAndTimeClsTb": {
+      "message": "Válassza ki a dátumot és az időt a lap bezárásához"
+   },
+   "selectDayToCloseSchTb": {
+      "message": "Válassza ki a napot az ütemezés lap bezárásához."
+   },
+   "selectDayToClsTb": {
+      "message": "Válassza ki a napot a lap bezárásához"
+   },
+   "selectDayToSchdule": {
+      "message": "Válassza ki az ütemezéshez szükséges napot."
+   },
+   "selectDaysInWeek": {
+      "message": "Válassza ki a hét napjait"
+   },
+   "selectDaysInWeekIClsTime": {
+      "message": "Válassza ki a hét napjait a zárási időzítőben."
+   },
+   "selectDaysInWeekIOpClsTime": {
+      "message": "Válassza ki a hét napjait a nyitás vagy zárás időzítőjében."
+   },
+   "selectDaysInWeekIOpTime": {
+      "message": "Válassza ki a hét napjait a nyitott időzítőben."
+   },
+   "selectFrequency": {
+      "message": "Válassza a Frekvencia lehetőséget"
+   },
+   "selectFrequencyOfScheduleUrl": {
+      "message": "Válassza ki az ütemezett URL gyakoriságát."
+   },
+   "selectOpenDate": {
+      "message": "Válassza ki a megnyitás dátumát"
+   },
+   "selectOpenDay": {
+      "message": "Válassza a nyílt napot"
+   },
+   "selectOpenOrClose": {
+      "message": "Válassza ki a nyitási és zárási időt"
+   },
+   "selectOpenOrCloseDate": {
+      "message": "Válassza ki a nyitás és a bezárás dátumát"
+   },
+   "selectOpenOrCloseDay": {
+      "message": "Válassza ki a nyitvatartási és zárási napot"
+   },
+   "selectOpenTime": {
+      "message": "Válassza ki a nyitvatartási időt"
+   },
+   "selectPreferredLanguage": {
+      "message": "Válassza ki a kívánt nyelvet."
+   },
+   "selectToOpenTab": {
+      "message": "Válassza ki a napot az új lap megnyitásához"
+   },
+   "selectTypTimerClsTb": {
+      "message": "Válassza ki az időzítő típusát a lap bezárásához"
+   },
+   "selectTypeOfSchedule": {
+      "message": "Válassza ki az ütemezés típusát, ha egyszerre szeretné megnyitni és bezárni, mint a „Mindkettő” lehetőséget."
+   },
+   "selectTypeOfTimer": {
+      "message": "Válassza ki az időzítő típusát az új lap megnyitásához"
+   },
+   "select_weeks": {
+      "message": "Válassza a Hetek lehetőséget"
+   },
+   "september": {
+      "message": "szeptember"
+   },
+   "settingSave": {
+      "message": "A beállítások mentése sikeres volt"
+   },
+   "settingToClose": {
+      "message": "A lap bezárásának beállítása inkognitó módban."
+   },
+   "shareYourSuggestionWithUs": {
+      "message": "Ossza meg velünk javaslatait.."
+   },
+   "slectDayToScheduleWeekly": {
+      "message": "Válassza ki a napokat a lap heti ütemezéséhez."
+   },
+   "slectMinute": {
+      "message": "Válassza a Perc lehetőséget"
+   },
+   "smthngWrng": {
+      "message": "Valami elromlott"
+   },
+   "softpulseInfotech": {
+      "message": "Softpulse Infotech"
+   },
+   "somethingWentWrong": {
+      "message": "Valami elromlott. Frissítse az oldalt, és próbálja újra."
+   },
+   "status": {
+      "message": "Állapot"
+   },
+   "subcrKeyShldNEmpt": {
+      "message": "Kérjük, adja meg az előfizetési kulcsot."
+   },
+   "subdomain": {
+      "message": "Aldomain"
+   },
+   "subkeyInputTitle": {
+      "message": "Adja meg az előfizetési kulcsot"
+   },
+   "submFeedBack": {
+      "message": "Beküld"
+   },
+   "suggForTbSch": {
+      "message": "Javaslat a lapütemezőhöz"
+   },
+   "suggestionAndRateUs": {
+      "message": "Javaslat és Értékeljen minket"
+   },
+   "sunday": {
+      "message": "vasárnap"
+   },
+   "tabCloseOneTime": {
+      "message": "A lap csak egyszer zár be"
+   },
+   "tabSchTutorial": {
+      "message": "Lapütemező oktatóanyag"
+   },
+   "tabScheduler": {
+      "message": "Lapütemező"
+   },
+   "tabSchedulerOptions": {
+      "message": "Lapütemező beállításai"
+   },
+   "tabWillOpenOneTime": {
+      "message": "A lap csak egyszer nyílik meg"
+   },
+   "tabWillOpenWhenBrowserOpen": {
+      "message": "A lap megnyílik, amikor a böngésző elindul"
+   },
+   "termCondition": {
+      "message": "Általános Szerződési Feltételek"
+   },
+   "thanksFrRev": {
+      "message": "Köszönjük értékelését"
+   },
+   "thnkUFeedBack": {
+      "message": "Köszönjük javaslatát"
+   },
+   "thnkUFrUsngTbSch": {
+      "message": "Kérjük, tegyen javaslatot a fejlesztésünkre"
+   },
+   "thursday": {
+      "message": "csütörtök"
+   },
+   "time": {
+      "message": "Idő"
+   },
+   "timeExpired": {
+      "message": "Idő lejárt"
+   },
+   "timer": {
+      "message": "Időzítő"
+   },
+   "title": {
+      "message": "Cím"
+   },
+   "titleLengtWarn": {
+      "message": "A cím hossza nem haladhatja meg a 200 karaktert."
+   },
+   "toScheduledOpenTbMsg": {
+      "message": "Az ütemezett megnyitáshoz törölje az URL-szűrés jelölését."
+   },
+   "toogleCloseTab": {
+      "message": "Az ütemezési riasztás indítása/leállítása az összes lap bezárása URL-je esetén"
+   },
+   "toogleDarkmode": {
+      "message": "A megtekintési élmény testreszabásához váltson a sötét mód és az alapértelmezett mód között."
+   },
+   "toogleOff": {
+      "message": "Le"
+   },
+   "toogleOn": {
+      "message": "On"
+   },
+   "toogleOpenTab": {
+      "message": "Az ütemezési riasztás indítása/leállítása az összes megnyitott lap URL-jére vonatkozóan"
+   },
+   "topLevelDomain": {
+      "message": "Legfelső szintű domain"
+   },
+   "totalProcessed": {
+      "message": "Összes rögzített feldolgozás"
+   },
+   "tuesday": {
+      "message": "kedd"
+   },
+   "tutorialImg1": {
+      "message": "\u003Cimg src=\"../images/en/1.png\">"
+   },
+   "tutorialImg10": {
+      "message": "\u003Cimg src=\"../images/en/10.png\">"
+   },
+   "tutorialImg11": {
+      "message": "\u003Cimg src=\"../images/en/11.png\">"
+   },
+   "tutorialImg12": {
+      "message": "\u003Cimg src=\"../images/en/12.png\">"
+   },
+   "tutorialImg13": {
+      "message": "\u003Cimg src=\"../images/en/13.png\">"
+   },
+   "tutorialImg14": {
+      "message": "\u003Cimg src=\"../images/en/14.png\">"
+   },
+   "tutorialImg2": {
+      "message": "\u003Cimg src=\"../images/en/2.png\">"
+   },
+   "tutorialImg3": {
+      "message": "\u003Cimg src=\"../images/en/3.png\">"
+   },
+   "tutorialImg4": {
+      "message": "\u003Cimg src=\"../images/en/4.png\">"
+   },
+   "tutorialImg5": {
+      "message": "\u003Cimg src=\"../images/en/5.png\">"
+   },
+   "tutorialImg6": {
+      "message": "\u003Cimg src=\"../images/en/6.png\">"
+   },
+   "tutorialImg7": {
+      "message": "\u003Cimg src=\"../images/en/7.png\">"
+   },
+   "tutorialImg8": {
+      "message": "\u003Cimg src=\"../images/en/8.png\">"
+   },
+   "tutorialImg9": {
+      "message": "\u003Cimg src=\"../images/en/9.png\">"
+   },
+   "uncheckAll": {
+      "message": "Törölje az Összes bejelölését"
+   },
+   "unlimitedSchedule": {
+      "message": "Korlátlan ütemezési korlát"
+   },
+   "unspecifiedURL": {
+      "message": "11. URL meghatározatlan elérési út"
+   },
+   "unspecifiedURLExm1": {
+      "message": "A fenti példában az adott URL a bezárás fülön található, ami azt jelzi, hogy az új lapon megnyíló, ismeretlen webcímmel kezdődő és végződő URL 5 perc múlva bezáródik."
+   },
+   "upgradePlan": {
+      "message": "Kérjük, vásároljon csomagot, VAGY jelentkezzen be, és frissítse csomagját további funkciók eléréséhez."
+   },
+   "upgradePlanUnlock": {
+      "message": "Frissítse tervét, hogy további funkciókat érhessen el."
+   },
+   "uploadValidFormat": {
+      "message": "Kérjük, töltsön fel érvényes formátumot"
+   },
+   "url": {
+      "message": "URL"
+   },
+   "urlContExat": {
+      "message": "URL-szűrés"
+   },
+   "urlEndWithUnspesifiedPth": {
+      "message": "9. Az URL vége meghatározatlan elérési úttal"
+   },
+   "urlEndWithUnspesifiedPthExm1": {
+      "message": "A fenti példában az adott URL a bezárás lapon található, ami azt mondja, hogy az új lapon megnyílt és ismeretlen elérési úttal végződő URL 5 perc múlva bezárul."
+   },
+   "urlFilterInfo": {
+      "message": "Az ellenőrizendő URL-t tartalmazza, csak az URL egy részére kell, és az ellenőrizendő pontos URL-nek pontosan meg kell egyeznie a megadott URL-lel"
+   },
+   "urlFilterinCLoseTb": {
+      "message": "14. URL-szűrés a lap bezárásakor URL-cím"
+   },
+   "urlFilterinCLoseTbExample": {
+      "message": "A fenti példában az adott URL a bezárás lapon van, ami azt mondja, hogy a már megnyitott lap URL-je megegyezett az adott URL egy részével, így bezárja azt a lapot"
+   },
+   "urlIsRequired": {
+      "message": "Weboldal hivatkozás szükséges"
+   },
+   "urlNotvalid": {
+      "message": "Az URL érvénytelen"
+   },
+   "urlStartWithUnspesifiedPth": {
+      "message": "10. Az URL meghatározatlan elérési úttal kezdődik"
+   },
+   "urlStartWithUnspesifiedPthExm1": {
+      "message": "\u003Cb>A fenti példában az adott URL a bezárás lapon található, ami azt jelzi, hogy az új lapon megnyílt és ismeretlen „www”\u003C/b> vagy \u003Cb>„blog”\u003C/b> aldomainnel kezdődő URL 5 perc múlva bezárul."
+   },
+   "useSpecificUrl": {
+      "message": "Használjon konkrét webhelylinket"
+   },
+   "useSpecificUrl1": {
+      "message": "A Webhely hivatkozás mezőjében pontosan be kell írnia az aldomaint, a legfelső szintű domaint, a domain nevet és az oldal elérési útját a zárt böngésző lapjára."
+   },
+   "useSpecificUrl2": {
+      "message": "Az összes böngésző bezárt lapjának használata"
+   },
+   "useSpecificUrl3": {
+      "message": "Használjon konkrét és teljes webhelylinket"
+   },
+   "useUnSpecificUrl1": {
+      "message": "Használjon nem meghatározott webhelylinket"
+   },
+   "useUnSpecificUrl2": {
+      "message": "Kezdje a használatot meghatározatlan webhelyhivatkozással"
+   },
+   "useUnSpecificUrl3": {
+      "message": "Használja a végét nem meghatározott webhelyhivatkozással"
+   },
+   "used": {
+      "message": "Te használtad"
+   },
+   "validFormatCsv": {
+      "message": "Mi az érvényes CSV-fájlformátum az importáláshoz?"
+   },
+   "websiteLink": {
+      "message": "Weboldal Link"
+   },
+   "websiteUrl": {
+      "message": "Webhely URL"
+   },
+   "wednesday": {
+      "message": "szerda"
+   },
+   "weekName": {
+      "message": "Hét neve"
+   },
+   "weekly": {
+      "message": "Heti"
+   },
+   "whenExtensionTabAppears": {
+      "message": "Amikor megjelenik a Bővítmények lap, keresse meg a „Lapütemező automatikus nyitással és bezárással”, hogy engedélyezze az inkognitómódot, és kattintson a mellette lévő „Részletek” gombra."
+   },
+   "whenMenuPopup": {
+      "message": "Amikor megjelenik egy menü, válassza a \"Bővítmények kezelése\" lehetőséget."
+   },
+   "withSignMustFill": {
+      "message": "\u003Cspan>A *\u003C/span> jellel ki kell tölteni vagy ki kell választani, válassza ki a nyitási vagy zárási időt, vagy mindkét időt."
+   },
+   "writeYourDescriptionAboutSchUrl": {
+      "message": "Írja ide az ütemezett URL leírását."
+   },
+   "yes": {
+      "message": "Igen"
+   },
+   "yourEmailAddress": {
+      "message": "Az Ön e-mail címe"
+   },
+   "yourScheduleUrl": {
+      "message": "Ütemezési URL-je"
+   }
+}

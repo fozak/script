@@ -1,0 +1,1448 @@
+{
+   "10_min": {
+      "message": "10 minuter"
+   },
+   "1_min": {
+      "message": "1 minut"
+   },
+   "30_min": {
+      "message": "30 minuter"
+   },
+   "5_min": {
+      "message": "5 minuter"
+   },
+   "60_min": {
+      "message": "timme"
+   },
+   "Dashboard": {
+      "message": "Instrumentpanel"
+   },
+   "Login": {
+      "message": "Inloggning"
+   },
+   "Off": {
+      "message": "Av"
+   },
+   "On": {
+      "message": "På"
+   },
+   "Selected": {
+      "message": "Vald"
+   },
+   "Settings": {
+      "message": "Inställningar"
+   },
+   "Tutorial": {
+      "message": "Handledning"
+   },
+   "action": {
+      "message": "Handling"
+   },
+   "activateScheduleTab": {
+      "message": "Aktivera schemalagd flik."
+   },
+   "active": {
+      "message": "Aktiv"
+   },
+   "activeAllScheduleTab": {
+      "message": "Kör Tab Schemaläggare"
+   },
+   "activeStatus": {
+      "message": "Status"
+   },
+   "actvInactvNotification": {
+      "message": "Visa meddelande när schemafliken öppnas"
+   },
+   "actvInactvOpnTb": {
+      "message": "Aktiv eller inaktiv öppen flik"
+   },
+   "actvIntvClsTb": {
+      "message": "Aktiv eller inaktiv stängflik"
+   },
+   "add": {
+      "message": "Tillägga"
+   },
+   "addDescription": {
+      "message": "Lägg till beskrivning"
+   },
+   "addNew": {
+      "message": "Lägg till ny"
+   },
+   "addNewURlCls": {
+      "message": "Lägg till ny URL för att stänga"
+   },
+   "addNewUrlToOpen": {
+      "message": "Lägg till ny URL för att öppnas i nytt fönster"
+   },
+   "addTitle": {
+      "message": "Lägg till titel"
+   },
+   "addWebsite": {
+      "message": "Lägg till webbplats"
+   },
+   "all": {
+      "message": "Alla"
+   },
+   "allInputFieldReq": {
+      "message": "Alla fält är obligatoriska"
+   },
+   "all_weeks": {
+      "message": "Hela veckan"
+   },
+   "alreadyPurchase": {
+      "message": "Redan köpt? Ange nyckel här"
+   },
+   "andAt": {
+      "message": "och kl"
+   },
+   "annually": {
+      "message": "Årligen"
+   },
+   "appDesc": {
+      "message": "Webbläsarflikarna öppnas och stängs automatiskt vid vald tidpunkt. Användaren kan aktivera/avaktivera lista baserat på krav"
+   },
+   "appName": {
+      "message": "Tab Scheduler med automatisk öppning och stängning"
+   },
+   "april": {
+      "message": "april"
+   },
+   "at": {
+      "message": "på"
+   },
+   "august": {
+      "message": "augusti"
+   },
+   "autoFocus": {
+      "message": "Fliken Autofokus"
+   },
+   "autoFocustip": {
+      "message": "Om på, kommer den nya fliken att öppnas i ett aktivt/fokusläge."
+   },
+   "autofocustip": {
+      "message": "Nya flikar som öppnas fokuserar automatiskt"
+   },
+   "basic": {
+      "message": "Grundläggande"
+   },
+   "billedAnnyally": {
+      "message": "Faktureras årligen"
+   },
+   "billedMonthly": {
+      "message": "Faktureras månadsvis"
+   },
+   "both": {
+      "message": "Både"
+   },
+   "browserOpen": {
+      "message": "Öppna webbläsaren"
+   },
+   "browserWebAddress": {
+      "message": "Webbläsarens webbadress börjar och slutar med en okänd webbadress.Sätt \u003Cb>*\u003C/b> på båda sidor av ditt inmatningsfält för webbplatslänk."
+   },
+   "browserWebAddress2": {
+      "message": "Webbläsarens webbadress innehåller domännamnet google.com, som kommer att stängas inom några minuter oavsett underdomän och sökväg. Sätt \u003Cb>*\u003C/b> på båda sidorna domännamn och toppdomän"
+   },
+   "browserWebAddress3": {
+      "message": "Webbläsarens webbadress börjar med ett okänt domännamn och slutar med en okänd sökväg"
+   },
+   "browserWebAddress31": {
+      "message": "stängs efter givna minuter, sätt \u003Cb>*\u003C/b> på båda sidor av toppdomänen"
+   },
+   "browserWebAddress4": {
+      "message": "Webbläsarens webbadress börjar med en okänd webbadress. Sätt \u003Cb>*\u003C/b> i början av din URL. Kom ihåg att webbläsarens webbadress måste matcha din URL efter \u003Cb>*\u003C/b> du har skrivit."
+   },
+   "browserWebAddress41": {
+      "message": "Webbläsarens webbadress börjar med en okänd underdomän"
+   },
+   "browserWebAddress42": {
+      "message": "i början av din webbplatslänk"
+   },
+   "browserWebAddress5": {
+      "message": "Webbläsarens webbadress slutar med en okänd webbadress. Sätt \u003Cb>*\u003C/b> i slutet av din URL. Kom ihåg att din webbadress måste matcha innan \u003Cb>*\u003C/b> du har skrivit."
+   },
+   "browserWebAddress51": {
+      "message": "Webbläsarens webbadress slutar med en okänd sökväg. Sätt \u003Cb>*\u003C/b> i slutet av din webbadress"
+   },
+   "browserWebAddress6": {
+      "message": "Sätt endast \u003Cb>*\u003C/b> i webbadressfältet för att stänga alla webbläsarflikar. Efter stängning stängs alla flikar webbläsaren automatiskt."
+   },
+   "browserWebAddress7": {
+      "message": "Du måste ha skrivit den exakta underdomänen, toppdomänen, domännamnet och sidsökvägen i URL-fältet för att öppna webbläsarens flik."
+   },
+   "browserWebAddress8": {
+      "message": "Du kan öppna webbadressen i specifikt datum och tid, specifik månad, specifik vecka, specifik år och repetitionstid"
+   },
+   "buyPlan": {
+      "message": "Köp plan"
+   },
+   "buycofee": {
+      "message": "Köp mig en kaffe"
+   },
+   "cancel": {
+      "message": "Avboka"
+   },
+   "changeLanguage": {
+      "message": "Byt språk"
+   },
+   "checkAll": {
+      "message": "Markera alla"
+   },
+   "checkThisOpToPreventClosePinTb": {
+      "message": "Markera det här alternativet för att förhindra stängning av fästade flikar."
+   },
+   "checkThisOptionOnlyPartOfUrlMtch": {
+      "message": "Markera det här alternativet om bara en del av webbadressen behöver matchas."
+   },
+   "checkThisOptionToActivate": {
+      "message": "Markera det här alternativet för att aktivera eller inaktivera din schemalagda webbadress."
+   },
+   "checkThisOptionToCloseOnly": {
+      "message": "Markera det här alternativet om du bara vill stänga inkognitoflikar. Aktivera också alternativet 'Tillåt i inkognito' i tilläggsinformationen. För instruktioner, se självstudiesidan."
+   },
+   "checkThisOptionToCloseOnlyInIncgnitoTb": {
+      "message": "Markera det här alternativet om du bara vill stänga inkognitoflikar. Aktivera också alternativet 'Tillåt i inkognito' i tilläggsinformationen. För instruktioner, se självstudiesidan."
+   },
+   "checkThisOptionToInBg": {
+      "message": "Markera det här alternativet om du vill öppna URL:en i bakgrunden utan att öppna den på en ny flik"
+   },
+   "checkThisOptionToInactivNotification": {
+      "message": "Markera det här alternativet för inaktiv avisering på den schemalagda webbadressen"
+   },
+   "checkThisOptionToOpen": {
+      "message": "Markera det här alternativet om du vill öppna din webbadress i inkognitoläge"
+   },
+   "checkThisOptionToOpenIncogito": {
+      "message": "Markera det här alternativet om du vill öppna din webbadress i inkognitoläge"
+   },
+   "checkThisOptionToPrevent": {
+      "message": "Markera det här alternativet för att förhindra stängning av fästade flikar."
+   },
+   "clickExtIcon": {
+      "message": "Klicka på ikonen \"Extensions\" i verktygsfältet, som ser ut som en pusselbit."
+   },
+   "clickTheSwitch": {
+      "message": "Klicka på knappen bredvid den för att slå på den"
+   },
+   "close": {
+      "message": "Nära"
+   },
+   "closeAllTab": {
+      "message": "12. Stäng alla webbläsares flikar"
+   },
+   "closeAllTabExm1": {
+      "message": "I ovanstående exempel är den givna webbadressen i stäng flik, vilket anger att den kommer att stänga alla flikar kl. 12:00 den 25/2/2023"
+   },
+   "closeDate": {
+      "message": "Stängningsdatum"
+   },
+   "closeDay": {
+      "message": "Stäng dag"
+   },
+   "closeEveryYear": {
+      "message": "Stäng varje år"
+   },
+   "closeInEvery": {
+      "message": "Nära i varje"
+   },
+   "closeIncognitoTab": {
+      "message": "Stäng endast inkognitoflikar"
+   },
+   "closeMinute": {
+      "message": "Stäng minut"
+   },
+   "closeOnDay": {
+      "message": "Stäng på dagen"
+   },
+   "closeOnEvery": {
+      "message": "Stäng på varje"
+   },
+   "closeOnEveryDay": {
+      "message": "Stäng på varje dag"
+   },
+   "closeOnEveryMonth": {
+      "message": "Stäng varje månad på dagen"
+   },
+   "closeOnEveryWeek": {
+      "message": "Stäng varje vecka"
+   },
+   "closeSecond": {
+      "message": "Stäng andra"
+   },
+   "closeSeconsMoreThan5": {
+      "message": "Nära sekunder bör vara mer än 5."
+   },
+   "closeTabSchedule": {
+      "message": "Stäng flikschema"
+   },
+   "closeTabURL": {
+      "message": "Stäng flik-URL"
+   },
+   "closeTime": {
+      "message": "Stängningstid"
+   },
+   "closeUrl": {
+      "message": "Stäng webbplatslänk"
+   },
+   "closeWeek": {
+      "message": "Stäng vecka"
+   },
+   "closeWeeks": {
+      "message": "Stäng veckor"
+   },
+   "close_on": {
+      "message": "Stäng på"
+   },
+   "cngrtsForSubcr": {
+      "message": "Grattis! Din plan har aktiverats."
+   },
+   "commonQuestionsAns": {
+      "message": "Vanliga frågor och svar"
+   },
+   "copySucessClose": {
+      "message": "URL-data för stäng flik har kopierats till URL-data för Öppna flik"
+   },
+   "createNewTimer": {
+      "message": "Skapa ny timer"
+   },
+   "currentPlan": {
+      "message": "Nuvarande plan"
+   },
+   "currentTabSchedule": {
+      "message": "Aktuellt flikschema"
+   },
+   "currentTbScheduleTimer": {
+      "message": "Aktuell flik schemalagd timer."
+   },
+   "cusSec": {
+      "message": "Anpassad andra"
+   },
+   "custMin": {
+      "message": "Anpassad minut"
+   },
+   "custmMinSch": {
+      "message": "7. Anpassat minutschema"
+   },
+   "custmMinSchExm1": {
+      "message": "I ovanstående exempel är den givna webbadressen i öppen flik, vilket anger att den givna webbadressen är öppen i ny flik var 15:e minut."
+   },
+   "custmMinSchExm2": {
+      "message": "I exemplet ovan är den givna webbadressen i stäng flik, vilket anger att en given URL som öppnas i en ny flik kommer att stängas efter 15 minuter."
+   },
+   "customSecondWarning": {
+      "message": "Den anpassade andra funktionen är experimentell och kanske inte fungerar korrekt om sekunder är inställda under 60."
+   },
+   "darkMode": {
+      "message": "Mörkt läge"
+   },
+   "datNotCopy": {
+      "message": "Vissa data kopieras inte på grund av en ogiltig URL."
+   },
+   "dataSaved": {
+      "message": "Timerdata sparas framgångsrikt"
+   },
+   "date": {
+      "message": "Datum"
+   },
+   "dateIsOutOfRange": {
+      "message": "Datum är utanför intervallet"
+   },
+   "day": {
+      "message": "Dag"
+   },
+   "december": {
+      "message": "december"
+   },
+   "delete": {
+      "message": "Radera"
+   },
+   "deleteScheduleTb": {
+      "message": "Ta bort schemalagd flik."
+   },
+   "description": {
+      "message": "Beskrivning"
+   },
+   "developedBy": {
+      "message": "Utvecklad av:"
+   },
+   "doNotCloseInPinnedTabs": {
+      "message": "Stäng inte fastnålade flikar"
+   },
+   "doNotShowNotification": {
+      "message": "Visa inte avisering"
+   },
+   "domainName": {
+      "message": "Domännamn"
+   },
+   "downloadCloseTbSampleCsv": {
+      "message": "Ladda ner en CSV-exempel på stängflik för att se ett exempel på det format som krävs"
+   },
+   "downloadOpenTbSampleCsv": {
+      "message": "Ladda ner en CSV-exempel på öppen flik för att se ett exempel på det format som krävs"
+   },
+   "editScheduleTb": {
+      "message": "Redigera schemalagd flik."
+   },
+   "email": {
+      "message": "E-post"
+   },
+   "enterDateToCloseTab": {
+      "message": "Ange datum här för att stänga schemafliken."
+   },
+   "enterDateToOpen": {
+      "message": "Ange datum för att öppna schemafliken."
+   },
+   "enterMiniutesToCloseTb": {
+      "message": "Ange minuter för att stänga fliken."
+   },
+   "enterMiniutesToOpen": {
+      "message": "Ange miniutter för att öppna schemafliken."
+   },
+   "enterMinute": {
+      "message": "Ange minut"
+   },
+   "enterSecond": {
+      "message": "Ange andra"
+   },
+   "enterSecondsToCloseTab": {
+      "message": "Ange sekunder för att stänga fliken."
+   },
+   "enterSecondsToOpen": {
+      "message": "Ange sekunder för att öppna schemafliken."
+   },
+   "enterTilteOfScheduleUrl": {
+      "message": "Ange titeln på den schemalagda webbadressen."
+   },
+   "enterTimeToCloseTab": {
+      "message": "Ange tid här för att stänga schemafliken."
+   },
+   "enterTimeToSchedule": {
+      "message": "Ange tid för att öppna schemafliken."
+   },
+   "enterValidEmail": {
+      "message": "Vänligen ange giltig e-post"
+   },
+   "enterValidUrl": {
+      "message": "Ange en giltig URL"
+   },
+   "enterValueInCloseSec": {
+      "message": "Ange värde på nära håll"
+   },
+   "enterValueInOpenCloseSec": {
+      "message": "Ange värde i öppna eller stängda sekunder"
+   },
+   "enterValueInOpenMinutes": {
+      "message": "Ange värde i öppna minuter"
+   },
+   "enterVlaueInCloseMinutes": {
+      "message": "Ange värde inom nära minuter"
+   },
+   "enterVlaueInOpenCloseMin": {
+      "message": "Ange värde i öppna eller stängda minuter"
+   },
+   "enterVlaueInOpenSeconds": {
+      "message": "Ange värde i öppna sekunder"
+   },
+   "enterYourURLToSchedule": {
+      "message": "Ange din URL för att schemalägga."
+   },
+   "every": {
+      "message": "varje"
+   },
+   "every10Min": {
+      "message": "Var 10:e minut"
+   },
+   "every1Minute": {
+      "message": "var 1 minut"
+   },
+   "every30Min": {
+      "message": "Var 30:e minut"
+   },
+   "every5Min": {
+      "message": "Var 5:e minut"
+   },
+   "everyDay": {
+      "message": "Varje dag"
+   },
+   "everyDayAt": {
+      "message": "varje dag kl"
+   },
+   "everyHour": {
+      "message": "Varje timme"
+   },
+   "everyMinute": {
+      "message": "Varje minut"
+   },
+   "everyMonth": {
+      "message": "Varje månad"
+   },
+   "everyMonthOn": {
+      "message": "varje månad på"
+   },
+   "everyMonthOnDay": {
+      "message": "varje månad på dagen"
+   },
+   "everyWeek": {
+      "message": "Varje vecka"
+   },
+   "everyWeekOn": {
+      "message": "varje vecka på"
+   },
+   "everyYear": {
+      "message": "Varje år"
+   },
+   "everyYesrOn": {
+      "message": "varje år"
+   },
+   "evr10MinSch": {
+      "message": "2. Schema för varje 10:e minut"
+   },
+   "evr10MinSchExm1": {
+      "message": "I exemplet ovan är den givna webbadressen i öppen flik, vilket tillstånd givna URL öppnas i ny flik var tionde minut."
+   },
+   "evr10MinSchExm2": {
+      "message": "I ovanstående exempel är den givna webbadressen i stäng flik, vilket anger att en given URL som öppnas i en ny flik kommer att stängas efter 10 minuter."
+   },
+   "evrDaySch": {
+      "message": "3. Schema för varje dag"
+   },
+   "evrDaySchExm1": {
+      "message": "I ovanstående exempel är den givna webbadressen i öppen flik, vilket anger att den kommer att öppnas i ny flik varje dag kl. 17:27"
+   },
+   "evrDaySchExm2": {
+      "message": "I ovanstående exempel är den givna webbadressen i stängfliken, vilket anger att den kommer att stänga den redan öppnade fliken kl. 17:27 varje dag"
+   },
+   "evrMonthSch": {
+      "message": "5. Schema för varje månad"
+   },
+   "evrMonthSchExm1": {
+      "message": "I exemplet ovan är den givna webbadressen i öppen flik, vilket anger att den öppnas i ny flik varje månad kl. 13:45 dag 25"
+   },
+   "evrMonthSchExm2": {
+      "message": "I ovanstående exempel är den givna webbadressen i stängningsfliken, vilket anger att den kommer att stänga den redan öppnade fliken varje månad kl. 13:45 dag 25"
+   },
+   "evrWeekSch": {
+      "message": "4. Schema för varje vecka"
+   },
+   "evrWeekSchExm1": {
+      "message": "I exemplet ovan finns den givna webbadressen i en öppen flik, vilket anger att den kommer att öppnas på en ny flik varje vecka kl. 17:00 på \u003Cb>måndag och tisdag\u003C/b> ."
+   },
+   "evrWeekSchExm2": {
+      "message": "I exemplet ovan finns den givna webbadressen i stängfliken, som anger att den kommer att stänga den redan öppnade fliken varje vecka kl. 17:00 på \u003Cb>måndag och tisdag\u003C/b> ."
+   },
+   "evrWeekSchExm3": {
+      "message": "I exemplet ovan kan flera dagar väljas i veckotimern."
+   },
+   "evrYearSch": {
+      "message": "6. Schema för varje år"
+   },
+   "evrYearSchExm1": {
+      "message": "I ovanstående exempel är den givna webbadressen i öppen flik, vilket anger att den kommer att öppnas i ny flik varje år kl. 13:35 den 1 januari"
+   },
+   "evrYearSchExm2": {
+      "message": "I ovanstående exempel är den givna webbadressen i stängfliken, vilket anger att den kommer att stänga den redan öppnade fliken varje år kl. 13:35 den 1 januari"
+   },
+   "exampleSort": {
+      "message": "till exempel"
+   },
+   "exdMaxLim": {
+      "message": "Överskridit max antal tillåtna enheter!"
+   },
+   "exmpOpnClsTbSch": {
+      "message": "Exempel på hur man öppnar och stänger fliken i Tab Scheduler"
+   },
+   "expLicKy": {
+      "message": "Denna licensnyckel har löpt ut."
+   },
+   "export": {
+      "message": "Exportera"
+   },
+   "exportBefore": {
+      "message": "Du har\u003Cexday>\u003C/exday>dagar kvar, Vänligen prenumerera för att fortsätta njuta av premiumfunktionen"
+   },
+   "exportClsTbDta": {
+      "message": "Exportera stängflikdata"
+   },
+   "exportOpenTbDt": {
+      "message": "Exportera information om öppen flik"
+   },
+   "exportedData": {
+      "message": "Timerdata har exporterats"
+   },
+   "extensionShouldAble": {
+      "message": "Nu ska tillägget kunna stänga flikar i inkognitoläge."
+   },
+   "faq": {
+      "message": "FAQ"
+   },
+   "faq_1": {
+      "message": "Vad är Tab Scheduler med Auto Open and Close?"
+   },
+   "faq_10": {
+      "message": "Hur visar jag mina schemalagda flikar?"
+   },
+   "faq_11": {
+      "message": "Är det obligatoriskt att fylla i både öppet- och stängningstider?"
+   },
+   "faq_12": {
+      "message": "Vad gör funktionerna i fliken Autofokus, Aktivera alla schemalagda flikar och Power Mode?"
+   },
+   "faq_13": {
+      "message": "Kan jag öppna/stänga den schemalagda webbplatslänken på inkognitofliken.?"
+   },
+   "faq_14": {
+      "message": "Vad är användningen av fliken Uppdatera om webbadressen redan är öppen?"
+   },
+   "faq_2": {
+      "message": "Vad är användningen av webbplatslänk?"
+   },
+   "faq_3": {
+      "message": "Hur schemalägger jag en URL med Tab Scheduler?"
+   },
+   "faq_4": {
+      "message": "Vad är alternativet \"Öppna URL i bakgrunden\"?"
+   },
+   "faq_5": {
+      "message": "Kan jag förhindra förlängningen från att stänga fastnålade flikar?"
+   },
+   "faq_6": {
+      "message": "Vad betyder schematypen \"Båda\"?"
+   },
+   "faq_7": {
+      "message": "Hur fungerar funktionen \"URL-filtrering\"?"
+   },
+   "faq_8": {
+      "message": "Kan jag inaktivera en schemalagd flik utan att ta bort den?"
+   },
+   "faq_9": {
+      "message": "Kommer jag att få aviseringar för schemalagda flikar?"
+   },
+   "faq_a_1": {
+      "message": "\u003Cp>Tab Scheduler med Auto Open and Close är ett webbläsartillägg som låter användare schemalägga flikar för att öppna och stänga automatiskt vid bestämda tider. Användare kan välja ett engångsschema eller ställa in återkommande scheman med olika frekvensalternativ. Det här tillägget har flera syften för användare och erbjuder många funktioner som är användbara för dig.\u003C/p>"
+   },
+   "faq_a_10": {
+      "message": "Alla schemalagda flikar visas i en lista som visar titel, webbplatslänk, öppet- och stängningstider, status och åtgärder du kan vidta (t.ex. aktivera, redigera, ta bort)."
+   },
+   "faq_a_11": {
+      "message": "Nej, du kan schemalägga antingen en öppen tid eller en stängningstid. Du måste dock fylla i eller välja de obligatoriska fälten markerade med en asterisk (*)."
+   },
+   "faq_a_12": {
+      "message": "Fliken Autofokus ser till att när en schemalagd flik öppnas, aktiverar alla schemalagda flikar dig att snabbt aktivera alla schemalagda flikar med ett enda klick. Power Mode optimerar tilläggets prestanda genom att hantera webbläsarresurser mer effektivt."
+   },
+   "faq_a_13": {
+      "message": "Ja, du kan välja att öppna en schemalagd flik i inkognitoläge genom att välja alternativet \"Öppna i inkognitoläge\". Du kan välja att endast stänga inkognitoflikar genom att välja alternativet \"Stäng endast inkognitoflikar\" så länge \"Tillåt i inkognito\" är aktiverat i tilläggsinställningarna"
+   },
+   "faq_a_14": {
+      "message": "När det här alternativet är aktiverat kommer tillägget automatiskt att uppdatera en befintlig flik om samma URL redan är öppen i din webbläsare. Detta förhindrar att duplicerade flikar öppnas och säkerställer att du alltid har den senaste versionen av sidan laddad."
+   },
+   "faq_a_14_1": {
+      "message": "Om du försöker öppna https://github.com/ och den redan är öppen på en annan flik, kommer tillägget helt enkelt att uppdatera den fliken istället för att öppna en ny."
+   },
+   "faq_a_14_2": {
+      "message": "Om https://github.com/ redan är öppen i tre flikar kommer tillägget att uppdatera alla tre flikarna."
+   },
+   "faq_a_2": {
+      "message": "Webbplatslänken är webbläsarens webbadress med öppen flik. Hur du kan använda webbadressen nämns nedan."
+   },
+   "faq_a_3": {
+      "message": "För att schemalägga en URL, ange webbplatslänken, ge schemat en titel, välj frekvens (En gång, Varje minut, Dagligen, etc.) och välj öppettider och stängningstider. Du kan också ange ett datum, dag eller sekunder för att öppna och stänga fliken."
+   },
+   "faq_a_4": {
+      "message": "\u003Cp>Det här alternativet ger dig full kontroll över att schemalägga en URL som ska öppnas i bakgrunden utan att fokusera på den nya fliken. URL:en öppnas tyst medan du fortsätter att arbeta på andra flikar. Det är särskilt användbart när du behöver webbläsaren för att hämta data från den schemalagda URL:en utan att visa den aktivt, till exempel i fallet med en GET API-begäran.\u003C/p>\u003Cbr> \u003Cp>Om du till exempel vill hämta data från en API-slutpunkt vid en bestämd tidpunkt regelbundet kan du använda det här effektiva alternativet för att köra begäran i bakgrunden utan att öppna en ny synlig flik.\u003C/p>"
+   },
+   "faq_a_5": {
+      "message": "Ja, det finns ett alternativ för att förhindra stängning av nålade flikar. Markera alternativet \"Stäng inte fästade flikar\" för att säkerställa att dessa flikar förblir öppna även om de uppfyller andra stängningskriterier."
+   },
+   "faq_a_6": {
+      "message": "Schematypen \"Båda\" ger dig fullständig kontroll över när en flik öppnas och stängs, så att du kan ställa in specifika tider för båda åtgärderna."
+   },
+   "faq_a_7": {
+      "message": "URL-filtrering säkerställer att endast en specifik del av URL:en behöver matcha för att den schemalagda åtgärden ska äga rum. Detta är användbart när du vill automatisera vissa åtgärder baserat på partiella URL-matchningar. Om du till exempel markerar alternativet URL-filtrering för webbadressen https://example.com/sida, kommer det även att gälla för webbadresser som https://example.com/page/123, https://example.com/ page?query=example och https://subdomain.example.com/page."
+   },
+   "faq_a_8": {
+      "message": "Med alternativet \"Aktivera denna schemalagda flik\" kan du enkelt aktivera eller inaktivera schemalagda flikar, vilket ger dig flexibiliteten att hantera dina scheman utan att förlora konfigurationer."
+   },
+   "faq_a_9": {
+      "message": "Som standard kommer du att få aviseringar. Men om du föredrar att stoppa aviseringar kan du markera alternativet \"Visa inte meddelande\" för att inaktivera dem."
+   },
+   "february": {
+      "message": "februari"
+   },
+   "filterTips": {
+      "message": "Filtret gäller efter 'https://' eller 'www.', ex 'github.com'"
+   },
+   "for_exp": {
+      "message": "Till exempel"
+   },
+   "freeForever": {
+      "message": "Gratis för alltid"
+   },
+   "freeSchedule": {
+      "message": "gratis schema"
+   },
+   "freeTral": {
+      "message": "Som en uppskattad tidig användare kommer du att trivas\u003Crday>120\u003C/rday>dagars fri tillgång innan du byter till vår nya betalplan – tack för ditt fortsatta stöd!\u003Cp class=\"p-t-5\">Du har\u003Cb>\u003Cspan>\u003C/span>\u003C/b>dagar kvar av din\u003Crday>120\u003C/rday>-dagars ledig period.\u003Cafex class=\"warning\">\u003Cafex>\u003C/afex>\u003C/afex>\u003C/p> "
+   },
+   "frequentlyAskedQuestions": {
+      "message": "Vanliga frågor"
+   },
+   "friday": {
+      "message": "fredag"
+   },
+   "getThisPlan": {
+      "message": "Skaffa denna plan"
+   },
+   "goToSettingsPageToSchedule": {
+      "message": "Gå till inställningssidan för att schemalägga öppning och stängning av webbadresser."
+   },
+   "goURL": {
+      "message": "Gå till URL:en"
+   },
+   "helpAccordion12": {
+      "message": "Fungerar det här tillägget i vilo-/viloläge?"
+   },
+   "helpAccordion3": {
+      "message": "Kan jag schemalägga att en flik ska öppnas i inkognitoläge?"
+   },
+   "helpAccordion6": {
+      "message": "Vad är \"Tid har gått ut\"?"
+   },
+   "helpAccordion7": {
+      "message": "Kan jag exportera schemalagd URL?"
+   },
+   "helpAccordion8": {
+      "message": "Kan jag importera för att schemalägga URL?"
+   },
+   "helpPanelBodyDesc12First": {
+      "message": "Nej, det här tillägget fungerar inte i viloläge."
+   },
+   "helpPanelBodyDesc12Second": {
+      "message": "Om någon webbadress är schemalagd på fliken öppna eller stäng, går inte din dator automatiskt in i vilo- eller viloläge."
+   },
+   "helpPanelBodyDesc3": {
+      "message": "Ja, du kan välja att öppna en schemalagd flik i inkognitoläge genom att välja alternativet \"Öppna i inkognitoläge\". Se till att tilläggets \"Tillåt i inkognito\"-alternativet är aktiverat i webbläsarens tilläggsinställningar."
+   },
+   "helpPanelBodyDesc6": {
+      "message": "- Det givna datumet och tiden har passerat från det aktuella datumet och tiden och texten \"Tid förfallen\" visas."
+   },
+   "helpPanelBodyDesc7": {
+      "message": "Ja, du kan exportera redan schemalagd webbadress för öppen flik och stäng flik i csv-format och använda den med ett annat system för att importera den webbadressen."
+   },
+   "helpPanelBodyDesc8": {
+      "message": "Ja, du kan importera giltig öppen och stäng URL i csv-format. Det importerade csv-formatet schemaläggs automatiskt inom en given tid"
+   },
+   "herAreStepsToAllow": {
+      "message": "Här är stegen för \"Tillåt i inkognito\" i Google Chrome:"
+   },
+   "home": {
+      "message": "Hem"
+   },
+   "hour_minute_close": {
+      "message": "Varje timme nära minut"
+   },
+   "hour_minute_open": {
+      "message": "Varje timme öppet minut"
+   },
+   "how_to_use_tab": {
+      "message": "Hur använder man Tab Scheduler?"
+   },
+   "import": {
+      "message": "Importera"
+   },
+   "importClsTbDta": {
+      "message": "Importera stängflikdata"
+   },
+   "importExport": {
+      "message": "Import/Export"
+   },
+   "importOpenTbDt": {
+      "message": "Importera öppna flikdata"
+   },
+   "importedRecored": {
+      "message": ", importerad inspelad"
+   },
+   "inactivateScheduleTab": {
+      "message": "Inaktivera schemalagd flik."
+   },
+   "inactive": {
+      "message": "Inaktiv"
+   },
+   "inactiveSch": {
+      "message": "8. Inaktiv URL"
+   },
+   "inactiveSchExm1": {
+      "message": "I ovanstående exempel är den givna webbadressen i öppen flik eller stäng flik, vilket anger att den givna webbadressen är inaktiv och den kommer inte att utföra någon åtgärd."
+   },
+   "inactiveThisScheduledTabs": {
+      "message": "Aktivera denna schemalagda flik"
+   },
+   "invalidDuplicate": {
+      "message": ", dubblett eller ogiltigt inspelat"
+   },
+   "invldLicKy": {
+      "message": "Ogiltig licensnyckel!"
+   },
+   "isClose": {
+      "message": "är nära"
+   },
+   "isOpen": {
+      "message": "är öppen"
+   },
+   "january": {
+      "message": "januari"
+   },
+   "july": {
+      "message": "juli"
+   },
+   "june": {
+      "message": "juni"
+   },
+   "licKeyDis": {
+      "message": "Denna licensnyckel är inaktiverad."
+   },
+   "listTitle": {
+      "message": "Flikschemaläggare"
+   },
+   "loading": {
+      "message": "Vänligen vänta..."
+   },
+   "locale": {
+      "message": "sv"
+   },
+   "march": {
+      "message": "mars"
+   },
+   "maxSchedule": {
+      "message": "4 Maximal schemagräns"
+   },
+   "may": {
+      "message": "maj"
+   },
+   "mintValid": {
+      "message": "Minst 1 minut krävs"
+   },
+   "minute": {
+      "message": "Minut"
+   },
+   "minutesNotLessThan1": {
+      "message": "Protokoll bör inte vara mindre än 1."
+   },
+   "monday": {
+      "message": "måndag"
+   },
+   "month": {
+      "message": "Månad"
+   },
+   "monthly": {
+      "message": "Månatlig"
+   },
+   "more": {
+      "message": "mer"
+   },
+   "mostSubscribe": {
+      "message": "De flesta prenumererar"
+   },
+   "no": {
+      "message": "Inga"
+   },
+   "noDataToExport": {
+      "message": "Inga data att exportera."
+   },
+   "noScheduledTabs": {
+      "message": "Inga schemalagda flikar"
+   },
+   "noTimerSetAddNewTimer": {
+      "message": "Ingen timer inställd, klicka på knappen Lägg till för att ställa in ny timer"
+   },
+   "not_show_tutorial": {
+      "message": "Visa inte den här handledningen igen"
+   },
+   "notificationOpenTab": {
+      "message": "13. Meddelande på webbadressen för öppna/stäng-fliken"
+   },
+   "notificationOpenTabExm1": {
+      "message": "I ovanstående exempel är den givna webbadressen i öppen flik, vilket anger att den kommer att avisera och öppna/stänga URL i ny flik var 5:e minut."
+   },
+   "notifications": {
+      "message": "Underrättelse"
+   },
+   "november": {
+      "message": "november"
+   },
+   "october": {
+      "message": "oktober"
+   },
+   "onTheExtensionDetailPage": {
+      "message": "På tilläggets informationssida, scrolla ner och leta upp alternativet \"Tillåt i inkognito\"."
+   },
+   "oneTime": {
+      "message": "En gång"
+   },
+   "oneTmSch": {
+      "message": "1.Engångsschema"
+   },
+   "oneTmSchExm1": {
+      "message": "I ovanstående exempel är den givna webbadressen i öppen flik, vilket anger att den kommer att öppnas i ny flik En gång kl. 13:45 den 21/1/2023"
+   },
+   "oneTmSchExm2": {
+      "message": "I exemplet ovan är den givna webbadressen i stäng flik, vilket anger att den kommer att stänga alla specifika matchade URL-flikar kl. 13:45 den 21/1/2023"
+   },
+   "open": {
+      "message": "Öppna"
+   },
+   "openBackground": {
+      "message": "Om ja, ladda en URL i bakgrunden utan att öppna den på en ny flik"
+   },
+   "openDate": {
+      "message": "Öppet datum"
+   },
+   "openDay": {
+      "message": "Öppen dag"
+   },
+   "openEveryDayOn": {
+      "message": "Öppet varje dag kl"
+   },
+   "openEveryMonthOn": {
+      "message": "Öppet varje månad på dagen"
+   },
+   "openEveryWeekOn": {
+      "message": "Öppet varje vecka kl"
+   },
+   "openEveryYearOn": {
+      "message": "Öppet varje år"
+   },
+   "openGoogleChrome": {
+      "message": "Öppna Google Chrome."
+   },
+   "openInBackground": {
+      "message": "Öppna URL i bakgrunden"
+   },
+   "openInEvery": {
+      "message": "Öppet i varje"
+   },
+   "openInIncognito": {
+      "message": "Öppna i inkognitoläge"
+   },
+   "openMinute": {
+      "message": "Öppen minut"
+   },
+   "openOnDay": {
+      "message": "Öppet på dagen"
+   },
+   "openOnEvery": {
+      "message": "Öppet varje"
+   },
+   "openSecond": {
+      "message": "Öppna andra"
+   },
+   "openSecondsMoreThan5": {
+      "message": "Öppna sekunder bör vara mer än 5."
+   },
+   "openTabSchedule": {
+      "message": "Öppna flikschema"
+   },
+   "openTabURL": {
+      "message": "Öppna Tab URL"
+   },
+   "openTime": {
+      "message": "Öppen tid"
+   },
+   "openUrl": {
+      "message": "Öppna webbplatslänk"
+   },
+   "openWeek": {
+      "message": "Öppen vecka"
+   },
+   "openWeeks": {
+      "message": "Öppna veckor"
+   },
+   "open_on": {
+      "message": "Öppna på"
+   },
+   "optional": {
+      "message": "Frivillig"
+   },
+   "or": {
+      "message": "eller"
+   },
+   "outof": {
+      "message": "ut ur"
+   },
+   "pagePath": {
+      "message": "Sidans sökväg"
+   },
+   "paidFeature": {
+      "message": "Betald funktion"
+   },
+   "pauseSchedule": {
+      "message": "Starta eller stoppa alla scheman"
+   },
+   "pauseTabScheduler": {
+      "message": "Pausad flikschemaläggare"
+   },
+   "pleaseAllowIncognitoMessage": {
+      "message": "Vänligen aktivera alternativet \"Tillåt i inkognito\" i tilläggsinformationen. För instruktioner, se självstudiesidan."
+   },
+   "pleaseShareYourSuggestions": {
+      "message": "Dela gärna ditt förslag."
+   },
+   "plsShreAnySugWithUs": {
+      "message": "Ge gärna ett förslag för att förbättra oss"
+   },
+   "powerMode": {
+      "message": "Strömläge"
+   },
+   "premium": {
+      "message": "Premie"
+   },
+   "pricePlan": {
+      "message": "Prissättning och planer"
+   },
+   "privcyPolicy": {
+      "message": "Sekretesspolicy"
+   },
+   "prowerModeTip": {
+      "message": "Håll systemet alltid aktivt genom att aktivera Power Mode"
+   },
+   "put": {
+      "message": "Sätta"
+   },
+   "rateUs": {
+      "message": "Betygsätt oss"
+   },
+   "removeDuplicateEntry": {
+      "message": "Ta bort dubblettposten"
+   },
+   "removeOpenTbURL": {
+      "message": "Ta bort webbadress för öppen flik"
+   },
+   "repeat": {
+      "message": "Upprepa"
+   },
+   "requiredMsg": {
+      "message": "Nödvändig"
+   },
+   "rmvClsTb": {
+      "message": "Ta bort webbadress för stäng flik"
+   },
+   "sameTabs": {
+      "message": "Uppdatera fliken om webbadressen redan är öppen"
+   },
+   "sameTabsInfo": {
+      "message": "Förhindra att flera flikar öppnas för samma webbadress. Till exempel, om www.google.com redan är öppen, uppdateras den befintliga fliken istället för att öppna en ny flik för den."
+   },
+   "sampleCsvOpenPath": {
+      "message": "../sample_csv/en/open_tab_sample.csv"
+   },
+   "sampleFile": {
+      "message": "Exempelfil"
+   },
+   "saturday": {
+      "message": "lördag"
+   },
+   "savOpnData": {
+      "message": "Spara öppna flikdata"
+   },
+   "save": {
+      "message": "Spara"
+   },
+   "saveClsTbData": {
+      "message": "Spara data för stängd flik"
+   },
+   "saveSchedule": {
+      "message": "Spara schema"
+   },
+   "scheduleCloseTab": {
+      "message": "Fliken Schema Stäng"
+   },
+   "scheduleCurrentTab": {
+      "message": "Schemalägg aktuell flik"
+   },
+   "scheduleOpenTab": {
+      "message": "Schemalägg Öppna flik"
+   },
+   "scheduledTabIsAlreadyExistWithSameTimer": {
+      "message": "Denna schemalagda flik finns redan med samma timer."
+   },
+   "scheduledTabList": {
+      "message": "Schemalagd fliklista"
+   },
+   "scheduledType": {
+      "message": "Schematyp"
+   },
+   "search": {
+      "message": "Söka"
+   },
+   "secValid": {
+      "message": "Minst 5 sekunder krävs"
+   },
+   "second": {
+      "message": "Andra"
+   },
+   "selectCloseDate": {
+      "message": "Välj stängningsdatum"
+   },
+   "selectCloseDay": {
+      "message": "Välj stängningsdag"
+   },
+   "selectCloseTime": {
+      "message": "Välj stängningstid"
+   },
+   "selectColumn": {
+      "message": "Välj kolumn"
+   },
+   "selectDateAndTime": {
+      "message": "Välj datum och tid för att öppna ny flik"
+   },
+   "selectDateAndTimeClsTb": {
+      "message": "Välj datum och tid för att stänga fliken"
+   },
+   "selectDayToCloseSchTb": {
+      "message": "Välj dag för att stänga schemafliken."
+   },
+   "selectDayToClsTb": {
+      "message": "Välj dag för att stänga fliken"
+   },
+   "selectDayToSchdule": {
+      "message": "Välj dag att schemalägga fliken."
+   },
+   "selectDaysInWeek": {
+      "message": "Välj dagar i veckan"
+   },
+   "selectDaysInWeekIClsTime": {
+      "message": "Välj dagar i veckan i stängningstimern."
+   },
+   "selectDaysInWeekIOpClsTime": {
+      "message": "Välj dagar i veckan i öppen eller stäng timer."
+   },
+   "selectDaysInWeekIOpTime": {
+      "message": "Välj dagar i veckan i öppen timer."
+   },
+   "selectFrequency": {
+      "message": "Välj Frekvens"
+   },
+   "selectFrequencyOfScheduleUrl": {
+      "message": "Välj frekvens för den schemalagda URL:en."
+   },
+   "selectOpenDate": {
+      "message": "Välj öppetdatum"
+   },
+   "selectOpenDay": {
+      "message": "Välj öppen dag"
+   },
+   "selectOpenOrClose": {
+      "message": "Välj öppning och stängningstid"
+   },
+   "selectOpenOrCloseDate": {
+      "message": "Välj datum för öppning och stängning"
+   },
+   "selectOpenOrCloseDay": {
+      "message": "Välj öppet och stängt dag"
+   },
+   "selectOpenTime": {
+      "message": "Välj öppettid"
+   },
+   "selectPreferredLanguage": {
+      "message": "Välj önskat språk."
+   },
+   "selectToOpenTab": {
+      "message": "Välj dag för att öppna ny flik"
+   },
+   "selectTypTimerClsTb": {
+      "message": "Välj typ av timer för att stänga fliken"
+   },
+   "selectTypeOfSchedule": {
+      "message": "Välj typ av schema, om du vill både öppna och stänga än att välja \"Båda\"."
+   },
+   "selectTypeOfTimer": {
+      "message": "Välj typ av timer för att öppna en ny flik"
+   },
+   "select_weeks": {
+      "message": "Välj veckor"
+   },
+   "september": {
+      "message": "september"
+   },
+   "settingSave": {
+      "message": "Inställningarna har sparats"
+   },
+   "settingToClose": {
+      "message": "Inställning för att stänga flik i inkognitoläge."
+   },
+   "shareYourSuggestionWithUs": {
+      "message": "Dela dina förslag med oss.."
+   },
+   "slectDayToScheduleWeekly": {
+      "message": "Välj dagar för att schemalägga fliken varje vecka."
+   },
+   "slectMinute": {
+      "message": "Välj Minute"
+   },
+   "smthngWrng": {
+      "message": "Något gick fel"
+   },
+   "softpulseInfotech": {
+      "message": "Softpulse Infotech"
+   },
+   "somethingWentWrong": {
+      "message": "Något gick fel. Uppdatera sidan och försök igen."
+   },
+   "status": {
+      "message": "Status"
+   },
+   "subcrKeyShldNEmpt": {
+      "message": "Vänligen ange prenumerationsnyckel."
+   },
+   "subdomain": {
+      "message": "Underdomän"
+   },
+   "subkeyInputTitle": {
+      "message": "Ange prenumerationsnyckel"
+   },
+   "submFeedBack": {
+      "message": "Överlämna"
+   },
+   "suggForTbSch": {
+      "message": "Förslag på flikschemaläggare"
+   },
+   "suggestionAndRateUs": {
+      "message": "Förslag &amp; betygsätt oss"
+   },
+   "sunday": {
+      "message": "söndag"
+   },
+   "tabCloseOneTime": {
+      "message": "Fliken stängs endast en gång på"
+   },
+   "tabSchTutorial": {
+      "message": "Tutorial för Tab Scheduler"
+   },
+   "tabScheduler": {
+      "message": "Flikschemaläggare"
+   },
+   "tabSchedulerOptions": {
+      "message": "Alternativ för flikschemaläggning"
+   },
+   "tabWillOpenOneTime": {
+      "message": "Fliken öppnas endast en gång på"
+   },
+   "tabWillOpenWhenBrowserOpen": {
+      "message": "Fliken öppnas när webbläsaren öppnas"
+   },
+   "termCondition": {
+      "message": "Villkor"
+   },
+   "thanksFrRev": {
+      "message": "Tack för din recension"
+   },
+   "thnkUFeedBack": {
+      "message": "Tack för ditt förslag"
+   },
+   "thnkUFrUsngTbSch": {
+      "message": "Ge gärna ett förslag för att förbättra oss"
+   },
+   "thursday": {
+      "message": "torsdag"
+   },
+   "time": {
+      "message": "Tid"
+   },
+   "timeExpired": {
+      "message": "Tiden har gått ut"
+   },
+   "timer": {
+      "message": "Timer"
+   },
+   "title": {
+      "message": "Titel"
+   },
+   "titleLengtWarn": {
+      "message": "Titeln får inte vara längre än 200 tecken."
+   },
+   "toScheduledOpenTbMsg": {
+      "message": "För schemalagd öppen flik, avmarkera url-filtrering."
+   },
+   "toogleCloseTab": {
+      "message": "Starta/stoppa schemalarmet för alla webbadresser för stängda flikar"
+   },
+   "toogleDarkmode": {
+      "message": "Växla mellan mörkt läge och standardläge för att anpassa din tittarupplevelse."
+   },
+   "toogleOff": {
+      "message": "Av"
+   },
+   "toogleOn": {
+      "message": "På"
+   },
+   "toogleOpenTab": {
+      "message": "Starta/stoppa schemalarmet för webbadresser för alla öppna flikar"
+   },
+   "topLevelDomain": {
+      "message": "Toppnivådomän"
+   },
+   "totalProcessed": {
+      "message": "Totalt inspelat bearbetat"
+   },
+   "tuesday": {
+      "message": "tisdag"
+   },
+   "tutorialImg1": {
+      "message": "\u003Cimg src=\"../images/en/1.png\">"
+   },
+   "tutorialImg10": {
+      "message": "\u003Cimg src=\"../images/en/10.png\">"
+   },
+   "tutorialImg11": {
+      "message": "\u003Cimg src=\"../images/en/11.png\">"
+   },
+   "tutorialImg12": {
+      "message": "\u003Cimg src=\"../images/en/12.png\">"
+   },
+   "tutorialImg13": {
+      "message": "\u003Cimg src=\"../images/en/13.png\">"
+   },
+   "tutorialImg14": {
+      "message": "\u003Cimg src=\"../images/en/14.png\">"
+   },
+   "tutorialImg2": {
+      "message": "\u003Cimg src=\"../images/en/2.png\">"
+   },
+   "tutorialImg3": {
+      "message": "\u003Cimg src=\"../images/en/3.png\">"
+   },
+   "tutorialImg4": {
+      "message": "\u003Cimg src=\"../images/en/4.png\">"
+   },
+   "tutorialImg5": {
+      "message": "\u003Cimg src=\"../images/en/5.png\">"
+   },
+   "tutorialImg6": {
+      "message": "\u003Cimg src=\"../images/en/6.png\">"
+   },
+   "tutorialImg7": {
+      "message": "\u003Cimg src=\"../images/en/7.png\">"
+   },
+   "tutorialImg8": {
+      "message": "\u003Cimg src=\"../images/en/8.png\">"
+   },
+   "tutorialImg9": {
+      "message": "\u003Cimg src=\"../images/en/9.png\">"
+   },
+   "uncheckAll": {
+      "message": "Avmarkera alla"
+   },
+   "unlimitedSchedule": {
+      "message": "Obegränsad schemagräns"
+   },
+   "unspecifiedURL": {
+      "message": "11. Ospecificerad webbadress"
+   },
+   "unspecifiedURLExm1": {
+      "message": "I ovanstående exempel är den givna webbadressen i stäng flik, vilket anger att given URL som öppnades i en ny flik och börjar och slutar med en okänd webbadress kommer att stängas efter 5 minuter."
+   },
+   "upgradePlan": {
+      "message": "Köp plan ELLER Logga in och uppgradera din plan för att låsa upp fler funktioner."
+   },
+   "upgradePlanUnlock": {
+      "message": "Uppgradera din plan för att låsa upp fler funktioner."
+   },
+   "uploadValidFormat": {
+      "message": "Ladda upp giltigt format"
+   },
+   "url": {
+      "message": "URL"
+   },
+   "urlContExat": {
+      "message": "URL-filtrering"
+   },
+   "urlEndWithUnspesifiedPth": {
+      "message": "9. URL-slut med ospecificerad sökväg"
+   },
+   "urlEndWithUnspesifiedPthExm1": {
+      "message": "I ovanstående exempel är den givna webbadressen i stäng flik, vilket anger att en given URL som öppnades i en ny flik och slutar med okänd sökväg kommer att stängas efter 5 minuter."
+   },
+   "urlFilterInfo": {
+      "message": "Innehåller URL som kontrolleras behöver bara en del av URL:en och Exakt URL som kontrolleras måste vara en exakt matchning med den angivna URL:en"
+   },
+   "urlFilterinCLoseTb": {
+      "message": "14. URL-filtrering på webbadress med stängd flik"
+   },
+   "urlFilterinCLoseTbExample": {
+      "message": "I exemplet ovan är den givna webbadressen i stängningsfliken, vilket anger att redan öppnad flik-URL matchade en del av den del av den givna webbadressen så att den stänger den fliken"
+   },
+   "urlIsRequired": {
+      "message": "Webbplatslänk krävs"
+   },
+   "urlNotvalid": {
+      "message": "URL är inte giltig"
+   },
+   "urlStartWithUnspesifiedPth": {
+      "message": "10. URL börjar med ospecificerad sökväg"
+   },
+   "urlStartWithUnspesifiedPthExm1": {
+      "message": "I exemplet ovan är den givna webbadressen i stäng flik, vilket anger att given URL som öppnades i en ny flik och börjar med en okänd underdomän \u003Cb>\"www\"\u003C/b> eller \u003Cb>\"blogg\"\u003C/b> kommer att stängas efter 5 minuter."
+   },
+   "useSpecificUrl": {
+      "message": "Använd specifik webbplatslänk"
+   },
+   "useSpecificUrl1": {
+      "message": "Du måste ha skrivit den exakta underdomänen, toppdomänen, domännamnet och sidsökvägen i fältet Webbplatslänk till den stängda webbläsarens flik."
+   },
+   "useSpecificUrl2": {
+      "message": "Använd stängda alla webbläsares flikar"
+   },
+   "useSpecificUrl3": {
+      "message": "Använd specifik och fullständig webbplatslänk"
+   },
+   "useUnSpecificUrl1": {
+      "message": "Använd ospecificerad webbplatslänk"
+   },
+   "useUnSpecificUrl2": {
+      "message": "Använd börja med ospecificerad webbplatslänk"
+   },
+   "useUnSpecificUrl3": {
+      "message": "Använd slut med ospecificerad webbplatslänk"
+   },
+   "used": {
+      "message": "Du använde"
+   },
+   "validFormatCsv": {
+      "message": "Vilket är det giltiga CSV-filformatet för import?"
+   },
+   "websiteLink": {
+      "message": "Webbplatslänk"
+   },
+   "websiteUrl": {
+      "message": "Webbplats URL"
+   },
+   "wednesday": {
+      "message": "onsdag"
+   },
+   "weekName": {
+      "message": "Veckans namn"
+   },
+   "weekly": {
+      "message": "Varje vecka"
+   },
+   "whenExtensionTabAppears": {
+      "message": "När fliken Tillägg visas, leta reda på \"Flikschemaläggare med automatisk öppning och stängning\" för att aktivera i inkognitoläge och klicka på knappen \"Detaljer\" bredvid den."
+   },
+   "whenMenuPopup": {
+      "message": "När en meny dyker upp väljer du \"Hantera tillägg\"."
+   },
+   "withSignMustFill": {
+      "message": "Med \u003Cspan>*\u003C/span> måste tecken fylla eller välja, Välj antingen öppna eller stänga tid eller båda gånger."
+   },
+   "writeYourDescriptionAboutSchUrl": {
+      "message": "Skriv din beskrivning om schemalagd url här."
+   },
+   "yes": {
+      "message": "Ja"
+   },
+   "yourEmailAddress": {
+      "message": "Din e-postadress"
+   },
+   "yourScheduleUrl": {
+      "message": "Din schema-URL"
+   }
+}

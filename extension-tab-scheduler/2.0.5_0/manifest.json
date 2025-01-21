@@ -1,0 +1,25 @@
+{
+   "action": {
+      "default_icon": "src/images/icon32.png",
+      "default_popup": "src/html/popup.html",
+      "default_title": "__MSG_appName__"
+   },
+   "background": {
+      "service_worker": "src/js/background.js"
+   },
+   "default_locale": "en",
+   "description": "__MSG_appDesc__",
+   "host_permissions": [ "https://softpulseinfotech.com/*", "https://tab-scheduler.extfy.com/*", "https://extfy.com/*" ],
+   "icons": {
+      "128": "src/images/icon128.png",
+      "16": "src/images/icon16.png",
+      "48": "src/images/icon48.png"
+   },
+   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAjVlOkg/+SCXJnOXUCxlLJw36GV9fXYSgqOJhoQ3FYnCP5WE/4PuAYVjzTIXTo2NussfHvfqnRazXyyH33KHa2xIbvKGjp4TJHGressQzlFHBX9FvFdRDga7J53K8ncSixomgNmOsm9er0HuZuCXvbgXV1P1MvxsFz1c2VblIEQYdiZvIMt5qIuzjjI2/iYUZ/3xf6yjVW4g1orCmTZQCv8+gc3WYNcvRTxFD78B7E039ZK7sg+g6squ9oQcnx3XdZ0LgolghcMCO2eP7u8TtIhFm43/OIu2Up4XveEMxIJ8gQVKzRalvZinS/6IBYYMTiF7xNmDQddhE5KWP5Q6kxQIDAQAB",
+   "manifest_version": 3,
+   "name": "__MSG_appName__",
+   "offline_enabled": true,
+   "permissions": [ "alarms", "tabs", "storage", "notifications", "power", "cookies" ],
+   "update_url": "https://clients2.google.com/service/update2/crx",
+   "version": "2.0.5"
+}

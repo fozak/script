@@ -1,0 +1,4 @@
+﻿URL,Pemasa,Status,Tarikh Buka,Tarikh Tutup,Waktu Buka,Masa Tutup,Minggu Terbuka,Tutup Minggu,Pada Pelayar Buka,Hari Terbuka,Hari Tutup,Minit Terbuka,Tutup Minit,Buka Kedua,Tutup Kedua,Pemberitahuan,Tajuk,Penerangan,Buka URL dalam Latar Belakang,Buka dalam mod inkognito,Jangan tutup tab yang disematkan,Tutup tab inkognito sahaja,Penapisan URL,Jenis Jadual,Setiap Jam Minit Terbuka,Setiap Jam Tutup Minit,Muat semula tab jika URL sudah dibuka
+https://www.google.com/,Setiap Minit,Aktif,,,,,"","","",,,,,,,Tidak aktif,Close Every Minute,,Tidak,Tidak,Tidak,Tidak,ya,tutup,0,0,ya
+http://www.w3schools.com/,Setiap Hari,Aktif,,,16:31,,"","","",,,,,,,Tidak aktif,Every Day Open,,Tidak,Tidak,Tidak,Tidak,Tidak,Buka,0,0,Tidak
+https://www.flipkart.com/,Minit Tersuai,Aktif,,,,,"","","",,,120,5,,,Tidak aktif,Open and Close,,Tidak,Tidak,Tidak,Tidak,Tidak,Kedua-duanya,0,0,Tidak

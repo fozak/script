@@ -1,0 +1,4 @@
+﻿URL,Cronometru,Stare,Data deschiderii,Data închiderii,Ora deschisă,Ora de închidere,Săptămâna deschisă,Închide săptămâna,Pe Browser deschis,Ziua porților deschise,Ziua de închidere,Minutul deschis,Minutul de închidere,Deschide al doilea,Închide al doilea,Notificare,Titlu,Descriere,Deschideți adresa URL în fundal,Deschideți în modul incognito,Nu închideți filele fixate,Închideți numai filele incognito,Filtrare URL,Tipul de program,Fiecare oră Minut deschis,În fiecare oră minut de aproape,Actualizează fila dacă adresa URL este deja deschisă
+https://www.google.com/,În fiecare minut,Activ,,,,,"","","",,,,,,,Inactiv,Close Every Minute,,Nu,Nu,Nu,Nu,Da,Aproape,0,0,Da
+http://www.w3schools.com/,În fiecare zi,Activ,,,16:31,,"","","",,,,,,,Inactiv,Every Day Open,,Nu,Nu,Nu,Nu,Nu,Deschide,0,0,Nu
+https://www.flipkart.com/,Minut personalizat,Activ,,,,,"","","",,,120,5,,,Inactiv,Open and Close,,Nu,Nu,Nu,Nu,Nu,ambele,0,0,Nu

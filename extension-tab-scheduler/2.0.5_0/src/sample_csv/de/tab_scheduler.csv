@@ -1,0 +1,4 @@
+﻿URL,Timer,Status,Öffnungsdatum,Schlusstermin,Offene Zeit,Schließzeit,Offene Woche,Woche schließen,Beim Öffnen des Browsers,Tag der offenen Tür,Tag schließen,Offene Minute,Minute schließen,Offene Sekunde,Knapper Zweiter,Benachrichtigung,Titel,Beschreibung,URL im Hintergrund öffnen,Im Inkognito-Modus öffnen,Angeheftete Tabs nicht schließen,Schließen Sie nur Inkognito-Tabs,URL-Filterung,Zeitplantyp,Jede Stunde Offene Minute,Jede Stunde, jede Minute,Tab aktualisieren wenn die URL bereits geöffnet ist
+https://www.google.com/,Jede Minute,Aktiv,,,,,"","","",,,,,,,Inaktiv,Close Every Minute,,NEIN,NEIN,NEIN,NEIN,Ja,Schließen,0,0,Ja
+http://www.w3schools.com/,Täglich,Aktiv,,,16:31,,"","","",,,,,,,Inaktiv,Every Day Open,,NEIN,NEIN,NEIN,NEIN,NEIN,Offen,0,0,NEIN
+https://www.flipkart.com/,Benutzerdefinierte Minute,Aktiv,,,,,"","","",,,120,5,,,Inaktiv,Open and Close,,NEIN,NEIN,NEIN,NEIN,NEIN,Beide,0,0,NEIN

@@ -1,0 +1,1448 @@
+{
+   "10_min": {
+      "message": "10 minučių"
+   },
+   "1_min": {
+      "message": "1 minutę"
+   },
+   "30_min": {
+      "message": "30 minučių"
+   },
+   "5_min": {
+      "message": "5 minutės"
+   },
+   "60_min": {
+      "message": "valandą"
+   },
+   "Dashboard": {
+      "message": "Prietaisų skydelis"
+   },
+   "Login": {
+      "message": "Prisijungti"
+   },
+   "Off": {
+      "message": "Išjungta"
+   },
+   "On": {
+      "message": "Įjungta"
+   },
+   "Selected": {
+      "message": "Pasirinkta"
+   },
+   "Settings": {
+      "message": "Nustatymai"
+   },
+   "Tutorial": {
+      "message": "Pamoka"
+   },
+   "action": {
+      "message": "Veiksmas"
+   },
+   "activateScheduleTab": {
+      "message": "Suaktyvinkite suplanuotą skirtuką."
+   },
+   "active": {
+      "message": "Aktyvus"
+   },
+   "activeAllScheduleTab": {
+      "message": "Veikia skirtukų planavimo priemonė"
+   },
+   "activeStatus": {
+      "message": "Būsena"
+   },
+   "actvInactvNotification": {
+      "message": "Rodyti pranešimą atidarius tvarkaraščio skirtuką"
+   },
+   "actvInactvOpnTb": {
+      "message": "Aktyvus arba neaktyvus atidarytas skirtukas"
+   },
+   "actvIntvClsTb": {
+      "message": "Aktyvus arba neaktyvus uždaryti skirtuką"
+   },
+   "add": {
+      "message": "Pridėti"
+   },
+   "addDescription": {
+      "message": "Pridėti aprašymą"
+   },
+   "addNew": {
+      "message": "Pridėti naują"
+   },
+   "addNewURlCls": {
+      "message": "Pridėkite naują URL, kad uždarytumėte"
+   },
+   "addNewUrlToOpen": {
+      "message": "Pridėkite naują URL, kad atidarytumėte naujame lange"
+   },
+   "addTitle": {
+      "message": "Pridėti pavadinimą"
+   },
+   "addWebsite": {
+      "message": "Pridėti svetainę"
+   },
+   "all": {
+      "message": "Visi"
+   },
+   "allInputFieldReq": {
+      "message": "Visi laukai yra būtini"
+   },
+   "all_weeks": {
+      "message": "Visą savaitę"
+   },
+   "alreadyPurchase": {
+      "message": "Jau nusipirkote? Įveskite raktą čia"
+   },
+   "andAt": {
+      "message": "ir pas"
+   },
+   "annually": {
+      "message": "Kasmet"
+   },
+   "appDesc": {
+      "message": "Naršyklės skirtukai bus atidaryti ir uždaryti automatiškai pasirinktu laiku. Vartotojas gali suaktyvinti / išjungti sąrašą pagal poreikį"
+   },
+   "appName": {
+      "message": "Skirtukų planuoklis su automatiniu atidarymu ir uždarymu"
+   },
+   "april": {
+      "message": "balandžio mėn"
+   },
+   "at": {
+      "message": "adresu"
+   },
+   "august": {
+      "message": "rugpjūčio mėn"
+   },
+   "autoFocus": {
+      "message": "Automatinio fokusavimo skirtukas"
+   },
+   "autoFocustip": {
+      "message": "Jei įjungta, naujas skirtukas bus atidarytas aktyvioje / fokusavimo būsenoje."
+   },
+   "autofocustip": {
+      "message": "Atidaryti nauji skirtukai bus automatiškai sufokusuoti"
+   },
+   "basic": {
+      "message": "Pagrindinis"
+   },
+   "billedAnnyally": {
+      "message": "Atsiskaitoma kasmet"
+   },
+   "billedMonthly": {
+      "message": "Atsiskaitoma kas mėnesį"
+   },
+   "both": {
+      "message": "Abu"
+   },
+   "browserOpen": {
+      "message": "Atidarykite naršyklę"
+   },
+   "browserWebAddress": {
+      "message": "Naršyklės žiniatinklio adresas prasideda ir baigiasi nežinomu žiniatinklio adresu. Įveskite \u003Cb>*\u003C/b> abiejose įvesto svetainės nuorodos lauko pusėse."
+   },
+   "browserWebAddress2": {
+      "message": "Naršyklės žiniatinklio adresu yra domeno pavadinimas google.com, kuris bus uždarytas per tam tikras minutes, neatsižvelgiant į padomenį ir puslapio kelią. Įdėkite \u003Cb>*\u003C/b> abiejose domeno vardo ir ALD pusėse"
+   },
+   "browserWebAddress3": {
+      "message": "Naršyklės žiniatinklio adresas prasideda nežinomu domeno pavadinimu ir baigiasi nežinomu puslapio keliu"
+   },
+   "browserWebAddress31": {
+      "message": "bus uždarytas po tam tikrų minučių, įdėkite \u003Cb>*\u003C/b> abiejose ALD pusėse"
+   },
+   "browserWebAddress4": {
+      "message": "Naršyklės žiniatinklio adresas prasideda nežinomu žiniatinklio adresu. Įveskite \u003Cb>*\u003C/b> URL pradžioje. Atminkite, kad naršyklės žiniatinklio adresas turi sutapti su jūsų URL po to, kai parašėte \u003Cb>* .\u003C/b>"
+   },
+   "browserWebAddress41": {
+      "message": "Naršyklės žiniatinklio adresas prasideda nežinomu padomeniu"
+   },
+   "browserWebAddress42": {
+      "message": "savo svetainės nuorodos pradžioje"
+   },
+   "browserWebAddress5": {
+      "message": "Naršyklės žiniatinklio adresas baigiasi nežinomu žiniatinklio adresu. Įveskite \u003Cb>*\u003C/b> URL pabaigoje. Atminkite, kad jūsų žiniatinklio adresas turi sutapti prieš \u003Cb>*,\u003C/b> kurį parašėte."
+   },
+   "browserWebAddress51": {
+      "message": "Naršyklės žiniatinklio adresas baigiasi nežinomu puslapio keliu. Įdėkite \u003Cb>*\u003C/b> savo žiniatinklio adreso pabaigoje"
+   },
+   "browserWebAddress6": {
+      "message": "Norėdami uždaryti visus naršyklės skirtukus, svetainės adreso lauke įveskite tik \u003Cb>*\u003C/b> . Uždarius visus skirtukus, naršyklė bus uždaryta automatiškai."
+   },
+   "browserWebAddress7": {
+      "message": "URL lauke turite parašyti tikslų padomenį, aukščiausio lygio domeną, domeno pavadinimą ir puslapio kelią, kad atidarytumėte naršyklės skirtuką."
+   },
+   "browserWebAddress8": {
+      "message": "Galite atidaryti URL konkrečią datą ir laiką, konkretų mėnesį, konkrečią savaitę, konkrečius metus ir kartojimo laiką"
+   },
+   "buyPlan": {
+      "message": "Pirkimo planas"
+   },
+   "buycofee": {
+      "message": "Nupirk man kavos"
+   },
+   "cancel": {
+      "message": "Atšaukti"
+   },
+   "changeLanguage": {
+      "message": "Keisti kalbą"
+   },
+   "checkAll": {
+      "message": "Patikrinkite viską"
+   },
+   "checkThisOpToPreventClosePinTb": {
+      "message": "Pažymėkite šią parinktį, kad neužsidarytumėte prisegtų skirtukų."
+   },
+   "checkThisOptionOnlyPartOfUrlMtch": {
+      "message": "Pažymėkite šią parinktį, jei reikia atitikti tik dalį URL."
+   },
+   "checkThisOptionToActivate": {
+      "message": "Pažymėkite šią parinktį, kad suaktyvintumėte arba išjungtumėte suplanuotą URL."
+   },
+   "checkThisOptionToCloseOnly": {
+      "message": "Pažymėkite šią parinktį, jei norite uždaryti tik inkognito skirtukus. Be to, išsamioje plėtinio dalyje įgalinkite parinktį „Leisti inkognito režimu“. Instrukcijas rasite mokymo programos puslapyje."
+   },
+   "checkThisOptionToCloseOnlyInIncgnitoTb": {
+      "message": "Pažymėkite šią parinktį, jei norite uždaryti tik inkognito skirtukus. Be to, išsamioje plėtinio dalyje įgalinkite parinktį „Leisti inkognito režimu“. Instrukcijas rasite mokymo programos puslapyje."
+   },
+   "checkThisOptionToInBg": {
+      "message": "Pažymėkite šią parinktį, jei norite atidaryti URL fone neatidarę jo naujame skirtuke"
+   },
+   "checkThisOptionToInactivNotification": {
+      "message": "Pažymėkite šią parinktį, jei norite gauti neaktyvų pranešimą suplanuotame URL"
+   },
+   "checkThisOptionToOpen": {
+      "message": "Pažymėkite šią parinktį, jei norite atidaryti savo URL inkognito režimu"
+   },
+   "checkThisOptionToOpenIncogito": {
+      "message": "Pažymėkite šią parinktį, jei norite atidaryti savo URL inkognito režimu"
+   },
+   "checkThisOptionToPrevent": {
+      "message": "Pažymėkite šią parinktį, kad neužsidarytumėte prisegtų skirtukų."
+   },
+   "clickExtIcon": {
+      "message": "Įrankių juostoje spustelėkite piktogramą „Plėtiniai“, kuri atrodo kaip galvosūkis."
+   },
+   "clickTheSwitch": {
+      "message": "Spustelėkite šalia esantį jungiklį, kad jį įjungtumėte"
+   },
+   "close": {
+      "message": "Uždaryti"
+   },
+   "closeAllTab": {
+      "message": "12. Uždarykite visos naršyklės skirtuką"
+   },
+   "closeAllTabExm1": {
+      "message": "Aukščiau pateiktame pavyzdyje nurodytas URL yra uždarymo skirtuke, o tai reiškia, kad jis uždarys visus skirtukus 2023-02-25 12:00 val."
+   },
+   "closeDate": {
+      "message": "Uždarymo data"
+   },
+   "closeDay": {
+      "message": "Uždarymo diena"
+   },
+   "closeEveryYear": {
+      "message": "Uždaryti kiekvienais metais"
+   },
+   "closeInEvery": {
+      "message": "Uždaryti kiekviename"
+   },
+   "closeIncognitoTab": {
+      "message": "Uždarykite tik inkognito skirtukus"
+   },
+   "closeMinute": {
+      "message": "Uždarymo minutė"
+   },
+   "closeOnDay": {
+      "message": "Uždaryti dieną"
+   },
+   "closeOnEvery": {
+      "message": "Uždarykite kiekvieną"
+   },
+   "closeOnEveryDay": {
+      "message": "Uždarykite kiekvieną dieną"
+   },
+   "closeOnEveryMonth": {
+      "message": "Uždaryti kiekvieną mėnesį dieną"
+   },
+   "closeOnEveryWeek": {
+      "message": "Uždaryti kiekvieną savaitę"
+   },
+   "closeSecond": {
+      "message": "Uždaryti Antra"
+   },
+   "closeSeconsMoreThan5": {
+      "message": "Uždaryti sekundės turi būti ilgesnės nei 5."
+   },
+   "closeTabSchedule": {
+      "message": "Uždaryti skirtuko tvarkaraštį"
+   },
+   "closeTabURL": {
+      "message": "Uždaryti skirtuko URL"
+   },
+   "closeTime": {
+      "message": "Uždarymo laikas"
+   },
+   "closeUrl": {
+      "message": "Uždaryti svetainės nuorodą"
+   },
+   "closeWeek": {
+      "message": "Uždaryti savaitę"
+   },
+   "closeWeeks": {
+      "message": "Uždaryti savaites"
+   },
+   "close_on": {
+      "message": "Užsidaryk"
+   },
+   "cngrtsForSubcr": {
+      "message": "Sveikiname! Jūsų planas sėkmingai suaktyvintas."
+   },
+   "commonQuestionsAns": {
+      "message": "Dažni klausimai ir atsakymai"
+   },
+   "copySucessClose": {
+      "message": "Uždaryti skirtuko URL duomenys nukopijuoti į Atidaryti skirtuko URL duomenis"
+   },
+   "createNewTimer": {
+      "message": "Sukurti naują laikmatį"
+   },
+   "currentPlan": {
+      "message": "Dabartinis planas"
+   },
+   "currentTabSchedule": {
+      "message": "Dabartinis skirtukų tvarkaraštis"
+   },
+   "currentTbScheduleTimer": {
+      "message": "Dabartinio skirtuko suplanuotas laikmatis."
+   },
+   "cusSec": {
+      "message": "Pasirinktinis Antrasis"
+   },
+   "custMin": {
+      "message": "Tinkinta minutė"
+   },
+   "custmMinSch": {
+      "message": "7. Individualus minučių grafikas"
+   },
+   "custmMinSchExm1": {
+      "message": "Aukščiau pateiktame pavyzdyje nurodytas URL yra atidarytame skirtuke, kuris nurodo, kad nurodytas URL atidaromas naujame skirtuke Kas 15 minučių."
+   },
+   "custmMinSchExm2": {
+      "message": "Aukščiau pateiktame pavyzdyje nurodytas URL yra uždarymo skirtuke, o tai reiškia, kad nurodytas URL, atidarytas naujame skirtuke, bus uždarytas po 15 minučių."
+   },
+   "customSecondWarning": {
+      "message": "Tinkinta antroji funkcija yra eksperimentinė ir gali tinkamai neveikti, jei sekundžių skaičius yra mažesnis nei 60."
+   },
+   "darkMode": {
+      "message": "Tamsusis režimas"
+   },
+   "datNotCopy": {
+      "message": "Kai kurie duomenys nenukopijuojami dėl netinkamo URL."
+   },
+   "dataSaved": {
+      "message": "Laikmačio duomenys sėkmingai išsaugoti"
+   },
+   "date": {
+      "message": "Data"
+   },
+   "dateIsOutOfRange": {
+      "message": "Data nepatenka į diapazoną"
+   },
+   "day": {
+      "message": "Diena"
+   },
+   "december": {
+      "message": "gruodį"
+   },
+   "delete": {
+      "message": "Ištrinti"
+   },
+   "deleteScheduleTb": {
+      "message": "Ištrinti suplanuotą skirtuką."
+   },
+   "description": {
+      "message": "Aprašymas"
+   },
+   "developedBy": {
+      "message": "Sukūrė:"
+   },
+   "doNotCloseInPinnedTabs": {
+      "message": "Neuždarykite prisegtų skirtukų"
+   },
+   "doNotShowNotification": {
+      "message": "Nerodyti pranešimo"
+   },
+   "domainName": {
+      "message": "Domeno vardas"
+   },
+   "downloadCloseTbSampleCsv": {
+      "message": "Atsisiųskite CSV uždarymo skirtuko pavyzdį, kad pamatytumėte reikiamo formato pavyzdį"
+   },
+   "downloadOpenTbSampleCsv": {
+      "message": "Atsisiųskite atidaryto skirtuko CSV pavyzdį, kad pamatytumėte reikiamo formato pavyzdį"
+   },
+   "editScheduleTb": {
+      "message": "Redaguoti suplanuotą skirtuką."
+   },
+   "email": {
+      "message": "El. paštas"
+   },
+   "enterDateToCloseTab": {
+      "message": "Įveskite datą čia, kad uždarytumėte tvarkaraščio skirtuką."
+   },
+   "enterDateToOpen": {
+      "message": "Įveskite datą, kad atidarytumėte tvarkaraščio skirtuką."
+   },
+   "enterMiniutesToCloseTb": {
+      "message": "Įveskite minutes, kad uždarytumėte skirtuką."
+   },
+   "enterMiniutesToOpen": {
+      "message": "Įveskite minutes, kad atidarytumėte tvarkaraščio skirtuką."
+   },
+   "enterMinute": {
+      "message": "Įveskite minutę"
+   },
+   "enterSecond": {
+      "message": "Įveskite Antrą"
+   },
+   "enterSecondsToCloseTab": {
+      "message": "Įveskite sekundes, kad uždarytumėte skirtuką."
+   },
+   "enterSecondsToOpen": {
+      "message": "Įveskite sekundes, kad atidarytumėte tvarkaraščio skirtuką."
+   },
+   "enterTilteOfScheduleUrl": {
+      "message": "Įveskite suplanuoto URL pavadinimą."
+   },
+   "enterTimeToCloseTab": {
+      "message": "Įveskite laiką čia, kad uždarytumėte tvarkaraščio skirtuką."
+   },
+   "enterTimeToSchedule": {
+      "message": "Įveskite laiką, kad atidarytumėte tvarkaraščio skirtuką."
+   },
+   "enterValidEmail": {
+      "message": "Įveskite galiojantį el"
+   },
+   "enterValidUrl": {
+      "message": "Įveskite tinkamą URL"
+   },
+   "enterValueInCloseSec": {
+      "message": "Įveskite vertę artimiausiomis sekundėmis"
+   },
+   "enterValueInOpenCloseSec": {
+      "message": "Įveskite vertę atidarymo arba uždarymo sekundėmis"
+   },
+   "enterValueInOpenMinutes": {
+      "message": "Įveskite vertę atviromis minutėmis"
+   },
+   "enterVlaueInCloseMinutes": {
+      "message": "Įveskite vertę artimiausiomis minutėmis"
+   },
+   "enterVlaueInOpenCloseMin": {
+      "message": "Įveskite vertę atviros arba uždarytos minutėmis"
+   },
+   "enterVlaueInOpenSeconds": {
+      "message": "Įveskite vertę atviromis sekundėmis"
+   },
+   "enterYourURLToSchedule": {
+      "message": "Norėdami suplanuoti, įveskite URL."
+   },
+   "every": {
+      "message": "kas"
+   },
+   "every10Min": {
+      "message": "Kas 10 minučių"
+   },
+   "every1Minute": {
+      "message": "kas 1 minutę"
+   },
+   "every30Min": {
+      "message": "Kas 30 minučių"
+   },
+   "every5Min": {
+      "message": "Kas 5 minutes"
+   },
+   "everyDay": {
+      "message": "Kiekvieną dieną"
+   },
+   "everyDayAt": {
+      "message": "kiekvieną dieną val"
+   },
+   "everyHour": {
+      "message": "Kiekvieną valandą"
+   },
+   "everyMinute": {
+      "message": "Kiekvieną minutę"
+   },
+   "everyMonth": {
+      "message": "Kiekvieną mėnesį"
+   },
+   "everyMonthOn": {
+      "message": "kiekvieną mėnesį"
+   },
+   "everyMonthOnDay": {
+      "message": "kiekvieną mėnesį dieną"
+   },
+   "everyWeek": {
+      "message": "Kiekvieną savaitę"
+   },
+   "everyWeekOn": {
+      "message": "kiekvieną savaitę"
+   },
+   "everyYear": {
+      "message": "Kiekvienais metais"
+   },
+   "everyYesrOn": {
+      "message": "kiekvienais metais"
+   },
+   "evr10MinSch": {
+      "message": "2. Kas 10 minučių tvarkaraštis"
+   },
+   "evr10MinSchExm1": {
+      "message": "Aukščiau pateiktame pavyzdyje nurodytas URL yra atidarytame skirtuke, o tai reiškia, kad nurodytas URL bus atidarytas naujame skirtuke Kas 10 minučių."
+   },
+   "evr10MinSchExm2": {
+      "message": "Aukščiau pateiktame pavyzdyje nurodytas URL yra uždarymo skirtuke, o tai reiškia, kad nurodytas URL, atidarytas naujame skirtuke, bus uždarytas po 10 minučių."
+   },
+   "evrDaySch": {
+      "message": "3. Kasdienis tvarkaraštis"
+   },
+   "evrDaySchExm1": {
+      "message": "Aukščiau pateiktame pavyzdyje nurodytas URL yra atidarytame skirtuke, o tai reiškia, kad jis bus atidarytas naujame skirtuke Kiekvieną dieną 17:27 val."
+   },
+   "evrDaySchExm2": {
+      "message": "Aukščiau pateiktame pavyzdyje nurodytas URL yra uždarymo skirtuke, o tai reiškia, kad jis uždarys jau atidarytą skirtuką kiekvieną dieną 17:27 val."
+   },
+   "evrMonthSch": {
+      "message": "5. Kiekvieno mėnesio tvarkaraštis"
+   },
+   "evrMonthSchExm1": {
+      "message": "Aukščiau pateiktame pavyzdyje nurodytas URL yra atidarytame skirtuke, kuris nurodo, kad jis bus atidarytas naujame skirtuke kiekvieną mėnesį 25 dieną 13:45"
+   },
+   "evrMonthSchExm2": {
+      "message": "Aukščiau pateiktame pavyzdyje nurodytas URL yra uždarymo skirtuke, o tai reiškia, kad jis uždarys jau atidarytą skirtuką kiekvieną mėnesį 25 dieną 13:45"
+   },
+   "evrWeekSch": {
+      "message": "4. Kiekvienos savaitės tvarkaraštis"
+   },
+   "evrWeekSchExm1": {
+      "message": "Aukščiau pateiktame pavyzdyje nurodytas URL yra atidarytame skirtuke, o tai reiškia, kad jis bus atidarytas naujame skirtuke kiekvieną savaitę \u003Cb>pirmadieniais ir antradieniais\u003C/b> 17:00 val ."
+   },
+   "evrWeekSchExm2": {
+      "message": "Aukščiau pateiktame pavyzdyje nurodytas URL yra uždarymo skirtuke, kuris nurodo, kad jis uždarys jau atidarytą skirtuką kiekvieną savaitę 17:00 pirmadieniais \u003Cb>ir antradieniais\u003C/b> ."
+   },
+   "evrWeekSchExm3": {
+      "message": "Aukščiau pateiktame pavyzdyje savaitės laikmatyje galima pasirinkti kelias dienas."
+   },
+   "evrYearSch": {
+      "message": "6.Kiekvienų metų tvarkaraštis"
+   },
+   "evrYearSchExm1": {
+      "message": "Aukščiau pateiktame pavyzdyje nurodytas URL yra atidarytame skirtuke, o tai reiškia, kad jis bus atidarytas naujame skirtuke Kiekvienais metais sausio 1 d., 13:35"
+   },
+   "evrYearSchExm2": {
+      "message": "Aukščiau pateiktame pavyzdyje nurodytas URL yra uždarymo skirtuke, o tai reiškia, kad jis uždarys jau atidarytą skirtuką kiekvienais metais sausio 1 d., 13:35"
+   },
+   "exampleSort": {
+      "message": "pvz"
+   },
+   "exdMaxLim": {
+      "message": "Viršytas didžiausias leistinas įrenginių skaičius!"
+   },
+   "exmpOpnClsTbSch": {
+      "message": "Pavyzdys, kaip atidaryti ir uždaryti skirtuką skirtukų planuoklyje"
+   },
+   "expLicKy": {
+      "message": "Šis licencijos raktas nebegalioja."
+   },
+   "export": {
+      "message": "Eksportuoti"
+   },
+   "exportBefore": {
+      "message": "Jūs turite\u003Cexday>\u003C/exday>liko dienų, užsiprenumeruokite, kad galėtumėte toliau mėgautis aukščiausios kokybės funkcija"
+   },
+   "exportClsTbDta": {
+      "message": "Eksportuokite uždarymo skirtuko duomenis"
+   },
+   "exportOpenTbDt": {
+      "message": "Eksportuokite atidaryto skirtuko duomenis"
+   },
+   "exportedData": {
+      "message": "Laikmačio duomenys sėkmingai eksportuoti"
+   },
+   "extensionShouldAble": {
+      "message": "Dabar plėtinys turėtų galėti uždaryti skirtukus inkognito režimu."
+   },
+   "faq": {
+      "message": "DUK"
+   },
+   "faq_1": {
+      "message": "Kas yra skirtukų planuoklis su automatiniu atidarymu ir uždarymu?"
+   },
+   "faq_10": {
+      "message": "Kaip peržiūrėti suplanuotus skirtukus?"
+   },
+   "faq_11": {
+      "message": "Ar privaloma pildyti ir atidarymo, ir uždarymo laiką?"
+   },
+   "faq_12": {
+      "message": "Ką veikia automatinio fokusavimo skirtuko, visų suplanuotų skirtukų suaktyvinimo ir maitinimo režimo funkcijos?"
+   },
+   "faq_13": {
+      "message": "Ar galiu atidaryti / uždaryti suplanuotą svetainės nuorodą inkognito skirtuke?"
+   },
+   "faq_14": {
+      "message": "Kam naudingas skirtukas Atnaujinti, jei URL jau atidarytas?"
+   },
+   "faq_2": {
+      "message": "Kuo naudinga svetainės nuoroda?"
+   },
+   "faq_3": {
+      "message": "Kaip suplanuoti URL naudojant skirtukų planuoklę?"
+   },
+   "faq_4": {
+      "message": "Kas yra parinktis „Atidaryti URL fone“?"
+   },
+   "faq_5": {
+      "message": "Ar galiu neleisti plėtiniui uždaryti prisegtų skirtukų?"
+   },
+   "faq_6": {
+      "message": "Ką reiškia tvarkaraščio tipas „Abu“?"
+   },
+   "faq_7": {
+      "message": "Kaip veikia „URL filtravimo“ funkcija?"
+   },
+   "faq_8": {
+      "message": "Ar galiu išjungti suplanuotą skirtuką jo neištrindamas?"
+   },
+   "faq_9": {
+      "message": "Ar gausiu pranešimus apie suplanuotus skirtukus?"
+   },
+   "faq_a_1": {
+      "message": "\u003Cp>Skirtukų planuoklis su automatiniu atidarymu ir uždarymu yra naršyklės plėtinys, leidžiantis vartotojams suplanuoti skirtukų atidarymą ir uždarymą automatiškai nustatytu laiku. Vartotojai gali pasirinkti vienkartinį tvarkaraštį arba nustatyti pasikartojančius grafikus su įvairiomis dažnio parinktimis. Šis plėtinys turi keletą naudotojų tikslų ir suteikia daug jums naudingų funkcijų.\u003C/p>"
+   },
+   "faq_a_10": {
+      "message": "Visi suplanuoti skirtukai rodomi sąraše, kuriame rodomas pavadinimas, svetainės nuoroda, atidarymo ir uždarymo laikas, būsena ir veiksmai, kuriuos galite atlikti (pvz., aktyvuoti, redaguoti, ištrinti)."
+   },
+   "faq_a_11": {
+      "message": "Ne, galite suplanuoti darbo arba uždarymo laiką. Tačiau privalote užpildyti arba pasirinkti reikiamus laukus, pažymėtus žvaigždute (*)."
+   },
+   "faq_a_12": {
+      "message": "Automatinio fokusavimo skirtukas užtikrina, kad atidarius suplanuotą skirtuką, Aktyvinti visus suplanuotus skirtukus galite vienu spustelėjimu greitai įjungti visus suplanuotus skirtukus. Maitinimo režimas optimizuoja plėtinio našumą efektyviau valdydamas naršyklės išteklius."
+   },
+   "faq_a_13": {
+      "message": "Taip, galite pasirinkti atidaryti suplanuotą skirtuką inkognito režimu, pasirinkę parinktį „Atidaryti inkognito režimu“. Galite pasirinkti uždaryti tik inkognito skirtukus, pasirinkę parinktį „Uždaryti tik inkognito skirtukus“, jei plėtinio nustatymuose įgalinta „Leisti inkognito režimu“."
+   },
+   "faq_a_14": {
+      "message": "Kai ši parinktis įjungta, plėtinys automatiškai atnaujins esamą skirtuką, jei tas pats URL jau atidarytas jūsų naršyklėje. Tai neleidžia atidaryti pasikartojančių skirtukų ir užtikrina, kad visada būtų įkelta naujausia puslapio versija."
+   },
+   "faq_a_14_1": {
+      "message": "Jei bandysite atidaryti https://github.com/ ir jis jau atidarytas kitame skirtuke, plėtinys tiesiog atnaujins tą skirtuką, o ne atidarys naują."
+   },
+   "faq_a_14_2": {
+      "message": "Jei https://github.com/ jau atidarytas trijuose skirtukuose, plėtinys atnaujins visus tris skirtukus."
+   },
+   "faq_a_2": {
+      "message": "Svetainės nuoroda yra jūsų naršyklės atidaryto skirtuko svetainės adresas. Žemiau paminėta, kaip galite naudoti svetainės adresą."
+   },
+   "faq_a_3": {
+      "message": "Norėdami suplanuoti URL, įveskite svetainės nuorodą, suteikite tvarkaraščiui pavadinimą, pasirinkite dažnumą (vieną kartą, kas minutę, kasdien ir kt.) ir pasirinkite atidarymo bei uždarymo laiką. Taip pat galite nurodyti datą, dieną arba sekundes, kad atidarytumėte ir uždarytumėte skirtuką."
+   },
+   "faq_a_4": {
+      "message": "\u003Cp>Ši parinktis suteikia visišką valdymą, kaip planuoti URL atidarymą fone, nekreipiant dėmesio į naują skirtuką. URL bus atidarytas tyliai, kol toliau dirbsite su kitais skirtukais. Tai ypač naudinga, kai reikia, kad naršyklė gautų duomenis iš suplanuoto URL, nerodant jo aktyviai, pvz., GET API užklausos atveju.\u003C/p>\u003Cbr> \u003Cp>Pavyzdžiui, jei norite reguliariai gauti duomenis iš API galinio taško nustatytu laiku, galite naudoti šią efektyvią parinktį, kad užklausa būtų vykdoma fone neatidarant naujo matomo skirtuko.\u003C/p>"
+   },
+   "faq_a_5": {
+      "message": "Taip, yra galimybė neleisti uždaryti prisegtų skirtukų. Pažymėkite parinktį „Neuždaryti prisegtų skirtukų“, kad įsitikintumėte, jog šie skirtukai lieka atidaryti, net jei atitinka kitus uždarymo kriterijus."
+   },
+   "faq_a_6": {
+      "message": "Tvarkaraščio tipas „Abu“ suteikia galimybę visiškai valdyti, kada atidaromas ir uždaromas skirtukas, todėl galite nustatyti konkretų abiejų veiksmų laiką."
+   },
+   "faq_a_7": {
+      "message": "URL filtravimas užtikrina, kad tik konkreti URL dalis turi atitikti, kad būtų atliktas suplanuotas veiksmas. Tai naudinga, kai norite automatizuoti tam tikrus veiksmus, pagrįstus dalinėmis URL atitiktimis. Pavyzdžiui, jei pažymėsite URL filtravimo parinktį URL https://example.com/page, ji taip pat bus taikoma tokiems URL kaip https://example.com/page/123, https://example.com/ page?query=example ir https://subdomain.example.com/puslapis."
+   },
+   "faq_a_8": {
+      "message": "Naudodami parinktį „Suaktyvinti šį suplanuotą skirtuką“ galite lengvai suaktyvinti arba išjungti suplanuotus skirtukus, todėl galite lanksčiai tvarkyti tvarkaraščius neprarandant konfigūracijų."
+   },
+   "faq_a_9": {
+      "message": "Pagal numatytuosius nustatymus gausite pranešimus. Tačiau jei norite sustabdyti pranešimus, galite pažymėti parinktį „Nerodyti pranešimų“, kad juos išjungtumėte."
+   },
+   "february": {
+      "message": "vasario mėn"
+   },
+   "filterTips": {
+      "message": "Filtras taikomas po „https://“ arba „www.“, pvz., „github.com“"
+   },
+   "for_exp": {
+      "message": "Pavyzdžiui"
+   },
+   "freeForever": {
+      "message": "Nemokamai amžinai"
+   },
+   "freeSchedule": {
+      "message": "nemokamas tvarkaraštis"
+   },
+   "freeTral": {
+      "message": "Kaip vertinamas ankstyvas vartotojas, jums patiks\u003Crday>120\u003C/rday>dienų nemokama prieiga prieš pereinant prie naujo mokamo plano – dėkojame už nuolatinį palaikymą!\u003Cp class=\"p-t-5\">Jūs turite\u003Cb>\u003Cspan>\u003C/span>\u003C/b>liko dienos\u003Crday>120\u003C/rday>- laisvas dienos laikotarpis.\u003Cafex class=\"warning\">\u003Cafex>\u003C/afex>\u003C/afex>\u003C/p> "
+   },
+   "frequentlyAskedQuestions": {
+      "message": "Dažnai užduodami klausimai"
+   },
+   "friday": {
+      "message": "penktadienis"
+   },
+   "getThisPlan": {
+      "message": "Gaukite šį planą"
+   },
+   "goToSettingsPageToSchedule": {
+      "message": "Eikite į nustatymų puslapį ir suplanuokite URL atidarymą ir uždarymą."
+   },
+   "goURL": {
+      "message": "Eikite į URL"
+   },
+   "helpAccordion12": {
+      "message": "Ar šis plėtinys veikia miego / sustabdymo režimu?"
+   },
+   "helpAccordion3": {
+      "message": "Ar galiu suplanuoti skirtuko atidarymą inkognito režimu?"
+   },
+   "helpAccordion6": {
+      "message": "Kas yra \"Baigėsi laikas\"?"
+   },
+   "helpAccordion7": {
+      "message": "Ar galiu eksportuoti suplanuotą URL?"
+   },
+   "helpAccordion8": {
+      "message": "Ar galiu importuoti į planuoti URL?"
+   },
+   "helpPanelBodyDesc12First": {
+      "message": "Ne, šis plėtinys neveiks miego / sustabdymo režimu."
+   },
+   "helpPanelBodyDesc12Second": {
+      "message": "Jei atidarymo arba uždarymo skirtuke suplanuotas koks nors URL, kompiuteris automatiškai neįsijungs į miego arba sustabdymo režimą."
+   },
+   "helpPanelBodyDesc3": {
+      "message": "Taip, galite pasirinkti atidaryti suplanuotą skirtuką inkognito režimu, pasirinkę parinktį „Atidaryti inkognito režimu“. Įsitikinkite, kad naršyklės plėtinio nustatymuose įgalinta plėtinio parinktis „Leisti inkognito režimu“."
+   },
+   "helpPanelBodyDesc6": {
+      "message": "- Nurodyta data ir laikas praėjo nuo dabartinės datos ir laiko, tada bus rodomas tekstas \"Laikas pasibaigė\"."
+   },
+   "helpPanelBodyDesc7": {
+      "message": "Taip, galite eksportuoti jau suplanuotą atidarytą skirtuką ir uždaryti skirtuko URL csv formatu ir naudoti jį su kita sistema, kad importuotumėte tą URL."
+   },
+   "helpPanelBodyDesc8": {
+      "message": "Taip, galite importuoti galiojantį atidarymo ir uždarymo URL csv formatu. Importuotas csv formatas bus automatiškai suplanuotas nurodytu laiku"
+   },
+   "herAreStepsToAllow": {
+      "message": "Štai „Google Chrome“ „Leisti inkognito režimu“ veiksmai:"
+   },
+   "home": {
+      "message": "Pradžia"
+   },
+   "hour_minute_close": {
+      "message": "Kiekvieną valandą Uždaryti minutę"
+   },
+   "hour_minute_open": {
+      "message": "Kiekvieną valandą atviros minutės"
+   },
+   "how_to_use_tab": {
+      "message": "Kaip naudoti skirtukų planavimo priemonę?"
+   },
+   "import": {
+      "message": "Importuoti"
+   },
+   "importClsTbDta": {
+      "message": "Importuoti skirtuko uždarymo duomenis"
+   },
+   "importExport": {
+      "message": "Importuoti/eksportuoti"
+   },
+   "importOpenTbDt": {
+      "message": "Importuokite atidaryto skirtuko duomenis"
+   },
+   "importedRecored": {
+      "message": ", importuota įrašyta"
+   },
+   "inactivateScheduleTab": {
+      "message": "Išaktyvinti suplanuotą skirtuką."
+   },
+   "inactive": {
+      "message": "Neaktyvus"
+   },
+   "inactiveSch": {
+      "message": "8. Neaktyvus URL"
+   },
+   "inactiveSchExm1": {
+      "message": "Aukščiau pateiktame pavyzdyje nurodytas URL yra atidarytame skirtuke arba uždarytame skirtuke, o tai reiškia, kad nurodytas URL yra neaktyvus ir neatliks jokių veiksmų."
+   },
+   "inactiveThisScheduledTabs": {
+      "message": "Suaktyvinkite šį suplanuotą skirtuką"
+   },
+   "invalidDuplicate": {
+      "message": ", įrašytas dublikatas arba neteisingas"
+   },
+   "invldLicKy": {
+      "message": "Neteisingas licencijos raktas!"
+   },
+   "isClose": {
+      "message": "yra arti"
+   },
+   "isOpen": {
+      "message": "yra atvira"
+   },
+   "january": {
+      "message": "sausio mėn"
+   },
+   "july": {
+      "message": "liepos mėn"
+   },
+   "june": {
+      "message": "birželio mėn"
+   },
+   "licKeyDis": {
+      "message": "Šis licencijos raktas išjungtas."
+   },
+   "listTitle": {
+      "message": "Skirtukų planuoklis"
+   },
+   "loading": {
+      "message": "Prašome palaukti..."
+   },
+   "locale": {
+      "message": "lt"
+   },
+   "march": {
+      "message": "kovo mėn"
+   },
+   "maxSchedule": {
+      "message": "4 Maksimalus tvarkaraščio limitas"
+   },
+   "may": {
+      "message": "gegužės mėn"
+   },
+   "mintValid": {
+      "message": "Reikalinga mažiausiai 1 minutė"
+   },
+   "minute": {
+      "message": "Minutė"
+   },
+   "minutesNotLessThan1": {
+      "message": "Minutės turi būti ne trumpesnės kaip 1."
+   },
+   "monday": {
+      "message": "pirmadienis"
+   },
+   "month": {
+      "message": "Mėnuo"
+   },
+   "monthly": {
+      "message": "Kas mėnesį"
+   },
+   "more": {
+      "message": "daugiau"
+   },
+   "mostSubscribe": {
+      "message": "Dauguma prenumeruoja"
+   },
+   "no": {
+      "message": "Nr"
+   },
+   "noDataToExport": {
+      "message": "Nėra eksportuojamų duomenų."
+   },
+   "noScheduledTabs": {
+      "message": "Nėra suplanuotų skirtukų"
+   },
+   "noTimerSetAddNewTimer": {
+      "message": "Laikmatis nenustatytas, spustelėkite mygtuką Pridėti, kad nustatytumėte naują laikmatį"
+   },
+   "not_show_tutorial": {
+      "message": "Daugiau nerodyti šios mokymo programos"
+   },
+   "notificationOpenTab": {
+      "message": "13. Pranešimas atidarius / uždarius skirtuką URL"
+   },
+   "notificationOpenTabExm1": {
+      "message": "Aukščiau pateiktame pavyzdyje nurodytas URL yra atidarytame skirtuke, kuriame teigiama, kad jis pateiks pranešimą ir atidarys / uždarys URL naujame skirtuke kas 5 minutes."
+   },
+   "notifications": {
+      "message": "Pranešimas"
+   },
+   "november": {
+      "message": "lapkritis"
+   },
+   "october": {
+      "message": "spalis"
+   },
+   "onTheExtensionDetailPage": {
+      "message": "Išsamios plėtinio informacijos puslapyje slinkite žemyn ir raskite parinktį „Leisti inkognito režimu“."
+   },
+   "oneTime": {
+      "message": "Vieną kartą"
+   },
+   "oneTmSch": {
+      "message": "1. Vieno laiko tvarkaraštis"
+   },
+   "oneTmSchExm1": {
+      "message": "Aukščiau pateiktame pavyzdyje nurodytas URL yra atidarytame skirtuke, o tai reiškia, kad jis bus atidarytas naujame skirtuke vieną kartą 2023-01-21 13:45"
+   },
+   "oneTmSchExm2": {
+      "message": "Aukščiau pateiktame pavyzdyje nurodytas URL yra uždarymo skirtuke, o tai reiškia, kad jis uždarys visus konkrečius atitikusius URL skirtukus 2023-01-21 13:45"
+   },
+   "open": {
+      "message": "Atidaryti"
+   },
+   "openBackground": {
+      "message": "Jei taip, įkelkite URL fone neatidarant jo naujame skirtuke"
+   },
+   "openDate": {
+      "message": "Atidarymo data"
+   },
+   "openDay": {
+      "message": "Atvirų durų diena"
+   },
+   "openEveryDayOn": {
+      "message": "Atidaryta kiekvieną dieną"
+   },
+   "openEveryMonthOn": {
+      "message": "Atidaryta kiekvieną mėnesį kiekvieną dieną"
+   },
+   "openEveryWeekOn": {
+      "message": "Atidaryta kiekvieną savaitę"
+   },
+   "openEveryYearOn": {
+      "message": "Atidaryta kiekvienais metais"
+   },
+   "openGoogleChrome": {
+      "message": "Atidarykite Google Chrome."
+   },
+   "openInBackground": {
+      "message": "Atidarykite URL fone"
+   },
+   "openInEvery": {
+      "message": "Atidaryti kiekviename"
+   },
+   "openInIncognito": {
+      "message": "Atidaryti inkognito režimu"
+   },
+   "openMinute": {
+      "message": "Atviros minutės"
+   },
+   "openOnDay": {
+      "message": "Atidaryta dieną"
+   },
+   "openOnEvery": {
+      "message": "Atidaryti kiekvieną"
+   },
+   "openSecond": {
+      "message": "Atidaryti antrą"
+   },
+   "openSecondsMoreThan5": {
+      "message": "Atidarytos sekundės turėtų būti ilgesnės nei 5."
+   },
+   "openTabSchedule": {
+      "message": "Atidaryti skirtuko tvarkaraštį"
+   },
+   "openTabURL": {
+      "message": "Atidaryti skirtuko URL"
+   },
+   "openTime": {
+      "message": "Atidarymo laikas"
+   },
+   "openUrl": {
+      "message": "Atidarykite svetainės nuorodą"
+   },
+   "openWeek": {
+      "message": "Atvirų durų savaitė"
+   },
+   "openWeeks": {
+      "message": "Atvirų durų savaitės"
+   },
+   "open_on": {
+      "message": "Atidaryti"
+   },
+   "optional": {
+      "message": "Neprivaloma"
+   },
+   "or": {
+      "message": "arba"
+   },
+   "outof": {
+      "message": "iš"
+   },
+   "pagePath": {
+      "message": "Puslapio kelias"
+   },
+   "paidFeature": {
+      "message": "Mokama funkcija"
+   },
+   "pauseSchedule": {
+      "message": "Pradėti arba sustabdyti visus tvarkaraščius"
+   },
+   "pauseTabScheduler": {
+      "message": "Pristabdytas skirtukų planuoklis"
+   },
+   "pleaseAllowIncognitoMessage": {
+      "message": "Išsamioje plėtinio dalyje įgalinkite parinktį „Leisti inkognito režimu“. Instrukcijas rasite mokymo programos puslapyje."
+   },
+   "pleaseShareYourSuggestions": {
+      "message": "Pasidalykite savo pasiūlymu."
+   },
+   "plsShreAnySugWithUs": {
+      "message": "Pateikite pasiūlymą, kaip mus patobulinti"
+   },
+   "powerMode": {
+      "message": "Maitinimo režimas"
+   },
+   "premium": {
+      "message": "Premium"
+   },
+   "pricePlan": {
+      "message": "Kainos ir planai"
+   },
+   "privcyPolicy": {
+      "message": "Privatumo politika"
+   },
+   "prowerModeTip": {
+      "message": "Įjunkite maitinimo režimą, kad sistema visada būtų aktyvi"
+   },
+   "put": {
+      "message": "Įdėkite"
+   },
+   "rateUs": {
+      "message": "Įvertinkite mus"
+   },
+   "removeDuplicateEntry": {
+      "message": "Pašalinkite pasikartojančius įrašus"
+   },
+   "removeOpenTbURL": {
+      "message": "Pašalinti atidaryto skirtuko URL"
+   },
+   "repeat": {
+      "message": "Pakartokite"
+   },
+   "requiredMsg": {
+      "message": "Privaloma"
+   },
+   "rmvClsTb": {
+      "message": "Pašalinti uždarymo skirtuko URL"
+   },
+   "sameTabs": {
+      "message": "Atnaujinkite skirtuką, jei URL jau atidarytas"
+   },
+   "sameTabsInfo": {
+      "message": "Neleiskite atidaryti kelių to paties URL skirtukų. Pavyzdžiui, jei www.google.com jau atidarytas, tas esamas skirtukas bus atnaujintas, užuot atidarius naują skirtuką."
+   },
+   "sampleCsvOpenPath": {
+      "message": "../sample_csv/en/open_tab_sample.csv"
+   },
+   "sampleFile": {
+      "message": "Pavyzdinis failas"
+   },
+   "saturday": {
+      "message": "šeštadienis"
+   },
+   "savOpnData": {
+      "message": "Išsaugokite atidaryto skirtuko duomenis"
+   },
+   "save": {
+      "message": "Išsaugoti"
+   },
+   "saveClsTbData": {
+      "message": "Išsaugokite uždarymo skirtuko duomenis"
+   },
+   "saveSchedule": {
+      "message": "Išsaugoti tvarkaraštį"
+   },
+   "scheduleCloseTab": {
+      "message": "Tvarkaraštis Uždaryti skirtuką"
+   },
+   "scheduleCurrentTab": {
+      "message": "Suplanuoti dabartinį skirtuką"
+   },
+   "scheduleOpenTab": {
+      "message": "Tvarkaraštis Atidaryti skirtuką"
+   },
+   "scheduledTabIsAlreadyExistWithSameTimer": {
+      "message": "Šis suplanuotas skirtukas jau yra su tuo pačiu laikmačiu."
+   },
+   "scheduledTabList": {
+      "message": "Suplanuotų skirtukų sąrašas"
+   },
+   "scheduledType": {
+      "message": "Tvarkaraščio tipas"
+   },
+   "search": {
+      "message": "Ieškoti"
+   },
+   "secValid": {
+      "message": "Reikia mažiausiai 5 sekundžių"
+   },
+   "second": {
+      "message": "Antra"
+   },
+   "selectCloseDate": {
+      "message": "Pasirinkite uždarymo datą"
+   },
+   "selectCloseDay": {
+      "message": "Pasirinkite uždarymo dieną"
+   },
+   "selectCloseTime": {
+      "message": "Pasirinkite uždarymo laiką"
+   },
+   "selectColumn": {
+      "message": "Pasirinkite stulpelį"
+   },
+   "selectDateAndTime": {
+      "message": "Norėdami atidaryti naują skirtuką, pasirinkite datą ir laiką"
+   },
+   "selectDateAndTimeClsTb": {
+      "message": "Norėdami uždaryti skirtuką, pasirinkite datą ir laiką"
+   },
+   "selectDayToCloseSchTb": {
+      "message": "Pasirinkite dieną, kad uždarytumėte tvarkaraščio skirtuką."
+   },
+   "selectDayToClsTb": {
+      "message": "Pasirinkite dieną, kad uždarytumėte skirtuką"
+   },
+   "selectDayToSchdule": {
+      "message": "Pasirinkite dieną planuoti skirtuką."
+   },
+   "selectDaysInWeek": {
+      "message": "Pasirinkite savaitės dienas"
+   },
+   "selectDaysInWeekIClsTime": {
+      "message": "Pasirinkite savaitės dienas uždarymo laikmatyje."
+   },
+   "selectDaysInWeekIOpClsTime": {
+      "message": "Atidarymo arba uždarymo laikmatyje pasirinkite savaitės dienas."
+   },
+   "selectDaysInWeekIOpTime": {
+      "message": "Atidarymo laikmatyje pasirinkite savaitės dienas."
+   },
+   "selectFrequency": {
+      "message": "Pasirinkite Dažnis"
+   },
+   "selectFrequencyOfScheduleUrl": {
+      "message": "Pasirinkite suplanuoto URL dažnumą."
+   },
+   "selectOpenDate": {
+      "message": "Pasirinkite atidarymo datą"
+   },
+   "selectOpenDay": {
+      "message": "Pasirinkite atvirų durų dieną"
+   },
+   "selectOpenOrClose": {
+      "message": "Pasirinkite atidarymo ir uždarymo laiką"
+   },
+   "selectOpenOrCloseDate": {
+      "message": "Pasirinkite atidarymo ir uždarymo datą"
+   },
+   "selectOpenOrCloseDay": {
+      "message": "Pasirinkite atidarymo ir uždarymo dieną"
+   },
+   "selectOpenTime": {
+      "message": "Pasirinkite darbo laiką"
+   },
+   "selectPreferredLanguage": {
+      "message": "Pasirinkite pageidaujamą kalbą."
+   },
+   "selectToOpenTab": {
+      "message": "Pasirinkite dieną, kad atidarytumėte naują skirtuką"
+   },
+   "selectTypTimerClsTb": {
+      "message": "Norėdami uždaryti skirtuką, pasirinkite laikmačio tipą"
+   },
+   "selectTypeOfSchedule": {
+      "message": "Pasirinkite tvarkaraščio tipą, jei norite atidaryti ir uždaryti, tada pasirinkite „Abu“."
+   },
+   "selectTypeOfTimer": {
+      "message": "Norėdami atidaryti naują skirtuką, pasirinkite laikmačio tipą"
+   },
+   "select_weeks": {
+      "message": "Pasirinkite Savaitės"
+   },
+   "september": {
+      "message": "rugsėjis"
+   },
+   "settingSave": {
+      "message": "Nustatymai sėkmingai išsaugoti"
+   },
+   "settingToClose": {
+      "message": "Skirtuko uždarymo inkognito režimu nustatymas."
+   },
+   "shareYourSuggestionWithUs": {
+      "message": "Pasidalykite savo pasiūlymais su mumis.."
+   },
+   "slectDayToScheduleWeekly": {
+      "message": "Pasirinkite dienas, kad planuotumėte skirtuką kas savaitę."
+   },
+   "slectMinute": {
+      "message": "Pasirinkite Minutė"
+   },
+   "smthngWrng": {
+      "message": "Kažkas nutiko"
+   },
+   "softpulseInfotech": {
+      "message": "Softpulse Infotech"
+   },
+   "somethingWentWrong": {
+      "message": "Kažkas nutiko. Atnaujinkite puslapį ir bandykite dar kartą."
+   },
+   "status": {
+      "message": "Būsena"
+   },
+   "subcrKeyShldNEmpt": {
+      "message": "Įveskite prenumeratos raktą."
+   },
+   "subdomain": {
+      "message": "Subdomenas"
+   },
+   "subkeyInputTitle": {
+      "message": "Įveskite prenumeratos raktą"
+   },
+   "submFeedBack": {
+      "message": "Pateikti"
+   },
+   "suggForTbSch": {
+      "message": "Pasiūlymas skirtukų planuokliui"
+   },
+   "suggestionAndRateUs": {
+      "message": "Pasiūlykite ir įvertinkite mus"
+   },
+   "sunday": {
+      "message": "sekmadienis"
+   },
+   "tabCloseOneTime": {
+      "message": "Skirtukas užsidarys tik vieną kartą"
+   },
+   "tabSchTutorial": {
+      "message": "Skirtukų planuoklio pamoka"
+   },
+   "tabScheduler": {
+      "message": "Skirtukų planuoklis"
+   },
+   "tabSchedulerOptions": {
+      "message": "Skirtukų planavimo parinktys"
+   },
+   "tabWillOpenOneTime": {
+      "message": "Skirtukas bus atidarytas tik vieną kartą"
+   },
+   "tabWillOpenWhenBrowserOpen": {
+      "message": "Skirtukas atsidarys, kai bus atidaryta naršyklė"
+   },
+   "termCondition": {
+      "message": "Sąlygos ir sąlygos"
+   },
+   "thanksFrRev": {
+      "message": "Dėkojame už atsiliepimą"
+   },
+   "thnkUFeedBack": {
+      "message": "Dėkojame už pasiūlymą"
+   },
+   "thnkUFrUsngTbSch": {
+      "message": "Pateikite pasiūlymą, kaip mus patobulinti"
+   },
+   "thursday": {
+      "message": "ketvirtadienis"
+   },
+   "time": {
+      "message": "Laikas"
+   },
+   "timeExpired": {
+      "message": "Baigėsi laikas"
+   },
+   "timer": {
+      "message": "Laikmatis"
+   },
+   "title": {
+      "message": "Pavadinimas"
+   },
+   "titleLengtWarn": {
+      "message": "Pavadinimo ilgis neturi viršyti 200 simbolių."
+   },
+   "toScheduledOpenTbMsg": {
+      "message": "Norėdami atidaryti suplanuotą skirtuką, panaikinkite URL filtravimo žymėjimą."
+   },
+   "toogleCloseTab": {
+      "message": "Pradėti / sustabdyti visų uždarymo skirtukų URL tvarkaraščio signalą"
+   },
+   "toogleDarkmode": {
+      "message": "Norėdami tinkinti savo žiūrėjimo patirtį, perjunkite iš tamsaus režimo į numatytąjį režimą ir atvirkščiai."
+   },
+   "toogleOff": {
+      "message": "Išjungta"
+   },
+   "toogleOn": {
+      "message": "Įjungta"
+   },
+   "toogleOpenTab": {
+      "message": "Pradėti / sustabdyti visų atidarytų skirtukų URL tvarkaraščio signalą"
+   },
+   "topLevelDomain": {
+      "message": "Aukščiausio lygio domenas"
+   },
+   "totalProcessed": {
+      "message": "Iš viso apdorota įrašyta"
+   },
+   "tuesday": {
+      "message": "antradienis"
+   },
+   "tutorialImg1": {
+      "message": "\u003Cimg src=\"../images/en/1.png\">"
+   },
+   "tutorialImg10": {
+      "message": "\u003Cimg src=\"../images/en/10.png\">"
+   },
+   "tutorialImg11": {
+      "message": "\u003Cimg src=\"../images/en/11.png\">"
+   },
+   "tutorialImg12": {
+      "message": "\u003Cimg src=\"../images/en/12.png\">"
+   },
+   "tutorialImg13": {
+      "message": "\u003Cimg src=\"../images/en/13.png\">"
+   },
+   "tutorialImg14": {
+      "message": "\u003Cimg src=\"../images/en/14.png\">"
+   },
+   "tutorialImg2": {
+      "message": "\u003Cimg src=\"../images/en/2.png\">"
+   },
+   "tutorialImg3": {
+      "message": "\u003Cimg src=\"../images/en/3.png\">"
+   },
+   "tutorialImg4": {
+      "message": "\u003Cimg src=\"../images/en/4.png\">"
+   },
+   "tutorialImg5": {
+      "message": "\u003Cimg src=\"../images/en/5.png\">"
+   },
+   "tutorialImg6": {
+      "message": "\u003Cimg src=\"../images/en/6.png\">"
+   },
+   "tutorialImg7": {
+      "message": "\u003Cimg src=\"../images/en/7.png\">"
+   },
+   "tutorialImg8": {
+      "message": "\u003Cimg src=\"../images/en/8.png\">"
+   },
+   "tutorialImg9": {
+      "message": "\u003Cimg src=\"../images/en/9.png\">"
+   },
+   "uncheckAll": {
+      "message": "Panaikinkite visų žymėjimą"
+   },
+   "unlimitedSchedule": {
+      "message": "Neribotas tvarkaraščio limitas"
+   },
+   "unspecifiedURL": {
+      "message": "11. URL nenurodytas kelias"
+   },
+   "unspecifiedURLExm1": {
+      "message": "Aukščiau pateiktame pavyzdyje nurodytas URL yra uždarymo skirtuke, o tai nurodo, kad duotas URL, kuris atidarytas naujame skirtuke ir prasideda bei baigiasi nežinomu žiniatinklio adresu, bus uždarytas po 5 minučių."
+   },
+   "upgradePlan": {
+      "message": "Įsigykite planą ARBA prisijunkite ir atnaujinkite savo planą, kad atrakintumėte daugiau funkcijų."
+   },
+   "upgradePlanUnlock": {
+      "message": "Atnaujinkite savo planą, kad atrakintumėte daugiau funkcijų."
+   },
+   "uploadValidFormat": {
+      "message": "Įkelkite tinkamą formatą"
+   },
+   "url": {
+      "message": "URL"
+   },
+   "urlContExat": {
+      "message": "URL filtravimas"
+   },
+   "urlEndWithUnspesifiedPth": {
+      "message": "9. URL pabaiga nenurodytu keliu"
+   },
+   "urlEndWithUnspesifiedPthExm1": {
+      "message": "Aukščiau pateiktame pavyzdyje nurodytas URL yra uždarymo skirtuke, kuriame teigiama, kad nurodytas URL, atidarytas naujame skirtuke ir pasibaigęs nežinomu keliu, bus uždarytas po 5 minučių."
+   },
+   "urlFilterInfo": {
+      "message": "Yra tikrinamas URL reikia tik dalies URL, o tikrinamas tikslus URL turi tiksliai atitikti nurodytą URL"
+   },
+   "urlFilterinCLoseTb": {
+      "message": "14. URL filtravimas uždarant skirtuką URL"
+   },
+   "urlFilterinCLoseTbExample": {
+      "message": "Aukščiau pateiktame pavyzdyje nurodytas URL yra uždarymo skirtuke, o tai reiškia, kad jau atidaryto skirtuko URL atitiko tam tikrą nurodyto URL dalį, todėl jis uždarys tą skirtuką"
+   },
+   "urlIsRequired": {
+      "message": "Būtina svetainės nuoroda"
+   },
+   "urlNotvalid": {
+      "message": "URL neteisingas"
+   },
+   "urlStartWithUnspesifiedPth": {
+      "message": "10. URL prasideda nenurodytu keliu"
+   },
+   "urlStartWithUnspesifiedPthExm1": {
+      "message": "Aukščiau pateiktame pavyzdyje nurodytas URL yra uždarymo skirtuke, o tai nurodo, kad nurodytas URL, atidarytas naujame skirtuke ir prasidedantis nežinomu padomeniu \u003Cb>„www“\u003C/b> arba \u003Cb>„tinklaraštis“,\u003C/b> bus uždarytas po 5 minučių."
+   },
+   "useSpecificUrl": {
+      "message": "Naudokite konkrečią svetainės nuorodą"
+   },
+   "useSpecificUrl1": {
+      "message": "Lauke Svetainės nuoroda į uždarytą naršyklės skirtuką turite parašyti tikslų padomenį, aukščiausio lygio domeną, domeno pavadinimą ir puslapio kelią."
+   },
+   "useSpecificUrl2": {
+      "message": "Naudokite uždarytą visų naršyklės skirtuką"
+   },
+   "useSpecificUrl3": {
+      "message": "Naudokite konkrečią ir visą svetainės nuorodą"
+   },
+   "useUnSpecificUrl1": {
+      "message": "Naudokite nenurodytą svetainės nuorodą"
+   },
+   "useUnSpecificUrl2": {
+      "message": "Naudoti pradėkite nuo nenurodytos svetainės nuorodos"
+   },
+   "useUnSpecificUrl3": {
+      "message": "Naudokite pabaigą su nenurodyta svetainės nuoroda"
+   },
+   "used": {
+      "message": "Jūs naudojote"
+   },
+   "validFormatCsv": {
+      "message": "Koks galiojantis CSV failo formatas importuojant?"
+   },
+   "websiteLink": {
+      "message": "Svetainės nuoroda"
+   },
+   "websiteUrl": {
+      "message": "Svetainės URL"
+   },
+   "wednesday": {
+      "message": "trečiadienį"
+   },
+   "weekName": {
+      "message": "Savaitės pavadinimas"
+   },
+   "weekly": {
+      "message": "Kas savaitę"
+   },
+   "whenExtensionTabAppears": {
+      "message": "Kai pasirodys skirtukas Plėtiniai, suraskite skirtukų planuoklį su automatiniu atidarymu ir uždarymu, kad įjungtumėte inkognito režimą, ir spustelėkite šalia jo esantį mygtuką „Išsami informacija“."
+   },
+   "whenMenuPopup": {
+      "message": "Kai pasirodys meniu, pasirinkite „Tvarkyti plėtinius“."
+   },
+   "withSignMustFill": {
+      "message": "Su \u003Cspan>*\u003C/span> ženklu reikia užpildyti arba pasirinkti, pasirinkite atidarymo arba uždarymo laiką arba abu laiką."
+   },
+   "writeYourDescriptionAboutSchUrl": {
+      "message": "Čia parašykite savo suplanuoto URL aprašymą."
+   },
+   "yes": {
+      "message": "Taip"
+   },
+   "yourEmailAddress": {
+      "message": "Jūsų el. pašto adresas"
+   },
+   "yourScheduleUrl": {
+      "message": "Jūsų tvarkaraščio URL"
+   }
+}

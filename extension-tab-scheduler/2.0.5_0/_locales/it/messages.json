@@ -1,0 +1,1448 @@
+{
+   "10_min": {
+      "message": "10 minuti"
+   },
+   "1_min": {
+      "message": "1 minuto"
+   },
+   "30_min": {
+      "message": "30 minuti"
+   },
+   "5_min": {
+      "message": "5 minuti"
+   },
+   "60_min": {
+      "message": "ora"
+   },
+   "Dashboard": {
+      "message": "Pannello di controllo"
+   },
+   "Login": {
+      "message": "Login"
+   },
+   "Off": {
+      "message": "Spento"
+   },
+   "On": {
+      "message": "SU"
+   },
+   "Selected": {
+      "message": "Selezionato"
+   },
+   "Settings": {
+      "message": "Impostazioni"
+   },
+   "Tutorial": {
+      "message": "Esercitazione"
+   },
+   "action": {
+      "message": "Azione"
+   },
+   "activateScheduleTab": {
+      "message": "Attiva la scheda programmata."
+   },
+   "active": {
+      "message": "Attivo"
+   },
+   "activeAllScheduleTab": {
+      "message": "Esecuzione del pianificatore di schede"
+   },
+   "activeStatus": {
+      "message": "Stato"
+   },
+   "actvInactvNotification": {
+      "message": "Visualizza la notifica quando la scheda della pianificazione è aperta"
+   },
+   "actvInactvOpnTb": {
+      "message": "Scheda aperta attiva o inattiva"
+   },
+   "actvIntvClsTb": {
+      "message": "Chiudi scheda attiva o inattiva"
+   },
+   "add": {
+      "message": "Aggiungere"
+   },
+   "addDescription": {
+      "message": "Aggiungi descrizione"
+   },
+   "addNew": {
+      "message": "Aggiungi nuovo"
+   },
+   "addNewURlCls": {
+      "message": "Aggiungi nuovo URL per chiudere"
+   },
+   "addNewUrlToOpen": {
+      "message": "Aggiungi un nuovo URL da aprire in una nuova finestra"
+   },
+   "addTitle": {
+      "message": "Aggiungi titolo"
+   },
+   "addWebsite": {
+      "message": "Aggiungi sito web"
+   },
+   "all": {
+      "message": "Tutto"
+   },
+   "allInputFieldReq": {
+      "message": "Tutti i campi sono obbligatori"
+   },
+   "all_weeks": {
+      "message": "Tutta la settimana"
+   },
+   "alreadyPurchase": {
+      "message": "Hai già acquistato? Inserisci la chiave qui"
+   },
+   "andAt": {
+      "message": "e a"
+   },
+   "annually": {
+      "message": "Annualmente"
+   },
+   "appDesc": {
+      "message": "Le schede del browser si apriranno e si chiuderanno automaticamente all'ora selezionata. L'utente può attivare/disattivare l'elenco in base alle esigenze"
+   },
+   "appName": {
+      "message": "Tab Scheduler con apertura e chiusura automatica"
+   },
+   "april": {
+      "message": "aprile"
+   },
+   "at": {
+      "message": "A"
+   },
+   "august": {
+      "message": "agosto"
+   },
+   "autoFocus": {
+      "message": "Scheda Messa a fuoco automatica"
+   },
+   "autoFocustip": {
+      "message": "Se attivata, la nuova scheda verrà aperta in stato attivo/focus."
+   },
+   "autofocustip": {
+      "message": "Le nuove schede aperte verranno messe a fuoco automaticamente"
+   },
+   "basic": {
+      "message": "Di base"
+   },
+   "billedAnnyally": {
+      "message": "Fatturato annualmente"
+   },
+   "billedMonthly": {
+      "message": "Fatturato mensilmente"
+   },
+   "both": {
+      "message": "Entrambi"
+   },
+   "browserOpen": {
+      "message": "Nel browser aperto"
+   },
+   "browserWebAddress": {
+      "message": "L'indirizzo web del browser inizia e finisce con un indirizzo web sconosciuto. Inserisci \u003Cb>*\u003C/b> su entrambi i lati del campo Link al sito web."
+   },
+   "browserWebAddress2": {
+      "message": "L'indirizzo web del browser contiene il nome di dominio google.com, che verrà chiuso nei minuti indicati, indipendentemente dal sottodominio, e dal percorso della pagina. Inserisci \u003Cb>*\u003C/b> su entrambi i lati del nome di dominio e del TLD"
+   },
+   "browserWebAddress3": {
+      "message": "L'indirizzo web del browser inizia con un nome di dominio sconosciuto e termina con un percorso di pagina sconosciuto"
+   },
+   "browserWebAddress31": {
+      "message": "verrà chiuso dopo alcuni minuti, metti \u003Cb>*\u003C/b> su entrambi i lati del TLD"
+   },
+   "browserWebAddress4": {
+      "message": "L'indirizzo web del browser inizia con un indirizzo web sconosciuto. Metti \u003Cb>*\u003C/b> all'inizio del tuo URL. Ricorda che l'indirizzo web del browser deve corrispondere al tuo URL dopo che hai scritto \u003Cb>* .\u003C/b>"
+   },
+   "browserWebAddress41": {
+      "message": "L'indirizzo web del browser inizia con un sottodominio sconosciuto"
+   },
+   "browserWebAddress42": {
+      "message": "all'inizio del collegamento al tuo sito web"
+   },
+   "browserWebAddress5": {
+      "message": "L'indirizzo web del browser termina con un indirizzo web sconosciuto. Metti \u003Cb>*\u003C/b> alla fine del tuo URL. Ricorda che il tuo indirizzo web deve corrispondere prima di aver scritto \u003Cb>* .\u003C/b>"
+   },
+   "browserWebAddress51": {
+      "message": "L'indirizzo web del browser termina con un percorso di pagina sconosciuto. Inserisci \u003Cb>*\u003C/b> alla fine del tuo indirizzo web"
+   },
+   "browserWebAddress6": {
+      "message": "Inserisci solo \u003Cb>*\u003C/b> nel campo indirizzo del sito web per chiudere tutte le schede del browser. Dopo aver chiuso tutte le schede, il browser verrà chiuso automaticamente."
+   },
+   "browserWebAddress7": {
+      "message": "Devi aver scritto il sottodominio esatto, il dominio di primo livello, il nome di dominio e il percorso della pagina nel campo URL per aprirlo nella scheda del browser."
+   },
+   "browserWebAddress8": {
+      "message": "Puoi aprire l'URL in una data e un'ora specifiche, un mese specifico, una settimana specifica, un anno specifico e ripetere l'ora"
+   },
+   "buyPlan": {
+      "message": "Acquista il piano"
+   },
+   "buycofee": {
+      "message": "Offrimi un caffè"
+   },
+   "cancel": {
+      "message": "Cancellare"
+   },
+   "changeLanguage": {
+      "message": "Cambia lingua"
+   },
+   "checkAll": {
+      "message": "Seleziona tutto"
+   },
+   "checkThisOpToPreventClosePinTb": {
+      "message": "Selezionare questa opzione per impedire la chiusura delle schede bloccate."
+   },
+   "checkThisOptionOnlyPartOfUrlMtch": {
+      "message": "Selezionare questa opzione se è necessario trovare una corrispondenza solo per una parte dell'URL."
+   },
+   "checkThisOptionToActivate": {
+      "message": "Seleziona questa opzione per attivare o disattivare l'URL pianificato."
+   },
+   "checkThisOptionToCloseOnly": {
+      "message": "Seleziona questa opzione per chiudere solo le schede in incognito. Abilita inoltre l'opzione 'Allow in Incognito' nei dettagli dell'estensione. Per istruzioni, fai riferimento alla pagina del tutorial."
+   },
+   "checkThisOptionToCloseOnlyInIncgnitoTb": {
+      "message": "Seleziona questa opzione per chiudere solo le schede in incognito. Abilita inoltre l'opzione 'Allow in Incognito' nei dettagli dell'estensione. Per istruzioni, fai riferimento alla pagina del tutorial."
+   },
+   "checkThisOptionToInBg": {
+      "message": "Seleziona questa opzione se vuoi aprire l'URL in background senza aprirlo in una nuova scheda"
+   },
+   "checkThisOptionToInactivNotification": {
+      "message": "Seleziona questa opzione per disattivare la notifica sull'URL pianificato"
+   },
+   "checkThisOptionToOpen": {
+      "message": "Seleziona questa opzione se vuoi aprire il tuo URL in modalità di navigazione in incognito"
+   },
+   "checkThisOptionToOpenIncogito": {
+      "message": "Seleziona questa opzione se vuoi aprire il tuo URL in modalità di navigazione in incognito"
+   },
+   "checkThisOptionToPrevent": {
+      "message": "Selezionare questa opzione per impedire la chiusura delle schede bloccate."
+   },
+   "clickExtIcon": {
+      "message": "Fare clic sull'icona \"Estensioni\" nella barra degli strumenti, che assomiglia a un pezzo di puzzle."
+   },
+   "clickTheSwitch": {
+      "message": "Fare clic sull'interruttore accanto per attivarlo"
+   },
+   "close": {
+      "message": "Vicino"
+   },
+   "closeAllTab": {
+      "message": "12. Chiudere tutte le schede del browser"
+   },
+   "closeAllTabExm1": {
+      "message": "Nell'esempio sopra riportato l'URL specificato è nella scheda Chiudi, il che indica che chiuderà tutte le schede alle 12:00 del 25/2/2023"
+   },
+   "closeDate": {
+      "message": "Data di chiusura"
+   },
+   "closeDay": {
+      "message": "Giorno di chiusura"
+   },
+   "closeEveryYear": {
+      "message": "Chiuso ogni anno il"
+   },
+   "closeInEvery": {
+      "message": "Vicino in ogni"
+   },
+   "closeIncognitoTab": {
+      "message": "Chiudi solo le schede in incognito"
+   },
+   "closeMinute": {
+      "message": "Chiudi minuto"
+   },
+   "closeOnDay": {
+      "message": "Chiuso il giorno"
+   },
+   "closeOnEvery": {
+      "message": "Chiudi su ogni"
+   },
+   "closeOnEveryDay": {
+      "message": "Chiuso tutti i giorni"
+   },
+   "closeOnEveryMonth": {
+      "message": "Chiuso ogni mese il giorno"
+   },
+   "closeOnEveryWeek": {
+      "message": "Chiuso ogni settimana il"
+   },
+   "closeSecond": {
+      "message": "Chiudi Secondo"
+   },
+   "closeSeconsMoreThan5": {
+      "message": "I secondi ravvicinati dovrebbero essere più di 5."
+   },
+   "closeTabSchedule": {
+      "message": "Chiudi Scheda Programma"
+   },
+   "closeTabURL": {
+      "message": "Chiudi URL scheda"
+   },
+   "closeTime": {
+      "message": "Orario di chiusura"
+   },
+   "closeUrl": {
+      "message": "Chiudi collegamento al sito web"
+   },
+   "closeWeek": {
+      "message": "Settimana di chiusura"
+   },
+   "closeWeeks": {
+      "message": "Settimane di chiusura"
+   },
+   "close_on": {
+      "message": "Chiudi su"
+   },
+   "cngrtsForSubcr": {
+      "message": "Congratulazioni! Il tuo piano è stato attivato con successo."
+   },
+   "commonQuestionsAns": {
+      "message": "Domande e risposte comuni"
+   },
+   "copySucessClose": {
+      "message": "Chiudi scheda URL dati copiati in Apri scheda URL dati"
+   },
+   "createNewTimer": {
+      "message": "Crea nuovo timer"
+   },
+   "currentPlan": {
+      "message": "Piano attuale"
+   },
+   "currentTabSchedule": {
+      "message": "Programmazione attuale delle schede"
+   },
+   "currentTbScheduleTimer": {
+      "message": "Timer programmato per la scheda corrente."
+   },
+   "cusSec": {
+      "message": "Secondo personalizzato"
+   },
+   "custMin": {
+      "message": "Minuto personalizzato"
+   },
+   "custmMinSch": {
+      "message": "7. Programma personalizzato dei minuti"
+   },
+   "custmMinSchExm1": {
+      "message": "Nell'esempio sopra riportato l'URL specificato è nella scheda aperta, il che indica che l'URL specificato si apre in una nuova scheda ogni 15 minuti."
+   },
+   "custmMinSchExm2": {
+      "message": "Nell'esempio sopra, l'URL specificato si trova nella scheda Chiudi, il che significa che l'URL aperto in una nuova scheda verrà chiuso dopo 15 minuti."
+   },
+   "customSecondWarning": {
+      "message": "La funzionalità personalizzata dei secondi è sperimentale e potrebbe non funzionare correttamente se i secondi sono impostati su un valore inferiore a 60."
+   },
+   "darkMode": {
+      "message": "Modalità scura"
+   },
+   "datNotCopy": {
+      "message": "Alcuni dati non vengono copiati a causa di un URL non valido."
+   },
+   "dataSaved": {
+      "message": "I dati del timer sono stati salvati correttamente"
+   },
+   "date": {
+      "message": "Data"
+   },
+   "dateIsOutOfRange": {
+      "message": "La data è fuori intervallo"
+   },
+   "day": {
+      "message": "Giorno"
+   },
+   "december": {
+      "message": "Dicembre"
+   },
+   "delete": {
+      "message": "Eliminare"
+   },
+   "deleteScheduleTb": {
+      "message": "Elimina la scheda pianificata."
+   },
+   "description": {
+      "message": "Descrizione"
+   },
+   "developedBy": {
+      "message": "Sviluppato da:"
+   },
+   "doNotCloseInPinnedTabs": {
+      "message": "Non chiudere le schede bloccate"
+   },
+   "doNotShowNotification": {
+      "message": "Non mostrare la notifica"
+   },
+   "domainName": {
+      "message": "Nome di dominio"
+   },
+   "downloadCloseTbSampleCsv": {
+      "message": "Scarica un campione CSV con scheda chiusa per vedere un esempio del formato richiesto"
+   },
+   "downloadOpenTbSampleCsv": {
+      "message": "Scarica un campione CSV di scheda aperta per vedere un esempio del formato richiesto"
+   },
+   "editScheduleTb": {
+      "message": "Modifica scheda programmata."
+   },
+   "email": {
+      "message": "E-mail"
+   },
+   "enterDateToCloseTab": {
+      "message": "Inserisci la data qui per chiudere la scheda della pianificazione."
+   },
+   "enterDateToOpen": {
+      "message": "Inserisci la data per aprire la scheda del programma."
+   },
+   "enterMiniutesToCloseTb": {
+      "message": "Inserisci minuti per chiudere la scheda."
+   },
+   "enterMiniutesToOpen": {
+      "message": "Inserisci i minuti per aprire la scheda della programmazione."
+   },
+   "enterMinute": {
+      "message": "Inserisci minuto"
+   },
+   "enterSecond": {
+      "message": "Inserisci il secondo"
+   },
+   "enterSecondsToCloseTab": {
+      "message": "Inserisci i secondi per chiudere la scheda."
+   },
+   "enterSecondsToOpen": {
+      "message": "Inserisci i secondi per aprire la scheda della pianificazione."
+   },
+   "enterTilteOfScheduleUrl": {
+      "message": "Inserisci il titolo dell'URL programmato."
+   },
+   "enterTimeToCloseTab": {
+      "message": "Inserisci qui l'ora per chiudere la scheda della pianificazione."
+   },
+   "enterTimeToSchedule": {
+      "message": "Inserisci l'ora per aprire la scheda della pianificazione."
+   },
+   "enterValidEmail": {
+      "message": "Inserisci un indirizzo email valido"
+   },
+   "enterValidUrl": {
+      "message": "Inserisci un URL valido"
+   },
+   "enterValueInCloseSec": {
+      "message": "Inserisci il valore in pochi secondi"
+   },
+   "enterValueInOpenCloseSec": {
+      "message": "Inserisci il valore in secondi di apertura o chiusura"
+   },
+   "enterValueInOpenMinutes": {
+      "message": "Inserisci il valore nei minuti di apertura"
+   },
+   "enterVlaueInCloseMinutes": {
+      "message": "Inserisci il valore in minuti di chiusura"
+   },
+   "enterVlaueInOpenCloseMin": {
+      "message": "Inserisci il valore in minuti di apertura o chiusura"
+   },
+   "enterVlaueInOpenSeconds": {
+      "message": "Inserisci il valore in secondi di apertura"
+   },
+   "enterYourURLToSchedule": {
+      "message": "Inserisci l'URL per programmare."
+   },
+   "every": {
+      "message": "ogni"
+   },
+   "every10Min": {
+      "message": "Ogni 10 minuti"
+   },
+   "every1Minute": {
+      "message": "ogni 1 minuto"
+   },
+   "every30Min": {
+      "message": "Ogni 30 minuti"
+   },
+   "every5Min": {
+      "message": "Ogni 5 minuti"
+   },
+   "everyDay": {
+      "message": "Ogni giorno"
+   },
+   "everyDayAt": {
+      "message": "ogni giorno alle"
+   },
+   "everyHour": {
+      "message": "Ogni Ora"
+   },
+   "everyMinute": {
+      "message": "Ogni minuto"
+   },
+   "everyMonth": {
+      "message": "Ogni mese"
+   },
+   "everyMonthOn": {
+      "message": "ogni mese su"
+   },
+   "everyMonthOnDay": {
+      "message": "ogni mese il giorno"
+   },
+   "everyWeek": {
+      "message": "Ogni settimana"
+   },
+   "everyWeekOn": {
+      "message": "ogni settimana su"
+   },
+   "everyYear": {
+      "message": "Ogni anno"
+   },
+   "everyYesrOn": {
+      "message": "ogni anno su"
+   },
+   "evr10MinSch": {
+      "message": "2. Programmazione ogni 10 minuti"
+   },
+   "evr10MinSchExm1": {
+      "message": "Nell'esempio sopra riportato, l'URL specificato è in una scheda aperta, il che significa che l'URL specificato verrà aperto in una nuova scheda ogni 10 minuti."
+   },
+   "evr10MinSchExm2": {
+      "message": "Nell'esempio sopra, l'URL specificato si trova nella scheda Chiudi, il che significa che l'URL aperto in una nuova scheda verrà chiuso dopo 10 minuti."
+   },
+   "evrDaySch": {
+      "message": "3. Programma giornaliero"
+   },
+   "evrDaySchExm1": {
+      "message": "Nell'esempio sopra riportato l'URL fornito è nella scheda aperta, il che indica che verrà aperto in una nuova scheda ogni giorno alle 17:27"
+   },
+   "evrDaySchExm2": {
+      "message": "Nell'esempio sopra riportato l'URL specificato è nella scheda Chiudi, il che indica che chiuderà la scheda già aperta alle 17:27 di ogni giorno"
+   },
+   "evrMonthSch": {
+      "message": "5. Programma mensile"
+   },
+   "evrMonthSchExm1": {
+      "message": "Nell'esempio sopra riportato l'URL fornito è nella scheda aperta, che indica che si aprirà in una nuova scheda ogni mese alle 13:45 del giorno 25"
+   },
+   "evrMonthSchExm2": {
+      "message": "Nell'esempio sopra riportato l'URL specificato è nella scheda Chiudi, che indica che chiuderà la scheda già aperta ogni mese alle 13:45 del giorno 25"
+   },
+   "evrWeekSch": {
+      "message": "4. Programma settimanale"
+   },
+   "evrWeekSchExm1": {
+      "message": "Nell'esempio sopra, l'URL specificato si trova in una scheda aperta, il che indica che verrà aperto in una nuova scheda ogni settimana alle 17:00 di \u003Cb>lunedì e martedì\u003C/b> ."
+   },
+   "evrWeekSchExm2": {
+      "message": "Nell'esempio sopra, l'URL specificato si trova nella scheda Chiudi, che indica che chiuderà la scheda già aperta ogni settimana alle 17:00 di \u003Cb>lunedì e martedì\u003C/b> ."
+   },
+   "evrWeekSchExm3": {
+      "message": "Nell'esempio sopra, è possibile selezionare più giorni nel timer settimanale."
+   },
+   "evrYearSch": {
+      "message": "6. Programma annuale"
+   },
+   "evrYearSchExm1": {
+      "message": "Nell'esempio sopra riportato l'URL fornito è nella scheda aperta, il che indica che verrà aperto in una nuova scheda ogni anno alle 13:35 del 1° gennaio"
+   },
+   "evrYearSchExm2": {
+      "message": "Nell'esempio sopra riportato l'URL specificato è nella scheda Chiudi, il che indica che chiuderà la scheda già aperta ogni anno alle 13:35 del 1° gennaio"
+   },
+   "exampleSort": {
+      "message": "per esempio"
+   },
+   "exdMaxLim": {
+      "message": "Superato il numero massimo di dispositivi consentiti!"
+   },
+   "exmpOpnClsTbSch": {
+      "message": "Esempio di come aprire e chiudere una scheda in Tab Scheduler"
+   },
+   "expLicKy": {
+      "message": "Questa chiave di licenza è scaduta."
+   },
+   "export": {
+      "message": "Esportare"
+   },
+   "exportBefore": {
+      "message": "Hai\u003Cexday>\u003C/exday>giorni rimasti, iscriviti per continuare a usufruire delle funzionalità premium"
+   },
+   "exportClsTbDta": {
+      "message": "Esporta i dati della scheda di chiusura"
+   },
+   "exportOpenTbDt": {
+      "message": "Esportare i dati della scheda aperta"
+   },
+   "exportedData": {
+      "message": "Dati del timer esportati correttamente"
+   },
+   "extensionShouldAble": {
+      "message": "Ora l'estensione dovrebbe essere in grado di chiudere le schede in modalità di navigazione in incognito."
+   },
+   "faq": {
+      "message": "Domande frequenti"
+   },
+   "faq_1": {
+      "message": "Che cos'è Tab Scheduler con apertura e chiusura automatica?"
+   },
+   "faq_10": {
+      "message": "Come posso visualizzare le mie schede programmate?"
+   },
+   "faq_11": {
+      "message": "È obbligatorio compilare sia l'orario di apertura che quello di chiusura?"
+   },
+   "faq_12": {
+      "message": "A cosa servono le funzioni Scheda Messa a fuoco automatica, Attiva tutte le schede programmate e Modalità risparmio energia?"
+   },
+   "faq_13": {
+      "message": "Posso aprire/chiudere il collegamento al sito Web pianificato nella scheda di navigazione in incognito?"
+   },
+   "faq_14": {
+      "message": "A cosa serve la scheda Aggiorna se l'URL è già aperto?"
+   },
+   "faq_2": {
+      "message": "A cosa serve il collegamento al sito web?"
+   },
+   "faq_3": {
+      "message": "Come posso pianificare un URL utilizzando Tab Scheduler?"
+   },
+   "faq_4": {
+      "message": "Che cos'è l'opzione \"Apri URL in background\"?"
+   },
+   "faq_5": {
+      "message": "Posso impedire all'estensione di chiudere le schede bloccate?"
+   },
+   "faq_6": {
+      "message": "Cosa significa il tipo di pianificazione \"Entrambi\"?"
+   },
+   "faq_7": {
+      "message": "Come funziona la funzione \"Filtraggio URL\"?"
+   },
+   "faq_8": {
+      "message": "Posso disattivare una scheda pianificata senza eliminarla?"
+   },
+   "faq_9": {
+      "message": "Riceverò notifiche per le schede programmate?"
+   },
+   "faq_a_1": {
+      "message": "\u003Cp>Tab Scheduler with Auto Open and Close è un'estensione del browser che consente agli utenti di pianificare l'apertura e la chiusura automatica delle schede a orari stabiliti. Gli utenti possono selezionare una pianificazione una tantum o impostare pianificazioni ricorrenti con varie opzioni di frequenza. Questa estensione ha molteplici scopi per gli utenti e fornisce molte funzionalità utili.\u003C/p>"
+   },
+   "faq_a_10": {
+      "message": "Tutte le schede programmate vengono visualizzate in un elenco che mostra il titolo, il collegamento al sito Web, gli orari di apertura e chiusura, lo stato e le azioni che è possibile eseguire (ad esempio, attivare, modificare, eliminare)."
+   },
+   "faq_a_11": {
+      "message": "No, puoi programmare un orario di apertura o di chiusura. Tuttavia, devi compilare o selezionare i campi obbligatori contrassegnati con un asterisco (*)."
+   },
+   "faq_a_12": {
+      "message": "Auto Focus Tab assicura che quando si apre una scheda programmata, Activate All Scheduled Tabs ti consente di attivare rapidamente tutte le tue schede programmate con un solo clic. Power Mode ottimizza le prestazioni dell'estensione gestendo le risorse del browser in modo più efficiente."
+   },
+   "faq_a_13": {
+      "message": "Sì, puoi scegliere di aprire una scheda programmata in modalità di navigazione in incognito selezionando l'opzione \"Apri in modalità di navigazione in incognito\". Puoi scegliere di chiudere solo le schede di navigazione in incognito selezionando l'opzione \"Chiudi solo schede di navigazione in incognito\", a condizione che \"Consenti in modalità di navigazione in incognito\" sia abilitato nelle impostazioni dell'estensione."
+   },
+   "faq_a_14": {
+      "message": "Quando questa opzione è abilitata, l'estensione aggiornerà automaticamente una scheda esistente se lo stesso URL è già aperto nel tuo browser. Ciò impedisce l'apertura di schede duplicate e garantisce che tu abbia sempre caricata la versione più recente della pagina."
+   },
+   "faq_a_14_1": {
+      "message": "Se provi ad aprire https://github.com/ e questo è già aperto in un'altra scheda, l'estensione aggiornerà semplicemente quella scheda anziché aprirne una nuova."
+   },
+   "faq_a_14_2": {
+      "message": "Se https://github.com/ è già aperto in tre schede, l'estensione aggiornerà tutte e tre le schede."
+   },
+   "faq_a_2": {
+      "message": "Il collegamento al sito Web è l'indirizzo del sito Web della scheda aperta del tuo browser. Di seguito è riportato come puoi utilizzare l'indirizzo del sito Web."
+   },
+   "faq_a_3": {
+      "message": "Per pianificare un URL, inserisci il link del sito web, dai un titolo alla pianificazione, seleziona la frequenza (Una volta, Ogni minuto, Ogni giorno, ecc.) e scegli gli orari di apertura e chiusura. Puoi anche specificare una data, un giorno o dei secondi per aprire e chiudere la scheda."
+   },
+   "faq_a_4": {
+      "message": "\u003Cp>Questa opzione ti dà il pieno controllo per programmare un URL da aprire in background senza mettere a fuoco la nuova scheda. L'URL si aprirà silenziosamente mentre continui a lavorare su altre schede. È particolarmente utile quando hai bisogno che il browser recuperi i dati dall'URL programmato senza visualizzarli attivamente, come nel caso di una richiesta API GET.\u003C/p>\u003Cbr> \u003Cp>Ad esempio, se si desidera recuperare regolarmente dati da un endpoint API a un orario stabilito, è possibile utilizzare questa efficiente opzione per eseguire la richiesta in background senza aprire una nuova scheda visibile.\u003C/p>"
+   },
+   "faq_a_5": {
+      "message": "Sì, c'è un'opzione per impedire la chiusura delle schede bloccate. Seleziona l'opzione \"Non chiudere le schede bloccate\" per assicurarti che queste schede restino aperte anche se soddisfano altri criteri di chiusura."
+   },
+   "faq_a_6": {
+      "message": "Il tipo di pianificazione \"Entrambi\" ti offre il controllo completo su quando una scheda si apre e si chiude, consentendoti di impostare orari specifici per entrambe le azioni."
+   },
+   "faq_a_7": {
+      "message": "URL Filtering assicura che solo una parte specifica dell'URL debba corrispondere affinché l'azione pianificata abbia luogo. Ciò è utile quando si desidera automatizzare determinate azioni in base a corrispondenze URL parziali. Ad esempio, se si seleziona l'opzione URL Filtering per l'URL https://example.com/page, verrà applicata anche a URL come https://example.com/page/123, https://example.com/page?query=example e https://subdomain.example.com/page."
+   },
+   "faq_a_8": {
+      "message": "Con l'opzione \"Attiva questa scheda pianificata\" puoi attivare o disattivare facilmente le schede pianificate, ottenendo la flessibilità di gestire le tue pianificazioni senza perdere le configurazioni."
+   },
+   "faq_a_9": {
+      "message": "Di default, riceverai le notifiche. Tuttavia, se preferisci interrompere le notifiche, puoi selezionare l'opzione \"Non mostrare notifiche\" per disattivarle."
+   },
+   "february": {
+      "message": "Febbraio"
+   },
+   "filterTips": {
+      "message": "Il filtro si applica dopo 'https://' o 'www.', ad esempio 'github.com'"
+   },
+   "for_exp": {
+      "message": "Per esempio"
+   },
+   "freeForever": {
+      "message": "Libero per sempre"
+   },
+   "freeSchedule": {
+      "message": "orario libero"
+   },
+   "freeTral": {
+      "message": "Come stimato utente iniziale, potrai godere\u003Crday>120\u003C/rday>giorni di accesso gratuito prima di passare al nostro nuovo piano a pagamento: grazie per il tuo continuo supporto!\u003Cp class=\"p-t-5\">Hai\u003Cb>\u003Cspan>\u003C/span>\u003C/b>giorni rimanenti dal tuo\u003Crday>120\u003C/rday>-giorno di periodo libero.\u003Cafex class=\"warning\">\u003Cafex>\u003C/afex>\u003C/afex>\u003C/p> "
+   },
+   "frequentlyAskedQuestions": {
+      "message": "Domande frequenti"
+   },
+   "friday": {
+      "message": "Venerdì"
+   },
+   "getThisPlan": {
+      "message": "Ottieni questo piano"
+   },
+   "goToSettingsPageToSchedule": {
+      "message": "Vai alla pagina delle impostazioni per programmare l'apertura e la chiusura degli URL."
+   },
+   "goURL": {
+      "message": "Vai all'URL"
+   },
+   "helpAccordion12": {
+      "message": "Questa estensione funziona in modalità sospensione/sleep?"
+   },
+   "helpAccordion3": {
+      "message": "Posso programmare l'apertura di una scheda in modalità di navigazione in incognito?"
+   },
+   "helpAccordion6": {
+      "message": "Che cosa significa \"Tempo scaduto\"?"
+   },
+   "helpAccordion7": {
+      "message": "Posso esportare un URL programmato?"
+   },
+   "helpAccordion8": {
+      "message": "Posso importare nell'URL della pianificazione?"
+   },
+   "helpPanelBodyDesc12First": {
+      "message": "No, questa estensione non funziona in modalità sospensione/sleep."
+   },
+   "helpPanelBodyDesc12Second": {
+      "message": "Se un URL è programmato nella scheda Apri o Chiudi, il PC non entrerà automaticamente in modalità sospensione o di sospensione."
+   },
+   "helpPanelBodyDesc3": {
+      "message": "Sì, puoi scegliere di aprire una scheda programmata in modalità di navigazione in incognito selezionando l'opzione \"Apri in modalità di navigazione in incognito\". Assicurati che l'opzione \"Consenti in modalità di navigazione in incognito\" dell'estensione sia abilitata nelle impostazioni dell'estensione del browser."
+   },
+   "helpPanelBodyDesc6": {
+      "message": "- La data e l'ora specificate sono trascorse dalla data e dall'ora correnti, quindi verrà visualizzato il testo \"Tempo scaduto\"."
+   },
+   "helpPanelBodyDesc7": {
+      "message": "Sì, puoi esportare gli URL delle schede aperte e chiuse già programmate in formato CSV e utilizzarli con un altro sistema per importare tale URL."
+   },
+   "helpPanelBodyDesc8": {
+      "message": "Sì, puoi importare URL di apertura e chiusura validi in formato csv. Il formato csv importato verrà automaticamente programmato in un orario stabilito"
+   },
+   "herAreStepsToAllow": {
+      "message": "Ecco i passaggi per \"Consenti navigazione in incognito\" in Google Chrome:"
+   },
+   "home": {
+      "message": "Casa"
+   },
+   "hour_minute_close": {
+      "message": "Ogni ora Chiudi minuto"
+   },
+   "hour_minute_open": {
+      "message": "Ogni ora aperto minuto"
+   },
+   "how_to_use_tab": {
+      "message": "Come utilizzare Tab Scheduler?"
+   },
+   "import": {
+      "message": "Importare"
+   },
+   "importClsTbDta": {
+      "message": "Importa dati di chiusura scheda"
+   },
+   "importExport": {
+      "message": "Importazione/Esportazione"
+   },
+   "importOpenTbDt": {
+      "message": "Importa dati scheda aperta"
+   },
+   "importedRecored": {
+      "message": ", importato registrato"
+   },
+   "inactivateScheduleTab": {
+      "message": "Disattiva la scheda pianificata."
+   },
+   "inactive": {
+      "message": "Inattivo"
+   },
+   "inactiveSch": {
+      "message": "8.URL inattivo"
+   },
+   "inactiveSchExm1": {
+      "message": "Nell'esempio sopra, l'URL specificato si trova nella scheda aperta o nella scheda chiusa, il che indica che l'URL specificato è inattivo e non eseguirà alcuna azione."
+   },
+   "inactiveThisScheduledTabs": {
+      "message": "Attiva questa scheda programmata"
+   },
+   "invalidDuplicate": {
+      "message": ", duplicato o registrazione non valida"
+   },
+   "invldLicKy": {
+      "message": "Chiave di licenza non valida!"
+   },
+   "isClose": {
+      "message": "è vicino"
+   },
+   "isOpen": {
+      "message": "è aperto"
+   },
+   "january": {
+      "message": "Gennaio"
+   },
+   "july": {
+      "message": "Luglio"
+   },
+   "june": {
+      "message": "Giugno"
+   },
+   "licKeyDis": {
+      "message": "Questa chiave di licenza è disabilitata."
+   },
+   "listTitle": {
+      "message": "Pianificatore di schede"
+   },
+   "loading": {
+      "message": "Attendere prego..."
+   },
+   "locale": {
+      "message": "esso"
+   },
+   "march": {
+      "message": "Marzo"
+   },
+   "maxSchedule": {
+      "message": "4 Limite massimo di programmazione"
+   },
+   "may": {
+      "message": "Maggio"
+   },
+   "mintValid": {
+      "message": "È richiesto almeno 1 minuto"
+   },
+   "minute": {
+      "message": "Minuto"
+   },
+   "minutesNotLessThan1": {
+      "message": "Il minuto non deve essere inferiore a 1."
+   },
+   "monday": {
+      "message": "Lunedi"
+   },
+   "month": {
+      "message": "Mese"
+   },
+   "monthly": {
+      "message": "Mensile"
+   },
+   "more": {
+      "message": "Di più"
+   },
+   "mostSubscribe": {
+      "message": "La maggior parte si iscrive"
+   },
+   "no": {
+      "message": "NO"
+   },
+   "noDataToExport": {
+      "message": "Nessun dato da esportare."
+   },
+   "noScheduledTabs": {
+      "message": "Nessuna scheda programmata"
+   },
+   "noTimerSetAddNewTimer": {
+      "message": "Nessun timer impostato, fare clic sul pulsante Aggiungi per impostare un nuovo timer"
+   },
+   "not_show_tutorial": {
+      "message": "Non mostrare più questo tutorial"
+   },
+   "notificationOpenTab": {
+      "message": "13. Notifica su URL scheda aperta/chiusa"
+   },
+   "notificationOpenTabExm1": {
+      "message": "Nell'esempio sopra riportato, l'URL specificato si trova nella scheda aperta, il che indica che invierà una notifica e aprirà/chiuderà l'URL in una nuova scheda ogni 5 minuti."
+   },
+   "notifications": {
+      "message": "Notifica"
+   },
+   "november": {
+      "message": "novembre"
+   },
+   "october": {
+      "message": "ottobre"
+   },
+   "onTheExtensionDetailPage": {
+      "message": "Nella pagina dei dettagli dell'estensione, scorri verso il basso e individua l'opzione \"Consenti navigazione in incognito\"."
+   },
+   "oneTime": {
+      "message": "Una volta"
+   },
+   "oneTmSch": {
+      "message": "1. Programma una tantum"
+   },
+   "oneTmSchExm1": {
+      "message": "Nell'esempio sopra riportato l'URL specificato è nella scheda aperta, il che indica che si aprirà in una nuova scheda Una volta alle 13:45 del 21/1/2023"
+   },
+   "oneTmSchExm2": {
+      "message": "Nell'esempio sopra riportato l'URL specificato è nella scheda Chiudi, il che indica che chiuderà tutte le schede URL specifiche corrispondenti alle 13:45 del 21/1/2023"
+   },
+   "open": {
+      "message": "Aprire"
+   },
+   "openBackground": {
+      "message": "In caso affermativo, caricamento di un URL in background senza aprirlo in una nuova scheda"
+   },
+   "openDate": {
+      "message": "Data di apertura"
+   },
+   "openDay": {
+      "message": "Giornata delle porte aperte"
+   },
+   "openEveryDayOn": {
+      "message": "Aperto tutti i giorni il"
+   },
+   "openEveryMonthOn": {
+      "message": "Aperto tutti i mesi il giorno"
+   },
+   "openEveryWeekOn": {
+      "message": "Aperto tutte le settimane il"
+   },
+   "openEveryYearOn": {
+      "message": "Aperto ogni anno il"
+   },
+   "openGoogleChrome": {
+      "message": "Apri Google Chrome."
+   },
+   "openInBackground": {
+      "message": "Apri URL in background"
+   },
+   "openInEvery": {
+      "message": "Aperto in ogni"
+   },
+   "openInIncognito": {
+      "message": "Apri in modalità di navigazione in incognito"
+   },
+   "openMinute": {
+      "message": "Minuto aperto"
+   },
+   "openOnDay": {
+      "message": "Aperto di giorno"
+   },
+   "openOnEvery": {
+      "message": "Aperto tutti i giorni"
+   },
+   "openSecond": {
+      "message": "Aperto secondo"
+   },
+   "openSecondsMoreThan5": {
+      "message": "I secondi aperti dovrebbero essere più di 5."
+   },
+   "openTabSchedule": {
+      "message": "Apri la pianificazione delle schede"
+   },
+   "openTabURL": {
+      "message": "Apri URL della scheda"
+   },
+   "openTime": {
+      "message": "Orario di apertura"
+   },
+   "openUrl": {
+      "message": "Apri il collegamento al sito web"
+   },
+   "openWeek": {
+      "message": "Settimana delle porte aperte"
+   },
+   "openWeeks": {
+      "message": "Settimane Aperte"
+   },
+   "open_on": {
+      "message": "Aperto il"
+   },
+   "optional": {
+      "message": "Opzionale"
+   },
+   "or": {
+      "message": "O"
+   },
+   "outof": {
+      "message": "fuori da"
+   },
+   "pagePath": {
+      "message": "Percorso della pagina"
+   },
+   "paidFeature": {
+      "message": "Funzionalità a pagamento"
+   },
+   "pauseSchedule": {
+      "message": "Avvia o interrompi tutte le pianificazioni"
+   },
+   "pauseTabScheduler": {
+      "message": "Pianificatore di schede in pausa"
+   },
+   "pleaseAllowIncognitoMessage": {
+      "message": "Abilita l'opzione \"Consenti in Incognito\" nei dettagli dell'estensione. Per istruzioni, fai riferimento alla pagina del tutorial."
+   },
+   "pleaseShareYourSuggestions": {
+      "message": "Per favore condividi il tuo suggerimento."
+   },
+   "plsShreAnySugWithUs": {
+      "message": "Per favore, dacci un suggerimento per migliorarci"
+   },
+   "powerMode": {
+      "message": "Modalità di alimentazione"
+   },
+   "premium": {
+      "message": "Premio"
+   },
+   "pricePlan": {
+      "message": "Prezzi e piani"
+   },
+   "privcyPolicy": {
+      "message": "politica sulla riservatezza"
+   },
+   "prowerModeTip": {
+      "message": "Mantieni il sistema sempre attivo abilitando la modalità Power"
+   },
+   "put": {
+      "message": "Mettere"
+   },
+   "rateUs": {
+      "message": "Valutaci"
+   },
+   "removeDuplicateEntry": {
+      "message": "Si prega di rimuovere la voce duplicata"
+   },
+   "removeOpenTbURL": {
+      "message": "Rimuovi URL scheda aperta"
+   },
+   "repeat": {
+      "message": "Ripetere"
+   },
+   "requiredMsg": {
+      "message": "Necessario"
+   },
+   "rmvClsTb": {
+      "message": "Rimuovi URL di chiusura della scheda"
+   },
+   "sameTabs": {
+      "message": "Aggiorna la scheda se l'URL è già aperto"
+   },
+   "sameTabsInfo": {
+      "message": "Impedisci l'apertura di più schede per lo stesso URL. Ad esempio, se www.google.com è già aperto, la scheda esistente verrà aggiornata anziché aprirne una nuova."
+   },
+   "sampleCsvOpenPath": {
+      "message": "../sample_csv/en/open_tab_sample.csv"
+   },
+   "sampleFile": {
+      "message": "File di esempio"
+   },
+   "saturday": {
+      "message": "Sabato"
+   },
+   "savOpnData": {
+      "message": "Salva i dati della scheda aperta"
+   },
+   "save": {
+      "message": "Salva"
+   },
+   "saveClsTbData": {
+      "message": "Salva i dati della scheda di chiusura"
+   },
+   "saveSchedule": {
+      "message": "Salva la pianificazione"
+   },
+   "scheduleCloseTab": {
+      "message": "Chiudi scheda Pianificazione"
+   },
+   "scheduleCurrentTab": {
+      "message": "Pianifica la scheda corrente"
+   },
+   "scheduleOpenTab": {
+      "message": "Scheda aperta programma"
+   },
+   "scheduledTabIsAlreadyExistWithSameTimer": {
+      "message": "Questa scheda programmata esiste già con lo stesso timer."
+   },
+   "scheduledTabList": {
+      "message": "Elenco schede programmate"
+   },
+   "scheduledType": {
+      "message": "Tipo di programma"
+   },
+   "search": {
+      "message": "Ricerca"
+   },
+   "secValid": {
+      "message": "Sono richiesti almeno 5 secondi"
+   },
+   "second": {
+      "message": "Secondo"
+   },
+   "selectCloseDate": {
+      "message": "Seleziona la data di chiusura"
+   },
+   "selectCloseDay": {
+      "message": "Seleziona il giorno di chiusura"
+   },
+   "selectCloseTime": {
+      "message": "Seleziona l'orario di chiusura"
+   },
+   "selectColumn": {
+      "message": "Seleziona colonna"
+   },
+   "selectDateAndTime": {
+      "message": "Seleziona data e ora per aprire una nuova scheda"
+   },
+   "selectDateAndTimeClsTb": {
+      "message": "Seleziona data e ora per chiudere la scheda"
+   },
+   "selectDayToCloseSchTb": {
+      "message": "Seleziona il giorno per chiudere la scheda della programmazione."
+   },
+   "selectDayToClsTb": {
+      "message": "Seleziona il giorno per chiudere la scheda"
+   },
+   "selectDayToSchdule": {
+      "message": "Seleziona il giorno per pianificare la scheda."
+   },
+   "selectDaysInWeek": {
+      "message": "Seleziona i giorni della settimana"
+   },
+   "selectDaysInWeekIClsTime": {
+      "message": "Seleziona i giorni della settimana nel timer di chiusura."
+   },
+   "selectDaysInWeekIOpClsTime": {
+      "message": "Seleziona i giorni della settimana nel timer di apertura o chiusura."
+   },
+   "selectDaysInWeekIOpTime": {
+      "message": "Seleziona i giorni della settimana nel timer aperto."
+   },
+   "selectFrequency": {
+      "message": "Seleziona Frequenza"
+   },
+   "selectFrequencyOfScheduleUrl": {
+      "message": "Seleziona la frequenza dell'URL pianificato."
+   },
+   "selectOpenDate": {
+      "message": "Seleziona data di apertura"
+   },
+   "selectOpenDay": {
+      "message": "Seleziona il giorno di apertura"
+   },
+   "selectOpenOrClose": {
+      "message": "Seleziona l'orario di apertura e chiusura"
+   },
+   "selectOpenOrCloseDate": {
+      "message": "Seleziona la data di apertura e chiusura"
+   },
+   "selectOpenOrCloseDay": {
+      "message": "Seleziona il giorno di apertura e chiusura"
+   },
+   "selectOpenTime": {
+      "message": "Seleziona orario di apertura"
+   },
+   "selectPreferredLanguage": {
+      "message": "Seleziona la lingua preferita."
+   },
+   "selectToOpenTab": {
+      "message": "Seleziona il giorno per aprire una nuova scheda"
+   },
+   "selectTypTimerClsTb": {
+      "message": "Seleziona il tipo di timer per chiudere la scheda"
+   },
+   "selectTypeOfSchedule": {
+      "message": "Seleziona il tipo di pianificazione: se vuoi sia aprire che chiudere, seleziona \"Entrambi\"."
+   },
+   "selectTypeOfTimer": {
+      "message": "Seleziona il tipo di timer per aprire una nuova scheda"
+   },
+   "select_weeks": {
+      "message": "Seleziona settimane"
+   },
+   "september": {
+      "message": "settembre"
+   },
+   "settingSave": {
+      "message": "Le impostazioni sono state salvate correttamente"
+   },
+   "settingToClose": {
+      "message": "Impostazione per chiudere la scheda in modalità di navigazione in incognito."
+   },
+   "shareYourSuggestionWithUs": {
+      "message": "Condividete i vostri suggerimenti con noi."
+   },
+   "slectDayToScheduleWeekly": {
+      "message": "Seleziona i giorni in cui programmare la scheda settimanalmente."
+   },
+   "slectMinute": {
+      "message": "Seleziona minuto"
+   },
+   "smthngWrng": {
+      "message": "Qualcosa è andato storto"
+   },
+   "softpulseInfotech": {
+      "message": "Informazioni su Softpulse"
+   },
+   "somethingWentWrong": {
+      "message": "Qualcosa è andato storto. Aggiorna la pagina e riprova."
+   },
+   "status": {
+      "message": "Stato"
+   },
+   "subcrKeyShldNEmpt": {
+      "message": "Inserisci la chiave di abbonamento."
+   },
+   "subdomain": {
+      "message": "Sottodominio"
+   },
+   "subkeyInputTitle": {
+      "message": "Inserisci la chiave di abbonamento"
+   },
+   "submFeedBack": {
+      "message": "Invia"
+   },
+   "suggForTbSch": {
+      "message": "Suggerimento per il pianificatore di schede"
+   },
+   "suggestionAndRateUs": {
+      "message": "Suggerimenti e Valutaci"
+   },
+   "sunday": {
+      "message": "Domenica"
+   },
+   "tabCloseOneTime": {
+      "message": "La scheda verrà chiusa solo una volta"
+   },
+   "tabSchTutorial": {
+      "message": "Tutorial di Tab Scheduler"
+   },
+   "tabScheduler": {
+      "message": "Pianificatore di schede"
+   },
+   "tabSchedulerOptions": {
+      "message": "Opzioni di pianificazione delle schede"
+   },
+   "tabWillOpenOneTime": {
+      "message": "La scheda si aprirà solo una volta"
+   },
+   "tabWillOpenWhenBrowserOpen": {
+      "message": "La scheda si aprirà quando il browser verrà aperto"
+   },
+   "termCondition": {
+      "message": "Termini e condizioni"
+   },
+   "thanksFrRev": {
+      "message": "Grazie per la tua recensione"
+   },
+   "thnkUFeedBack": {
+      "message": "Grazie per il tuo suggerimento"
+   },
+   "thnkUFrUsngTbSch": {
+      "message": "Per favore, dacci un suggerimento per migliorarci"
+   },
+   "thursday": {
+      "message": "Giovedì"
+   },
+   "time": {
+      "message": "Tempo"
+   },
+   "timeExpired": {
+      "message": "Tempo scaduto"
+   },
+   "timer": {
+      "message": "Timer"
+   },
+   "title": {
+      "message": "Titolo"
+   },
+   "titleLengtWarn": {
+      "message": "La lunghezza del titolo non deve superare i 200 caratteri."
+   },
+   "toScheduledOpenTbMsg": {
+      "message": "Per programmare l'apertura della scheda, deselezionare il filtro URL."
+   },
+   "toogleCloseTab": {
+      "message": "Avvia/interrompi l'allarme programmato per tutti gli URL di chiusura delle schede"
+   },
+   "toogleDarkmode": {
+      "message": "Passa dalla modalità scura a quella predefinita per personalizzare la tua esperienza visiva."
+   },
+   "toogleOff": {
+      "message": "Spento"
+   },
+   "toogleOn": {
+      "message": "SU"
+   },
+   "toogleOpenTab": {
+      "message": "Avvia/interrompi l'allarme programmato per tutti gli URL delle schede aperte"
+   },
+   "topLevelDomain": {
+      "message": "Dominio di primo livello"
+   },
+   "totalProcessed": {
+      "message": "Totale registrato elaborato"
+   },
+   "tuesday": {
+      "message": "Martedì"
+   },
+   "tutorialImg1": {
+      "message": "\u003Cimg src=\"../images/en/1.png\">"
+   },
+   "tutorialImg10": {
+      "message": "\u003Cimg src=\"../images/en/10.png\">"
+   },
+   "tutorialImg11": {
+      "message": "\u003Cimg src=\"../images/en/11.png\">"
+   },
+   "tutorialImg12": {
+      "message": "\u003Cimg src=\"../images/en/12.png\">"
+   },
+   "tutorialImg13": {
+      "message": "\u003Cimg src=\"../images/en/13.png\">"
+   },
+   "tutorialImg14": {
+      "message": "\u003Cimg src=\"../images/en/14.png\">"
+   },
+   "tutorialImg2": {
+      "message": "\u003Cimg src=\"../images/en/2.png\">"
+   },
+   "tutorialImg3": {
+      "message": "\u003Cimg src=\"../images/en/3.png\">"
+   },
+   "tutorialImg4": {
+      "message": "\u003Cimg src=\"../images/en/4.png\">"
+   },
+   "tutorialImg5": {
+      "message": "\u003Cimg src=\"../images/en/5.png\">"
+   },
+   "tutorialImg6": {
+      "message": "\u003Cimg src=\"../images/en/6.png\">"
+   },
+   "tutorialImg7": {
+      "message": "\u003Cimg src=\"../images/en/7.png\">"
+   },
+   "tutorialImg8": {
+      "message": "\u003Cimg src=\"../images/en/8.png\">"
+   },
+   "tutorialImg9": {
+      "message": "\u003Cimg src=\"../images/en/9.png\">"
+   },
+   "uncheckAll": {
+      "message": "Deseleziona tutto"
+   },
+   "unlimitedSchedule": {
+      "message": "Limite di programmazione illimitato"
+   },
+   "unspecifiedURL": {
+      "message": "11. URL percorso non specificato"
+   },
+   "unspecifiedURLExm1": {
+      "message": "Nell'esempio sopra, l'URL specificato si trova nella scheda Chiudi, il che significa che l'URL specificato che si è aperto in una nuova scheda e che inizia e finisce con un indirizzo web sconosciuto verrà chiuso dopo 5 minuti."
+   },
+   "upgradePlan": {
+      "message": "Acquista un piano OPPURE accedi e aggiorna il tuo piano per sbloccare più funzionalità."
+   },
+   "upgradePlanUnlock": {
+      "message": "Aggiorna il tuo piano per sbloccare più funzionalità."
+   },
+   "uploadValidFormat": {
+      "message": "Si prega di caricare un formato valido"
+   },
+   "url": {
+      "message": "Indirizzo URL"
+   },
+   "urlContExat": {
+      "message": "Filtraggio URL"
+   },
+   "urlEndWithUnspesifiedPth": {
+      "message": "9. URL termina con percorso non specificato"
+   },
+   "urlEndWithUnspesifiedPthExm1": {
+      "message": "Nell'esempio sopra, l'URL specificato si trova nella scheda Chiudi, il che indica che l'URL specificato che si è aperto in una nuova scheda e termina con un percorso sconosciuto verrà chiuso dopo 5 minuti."
+   },
+   "urlFilterInfo": {
+      "message": "Contiene l'URL che viene controllato, necessita solo di una parte dell'URL e l'URL esatto che viene controllato deve corrispondere esattamente all'URL specificato"
+   },
+   "urlFilterinCLoseTb": {
+      "message": "14. Filtraggio URL alla chiusura della scheda URL"
+   },
+   "urlFilterinCLoseTbExample": {
+      "message": "Nell'esempio sopra riportato l'URL specificato è nella scheda Chiudi, il che indica che l'URL della scheda già aperta corrisponde ad alcune parti dell'URL specificato, quindi chiuderà quella scheda"
+   },
+   "urlIsRequired": {
+      "message": "Il collegamento al sito Web è obbligatorio"
+   },
+   "urlNotvalid": {
+      "message": "URL non valido"
+   },
+   "urlStartWithUnspesifiedPth": {
+      "message": "10. L'URL inizia con un percorso non specificato"
+   },
+   "urlStartWithUnspesifiedPthExm1": {
+      "message": "Nell'esempio sopra, l'URL specificato si trova nella scheda Chiudi, il che significa che l'URL che si è aperto in una nuova scheda e che inizia con un sottodominio sconosciuto \u003Cb>\"www\"\u003C/b> o \u003Cb>\"blog\"\u003C/b> verrà chiuso dopo 5 minuti."
+   },
+   "useSpecificUrl": {
+      "message": "Utilizzare un collegamento specifico al sito Web"
+   },
+   "useSpecificUrl1": {
+      "message": "Devi aver scritto il sottodominio esatto, il dominio di primo livello, il nome di dominio e il percorso della pagina nel campo Collegamento al sito web nella scheda del browser chiuso."
+   },
+   "useSpecificUrl2": {
+      "message": "Usa tutte le schede del browser chiuse"
+   },
+   "useSpecificUrl3": {
+      "message": "Utilizzare il collegamento al sito Web specifico e completo"
+   },
+   "useUnSpecificUrl1": {
+      "message": "Utilizzare un collegamento al sito Web non specificato"
+   },
+   "useUnSpecificUrl2": {
+      "message": "Utilizzare l'inizio con un collegamento al sito Web non specificato"
+   },
+   "useUnSpecificUrl3": {
+      "message": "Utilizzare la fine con un collegamento al sito Web non specificato"
+   },
+   "used": {
+      "message": "Hai usato"
+   },
+   "validFormatCsv": {
+      "message": "Qual è il formato di file CSV valido per l'importazione?"
+   },
+   "websiteLink": {
+      "message": "Collegamento al sito web"
+   },
+   "websiteUrl": {
+      "message": "URL del sito web"
+   },
+   "wednesday": {
+      "message": "Mercoledì"
+   },
+   "weekName": {
+      "message": "Nome della settimana"
+   },
+   "weekly": {
+      "message": "Settimanale"
+   },
+   "whenExtensionTabAppears": {
+      "message": "Quando viene visualizzata la scheda Estensioni, individua \"Pianificatore schede con apertura e chiusura automatica\" per abilitarlo in modalità di navigazione in incognito e fai clic sul pulsante \"Dettagli\" accanto ad esso."
+   },
+   "whenMenuPopup": {
+      "message": "Quando si apre un menu, seleziona \"Gestisci estensioni\"."
+   },
+   "withSignMustFill": {
+      "message": "Con il segno \u003Cspan>*\u003C/span> è necessario compilare o selezionare, selezionare l'orario di apertura o di chiusura o entrambi gli orari."
+   },
+   "writeYourDescriptionAboutSchUrl": {
+      "message": "Scrivi qui la tua descrizione dell'URL programmato."
+   },
+   "yes": {
+      "message": "SÌ"
+   },
+   "yourEmailAddress": {
+      "message": "Il tuo indirizzo di posta elettronica"
+   },
+   "yourScheduleUrl": {
+      "message": "URL del tuo programma"
+   }
+}

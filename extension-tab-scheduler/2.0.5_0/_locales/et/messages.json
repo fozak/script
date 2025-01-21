@@ -1,0 +1,1448 @@
+{
+   "10_min": {
+      "message": "10 minutit"
+   },
+   "1_min": {
+      "message": "1 minut"
+   },
+   "30_min": {
+      "message": "30 minutit"
+   },
+   "5_min": {
+      "message": "5 minutit"
+   },
+   "60_min": {
+      "message": "tund"
+   },
+   "Dashboard": {
+      "message": "Armatuurlaud"
+   },
+   "Login": {
+      "message": "Logi sisse"
+   },
+   "Off": {
+      "message": "Väljas"
+   },
+   "On": {
+      "message": "Sees"
+   },
+   "Selected": {
+      "message": "Valitud"
+   },
+   "Settings": {
+      "message": "Seaded"
+   },
+   "Tutorial": {
+      "message": "Õpetus"
+   },
+   "action": {
+      "message": "Tegevus"
+   },
+   "activateScheduleTab": {
+      "message": "Aktiveerige ajastatud vahekaart."
+   },
+   "active": {
+      "message": "Aktiivne"
+   },
+   "activeAllScheduleTab": {
+      "message": "Tab-plaanija käivitamine"
+   },
+   "activeStatus": {
+      "message": "Olek"
+   },
+   "actvInactvNotification": {
+      "message": "Kuva märguanne ajakava vahekaardi avamisel"
+   },
+   "actvInactvOpnTb": {
+      "message": "Aktiivne või passiivne avatud vahekaart"
+   },
+   "actvIntvClsTb": {
+      "message": "Aktiivne või passiivne sulgege vahekaart"
+   },
+   "add": {
+      "message": "Lisa"
+   },
+   "addDescription": {
+      "message": "Lisa kirjeldus"
+   },
+   "addNew": {
+      "message": "Lisa uus"
+   },
+   "addNewURlCls": {
+      "message": "Lisage sulgemiseks uus URL"
+   },
+   "addNewUrlToOpen": {
+      "message": "Uues aknas avamiseks lisage uus URL"
+   },
+   "addTitle": {
+      "message": "Lisa pealkiri"
+   },
+   "addWebsite": {
+      "message": "Lisa veebisait"
+   },
+   "all": {
+      "message": "Kõik"
+   },
+   "allInputFieldReq": {
+      "message": "Kõik väljad on kohustuslikud"
+   },
+   "all_weeks": {
+      "message": "Terve nädal"
+   },
+   "alreadyPurchase": {
+      "message": "Kas olete juba ostetud? Sisestage võti siia"
+   },
+   "andAt": {
+      "message": "ja kell"
+   },
+   "annually": {
+      "message": "Igal aastal"
+   },
+   "appDesc": {
+      "message": "Brauseri vahelehed avatakse ja suletakse automaatselt valitud ajal. Kasutaja saab nimekirja vastavalt vajadusele aktiveerida/deaktiveerida"
+   },
+   "appName": {
+      "message": "Vahelehtede ajakava automaatse avamise ja sulgemisega"
+   },
+   "april": {
+      "message": "aprill"
+   },
+   "at": {
+      "message": "juures"
+   },
+   "august": {
+      "message": "augustil"
+   },
+   "autoFocus": {
+      "message": "Autofookuse vahekaart"
+   },
+   "autoFocustip": {
+      "message": "Kui see on sisse lülitatud, avatakse uus vahekaart aktiivse/fookuse olekus."
+   },
+   "autofocustip": {
+      "message": "Uued avatud vahelehed fokusseerivad automaatselt"
+   },
+   "basic": {
+      "message": "Põhiline"
+   },
+   "billedAnnyally": {
+      "message": "Arveldatakse igal aastal"
+   },
+   "billedMonthly": {
+      "message": "Arveldatakse igakuiselt"
+   },
+   "both": {
+      "message": "Mõlemad"
+   },
+   "browserOpen": {
+      "message": "Ava brauseris"
+   },
+   "browserWebAddress": {
+      "message": "Brauseri veebiaadress algab ja lõpeb tundmatu veebiaadressiga.Märkige sisestatud veebisaidi lingi välja mõlemale küljele \u003Cb>* .\u003C/b>"
+   },
+   "browserWebAddress2": {
+      "message": "Brauseri veebiaadress sisaldab domeeninime google.com, mis suletakse antud minutite jooksul olenemata alamdomeenist ja lehe teest. Pange \u003Cb>*\u003C/b> mõlemale poole domeeninime ja tippdomeeni"
+   },
+   "browserWebAddress3": {
+      "message": "Brauseri veebiaadress algab tundmatu domeeninimega ja lõpeb tundmatu lehe teega"
+   },
+   "browserWebAddress31": {
+      "message": "suletakse antud minuti pärast, pange tippdomeeni mõlemale poolele \u003Cb>*\u003C/b>"
+   },
+   "browserWebAddress4": {
+      "message": "Brauseri veebiaadress algab tundmatu veebiaadressiga. Pange \u003Cb>*\u003C/b> URL-i algusesse. Pidage meeles, et pärast \u003Cb>*\u003C/b> kirjutamist peab brauseri veebiaadress ühtima teie URL-iga ."
+   },
+   "browserWebAddress41": {
+      "message": "Brauseri veebiaadress algab tundmatu alamdomeeniga"
+   },
+   "browserWebAddress42": {
+      "message": "veebisaidi lingi alguses"
+   },
+   "browserWebAddress5": {
+      "message": "Brauseri veebiaadress lõpeb tundmatu veebiaadressiga. Pange \u003Cb>*\u003C/b> URL-i lõppu. Pidage meeles, et teie veebiaadress peab ühtima enne \u003Cb>*,\u003C/b> kui olete kirjutanud."
+   },
+   "browserWebAddress51": {
+      "message": "Brauseri veebiaadress lõpeb tundmatu lehe teega. Pange \u003Cb>*\u003C/b> oma veebiaadressi lõppu"
+   },
+   "browserWebAddress6": {
+      "message": "Kõigi brauseri vahekaartide sulgemiseks sisestage veebisaidi aadressi väljale ainult \u003Cb>*\u003C/b> . Pärast vahekaartide sulgemist suletakse brauser automaatselt."
+   },
+   "browserWebAddress7": {
+      "message": "Peate olema brauseri vahekaardil avatava URL-i väljale kirjutanud täpse alamdomeeni, tippdomeeni, domeeninime ja lehetee."
+   },
+   "browserWebAddress8": {
+      "message": "URL-i saate avada kindlal kuupäeval ja kellaajal, kindlal kuul, kindlal nädalal, konkreetsel aastal ja kordusajal"
+   },
+   "buyPlan": {
+      "message": "Osta plaan"
+   },
+   "buycofee": {
+      "message": "Osta mulle kohvi"
+   },
+   "cancel": {
+      "message": "Tühista"
+   },
+   "changeLanguage": {
+      "message": "Muuda keelt"
+   },
+   "checkAll": {
+      "message": "Märkige kõik"
+   },
+   "checkThisOpToPreventClosePinTb": {
+      "message": "Kinnitatud vahelehtede sulgemise vältimiseks märkige see suvand."
+   },
+   "checkThisOptionOnlyPartOfUrlMtch": {
+      "message": "Märkige see valik, kui URL-ist on vaja sobitada ainult osa."
+   },
+   "checkThisOptionToActivate": {
+      "message": "Märkige see suvand ajastatud URL-i aktiveerimiseks või inaktiveerimiseks."
+   },
+   "checkThisOptionToCloseOnly": {
+      "message": "Märkige see valik ainult inkognito vahelehtede sulgemiseks. Samuti lubage laienduse üksikasjades valik „Luba inkognito režiimis”. Juhised leiate õpetuse lehelt."
+   },
+   "checkThisOptionToCloseOnlyInIncgnitoTb": {
+      "message": "Märkige see valik ainult inkognito vahelehtede sulgemiseks. Samuti lubage laienduse üksikasjades valik „Luba inkognito režiimis”. Juhised leiate õpetuse lehelt."
+   },
+   "checkThisOptionToInBg": {
+      "message": "Märkige see valik, kui soovite avada URL-i taustal ilma seda uuel vahelehel avamata"
+   },
+   "checkThisOptionToInactivNotification": {
+      "message": "Märkige see suvand, kui soovite ajastatud URL-il mitteaktiivseid märguandeid saada"
+   },
+   "checkThisOptionToOpen": {
+      "message": "Märkige see valik, kui soovite avada oma URL-i inkognito režiimis"
+   },
+   "checkThisOptionToOpenIncogito": {
+      "message": "Märkige see valik, kui soovite avada oma URL-i inkognito režiimis"
+   },
+   "checkThisOptionToPrevent": {
+      "message": "Kinnitatud vahelehtede sulgemise vältimiseks märkige see suvand."
+   },
+   "clickExtIcon": {
+      "message": "Klõpsake tööriistaribal ikooni \"Laiendused\", mis näeb välja nagu pusletükk."
+   },
+   "clickTheSwitch": {
+      "message": "Selle sisselülitamiseks klõpsake selle kõrval olevat lülitit"
+   },
+   "close": {
+      "message": "Sule"
+   },
+   "closeAllTab": {
+      "message": "12. Sulgege kogu brauseri vahekaart"
+   },
+   "closeAllTabExm1": {
+      "message": "Ülaltoodud näites on antud URL vahekaardil sulgemine, mis ütleb, et see sulgeb kõik vahelehed 25.02.2023 kell 12:00"
+   },
+   "closeDate": {
+      "message": "Sulgemiskuupäev"
+   },
+   "closeDay": {
+      "message": "Sulgemispäev"
+   },
+   "closeEveryYear": {
+      "message": "Sulgege igal aastal"
+   },
+   "closeInEvery": {
+      "message": "Sulge igas"
+   },
+   "closeIncognitoTab": {
+      "message": "Sulgege ainult inkognito vahelehed"
+   },
+   "closeMinute": {
+      "message": "Sulgemise minut"
+   },
+   "closeOnDay": {
+      "message": "Sulgege päeval"
+   },
+   "closeOnEvery": {
+      "message": "Sulgege igal"
+   },
+   "closeOnEveryDay": {
+      "message": "Sulgege iga päev"
+   },
+   "closeOnEveryMonth": {
+      "message": "Sulgege iga kuu päeval"
+   },
+   "closeOnEveryWeek": {
+      "message": "Sulgege igal nädalal"
+   },
+   "closeSecond": {
+      "message": "Sulge teine"
+   },
+   "closeSeconsMoreThan5": {
+      "message": "Sulgemissekundite arv peaks olema pikem kui 5."
+   },
+   "closeTabSchedule": {
+      "message": "Sule vahekaardi ajakava"
+   },
+   "closeTabURL": {
+      "message": "Sule vahekaardi URL"
+   },
+   "closeTime": {
+      "message": "Sulgemisaeg"
+   },
+   "closeUrl": {
+      "message": "Sulge veebisaidi link"
+   },
+   "closeWeek": {
+      "message": "Sulge nädal"
+   },
+   "closeWeeks": {
+      "message": "Sulgege nädalad"
+   },
+   "close_on": {
+      "message": "Sulgege"
+   },
+   "cngrtsForSubcr": {
+      "message": "Palju õnne! Teie plaan on edukalt aktiveeritud."
+   },
+   "commonQuestionsAns": {
+      "message": "Levinud küsimused ja vastused"
+   },
+   "copySucessClose": {
+      "message": "Vahekaardi sulgemise URL-i andmed kopeeriti vahekaardi avamise URL-i andmetesse"
+   },
+   "createNewTimer": {
+      "message": "Loo uus taimer"
+   },
+   "currentPlan": {
+      "message": "Praegune plaan"
+   },
+   "currentTabSchedule": {
+      "message": "Praegune vahekaartide ajakava"
+   },
+   "currentTbScheduleTimer": {
+      "message": "Praeguse vahekaardi ajastatud taimer."
+   },
+   "cusSec": {
+      "message": "Kohandatud Teine"
+   },
+   "custMin": {
+      "message": "Kohandatud minut"
+   },
+   "custmMinSch": {
+      "message": "7. Kohandatud minutigraafik"
+   },
+   "custmMinSchExm1": {
+      "message": "Ülaltoodud näites on antud URL avatud vahekaardil, mis näitab, et antud URL on avatud uuel vahekaardil Iga 15 minuti järel."
+   },
+   "custmMinSchExm2": {
+      "message": "Ülaltoodud näites on antud URL vahekaardil suletud, mis näitab, et antud URL, mis avati uuel vahelehel, suletakse 15 minuti pärast."
+   },
+   "customSecondWarning": {
+      "message": "Kohandatud teise funktsioon on katseline ja see ei pruugi korralikult töötada, kui sekundite arv on alla 60."
+   },
+   "darkMode": {
+      "message": "Tume režiim"
+   },
+   "datNotCopy": {
+      "message": "Mõnda teavet ei kopeerita kehtetu URL-i tõttu."
+   },
+   "dataSaved": {
+      "message": "Taimeri andmete salvestamine õnnestus"
+   },
+   "date": {
+      "message": "Kuupäev"
+   },
+   "dateIsOutOfRange": {
+      "message": "Kuupäev on vahemikust väljas"
+   },
+   "day": {
+      "message": "päev"
+   },
+   "december": {
+      "message": "detsembril"
+   },
+   "delete": {
+      "message": "Kustuta"
+   },
+   "deleteScheduleTb": {
+      "message": "Kustuta ajastatud vahekaart."
+   },
+   "description": {
+      "message": "Kirjeldus"
+   },
+   "developedBy": {
+      "message": "Välja töötanud:"
+   },
+   "doNotCloseInPinnedTabs": {
+      "message": "Ärge sulgege kinnitatud vahelehti"
+   },
+   "doNotShowNotification": {
+      "message": "Ära näita teatist"
+   },
+   "domainName": {
+      "message": "Domeeninimi"
+   },
+   "downloadCloseTbSampleCsv": {
+      "message": "Laadige alla vahekaardi sulgemise CSV näidis, et näha nõutava vormingu näidet"
+   },
+   "downloadOpenTbSampleCsv": {
+      "message": "Laadige alla avatud vahelehe CSV näidis, et näha nõutava vormingu näidet"
+   },
+   "editScheduleTb": {
+      "message": "Redigeeri ajastatud vahekaarti."
+   },
+   "email": {
+      "message": "Meil"
+   },
+   "enterDateToCloseTab": {
+      "message": "Ajakava vahekaardi sulgemiseks sisestage siia kuupäev."
+   },
+   "enterDateToOpen": {
+      "message": "Ajakava vahekaardi avamiseks sisestage kuupäev."
+   },
+   "enterMiniutesToCloseTb": {
+      "message": "Vahekaardi sulgemiseks sisestage minutid."
+   },
+   "enterMiniutesToOpen": {
+      "message": "Sisestage ajakava vahekaardi avamiseks minutid."
+   },
+   "enterMinute": {
+      "message": "Sisesta minut"
+   },
+   "enterSecond": {
+      "message": "Sisestage teine"
+   },
+   "enterSecondsToCloseTab": {
+      "message": "Vahekaardi sulgemiseks sisestage sekundid."
+   },
+   "enterSecondsToOpen": {
+      "message": "Sisestage ajakava vahekaardi avamiseks sekundid."
+   },
+   "enterTilteOfScheduleUrl": {
+      "message": "Sisestage ajastatud URL-i pealkiri."
+   },
+   "enterTimeToCloseTab": {
+      "message": "Ajakava vahekaardi sulgemiseks sisestage siia aeg."
+   },
+   "enterTimeToSchedule": {
+      "message": "Sisestage ajakava vahekaardi avamise aeg."
+   },
+   "enterValidEmail": {
+      "message": "Sisestage kehtiv e-posti aadress"
+   },
+   "enterValidUrl": {
+      "message": "Sisestage kehtiv URL"
+   },
+   "enterValueInCloseSec": {
+      "message": "Sisestage väärtus lähisekundites"
+   },
+   "enterValueInOpenCloseSec": {
+      "message": "Sisestage väärtus avatud või sulgemise sekundites"
+   },
+   "enterValueInOpenMinutes": {
+      "message": "Sisestage väärtus avatud minutites"
+   },
+   "enterVlaueInCloseMinutes": {
+      "message": "Sisestage väärtus lähiminutites"
+   },
+   "enterVlaueInOpenCloseMin": {
+      "message": "Sisestage väärtus avatud või sulgemisminutites"
+   },
+   "enterVlaueInOpenSeconds": {
+      "message": "Sisestage väärtus avatud sekundites"
+   },
+   "enterYourURLToSchedule": {
+      "message": "Sisestage ajastamiseks oma URL."
+   },
+   "every": {
+      "message": "iga"
+   },
+   "every10Min": {
+      "message": "Iga 10 minuti järel"
+   },
+   "every1Minute": {
+      "message": "iga 1 minuti järel"
+   },
+   "every30Min": {
+      "message": "Iga 30 minuti järel"
+   },
+   "every5Min": {
+      "message": "Iga 5 minuti järel"
+   },
+   "everyDay": {
+      "message": "Iga päev"
+   },
+   "everyDayAt": {
+      "message": "iga päev kl"
+   },
+   "everyHour": {
+      "message": "Iga tund"
+   },
+   "everyMinute": {
+      "message": "Iga minut"
+   },
+   "everyMonth": {
+      "message": "Iga kuu"
+   },
+   "everyMonthOn": {
+      "message": "iga kuu edasi"
+   },
+   "everyMonthOnDay": {
+      "message": "iga kuu päeval"
+   },
+   "everyWeek": {
+      "message": "Iga nädal"
+   },
+   "everyWeekOn": {
+      "message": "iga nädal edasi"
+   },
+   "everyYear": {
+      "message": "Igal aastal"
+   },
+   "everyYesrOn": {
+      "message": "igal aastal edasi"
+   },
+   "evr10MinSch": {
+      "message": "2. Ajakava iga 10 minuti järel"
+   },
+   "evr10MinSchExm1": {
+      "message": "Ülaltoodud näites on antud URL avatud vahekaardil, mis tähendab, et antud URL avaneb uuel vahekaardil iga 10 minuti järel."
+   },
+   "evr10MinSchExm2": {
+      "message": "Ülaltoodud näites on antud URL vahekaardil suletud, mis näitab, et antud URL, mis avati uuel vahelehel, suletakse 10 minuti pärast."
+   },
+   "evrDaySch": {
+      "message": "3. Igapäevane ajakava"
+   },
+   "evrDaySchExm1": {
+      "message": "Ülaltoodud näites on antud URL avatud vahekaardil, mis näitab, et see avaneb uuel vahekaardil iga päev kell 17:27"
+   },
+   "evrDaySchExm2": {
+      "message": "Ülaltoodud näites on antud URL vahekaardil sulgemine, mis ütleb, et see sulgeb juba avatud vahekaardi iga päev kell 17:27"
+   },
+   "evrMonthSch": {
+      "message": "5. Iga kuu ajakava"
+   },
+   "evrMonthSchExm1": {
+      "message": "Ülaltoodud näites on antud URL avatud vahekaardil, mis ütleb, et see avaneb uuel vahekaardil iga kuu kell 13:45 25. päeval"
+   },
+   "evrMonthSchExm2": {
+      "message": "Ülaltoodud näites on antud URL vahekaardil sulgemine, mis ütleb, et see sulgeb juba avatud vahekaardi iga kuu kell 13:45 25. päeval"
+   },
+   "evrWeekSch": {
+      "message": "4. Iga nädala ajakava"
+   },
+   "evrWeekSchExm1": {
+      "message": "Ülaltoodud näites on antud URL avatud vahekaardil, mis näitab, et see avaneb uuel vahelehel igal nädalal esmaspäeval \u003Cb>ja teisipäeval\u003C/b> kell 17.00 ."
+   },
+   "evrWeekSchExm2": {
+      "message": "Ülaltoodud näites on antud URL sulgemiskaardil, mis ütleb, et see sulgeb juba avatud vahelehe igal nädalal esmaspäeval \u003Cb>ja teisipäeval\u003C/b> kell 17:00 ."
+   },
+   "evrWeekSchExm3": {
+      "message": "Ülaltoodud näites saab nädalataimeris valida mitu päeva."
+   },
+   "evrYearSch": {
+      "message": "6. Iga aasta ajakava"
+   },
+   "evrYearSchExm1": {
+      "message": "Ülaltoodud näites on antud URL avatud vahekaardil, mis näitab, et see avaneb uuel vahekaardil igal aastal 1. jaanuaril kell 13:35"
+   },
+   "evrYearSchExm2": {
+      "message": "Ülaltoodud näites on antud URL vahekaardil sulgemine, mis ütleb, et see sulgeb juba avatud vahekaardi igal aastal 1. jaanuaril kell 13:35"
+   },
+   "exampleSort": {
+      "message": "nt"
+   },
+   "exdMaxLim": {
+      "message": "Ületatud maksimaalne lubatud seadmete arv!"
+   },
+   "exmpOpnClsTbSch": {
+      "message": "Näide, kuidas vahekaartide ajakavas vahekaarti avada ja sulgeda"
+   },
+   "expLicKy": {
+      "message": "See litsentsivõti on aegunud."
+   },
+   "export": {
+      "message": "Ekspordi"
+   },
+   "exportBefore": {
+      "message": "Sul on\u003Cexday>\u003C/exday>päevi jäänud. Premium-funktsiooni nautimise jätkamiseks tellige"
+   },
+   "exportClsTbDta": {
+      "message": "Ekspordi vahekaardi sulgemise andmed"
+   },
+   "exportOpenTbDt": {
+      "message": "Ekspordi avatud vahelehe andmed"
+   },
+   "exportedData": {
+      "message": "Taimeri andmete eksportimine õnnestus"
+   },
+   "extensionShouldAble": {
+      "message": "Nüüd peaks laiendus suutma vahekaarte sulgeda inkognito režiimis."
+   },
+   "faq": {
+      "message": "KKK"
+   },
+   "faq_1": {
+      "message": "Mis on automaatse avamise ja sulgemisega vahelehtede ajakava?"
+   },
+   "faq_10": {
+      "message": "Kuidas vaadata oma ajastatud vahekaarte?"
+   },
+   "faq_11": {
+      "message": "Kas nii lahtioleku- kui ka sulgemisaja täitmine on kohustuslik?"
+   },
+   "faq_12": {
+      "message": "Mida teevad automaatse teravustamise vahekaardi, kõigi ajastatud vahekaartide aktiveerimise ja toiterežiimi funktsioonid?"
+   },
+   "faq_13": {
+      "message": "Kas ma saan avada/sulgeda kavandatud veebisaidi lingi inkognito vahekaardil?"
+   },
+   "faq_14": {
+      "message": "Mis kasu on vahekaardilt Värskenda, kui URL on juba avatud?"
+   },
+   "faq_2": {
+      "message": "Milleks on veebisaidi lingi kasutamine?"
+   },
+   "faq_3": {
+      "message": "Kuidas ajastada URL-i vahekaartide ajakava abil?"
+   },
+   "faq_4": {
+      "message": "Mis on valik „Ava URL taustal”?"
+   },
+   "faq_5": {
+      "message": "Kas ma saan takistada laiendil kinnitatud vahekaartide sulgemist?"
+   },
+   "faq_6": {
+      "message": "Mida tähendab ajakava tüüp \"Mõlemad\"?"
+   },
+   "faq_7": {
+      "message": "Kuidas URL-i filtreerimise funktsioon töötab?"
+   },
+   "faq_8": {
+      "message": "Kas ma saan ajastatud vahelehe desaktiveerida ilma seda kustutamata?"
+   },
+   "faq_9": {
+      "message": "Kas ma saan ajastatud vahekaartide kohta märguandeid?"
+   },
+   "faq_a_1": {
+      "message": "\u003Cp>Vahelehtede ajakava koos automaatse avamise ja sulgemisega on brauseri laiendus, mis võimaldab kasutajatel ajastada vahekaartide automaatset avamist ja sulgemist määratud aegadel. Kasutajad saavad valida ühekordse ajakava või seadistada korduvaid ajakavasid erinevate sagedusvalikutega. Sellel laiendusel on kasutajate jaoks mitu eesmärki ja see pakub palju funktsioone, mis on teile kasulikud.\u003C/p>"
+   },
+   "faq_a_10": {
+      "message": "Kõik ajastatud vahelehed kuvatakse loendis, mis näitab pealkirja, veebisaidi linki, avamise ja sulgemise aegu, olekut ja toiminguid, mida saate teha (nt aktiveerimine, muutmine, kustutamine)."
+   },
+   "faq_a_11": {
+      "message": "Ei, saate planeerida kas lahtioleku või sulgemise aja. Siiski tuleb täita või valida tärniga (*) märgitud nõutud väljad."
+   },
+   "faq_a_12": {
+      "message": "Vahekaart Automaatne teravustamine tagab, et ajastatud vahekaardi avanemisel võimaldab Aktiveeri kõik ajastatud vahekaardid kõik ajastatud vahelehed kiiresti ühe klõpsuga sisse lülitada. Toiterežiim optimeerib laienduse jõudlust, haldades brauseri ressursse tõhusamalt."
+   },
+   "faq_a_13": {
+      "message": "Jah, saate ajastatud vahekaardi avada inkognito režiimis, valides valiku „Ava inkognito režiimis”. Saate sulgeda ainult inkognito režiimis vahekaardid, valides suvandi \"Sule ainult inkognito režiimis vahekaardid\", kui laienduse seadetes on lubatud \"Luba inkognito režiimis\""
+   },
+   "faq_a_14": {
+      "message": "Kui see valik on lubatud, värskendab laiendus automaatselt olemasolevat vahekaarti, kui sama URL on teie brauseris juba avatud. See hoiab ära topeltvahelehtede avamise ja tagab, et teil on alati laaditud lehe uusim versioon."
+   },
+   "faq_a_14_1": {
+      "message": "Kui proovite avada aadressi https://github.com/ ja see on juba mõnel teisel vahekaardil avatud, siis laiendus lihtsalt värskendab seda vahekaarti, mitte ei ava uut."
+   },
+   "faq_a_14_2": {
+      "message": "Kui https://github.com/ on juba avatud kolmel vahekaardil, värskendab laiendus kõiki kolme vahekaarti."
+   },
+   "faq_a_2": {
+      "message": "Veebisaidi link on teie brauseri avatud vahekaardi veebisaidi aadress. Allpool on mainitud, kuidas saate veebisaidi aadressi kasutada."
+   },
+   "faq_a_3": {
+      "message": "URL-i ajastamiseks sisestage veebisaidi link, pange ajakavale pealkiri, valige sagedus (üks kord, iga minut, iga päev jne) ning avamis- ja sulgemisajad. Saate vahekaardi avamiseks ja sulgemiseks määrata ka kuupäeva, päeva või sekundid."
+   },
+   "faq_a_4": {
+      "message": "\u003Cp>See valik annab teile täieliku kontrolli URL-i taustal avamise ajastamiseks ilma uut vahekaarti fookusesse toomata. Kui jätkate teiste vahekaartidega töötamist, avaneb URL vaikselt. See on eriti kasulik, kui teil on vaja, et brauser tooks andmeid ajastatud URL-ilt ilma neid aktiivselt kuvamata, näiteks GET API päringu korral.\u003C/p>\u003Cbr> \u003Cp>Näiteks kui soovite API lõpp-punktist andmeid tuua regulaarselt määratud ajal, saate seda tõhusat valikut kasutada päringu käivitamiseks taustal ilma uut nähtavat vahekaarti avamata.\u003C/p>"
+   },
+   "faq_a_5": {
+      "message": "Jah, kinnitatud vahelehtede sulgemise takistamiseks on võimalus. Märkige suvand \"Ära sulge kinnitatud vahelehti\", et need vahelehed jääksid avatuks isegi siis, kui need vastavad teistele sulgemiskriteeriumidele."
+   },
+   "faq_a_6": {
+      "message": "Ajakava tüüp „Mõlemad” annab teile täieliku kontrolli selle üle, millal vaheleht avaneb ja sulgub, võimaldades teil määrata mõlema toimingu jaoks kindlad kellaajad."
+   },
+   "faq_a_7": {
+      "message": "URL-i filtreerimine tagab, et ajastatud toimingu toimumiseks peab ainult teatud osa URL-ist ühtima. See on kasulik, kui soovite teatud toiminguid osaliste URL-i vastete põhjal automatiseerida. Näiteks kui märgite URL-i filtreerimise valiku URL-i https://example.com/page jaoks, rakendub see ka sellistele URL-idele nagu https://example.com/page/123, https://example.com/ page?query=example ja https://subdomain.example.com/page."
+   },
+   "faq_a_8": {
+      "message": "Valikuga \"Aktiveeri see ajastatud vahekaart\" saate ajastatud vahekaarte hõlpsalt aktiveerida või deaktiveerida, andes teile paindlikkuse ajakavade haldamiseks ilma konfiguratsioone kaotamata."
+   },
+   "faq_a_9": {
+      "message": "Vaikimisi saate teateid. Kui aga eelistate märguandeid peatada, saate nende keelamiseks märkida valiku „Ära kuva teatist”."
+   },
+   "february": {
+      "message": "veebruar"
+   },
+   "filterTips": {
+      "message": "Filter rakendub pärast 'https://' või 'www.', nt 'github.com'"
+   },
+   "for_exp": {
+      "message": "Näiteks"
+   },
+   "freeForever": {
+      "message": "Igavesti tasuta"
+   },
+   "freeSchedule": {
+      "message": "vaba ajakava"
+   },
+   "freeTral": {
+      "message": "Hinnatud varase kasutajana naudite seda\u003Crday>120\u003C/rday>päeva tasuta juurdepääs enne uuele tasulisele paketile üleminekut – täname teid jätkuva toetuse eest!\u003Cp class=\"p-t-5\">Sul on\u003Cb>\u003Cspan>\u003C/span>\u003C/b>päevad on teie aega jäänud\u003Crday>120\u003C/rday>-päevane vaba periood.\u003Cafex class=\"warning\">\u003Cafex>\u003C/afex>\u003C/afex>\u003C/p> "
+   },
+   "frequentlyAskedQuestions": {
+      "message": "Korduma kippuvad küsimused"
+   },
+   "friday": {
+      "message": "reedel"
+   },
+   "getThisPlan": {
+      "message": "Hankige see plaan"
+   },
+   "goToSettingsPageToSchedule": {
+      "message": "URL-ide avamise ja sulgemise ajastamiseks minge seadete lehele."
+   },
+   "goURL": {
+      "message": "Minge URL-ile"
+   },
+   "helpAccordion12": {
+      "message": "Kas see laiendus töötab puhke-/peatusrežiimis?"
+   },
+   "helpAccordion3": {
+      "message": "Kas saan ajastada vahekaardi avamise inkognito režiimis?"
+   },
+   "helpAccordion6": {
+      "message": "Mis on \"aeg möödas\"?"
+   },
+   "helpAccordion7": {
+      "message": "Kas ma saan eksportida ajastatud URL-i?"
+   },
+   "helpAccordion8": {
+      "message": "Kas ma saan importida ajakava URL-i?"
+   },
+   "helpPanelBodyDesc12First": {
+      "message": "Ei, see laiendus ei tööta puhke-/peatusrežiimis."
+   },
+   "helpPanelBodyDesc12Second": {
+      "message": "Kui avamise või sulgemise vahekaardil on ajastatud mõni URL, ei lülitu teie arvuti automaatselt puhke- või peatamisrežiimi."
+   },
+   "helpPanelBodyDesc3": {
+      "message": "Jah, saate ajastatud vahekaardi avada inkognito režiimis, valides valiku „Ava inkognito režiimis”. Veenduge, et laienduse valik „Luba inkognito režiimis” oleks brauseri laienduse seadetes lubatud."
+   },
+   "helpPanelBodyDesc6": {
+      "message": "- Antud kuupäev ja kellaaeg on praegusest kuupäevast ja kellaajast möödas, siis kuvatakse tekst \"Aeg on aegunud\"."
+   },
+   "helpPanelBodyDesc7": {
+      "message": "Jah, saate juba ajastatud avatud vahelehe ja sulgeda vahelehe URL-i eksportida csv-vormingus ning kasutada seda koos mõne teise süsteemiga selle URL-i importimiseks."
+   },
+   "helpPanelBodyDesc8": {
+      "message": "Jah, saate importida kehtiva avatud ja sulgemise URL-i csv-vormingus. Imporditud csv-vorming ajastatakse automaatselt etteantud aja jooksul"
+   },
+   "herAreStepsToAllow": {
+      "message": "Siin on juhised Google Chrome'is inkognito režiimis lubamiseks."
+   },
+   "home": {
+      "message": "Kodu"
+   },
+   "hour_minute_close": {
+      "message": "Iga tund Sulge minut"
+   },
+   "hour_minute_open": {
+      "message": "Iga tund avatud minut"
+   },
+   "how_to_use_tab": {
+      "message": "Kuidas kasutada tabeldusgraafikut?"
+   },
+   "import": {
+      "message": "Import"
+   },
+   "importClsTbDta": {
+      "message": "Importige vahekaardi sulgemise andmed"
+   },
+   "importExport": {
+      "message": "Import/Eksport"
+   },
+   "importOpenTbDt": {
+      "message": "Importige avatud vahelehe andmed"
+   },
+   "importedRecored": {
+      "message": ", imporditud salvestatud"
+   },
+   "inactivateScheduleTab": {
+      "message": "Inaktiveerige ajastatud vahekaart."
+   },
+   "inactive": {
+      "message": "Mitteaktiivne"
+   },
+   "inactiveSch": {
+      "message": "8. Passiivne URL"
+   },
+   "inactiveSchExm1": {
+      "message": "Ülaltoodud näites on antud URL avatud vahekaardil või sulgemise vahekaardil, mis tähendab, et antud URL on passiivne ja see ei tee ühtegi toimingut."
+   },
+   "inactiveThisScheduledTabs": {
+      "message": "Aktiveerige see ajastatud vahekaart"
+   },
+   "invalidDuplicate": {
+      "message": ", on salvestatud duplikaat või kehtetu"
+   },
+   "invldLicKy": {
+      "message": "Vigane litsentsivõti!"
+   },
+   "isClose": {
+      "message": "on lähedal"
+   },
+   "isOpen": {
+      "message": "on avatud"
+   },
+   "january": {
+      "message": "jaanuaril"
+   },
+   "july": {
+      "message": "juulil"
+   },
+   "june": {
+      "message": "juunini"
+   },
+   "licKeyDis": {
+      "message": "See litsentsivõti on keelatud."
+   },
+   "listTitle": {
+      "message": "Vahelehtede ajakava"
+   },
+   "loading": {
+      "message": "Palun oodake..."
+   },
+   "locale": {
+      "message": "et"
+   },
+   "march": {
+      "message": "märtsil"
+   },
+   "maxSchedule": {
+      "message": "4 Maksimaalne ajakava piirang"
+   },
+   "may": {
+      "message": "mai"
+   },
+   "mintValid": {
+      "message": "Nõutav on vähemalt 1 minut"
+   },
+   "minute": {
+      "message": "Minut"
+   },
+   "minutesNotLessThan1": {
+      "message": "Minut ei tohi olla väiksem kui 1."
+   },
+   "monday": {
+      "message": "esmaspäev"
+   },
+   "month": {
+      "message": "Kuu"
+   },
+   "monthly": {
+      "message": "Igakuine"
+   },
+   "more": {
+      "message": "rohkem"
+   },
+   "mostSubscribe": {
+      "message": "Enamik tellijaid"
+   },
+   "no": {
+      "message": "Ei"
+   },
+   "noDataToExport": {
+      "message": "Eksporditavaid andmeid pole."
+   },
+   "noScheduledTabs": {
+      "message": "Ajastatud vahekaarte pole"
+   },
+   "noTimerSetAddNewTimer": {
+      "message": "Taimer pole seatud, uue taimeri seadistamiseks klõpsake nuppu Lisa"
+   },
+   "not_show_tutorial": {
+      "message": "Ärge seda õpetust enam näita"
+   },
+   "notificationOpenTab": {
+      "message": "13. Märguanne vahekaardi avamise/sulgemise URL-i kohta"
+   },
+   "notificationOpenTabExm1": {
+      "message": "Ülaltoodud näites on antud URL avatud vahekaardil, mis annab teada ja avab/sulgeb URL-i uuel vahekaardil iga 5 minuti järel."
+   },
+   "notifications": {
+      "message": "Teavitus"
+   },
+   "november": {
+      "message": "novembril"
+   },
+   "october": {
+      "message": "oktoober"
+   },
+   "onTheExtensionDetailPage": {
+      "message": "Kerige laienduse üksikasjade lehel alla ja leidke valik „Luba inkognito režiimis”."
+   },
+   "oneTime": {
+      "message": "Üks kord"
+   },
+   "oneTmSch": {
+      "message": "1. Ühekordne ajakava"
+   },
+   "oneTmSchExm1": {
+      "message": "Ülaltoodud näites on antud URL avatud vahekaardil, mis näitab, et see avaneb uuel vahekaardil üks kord 21.01.2023 kell 13.45"
+   },
+   "oneTmSchExm2": {
+      "message": "Ülaltoodud näites on antud URL vahekaardil sulgemine, mis tähendab, et see sulgeb 21.01.2023 kell 13:45 kõik konkreetsed sobitatud URL-i vahekaardid"
+   },
+   "open": {
+      "message": "Avatud"
+   },
+   "openBackground": {
+      "message": "Kui jah, laadige URL taustal ilma seda uuel vahelehel avamata"
+   },
+   "openDate": {
+      "message": "Avamise kuupäev"
+   },
+   "openDay": {
+      "message": "Avatud uste päev"
+   },
+   "openEveryDayOn": {
+      "message": "Avatud iga päev"
+   },
+   "openEveryMonthOn": {
+      "message": "Avatud iga kuu päeval"
+   },
+   "openEveryWeekOn": {
+      "message": "Avatud igal nädalal"
+   },
+   "openEveryYearOn": {
+      "message": "Avatud igal aastal"
+   },
+   "openGoogleChrome": {
+      "message": "Avage Google Chrome."
+   },
+   "openInBackground": {
+      "message": "Ava URL taustal"
+   },
+   "openInEvery": {
+      "message": "Avatud igas"
+   },
+   "openInIncognito": {
+      "message": "Avage inkognito režiimis"
+   },
+   "openMinute": {
+      "message": "Avatud minut"
+   },
+   "openOnDay": {
+      "message": "Avatud päeval"
+   },
+   "openOnEvery": {
+      "message": "Avatud igal"
+   },
+   "openSecond": {
+      "message": "Ava teine"
+   },
+   "openSecondsMoreThan5": {
+      "message": "Avatud sekundid peaksid olema rohkem kui 5."
+   },
+   "openTabSchedule": {
+      "message": "Avage vahekaardi ajakava"
+   },
+   "openTabURL": {
+      "message": "Avage vahelehe URL"
+   },
+   "openTime": {
+      "message": "Avatud aeg"
+   },
+   "openUrl": {
+      "message": "Ava veebisaidi link"
+   },
+   "openWeek": {
+      "message": "Avatud uste nädal"
+   },
+   "openWeeks": {
+      "message": "Avatud uste nädalad"
+   },
+   "open_on": {
+      "message": "Ava sisse"
+   },
+   "optional": {
+      "message": "Valikuline"
+   },
+   "or": {
+      "message": "või"
+   },
+   "outof": {
+      "message": "välja"
+   },
+   "pagePath": {
+      "message": "Lehekülje tee"
+   },
+   "paidFeature": {
+      "message": "Tasuline funktsioon"
+   },
+   "pauseSchedule": {
+      "message": "Kõikide ajakavade käivitamine või peatamine"
+   },
+   "pauseTabScheduler": {
+      "message": "Peatatud vahelehtede ajakava"
+   },
+   "pleaseAllowIncognitoMessage": {
+      "message": "Lubage laienduse üksikasjades valik „Luba inkognito režiimis”. Juhised leiate õpetuse lehelt."
+   },
+   "pleaseShareYourSuggestions": {
+      "message": "Palun jagage oma ettepanekut."
+   },
+   "plsShreAnySugWithUs": {
+      "message": "Palun andke soovitus meie paremaks muutmiseks"
+   },
+   "powerMode": {
+      "message": "Toiterežiim"
+   },
+   "premium": {
+      "message": "Premium"
+   },
+   "pricePlan": {
+      "message": "Hinnakujundus ja plaanid"
+   },
+   "privcyPolicy": {
+      "message": "Privaatsuspoliitika"
+   },
+   "prowerModeTip": {
+      "message": "Hoidke süsteem alati aktiivsena, lubades toiterežiimi"
+   },
+   "put": {
+      "message": "Pane"
+   },
+   "rateUs": {
+      "message": "Hinda meid"
+   },
+   "removeDuplicateEntry": {
+      "message": "Eemaldage duplikaatkirje"
+   },
+   "removeOpenTbURL": {
+      "message": "Eemaldage avatud vahelehe URL"
+   },
+   "repeat": {
+      "message": "Korda"
+   },
+   "requiredMsg": {
+      "message": "Nõutav"
+   },
+   "rmvClsTb": {
+      "message": "Eemalda vahekaardi sulgemise URL"
+   },
+   "sameTabs": {
+      "message": "Värskendage vahekaarti, kui URL on juba avatud"
+   },
+   "sameTabsInfo": {
+      "message": "Vältige sama URL-i jaoks mitme vahelehe avamist. Näiteks kui www.google.com on juba avatud, värskendatakse olemasolevat vahekaarti selle asemel, et avada uus vahekaart."
+   },
+   "sampleCsvOpenPath": {
+      "message": "../sample_csv/en/open_tab_sample.csv"
+   },
+   "sampleFile": {
+      "message": "Näidisfail"
+   },
+   "saturday": {
+      "message": "laupäeval"
+   },
+   "savOpnData": {
+      "message": "Salvestage avatud vahelehe andmed"
+   },
+   "save": {
+      "message": "Salvesta"
+   },
+   "saveClsTbData": {
+      "message": "Salvestage vahekaardi sulgemise andmed"
+   },
+   "saveSchedule": {
+      "message": "Salvesta ajakava"
+   },
+   "scheduleCloseTab": {
+      "message": "Ajakava Sule vahekaart"
+   },
+   "scheduleCurrentTab": {
+      "message": "Ajastage praegune vahekaart"
+   },
+   "scheduleOpenTab": {
+      "message": "Ajakava Ava vahekaart"
+   },
+   "scheduledTabIsAlreadyExistWithSameTimer": {
+      "message": "See ajastatud vahekaart on sama taimeriga juba olemas."
+   },
+   "scheduledTabList": {
+      "message": "Ajastatud vahelehtede loend"
+   },
+   "scheduledType": {
+      "message": "Ajakava tüüp"
+   },
+   "search": {
+      "message": "Otsi"
+   },
+   "secValid": {
+      "message": "Nõutav on vähemalt 5 sekundit"
+   },
+   "second": {
+      "message": "Teiseks"
+   },
+   "selectCloseDate": {
+      "message": "Valige sulgemiskuupäev"
+   },
+   "selectCloseDay": {
+      "message": "Valige sulgemispäev"
+   },
+   "selectCloseTime": {
+      "message": "Valige sulgemisaeg"
+   },
+   "selectColumn": {
+      "message": "Valige Veerg"
+   },
+   "selectDateAndTime": {
+      "message": "Uue vahelehe avamiseks valige kuupäev ja kellaaeg"
+   },
+   "selectDateAndTimeClsTb": {
+      "message": "Valige vahekaardi sulgemiseks kuupäev ja kellaaeg"
+   },
+   "selectDayToCloseSchTb": {
+      "message": "Valige ajakava vahekaardi sulgemiseks päev."
+   },
+   "selectDayToClsTb": {
+      "message": "Valige vahekaardi sulgemiseks päev"
+   },
+   "selectDayToSchdule": {
+      "message": "Valige ajastamise vahekaart päev."
+   },
+   "selectDaysInWeek": {
+      "message": "Valige nädalapäevad"
+   },
+   "selectDaysInWeekIClsTime": {
+      "message": "Valige sulgemistaimeris nädalapäevad."
+   },
+   "selectDaysInWeekIOpClsTime": {
+      "message": "Valige avamise või sulgemise taimeris nädalapäevad."
+   },
+   "selectDaysInWeekIOpTime": {
+      "message": "Valige avatud taimeris nädalapäevad."
+   },
+   "selectFrequency": {
+      "message": "Valige Sagedus"
+   },
+   "selectFrequencyOfScheduleUrl": {
+      "message": "Valige ajastatud URL-i sagedus."
+   },
+   "selectOpenDate": {
+      "message": "Valige avamise kuupäev"
+   },
+   "selectOpenDay": {
+      "message": "Valige lahtiste uste päev"
+   },
+   "selectOpenOrClose": {
+      "message": "Valige avamise ja sulgemise aeg"
+   },
+   "selectOpenOrCloseDate": {
+      "message": "Valige avamise ja sulgemise kuupäev"
+   },
+   "selectOpenOrCloseDay": {
+      "message": "Valige avatud ja sulgemise päev"
+   },
+   "selectOpenTime": {
+      "message": "Valige lahtiolekuaeg"
+   },
+   "selectPreferredLanguage": {
+      "message": "Valige eelistatud keel."
+   },
+   "selectToOpenTab": {
+      "message": "Uue vahelehe avamiseks valige päev"
+   },
+   "selectTypTimerClsTb": {
+      "message": "Valige vahekaardi sulgemiseks taimeri tüüp"
+   },
+   "selectTypeOfSchedule": {
+      "message": "Valige ajakava tüüp, kui soovite nii avada kui sulgeda, kui valida \"Mõlemad\"."
+   },
+   "selectTypeOfTimer": {
+      "message": "Uue vahelehe avamiseks valige taimeri tüüp"
+   },
+   "select_weeks": {
+      "message": "Valige Nädalad"
+   },
+   "september": {
+      "message": "septembril"
+   },
+   "settingSave": {
+      "message": "Seadete salvestamine õnnestus"
+   },
+   "settingToClose": {
+      "message": "Vahekaardi sulgemise seadistus inkognito režiimis."
+   },
+   "shareYourSuggestionWithUs": {
+      "message": "Jagage oma ettepanekuid meiega.."
+   },
+   "slectDayToScheduleWeekly": {
+      "message": "Valige päevad, et ajastada vahekaart iganädalaselt."
+   },
+   "slectMinute": {
+      "message": "Valige Minut"
+   },
+   "smthngWrng": {
+      "message": "Midagi läks valesti"
+   },
+   "softpulseInfotech": {
+      "message": "Softpulse Infotech"
+   },
+   "somethingWentWrong": {
+      "message": "Midagi läks valesti. Värskendage lehte ja proovige uuesti."
+   },
+   "status": {
+      "message": "Olek"
+   },
+   "subcrKeyShldNEmpt": {
+      "message": "Sisestage liitumisvõti."
+   },
+   "subdomain": {
+      "message": "Alamdomeen"
+   },
+   "subkeyInputTitle": {
+      "message": "Sisestage liitumisvõti"
+   },
+   "submFeedBack": {
+      "message": "Esita"
+   },
+   "suggForTbSch": {
+      "message": "Soovitus vahelehtede ajakava jaoks"
+   },
+   "suggestionAndRateUs": {
+      "message": "Soovitage ja hinnake meid"
+   },
+   "sunday": {
+      "message": "pühapäev"
+   },
+   "tabCloseOneTime": {
+      "message": "Vahekaart suletakse ainult üks kord"
+   },
+   "tabSchTutorial": {
+      "message": "Vahelehtede ajakava õpetus"
+   },
+   "tabScheduler": {
+      "message": "Vahelehtede ajakava"
+   },
+   "tabSchedulerOptions": {
+      "message": "Vahekaardi ajakava valikud"
+   },
+   "tabWillOpenOneTime": {
+      "message": "Vahekaart avaneb ainult üks kord"
+   },
+   "tabWillOpenWhenBrowserOpen": {
+      "message": "Vahekaart avaneb, kui brauser avaneb"
+   },
+   "termCondition": {
+      "message": "Tingimused"
+   },
+   "thanksFrRev": {
+      "message": "Täname arvustuse eest"
+   },
+   "thnkUFeedBack": {
+      "message": "Täname teid soovituse eest"
+   },
+   "thnkUFrUsngTbSch": {
+      "message": "Palun andke soovitus meie paremaks muutmiseks"
+   },
+   "thursday": {
+      "message": "neljapäeval"
+   },
+   "time": {
+      "message": "Aeg"
+   },
+   "timeExpired": {
+      "message": "Aeg lõppes"
+   },
+   "timer": {
+      "message": "Taimer"
+   },
+   "title": {
+      "message": "Pealkiri"
+   },
+   "titleLengtWarn": {
+      "message": "Pealkirja pikkus ei tohi ületada 200 tähemärki."
+   },
+   "toScheduledOpenTbMsg": {
+      "message": "Ajastatud vahekaardi avamiseks tühjendage ruut URL-i filtreerimine."
+   },
+   "toogleCloseTab": {
+      "message": "Käivitage/peatage kõigi vahelehtede sulgemise URL-ide ajakava alarm"
+   },
+   "toogleDarkmode": {
+      "message": "Oma vaatamiskogemuse kohandamiseks vahetage tumeda režiimi ja vaikerežiimi vahel."
+   },
+   "toogleOff": {
+      "message": "Väljas"
+   },
+   "toogleOn": {
+      "message": "Sees"
+   },
+   "toogleOpenTab": {
+      "message": "Käivitage/peatage kõigi avatud vahelehe URL-ide ajakava häire"
+   },
+   "topLevelDomain": {
+      "message": "Tippdomeen"
+   },
+   "totalProcessed": {
+      "message": "Töödeldud salvestatud kogusumma"
+   },
+   "tuesday": {
+      "message": "teisipäeval"
+   },
+   "tutorialImg1": {
+      "message": "\u003Cimg src=\"../images/en/1.png\">"
+   },
+   "tutorialImg10": {
+      "message": "\u003Cimg src=\"../images/en/10.png\">"
+   },
+   "tutorialImg11": {
+      "message": "\u003Cimg src=\"../images/en/11.png\">"
+   },
+   "tutorialImg12": {
+      "message": "\u003Cimg src=\"../images/en/12.png\">"
+   },
+   "tutorialImg13": {
+      "message": "\u003Cimg src=\"../images/en/13.png\">"
+   },
+   "tutorialImg14": {
+      "message": "\u003Cimg src=\"../images/en/14.png\">"
+   },
+   "tutorialImg2": {
+      "message": "\u003Cimg src=\"../images/en/2.png\">"
+   },
+   "tutorialImg3": {
+      "message": "\u003Cimg src=\"../images/en/3.png\">"
+   },
+   "tutorialImg4": {
+      "message": "\u003Cimg src=\"../images/en/4.png\">"
+   },
+   "tutorialImg5": {
+      "message": "\u003Cimg src=\"../images/en/5.png\">"
+   },
+   "tutorialImg6": {
+      "message": "\u003Cimg src=\"../images/en/6.png\">"
+   },
+   "tutorialImg7": {
+      "message": "\u003Cimg src=\"../images/en/7.png\">"
+   },
+   "tutorialImg8": {
+      "message": "\u003Cimg src=\"../images/en/8.png\">"
+   },
+   "tutorialImg9": {
+      "message": "\u003Cimg src=\"../images/en/9.png\">"
+   },
+   "uncheckAll": {
+      "message": "Tühjendage märkeruut Kõik"
+   },
+   "unlimitedSchedule": {
+      "message": "Piiramatu ajakava piirang"
+   },
+   "unspecifiedURL": {
+      "message": "11. URL määramata tee"
+   },
+   "unspecifiedURLExm1": {
+      "message": "Ülaltoodud näites on antud URL vahekaardil suletud, mis näitab, et antud URL, mis avati uuel vahelehel ning algab ja lõpeb tundmatu veebiaadressiga, suletakse 5 minuti pärast."
+   },
+   "upgradePlan": {
+      "message": "Täiendavate funktsioonide avamiseks ostke plaan VÕI logige sisse ja uuendage oma paketti."
+   },
+   "upgradePlanUnlock": {
+      "message": "Täiendage oma plaani, et avada rohkem funktsioone."
+   },
+   "uploadValidFormat": {
+      "message": "Palun laadige üles kehtiv vorming"
+   },
+   "url": {
+      "message": "URL"
+   },
+   "urlContExat": {
+      "message": "URL-i filtreerimine"
+   },
+   "urlEndWithUnspesifiedPth": {
+      "message": "9. URL-i lõpp määramata teega"
+   },
+   "urlEndWithUnspesifiedPthExm1": {
+      "message": "Ülaltoodud näites on antud URL vahekaardil suletud, mis ütleb, et antud URL, mis avati uuel vahelehel ja lõpeb tundmatu teega, suletakse 5 minuti pärast."
+   },
+   "urlFilterInfo": {
+      "message": "Sisaldab kontrollitavat URL-i vajab ainult osa URL-ist ja kontrollitav täpne URL peab täpselt ühtima määratud URL-iga"
+   },
+   "urlFilterinCLoseTb": {
+      "message": "14. URL-i filtreerimine vahekaardi URL-i sulgemisel"
+   },
+   "urlFilterinCLoseTbExample": {
+      "message": "Ülaltoodud näites on antud URL vahekaardi sulgemisel, mis näitab, et juba avatud vahelehe URL ühtis osa antud URL-i osaga, nii et see sulgeb selle vahekaardi"
+   },
+   "urlIsRequired": {
+      "message": "Veebisaidi link on nõutav"
+   },
+   "urlNotvalid": {
+      "message": "URL ei ole kehtiv"
+   },
+   "urlStartWithUnspesifiedPth": {
+      "message": "10. URL algab määramata teega"
+   },
+   "urlStartWithUnspesifiedPthExm1": {
+      "message": "Ülaltoodud näites on antud URL vahekaardil suletud, mis näitab, et antud URL, mis avati uuel vahelehel ja algab tundmatu alamdomeeniga \u003Cb>'www'\u003C/b> või \u003Cb>'blogi',\u003C/b> suletakse 5 minuti pärast."
+   },
+   "useSpecificUrl": {
+      "message": "Kasutage konkreetset veebisaidi linki"
+   },
+   "useSpecificUrl1": {
+      "message": "Sul peab olema suletud brauseri vahekaardi väljale Veebisaidi link kirjutanud täpne alamdomeen, tippdomeen, domeeninimi ja lehetee."
+   },
+   "useSpecificUrl2": {
+      "message": "Kasutage suletud brauseri vahekaarti"
+   },
+   "useSpecificUrl3": {
+      "message": "Kasutage konkreetset ja täielikku veebisaidi linki"
+   },
+   "useUnSpecificUrl1": {
+      "message": "Kasutage määratlemata veebisaidi linki"
+   },
+   "useUnSpecificUrl2": {
+      "message": "Kasutage alustamist määratlemata veebisaidi lingiga"
+   },
+   "useUnSpecificUrl3": {
+      "message": "Kasutage lõppu määratlemata veebisaidi lingiga"
+   },
+   "used": {
+      "message": "Sa kasutasid"
+   },
+   "validFormatCsv": {
+      "message": "Mis on importimiseks kehtiv CSV-failivorming?"
+   },
+   "websiteLink": {
+      "message": "Veebisaidi link"
+   },
+   "websiteUrl": {
+      "message": "Veebisaidi URL"
+   },
+   "wednesday": {
+      "message": "kolmapäeval"
+   },
+   "weekName": {
+      "message": "Nädala nimi"
+   },
+   "weekly": {
+      "message": "Iganädalane"
+   },
+   "whenExtensionTabAppears": {
+      "message": "Kui kuvatakse vahekaart Laiendused, leidke inkognito režiimis lubamiseks vahekaartide ajakava automaatse avamise ja sulgemisega ja klõpsake selle kõrval olevat nuppu \"Üksikasjad\"."
+   },
+   "whenMenuPopup": {
+      "message": "Kui ilmub menüü, valige \"Halda laiendusi\"."
+   },
+   "withSignMustFill": {
+      "message": "Märgiga \u003Cspan>*\u003C/span> peab olema täitke või valige, valige kas avamise või sulgemise aeg või mõlemad kellaajad."
+   },
+   "writeYourDescriptionAboutSchUrl": {
+      "message": "Kirjutage siia oma ajastatud URL-i kirjeldus."
+   },
+   "yes": {
+      "message": "Jah"
+   },
+   "yourEmailAddress": {
+      "message": "Teie e-posti aadress"
+   },
+   "yourScheduleUrl": {
+      "message": "Teie ajakava URL"
+   }
+}

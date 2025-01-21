@@ -1,0 +1,1442 @@
+{
+   "10_min": {
+      "message": "10 minutos"
+   },
+   "1_min": {
+      "message": "1 minuto"
+   },
+   "30_min": {
+      "message": "30 minutos"
+   },
+   "5_min": {
+      "message": "5 minutos"
+   },
+   "60_min": {
+      "message": "hora"
+   },
+   "Dashboard": {
+      "message": "Painel"
+   },
+   "Login": {
+      "message": "Conecte-se"
+   },
+   "Off": {
+      "message": "Desligado"
+   },
+   "On": {
+      "message": "Sobre"
+   },
+   "Selected": {
+      "message": "Selecionado"
+   },
+   "Settings": {
+      "message": "Configurações"
+   },
+   "Tutorial": {
+      "message": "Tutorial"
+   },
+   "action": {
+      "message": "Ação"
+   },
+   "activateScheduleTab": {
+      "message": "Ativar aba agendada."
+   },
+   "active": {
+      "message": "Ativo"
+   },
+   "activeAllScheduleTab": {
+      "message": "Ativar todas as guias programadas"
+   },
+   "activeStatus": {
+      "message": "Status"
+   },
+   "actvInactvNotification": {
+      "message": "Exibir notificação quando a aba de programação for aberta"
+   },
+   "actvInactvOpnTb": {
+      "message": "Aba aberta ativa ou inativa"
+   },
+   "actvIntvClsTb": {
+      "message": "Fechar aba ativa ou inativa"
+   },
+   "add": {
+      "message": "Adicionar"
+   },
+   "addDescription": {
+      "message": "Adicionar descrição"
+   },
+   "addNew": {
+      "message": "Adicionar novo"
+   },
+   "addNewURlCls": {
+      "message": "Adicionar novo URL para fechar"
+   },
+   "addNewUrlToOpen": {
+      "message": "Adicionar novo URL para abrir em nova janela"
+   },
+   "addTitle": {
+      "message": "Adicionar título"
+   },
+   "addWebsite": {
+      "message": "Adicionar site"
+   },
+   "all": {
+      "message": "Todos"
+   },
+   "allInputFieldReq": {
+      "message": "Todos os campos são obrigatórios"
+   },
+   "all_weeks": {
+      "message": "Toda a semana"
+   },
+   "alreadyPurchase": {
+      "message": "Já comprou? Insira a chave aqui"
+   },
+   "andAt": {
+      "message": "e em"
+   },
+   "annually": {
+      "message": "Anualmente"
+   },
+   "appDesc": {
+      "message": "As abas do navegador serão abertas e fechadas automaticamente no horário selecionado. O usuário pode ativar/desativar a lista com base na necessidade"
+   },
+   "appName": {
+      "message": "Agendador de guias com abertura e fechamento automático"
+   },
+   "april": {
+      "message": "abril"
+   },
+   "at": {
+      "message": "no"
+   },
+   "august": {
+      "message": "Agosto"
+   },
+   "autoFocus": {
+      "message": "Guia de foco automático"
+   },
+   "autoFocustip": {
+      "message": "Se ativado, a nova aba será aberta em um estado ativo/em foco."
+   },
+   "autofocustip": {
+      "message": "Novas abas abertas focarão automaticamente"
+   },
+   "basic": {
+      "message": "Básico"
+   },
+   "billedAnnyally": {
+      "message": "Cobrado anualmente"
+   },
+   "billedMonthly": {
+      "message": "Cobrado mensalmente"
+   },
+   "both": {
+      "message": "Ambos"
+   },
+   "browserOpen": {
+      "message": "No navegador aberto"
+   },
+   "browserWebAddress": {
+      "message": "O endereço da web do navegador começa e termina com um endereço da web desconhecido. Coloque \u003Cb>*\u003C/b> em ambos os lados do campo Link do site de entrada."
+   },
+   "browserWebAddress2": {
+      "message": "O endereço da web do navegador contém o nome de domínio google.com, que será fechado em minutos, independentemente do subdomínio e do caminho da página. Coloque \u003Cb>*\u003C/b> em ambos os lados do nome de domínio e TLD"
+   },
+   "browserWebAddress3": {
+      "message": "O endereço da web do navegador começa com um nome de domínio desconhecido e termina com um caminho de página desconhecido"
+   },
+   "browserWebAddress31": {
+      "message": "será fechado após alguns minutos, coloque \u003Cb>*\u003C/b> em ambos os lados do TLD"
+   },
+   "browserWebAddress4": {
+      "message": "O endereço da web do navegador começa com um endereço da web desconhecido. Coloque \u003Cb>*\u003C/b> no começo do seu URL. Lembre-se de que o endereço da web do navegador deve corresponder ao seu URL depois que você escrever \u003Cb>* .\u003C/b>"
+   },
+   "browserWebAddress41": {
+      "message": "O endereço da web do navegador começa com um subdomínio desconhecido"
+   },
+   "browserWebAddress42": {
+      "message": "no início do link do seu site"
+   },
+   "browserWebAddress5": {
+      "message": "O endereço da web do navegador termina com um endereço da web desconhecido. Coloque \u003Cb>*\u003C/b> no final do seu URL. Lembre-se de que seu endereço da web deve corresponder antes de \u003Cb>*\u003C/b> que você tenha escrito."
+   },
+   "browserWebAddress51": {
+      "message": "O endereço da web do navegador termina com um caminho de página desconhecido. Coloque \u003Cb>*\u003C/b> no final do seu endereço da web"
+   },
+   "browserWebAddress6": {
+      "message": "Coloque apenas \u003Cb>*\u003C/b> no campo de endereço do site para fechar todas as abas do navegador. Após fechar todas as abas, o navegador será fechado automaticamente."
+   },
+   "browserWebAddress7": {
+      "message": "Você deve ter escrito o subdomínio exato, o domínio de nível superior, o nome do domínio e o caminho da página no campo URL para abrir na aba do navegador."
+   },
+   "browserWebAddress8": {
+      "message": "Você pode abrir a URL em uma data e hora específicas, mês específico, semana específica, ano específico e hora de repetição"
+   },
+   "buyPlan": {
+      "message": "Comprar Plano"
+   },
+   "buycofee": {
+      "message": "Compre-me um café"
+   },
+   "cancel": {
+      "message": "Cancelar"
+   },
+   "changeLanguage": {
+      "message": "Alterar idioma"
+   },
+   "checkAll": {
+      "message": "Verificar tudo"
+   },
+   "checkThisOpToPreventClosePinTb": {
+      "message": "Marque esta opção para impedir o fechamento de abas fixadas."
+   },
+   "checkThisOptionOnlyPartOfUrlMtch": {
+      "message": "Marque esta opção se apenas uma parte do URL precisar ser correspondida."
+   },
+   "checkThisOptionToActivate": {
+      "message": "Marque esta opção para ativar ou desativar sua URL agendada."
+   },
+   "checkThisOptionToCloseOnly": {
+      "message": "Marque esta opção para fechar apenas abas anônimas. Além disso, habilite a opção 'Permitir em anônimo' nos detalhes da extensão. Para instruções, consulte a página do tutorial."
+   },
+   "checkThisOptionToCloseOnlyInIncgnitoTb": {
+      "message": "Marque esta opção para fechar apenas abas anônimas. Além disso, habilite a opção 'Permitir em anônimo' nos detalhes da extensão. Para instruções, consulte a página do tutorial."
+   },
+   "checkThisOptionToInBg": {
+      "message": "Marque esta opção se quiser abrir o URL em segundo plano sem abri-lo em uma nova aba"
+   },
+   "checkThisOptionToInactivNotification": {
+      "message": "Marque esta opção para desativar a notificação na URL agendada"
+   },
+   "checkThisOptionToOpen": {
+      "message": "Marque esta opção se quiser abrir sua URL no modo anônimo"
+   },
+   "checkThisOptionToOpenIncogito": {
+      "message": "Marque esta opção se quiser abrir sua URL no modo anônimo"
+   },
+   "checkThisOptionToPrevent": {
+      "message": "Marque esta opção para impedir o fechamento de abas fixadas."
+   },
+   "clickExtIcon": {
+      "message": "Clique no ícone “Extensões” na barra de ferramentas, que se parece com uma peça de quebra-cabeça."
+   },
+   "clickTheSwitch": {
+      "message": "Clique no botão ao lado para ligá-lo"
+   },
+   "close": {
+      "message": "Fechar"
+   },
+   "closeAllTab": {
+      "message": "12. Feche todas as abas do navegador"
+   },
+   "closeAllTabExm1": {
+      "message": "No exemplo acima, o URL fornecido está na aba Fechar, o que indica que todas as abas serão fechadas às 12:00 em 25/02/2023"
+   },
+   "closeDate": {
+      "message": "Data de encerramento"
+   },
+   "closeDay": {
+      "message": "Dia de encerramento"
+   },
+   "closeEveryYear": {
+      "message": "Fecha todos os anos em"
+   },
+   "closeInEvery": {
+      "message": "Feche em todos os"
+   },
+   "closeIncognitoTab": {
+      "message": "Feche apenas as abas anônimas"
+   },
+   "closeMinute": {
+      "message": "Minuto próximo"
+   },
+   "closeOnDay": {
+      "message": "Fechar no dia"
+   },
+   "closeOnEvery": {
+      "message": "Feche em todos os"
+   },
+   "closeOnEveryDay": {
+      "message": "Fechar todos os dias em"
+   },
+   "closeOnEveryMonth": {
+      "message": "Fechar todos os meses no mesmo dia"
+   },
+   "closeOnEveryWeek": {
+      "message": "Fechado todas as semanas em"
+   },
+   "closeSecond": {
+      "message": "Fechar segundo"
+   },
+   "closeSeconsMoreThan5": {
+      "message": "Os segundos próximos devem ser mais de 5."
+   },
+   "closeTabSchedule": {
+      "message": "Fechar aba Agendar"
+   },
+   "closeTabURL": {
+      "message": "Fechar URL da aba"
+   },
+   "closeTime": {
+      "message": "Hora de fechar"
+   },
+   "closeUrl": {
+      "message": "Fechar link do site"
+   },
+   "closeWeek": {
+      "message": "Fechar Semana"
+   },
+   "closeWeeks": {
+      "message": "Fechar Semanas"
+   },
+   "close_on": {
+      "message": "Fechar em"
+   },
+   "cngrtsForSubcr": {
+      "message": "Parabéns! Seu plano foi ativado com sucesso."
+   },
+   "commonQuestionsAns": {
+      "message": "Perguntas e respostas comuns"
+   },
+   "copySucessClose": {
+      "message": "Dados de URL da guia Fechar copiados para Dados de URL da guia Abrir"
+   },
+   "createNewTimer": {
+      "message": "Criar novo temporizador"
+   },
+   "currentPlan": {
+      "message": "Plano atual"
+   },
+   "currentTabSchedule": {
+      "message": "Agenda de abas atual"
+   },
+   "currentTbScheduleTimer": {
+      "message": "Temporizador agendado da guia atual."
+   },
+   "cusSec": {
+      "message": "Segundo personalizado"
+   },
+   "custMin": {
+      "message": "Minuto personalizado"
+   },
+   "custmMinSch": {
+      "message": "7. Cronograma de minutos personalizado"
+   },
+   "custmMinSchExm1": {
+      "message": "No exemplo acima, a URL fornecida está na aba aberta, o que indica que a URL fornecida abre em uma nova aba a cada 15 minutos."
+   },
+   "custmMinSchExm2": {
+      "message": "No exemplo acima, a URL fornecida está na aba Fechar, o que indica que a URL fornecida que foi aberta em uma nova aba será fechada após 15 minutos."
+   },
+   "customSecondWarning": {
+      "message": "A funcionalidade de segundos personalizados é experimental e pode não funcionar corretamente se os segundos forem definidos abaixo de 60."
+   },
+   "darkMode": {
+      "message": "Modo escuro"
+   },
+   "datNotCopy": {
+      "message": "Alguns dados não são copiados devido a uma URL inválida."
+   },
+   "dataSaved": {
+      "message": "Dados do temporizador salvos com sucesso"
+   },
+   "date": {
+      "message": "Data"
+   },
+   "dateIsOutOfRange": {
+      "message": "A data está fora do intervalo"
+   },
+   "day": {
+      "message": "Dia"
+   },
+   "december": {
+      "message": "dezembro"
+   },
+   "delete": {
+      "message": "Excluir"
+   },
+   "deleteScheduleTb": {
+      "message": "Excluir aba agendada."
+   },
+   "description": {
+      "message": "Descrição"
+   },
+   "developedBy": {
+      "message": "Desenvolvido por:"
+   },
+   "doNotCloseInPinnedTabs": {
+      "message": "Não feche abas fixadas"
+   },
+   "doNotShowNotification": {
+      "message": "Não mostrar notificação"
+   },
+   "domainName": {
+      "message": "Nome de domínio"
+   },
+   "downloadCloseTbSampleCsv": {
+      "message": "Baixe um exemplo de CSV de guia fechada para ver um exemplo do formato necessário"
+   },
+   "downloadOpenTbSampleCsv": {
+      "message": "Baixe um exemplo de CSV de aba aberta para ver um exemplo do formato necessário"
+   },
+   "editScheduleTb": {
+      "message": "Editar aba agendada."
+   },
+   "email": {
+      "message": "E-mail"
+   },
+   "enterDateToCloseTab": {
+      "message": "Insira a data aqui para fechar a aba de programação."
+   },
+   "enterDateToOpen": {
+      "message": "Insira a data para abrir a aba de agendamento."
+   },
+   "enterMiniutesToCloseTb": {
+      "message": "Digite minutos para fechar a aba."
+   },
+   "enterMiniutesToOpen": {
+      "message": "Digite minutos para abrir a aba de programação."
+   },
+   "enterMinute": {
+      "message": "Digite o minuto"
+   },
+   "enterSecond": {
+      "message": "Entre em segundo"
+   },
+   "enterSecondsToCloseTab": {
+      "message": "Insira segundos para fechar a aba."
+   },
+   "enterSecondsToOpen": {
+      "message": "Insira segundos para abrir a aba de programação."
+   },
+   "enterTilteOfScheduleUrl": {
+      "message": "Insira o título do URL agendado."
+   },
+   "enterTimeToCloseTab": {
+      "message": "Insira o horário aqui para fechar a aba de programação."
+   },
+   "enterTimeToSchedule": {
+      "message": "Insira o horário para abrir a aba de programação."
+   },
+   "enterValidEmail": {
+      "message": "Por favor, insira um e-mail válido"
+   },
+   "enterValidUrl": {
+      "message": "Por favor, insira um URL válido"
+   },
+   "enterValueInCloseSec": {
+      "message": "Insira o valor em segundos próximos"
+   },
+   "enterValueInOpenCloseSec": {
+      "message": "Insira o valor em segundos de abertura ou fechamento"
+   },
+   "enterValueInOpenMinutes": {
+      "message": "Insira o valor em minutos abertos"
+   },
+   "enterVlaueInCloseMinutes": {
+      "message": "Insira o valor em minutos próximos"
+   },
+   "enterVlaueInOpenCloseMin": {
+      "message": "Insira o valor em minutos de abertura ou fechamento"
+   },
+   "enterVlaueInOpenSeconds": {
+      "message": "Insira o valor em segundos abertos"
+   },
+   "enterYourURLToSchedule": {
+      "message": "Insira sua URL para agendar."
+   },
+   "every": {
+      "message": "todo"
+   },
+   "every10Min": {
+      "message": "A cada 10 minutos"
+   },
+   "every1Minute": {
+      "message": "a cada 1 minuto"
+   },
+   "every30Min": {
+      "message": "A cada 30 minutos"
+   },
+   "every5Min": {
+      "message": "A cada 5 minutos"
+   },
+   "everyDay": {
+      "message": "Diariamente"
+   },
+   "everyDayAt": {
+      "message": "todos os dias às"
+   },
+   "everyHour": {
+      "message": "A cada hora"
+   },
+   "everyMinute": {
+      "message": "Cada minuto"
+   },
+   "everyMonth": {
+      "message": "Todos os meses"
+   },
+   "everyMonthOn": {
+      "message": "todo mês em"
+   },
+   "everyMonthOnDay": {
+      "message": "todo mês no dia"
+   },
+   "everyWeek": {
+      "message": "Toda semana"
+   },
+   "everyWeekOn": {
+      "message": "toda semana em"
+   },
+   "everyYear": {
+      "message": "Todos os anos"
+   },
+   "everyYesrOn": {
+      "message": "todos os anos em"
+   },
+   "evr10MinSch": {
+      "message": "2.Cada programação de 10 minutos"
+   },
+   "evr10MinSchExm1": {
+      "message": "No exemplo acima, a URL fornecida está na aba aberta, o que indica que a URL fornecida será aberta em uma nova aba a cada 10 minutos."
+   },
+   "evr10MinSchExm2": {
+      "message": "No exemplo acima, a URL fornecida está na aba Fechar, o que indica que a URL fornecida que foi aberta em uma nova aba será fechada após 10 minutos."
+   },
+   "evrDaySch": {
+      "message": "3. Programação diária"
+   },
+   "evrDaySchExm1": {
+      "message": "No exemplo acima, o URL fornecido está na aba aberta, o que indica que ele será aberto em uma nova aba todos os dias às 17h27."
+   },
+   "evrDaySchExm2": {
+      "message": "No exemplo acima, o URL fornecido está na aba Fechar, o que indica que ele fechará a aba já aberta às 17h27 todos os dias"
+   },
+   "evrMonthSch": {
+      "message": "5. Cronograma mensal"
+   },
+   "evrMonthSchExm1": {
+      "message": "No exemplo acima, o URL fornecido está na aba aberta, o que indica que será aberto em uma nova aba todo mês às 13h45 do dia 25."
+   },
+   "evrMonthSchExm2": {
+      "message": "No exemplo acima, o URL fornecido está na aba Fechar, o que indica que ele fechará a aba já aberta todo mês às 13h45 do dia 25."
+   },
+   "evrWeekSch": {
+      "message": "4. Programação semanal"
+   },
+   "evrWeekSchExm1": {
+      "message": "No exemplo acima, o URL fornecido está em uma aba aberta, o que indica que ela será aberta em uma nova aba toda semana às 17:00 nas \u003Cb>segundas e terças-feiras\u003C/b> ."
+   },
+   "evrWeekSchExm2": {
+      "message": "No exemplo acima, a URL fornecida está na aba Fechar, o que indica que ela fechará a aba já aberta todas as semanas às 17:00 na \u003Cb>segunda e terça-feira\u003C/b> ."
+   },
+   "evrWeekSchExm3": {
+      "message": "No exemplo acima, vários dias podem ser selecionados no cronômetro semanal."
+   },
+   "evrYearSch": {
+      "message": "6.Cronograma Anual"
+   },
+   "evrYearSchExm1": {
+      "message": "No exemplo acima, o URL fornecido está na aba aberta, o que indica que ele será aberto em uma nova aba todos os anos às 13h35 do dia 1º de janeiro."
+   },
+   "evrYearSchExm2": {
+      "message": "No exemplo acima, o URL fornecido está na aba Fechar, o que indica que ele fechará a aba já aberta todos os anos às 13h35 do dia 1º de janeiro."
+   },
+   "exampleSort": {
+      "message": "por exemplo"
+   },
+   "exdMaxLim": {
+      "message": "Excedeu o número máximo de dispositivos permitidos!"
+   },
+   "exmpOpnClsTbSch": {
+      "message": "Exemplo de como abrir e fechar abas no Tab Scheduler"
+   },
+   "expLicKy": {
+      "message": "Esta chave de licença expirou."
+   },
+   "export": {
+      "message": "Exportar"
+   },
+   "exportBefore": {
+      "message": "Você tem\u003Cexday>\u003C/exday>dias restantes, inscreva-se para continuar aproveitando o recurso premium"
+   },
+   "exportClsTbDta": {
+      "message": "Exportar dados de fechamento de aba"
+   },
+   "exportOpenTbDt": {
+      "message": "Exportar dados de abas abertas"
+   },
+   "exportedData": {
+      "message": "Dados do temporizador exportados com sucesso"
+   },
+   "extensionShouldAble": {
+      "message": "Agora, a extensão deve conseguir fechar abas no modo anônimo."
+   },
+   "faq": {
+      "message": "Perguntas frequentes"
+   },
+   "faq_1": {
+      "message": "O que é o Tab Scheduler com abertura e fechamento automáticos?"
+   },
+   "faq_10": {
+      "message": "Como posso visualizar minhas guias agendadas?"
+   },
+   "faq_11": {
+      "message": "É obrigatório preencher os horários de abertura e fechamento?"
+   },
+   "faq_12": {
+      "message": "O que os recursos Guia de foco automático, Ativar todas as guias programadas e Modo de energia fazem?"
+   },
+   "faq_13": {
+      "message": "Posso abrir/fechar o link do site agendado na aba anônima?"
+   },
+   "faq_14": {
+      "message": "Qual é a utilidade da aba Atualizar se a URL já estiver aberta?"
+   },
+   "faq_2": {
+      "message": "Qual é a utilidade do Website Link?"
+   },
+   "faq_3": {
+      "message": "Como posso agendar uma URL usando o Tab Scheduler?"
+   },
+   "faq_4": {
+      "message": "O que é a opção 'Abrir URL em segundo plano'?"
+   },
+   "faq_5": {
+      "message": "Posso impedir que a extensão feche abas fixadas?"
+   },
+   "faq_6": {
+      "message": "O que significa o tipo de programação \"Ambos\"?"
+   },
+   "faq_7": {
+      "message": "Como funciona o recurso 'Filtragem de URL'?"
+   },
+   "faq_8": {
+      "message": "Posso desativar uma aba agendada sem excluí-la?"
+   },
+   "faq_9": {
+      "message": "Receberei notificações sobre as guias agendadas?"
+   },
+   "faq_a_1": {
+      "message": "\u003Cp>Tab Scheduler com Auto Open and Close é uma extensão de navegador que permite aos usuários programar abas para abrir e fechar automaticamente em horários definidos. Os usuários podem selecionar uma programação única ou configurar programações recorrentes com várias opções de frequência. Esta extensão tem vários propósitos para os usuários e fornece muitos recursos que são úteis para você.\u003C/p>"
+   },
+   "faq_a_10": {
+      "message": "Todas as guias agendadas são exibidas em uma lista mostrando o título, o link do site, os horários de abertura e fechamento, o status e as ações que você pode realizar (por exemplo, ativar, editar, excluir)."
+   },
+   "faq_a_11": {
+      "message": "Não, você pode agendar um horário de abertura ou de fechamento. No entanto, você deve preencher ou selecionar os campos obrigatórios marcados com um asterisco (*)."
+   },
+   "faq_a_12": {
+      "message": "A guia Auto Focus garante que, quando uma guia agendada for aberta, Activate All Scheduled Tabs permitirá que você ative rapidamente todas as suas guias agendadas com um único clique. O Power Mode otimiza o desempenho da extensão gerenciando os recursos do navegador de forma mais eficiente."
+   },
+   "faq_a_13": {
+      "message": "Sim, você pode escolher abrir uma aba programada no modo anônimo selecionando a opção \"Abrir no modo anônimo\". Você pode escolher fechar somente abas anônimas selecionando a opção \"Fechar somente abas anônimas\", desde que \"Permitir no modo anônimo\" esteja habilitado nas configurações da extensão"
+   },
+   "faq_a_14": {
+      "message": "Quando essa opção estiver habilitada, a extensão atualizará automaticamente uma aba existente se a mesma URL já estiver aberta no seu navegador. Isso evita a abertura de abas duplicadas e garante que você sempre tenha a versão mais recente da página carregada."
+   },
+   "faq_a_14_1": {
+      "message": "Se você tentar abrir https://github.com/ e ele já estiver aberto em outra aba, a extensão simplesmente atualizará essa aba em vez de abrir uma nova."
+   },
+   "faq_a_14_2": {
+      "message": "Se https://github.com/ já estiver aberto em três abas, a extensão atualizará todas as três abas."
+   },
+   "faq_a_2": {
+      "message": "O Website Link é o endereço do site da aba aberta do seu navegador. Como você pode usar o endereço do site é mencionado abaixo."
+   },
+   "faq_a_3": {
+      "message": "Para agendar uma URL, insira o link do site, dê um título à agenda, selecione a frequência (Uma Vez, A Cada Minuto, Diariamente, etc.) e escolha os horários de abertura e fechamento. Você também pode especificar uma data, dia ou segundos para abrir e fechar a aba."
+   },
+   "faq_a_4": {
+      "message": "\u003Cp>Esta opção lhe dá controle total para agendar uma URL para abrir em segundo plano sem trazer a nova aba para o foco. A URL abrirá silenciosamente enquanto você continua trabalhando em outras abas. É particularmente útil quando você precisa que o navegador busque dados da URL agendada sem exibi-la ativamente, como no caso de uma solicitação GET API.\u003C/p>\u003Cbr> \u003Cp>Por exemplo, se você quiser buscar dados de um ponto de extremidade de API em um horário definido regularmente, você pode usar esta opção eficiente para executar a solicitação em segundo plano sem abrir uma nova aba visível.\u003C/p>"
+   },
+   "faq_a_5": {
+      "message": "Sim, há uma opção para impedir o fechamento de abas fixadas. Marque a opção \"Não fechar abas fixadas\" para garantir que essas abas permaneçam abertas mesmo que atendam a outros critérios de fechamento."
+   },
+   "faq_a_6": {
+      "message": "O tipo de programação \"Ambos\" oferece controle total sobre quando uma guia abre e fecha, permitindo que você defina horários específicos para ambas as ações."
+   },
+   "faq_a_7": {
+      "message": "A filtragem de URL garante que apenas uma parte específica da URL precise corresponder para que a ação programada ocorra. Isso é útil quando você deseja automatizar certas ações com base em correspondências parciais de URL. Por exemplo, se você marcar a opção Filtragem de URL para a URL https://example.com/page, ela também será aplicada a URLs como https://example.com/page/123, https://example.com/page?query=example e https://subdomain.example.com/page."
+   },
+   "faq_a_8": {
+      "message": "Com a opção \"Ativar esta aba agendada\", você pode ativar ou desativar facilmente abas agendadas, dando a você a flexibilidade de gerenciar suas agendas sem perder configurações."
+   },
+   "faq_a_9": {
+      "message": "Por padrão, você receberá notificações. No entanto, se preferir parar as notificações, você pode marcar a opção \"Não mostrar notificação\" para desabilitá-las."
+   },
+   "february": {
+      "message": "Fevereiro"
+   },
+   "for_exp": {
+      "message": "Por exemplo"
+   },
+   "freeForever": {
+      "message": "Livre para sempre"
+   },
+   "freeSchedule": {
+      "message": "agenda livre"
+   },
+   "freeTral": {
+      "message": "Como um valioso usuário inicial, você desfrutará\u003Crday>120\u003C/rday>dias de acesso gratuito antes de mudar para nosso novo plano pago — obrigado pelo seu apoio contínuo!\u003Cp class=\"p-t-5\">Você tem\u003Cb>\u003Cspan>\u003C/span>\u003C/b>dias restantes fora do seu\u003Crday>120\u003C/rday>período livre de -dia.\u003Cafex class=\"warning\">\u003Cafex>\u003C/afex>\u003C/afex>\u003C/p> "
+   },
+   "frequentlyAskedQuestions": {
+      "message": "Perguntas frequentes"
+   },
+   "friday": {
+      "message": "Sexta-feira"
+   },
+   "getThisPlan": {
+      "message": "Obtenha este plano"
+   },
+   "goToSettingsPageToSchedule": {
+      "message": "Acesse a página de configurações para agendar a abertura e o fechamento de URLs."
+   },
+   "goURL": {
+      "message": "Vá para a URL"
+   },
+   "helpAccordion12": {
+      "message": "Esta extensão funciona no modo de suspensão/hibernação?"
+   },
+   "helpAccordion3": {
+      "message": "Posso programar uma aba para abrir no modo anônimo?"
+   },
+   "helpAccordion6": {
+      "message": "O que é \"Tempo expirado\"?"
+   },
+   "helpAccordion7": {
+      "message": "Posso exportar URL agendada?"
+   },
+   "helpAccordion8": {
+      "message": "Posso importar para a URL da programação?"
+   },
+   "helpPanelBodyDesc12First": {
+      "message": "Não, esta extensão não funcionará no modo de suspensão/hibernação."
+   },
+   "helpPanelBodyDesc12Second": {
+      "message": "Se qualquer URL estiver agendada na aba abrir ou fechar, seu PC não entrará automaticamente no modo de suspensão ou hibernação."
+   },
+   "helpPanelBodyDesc3": {
+      "message": "Sim, você pode escolher abrir uma aba programada no modo anônimo selecionando a opção 'Abrir no modo anônimo'. Certifique-se de que a opção 'Permitir no modo anônimo' da extensão esteja habilitada nas configurações de extensão do navegador."
+   },
+   "helpPanelBodyDesc6": {
+      "message": "- A data e hora fornecidas já passaram da data e hora atuais e o texto \"Tempo Expirado\" será exibido."
+   },
+   "helpPanelBodyDesc7": {
+      "message": "Sim, você pode exportar a URL de abertura e fechamento de abas já agendada no formato csv e usá-la com outro sistema para importar essa URL."
+   },
+   "helpPanelBodyDesc8": {
+      "message": "Sim, você pode importar URLs de abertura e fechamento válidos no formato csv. O formato csv importado será agendado automaticamente em determinado momento"
+   },
+   "herAreStepsToAllow": {
+      "message": "Aqui estão os passos para \"Permitir no modo anônimo\" no Google Chrome:"
+   },
+   "home": {
+      "message": "Lar"
+   },
+   "hour_minute_close": {
+      "message": "Cada hora perto de um minuto"
+   },
+   "hour_minute_open": {
+      "message": "A cada hora  minuto aberto"
+   },
+   "how_to_use_tab": {
+      "message": "Como usar o agendador de guias?"
+   },
+   "import": {
+      "message": "Importar"
+   },
+   "importClsTbDta": {
+      "message": "Importar dados de fechamento de aba"
+   },
+   "importExport": {
+      "message": "Importação/Exportação"
+   },
+   "importOpenTbDt": {
+      "message": "Importar dados de abas abertas"
+   },
+   "importedRecored": {
+      "message": ", importado gravado"
+   },
+   "inactivateScheduleTab": {
+      "message": "Desativar aba agendada."
+   },
+   "inactive": {
+      "message": "Inativo"
+   },
+   "inactiveSch": {
+      "message": "8.URL inativo"
+   },
+   "inactiveSchExm1": {
+      "message": "No exemplo acima, a URL fornecida está na aba abrir ou fechar, o que indica que a URL fornecida está inativa e não executará nenhuma ação."
+   },
+   "inactiveThisScheduledTabs": {
+      "message": "Ative esta aba agendada"
+   },
+   "invalidDuplicate": {
+      "message": ", duplicado ou inválido registrado"
+   },
+   "invldLicKy": {
+      "message": "Chave de licença inválida!"
+   },
+   "isClose": {
+      "message": "está perto"
+   },
+   "isOpen": {
+      "message": "está aberto"
+   },
+   "january": {
+      "message": "Janeiro"
+   },
+   "july": {
+      "message": "Julho"
+   },
+   "june": {
+      "message": "Junho"
+   },
+   "licKeyDis": {
+      "message": "Esta chave de licença está desativada."
+   },
+   "listTitle": {
+      "message": "Agendador de abas"
+   },
+   "loading": {
+      "message": "Por favor, aguarde..."
+   },
+   "locale": {
+      "message": "em"
+   },
+   "march": {
+      "message": "Marchar"
+   },
+   "maxSchedule": {
+      "message": "4 Limite máximo de agendamento"
+   },
+   "may": {
+      "message": "Poderia"
+   },
+   "mintValid": {
+      "message": "É necessário no mínimo 1 minuto"
+   },
+   "minute": {
+      "message": "Minuto"
+   },
+   "minutesNotLessThan1": {
+      "message": "Os minutos não devem ser menores que 1."
+   },
+   "monday": {
+      "message": "Segunda-feira"
+   },
+   "month": {
+      "message": "Mês"
+   },
+   "monthly": {
+      "message": "Mensal"
+   },
+   "more": {
+      "message": "mais"
+   },
+   "mostSubscribe": {
+      "message": "Mais inscritos"
+   },
+   "no": {
+      "message": "Não"
+   },
+   "noDataToExport": {
+      "message": "Nenhum dado para exportar."
+   },
+   "noScheduledTabs": {
+      "message": "Nenhuma aba agendada"
+   },
+   "noTimerSetAddNewTimer": {
+      "message": "Nenhum temporizador definido, clique no botão Adicionar para definir um novo temporizador"
+   },
+   "not_show_tutorial": {
+      "message": "Não mostrar este tutorial novamente"
+   },
+   "notificationOpenTab": {
+      "message": "13. Notificação na URL da aba aberta/fechada"
+   },
+   "notificationOpenTabExm1": {
+      "message": "No exemplo acima, a URL fornecida está na aba aberta, o que indica que ela emitirá uma notificação e abrirá/fechará a URL em uma nova aba a cada 5 minutos."
+   },
+   "notifications": {
+      "message": "Notificação"
+   },
+   "november": {
+      "message": "novembro"
+   },
+   "october": {
+      "message": "outubro"
+   },
+   "onTheExtensionDetailPage": {
+      "message": "Na página de detalhes da extensão, role para baixo e localize a opção “Permitir no modo anônimo”."
+   },
+   "oneTime": {
+      "message": "Uma vez"
+   },
+   "oneTmSch": {
+      "message": "1. Cronograma Único"
+   },
+   "oneTmSchExm1": {
+      "message": "No exemplo acima, o URL fornecido está na aba aberta, o que indica que ele será aberto em uma nova aba Uma vez às 13:45 em 21/01/2023"
+   },
+   "oneTmSchExm2": {
+      "message": "No exemplo acima, o URL fornecido está na aba Fechar, o que indica que todas as abas de URL correspondentes específicas serão fechadas às 13h45 do dia 21/01/2023"
+   },
+   "open": {
+      "message": "Abrir"
+   },
+   "openBackground": {
+      "message": "Se sim, Carregando uma URL em segundo plano sem abri-la em uma nova aba"
+   },
+   "openDate": {
+      "message": "Data de abertura"
+   },
+   "openDay": {
+      "message": "Dia Aberto"
+   },
+   "openEveryDayOn": {
+      "message": "Aberto todos os dias em"
+   },
+   "openEveryMonthOn": {
+      "message": "Aberto todos os meses no mesmo dia"
+   },
+   "openEveryWeekOn": {
+      "message": "Aberto todas as semanas em"
+   },
+   "openEveryYearOn": {
+      "message": "Aberto todos os anos em"
+   },
+   "openGoogleChrome": {
+      "message": "Abra o Google Chrome."
+   },
+   "openInBackground": {
+      "message": "Abrir URL em segundo plano"
+   },
+   "openInEvery": {
+      "message": "Aberto em todos os"
+   },
+   "openInIncognito": {
+      "message": "Abrir no modo anônimo"
+   },
+   "openMinute": {
+      "message": "Minuto aberto"
+   },
+   "openOnDay": {
+      "message": "Aberto no dia"
+   },
+   "openOnEvery": {
+      "message": "Aberto em todos os"
+   },
+   "openSecond": {
+      "message": "Segundo aberto"
+   },
+   "openSecondsMoreThan5": {
+      "message": "Os segundos abertos devem ser maiores que 5."
+   },
+   "openTabSchedule": {
+      "message": "Agenda de abas abertas"
+   },
+   "openTabURL": {
+      "message": "URL da aba aberta"
+   },
+   "openTime": {
+      "message": "Horário Aberto"
+   },
+   "openUrl": {
+      "message": "Abrir link do site"
+   },
+   "openWeek": {
+      "message": "Semana Aberta"
+   },
+   "openWeeks": {
+      "message": "Semanas Abertas"
+   },
+   "open_on": {
+      "message": "Aberto em"
+   },
+   "optional": {
+      "message": "Opcional"
+   },
+   "or": {
+      "message": "ou"
+   },
+   "outof": {
+      "message": "fora de"
+   },
+   "pagePath": {
+      "message": "Caminho da página"
+   },
+   "paidFeature": {
+      "message": "Recurso pago"
+   },
+   "pauseSchedule": {
+      "message": "Iniciar ou parar todas as programações"
+   },
+   "pleaseAllowIncognitoMessage": {
+      "message": "Por favor, habilite a opção 'Permitir em modo anônimo' nos detalhes da extensão. Para instruções, por favor, consulte a página do tutorial."
+   },
+   "pleaseShareYourSuggestions": {
+      "message": "Por favor, compartilhe sua sugestão."
+   },
+   "plsShreAnySugWithUs": {
+      "message": "Por favor, dê uma sugestão para nos melhorar"
+   },
+   "powerMode": {
+      "message": "Modo de energia"
+   },
+   "premium": {
+      "message": "Prêmio"
+   },
+   "pricePlan": {
+      "message": "Preços e Planos"
+   },
+   "privcyPolicy": {
+      "message": "política de Privacidade"
+   },
+   "prowerModeTip": {
+      "message": "Mantenha o sistema sempre ativo habilitando o Modo de Energia"
+   },
+   "put": {
+      "message": "Colocar"
+   },
+   "rateUs": {
+      "message": "Avalie-nos"
+   },
+   "removeDuplicateEntry": {
+      "message": "Por favor, remova a entrada duplicada"
+   },
+   "removeOpenTbURL": {
+      "message": "Remover URL da aba aberta"
+   },
+   "repeat": {
+      "message": "Repita"
+   },
+   "requiredMsg": {
+      "message": "Obrigatório"
+   },
+   "rmvClsTb": {
+      "message": "Remover URL de fechamento da aba"
+   },
+   "sameTabs": {
+      "message": "Atualizar aba se o URL já estiver aberto"
+   },
+   "sameTabsInfo": {
+      "message": "Impedir a abertura de várias abas para o mesmo URL. Por exemplo, se www.google.com já estiver aberto, então essa aba existente será atualizada em vez de abrir uma nova aba para ela."
+   },
+   "sampleCsvOpenPath": {
+      "message": "../sample_csv/en/open_tab_sample.csv"
+   },
+   "sampleFile": {
+      "message": "Arquivo de amostra"
+   },
+   "saturday": {
+      "message": "Sábado"
+   },
+   "savOpnData": {
+      "message": "Salvar dados da aba aberta"
+   },
+   "save": {
+      "message": "Salvar"
+   },
+   "saveClsTbData": {
+      "message": "Salvar dados da guia fechar"
+   },
+   "saveSchedule": {
+      "message": "Salvar agenda"
+   },
+   "scheduleCloseTab": {
+      "message": "Agendar Fechar aba"
+   },
+   "scheduleCurrentTab": {
+      "message": "Agendar aba atual"
+   },
+   "scheduleOpenTab": {
+      "message": "Agendar aba aberta"
+   },
+   "scheduledTabIsAlreadyExistWithSameTimer": {
+      "message": "Esta aba agendada já existe com o mesmo temporizador."
+   },
+   "scheduledTabList": {
+      "message": "Lista de guias agendadas"
+   },
+   "scheduledType": {
+      "message": "Tipo de programação"
+   },
+   "search": {
+      "message": "Procurar"
+   },
+   "secValid": {
+      "message": "É necessário um mínimo de 5 segundos"
+   },
+   "second": {
+      "message": "Segundo"
+   },
+   "selectCloseDate": {
+      "message": "Selecione a data de fechamento"
+   },
+   "selectCloseDay": {
+      "message": "Selecione o dia de fechamento"
+   },
+   "selectCloseTime": {
+      "message": "Selecione o horário de fechamento"
+   },
+   "selectColumn": {
+      "message": "Selecionar coluna"
+   },
+   "selectDateAndTime": {
+      "message": "Selecione a data e a hora para abrir uma nova aba"
+   },
+   "selectDateAndTimeClsTb": {
+      "message": "Selecione a data e a hora para fechar a aba"
+   },
+   "selectDayToCloseSchTb": {
+      "message": "Selecione o dia para fechar a aba de programação."
+   },
+   "selectDayToClsTb": {
+      "message": "Selecione o dia para fechar a aba"
+   },
+   "selectDayToSchdule": {
+      "message": "Selecione o dia para agendar a guia."
+   },
+   "selectDaysInWeek": {
+      "message": "Selecione os dias da semana"
+   },
+   "selectDaysInWeekIClsTime": {
+      "message": "Selecione os dias da semana no cronômetro de fechamento."
+   },
+   "selectDaysInWeekIOpClsTime": {
+      "message": "Selecione os dias da semana no cronômetro de abertura ou fechamento."
+   },
+   "selectDaysInWeekIOpTime": {
+      "message": "Selecione os dias da semana no cronômetro aberto."
+   },
+   "selectFrequency": {
+      "message": "Selecione a frequência"
+   },
+   "selectFrequencyOfScheduleUrl": {
+      "message": "Selecione a frequência da URL agendada."
+   },
+   "selectOpenDate": {
+      "message": "Selecione a data de abertura"
+   },
+   "selectOpenDay": {
+      "message": "Selecione dia aberto"
+   },
+   "selectOpenOrClose": {
+      "message": "Selecione o horário de abertura e fechamento"
+   },
+   "selectOpenOrCloseDate": {
+      "message": "Selecione a data de abertura e fechamento"
+   },
+   "selectOpenOrCloseDay": {
+      "message": "Selecione o dia de abertura e fechamento"
+   },
+   "selectOpenTime": {
+      "message": "Selecione o horário de funcionamento"
+   },
+   "selectPreferredLanguage": {
+      "message": "Selecione seu idioma preferido."
+   },
+   "selectToOpenTab": {
+      "message": "Selecione o dia para abrir uma nova aba"
+   },
+   "selectTypTimerClsTb": {
+      "message": "Selecione o tipo de temporizador para fechar a aba"
+   },
+   "selectTypeOfSchedule": {
+      "message": "Selecione o tipo de agendamento, se quiser abrir e fechar, selecione \"Ambos\"."
+   },
+   "selectTypeOfTimer": {
+      "message": "Selecione o tipo de temporizador para abrir uma nova aba"
+   },
+   "select_weeks": {
+      "message": "Selecione Semanas"
+   },
+   "september": {
+      "message": "Setembro"
+   },
+   "settingSave": {
+      "message": "Configurações salvas com sucesso"
+   },
+   "settingToClose": {
+      "message": "Configurando para fechar a aba no modo anônimo."
+   },
+   "shareYourSuggestionWithUs": {
+      "message": "Compartilhe suas sugestões conosco."
+   },
+   "slectDayToScheduleWeekly": {
+      "message": "Selecione os dias para agendar a guia semanalmente."
+   },
+   "slectMinute": {
+      "message": "Selecione Minuto"
+   },
+   "smthngWrng": {
+      "message": "Algo deu errado"
+   },
+   "softpulseInfotech": {
+      "message": "Softpulse Infotech"
+   },
+   "somethingWentWrong": {
+      "message": "Algo deu errado. Atualize a página e tente novamente."
+   },
+   "status": {
+      "message": "Status"
+   },
+   "subcrKeyShldNEmpt": {
+      "message": "Insira a chave de assinatura."
+   },
+   "subdomain": {
+      "message": "Subdomínio"
+   },
+   "subkeyInputTitle": {
+      "message": "Insira a chave de assinatura"
+   },
+   "submFeedBack": {
+      "message": "Enviar"
+   },
+   "suggForTbSch": {
+      "message": "Sugestão para agendador de abas"
+   },
+   "suggestionAndRateUs": {
+      "message": "Sugira e avalie-nos"
+   },
+   "sunday": {
+      "message": "Domingo"
+   },
+   "tabCloseOneTime": {
+      "message": "A aba será fechada apenas uma vez"
+   },
+   "tabSchTutorial": {
+      "message": "Tutorial do Agendador de Guias"
+   },
+   "tabScheduler": {
+      "message": "Agendador de abas"
+   },
+   "tabSchedulerOptions": {
+      "message": "Opções do Agendador de Guias"
+   },
+   "tabWillOpenOneTime": {
+      "message": "A aba será aberta apenas uma vez"
+   },
+   "tabWillOpenWhenBrowserOpen": {
+      "message": "A guia será aberta quando o navegador for aberto"
+   },
+   "termCondition": {
+      "message": "Termos e Condições"
+   },
+   "thanksFrRev": {
+      "message": "Obrigado pela sua avaliação"
+   },
+   "thnkUFeedBack": {
+      "message": "Obrigado pela sua sugestão"
+   },
+   "thnkUFrUsngTbSch": {
+      "message": "Por favor, dê uma sugestão para nos melhorar"
+   },
+   "thursday": {
+      "message": "Quinta-feira"
+   },
+   "time": {
+      "message": "Tempo"
+   },
+   "timeExpired": {
+      "message": "Tempo expirado"
+   },
+   "timer": {
+      "message": "Temporizador"
+   },
+   "title": {
+      "message": "Título"
+   },
+   "titleLengtWarn": {
+      "message": "O título não deve ter mais de 200 caracteres."
+   },
+   "toScheduledOpenTbMsg": {
+      "message": "Para agendar a abertura da aba, desmarque a filtragem de URL."
+   },
+   "toogleCloseTab": {
+      "message": "Iniciar/parar o alarme de programação para todas as URLs de fechamento de abas"
+   },
+   "toogleDarkmode": {
+      "message": "Alterne entre o modo escuro e o modo padrão para personalizar sua experiência de visualização."
+   },
+   "toogleOff": {
+      "message": "Desligado"
+   },
+   "toogleOn": {
+      "message": "Sobre"
+   },
+   "toogleOpenTab": {
+      "message": "Iniciar/parar o alarme programado para todas as abas abertas URL"
+   },
+   "topLevelDomain": {
+      "message": "Domínio de nível superior"
+   },
+   "totalProcessed": {
+      "message": "Total registrado processado"
+   },
+   "tuesday": {
+      "message": "Terça-feira"
+   },
+   "tutorialImg1": {
+      "message": "\u003Cimg src=\"../images/en/1.png\">"
+   },
+   "tutorialImg10": {
+      "message": "\u003Cimg src=\"../images/en/10.png\">"
+   },
+   "tutorialImg11": {
+      "message": "\u003Cimg src=\"../images/en/11.png\">"
+   },
+   "tutorialImg12": {
+      "message": "\u003Cimg src=\"../images/en/12.png\">"
+   },
+   "tutorialImg13": {
+      "message": "\u003Cimg src=\"../images/en/13.png\">"
+   },
+   "tutorialImg14": {
+      "message": "\u003Cimg src=\"../images/en/14.png\">"
+   },
+   "tutorialImg2": {
+      "message": "\u003Cimg src=\"../images/en/2.png\">"
+   },
+   "tutorialImg3": {
+      "message": "\u003Cimg src=\"../images/en/3.png\">"
+   },
+   "tutorialImg4": {
+      "message": "\u003Cimg src=\"../images/en/4.png\">"
+   },
+   "tutorialImg5": {
+      "message": "\u003Cimg src=\"../images/en/5.png\">"
+   },
+   "tutorialImg6": {
+      "message": "\u003Cimg src=\"../images/en/6.png\">"
+   },
+   "tutorialImg7": {
+      "message": "\u003Cimg src=\"../images/en/7.png\">"
+   },
+   "tutorialImg8": {
+      "message": "\u003Cimg src=\"../images/en/8.png\">"
+   },
+   "tutorialImg9": {
+      "message": "\u003Cimg src=\"../images/en/9.png\">"
+   },
+   "uncheckAll": {
+      "message": "Desmarcar tudo"
+   },
+   "unlimitedSchedule": {
+      "message": "Limite de agendamento ilimitado"
+   },
+   "unspecifiedURL": {
+      "message": "11. URL caminho não especificado"
+   },
+   "unspecifiedURLExm1": {
+      "message": "No exemplo acima, a URL fornecida está na aba Fechar, o que indica que a URL fornecida, aberta em uma nova aba e que começa e termina com um endereço da web desconhecido, será fechada após 5 minutos."
+   },
+   "upgradePlan": {
+      "message": "Compre um plano OU faça login e atualize seu plano para desbloquear mais recursos."
+   },
+   "upgradePlanUnlock": {
+      "message": "Atualize seu plano para desbloquear mais recursos."
+   },
+   "uploadValidFormat": {
+      "message": "Por favor, carregue um formato válido"
+   },
+   "url": {
+      "message": "URL"
+   },
+   "urlContExat": {
+      "message": "Filtragem de URL"
+   },
+   "urlEndWithUnspesifiedPth": {
+      "message": "9. URL termina com caminho não especificado"
+   },
+   "urlEndWithUnspesifiedPthExm1": {
+      "message": "No exemplo acima, a URL fornecida está na aba Fechar, o que indica que a URL fornecida que foi aberta em uma nova aba e termina com um caminho desconhecido será fechada após 5 minutos."
+   },
+   "urlFilterInfo": {
+      "message": "Contém URL que está sendo verificado, precisa apenas de parte do URL e o URL exato que está sendo verificado deve ser uma correspondência exata com o URL especificado"
+   },
+   "urlFilterinCLoseTb": {
+      "message": "14. Filtragem de URL na aba de fechamento URL"
+   },
+   "urlFilterinCLoseTbExample": {
+      "message": "No exemplo acima, o URL fornecido está na aba Fechar, o que indica que o URL da aba já aberta corresponde a alguma parte do URL fornecido, então ele fechará essa aba"
+   },
+   "urlIsRequired": {
+      "message": "O link do site é obrigatório"
+   },
+   "urlNotvalid": {
+      "message": "URL não é válido"
+   },
+   "urlStartWithUnspesifiedPth": {
+      "message": "10. URL começa com caminho não especificado"
+   },
+   "urlStartWithUnspesifiedPthExm1": {
+      "message": "No exemplo acima, o URL fornecido está na aba Fechar, o que indica que o URL fornecido que foi aberto em uma nova aba e começa com um subdomínio desconhecido \u003Cb>'www'\u003C/b> ou \u003Cb>'blog'\u003C/b> será fechado após 5 minutos."
+   },
+   "useSpecificUrl": {
+      "message": "Use um link de site específico"
+   },
+   "useSpecificUrl1": {
+      "message": "Você deve ter escrito o subdomínio exato, o domínio de nível superior, o nome do domínio e o caminho da página no campo Link do site na aba fechada do navegador."
+   },
+   "useSpecificUrl2": {
+      "message": "Use todas as abas do navegador fechadas"
+   },
+   "useSpecificUrl3": {
+      "message": "Use um link de site específico e completo"
+   },
+   "useUnSpecificUrl1": {
+      "message": "Usar link de site não especificado"
+   },
+   "useUnSpecificUrl2": {
+      "message": "Use começar com um link de site não especificado"
+   },
+   "useUnSpecificUrl3": {
+      "message": "Use o final com um link de site não especificado"
+   },
+   "used": {
+      "message": "Você usou"
+   },
+   "validFormatCsv": {
+      "message": "Qual é o formato de arquivo CSV válido para importação?"
+   },
+   "websiteLink": {
+      "message": "Link do site"
+   },
+   "websiteUrl": {
+      "message": "URL do site"
+   },
+   "wednesday": {
+      "message": "Quarta-feira"
+   },
+   "weekName": {
+      "message": "Nome da semana"
+   },
+   "weekly": {
+      "message": "Semanalmente"
+   },
+   "whenExtensionTabAppears": {
+      "message": "Quando a aba Extensões aparecer, localize o \"Agendador de Abas com abertura e fechamento automáticos\" para habilitar no modo anônimo e clique no botão \"Detalhes\" ao lado dele."
+   },
+   "whenMenuPopup": {
+      "message": "Quando um menu aparecer, selecione \"Gerenciar extensões\"."
+   },
+   "withSignMustFill": {
+      "message": "Com o sinal \u003Cspan>*\u003C/span> deve ser preenchido ou selecionado, Selecione o horário de abertura ou fechamento ou ambos."
+   },
+   "writeYourDescriptionAboutSchUrl": {
+      "message": "Escreva sua descrição sobre o URL agendado aqui."
+   },
+   "yes": {
+      "message": "Sim"
+   },
+   "yourEmailAddress": {
+      "message": "Seu endereço de email"
+   },
+   "yourScheduleUrl": {
+      "message": "URL da sua programação"
+   }
+}

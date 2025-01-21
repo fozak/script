@@ -1,0 +1,1448 @@
+{
+   "10_min": {
+      "message": "10 minutter"
+   },
+   "1_min": {
+      "message": "1 minut"
+   },
+   "30_min": {
+      "message": "30 minutter"
+   },
+   "5_min": {
+      "message": "5 minutter"
+   },
+   "60_min": {
+      "message": "time"
+   },
+   "Dashboard": {
+      "message": "Dashboard"
+   },
+   "Login": {
+      "message": "Log ind"
+   },
+   "Off": {
+      "message": "Slukket"
+   },
+   "On": {
+      "message": "På"
+   },
+   "Selected": {
+      "message": "Valgt"
+   },
+   "Settings": {
+      "message": "Indstillinger"
+   },
+   "Tutorial": {
+      "message": "Tutorial"
+   },
+   "action": {
+      "message": "Handling"
+   },
+   "activateScheduleTab": {
+      "message": "Aktiver planlagt fane."
+   },
+   "active": {
+      "message": "Aktiv"
+   },
+   "activeAllScheduleTab": {
+      "message": "Kører faneplanlægning"
+   },
+   "activeStatus": {
+      "message": "Status"
+   },
+   "actvInactvNotification": {
+      "message": "Vis meddelelse, når planlægningsfanen åbnes"
+   },
+   "actvInactvOpnTb": {
+      "message": "Aktiv eller inaktiv åben fane"
+   },
+   "actvIntvClsTb": {
+      "message": "Aktiv eller inaktiv lukke fane"
+   },
+   "add": {
+      "message": "Tilføje"
+   },
+   "addDescription": {
+      "message": "Tilføj beskrivelse"
+   },
+   "addNew": {
+      "message": "Tilføj nyt"
+   },
+   "addNewURlCls": {
+      "message": "Tilføj ny URL for at lukke"
+   },
+   "addNewUrlToOpen": {
+      "message": "Tilføj ny URL for at åbne i nyt vindue"
+   },
+   "addTitle": {
+      "message": "Tilføj titel"
+   },
+   "addWebsite": {
+      "message": "Tilføj hjemmeside"
+   },
+   "all": {
+      "message": "Alle"
+   },
+   "allInputFieldReq": {
+      "message": "Alle felter er obligatoriske"
+   },
+   "all_weeks": {
+      "message": "Hele ugen"
+   },
+   "alreadyPurchase": {
+      "message": "Allerede købt? Indtast nøgle her"
+   },
+   "andAt": {
+      "message": "og kl"
+   },
+   "annually": {
+      "message": "Årligt"
+   },
+   "appDesc": {
+      "message": "Browserfaner åbnes og lukkes automatisk på det valgte tidspunkt. Brugeren kan aktivere/deaktivere listen baseret på krav"
+   },
+   "appName": {
+      "message": "Faneplanlægning med automatisk åbning og luk"
+   },
+   "april": {
+      "message": "april"
+   },
+   "at": {
+      "message": "på"
+   },
+   "august": {
+      "message": "august"
+   },
+   "autoFocus": {
+      "message": "Autofokus-faneblad"
+   },
+   "autoFocustip": {
+      "message": "Hvis den er aktiveret, vil den nye fane blive åbnet i en aktiv/fokustilstand."
+   },
+   "autofocustip": {
+      "message": "Nye åbne faner vil automatisk fokusere"
+   },
+   "basic": {
+      "message": "Grundlæggende"
+   },
+   "billedAnnyally": {
+      "message": "Faktureres årligt"
+   },
+   "billedMonthly": {
+      "message": "Faktureres månedligt"
+   },
+   "both": {
+      "message": "Begge"
+   },
+   "browserOpen": {
+      "message": "Åbn browseren"
+   },
+   "browserWebAddress": {
+      "message": "Browserens webadresse starter og slutter med en ukendt webadresse. Sæt \u003Cb>*\u003C/b> på begge sider af dit input-webstedslinkfelt."
+   },
+   "browserWebAddress2": {
+      "message": "Browserens webadresse indeholder domænenavnet google.com, som vil blive lukket i løbet af få minutter uanset underdomæne og sidesti. Sæt \u003Cb>*\u003C/b> på begge sider af domænenavn og TLD"
+   },
+   "browserWebAddress3": {
+      "message": "Browserens webadresse starter med et ukendt domænenavn og slutter med en ukendt sidesti"
+   },
+   "browserWebAddress31": {
+      "message": "lukkes efter givne minutter, sæt \u003Cb>*\u003C/b> på begge sider af TLD"
+   },
+   "browserWebAddress4": {
+      "message": "Browserens webadresse starter med en ukendt webadresse. Sæt \u003Cb>*\u003C/b> i begyndelsen af ​​din URL. Husk browserens webadresse skal matche din URL efter \u003Cb>*\u003C/b> du har skrevet."
+   },
+   "browserWebAddress41": {
+      "message": "Browserens webadresse starter med et ukendt underdomæne"
+   },
+   "browserWebAddress42": {
+      "message": "i begyndelsen af ​​dit webstedslink"
+   },
+   "browserWebAddress5": {
+      "message": "Browserens webadresse slutter med en ukendt webadresse. Sæt \u003Cb>*\u003C/b> i slutningen af ​​din URL. Husk din webadresse skal matche før \u003Cb>*\u003C/b> du har skrevet."
+   },
+   "browserWebAddress51": {
+      "message": "Browserens webadresse slutter med en ukendt sidesti. Sæt \u003Cb>*\u003C/b> i slutningen af ​​din webadresse"
+   },
+   "browserWebAddress6": {
+      "message": "Indsæt kun \u003Cb>*\u003C/b> i webstedets adressefelt for at lukke alle browserfaner. Efter lukket lukkes alle faner browseren automatisk."
+   },
+   "browserWebAddress7": {
+      "message": "Du skal have skrevet det nøjagtige underdomæne, topdomæne, domænenavn og sidesti i URL-feltet for at åbne i browserens faneblad."
+   },
+   "browserWebAddress8": {
+      "message": "Du kan åbne url i specifik dato og tid, specifik måned, specifik uge, specifikt år og gentagelsestidspunkt"
+   },
+   "buyPlan": {
+      "message": "Køb plan"
+   },
+   "buycofee": {
+      "message": "Køb mig en kaffe"
+   },
+   "cancel": {
+      "message": "Ophæve"
+   },
+   "changeLanguage": {
+      "message": "Skift sprog"
+   },
+   "checkAll": {
+      "message": "Marker alle"
+   },
+   "checkThisOpToPreventClosePinTb": {
+      "message": "Marker denne indstilling for at forhindre lukning af fastgjorte faner."
+   },
+   "checkThisOptionOnlyPartOfUrlMtch": {
+      "message": "Marker denne mulighed, hvis kun en del af URL'en skal matches."
+   },
+   "checkThisOptionToActivate": {
+      "message": "Marker denne mulighed for at aktivere eller inaktivere din planlagte url."
+   },
+   "checkThisOptionToCloseOnly": {
+      "message": "Marker denne mulighed for kun at lukke inkognitofaner. Aktiver også muligheden 'Tillad i inkognito' i udvidelsesdetaljerne. For instruktioner, se venligst selvstudiesiden."
+   },
+   "checkThisOptionToCloseOnlyInIncgnitoTb": {
+      "message": "Marker denne mulighed for kun at lukke inkognitofaner. Aktiver også muligheden 'Tillad i inkognito' i udvidelsesdetaljerne. For instruktioner, se venligst selvstudiesiden."
+   },
+   "checkThisOptionToInBg": {
+      "message": "Marker denne mulighed, hvis du vil åbne URL'en i baggrunden uden at åbne den i en ny fane"
+   },
+   "checkThisOptionToInactivNotification": {
+      "message": "Marker denne mulighed for inaktiv notifikation på den planlagte url"
+   },
+   "checkThisOptionToOpen": {
+      "message": "Marker denne mulighed, hvis du vil åbne din url i inkognitotilstand"
+   },
+   "checkThisOptionToOpenIncogito": {
+      "message": "Marker denne mulighed, hvis du vil åbne din url i inkognitotilstand"
+   },
+   "checkThisOptionToPrevent": {
+      "message": "Marker denne indstilling for at forhindre lukning af fastgjorte faner."
+   },
+   "clickExtIcon": {
+      "message": "Klik på \"Udvidelser\"-ikonet på værktøjslinjen, som ligner en puslespilsbrik."
+   },
+   "clickTheSwitch": {
+      "message": "Klik på kontakten ved siden af ​​den for at tænde den"
+   },
+   "close": {
+      "message": "Tæt"
+   },
+   "closeAllTab": {
+      "message": "12. Luk alle browserfaner"
+   },
+   "closeAllTabExm1": {
+      "message": "I ovenstående eksempel er den angivne URL i lukke fane, hvilket angiver, at den vil lukke alle faner kl. 12:00 den 25/2/2023"
+   },
+   "closeDate": {
+      "message": "Luk dato"
+   },
+   "closeDay": {
+      "message": "Lukkedag"
+   },
+   "closeEveryYear": {
+      "message": "Luk hvert år"
+   },
+   "closeInEvery": {
+      "message": "Tæt i hver"
+   },
+   "closeIncognitoTab": {
+      "message": "Luk kun inkognitofaner"
+   },
+   "closeMinute": {
+      "message": "Luk minut"
+   },
+   "closeOnDay": {
+      "message": "Luk på dagen"
+   },
+   "closeOnEvery": {
+      "message": "Tæt på hver"
+   },
+   "closeOnEveryDay": {
+      "message": "Luk på hver dag"
+   },
+   "closeOnEveryMonth": {
+      "message": "Luk hver måned på dagen"
+   },
+   "closeOnEveryWeek": {
+      "message": "Luk hver uge kl"
+   },
+   "closeSecond": {
+      "message": "Luk anden"
+   },
+   "closeSeconsMoreThan5": {
+      "message": "Tæt sekunder skal være mere end 5."
+   },
+   "closeTabSchedule": {
+      "message": "Luk faneplan"
+   },
+   "closeTabURL": {
+      "message": "Luk fane-URL"
+   },
+   "closeTime": {
+      "message": "Lukketid"
+   },
+   "closeUrl": {
+      "message": "Luk webstedslink"
+   },
+   "closeWeek": {
+      "message": "Luk uge"
+   },
+   "closeWeeks": {
+      "message": "Luk uger"
+   },
+   "close_on": {
+      "message": "Luk på"
+   },
+   "cngrtsForSubcr": {
+      "message": "Tillykke! Din plan er blevet aktiveret."
+   },
+   "commonQuestionsAns": {
+      "message": "Almindelige spørgsmål og svar"
+   },
+   "copySucessClose": {
+      "message": "Luk fane URL-data kopieret til Åbn fane URL-data"
+   },
+   "createNewTimer": {
+      "message": "Opret ny timer"
+   },
+   "currentPlan": {
+      "message": "Nuværende plan"
+   },
+   "currentTabSchedule": {
+      "message": "Aktuel faneplan"
+   },
+   "currentTbScheduleTimer": {
+      "message": "Aktuel faneplanlagt timer."
+   },
+   "cusSec": {
+      "message": "Brugerdefineret anden"
+   },
+   "custMin": {
+      "message": "Brugerdefineret minut"
+   },
+   "custmMinSch": {
+      "message": "7. Brugerdefineret minutplan"
+   },
+   "custmMinSchExm1": {
+      "message": "I ovenstående eksempel er den givne URL i åben fane, hvilket angiver, at den givne URL er åben i ny fane hvert 15. minut."
+   },
+   "custmMinSchExm2": {
+      "message": "I ovenstående eksempel er givet URL i lukke fane, som angiver, at givet URL, der åbnede i en ny fane, vil blive lukket efter 15 minutter."
+   },
+   "customSecondWarning": {
+      "message": "Den tilpassede anden funktionalitet er eksperimentel, og den fungerer muligvis ikke korrekt, hvis sekunder er indstillet til under 60."
+   },
+   "darkMode": {
+      "message": "Mørk tilstand"
+   },
+   "datNotCopy": {
+      "message": "Nogle data kopieres ikke på grund af en ugyldig URL."
+   },
+   "dataSaved": {
+      "message": "Timerdata blev gemt"
+   },
+   "date": {
+      "message": "Dato"
+   },
+   "dateIsOutOfRange": {
+      "message": "Datoen er uden for intervallet"
+   },
+   "day": {
+      "message": "Dag"
+   },
+   "december": {
+      "message": "december"
+   },
+   "delete": {
+      "message": "Slet"
+   },
+   "deleteScheduleTb": {
+      "message": "Slet planlagt fane."
+   },
+   "description": {
+      "message": "Beskrivelse"
+   },
+   "developedBy": {
+      "message": "Udviklet af:"
+   },
+   "doNotCloseInPinnedTabs": {
+      "message": "Luk ikke fastgjorte faner"
+   },
+   "doNotShowNotification": {
+      "message": "Vis ikke notifikation"
+   },
+   "domainName": {
+      "message": "Domænenavn"
+   },
+   "downloadCloseTbSampleCsv": {
+      "message": "Download et CSV-eksempel på en lukkefane for at se et eksempel på det påkrævede format"
+   },
+   "downloadOpenTbSampleCsv": {
+      "message": "Download en åben faneeksempel CSV for at se et eksempel på det påkrævede format"
+   },
+   "editScheduleTb": {
+      "message": "Rediger planlagt fane."
+   },
+   "email": {
+      "message": "E-mail"
+   },
+   "enterDateToCloseTab": {
+      "message": "Indtast dato her for at lukke tidsplan-fanen."
+   },
+   "enterDateToOpen": {
+      "message": "Indtast dato for at åbne skemafanen."
+   },
+   "enterMiniutesToCloseTb": {
+      "message": "Indtast minutter for at lukke fanen."
+   },
+   "enterMiniutesToOpen": {
+      "message": "Indtast miniutter for at åbne fanen tidsplan."
+   },
+   "enterMinute": {
+      "message": "Indtast minut"
+   },
+   "enterSecond": {
+      "message": "Indtast anden"
+   },
+   "enterSecondsToCloseTab": {
+      "message": "Indtast sekunder for at lukke fanen."
+   },
+   "enterSecondsToOpen": {
+      "message": "Indtast sekunder for at åbne fanen tidsplan."
+   },
+   "enterTilteOfScheduleUrl": {
+      "message": "Indtast titlen på den planlagte URL."
+   },
+   "enterTimeToCloseTab": {
+      "message": "Indtast tid her for at lukke tidsplan fanen."
+   },
+   "enterTimeToSchedule": {
+      "message": "Indtast tid for at åbne fanen tidsplan."
+   },
+   "enterValidEmail": {
+      "message": "Indtast venligst gyldig e-mail"
+   },
+   "enterValidUrl": {
+      "message": "Indtast venligst en gyldig URL"
+   },
+   "enterValueInCloseSec": {
+      "message": "Indtast værdi på få sekunder"
+   },
+   "enterValueInOpenCloseSec": {
+      "message": "Indtast værdi i åbne eller lukke sekunder"
+   },
+   "enterValueInOpenMinutes": {
+      "message": "Indtast værdi i åbne minutter"
+   },
+   "enterVlaueInCloseMinutes": {
+      "message": "Indtast værdi i tætte minutter"
+   },
+   "enterVlaueInOpenCloseMin": {
+      "message": "Indtast værdi i åbne eller lukke minutter"
+   },
+   "enterVlaueInOpenSeconds": {
+      "message": "Indtast værdi i åbne sekunder"
+   },
+   "enterYourURLToSchedule": {
+      "message": "Indtast din URL for at planlægge."
+   },
+   "every": {
+      "message": "hver"
+   },
+   "every10Min": {
+      "message": "Hvert 10. minut"
+   },
+   "every1Minute": {
+      "message": "hvert 1 minut"
+   },
+   "every30Min": {
+      "message": "Hvert 30. minut"
+   },
+   "every5Min": {
+      "message": "Hvert 5. minut"
+   },
+   "everyDay": {
+      "message": "Hver dag"
+   },
+   "everyDayAt": {
+      "message": "hver dag kl"
+   },
+   "everyHour": {
+      "message": "Hver Time"
+   },
+   "everyMinute": {
+      "message": "Hvert minut"
+   },
+   "everyMonth": {
+      "message": "Hver måned"
+   },
+   "everyMonthOn": {
+      "message": "hver måned på"
+   },
+   "everyMonthOnDay": {
+      "message": "hver måned på dagen"
+   },
+   "everyWeek": {
+      "message": "Hver uge"
+   },
+   "everyWeekOn": {
+      "message": "hver uge på"
+   },
+   "everyYear": {
+      "message": "Hvert år"
+   },
+   "everyYesrOn": {
+      "message": "hvert år videre"
+   },
+   "evr10MinSch": {
+      "message": "2.Hver 10 minutters tidsplan"
+   },
+   "evr10MinSchExm1": {
+      "message": "I ovenstående eksempel er den givne URL i åben fane, hvilket angiver, at den givne URL åbnes i en ny fane hvert 10. minut."
+   },
+   "evr10MinSchExm2": {
+      "message": "I ovenstående eksempel er den givne URL i lukke fane, som angiver, at givet URL, der åbnede i en ny fane, vil blive lukket efter 10 minutter."
+   },
+   "evrDaySch": {
+      "message": "3.Hver dagsplan"
+   },
+   "evrDaySchExm1": {
+      "message": "I ovenstående eksempel er den angivne URL i åben fane, hvilket angiver, at den åbnes i ny fane hver dag kl. 17:27"
+   },
+   "evrDaySchExm2": {
+      "message": "I ovenstående eksempel er den angivne URL i lukke fane, hvilket angiver, at den vil lukke den allerede åbnede fane kl. 17:27 hver dag"
+   },
+   "evrMonthSch": {
+      "message": "5. Hver måneds tidsplan"
+   },
+   "evrMonthSchExm1": {
+      "message": "I ovenstående eksempel er den angivne URL i åben fane, hvor der står, at den åbnes i ny fane hver måned kl. 13:45 på dag 25"
+   },
+   "evrMonthSchExm2": {
+      "message": "I ovenstående eksempel er den givne URL i lukke fane, hvilket angiver, at den vil lukke den allerede åbnede fane hver måned kl. 13:45 på dag 25"
+   },
+   "evrWeekSch": {
+      "message": "4.Hver uge tidsplan"
+   },
+   "evrWeekSchExm1": {
+      "message": "I ovenstående eksempel er den givne URL i en åben fane, hvilket angiver, at den åbner i en ny fane hver uge kl. 17:00 \u003Cb>mandag og tirsdag\u003C/b> ."
+   },
+   "evrWeekSchExm2": {
+      "message": "I ovenstående eksempel er den givne URL i lukkefanen, som angiver, at den vil lukke den allerede åbnede fane hver uge kl. 17:00 \u003Cb>mandag og tirsdag\u003C/b> ."
+   },
+   "evrWeekSchExm3": {
+      "message": "I ovenstående eksempel kan der vælges flere dage i ugetimeren."
+   },
+   "evrYearSch": {
+      "message": "6. Hvert årsplan"
+   },
+   "evrYearSchExm1": {
+      "message": "I ovenstående eksempel er den angivne URL i åben fane, hvilket angiver, at den åbnes i ny fane hvert år kl. 13:35 den 1. januar"
+   },
+   "evrYearSchExm2": {
+      "message": "I ovenstående eksempel er den angivne URL i lukke fane, hvilket angiver, at den vil lukke den allerede åbnede fane hvert år kl. 13:35 den 1. januar"
+   },
+   "exampleSort": {
+      "message": "f.eks"
+   },
+   "exdMaxLim": {
+      "message": "Overskredet maksimalt tilladte enheder!"
+   },
+   "exmpOpnClsTbSch": {
+      "message": "Eksempel på hvordan man åbner og lukker fane i faneplanlægning"
+   },
+   "expLicKy": {
+      "message": "Denne licensnøgle er udløbet."
+   },
+   "export": {
+      "message": "Eksportere"
+   },
+   "exportBefore": {
+      "message": "Det har du\u003Cexday>\u003C/exday>dage tilbage, abonner venligst for at fortsætte med at nyde premium-funktionen"
+   },
+   "exportClsTbDta": {
+      "message": "Eksporter luk fanedata"
+   },
+   "exportOpenTbDt": {
+      "message": "Eksporter åben fanedata"
+   },
+   "exportedData": {
+      "message": "Timerdata blev eksporteret"
+   },
+   "extensionShouldAble": {
+      "message": "Nu skulle udvidelsen være i stand til at lukke faner i inkognitotilstand."
+   },
+   "faq": {
+      "message": "FAQ"
+   },
+   "faq_1": {
+      "message": "Hvad er faneplanlægning med automatisk åbning og luk?"
+   },
+   "faq_10": {
+      "message": "Hvordan får jeg vist mine planlagte faner?"
+   },
+   "faq_11": {
+      "message": "Er det obligatorisk at udfylde både åbnings- og lukketider?"
+   },
+   "faq_12": {
+      "message": "Hvad gør funktionerne i fanen Autofokus, Aktiver alle planlagte faner og Strømtilstand?"
+   },
+   "faq_13": {
+      "message": "Kan jeg åbne/lukke det planlagte webstedslink på inkognitofanen.?"
+   },
+   "faq_14": {
+      "message": "Hvad er brugen af ​​fanen Opdater, hvis URL'en allerede er åben?"
+   },
+   "faq_2": {
+      "message": "Hvad er brugen af ​​webstedslink?"
+   },
+   "faq_3": {
+      "message": "Hvordan planlægger jeg en URL ved hjælp af Tab Scheduler?"
+   },
+   "faq_4": {
+      "message": "Hvad er muligheden 'Åbn URL i baggrunden'?"
+   },
+   "faq_5": {
+      "message": "Kan jeg forhindre forlængelsen i at lukke fastgjorte faner?"
+   },
+   "faq_6": {
+      "message": "Hvad betyder skematypen 'Begge'?"
+   },
+   "faq_7": {
+      "message": "Hvordan fungerer funktionen 'URL-filtrering'?"
+   },
+   "faq_8": {
+      "message": "Kan jeg deaktivere en planlagt fane uden at slette den?"
+   },
+   "faq_9": {
+      "message": "Vil jeg modtage meddelelser om planlagte faner?"
+   },
+   "faq_a_1": {
+      "message": "\u003Cp>Faneplanlægning med automatisk åbning og luk er en browserudvidelse, der giver brugerne mulighed for at planlægge faner til at åbne og lukke automatisk på fastlagte tidspunkter. Brugere kan vælge en engangstidsplan eller opsætte tilbagevendende tidsplaner med forskellige frekvensmuligheder. Denne udvidelse har flere formål for brugerne og giver mange funktioner, der er nyttige for dig.\u003C/p>"
+   },
+   "faq_a_10": {
+      "message": "Alle planlagte faner vises på en liste, der viser titlen, webstedslinket, åbnings- og lukketider, status og handlinger, du kan foretage (f.eks. aktivere, redigere, slette)."
+   },
+   "faq_a_11": {
+      "message": "Nej, du kan planlægge enten en åben tid eller en lukketid. Du skal dog udfylde eller vælge de påkrævede felter markeret med en stjerne (*)."
+   },
+   "faq_a_12": {
+      "message": "Autofokusfanen sikrer, at når en planlagt fane åbnes, aktiverer Aktiver alle planlagte faner dig hurtigt at slå alle dine planlagte faner til med et enkelt klik. Power Mode optimerer udvidelsens ydeevne ved at administrere browserressourcer mere effektivt."
+   },
+   "faq_a_13": {
+      "message": "Ja, du kan vælge at åbne en planlagt fane i inkognitotilstand ved at vælge \"Åbn i inkognitotilstand\". Du kan vælge kun at lukke inkognitofaner ved at vælge \"Luk kun inkognitofaner\", så længe \"Tillad i inkognito\" er aktiveret i udvidelsesindstillingerne"
+   },
+   "faq_a_14": {
+      "message": "Når denne mulighed er aktiveret, vil udvidelsen automatisk opdatere en eksisterende fane, hvis den samme URL allerede er åben i din browser. Dette forhindrer åbning af duplikerede faner og sikrer, at du altid har den nyeste version af siden indlæst."
+   },
+   "faq_a_14_1": {
+      "message": "Hvis du prøver at åbne https://github.com/, og den allerede er åben i en anden fane, vil udvidelsen blot opdatere denne fane i stedet for at åbne en ny."
+   },
+   "faq_a_14_2": {
+      "message": "Hvis https://github.com/ allerede er åben i tre faner, vil udvidelsen opdatere alle tre faner."
+   },
+   "faq_a_2": {
+      "message": "Websitelinket er din browsers åbne fane-webstedsadresse. Hvordan du kan bruge hjemmesidens adresse er nævnt nedenfor."
+   },
+   "faq_a_3": {
+      "message": "For at planlægge en URL skal du indtaste webstedslinket, give tidsplanen en titel, vælge frekvensen (én gang, hvert minut, dagligt osv.), og vælge åbnings- og lukketider. Du kan også angive en dato, dag eller sekunder for at åbne og lukke fanen."
+   },
+   "faq_a_4": {
+      "message": "\u003Cp>Denne mulighed giver dig fuld kontrol over at planlægge en URL til at åbne i baggrunden uden at bringe den nye fane i fokus. URL'en åbnes stille og roligt, mens du fortsætter med at arbejde på andre faner. Det er især nyttigt, når du har brug for browseren til at hente data fra den planlagte URL uden at vise den aktivt, f.eks. i tilfælde af en GET API-anmodning.\u003C/p>\u003Cbr> \u003Cp>Hvis du f.eks. ønsker at hente data fra et API-slutpunkt på et bestemt tidspunkt regelmæssigt, kan du bruge denne effektive mulighed til at køre anmodningen i baggrunden uden at åbne en ny synlig fane.\u003C/p>"
+   },
+   "faq_a_5": {
+      "message": "Ja, der er en mulighed for at forhindre lukning af fastgjorte faner. Marker indstillingen \"Luk ikke fastgjorte faner\" for at sikre, at disse faner forbliver åbne, selvom de opfylder andre lukkekriterier."
+   },
+   "faq_a_6": {
+      "message": "Tidsplantypen 'Begge' giver dig fuld kontrol over, hvornår en fane åbner og lukker, så du kan indstille bestemte tidspunkter for begge handlinger."
+   },
+   "faq_a_7": {
+      "message": "URL-filtrering sikrer, at kun en bestemt del af URL'en skal matche, for at den planlagte handling kan finde sted. Dette er nyttigt, når du vil automatisere bestemte handlinger baseret på delvise URL-matches. Hvis du f.eks. markerer URL-filtreringsindstillingen for URL'en https://example.com/page, vil den også gælde for URL'er som https://example.com/page/123, https://example.com/ page?query=example og https://subdomain.example.com/page."
+   },
+   "faq_a_8": {
+      "message": "Med muligheden \"Aktiver denne planlagte fane\" kan du nemt aktivere eller deaktivere planlagte faner, hvilket giver dig fleksibiliteten til at administrere dine tidsplaner uden at miste konfigurationer."
+   },
+   "faq_a_9": {
+      "message": "Som standard vil du modtage meddelelser. Men hvis du foretrækker at stoppe meddelelser, kan du markere \"Vis ikke meddelelse\" for at deaktivere dem."
+   },
+   "february": {
+      "message": "februar"
+   },
+   "filterTips": {
+      "message": "Filter gælder efter 'https://' eller 'www.', Ex 'github.com'"
+   },
+   "for_exp": {
+      "message": "F.eks"
+   },
+   "freeForever": {
+      "message": "Gratis for evigt"
+   },
+   "freeSchedule": {
+      "message": "gratis tidsplan"
+   },
+   "freeTral": {
+      "message": "Som en værdsat tidlig bruger vil du nyde det\u003Crday>120\u003C/rday>dages gratis adgang, før du skifter til vores nye betalingsplan – tak for din fortsatte støtte!\u003Cp class=\"p-t-5\">Det har du\u003Cb>\u003Cspan>\u003C/span>\u003C/b>dage tilbage af din\u003Crday>120\u003C/rday>-dages friperiode.\u003Cafex class=\"warning\">\u003Cafex>\u003C/afex>\u003C/afex>\u003C/p> "
+   },
+   "frequentlyAskedQuestions": {
+      "message": "Ofte stillede spørgsmål"
+   },
+   "friday": {
+      "message": "fredag"
+   },
+   "getThisPlan": {
+      "message": "Få denne plan"
+   },
+   "goToSettingsPageToSchedule": {
+      "message": "Gå til indstillingssiden for at planlægge åbning og lukning af URL'er."
+   },
+   "goURL": {
+      "message": "Gå til URL'en"
+   },
+   "helpAccordion12": {
+      "message": "Fungerer denne udvidelse i dvale-/suspenderingstilstand?"
+   },
+   "helpAccordion3": {
+      "message": "Kan jeg planlægge, at en fane skal åbnes i inkognitotilstand?"
+   },
+   "helpAccordion6": {
+      "message": "Hvad er \"Tid udløbet\"?"
+   },
+   "helpAccordion7": {
+      "message": "Kan jeg eksportere planlagt URL?"
+   },
+   "helpAccordion8": {
+      "message": "Kan jeg importere for at planlægge URL?"
+   },
+   "helpPanelBodyDesc12First": {
+      "message": "Nej, denne udvidelse fungerer ikke i dvale-/suspenderingstilstand."
+   },
+   "helpPanelBodyDesc12Second": {
+      "message": "Hvis der er planlagt en URL-adresse i fanen åben eller luk, vil din pc ikke automatisk gå i dvale- eller suspenderingstilstand."
+   },
+   "helpPanelBodyDesc3": {
+      "message": "Ja, du kan vælge at åbne en planlagt fane i inkognitotilstand ved at vælge \"Åbn i inkognitotilstand\". Sørg for, at udvidelsens 'Tillad i inkognito'-indstilling er aktiveret i browserens udvidelsesindstillinger."
+   },
+   "helpPanelBodyDesc6": {
+      "message": "- Den givne dato og klokkeslæt er gået fra den aktuelle dato og klokkeslæt, så vises teksten \"Tid udløbet\"."
+   },
+   "helpPanelBodyDesc7": {
+      "message": "Ja, du kan eksportere allerede planlagt åben fane- og lukkefane-URL i csv-format og bruge den med et andet system til at importere denne URL."
+   },
+   "helpPanelBodyDesc8": {
+      "message": "Ja, du kan importere gyldig åben og lukket URL i csv-format. Det importerede csv-format vil automatisk blive planlagt på et givet tidspunkt"
+   },
+   "herAreStepsToAllow": {
+      "message": "Her er trinene til \"Tillad i inkognito\" i Google Chrome:"
+   },
+   "home": {
+      "message": "Hjem"
+   },
+   "hour_minute_close": {
+      "message": "Hver time tæt minut"
+   },
+   "hour_minute_open": {
+      "message": "Hver time åbent minut"
+   },
+   "how_to_use_tab": {
+      "message": "Hvordan bruger man faneplanlægning?"
+   },
+   "import": {
+      "message": "Importere"
+   },
+   "importClsTbDta": {
+      "message": "Importer luk fanedata"
+   },
+   "importExport": {
+      "message": "Import/eksport"
+   },
+   "importOpenTbDt": {
+      "message": "Importer åbne fanedata"
+   },
+   "importedRecored": {
+      "message": ", importeret optaget"
+   },
+   "inactivateScheduleTab": {
+      "message": "Inaktiver planlagt fane."
+   },
+   "inactive": {
+      "message": "Inaktiv"
+   },
+   "inactiveSch": {
+      "message": "8.Inaktiv URL"
+   },
+   "inactiveSchExm1": {
+      "message": "I ovenstående eksempel er den givet URL i åben fane eller lukke fane, hvilket angiver, at den givne URL er inaktiv, og den vil ikke udføre nogen handling."
+   },
+   "inactiveThisScheduledTabs": {
+      "message": "Aktiver denne planlagte fane"
+   },
+   "invalidDuplicate": {
+      "message": ", duplikat eller ugyldigt registreret"
+   },
+   "invldLicKy": {
+      "message": "Ugyldig licensnøgle!"
+   },
+   "isClose": {
+      "message": "er tæt på"
+   },
+   "isOpen": {
+      "message": "er åben"
+   },
+   "january": {
+      "message": "januar"
+   },
+   "july": {
+      "message": "juli"
+   },
+   "june": {
+      "message": "juni"
+   },
+   "licKeyDis": {
+      "message": "Denne licensnøgle er deaktiveret."
+   },
+   "listTitle": {
+      "message": "Faneplanlægning"
+   },
+   "loading": {
+      "message": "Vent venligst..."
+   },
+   "locale": {
+      "message": "da"
+   },
+   "march": {
+      "message": "marts"
+   },
+   "maxSchedule": {
+      "message": "4 Maksimal tidsplangrænse"
+   },
+   "may": {
+      "message": "maj"
+   },
+   "mintValid": {
+      "message": "Minimum 1 minut er påkrævet"
+   },
+   "minute": {
+      "message": "Minut"
+   },
+   "minutesNotLessThan1": {
+      "message": "Referatet bør ikke være mindre end 1."
+   },
+   "monday": {
+      "message": "mandag"
+   },
+   "month": {
+      "message": "Måned"
+   },
+   "monthly": {
+      "message": "Månedlig"
+   },
+   "more": {
+      "message": "mere"
+   },
+   "mostSubscribe": {
+      "message": "De fleste abonnerer"
+   },
+   "no": {
+      "message": "Ingen"
+   },
+   "noDataToExport": {
+      "message": "Ingen data at eksportere."
+   },
+   "noScheduledTabs": {
+      "message": "Ingen planlagte faner"
+   },
+   "noTimerSetAddNewTimer": {
+      "message": "Ingen timer indstillet. Klik på knappen Tilføj for at indstille ny timer"
+   },
+   "not_show_tutorial": {
+      "message": "Vis ikke denne vejledning igen"
+   },
+   "notificationOpenTab": {
+      "message": "13. Meddelelse på URL-adresse for fanen åben/luk"
+   },
+   "notificationOpenTabExm1": {
+      "message": "I ovenstående eksempel er den givne URL i åben fane, hvilket angiver, at den vil give besked og åbne/lukke URL i ny fane hvert 5. minut."
+   },
+   "notifications": {
+      "message": "Notifikation"
+   },
+   "november": {
+      "message": "november"
+   },
+   "october": {
+      "message": "oktober"
+   },
+   "onTheExtensionDetailPage": {
+      "message": "På udvidelsens detaljeside skal du rulle ned og finde muligheden \"Tillad i inkognito\"."
+   },
+   "oneTime": {
+      "message": "Én gang"
+   },
+   "oneTmSch": {
+      "message": "1. Engangsplan"
+   },
+   "oneTmSchExm1": {
+      "message": "I ovenstående eksempel er den givne URL i åben fane, hvilket angiver, at den vil åbne i ny fane One Time kl. 13:45 den 21/1/2023"
+   },
+   "oneTmSchExm2": {
+      "message": "I ovenstående eksempel er den angivne URL i lukke fane, hvilket angiver, at den vil lukke alle specifikke matchede URL-faner kl. 13:45 den 21/1/2023"
+   },
+   "open": {
+      "message": "Åben"
+   },
+   "openBackground": {
+      "message": "Hvis ja, indlæser en URL i baggrunden uden at åbne den i en ny fane"
+   },
+   "openDate": {
+      "message": "Åbningsdato"
+   },
+   "openDay": {
+      "message": "Åben dag"
+   },
+   "openEveryDayOn": {
+      "message": "Åbent hver dag d"
+   },
+   "openEveryMonthOn": {
+      "message": "Åbent hver måned på dagen"
+   },
+   "openEveryWeekOn": {
+      "message": "Åbent hver uge kl"
+   },
+   "openEveryYearOn": {
+      "message": "Åbent hvert år d"
+   },
+   "openGoogleChrome": {
+      "message": "Åbn Google Chrome."
+   },
+   "openInBackground": {
+      "message": "Åbn URL i baggrunden"
+   },
+   "openInEvery": {
+      "message": "Åben i hver"
+   },
+   "openInIncognito": {
+      "message": "Åbn i inkognitotilstand"
+   },
+   "openMinute": {
+      "message": "Åbent minut"
+   },
+   "openOnDay": {
+      "message": "Åbent på dagen"
+   },
+   "openOnEvery": {
+      "message": "Åbent hver"
+   },
+   "openSecond": {
+      "message": "Åben anden"
+   },
+   "openSecondsMoreThan5": {
+      "message": "Åbne sekunder skal være mere end 5."
+   },
+   "openTabSchedule": {
+      "message": "Åbn faneplan"
+   },
+   "openTabURL": {
+      "message": "Åbn fane-URL"
+   },
+   "openTime": {
+      "message": "Åben tid"
+   },
+   "openUrl": {
+      "message": "Åbn webstedslink"
+   },
+   "openWeek": {
+      "message": "Åben uge"
+   },
+   "openWeeks": {
+      "message": "Åbne uger"
+   },
+   "open_on": {
+      "message": "Åbn på"
+   },
+   "optional": {
+      "message": "Valgfri"
+   },
+   "or": {
+      "message": "eller"
+   },
+   "outof": {
+      "message": "ud af"
+   },
+   "pagePath": {
+      "message": "Sidesti"
+   },
+   "paidFeature": {
+      "message": "Betalt funktion"
+   },
+   "pauseSchedule": {
+      "message": "Start eller stop alle tidsplaner"
+   },
+   "pauseTabScheduler": {
+      "message": "Faneplanlægger er sat på pause"
+   },
+   "pleaseAllowIncognitoMessage": {
+      "message": "Aktiver venligst indstillingen 'Tillad i inkognito' i udvidelsesdetaljerne. For instruktioner, se venligst selvstudiesiden."
+   },
+   "pleaseShareYourSuggestions": {
+      "message": "Del venligst dit forslag."
+   },
+   "plsShreAnySugWithUs": {
+      "message": "Giv venligst et forslag til at forbedre os"
+   },
+   "powerMode": {
+      "message": "Strømtilstand"
+   },
+   "premium": {
+      "message": "Præmie"
+   },
+   "pricePlan": {
+      "message": "Priser og planer"
+   },
+   "privcyPolicy": {
+      "message": "Privatlivspolitik"
+   },
+   "prowerModeTip": {
+      "message": "Hold systemet altid aktivt ved at aktivere Power Mode"
+   },
+   "put": {
+      "message": "Sætte"
+   },
+   "rateUs": {
+      "message": "Bedøm os"
+   },
+   "removeDuplicateEntry": {
+      "message": "Fjern venligst dublet indtastning"
+   },
+   "removeOpenTbURL": {
+      "message": "Fjern åbne fane-URL"
+   },
+   "repeat": {
+      "message": "Gentage"
+   },
+   "requiredMsg": {
+      "message": "Påkrævet"
+   },
+   "rmvClsTb": {
+      "message": "Fjern URL-adresse til lukke fane"
+   },
+   "sameTabs": {
+      "message": "Opdater fanen, hvis URL-adressen allerede er åben"
+   },
+   "sameTabsInfo": {
+      "message": "Undgå at åbne flere faner for den samme URL. Hvis f.eks. www.google.com allerede er åbnet, vil den eksisterende fane blive opdateret i stedet for at åbne en ny fane for den."
+   },
+   "sampleCsvOpenPath": {
+      "message": "../sample_csv/en/open_tab_sample.csv"
+   },
+   "sampleFile": {
+      "message": "Eksempel fil"
+   },
+   "saturday": {
+      "message": "lørdag"
+   },
+   "savOpnData": {
+      "message": "Gem data om åbne faner"
+   },
+   "save": {
+      "message": "Spare"
+   },
+   "saveClsTbData": {
+      "message": "Gem luk fanedata"
+   },
+   "saveSchedule": {
+      "message": "Gem tidsplan"
+   },
+   "scheduleCloseTab": {
+      "message": "Planlæg Luk Fanen"
+   },
+   "scheduleCurrentTab": {
+      "message": "Planlæg den aktuelle fane"
+   },
+   "scheduleOpenTab": {
+      "message": "Planlæg Åben fane"
+   },
+   "scheduledTabIsAlreadyExistWithSameTimer": {
+      "message": "Denne planlagte fane eksisterer allerede med samme timer."
+   },
+   "scheduledTabList": {
+      "message": "Planlagt faneliste"
+   },
+   "scheduledType": {
+      "message": "Skematype"
+   },
+   "search": {
+      "message": "Søge"
+   },
+   "secValid": {
+      "message": "Minimum 5 sekunder er påkrævet"
+   },
+   "second": {
+      "message": "Anden"
+   },
+   "selectCloseDate": {
+      "message": "Vælg lukkedato"
+   },
+   "selectCloseDay": {
+      "message": "Vælg lukkedag"
+   },
+   "selectCloseTime": {
+      "message": "Vælg lukketid"
+   },
+   "selectColumn": {
+      "message": "Vælg kolonne"
+   },
+   "selectDateAndTime": {
+      "message": "Vælg dato og klokkeslæt for at åbne en ny fane"
+   },
+   "selectDateAndTimeClsTb": {
+      "message": "Vælg dato og klokkeslæt for at lukke fanen"
+   },
+   "selectDayToCloseSchTb": {
+      "message": "Vælg dag for at lukke tidsplan-fanen."
+   },
+   "selectDayToClsTb": {
+      "message": "Vælg dag for at lukke fanen"
+   },
+   "selectDayToSchdule": {
+      "message": "Vælg dag for at planlægge fanen."
+   },
+   "selectDaysInWeek": {
+      "message": "Vælg dage i ugen"
+   },
+   "selectDaysInWeekIClsTime": {
+      "message": "Vælg dage i ugen i tæt timer."
+   },
+   "selectDaysInWeekIOpClsTime": {
+      "message": "Vælg dage i ugen i åben eller luk timer."
+   },
+   "selectDaysInWeekIOpTime": {
+      "message": "Vælg dage i ugen i åben timer."
+   },
+   "selectFrequency": {
+      "message": "Vælg Frekvens"
+   },
+   "selectFrequencyOfScheduleUrl": {
+      "message": "Vælg frekvens for den planlagte URL."
+   },
+   "selectOpenDate": {
+      "message": "Vælg åbningsdato"
+   },
+   "selectOpenDay": {
+      "message": "Vælg åben dag"
+   },
+   "selectOpenOrClose": {
+      "message": "Vælg åbnings- og lukketidspunkt"
+   },
+   "selectOpenOrCloseDate": {
+      "message": "Vælg åbnings- og lukkedato"
+   },
+   "selectOpenOrCloseDay": {
+      "message": "Vælg åben og lukkedag"
+   },
+   "selectOpenTime": {
+      "message": "Vælg åbningstid"
+   },
+   "selectPreferredLanguage": {
+      "message": "Vælg dit foretrukne sprog."
+   },
+   "selectToOpenTab": {
+      "message": "Vælg dag for at åbne ny fane"
+   },
+   "selectTypTimerClsTb": {
+      "message": "Vælg type timer for at lukke fanen"
+   },
+   "selectTypeOfSchedule": {
+      "message": "Vælg type skema, hvis du vil både åbne og lukke, end vælg \"Begge\"."
+   },
+   "selectTypeOfTimer": {
+      "message": "Vælg type timer for at åbne en ny fane"
+   },
+   "select_weeks": {
+      "message": "Vælg uger"
+   },
+   "september": {
+      "message": "september"
+   },
+   "settingSave": {
+      "message": "Indstillinger blev gemt"
+   },
+   "settingToClose": {
+      "message": "Indstilling til at lukke fanen i inkognitotilstand."
+   },
+   "shareYourSuggestionWithUs": {
+      "message": "Del dine forslag med os.."
+   },
+   "slectDayToScheduleWeekly": {
+      "message": "Vælg dage for at planlægge fanen ugentligt."
+   },
+   "slectMinute": {
+      "message": "Vælg minut"
+   },
+   "smthngWrng": {
+      "message": "Noget gik galt"
+   },
+   "softpulseInfotech": {
+      "message": "Softpulse Infotech"
+   },
+   "somethingWentWrong": {
+      "message": "Noget gik galt. Opdater siden, og prøv igen."
+   },
+   "status": {
+      "message": "Status"
+   },
+   "subcrKeyShldNEmpt": {
+      "message": "Indtast venligst abonnementsnøgle."
+   },
+   "subdomain": {
+      "message": "Underdomæne"
+   },
+   "subkeyInputTitle": {
+      "message": "Indtast abonnementsnøgle"
+   },
+   "submFeedBack": {
+      "message": "Indsend"
+   },
+   "suggForTbSch": {
+      "message": "Forslag til faneplanlægning"
+   },
+   "suggestionAndRateUs": {
+      "message": "Foreslå og bedøm os"
+   },
+   "sunday": {
+      "message": "søndag"
+   },
+   "tabCloseOneTime": {
+      "message": "Fanen lukker kun én gang på"
+   },
+   "tabSchTutorial": {
+      "message": "Tutorial til faneplanlægning"
+   },
+   "tabScheduler": {
+      "message": "Faneplanlægning"
+   },
+   "tabSchedulerOptions": {
+      "message": "Faneplanlægningsindstillinger"
+   },
+   "tabWillOpenOneTime": {
+      "message": "Fanen åbnes kun én gang på"
+   },
+   "tabWillOpenWhenBrowserOpen": {
+      "message": "Fanen åbnes, når browseren åbnes"
+   },
+   "termCondition": {
+      "message": "Vilkår og betingelser"
+   },
+   "thanksFrRev": {
+      "message": "Tak for din anmeldelse"
+   },
+   "thnkUFeedBack": {
+      "message": "Tak for dit forslag"
+   },
+   "thnkUFrUsngTbSch": {
+      "message": "Giv venligst et forslag til at forbedre os"
+   },
+   "thursday": {
+      "message": "torsdag"
+   },
+   "time": {
+      "message": "Tid"
+   },
+   "timeExpired": {
+      "message": "Tid udløbet"
+   },
+   "timer": {
+      "message": "Timer"
+   },
+   "title": {
+      "message": "Titel"
+   },
+   "titleLengtWarn": {
+      "message": "Titellængden må ikke overstige 200 tegn."
+   },
+   "toScheduledOpenTbMsg": {
+      "message": "Til planlagt åben fane skal du fjerne markeringen i url-filtrering."
+   },
+   "toogleCloseTab": {
+      "message": "Start/Stop tidsplanalarmen for alle URL-adresser til lukke faner"
+   },
+   "toogleDarkmode": {
+      "message": "Skift mellem mørk tilstand og standardtilstand for at tilpasse din seeroplevelse."
+   },
+   "toogleOff": {
+      "message": "Slukket"
+   },
+   "toogleOn": {
+      "message": "På"
+   },
+   "toogleOpenTab": {
+      "message": "Start/Stop tidsplanalarmen for al åbne fane-URL"
+   },
+   "topLevelDomain": {
+      "message": "Domæne på topniveau"
+   },
+   "totalProcessed": {
+      "message": "Samlet optaget behandlet"
+   },
+   "tuesday": {
+      "message": "tirsdag"
+   },
+   "tutorialImg1": {
+      "message": "\u003Cimg src=\"../images/en/1.png\">"
+   },
+   "tutorialImg10": {
+      "message": "\u003Cimg src=\"../images/en/10.png\">"
+   },
+   "tutorialImg11": {
+      "message": "\u003Cimg src=\"../images/en/11.png\">"
+   },
+   "tutorialImg12": {
+      "message": "\u003Cimg src=\"../images/en/12.png\">"
+   },
+   "tutorialImg13": {
+      "message": "\u003Cimg src=\"../images/en/13.png\">"
+   },
+   "tutorialImg14": {
+      "message": "\u003Cimg src=\"../images/en/14.png\">"
+   },
+   "tutorialImg2": {
+      "message": "\u003Cimg src=\"../images/en/2.png\">"
+   },
+   "tutorialImg3": {
+      "message": "\u003Cimg src=\"../images/en/3.png\">"
+   },
+   "tutorialImg4": {
+      "message": "\u003Cimg src=\"../images/en/4.png\">"
+   },
+   "tutorialImg5": {
+      "message": "\u003Cimg src=\"../images/en/5.png\">"
+   },
+   "tutorialImg6": {
+      "message": "\u003Cimg src=\"../images/en/6.png\">"
+   },
+   "tutorialImg7": {
+      "message": "\u003Cimg src=\"../images/en/7.png\">"
+   },
+   "tutorialImg8": {
+      "message": "\u003Cimg src=\"../images/en/8.png\">"
+   },
+   "tutorialImg9": {
+      "message": "\u003Cimg src=\"../images/en/9.png\">"
+   },
+   "uncheckAll": {
+      "message": "Fjern markeringen i Alle"
+   },
+   "unlimitedSchedule": {
+      "message": "Ubegrænset tidsplangrænse"
+   },
+   "unspecifiedURL": {
+      "message": "11. URL uspecificeret sti"
+   },
+   "unspecifiedURLExm1": {
+      "message": "I ovenstående eksempel er givet URL i lukke fane, som angiver, at givet URL, der åbnede i en ny fane og starter og slutter med en ukendt webadresse, vil blive lukket efter 5 minutter."
+   },
+   "upgradePlan": {
+      "message": "Køb venligst abonnement ELLER Log ind og opgrader din plan for at låse op for flere funktioner."
+   },
+   "upgradePlanUnlock": {
+      "message": "Opgrader din plan for at låse op for flere funktioner."
+   },
+   "uploadValidFormat": {
+      "message": "Upload venligst gyldigt format"
+   },
+   "url": {
+      "message": "URL"
+   },
+   "urlContExat": {
+      "message": "URL-filtrering"
+   },
+   "urlEndWithUnspesifiedPth": {
+      "message": "9. URL slutter med uspecificeret sti"
+   },
+   "urlEndWithUnspesifiedPthExm1": {
+      "message": "I ovenstående eksempel er givet URL i lukke fane, hvilket angiver, at givet URL, der åbnede i en ny fane og slutter med ukendt sti, vil blive lukket efter 5 minutter."
+   },
+   "urlFilterInfo": {
+      "message": "Indeholder URL, der kontrolleres, behøver kun en del af URL'en, og den nøjagtige URL, der kontrolleres, skal være et nøjagtigt match med den angivne URL"
+   },
+   "urlFilterinCLoseTb": {
+      "message": "14. URL-filtrering på URL-adresse for lukke fane"
+   },
+   "urlFilterinCLoseTbExample": {
+      "message": "I ovenstående eksempel er den angivne URL i lukke fane, hvilket angiver, at allerede åbnet fane URL matchede noget af delen af ​​den givne URL, så den vil lukke denne fane"
+   },
+   "urlIsRequired": {
+      "message": "Hjemmesidelink er påkrævet"
+   },
+   "urlNotvalid": {
+      "message": "URL er ikke gyldig"
+   },
+   "urlStartWithUnspesifiedPth": {
+      "message": "10. URL starter med uspecificeret sti"
+   },
+   "urlStartWithUnspesifiedPthExm1": {
+      "message": "I ovenstående eksempel er givet URL i lukke fane, som angiver, at givet URL, der åbnede i en ny fane og starter med et ukendt underdomæne \u003Cb>'www'\u003C/b> eller \u003Cb>'blog'\u003C/b> vil blive lukket efter 5 minutter."
+   },
+   "useSpecificUrl": {
+      "message": "Brug et specifikt webstedslink"
+   },
+   "useSpecificUrl1": {
+      "message": "Du skal have skrevet det nøjagtige underdomæne, topdomæne, domænenavn og sidesti i feltet Websitelink til den lukkede browsers fane."
+   },
+   "useSpecificUrl2": {
+      "message": "Brug lukkede alle browsers faneblade"
+   },
+   "useSpecificUrl3": {
+      "message": "Brug specifikt og fuldstændigt webstedslink"
+   },
+   "useUnSpecificUrl1": {
+      "message": "Brug uspecificeret webstedslink"
+   },
+   "useUnSpecificUrl2": {
+      "message": "Brug start med uspecificeret webstedslink"
+   },
+   "useUnSpecificUrl3": {
+      "message": "Brug slutningen med uspecificeret webstedslink"
+   },
+   "used": {
+      "message": "Du brugte"
+   },
+   "validFormatCsv": {
+      "message": "Hvad er det gyldige CSV-filformat til import?"
+   },
+   "websiteLink": {
+      "message": "Link til hjemmeside"
+   },
+   "websiteUrl": {
+      "message": "Webstedets URL"
+   },
+   "wednesday": {
+      "message": "onsdag"
+   },
+   "weekName": {
+      "message": "Ugens navn"
+   },
+   "weekly": {
+      "message": "Ugentlig"
+   },
+   "whenExtensionTabAppears": {
+      "message": "Når fanen Udvidelser vises, skal du finde \"Faneplanlægning med automatisk åbning og luk\" for at aktivere den i inkognitotilstand og klikke på knappen \"Detaljer\" ved siden af ​​den."
+   },
+   "whenMenuPopup": {
+      "message": "Når en menu popper op, skal du vælge \"Administrer udvidelser\"."
+   },
+   "withSignMustFill": {
+      "message": "Med \u003Cspan>*\u003C/span> tegnet skal udfyldes eller vælges, Vælg enten åbne eller lukke tid eller begge tidspunkter."
+   },
+   "writeYourDescriptionAboutSchUrl": {
+      "message": "Skriv din beskrivelse om planlagt url her."
+   },
+   "yes": {
+      "message": "Ja"
+   },
+   "yourEmailAddress": {
+      "message": "Din e-mailadresse"
+   },
+   "yourScheduleUrl": {
+      "message": "Din tidsplan-URL"
+   }
+}

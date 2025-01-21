@@ -1,0 +1,4 @@
+﻿URL,Timer,Status,Otvoreni datum,Datum zatvaranja,Otvoreno vrijeme,Vrijeme zatvaranja,Tjedan otvorenih vrata,Zatvori tjedan,Otvaranje preglednika,Dan otvorenih vrata,Dan zatvaranja,Otvorena minuta,Zatvori Minutu,Open Second,Zatvori drugi,Obavijest,Titula,Opis,Otvori URL u pozadini,Otvori u anonimnom načinu,Nemojte zatvarati prikvačene kartice,Zatvori samo anonimne kartice,URL filtriranje,Vrsta rasporeda,Otvorena minuta svakog sata,Svaki sat Zatvori minutu,Osvježi karticu ako je URL već otvoren
+https://www.google.com/,Svake minute,Aktivan,,,,,"","","",,,,,,,Neaktivan,Close Every Minute,,Ne,Ne,Ne,Ne,Da,Zatvoriti,0,0,Da
+http://www.w3schools.com/,Svaki dan,Aktivan,,,16:31,,"","","",,,,,,,Neaktivan,Every Day Open,,Ne,Ne,Ne,Ne,Ne,Otvoriti,0,0,Ne
+https://www.flipkart.com/,Prilagođena minuta,Aktivan,,,,,"","","",,,120,5,,,Neaktivan,Open and Close,,Ne,Ne,Ne,Ne,Ne,Oba,0,0,Ne

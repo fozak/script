@@ -1,0 +1,4 @@
+﻿URL,Timer,Katayuan,Buksan ang Petsa,Petsa ng Pagsara,Open Time,Oras ng Isara,Buksan ang Linggo,Isara ang Linggo,Sa Browser Open,Bukas na Araw,Isara ang Araw,Buksan ang Minuto,Isara ang Minuto,Buksan ang Pangalawa,Isara Pangalawa,Abiso,Pamagat,Paglalarawan,Buksan ang URL sa Background,Buksan sa incognito mode,Huwag isara ang mga naka-pin na tab,Isara lang ang mga tab na incognito,Pag-filter ng URL,Uri ng Iskedyul,Bawat Oras na Open Minute,Bawat Oras Close Minuto,I-refresh ang tab kung nakabukas na ang URL
+https://www.google.com/,Bawat Minuto,Aktibo,,,,,"","","",,,,,,,Hindi aktibo,Close Every Minute,,Hindi,Hindi,Hindi,Hindi,Oo,Isara,0,0,Oo
+http://www.w3schools.com/,Araw-araw,Aktibo,,,16:31,,"","","",,,,,,,Hindi aktibo,Every Day Open,,Hindi,Hindi,Hindi,Hindi,Hindi,Bukas,0,0,Hindi
+https://www.flipkart.com/,Custom na Minuto,Aktibo,,,,,"","","",,,120,5,,,Hindi aktibo,Open and Close,,Hindi,Hindi,Hindi,Hindi,Hindi,pareho,0,0,Hindi

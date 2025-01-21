@@ -1,0 +1,4 @@
+﻿Alamat URL-nya,Pengatur waktu,Status,Tanggal Buka,Tanggal Tutup,Waktu Buka,Waktu Tutup,Minggu Terbuka,Minggu Tutup,Di Browser Buka,Hari Terbuka,Hari Tutup,Buka Menit,Tutup Menit,Buka Kedua,Tutup Kedua,Pemberitahuan,Judul,Keterangan,Buka URL di Latar Belakang,Buka dalam mode penyamaran,Jangan tutup tab yang disematkan,Tutup hanya tab penyamaran,Penyaringan URL,Jenis Jadwal,Setiap Jam Buka Menit,Setiap Jam Tutup Menit,Segarkan tab jika URL sudah terbuka
+https://www.google.com/,Setiap Menit,Aktif,,,,,"","","",,,,,,,Tidak aktif,Close Every Minute,,TIDAK,TIDAK,TIDAK,TIDAK,Ya,Menutup,0,0,Ya
+http://www.w3schools.com/,Setiap hari,Aktif,,,16:31,,"","","",,,,,,,Tidak aktif,Every Day Open,,TIDAK,TIDAK,TIDAK,TIDAK,TIDAK,Membuka,0,0,TIDAK
+https://www.flipkart.com/,Menit Kustom,Aktif,,,,,"","","",,,120,5,,,Tidak aktif,Open and Close,,TIDAK,TIDAK,TIDAK,TIDAK,TIDAK,Keduanya,0,0,TIDAK

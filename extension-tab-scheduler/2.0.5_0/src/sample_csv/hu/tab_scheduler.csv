@@ -1,0 +1,4 @@
+﻿URL,Időzítő,Állapot,Megnyitás dátuma,Bezárás dátuma,Nyitva tartás,Bezárási idő,Nyílt hét,Zárja be a hetet,A böngésző megnyitásakor,Nyílt nap,Záró nap,Nyitott perc,Bezárási perc,Második megnyitás,Bezárás Második,Bejelentés,Cím,Leírás,Nyissa meg az URL-t a háttérben,Megnyitás inkognitó módban,Ne zárja be a rögzített füleket,Csak az inkognitó lapokat zárja be,URL-szűrés,Ütemezés típusa,Minden óra Nyitott perc,Minden óra Záró Perc,Frissítse a lapot ha az URL már meg van nyitva
+https://www.google.com/,Minden percben,Aktív,,,,,"","","",,,,,,,Inaktív,Close Every Minute,,Nem,Nem,Nem,Nem,Igen,Közeli,0,0,Igen
+http://www.w3schools.com/,Minden nap,Aktív,,,16:31,,"","","",,,,,,,Inaktív,Every Day Open,,Nem,Nem,Nem,Nem,Nem,Nyitott,0,0,Nem
+https://www.flipkart.com/,Egyedi perc,Aktív,,,,,"","","",,,120,5,,,Inaktív,Open and Close,,Nem,Nem,Nem,Nem,Nem,Mindkét,0,0,Nem

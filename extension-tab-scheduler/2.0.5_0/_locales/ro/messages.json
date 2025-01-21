@@ -1,0 +1,1448 @@
+{
+   "10_min": {
+      "message": "10 minute"
+   },
+   "1_min": {
+      "message": "1 minut"
+   },
+   "30_min": {
+      "message": "30 de minute"
+   },
+   "5_min": {
+      "message": "5 minute"
+   },
+   "60_min": {
+      "message": "oră"
+   },
+   "Dashboard": {
+      "message": "Bord"
+   },
+   "Login": {
+      "message": "Log in"
+   },
+   "Off": {
+      "message": "Oprit"
+   },
+   "On": {
+      "message": "Pe"
+   },
+   "Selected": {
+      "message": "Selectat"
+   },
+   "Settings": {
+      "message": "Setări"
+   },
+   "Tutorial": {
+      "message": "Tutorial"
+   },
+   "action": {
+      "message": "Acţiune"
+   },
+   "activateScheduleTab": {
+      "message": "Activați fila programată."
+   },
+   "active": {
+      "message": "Activ"
+   },
+   "activeAllScheduleTab": {
+      "message": "Se execută planificatorul Tab"
+   },
+   "activeStatus": {
+      "message": "Stare"
+   },
+   "actvInactvNotification": {
+      "message": "Afișează notificarea când se deschide fila de programare"
+   },
+   "actvInactvOpnTb": {
+      "message": "Filă deschisă activă sau inactivă"
+   },
+   "actvIntvClsTb": {
+      "message": "Filă de închidere activă sau inactivă"
+   },
+   "add": {
+      "message": "Adăuga"
+   },
+   "addDescription": {
+      "message": "Adăugați descriere"
+   },
+   "addNew": {
+      "message": "Adăugați nou"
+   },
+   "addNewURlCls": {
+      "message": "Adăugați o nouă adresă URL pentru a închide"
+   },
+   "addNewUrlToOpen": {
+      "message": "Adăugați o nouă adresă URL pentru a se deschide într-o fereastră nouă"
+   },
+   "addTitle": {
+      "message": "Adăugați titlu"
+   },
+   "addWebsite": {
+      "message": "Adăugați site-ul web"
+   },
+   "all": {
+      "message": "Toate"
+   },
+   "allInputFieldReq": {
+      "message": "Toate câmpurile sunt obligatorii"
+   },
+   "all_weeks": {
+      "message": "Toată Săptămâna"
+   },
+   "alreadyPurchase": {
+      "message": "Ați cumpărat deja? Introduceți cheia aici"
+   },
+   "andAt": {
+      "message": "iar la"
+   },
+   "annually": {
+      "message": "Anual"
+   },
+   "appDesc": {
+      "message": "Filele browserului se vor deschide și se vor închide automat la ora selectată. Utilizatorul poate activa/dezactiva lista în funcție de cerințe"
+   },
+   "appName": {
+      "message": "Planificator de file cu deschidere și închidere automată"
+   },
+   "april": {
+      "message": "aprilie"
+   },
+   "at": {
+      "message": "la"
+   },
+   "august": {
+      "message": "august"
+   },
+   "autoFocus": {
+      "message": "Fila Focalizare automată"
+   },
+   "autoFocustip": {
+      "message": "Dacă este activată, noua filă va fi deschisă într-o stare activă/focalizată."
+   },
+   "autofocustip": {
+      "message": "Noile file deschise se vor focaliza automat"
+   },
+   "basic": {
+      "message": "De bază"
+   },
+   "billedAnnyally": {
+      "message": "Facturat anual"
+   },
+   "billedMonthly": {
+      "message": "Facturat lunar"
+   },
+   "both": {
+      "message": "ambele"
+   },
+   "browserOpen": {
+      "message": "Pe Browser deschis"
+   },
+   "browserWebAddress": {
+      "message": "Adresa web a browserului începe și se termină cu o adresă web necunoscută. Pune \u003Cb>*\u003C/b> pe ambele părți ale câmpului introdus Link site."
+   },
+   "browserWebAddress2": {
+      "message": "Adresa web a browserului conține numele domeniului google.com, care va fi închis în câteva minute, indiferent de subdomeniu și calea paginii. Pune \u003Cb>*\u003C/b> pe ambele părți numele de domeniu și TLD"
+   },
+   "browserWebAddress3": {
+      "message": "Adresa web a browserului începe cu un nume de domeniu necunoscut și se termină cu o cale de pagină necunoscută"
+   },
+   "browserWebAddress31": {
+      "message": "se va închide după anumite minute, pune \u003Cb>*\u003C/b> pe ambele părți ale TLD-ului"
+   },
+   "browserWebAddress4": {
+      "message": "Adresa web a browserului începe cu o adresă web necunoscută. Pune \u003Cb>*\u003C/b> la începutul adresei URL. Rețineți că adresa web a browserului trebuie să se potrivească cu adresa dvs. URL după ce \u003Cb>*\u003C/b> ați scris."
+   },
+   "browserWebAddress41": {
+      "message": "Adresa web a browserului începe cu un subdomeniu necunoscut"
+   },
+   "browserWebAddress42": {
+      "message": "la începutul link-ului site-ului dvs"
+   },
+   "browserWebAddress5": {
+      "message": "Adresa web a browserului se termină cu o adresă web necunoscută. Pune \u003Cb>*\u003C/b> la sfârșitul adresei URL. Amintiți-vă că adresa dvs. web trebuie să se potrivească înainte ca \u003Cb>*\u003C/b> să fi scris."
+   },
+   "browserWebAddress51": {
+      "message": "Adresa web a browserului se termină cu o cale de pagină necunoscută. Pune \u003Cb>*\u003C/b> la sfârșitul adresei tale web"
+   },
+   "browserWebAddress6": {
+      "message": "Introduceți numai \u003Cb>*\u003C/b> în câmpul pentru adresa site-ului web pentru a închide toate filele browserului. După închis, toate filele, browserul se va închide automat."
+   },
+   "browserWebAddress7": {
+      "message": "Trebuie să fi scris subdomeniul exact, domeniul de nivel superior, numele domeniului și calea paginii în câmpul URL în fila deschisă a browserului."
+   },
+   "browserWebAddress8": {
+      "message": "Puteți deschide adresa URL la o anumită dată și oră, o anumită lună, o anumită săptămână, un anumit an și o anumită perioadă de timp"
+   },
+   "buyPlan": {
+      "message": "Cumpărați plan"
+   },
+   "buycofee": {
+      "message": "Cumpără-mi o cafea"
+   },
+   "cancel": {
+      "message": "Anula"
+   },
+   "changeLanguage": {
+      "message": "Schimbați limba"
+   },
+   "checkAll": {
+      "message": "Verificați toate"
+   },
+   "checkThisOpToPreventClosePinTb": {
+      "message": "Bifați această opțiune pentru a preveni închiderea filelor fixate."
+   },
+   "checkThisOptionOnlyPartOfUrlMtch": {
+      "message": "Bifați această opțiune dacă doar o parte a adresei URL trebuie să fie potrivită."
+   },
+   "checkThisOptionToActivate": {
+      "message": "Bifați această opțiune pentru a activa sau dezactiva adresa URL programată."
+   },
+   "checkThisOptionToCloseOnly": {
+      "message": "Bifați această opțiune pentru a închide numai filele incognito. De asemenea, activați opțiunea „Permite în incognito” în detaliile extensiei. Pentru instrucțiuni, vă rugăm să consultați pagina de tutorial."
+   },
+   "checkThisOptionToCloseOnlyInIncgnitoTb": {
+      "message": "Bifați această opțiune pentru a închide numai filele incognito. De asemenea, activați opțiunea „Permite în incognito” în detaliile extensiei. Pentru instrucțiuni, vă rugăm să consultați pagina de tutorial."
+   },
+   "checkThisOptionToInBg": {
+      "message": "Bifați această opțiune dacă doriți să deschideți adresa URL în fundal fără a o deschide într-o filă nouă"
+   },
+   "checkThisOptionToInactivNotification": {
+      "message": "Bifați această opțiune pentru notificarea inactivă pe adresa URL programată"
+   },
+   "checkThisOptionToOpen": {
+      "message": "Bifați această opțiune dacă doriți să vă deschideți adresa URL în modul incognito"
+   },
+   "checkThisOptionToOpenIncogito": {
+      "message": "Bifați această opțiune dacă doriți să vă deschideți adresa URL în modul incognito"
+   },
+   "checkThisOptionToPrevent": {
+      "message": "Bifați această opțiune pentru a preveni închiderea filelor fixate."
+   },
+   "clickExtIcon": {
+      "message": "Faceți clic pe pictograma „Extensii” din bara de instrumente, care arată ca o piesă de puzzle."
+   },
+   "clickTheSwitch": {
+      "message": "Faceți clic pe comutatorul de lângă acesta pentru a-l porni"
+   },
+   "close": {
+      "message": "Aproape"
+   },
+   "closeAllTab": {
+      "message": "12. Închideți toate filele browserului"
+   },
+   "closeAllTabExm1": {
+      "message": "În exemplul de mai sus, adresa URL dată este în fila închidere, care afirmă că va închide toate filele la 12:00 pe 25/2/2023"
+   },
+   "closeDate": {
+      "message": "Data închiderii"
+   },
+   "closeDay": {
+      "message": "Ziua de închidere"
+   },
+   "closeEveryYear": {
+      "message": "Închide în fiecare an"
+   },
+   "closeInEvery": {
+      "message": "Aproape în fiecare"
+   },
+   "closeIncognitoTab": {
+      "message": "Închideți numai filele incognito"
+   },
+   "closeMinute": {
+      "message": "Minutul de închidere"
+   },
+   "closeOnDay": {
+      "message": "Ziua aproape"
+   },
+   "closeOnEvery": {
+      "message": "Aproape pe fiecare"
+   },
+   "closeOnEveryDay": {
+      "message": "Închideți în fiecare zi"
+   },
+   "closeOnEveryMonth": {
+      "message": "Închideți în fiecare lună în fiecare zi"
+   },
+   "closeOnEveryWeek": {
+      "message": "Închide în fiecare săptămână"
+   },
+   "closeSecond": {
+      "message": "Închide al doilea"
+   },
+   "closeSeconsMoreThan5": {
+      "message": "Secundele apropiate ar trebui să fie mai mult de 5."
+   },
+   "closeTabSchedule": {
+      "message": "Închideți Programul de filă"
+   },
+   "closeTabURL": {
+      "message": "Închideți adresa URL a filei"
+   },
+   "closeTime": {
+      "message": "Ora de închidere"
+   },
+   "closeUrl": {
+      "message": "Închideți linkul site-ului"
+   },
+   "closeWeek": {
+      "message": "Închide săptămâna"
+   },
+   "closeWeeks": {
+      "message": "Închide săptămâni"
+   },
+   "close_on": {
+      "message": "Închide"
+   },
+   "cngrtsForSubcr": {
+      "message": "Felicitări! Planul dvs. a fost activat cu succes."
+   },
+   "commonQuestionsAns": {
+      "message": "Întrebări și răspunsuri comune"
+   },
+   "copySucessClose": {
+      "message": "Datele URL ale filei Închidere au fost copiate în datele URL ale filei Deschidere"
+   },
+   "createNewTimer": {
+      "message": "Creați un cronometru nou"
+   },
+   "currentPlan": {
+      "message": "Planul curent"
+   },
+   "currentTabSchedule": {
+      "message": "Programul curent al filei"
+   },
+   "currentTbScheduleTimer": {
+      "message": "Temporizator programat pentru fila curentă."
+   },
+   "cusSec": {
+      "message": "Custom Second"
+   },
+   "custMin": {
+      "message": "Minut personalizat"
+   },
+   "custmMinSch": {
+      "message": "7.Program personalizat de minute"
+   },
+   "custmMinSchExm1": {
+      "message": "În exemplul de mai sus, adresa URL dată este în fila deschisă, care indică adresa URL dată deschisă într-o filă nouă La fiecare 15 minute."
+   },
+   "custmMinSchExm2": {
+      "message": "În exemplul de mai sus, adresa URL dată este în fila de închidere, care afirmă că adresa URL dată care s-a deschis într-o filă nouă va fi închisă după 15 minute."
+   },
+   "customSecondWarning": {
+      "message": "Funcționalitatea secundă personalizată este experimentală și este posibil să nu funcționeze corect dacă secundele sunt setate sub 60."
+   },
+   "darkMode": {
+      "message": "Modul întunecat"
+   },
+   "datNotCopy": {
+      "message": "Unele date nu sunt copiate din cauza unei adrese URL nevalide."
+   },
+   "dataSaved": {
+      "message": "Datele temporizatorului se salvează cu succes"
+   },
+   "date": {
+      "message": "Data"
+   },
+   "dateIsOutOfRange": {
+      "message": "Data este în afara intervalului"
+   },
+   "day": {
+      "message": "Zi"
+   },
+   "december": {
+      "message": "decembrie"
+   },
+   "delete": {
+      "message": "Şterge"
+   },
+   "deleteScheduleTb": {
+      "message": "Șterge fila programată."
+   },
+   "description": {
+      "message": "Descriere"
+   },
+   "developedBy": {
+      "message": "Dezvoltat de:"
+   },
+   "doNotCloseInPinnedTabs": {
+      "message": "Nu închideți filele fixate"
+   },
+   "doNotShowNotification": {
+      "message": "Nu afișați notificarea"
+   },
+   "domainName": {
+      "message": "Nume de domeniu"
+   },
+   "downloadCloseTbSampleCsv": {
+      "message": "Descărcați un eșantion CSV de filă apropiată pentru a vedea un exemplu de format necesar"
+   },
+   "downloadOpenTbSampleCsv": {
+      "message": "Descărcați un exemplu de CSV cu filă deschisă pentru a vedea un exemplu de format necesar"
+   },
+   "editScheduleTb": {
+      "message": "Editați fila programată."
+   },
+   "email": {
+      "message": "E-mail"
+   },
+   "enterDateToCloseTab": {
+      "message": "Introduceți data aici pentru a închide fila de program."
+   },
+   "enterDateToOpen": {
+      "message": "Introduceți data pentru a deschide fila Program."
+   },
+   "enterMiniutesToCloseTb": {
+      "message": "Introduceți minute pentru a închide fila."
+   },
+   "enterMiniutesToOpen": {
+      "message": "Introduceți minute pentru a deschide fila de program."
+   },
+   "enterMinute": {
+      "message": "Introduceți Minutul"
+   },
+   "enterSecond": {
+      "message": "Introduceți al doilea"
+   },
+   "enterSecondsToCloseTab": {
+      "message": "Introduceți secunde pentru a închide fila."
+   },
+   "enterSecondsToOpen": {
+      "message": "Introduceți secunde pentru a deschide fila de program."
+   },
+   "enterTilteOfScheduleUrl": {
+      "message": "Introduceți titlul adresei URL programate."
+   },
+   "enterTimeToCloseTab": {
+      "message": "Introduceți ora aici pentru a închide fila de program."
+   },
+   "enterTimeToSchedule": {
+      "message": "Introduceți ora pentru a deschide fila de program."
+   },
+   "enterValidEmail": {
+      "message": "Vă rugăm să introduceți un e-mail valid"
+   },
+   "enterValidUrl": {
+      "message": "Vă rugăm să introduceți o adresă URL validă"
+   },
+   "enterValueInCloseSec": {
+      "message": "Introduceți valoarea în secunde apropiate"
+   },
+   "enterValueInOpenCloseSec": {
+      "message": "Introduceți valoarea în secunde de deschidere sau de închidere"
+   },
+   "enterValueInOpenMinutes": {
+      "message": "Introduceți valoarea în minute deschise"
+   },
+   "enterVlaueInCloseMinutes": {
+      "message": "Introduceți valoarea în minute apropiate"
+   },
+   "enterVlaueInOpenCloseMin": {
+      "message": "Introduceți valoarea în minutele deschise sau închise"
+   },
+   "enterVlaueInOpenSeconds": {
+      "message": "Introduceți valoarea în secunde deschise"
+   },
+   "enterYourURLToSchedule": {
+      "message": "Introduceți adresa URL pentru programare."
+   },
+   "every": {
+      "message": "fiecare"
+   },
+   "every10Min": {
+      "message": "La fiecare 10 minute"
+   },
+   "every1Minute": {
+      "message": "la fiecare 1 minut"
+   },
+   "every30Min": {
+      "message": "La fiecare 30 de minute"
+   },
+   "every5Min": {
+      "message": "La fiecare 5 minute"
+   },
+   "everyDay": {
+      "message": "În fiecare zi"
+   },
+   "everyDayAt": {
+      "message": "în fiecare zi la"
+   },
+   "everyHour": {
+      "message": "În fiecare oră"
+   },
+   "everyMinute": {
+      "message": "În fiecare minut"
+   },
+   "everyMonth": {
+      "message": "În fiecare lună"
+   },
+   "everyMonthOn": {
+      "message": "în fiecare lună"
+   },
+   "everyMonthOnDay": {
+      "message": "în fiecare lună în zi"
+   },
+   "everyWeek": {
+      "message": "În fiecare săptămână"
+   },
+   "everyWeekOn": {
+      "message": "în fiecare săptămână pe"
+   },
+   "everyYear": {
+      "message": "În fiecare an"
+   },
+   "everyYesrOn": {
+      "message": "în fiecare an"
+   },
+   "evr10MinSch": {
+      "message": "2. Program la fiecare 10 minute"
+   },
+   "evr10MinSchExm1": {
+      "message": "În exemplul de mai sus, adresa URL dată este în fila deschisă, care afirmă că adresa URL dată se va deschide într-o filă nouă la fiecare 10 minute."
+   },
+   "evr10MinSchExm2": {
+      "message": "În exemplul de mai sus, adresa URL dată este în fila de închidere, care afirmă că adresa URL dată care s-a deschis într-o filă nouă va fi închisă după 10 minute."
+   },
+   "evrDaySch": {
+      "message": "3. Programul zilnic"
+   },
+   "evrDaySchExm1": {
+      "message": "În exemplul de mai sus, adresa URL dată este în fila deschisă, care afirmă că se va deschide într-o filă nouă în fiecare zi la 5:27 PM"
+   },
+   "evrDaySchExm2": {
+      "message": "În exemplul de mai sus, adresa URL dată este în fila de închidere, care afirmă că va închide fila deja deschisă la 17:27 în fiecare zi"
+   },
+   "evrMonthSch": {
+      "message": "5. Programul în fiecare lună"
+   },
+   "evrMonthSchExm1": {
+      "message": "În exemplul de mai sus, adresa URL dată este în fila deschisă, care afirmă că se va deschide într-o filă nouă În fiecare lună la 13:45 în ziua 25"
+   },
+   "evrMonthSchExm2": {
+      "message": "În exemplul de mai sus, adresa URL dată este în fila de închidere, care afirmă că va închide fila deja deschisă în fiecare lună la 13:45 în ziua 25"
+   },
+   "evrWeekSch": {
+      "message": "4. Programul în fiecare săptămână"
+   },
+   "evrWeekSchExm1": {
+      "message": "În exemplul de mai sus, adresa URL dată se află într-o filă deschisă, care afirmă că se va deschide într-o filă nouă în fiecare săptămână la ora 17:00 \u003Cb>luni și marți\u003C/b> ."
+   },
+   "evrWeekSchExm2": {
+      "message": "În exemplul de mai sus, adresa URL dată se află în fila de închidere, care afirmă că va închide fila deja deschisă în fiecare săptămână, la 17:00, \u003Cb>luni și marți\u003C/b> ."
+   },
+   "evrWeekSchExm3": {
+      "message": "În exemplul de mai sus, pot fi selectate mai multe zile în cronometrul săptămânii."
+   },
+   "evrYearSch": {
+      "message": "6. Programul anual"
+   },
+   "evrYearSchExm1": {
+      "message": "În exemplul de mai sus, adresa URL dată este în fila deschisă, care afirmă că se va deschide într-o filă nouă În fiecare an la 13:35 pe 1 ianuarie"
+   },
+   "evrYearSchExm2": {
+      "message": "În exemplul de mai sus, adresa URL dată este în fila de închidere, care afirmă că va închide fila deja deschisă în fiecare an, la 13:35, pe 1 ianuarie"
+   },
+   "exampleSort": {
+      "message": "de ex"
+   },
+   "exdMaxLim": {
+      "message": "Dispozitivele maxime permise sunt depășite!"
+   },
+   "exmpOpnClsTbSch": {
+      "message": "Exemplu despre cum să deschideți și să închideți fila în Tab Scheduler"
+   },
+   "expLicKy": {
+      "message": "Această cheie de licență a expirat."
+   },
+   "export": {
+      "message": "Export"
+   },
+   "exportBefore": {
+      "message": "Aveți\u003Cexday>\u003C/exday>zile rămase, Vă rugăm să vă abonați pentru a continua să vă bucurați de funcția premium"
+   },
+   "exportClsTbDta": {
+      "message": "Exportați datele filei de închidere"
+   },
+   "exportOpenTbDt": {
+      "message": "Exportați datele filei deschise"
+   },
+   "exportedData": {
+      "message": "Datele temporizatorului au fost exportate cu succes"
+   },
+   "extensionShouldAble": {
+      "message": "Acum, extensia ar trebui să poată închide filele în modul Incognito."
+   },
+   "faq": {
+      "message": "FAQ"
+   },
+   "faq_1": {
+      "message": "Ce este Tab Scheduler cu Auto Open and Close?"
+   },
+   "faq_10": {
+      "message": "Cum îmi văd filele programate?"
+   },
+   "faq_11": {
+      "message": "Este obligatoriu să completați atât orele de deschidere, cât și de închidere?"
+   },
+   "faq_12": {
+      "message": "Ce fac funcțiile filei Auto Focus, Activați toate filele programate și Power Mode?"
+   },
+   "faq_13": {
+      "message": "Pot deschide/închide linkul de site programat în fila incognito.?"
+   },
+   "faq_14": {
+      "message": "La ce folosește fila Reîmprospătare dacă adresa URL este deja deschisă?"
+   },
+   "faq_2": {
+      "message": "La ce folosește Website Link?"
+   },
+   "faq_3": {
+      "message": "Cum programez o adresă URL folosind Tab Scheduler?"
+   },
+   "faq_4": {
+      "message": "Ce este opțiunea „Deschidere URL în fundal”?"
+   },
+   "faq_5": {
+      "message": "Pot împiedica extensia să închidă filele fixate?"
+   },
+   "faq_6": {
+      "message": "Ce înseamnă tipul de program „Ambele”?"
+   },
+   "faq_7": {
+      "message": "Cum funcționează funcția „Filtrare URL”?"
+   },
+   "faq_8": {
+      "message": "Pot dezactiva o filă programată fără a o șterge?"
+   },
+   "faq_9": {
+      "message": "Voi primi notificări pentru filele programate?"
+   },
+   "faq_a_1": {
+      "message": "\u003Cp>Tab Scheduler cu Auto Open and Close este o extensie de browser care permite utilizatorilor să programeze filele să se deschidă și să se închidă automat la ore stabilite. Utilizatorii pot selecta un program unic sau pot configura programe recurente cu diferite opțiuni de frecvență. Această extensie are mai multe scopuri pentru utilizatori și oferă multe funcții care vă sunt utile.\u003C/p>"
+   },
+   "faq_a_10": {
+      "message": "Toate filele programate sunt afișate într-o listă care arată titlul, linkul site-ului web, orele de deschidere și închidere, starea și acțiunile pe care le puteți întreprinde (de exemplu, activați, editați, ștergeți)."
+   },
+   "faq_a_11": {
+      "message": "Nu, puteți programa fie o oră de deschidere, fie una de închidere. Cu toate acestea, trebuie să completați sau să selectați câmpurile obligatorii marcate cu un asterisc (*)."
+   },
+   "faq_a_12": {
+      "message": "Fila de focalizare automată asigură că atunci când se deschide o filă programată, Activarea tuturor filelor programate vă permite să activați rapid toate filele programate cu un singur clic. Modul Power optimizează performanța extensiei prin gestionarea mai eficientă a resurselor browserului."
+   },
+   "faq_a_13": {
+      "message": "Da, puteți alege să deschideți o filă programată în modul incognito selectând opțiunea „Deschideți în modul incognito”. Puteți alege să închideți numai filele incognito selectând opțiunea „Închideți numai filele incognito”, atâta timp cât „Permiteți în incognito” este activat în setările extensiei"
+   },
+   "faq_a_14": {
+      "message": "Când această opțiune este activată, extensia va reîmprospăta automat o filă existentă dacă aceeași adresă URL este deja deschisă în browser. Acest lucru previne deschiderea filelor duplicate și vă asigură că aveți întotdeauna cea mai recentă versiune a paginii încărcată."
+   },
+   "faq_a_14_1": {
+      "message": "Dacă încercați să deschideți https://github.com/ și este deja deschis într-o altă filă, extensia va reîmprospăta pur și simplu acea filă în loc să deschidă una nouă."
+   },
+   "faq_a_14_2": {
+      "message": "Dacă https://github.com/ este deja deschis în trei file, extensia va reîmprospăta toate cele trei file."
+   },
+   "faq_a_2": {
+      "message": "Link-ul site-ului web este adresa site-ului cu fila deschisă a browserului dvs. Cum puteți utiliza adresa site-ului web este menționat mai jos."
+   },
+   "faq_a_3": {
+      "message": "Pentru a programa o adresă URL, introduceți linkul site-ului, dați programului un titlu, selectați frecvența (O singură dată, Fiecare minut, Zilnic etc.) și alegeți orele de deschidere și de închidere. De asemenea, puteți specifica o dată, o zi sau secunde pentru a deschide și închide fila."
+   },
+   "faq_a_4": {
+      "message": "\u003Cp>Această opțiune vă oferă control deplin pentru a programa o adresă URL să se deschidă în fundal, fără a aduce noua filă în centrul atenției. Adresa URL se va deschide în liniște în timp ce continuați să lucrați la alte file. Este deosebit de util atunci când aveți nevoie de browser pentru a prelua date de la adresa URL programată fără a le afișa în mod activ, cum ar fi în cazul unei solicitări GET API.\u003C/p>\u003Cbr> \u003Cp>De exemplu, dacă doriți să preluați date de la un punct final API la o oră stabilită în mod regulat, puteți utiliza această opțiune eficientă pentru a rula solicitarea în fundal fără a deschide o nouă filă vizibilă.\u003C/p>"
+   },
+   "faq_a_5": {
+      "message": "Da, există o opțiune pentru a preveni închiderea filelor fixate. Bifați opțiunea „Nu închideți filele fixate” pentru a vă asigura că aceste file rămân deschise chiar dacă îndeplinesc alte criterii de închidere."
+   },
+   "faq_a_6": {
+      "message": "Tipul de program „Ambele” vă oferă control complet asupra momentului în care se deschide și se închide o filă, permițându-vă să setați ore specifice pentru ambele acțiuni."
+   },
+   "faq_a_7": {
+      "message": "Filtrarea URL asigură că numai o anumită parte a adresei URL trebuie să se potrivească pentru ca acțiunea programată să aibă loc. Acest lucru este util atunci când doriți să automatizați anumite acțiuni pe baza potrivirilor parțiale ale adresei URL. De exemplu, dacă bifați opțiunea Filtrare URL pentru adresa URL https://example.com/page, aceasta se va aplica și pentru adrese URL precum https://example.com/page/123, https://example.com/ page?query=example și https://subdomain.example.com/page."
+   },
+   "faq_a_8": {
+      "message": "Cu opțiunea „Activați această filă programată”, puteți activa sau dezactiva cu ușurință filele programate, oferindu-vă flexibilitatea de a vă gestiona programele fără a pierde configurațiile."
+   },
+   "faq_a_9": {
+      "message": "În mod implicit, veți primi notificări. Cu toate acestea, dacă preferați să opriți notificările, puteți bifa opțiunea „Nu afișați notificarea” pentru a le dezactiva."
+   },
+   "february": {
+      "message": "februarie"
+   },
+   "filterTips": {
+      "message": "Filtrul se aplică după „https://” sau „www.”, de exemplu „github.com”"
+   },
+   "for_exp": {
+      "message": "De exemplu"
+   },
+   "freeForever": {
+      "message": "Liber pentru totdeauna"
+   },
+   "freeSchedule": {
+      "message": "program liber"
+   },
+   "freeTral": {
+      "message": "În calitate de utilizator timpuriu apreciat, vă veți bucura\u003Crday>120\u003C/rday>zile de acces gratuit înainte de a trece la noul nostru plan plătit — vă mulțumim pentru sprijinul acordat!\u003Cp class=\"p-t-5\">Aveți\u003Cb>\u003Cspan>\u003C/span>\u003C/b>zile rămase în afara ta\u003Crday>120\u003C/rday>-zi perioada liberă.\u003Cafex class=\"warning\">\u003Cafex>\u003C/afex>\u003C/afex>\u003C/p> "
+   },
+   "frequentlyAskedQuestions": {
+      "message": "Întrebări frecvente"
+   },
+   "friday": {
+      "message": "vineri"
+   },
+   "getThisPlan": {
+      "message": "Obțineți acest plan"
+   },
+   "goToSettingsPageToSchedule": {
+      "message": "Accesați pagina de setări pentru a programa deschiderea și închiderea URL-urilor."
+   },
+   "goURL": {
+      "message": "Accesați adresa URL"
+   },
+   "helpAccordion12": {
+      "message": "Această extensie funcționează în modul de repaus/suspendare?"
+   },
+   "helpAccordion3": {
+      "message": "Pot programa o filă să se deschidă în modul incognito?"
+   },
+   "helpAccordion6": {
+      "message": "Ce este „Timpul expirat”?"
+   },
+   "helpAccordion7": {
+      "message": "Pot exporta adresa URL programată?"
+   },
+   "helpAccordion8": {
+      "message": "Pot importa în URL-ul de programare?"
+   },
+   "helpPanelBodyDesc12First": {
+      "message": "Nu, această extensie nu va funcționa în modul de repaus/suspendare."
+   },
+   "helpPanelBodyDesc12Second": {
+      "message": "Dacă orice adresă URL este programată în fila de deschidere sau închidere, atunci computerul dvs. nu va intra automat în modul de repaus sau de suspendare."
+   },
+   "helpPanelBodyDesc3": {
+      "message": "Da, puteți alege să deschideți o filă programată în modul incognito selectând opțiunea „Deschideți în modul incognito”. Asigurați-vă că opțiunea „Permite în incognito” a extensiei este activată în setările extensiei ale browserului."
+   },
+   "helpPanelBodyDesc6": {
+      "message": "- Data și ora dată sunt trecute de la data și ora curente, apoi se va afișa textul „Timp expirat”."
+   },
+   "helpPanelBodyDesc7": {
+      "message": "Da, puteți să exportați o filă deschisă deja programată și să închideți adresa URL a filei în format csv și să o utilizați cu alt sistem pentru a importa acea adresă URL."
+   },
+   "helpPanelBodyDesc8": {
+      "message": "Da, puteți importa o adresă URL de deschidere și închidere validă în format csv. Formatul csv importat va fi programat automat într-un anumit timp"
+   },
+   "herAreStepsToAllow": {
+      "message": "Iată pașii pentru „Permite în incognito” în Google Chrome:"
+   },
+   "home": {
+      "message": "Acasă"
+   },
+   "hour_minute_close": {
+      "message": "În fiecare oră, minut de aproape"
+   },
+   "hour_minute_open": {
+      "message": "Fiecare oră Minut deschis"
+   },
+   "how_to_use_tab": {
+      "message": "Cum se folosește Tab Scheduler?"
+   },
+   "import": {
+      "message": "Import"
+   },
+   "importClsTbDta": {
+      "message": "Importați datele filei de închidere"
+   },
+   "importExport": {
+      "message": "Import/Export"
+   },
+   "importOpenTbDt": {
+      "message": "Importați datele filelor deschise"
+   },
+   "importedRecored": {
+      "message": ", importat înregistrat"
+   },
+   "inactivateScheduleTab": {
+      "message": "Dezactivați fila programată."
+   },
+   "inactive": {
+      "message": "Inactiv"
+   },
+   "inactiveSch": {
+      "message": "8. URL inactiv"
+   },
+   "inactiveSchExm1": {
+      "message": "În exemplul de mai sus, adresa URL dată este în fila deschisă sau în fila închidere, ceea ce afirmă că adresa URL dată este inactivă și nu va efectua nicio acțiune."
+   },
+   "inactiveThisScheduledTabs": {
+      "message": "Activați această filă programată"
+   },
+   "invalidDuplicate": {
+      "message": ", duplicat sau înregistrat nevalid"
+   },
+   "invldLicKy": {
+      "message": "Cheie de licență nevalidă!"
+   },
+   "isClose": {
+      "message": "este aproape"
+   },
+   "isOpen": {
+      "message": "este deschis"
+   },
+   "january": {
+      "message": "ianuarie"
+   },
+   "july": {
+      "message": "iulie"
+   },
+   "june": {
+      "message": "iunie"
+   },
+   "licKeyDis": {
+      "message": "Această cheie de licență este dezactivată."
+   },
+   "listTitle": {
+      "message": "Planificator de file"
+   },
+   "loading": {
+      "message": "Va rugam asteptati..."
+   },
+   "locale": {
+      "message": "ro"
+   },
+   "march": {
+      "message": "martie"
+   },
+   "maxSchedule": {
+      "message": "4 Limită maximă de program"
+   },
+   "may": {
+      "message": "mai"
+   },
+   "mintValid": {
+      "message": "Este necesar minim 1 minut"
+   },
+   "minute": {
+      "message": "Minut"
+   },
+   "minutesNotLessThan1": {
+      "message": "Minutele nu trebuie să fie mai mici de 1."
+   },
+   "monday": {
+      "message": "luni"
+   },
+   "month": {
+      "message": "Lună"
+   },
+   "monthly": {
+      "message": "Lunar"
+   },
+   "more": {
+      "message": "Mai mult"
+   },
+   "mostSubscribe": {
+      "message": "Majoritatea Abonați-vă"
+   },
+   "no": {
+      "message": "Nu"
+   },
+   "noDataToExport": {
+      "message": "Nu există date de exportat."
+   },
+   "noScheduledTabs": {
+      "message": "Nu există file programate"
+   },
+   "noTimerSetAddNewTimer": {
+      "message": "Fără cronometru setat, faceți clic pe butonul Adăugare pentru a seta un nou cronometru"
+   },
+   "not_show_tutorial": {
+      "message": "Nu mai afișa acest tutorial din nou"
+   },
+   "notificationOpenTab": {
+      "message": "13. Notificare la adresa URL a filei deschide/închide"
+   },
+   "notificationOpenTabExm1": {
+      "message": "În exemplul de mai sus, adresa URL dată este în fila deschisă, care afirmă că va da notificare și va deschide/închide adresa URL într-o filă nouă la fiecare 5 minute."
+   },
+   "notifications": {
+      "message": "Notificare"
+   },
+   "november": {
+      "message": "noiembrie"
+   },
+   "october": {
+      "message": "octombrie"
+   },
+   "onTheExtensionDetailPage": {
+      "message": "Pe pagina de detalii a extensiei, derulați în jos și găsiți opțiunea „Permiteți în incognito”."
+   },
+   "oneTime": {
+      "message": "O dată"
+   },
+   "oneTmSch": {
+      "message": "1. Program unic"
+   },
+   "oneTmSchExm1": {
+      "message": "În exemplul de mai sus, adresa URL dată este în fila deschisă, care afirmă că se va deschide într-o filă nouă O dată la 13:45 pe 21/1/2023"
+   },
+   "oneTmSchExm2": {
+      "message": "În exemplul de mai sus, adresa URL dată se află în fila de închidere, care afirmă că va închide toate filele URL potrivite la 13:45 pe 21/1/2023"
+   },
+   "open": {
+      "message": "Deschide"
+   },
+   "openBackground": {
+      "message": "Dacă da, se încarcă o adresă URL în fundal fără a o deschide într-o filă nouă"
+   },
+   "openDate": {
+      "message": "Data deschiderii"
+   },
+   "openDay": {
+      "message": "Ziua porților deschise"
+   },
+   "openEveryDayOn": {
+      "message": "Deschis în fiecare zi"
+   },
+   "openEveryMonthOn": {
+      "message": "Deschis în fiecare lună în fiecare zi"
+   },
+   "openEveryWeekOn": {
+      "message": "Deschis în fiecare săptămână"
+   },
+   "openEveryYearOn": {
+      "message": "Deschis în fiecare an"
+   },
+   "openGoogleChrome": {
+      "message": "Deschide Google Chrome."
+   },
+   "openInBackground": {
+      "message": "Deschideți adresa URL în fundal"
+   },
+   "openInEvery": {
+      "message": "Deschis în fiecare"
+   },
+   "openInIncognito": {
+      "message": "Deschideți în modul incognito"
+   },
+   "openMinute": {
+      "message": "Minutul deschis"
+   },
+   "openOnDay": {
+      "message": "Deschis în ziua"
+   },
+   "openOnEvery": {
+      "message": "Deschis pe fiecare"
+   },
+   "openSecond": {
+      "message": "Deschide al doilea"
+   },
+   "openSecondsMoreThan5": {
+      "message": "Secundele deschise ar trebui să fie mai mult de 5."
+   },
+   "openTabSchedule": {
+      "message": "Deschideți Programul de filă"
+   },
+   "openTabURL": {
+      "message": "Deschideți adresa URL a filei"
+   },
+   "openTime": {
+      "message": "Ora deschisă"
+   },
+   "openUrl": {
+      "message": "Deschideți linkul site-ului"
+   },
+   "openWeek": {
+      "message": "Săptămâna deschisă"
+   },
+   "openWeeks": {
+      "message": "Săptămânile deschise"
+   },
+   "open_on": {
+      "message": "Deschide pe"
+   },
+   "optional": {
+      "message": "Opțional"
+   },
+   "or": {
+      "message": "sau"
+   },
+   "outof": {
+      "message": "din"
+   },
+   "pagePath": {
+      "message": "Calea paginii"
+   },
+   "paidFeature": {
+      "message": "Funcție plătită"
+   },
+   "pauseSchedule": {
+      "message": "Porniți sau opriți toate programele"
+   },
+   "pauseTabScheduler": {
+      "message": "Programator filă întrerupt"
+   },
+   "pleaseAllowIncognitoMessage": {
+      "message": "Activați opțiunea „Permite în incognito” în detaliile extensiei. Pentru instrucțiuni, vă rugăm să consultați pagina de tutorial."
+   },
+   "pleaseShareYourSuggestions": {
+      "message": "Vă rugăm să împărtășiți sugestia dvs."
+   },
+   "plsShreAnySugWithUs": {
+      "message": "Vă rugăm să ne oferiți o sugestie pentru a ne îmbunătăți"
+   },
+   "powerMode": {
+      "message": "Modul Power"
+   },
+   "premium": {
+      "message": "Premium"
+   },
+   "pricePlan": {
+      "message": "Prețuri și planuri"
+   },
+   "privcyPolicy": {
+      "message": "Politica de confidențialitate"
+   },
+   "prowerModeTip": {
+      "message": "Păstrați sistemul întotdeauna activ activând modul Power"
+   },
+   "put": {
+      "message": "Pune"
+   },
+   "rateUs": {
+      "message": "Evaluează-ne"
+   },
+   "removeDuplicateEntry": {
+      "message": "Vă rugăm să eliminați intrarea duplicată"
+   },
+   "removeOpenTbURL": {
+      "message": "Eliminați adresa URL a filei deschise"
+   },
+   "repeat": {
+      "message": "Repeta"
+   },
+   "requiredMsg": {
+      "message": "Necesar"
+   },
+   "rmvClsTb": {
+      "message": "Eliminați adresa URL a filei de închidere"
+   },
+   "sameTabs": {
+      "message": "Actualizează fila dacă adresa URL este deja deschisă"
+   },
+   "sameTabsInfo": {
+      "message": "Preveniți deschiderea mai multor file pentru aceeași adresă URL. De exemplu, dacă www.google.com este deja deschis, atunci fila existentă va fi reîmprospătată în loc să deschidă o filă nouă pentru ea."
+   },
+   "sampleCsvOpenPath": {
+      "message": "../sample_csv/en/open_tab_sample.csv"
+   },
+   "sampleFile": {
+      "message": "Exemplu de fișier"
+   },
+   "saturday": {
+      "message": "sâmbătă"
+   },
+   "savOpnData": {
+      "message": "Salvați datele filelor deschise"
+   },
+   "save": {
+      "message": "Salva"
+   },
+   "saveClsTbData": {
+      "message": "Salvați datele filei închise"
+   },
+   "saveSchedule": {
+      "message": "Salvați programul"
+   },
+   "scheduleCloseTab": {
+      "message": "Planificare Închide fila"
+   },
+   "scheduleCurrentTab": {
+      "message": "Programați fila curentă"
+   },
+   "scheduleOpenTab": {
+      "message": "Programează fila deschisă"
+   },
+   "scheduledTabIsAlreadyExistWithSameTimer": {
+      "message": "Această filă programată există deja cu același temporizator."
+   },
+   "scheduledTabList": {
+      "message": "Lista de file programată"
+   },
+   "scheduledType": {
+      "message": "Tipul de program"
+   },
+   "search": {
+      "message": "Căutare"
+   },
+   "secValid": {
+      "message": "Sunt necesare minim 5 secunde"
+   },
+   "second": {
+      "message": "Doilea"
+   },
+   "selectCloseDate": {
+      "message": "Selectați data închiderii"
+   },
+   "selectCloseDay": {
+      "message": "Selectați ziua de închidere"
+   },
+   "selectCloseTime": {
+      "message": "Selectați ora de închidere"
+   },
+   "selectColumn": {
+      "message": "Selectați Coloană"
+   },
+   "selectDateAndTime": {
+      "message": "Selectați data și ora pentru a deschide o nouă filă"
+   },
+   "selectDateAndTimeClsTb": {
+      "message": "Selectați data și ora pentru a închide fila"
+   },
+   "selectDayToCloseSchTb": {
+      "message": "Selectați ziua pentru a închide fila de program."
+   },
+   "selectDayToClsTb": {
+      "message": "Selectați ziua pentru a închide fila"
+   },
+   "selectDayToSchdule": {
+      "message": "Selectați ziua pentru a programa fila."
+   },
+   "selectDaysInWeek": {
+      "message": "Selectați zilele săptămânii"
+   },
+   "selectDaysInWeekIClsTime": {
+      "message": "Selectați zilele săptămânii în cronometrul de închidere."
+   },
+   "selectDaysInWeekIOpClsTime": {
+      "message": "Selectați zilele săptămânii în cronometrul de deschidere sau închidere."
+   },
+   "selectDaysInWeekIOpTime": {
+      "message": "Selectați zilele săptămânii în cronometru deschis."
+   },
+   "selectFrequency": {
+      "message": "Selectați Frecvență"
+   },
+   "selectFrequencyOfScheduleUrl": {
+      "message": "Selectați frecvența adresei URL programate."
+   },
+   "selectOpenDate": {
+      "message": "Selectați data deschiderii"
+   },
+   "selectOpenDay": {
+      "message": "Selectați ziua porților deschise"
+   },
+   "selectOpenOrClose": {
+      "message": "Selectați ora de deschidere și de închidere"
+   },
+   "selectOpenOrCloseDate": {
+      "message": "Selectați data deschiderii și închiderii"
+   },
+   "selectOpenOrCloseDay": {
+      "message": "Selectați ziua de deschidere și de închidere"
+   },
+   "selectOpenTime": {
+      "message": "Selectați ora de deschidere"
+   },
+   "selectPreferredLanguage": {
+      "message": "Selectați limba preferată."
+   },
+   "selectToOpenTab": {
+      "message": "Selectați ziua pentru a deschide o nouă filă"
+   },
+   "selectTypTimerClsTb": {
+      "message": "Selectați tipul de cronometru pentru a închide fila"
+   },
+   "selectTypeOfSchedule": {
+      "message": "Selectați tipul de program, dacă doriți să deschideți și să închideți, apoi selectați „Ambele”."
+   },
+   "selectTypeOfTimer": {
+      "message": "Selectați tipul de cronometru pentru a deschide o nouă filă"
+   },
+   "select_weeks": {
+      "message": "Selectați Săptămâni"
+   },
+   "september": {
+      "message": "septembrie"
+   },
+   "settingSave": {
+      "message": "Setările se salvează cu succes"
+   },
+   "settingToClose": {
+      "message": "Setarea pentru a închide fila în modul incognito."
+   },
+   "shareYourSuggestionWithUs": {
+      "message": "Împărtășește-ne sugestiile tale.."
+   },
+   "slectDayToScheduleWeekly": {
+      "message": "Selectați zilele pentru a programa săptămânal fila."
+   },
+   "slectMinute": {
+      "message": "Selectați Minut"
+   },
+   "smthngWrng": {
+      "message": "Ceva a mers prost"
+   },
+   "softpulseInfotech": {
+      "message": "Softpulse Infotech"
+   },
+   "somethingWentWrong": {
+      "message": "Ceva a mers prost. Actualizați pagina și încercați din nou."
+   },
+   "status": {
+      "message": "Stare"
+   },
+   "subcrKeyShldNEmpt": {
+      "message": "Vă rugăm să introduceți cheia de abonament."
+   },
+   "subdomain": {
+      "message": "Subdomeniu"
+   },
+   "subkeyInputTitle": {
+      "message": "Introduceți cheia de abonament"
+   },
+   "submFeedBack": {
+      "message": "Trimiteți"
+   },
+   "suggForTbSch": {
+      "message": "Sugestie pentru planificatorul de file"
+   },
+   "suggestionAndRateUs": {
+      "message": "Sugestie &amp; Evalueaza-ne"
+   },
+   "sunday": {
+      "message": "duminică"
+   },
+   "tabCloseOneTime": {
+      "message": "Tab se va închide o singură dată"
+   },
+   "tabSchTutorial": {
+      "message": "Tutorial Scheduler Tab"
+   },
+   "tabScheduler": {
+      "message": "Planificator de file"
+   },
+   "tabSchedulerOptions": {
+      "message": "Opțiuni de planificare a filelor"
+   },
+   "tabWillOpenOneTime": {
+      "message": "Tab se va deschide o singură dată"
+   },
+   "tabWillOpenWhenBrowserOpen": {
+      "message": "Fila se va deschide când browserul se va deschide"
+   },
+   "termCondition": {
+      "message": "Termeni și condiții"
+   },
+   "thanksFrRev": {
+      "message": "Vă mulțumim pentru recenzia dvs"
+   },
+   "thnkUFeedBack": {
+      "message": "Vă mulțumesc pentru sugestie"
+   },
+   "thnkUFrUsngTbSch": {
+      "message": "Vă rugăm să ne oferiți o sugestie pentru a ne îmbunătăți"
+   },
+   "thursday": {
+      "message": "joi"
+   },
+   "time": {
+      "message": "Timp"
+   },
+   "timeExpired": {
+      "message": "Timpul a expirat"
+   },
+   "timer": {
+      "message": "Cronometru"
+   },
+   "title": {
+      "message": "Titlu"
+   },
+   "titleLengtWarn": {
+      "message": "Lungimea titlului nu trebuie să depășească 200 de caractere."
+   },
+   "toScheduledOpenTbMsg": {
+      "message": "Pentru a deschide fila programată, debifați filtrarea adreselor URL."
+   },
+   "toogleCloseTab": {
+      "message": "Porniți/Opriți alarma de programare pentru toate adresele URL ale filelor de închidere"
+   },
+   "toogleDarkmode": {
+      "message": "Comutați între modul întunecat și modul implicit pentru a vă personaliza experiența de vizionare."
+   },
+   "toogleOff": {
+      "message": "Oprit"
+   },
+   "toogleOn": {
+      "message": "Pe"
+   },
+   "toogleOpenTab": {
+      "message": "Porniți/Opriți alarma de programare pentru toate adresele URL deschise"
+   },
+   "topLevelDomain": {
+      "message": "Domeniu de nivel superior"
+   },
+   "totalProcessed": {
+      "message": "Total înregistrate procesate"
+   },
+   "tuesday": {
+      "message": "marţi"
+   },
+   "tutorialImg1": {
+      "message": "\u003Cimg src=\"../images/en/1.png\">"
+   },
+   "tutorialImg10": {
+      "message": "\u003Cimg src=\"../images/en/10.png\">"
+   },
+   "tutorialImg11": {
+      "message": "\u003Cimg src=\"../images/en/11.png\">"
+   },
+   "tutorialImg12": {
+      "message": "\u003Cimg src=\"../images/en/12.png\">"
+   },
+   "tutorialImg13": {
+      "message": "\u003Cimg src=\"../images/en/13.png\">"
+   },
+   "tutorialImg14": {
+      "message": "\u003Cimg src=\"../images/en/14.png\">"
+   },
+   "tutorialImg2": {
+      "message": "\u003Cimg src=\"../images/en/2.png\">"
+   },
+   "tutorialImg3": {
+      "message": "\u003Cimg src=\"../images/en/3.png\">"
+   },
+   "tutorialImg4": {
+      "message": "\u003Cimg src=\"../images/en/4.png\">"
+   },
+   "tutorialImg5": {
+      "message": "\u003Cimg src=\"../images/en/5.png\">"
+   },
+   "tutorialImg6": {
+      "message": "\u003Cimg src=\"../images/en/6.png\">"
+   },
+   "tutorialImg7": {
+      "message": "\u003Cimg src=\"../images/en/7.png\">"
+   },
+   "tutorialImg8": {
+      "message": "\u003Cimg src=\"../images/en/8.png\">"
+   },
+   "tutorialImg9": {
+      "message": "\u003Cimg src=\"../images/en/9.png\">"
+   },
+   "uncheckAll": {
+      "message": "Debifați Toate"
+   },
+   "unlimitedSchedule": {
+      "message": "Limită nelimitată de program"
+   },
+   "unspecifiedURL": {
+      "message": "11. URL cale nespecificată"
+   },
+   "unspecifiedURLExm1": {
+      "message": "În exemplul de mai sus, adresa URL dată este în fila de închidere, care afirmă că adresa URL dată care s-a deschis într-o filă nouă și începe și se termină cu o adresă web necunoscută va fi închisă după 5 minute."
+   },
+   "upgradePlan": {
+      "message": "Vă rugăm să cumpărați un plan SAU să vă autentificați și să vă actualizați planul pentru a debloca mai multe funcții."
+   },
+   "upgradePlanUnlock": {
+      "message": "Actualizați-vă planul pentru a debloca mai multe funcții."
+   },
+   "uploadValidFormat": {
+      "message": "Vă rugăm să încărcați un format valid"
+   },
+   "url": {
+      "message": "URL"
+   },
+   "urlContExat": {
+      "message": "Filtrare URL"
+   },
+   "urlEndWithUnspesifiedPth": {
+      "message": "9. URL-ul se termină cu o cale nespecificată"
+   },
+   "urlEndWithUnspesifiedPthExm1": {
+      "message": "În exemplul de mai sus, adresa URL dată este în fila de închidere, care afirmă că adresa URL dată care s-a deschis într-o filă nouă și se termină cu o cale necunoscută va fi închisă după 5 minute."
+   },
+   "urlFilterInfo": {
+      "message": "Conține adresa URL care este verificată, necesită doar o parte din adresa URL, iar URL-ul exact verificat trebuie să corespundă exactă cu adresa URL specificată"
+   },
+   "urlFilterinCLoseTb": {
+      "message": "14. Filtrare URL pe URL-ul filei închide"
+   },
+   "urlFilterinCLoseTbExample": {
+      "message": "În exemplul de mai sus, adresa URL dată se află în fila de închidere, care afirmă că adresa URL a filei deja deschisă se potrivește cu o parte din adresa URL dată, așa că va închide acea filă"
+   },
+   "urlIsRequired": {
+      "message": "Linkul site-ului este necesar"
+   },
+   "urlNotvalid": {
+      "message": "Adresa URL nu este validă"
+   },
+   "urlStartWithUnspesifiedPth": {
+      "message": "10. URL începe cu o cale nespecificată"
+   },
+   "urlStartWithUnspesifiedPthExm1": {
+      "message": "În exemplul de mai sus, adresa URL dată este în fila de închidere, care afirmă că adresa URL dată care s-a deschis într-o filă nouă și începe cu un subdomeniu necunoscut \u003Cb>„www”\u003C/b> sau \u003Cb>„blog”\u003C/b> va fi închisă după 5 minute."
+   },
+   "useSpecificUrl": {
+      "message": "Utilizați un link specific pentru site-ul web"
+   },
+   "useSpecificUrl1": {
+      "message": "Trebuie să fi scris subdomeniul exact, domeniul de nivel superior, numele domeniului și calea paginii în câmpul Link site în fila browserului închis."
+   },
+   "useSpecificUrl2": {
+      "message": "Folosiți toate filele închise ale browserului"
+   },
+   "useSpecificUrl3": {
+      "message": "Utilizați link-ul site-ului specific și complet"
+   },
+   "useUnSpecificUrl1": {
+      "message": "Utilizați link-ul site-ului web nespecificat"
+   },
+   "useUnSpecificUrl2": {
+      "message": "Utilizați începe cu linkul site-ului web nespecificat"
+   },
+   "useUnSpecificUrl3": {
+      "message": "Utilizați sfârșitul cu linkul site-ului web nespecificat"
+   },
+   "used": {
+      "message": "Ai folosit"
+   },
+   "validFormatCsv": {
+      "message": "Care este formatul de fișier CSV valid pentru import?"
+   },
+   "websiteLink": {
+      "message": "Link site-ul"
+   },
+   "websiteUrl": {
+      "message": "Adresa URL a site-ului web"
+   },
+   "wednesday": {
+      "message": "miercuri"
+   },
+   "weekName": {
+      "message": "Numele săptămânii"
+   },
+   "weekly": {
+      "message": "Săptămânal"
+   },
+   "whenExtensionTabAppears": {
+      "message": "Când apare fila Extensii, găsiți „Programator de file cu deschidere și închidere automată” pentru a o activa în modul Incognito și faceți clic pe butonul „Detalii” de lângă acesta."
+   },
+   "whenMenuPopup": {
+      "message": "Când apare un meniu, selectați „Gestionați extensiile”."
+   },
+   "withSignMustFill": {
+      "message": "Cu semnul \u003Cspan>*\u003C/span> trebuie să fie de umplere sau selectare, Selectați fie ora de deschidere, fie de închidere sau ambele."
+   },
+   "writeYourDescriptionAboutSchUrl": {
+      "message": "Scrieți descrierea dvs. despre adresa URL programată aici."
+   },
+   "yes": {
+      "message": "Da"
+   },
+   "yourEmailAddress": {
+      "message": "Adresa dvs. de e-mail"
+   },
+   "yourScheduleUrl": {
+      "message": "Adresa URL a programului dvs"
+   }
+}

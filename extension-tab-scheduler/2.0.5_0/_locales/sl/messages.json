@@ -1,0 +1,1448 @@
+{
+   "10_min": {
+      "message": "10 minut"
+   },
+   "1_min": {
+      "message": "1 minuta"
+   },
+   "30_min": {
+      "message": "30 minut"
+   },
+   "5_min": {
+      "message": "5 minut"
+   },
+   "60_min": {
+      "message": "uro"
+   },
+   "Dashboard": {
+      "message": "Nadzorna plošča"
+   },
+   "Login": {
+      "message": "Prijava"
+   },
+   "Off": {
+      "message": "Izključeno"
+   },
+   "On": {
+      "message": "Vklopljeno"
+   },
+   "Selected": {
+      "message": "Izbrano"
+   },
+   "Settings": {
+      "message": "nastavitve"
+   },
+   "Tutorial": {
+      "message": "Vadnica"
+   },
+   "action": {
+      "message": "Akcija"
+   },
+   "activateScheduleTab": {
+      "message": "Aktiviraj načrtovani zavihek."
+   },
+   "active": {
+      "message": "Aktiven"
+   },
+   "activeAllScheduleTab": {
+      "message": "Izvajanje načrtovalnika zavihkov"
+   },
+   "activeStatus": {
+      "message": "Stanje"
+   },
+   "actvInactvNotification": {
+      "message": "Prikaži obvestilo, ko se odpre zavihek urnika"
+   },
+   "actvInactvOpnTb": {
+      "message": "Aktiven ali neaktiven odprt zavihek"
+   },
+   "actvIntvClsTb": {
+      "message": "Aktivno ali neaktivno zapiranje zavihka"
+   },
+   "add": {
+      "message": "Dodaj"
+   },
+   "addDescription": {
+      "message": "Dodajte opis"
+   },
+   "addNew": {
+      "message": "Dodaj novo"
+   },
+   "addNewURlCls": {
+      "message": "Dodajte nov URL za zapiranje"
+   },
+   "addNewUrlToOpen": {
+      "message": "Dodajte nov URL za odpiranje v novem oknu"
+   },
+   "addTitle": {
+      "message": "Dodajte naslov"
+   },
+   "addWebsite": {
+      "message": "Dodaj spletno stran"
+   },
+   "all": {
+      "message": "Vse"
+   },
+   "allInputFieldReq": {
+      "message": "Vsa polja so obvezna"
+   },
+   "all_weeks": {
+      "message": "Ves teden"
+   },
+   "alreadyPurchase": {
+      "message": "Ste že kupili? Tukaj vnesite ključ"
+   },
+   "andAt": {
+      "message": "in pri"
+   },
+   "annually": {
+      "message": "Letno"
+   },
+   "appDesc": {
+      "message": "Zavihki brskalnika se bodo samodejno odprli in zaprli ob izbranem času. Uporabnik lahko aktivira/deaktivira seznam na podlagi zahteve"
+   },
+   "appName": {
+      "message": "Razporejevalnik zavihkov s samodejnim odpiranjem in zapiranjem"
+   },
+   "april": {
+      "message": "aprila"
+   },
+   "at": {
+      "message": "pri"
+   },
+   "august": {
+      "message": "avgusta"
+   },
+   "autoFocus": {
+      "message": "Zavihek Samodejno ostrenje"
+   },
+   "autoFocustip": {
+      "message": "Če je vklopljen, bo nov zavihek odprt v aktivnem/izostrenem stanju."
+   },
+   "autofocustip": {
+      "message": "Novi odprti zavihki bodo samodejno fokusirani"
+   },
+   "basic": {
+      "message": "Osnovno"
+   },
+   "billedAnnyally": {
+      "message": "Zaračunano letno"
+   },
+   "billedMonthly": {
+      "message": "Zaračunava se mesečno"
+   },
+   "both": {
+      "message": "Oba"
+   },
+   "browserOpen": {
+      "message": "V brskalniku Odprto"
+   },
+   "browserWebAddress": {
+      "message": "Spletni naslov brskalnika se začne in konča z neznanim spletnim naslovom. Vstavite \u003Cb>*\u003C/b> na obeh straneh vnosnega polja za povezavo do spletnega mesta."
+   },
+   "browserWebAddress2": {
+      "message": "Spletni naslov brskalnika vsebuje ime domene google.com, ki se v danih minutah zapre, ne glede na poddomeno in pot strani. Vstavite \u003Cb>*\u003C/b> na obeh straneh imena domene in TLD"
+   },
+   "browserWebAddress3": {
+      "message": "Spletni naslov brskalnika se začne z neznanim imenom domene in konča z neznano potjo strani"
+   },
+   "browserWebAddress31": {
+      "message": "se bo po danih minutah zaprl, postavite \u003Cb>*\u003C/b> na obe strani TLD"
+   },
+   "browserWebAddress4": {
+      "message": "Spletni naslov brskalnika se začne z neznanim spletnim naslovom. Vstavite \u003Cb>*\u003C/b> na začetek URL-ja. Ne pozabite, da se mora spletni naslov brskalnika ujemati z vašim URL-jem po \u003Cb>*,\u003C/b> ki ste ga napisali."
+   },
+   "browserWebAddress41": {
+      "message": "Spletni naslov brskalnika se začne z neznano poddomeno"
+   },
+   "browserWebAddress42": {
+      "message": "na začetku povezave do vašega spletnega mesta"
+   },
+   "browserWebAddress5": {
+      "message": "Spletni naslov brskalnika se konča z neznanim spletnim naslovom. Vstavite \u003Cb>*\u003C/b> na koncu vašega URL-ja. Ne pozabite, da se mora vaš spletni naslov ujemati pred \u003Cb>*,\u003C/b> ki ste ga napisali."
+   },
+   "browserWebAddress51": {
+      "message": "Spletni naslov brskalnika se konča z neznano potjo do strani. Vstavite \u003Cb>*\u003C/b> na koncu svojega spletnega naslova"
+   },
+   "browserWebAddress6": {
+      "message": "V polje za naslov spletne strani vnesite samo \u003Cb>*\u003C/b> , da zaprete vse zavihke brskalnika. Po zaprtju se vsi zavihki brskalnika samodejno zaprejo."
+   },
+   "browserWebAddress7": {
+      "message": "Morali ste napisati natančno poddomeno, domeno najvišje ravni, ime domene in pot do strani v polje URL, ki se odpre v zavihku brskalnika."
+   },
+   "browserWebAddress8": {
+      "message": "URL lahko odprete na določen datum in uro, določen mesec, določen teden, določeno leto in čas ponovitve"
+   },
+   "buyPlan": {
+      "message": "Nakupni načrt"
+   },
+   "buycofee": {
+      "message": "Kupi mi kavo"
+   },
+   "cancel": {
+      "message": "Prekliči"
+   },
+   "changeLanguage": {
+      "message": "Spremeni jezik"
+   },
+   "checkAll": {
+      "message": "Označite vse"
+   },
+   "checkThisOpToPreventClosePinTb": {
+      "message": "Označite to možnost, da preprečite zapiranje pripetih zavihkov."
+   },
+   "checkThisOptionOnlyPartOfUrlMtch": {
+      "message": "Označite to možnost, če se mora ujemati le del URL-ja."
+   },
+   "checkThisOptionToActivate": {
+      "message": "Označite to možnost, če želite aktivirati ali deaktivirati načrtovani URL."
+   },
+   "checkThisOptionToCloseOnly": {
+      "message": "Označite to možnost, če želite zapreti samo zavihke brez beleženja zgodovine. V podrobnostih razširitve omogočite tudi možnost »Dovoli v načinu brez beleženja zgodovine«. Za navodila si oglejte stran z vadnicami."
+   },
+   "checkThisOptionToCloseOnlyInIncgnitoTb": {
+      "message": "Označite to možnost, če želite zapreti samo zavihke brez beleženja zgodovine. V podrobnostih razširitve omogočite tudi možnost »Dovoli v načinu brez beleženja zgodovine«. Za navodila si oglejte stran z vadnicami."
+   },
+   "checkThisOptionToInBg": {
+      "message": "Označite to možnost, če želite URL odpreti v ozadju, ne da bi ga odprli v novem zavihku"
+   },
+   "checkThisOptionToInactivNotification": {
+      "message": "Označite to možnost za neaktivno obvestilo na načrtovanem URL-ju"
+   },
+   "checkThisOptionToOpen": {
+      "message": "Označite to možnost, če želite svoj URL odpreti v načinu brez beleženja zgodovine"
+   },
+   "checkThisOptionToOpenIncogito": {
+      "message": "Označite to možnost, če želite svoj URL odpreti v načinu brez beleženja zgodovine"
+   },
+   "checkThisOptionToPrevent": {
+      "message": "Označite to možnost, da preprečite zapiranje pripetih zavihkov."
+   },
+   "clickExtIcon": {
+      "message": "V orodni vrstici kliknite ikono »Razširitve«, ki je videti kot košček sestavljanke."
+   },
+   "clickTheSwitch": {
+      "message": "Kliknite stikalo poleg njega, da ga vklopite"
+   },
+   "close": {
+      "message": "Zapri"
+   },
+   "closeAllTab": {
+      "message": "12. Zaprite vse zavihke brskalnika"
+   },
+   "closeAllTabExm1": {
+      "message": "V zgornjem primeru je podani URL v zavihku zapri, kar navaja, da bo zaprl vse zavihke 25. 2. 2023 ob 12:00"
+   },
+   "closeDate": {
+      "message": "Zaključni datum"
+   },
+   "closeDay": {
+      "message": "Dan zaprtja"
+   },
+   "closeEveryYear": {
+      "message": "Zapri vsako leto"
+   },
+   "closeInEvery": {
+      "message": "Zapri v vsakem"
+   },
+   "closeIncognitoTab": {
+      "message": "Zapri samo zavihke brez beleženja zgodovine"
+   },
+   "closeMinute": {
+      "message": "Zapri minuto"
+   },
+   "closeOnDay": {
+      "message": "Zaprto na dan"
+   },
+   "closeOnEvery": {
+      "message": "Zapri na vsak"
+   },
+   "closeOnEveryDay": {
+      "message": "Zaprite vsak dan"
+   },
+   "closeOnEveryMonth": {
+      "message": "Zapri vsak mesec na dan"
+   },
+   "closeOnEveryWeek": {
+      "message": "Zaprite vsak teden"
+   },
+   "closeSecond": {
+      "message": "Zapri drugo"
+   },
+   "closeSeconsMoreThan5": {
+      "message": "Zaprte sekunde morajo biti več kot 5."
+   },
+   "closeTabSchedule": {
+      "message": "Zapri zavihek Razpored"
+   },
+   "closeTabURL": {
+      "message": "Zapri zavihek URL"
+   },
+   "closeTime": {
+      "message": "Zapri čas"
+   },
+   "closeUrl": {
+      "message": "Zapri povezavo do spletnega mesta"
+   },
+   "closeWeek": {
+      "message": "Zapri teden"
+   },
+   "closeWeeks": {
+      "message": "Zapri tedne"
+   },
+   "close_on": {
+      "message": "Zapri"
+   },
+   "cngrtsForSubcr": {
+      "message": "čestitke! Vaš načrt je bil uspešno aktiviran."
+   },
+   "commonQuestionsAns": {
+      "message": "Pogosta vprašanja in odgovori"
+   },
+   "copySucessClose": {
+      "message": "Podatki URL-ja za zapiranje zavihka so kopirani v podatke URL-ja za odpiranje zavihka"
+   },
+   "createNewTimer": {
+      "message": "Ustvari nov časovnik"
+   },
+   "currentPlan": {
+      "message": "Trenutni načrt"
+   },
+   "currentTabSchedule": {
+      "message": "Trenutni razpored zavihkov"
+   },
+   "currentTbScheduleTimer": {
+      "message": "Časovnik trenutnega zavihka."
+   },
+   "cusSec": {
+      "message": "Custom Second"
+   },
+   "custMin": {
+      "message": "Minuta po meri"
+   },
+   "custmMinSch": {
+      "message": "7. Minutni razpored po meri"
+   },
+   "custmMinSchExm1": {
+      "message": "V zgornjem primeru je podani URL na odprtem zavihku, kar navaja, da se dani URL odpre na novem zavihku vsakih 15 minut."
+   },
+   "custmMinSchExm2": {
+      "message": "V zgornjem primeru je dani URL v zaprtem zavihku, kar navaja, da bo dani URL, ki se je odprl v novem zavihku, zaprt po 15 minutah."
+   },
+   "customSecondWarning": {
+      "message": "Funkcionalnost sekund po meri je poskusna in morda ne bo delovala pravilno, če so sekunde nastavljene pod 60."
+   },
+   "darkMode": {
+      "message": "Temni način"
+   },
+   "datNotCopy": {
+      "message": "Nekateri podatki niso kopirani zaradi neveljavnega URL-ja."
+   },
+   "dataSaved": {
+      "message": "Podatki časovnika so uspešno shranjeni"
+   },
+   "date": {
+      "message": "Datum"
+   },
+   "dateIsOutOfRange": {
+      "message": "Datum je izven obsega"
+   },
+   "day": {
+      "message": "Dan"
+   },
+   "december": {
+      "message": "decembra"
+   },
+   "delete": {
+      "message": "Izbriši"
+   },
+   "deleteScheduleTb": {
+      "message": "Izbriši načrtovani zavihek."
+   },
+   "description": {
+      "message": "Opis"
+   },
+   "developedBy": {
+      "message": "Razvil:"
+   },
+   "doNotCloseInPinnedTabs": {
+      "message": "Ne zapirajte pripetih zavihkov"
+   },
+   "doNotShowNotification": {
+      "message": "Ne pokaži obvestila"
+   },
+   "domainName": {
+      "message": "Ime domene"
+   },
+   "downloadCloseTbSampleCsv": {
+      "message": "Prenesite vzorec CSV za zapiranje zavihka, da si ogledate primer zahtevane oblike"
+   },
+   "downloadOpenTbSampleCsv": {
+      "message": "Prenesite vzorec CSV odprtega zavihka, da si ogledate primer zahtevane oblike"
+   },
+   "editScheduleTb": {
+      "message": "Uredi načrtovani zavihek."
+   },
+   "email": {
+      "message": "E-pošta"
+   },
+   "enterDateToCloseTab": {
+      "message": "Tukaj vnesite datum, da zaprete zavihek urnika."
+   },
+   "enterDateToOpen": {
+      "message": "Vnesite datum, da odprete zavihek urnika."
+   },
+   "enterMiniutesToCloseTb": {
+      "message": "Vnesite minute, da zaprete zavihek."
+   },
+   "enterMiniutesToOpen": {
+      "message": "Vnesite minute, da odprete zavihek urnika."
+   },
+   "enterMinute": {
+      "message": "Vnesite minuto"
+   },
+   "enterSecond": {
+      "message": "Vnesite drugo"
+   },
+   "enterSecondsToCloseTab": {
+      "message": "Vnesite sekunde, da zaprete zavihek."
+   },
+   "enterSecondsToOpen": {
+      "message": "Vnesite sekunde, da odprete zavihek urnika."
+   },
+   "enterTilteOfScheduleUrl": {
+      "message": "Vnesite naslov načrtovanega URL-ja."
+   },
+   "enterTimeToCloseTab": {
+      "message": "Tukaj vnesite čas, da zaprete zavihek urnika."
+   },
+   "enterTimeToSchedule": {
+      "message": "Vnesite čas, da odprete zavihek urnika."
+   },
+   "enterValidEmail": {
+      "message": "Vnesite veljaven e-poštni naslov"
+   },
+   "enterValidUrl": {
+      "message": "Vnesite veljaven URL"
+   },
+   "enterValueInCloseSec": {
+      "message": "Vnesite vrednost v nekaj sekundah"
+   },
+   "enterValueInOpenCloseSec": {
+      "message": "Vnesite vrednost v odprtih ali zaprtih sekundah"
+   },
+   "enterValueInOpenMinutes": {
+      "message": "Vnesite vrednost v odprtih minutah"
+   },
+   "enterVlaueInCloseMinutes": {
+      "message": "Vnesite vrednost v bližnjih minutah"
+   },
+   "enterVlaueInOpenCloseMin": {
+      "message": "Vnesite vrednost v minutah odprtja ali zaprtja"
+   },
+   "enterVlaueInOpenSeconds": {
+      "message": "Vnesite vrednost v odprtih sekundah"
+   },
+   "enterYourURLToSchedule": {
+      "message": "Vnesite svoj URL za razpored."
+   },
+   "every": {
+      "message": "vsak"
+   },
+   "every10Min": {
+      "message": "Vsakih 10 minut"
+   },
+   "every1Minute": {
+      "message": "vsako 1 minuto"
+   },
+   "every30Min": {
+      "message": "Vsakih 30 minut"
+   },
+   "every5Min": {
+      "message": "Vsakih 5 minut"
+   },
+   "everyDay": {
+      "message": "Vsak dan"
+   },
+   "everyDayAt": {
+      "message": "vsak dan ob"
+   },
+   "everyHour": {
+      "message": "Vsako uro"
+   },
+   "everyMinute": {
+      "message": "Vsako minuto"
+   },
+   "everyMonth": {
+      "message": "Vsak mesec"
+   },
+   "everyMonthOn": {
+      "message": "vsak mesec naprej"
+   },
+   "everyMonthOnDay": {
+      "message": "vsak mesec na dan"
+   },
+   "everyWeek": {
+      "message": "Vsak teden"
+   },
+   "everyWeekOn": {
+      "message": "vsak teden naprej"
+   },
+   "everyYear": {
+      "message": "Vsako leto"
+   },
+   "everyYesrOn": {
+      "message": "vsako leto naprej"
+   },
+   "evr10MinSch": {
+      "message": "2.Urnik vsakih 10 minut"
+   },
+   "evr10MinSchExm1": {
+      "message": "V zgornjem primeru je dani URL na odprtem zavihku, kar navaja, da se bo dani URL odprl v novem zavihku vsakih 10 minut."
+   },
+   "evr10MinSchExm2": {
+      "message": "V zgornjem primeru je dani URL v zaprtem zavihku, kar navaja, da bo dani URL, ki se je odprl v novem zavihku, zaprt po 10 minutah."
+   },
+   "evrDaySch": {
+      "message": "3. Urnik za vsak dan"
+   },
+   "evrDaySchExm1": {
+      "message": "V zgornjem primeru je podani URL v odprtem zavihku, kar navaja, da se bo odprl v novem zavihku vsak dan ob 17:27"
+   },
+   "evrDaySchExm2": {
+      "message": "V zgornjem primeru je dani URL v zaprtem zavihku, kar pomeni, da bo zaprl že odprt zavihek vsak dan ob 17:27"
+   },
+   "evrMonthSch": {
+      "message": "5. Vsak mesec urnik"
+   },
+   "evrMonthSchExm1": {
+      "message": "V zgornjem primeru je podani URL v odprtem zavihku, ki pravi, da se bo odprl v novem zavihku vsak mesec ob 13:45 na 25. dan"
+   },
+   "evrMonthSchExm2": {
+      "message": "V zgornjem primeru je dani URL v zaprtem zavihku, kar navaja, da bo zaprl že odprt zavihek vsak mesec ob 13:45 na 25. dan"
+   },
+   "evrWeekSch": {
+      "message": "4. Vsak teden urnik"
+   },
+   "evrWeekSchExm1": {
+      "message": "V zgornjem primeru je dani URL v odprtem zavihku, ki navaja, da se bo odprl v novem zavihku vsak teden ob 17:00 v \u003Cb>ponedeljek in torek\u003C/b> ."
+   },
+   "evrWeekSchExm2": {
+      "message": "V zgornjem primeru je dani URL v zavihku zapiranje, ki navaja, da bo zaprl že odprt zavihek vsak teden ob 17:00 v \u003Cb>ponedeljek in torek\u003C/b> ."
+   },
+   "evrWeekSchExm3": {
+      "message": "V zgornjem primeru lahko v tedenskem časovniku izberete več dni."
+   },
+   "evrYearSch": {
+      "message": "6. Vsako leto urnik"
+   },
+   "evrYearSchExm1": {
+      "message": "V zgornjem primeru je navedeni URL v odprtem zavihku, kar navaja, da se bo odprl v novem zavihku vsako leto 1. januarja ob 13:35"
+   },
+   "evrYearSchExm2": {
+      "message": "V zgornjem primeru je dani URL v zaprtem zavihku, kar pomeni, da bo zaprl že odprt zavihek vsako leto 1. januarja ob 13:35"
+   },
+   "exampleSort": {
+      "message": "npr"
+   },
+   "exdMaxLim": {
+      "message": "Preseženo največje dovoljeno število naprav!"
+   },
+   "exmpOpnClsTbSch": {
+      "message": "Primer odpiranja in zapiranja zavihka v razporejevalniku zavihkov"
+   },
+   "expLicKy": {
+      "message": "Ta licenčni ključ je potekel."
+   },
+   "export": {
+      "message": "Izvozi"
+   },
+   "exportBefore": {
+      "message": "imaš\u003Cexday>\u003C/exday>preostalih dni, naročite se, če želite še naprej uživati ​​v vrhunski funkciji"
+   },
+   "exportClsTbDta": {
+      "message": "Izvoz podatkov za zapiranje zavihka"
+   },
+   "exportOpenTbDt": {
+      "message": "Izvoz podatkov odprtih zavihkov"
+   },
+   "exportedData": {
+      "message": "Podatki časovnika so bili uspešno izvoženi"
+   },
+   "extensionShouldAble": {
+      "message": "Zdaj bi morala razširitev imeti možnost zapiranja zavihkov v načinu brez beleženja zgodovine."
+   },
+   "faq": {
+      "message": "pogosta vprašanja"
+   },
+   "faq_1": {
+      "message": "Kaj je razporejevalnik zavihkov s samodejnim odpiranjem in zapiranjem?"
+   },
+   "faq_10": {
+      "message": "Kako si ogledam svoje načrtovane zavihke?"
+   },
+   "faq_11": {
+      "message": "Ali je obvezno izpolniti čas odprtja in časa zaprtja?"
+   },
+   "faq_12": {
+      "message": "Kaj počnejo funkcije zavihka Auto Focus, Activate All Scheduled Tabs in Power Mode?"
+   },
+   "faq_13": {
+      "message": "Ali lahko odprem/zaprem načrtovano povezavo do spletnega mesta v zavihku brez beleženja zgodovine?"
+   },
+   "faq_14": {
+      "message": "Kakšna je uporaba zavihka Osveži, če je URL že odprt?"
+   },
+   "faq_2": {
+      "message": "Kakšna je uporaba povezave do spletnega mesta?"
+   },
+   "faq_3": {
+      "message": "Kako razporedim URL z razporejevalnikom zavihkov?"
+   },
+   "faq_4": {
+      "message": "Kaj je možnost »Odpri URL v ozadju«?"
+   },
+   "faq_5": {
+      "message": "Ali lahko razširitvi preprečim zapiranje pripetih zavihkov?"
+   },
+   "faq_6": {
+      "message": "Kaj pomeni vrsta razporeda »Oboje«?"
+   },
+   "faq_7": {
+      "message": "Kako deluje funkcija 'URL Filtering'?"
+   },
+   "faq_8": {
+      "message": "Ali lahko deaktiviram načrtovani zavihek, ne da bi ga izbrisal?"
+   },
+   "faq_9": {
+      "message": "Ali bom prejemal obvestila za načrtovane zavihke?"
+   },
+   "faq_a_1": {
+      "message": "\u003Cp>Razporejevalnik zavihkov s samodejnim odpiranjem in zapiranjem je razširitev brskalnika, ki uporabnikom omogoča, da načrtujejo samodejno odpiranje in zapiranje zavihkov ob določenem času. Uporabniki lahko izberejo enkratni urnik ali nastavijo ponavljajoče se urnike z različnimi možnostmi frekvence. Ta razširitev ima več namenov za uporabnike in ponuja številne funkcije, ki so vam v pomoč.\u003C/p>"
+   },
+   "faq_a_10": {
+      "message": "Vsi načrtovani zavihki so prikazani na seznamu, ki prikazuje naslov, povezavo do spletnega mesta, čas odprtja in zaprtja, stanje in dejanja, ki jih lahko izvedete (npr. aktiviranje, urejanje, brisanje)."
+   },
+   "faq_a_11": {
+      "message": "Ne, načrtujete lahko odprti ali zaprti čas. Vendar pa morate izpolniti ali izbrati zahtevana polja, označena z zvezdico (*)."
+   },
+   "faq_a_12": {
+      "message": "Zavihek s samodejnim fokusom zagotavlja, da ko se odpre načrtovani zavihek, vam možnost Aktiviraj vse načrtovane zavihke omogoča hiter vklop vseh načrtovanih zavihkov z enim klikom. Power Mode optimizira delovanje razširitve z učinkovitejšim upravljanjem virov brskalnika."
+   },
+   "faq_a_13": {
+      "message": "Da, načrtovani zavihek lahko odprete v načinu brez beleženja zgodovine, tako da izberete možnost »Odpri v načinu brez beleženja zgodovine«. Izberete lahko, da zaprete samo zavihke brez beleženja zgodovine, tako da izberete možnost »Zapri samo zavihke brez beleženja zgodovine«, če je v nastavitvah razširitve omogočeno »Dovoli v načinu brez beleženja zgodovine«."
+   },
+   "faq_a_14": {
+      "message": "Ko je ta možnost omogočena, bo razširitev samodejno osvežila obstoječi zavihek, če je isti URL že odprt v vašem brskalniku. To preprečuje odpiranje podvojenih zavihkov in zagotavlja, da imate vedno naloženo najnovejšo različico strani."
+   },
+   "faq_a_14_1": {
+      "message": "Če poskušate odpreti https://github.com/ in je že odprt v drugem zavihku, bo razširitev preprosto osvežila ta zavihek, namesto da bi odprla novega."
+   },
+   "faq_a_14_2": {
+      "message": "Če je https://github.com/ že odprt v treh zavihkih, bo razširitev osvežila vse tri zavihke."
+   },
+   "faq_a_2": {
+      "message": "Povezava do spletnega mesta je naslov spletnega mesta odprtega zavihka vašega brskalnika. Spodaj je opisano, kako lahko uporabite naslov spletne strani."
+   },
+   "faq_a_3": {
+      "message": "Če želite razporediti URL, vnesite povezavo do spletnega mesta, dajte urniku naslov, izberite pogostost (Enkrat, Vsako minuto, Dnevno itd.) in izberite čas odprtja in zaprtja. Določite lahko tudi datum, dan ali sekunde za odpiranje in zapiranje zavihka."
+   },
+   "faq_a_4": {
+      "message": "\u003Cp>Ta možnost vam omogoča popoln nadzor, da načrtujete odpiranje URL-ja v ozadju, ne da bi bil v fokusu nov zavihek. URL se bo tiho odprl, medtem ko boste nadaljevali z delom na drugih zavihkih. To je še posebej uporabno, ko morate brskalnik pridobiti podatke iz načrtovanega URL-ja, ne da bi jih aktivno prikazal, na primer v primeru zahteve GET API.\u003C/p>\u003Cbr> \u003Cp>Na primer, če želite redno pridobivati ​​podatke iz končne točke API-ja ob določenem času, lahko uporabite to učinkovito možnost za zagon zahteve v ozadju, ne da bi odprli nov viden zavihek.\u003C/p>"
+   },
+   "faq_a_5": {
+      "message": "Da, obstaja možnost, da preprečite zapiranje pripetih zavihkov. Označite možnost »Ne zapri pripetih zavihkov«, da zagotovite, da ti zavihki ostanejo odprti, tudi če izpolnjujejo druge kriterije zapiranja."
+   },
+   "faq_a_6": {
+      "message": "Vrsta razporeda »Oboje« vam omogoča popoln nadzor nad tem, kdaj se zavihek odpre in zapre, kar vam omogoča, da nastavite točno določen čas za obe dejanji."
+   },
+   "faq_a_7": {
+      "message": "Filtriranje URL-jev zagotavlja, da se mora samo določen del URL-ja ujemati, da se izvede načrtovano dejanje. To je uporabno, če želite avtomatizirati določena dejanja na podlagi delnih ujemanj URL-jev. Če na primer označite možnost filtriranja URL-jev za URL https://example.com/page, bo to veljalo tudi za URL-je, kot sta https://example.com/page/123, https://example.com/ page?query=example in https://subdomain.example.com/page."
+   },
+   "faq_a_8": {
+      "message": "Z možnostjo »Aktiviraj ta načrtovani zavihek« lahko enostavno aktivirate ali deaktivirate načrtovane zavihke, kar vam daje prilagodljivost pri upravljanju vaših urnikov, ne da bi pri tem izgubili konfiguracije."
+   },
+   "faq_a_9": {
+      "message": "Privzeto boste prejemali obvestila. Če pa raje ustavite obvestila, lahko označite možnost »Ne prikaži obvestila«, da jih onemogočite."
+   },
+   "february": {
+      "message": "februar"
+   },
+   "filterTips": {
+      "message": "Filter velja za 'https://' ali 'www.', npr. 'github.com'"
+   },
+   "for_exp": {
+      "message": "Na primer"
+   },
+   "freeForever": {
+      "message": "Brezplačno za vedno"
+   },
+   "freeSchedule": {
+      "message": "prost urnik"
+   },
+   "freeTral": {
+      "message": "Kot cenjen prvi uporabnik boste uživali\u003Crday>120\u003C/rday>dni brezplačnega dostopa, preden preklopite na naš novi plačljivi paket – hvala za vašo nadaljnjo podporo!\u003Cp class=\"p-t-5\">imaš\u003Cb>\u003Cspan>\u003C/span>\u003C/b>preostalih dni od vašega\u003Crday>120\u003C/rday>- prosti dan.\u003Cafex class=\"warning\">\u003Cafex>\u003C/afex>\u003C/afex>\u003C/p> "
+   },
+   "frequentlyAskedQuestions": {
+      "message": "Pogosta vprašanja"
+   },
+   "friday": {
+      "message": "Petek"
+   },
+   "getThisPlan": {
+      "message": "Pridobite ta načrt"
+   },
+   "goToSettingsPageToSchedule": {
+      "message": "Pojdite na stran z nastavitvami, da razporedite odpiranje in zapiranje URL-jev."
+   },
+   "goURL": {
+      "message": "Pojdite na URL"
+   },
+   "helpAccordion12": {
+      "message": "Ali ta razširitev deluje v načinu spanja/začasne zaustavitve?"
+   },
+   "helpAccordion3": {
+      "message": "Ali lahko načrtujem odpiranje zavihka v načinu brez beleženja zgodovine?"
+   },
+   "helpAccordion6": {
+      "message": "Kaj je \"Čas je potekel\"?"
+   },
+   "helpAccordion7": {
+      "message": "Ali lahko izvozim načrtovan URL?"
+   },
+   "helpAccordion8": {
+      "message": "Ali lahko uvozim v URL urnika?"
+   },
+   "helpPanelBodyDesc12First": {
+      "message": "Ne, ta razširitev ne bo delovala v načinu mirovanja/začasne zaustavitve."
+   },
+   "helpPanelBodyDesc12Second": {
+      "message": "Če je kateri koli URL načrtovan v odprtem ali zaprtem zavihku, vaš računalnik ne bo samodejno preklopil v način spanja ali zaustavitve."
+   },
+   "helpPanelBodyDesc3": {
+      "message": "Da, načrtovani zavihek lahko odprete v načinu brez beleženja zgodovine, tako da izberete možnost »Odpri v načinu brez beleženja zgodovine«. Prepričajte se, da je možnost razširitve »Dovoli v načinu brez beleženja zgodovine« omogočena v nastavitvah razširitve brskalnika."
+   },
+   "helpPanelBodyDesc6": {
+      "message": "- Navedeni datum in čas sta preskočena s trenutnega datuma in časa, nato pa se prikaže besedilo »Čas je potekel«."
+   },
+   "helpPanelBodyDesc7": {
+      "message": "Da, URL že načrtovanega odprtega zavihka in zaprtega zavihka lahko izvozite v obliki csv in ga uporabite z drugim sistemom za uvoz tega URL-ja."
+   },
+   "helpPanelBodyDesc8": {
+      "message": "Da, uvozite lahko veljaven URL za odpiranje in zapiranje v formatu csv. Uvoženi format csv bo samodejno razporejen ob določenem času"
+   },
+   "herAreStepsToAllow": {
+      "message": "Tukaj so koraki za »Dovoli v načinu brez beleženja zgodovine« v brskalniku Google Chrome:"
+   },
+   "home": {
+      "message": "domov"
+   },
+   "hour_minute_close": {
+      "message": "Vsako uro Zapri Minuto"
+   },
+   "hour_minute_open": {
+      "message": "Vsako uro Odprta minuta"
+   },
+   "how_to_use_tab": {
+      "message": "Kako uporabljati razporejevalnik zavihkov?"
+   },
+   "import": {
+      "message": "Uvozi"
+   },
+   "importClsTbDta": {
+      "message": "Uvozi podatke za zapiranje zavihka"
+   },
+   "importExport": {
+      "message": "Uvoz/izvoz"
+   },
+   "importOpenTbDt": {
+      "message": "Uvoz podatkov odprtih zavihkov"
+   },
+   "importedRecored": {
+      "message": ", uvoženo posneto"
+   },
+   "inactivateScheduleTab": {
+      "message": "Deaktiviraj načrtovani zavihek."
+   },
+   "inactive": {
+      "message": "Neaktiven"
+   },
+   "inactiveSch": {
+      "message": "8. Neaktiven URL"
+   },
+   "inactiveSchExm1": {
+      "message": "V zgornjem primeru je dani URL na odprtem ali zaprtem zavihku, kar navaja, da je dani URL neaktiven in ne bo izvedel nobenega dejanja."
+   },
+   "inactiveThisScheduledTabs": {
+      "message": "Aktivirajte ta načrtovani zavihek"
+   },
+   "invalidDuplicate": {
+      "message": ", podvojeno ali neveljavno posneto"
+   },
+   "invldLicKy": {
+      "message": "Neveljaven licenčni ključ!"
+   },
+   "isClose": {
+      "message": "je blizu"
+   },
+   "isOpen": {
+      "message": "je odprta"
+   },
+   "january": {
+      "message": "januar"
+   },
+   "july": {
+      "message": "julija"
+   },
+   "june": {
+      "message": "junija"
+   },
+   "licKeyDis": {
+      "message": "Ta licenčni ključ je onemogočen."
+   },
+   "listTitle": {
+      "message": "Razporejevalnik zavihkov"
+   },
+   "loading": {
+      "message": "prosim počakajte ..."
+   },
+   "locale": {
+      "message": "en"
+   },
+   "march": {
+      "message": "marec"
+   },
+   "maxSchedule": {
+      "message": "4 Največja omejitev urnika"
+   },
+   "may": {
+      "message": "maja"
+   },
+   "mintValid": {
+      "message": "Zahtevana je najmanj 1 minuta"
+   },
+   "minute": {
+      "message": "minuta"
+   },
+   "minutesNotLessThan1": {
+      "message": "Minute ne smejo biti krajše od 1."
+   },
+   "monday": {
+      "message": "ponedeljek"
+   },
+   "month": {
+      "message": "mesec"
+   },
+   "monthly": {
+      "message": "Mesečno"
+   },
+   "more": {
+      "message": "več"
+   },
+   "mostSubscribe": {
+      "message": "Večina Naročite se"
+   },
+   "no": {
+      "message": "št"
+   },
+   "noDataToExport": {
+      "message": "Ni podatkov za izvoz."
+   },
+   "noScheduledTabs": {
+      "message": "Ni načrtovanih zavihkov"
+   },
+   "noTimerSetAddNewTimer": {
+      "message": "Časovnik ni nastavljen, kliknite gumb Dodaj, da nastavite nov časovnik"
+   },
+   "not_show_tutorial": {
+      "message": "Te vadnice ne pokaži več"
+   },
+   "notificationOpenTab": {
+      "message": "13. Obvestilo o odpiranju/zapiranju zavihka URL"
+   },
+   "notificationOpenTabExm1": {
+      "message": "V zgornjem primeru je podani URL v odprtem zavihku, kar navaja, da bo vsakih 5 minut poslal obvestilo in odprl/zaprl URL v novem zavihku."
+   },
+   "notifications": {
+      "message": "Obvestilo"
+   },
+   "november": {
+      "message": "novembra"
+   },
+   "october": {
+      "message": "oktobra"
+   },
+   "onTheExtensionDetailPage": {
+      "message": "Na strani s podrobnostmi o razširitvi se pomaknite navzdol in poiščite možnost »Dovoli v načinu brez beleženja zgodovine«."
+   },
+   "oneTime": {
+      "message": "One Time"
+   },
+   "oneTmSch": {
+      "message": "1. Enkratni urnik"
+   },
+   "oneTmSchExm1": {
+      "message": "V zgornjem primeru je podani URL v odprtem zavihku, kar navaja, da se bo odprl v novem zavihku Enkrat ob 13:45 21. 1. 2023"
+   },
+   "oneTmSchExm2": {
+      "message": "V zgornjem primeru je podani URL v zavihku Zapri, kar navaja, da bo zaprl vse določene zavihke URL-jev, ki se ujemajo, ob 13:45 dne 21. 1. 2023"
+   },
+   "open": {
+      "message": "Odpri"
+   },
+   "openBackground": {
+      "message": "Če da, nalaganje URL-ja v ozadju, ne da bi ga odprli v novem zavihku"
+   },
+   "openDate": {
+      "message": "Odprti datum"
+   },
+   "openDay": {
+      "message": "Dan odprtih vrat"
+   },
+   "openEveryDayOn": {
+      "message": "Odprto vsak dan"
+   },
+   "openEveryMonthOn": {
+      "message": "Odprto vsak mesec na dan"
+   },
+   "openEveryWeekOn": {
+      "message": "Odprto vsak teden"
+   },
+   "openEveryYearOn": {
+      "message": "Odprto vsako leto"
+   },
+   "openGoogleChrome": {
+      "message": "Odprite Google Chrome."
+   },
+   "openInBackground": {
+      "message": "Odpri URL v ozadju"
+   },
+   "openInEvery": {
+      "message": "Odprto v vsakem"
+   },
+   "openInIncognito": {
+      "message": "Odpri v načinu brez beleženja zgodovine"
+   },
+   "openMinute": {
+      "message": "Odprta minuta"
+   },
+   "openOnDay": {
+      "message": "Odprto na dan"
+   },
+   "openOnEvery": {
+      "message": "Odprto na vsak"
+   },
+   "openSecond": {
+      "message": "Odprto drugo"
+   },
+   "openSecondsMoreThan5": {
+      "message": "Odprte sekunde morajo biti več kot 5."
+   },
+   "openTabSchedule": {
+      "message": "Odprite zavihek Razpored"
+   },
+   "openTabURL": {
+      "message": "Odpri zavihek URL"
+   },
+   "openTime": {
+      "message": "Odprti čas"
+   },
+   "openUrl": {
+      "message": "Odprite povezavo do spletnega mesta"
+   },
+   "openWeek": {
+      "message": "Teden odprtih vrat"
+   },
+   "openWeeks": {
+      "message": "Tedni odprtih vrat"
+   },
+   "open_on": {
+      "message": "Odpri naprej"
+   },
+   "optional": {
+      "message": "Neobvezno"
+   },
+   "or": {
+      "message": "oz"
+   },
+   "outof": {
+      "message": "izven"
+   },
+   "pagePath": {
+      "message": "Pot strani"
+   },
+   "paidFeature": {
+      "message": "Plačljiva funkcija"
+   },
+   "pauseSchedule": {
+      "message": "Začnite ali ustavite vse urnike"
+   },
+   "pauseTabScheduler": {
+      "message": "Zaustavljen razporejevalnik zavihkov"
+   },
+   "pleaseAllowIncognitoMessage": {
+      "message": "V podrobnostih razširitve omogočite možnost »Dovoli v načinu brez beleženja zgodovine«. Za navodila si oglejte stran z vadnicami."
+   },
+   "pleaseShareYourSuggestions": {
+      "message": "Prosimo, delite svoj predlog."
+   },
+   "plsShreAnySugWithUs": {
+      "message": "Prosimo, dajte predlog, da bi nas izboljšali"
+   },
+   "powerMode": {
+      "message": "Način napajanja"
+   },
+   "premium": {
+      "message": "Premium"
+   },
+   "pricePlan": {
+      "message": "Cene in načrti"
+   },
+   "privcyPolicy": {
+      "message": "Politika zasebnosti"
+   },
+   "prowerModeTip": {
+      "message": "Naj bo sistem vedno aktiven, tako da omogočite Power Mode"
+   },
+   "put": {
+      "message": "Postavite"
+   },
+   "rateUs": {
+      "message": "Ocenite nas"
+   },
+   "removeDuplicateEntry": {
+      "message": "Odstranite podvojen vnos"
+   },
+   "removeOpenTbURL": {
+      "message": "Odstrani URL odprtega zavihka"
+   },
+   "repeat": {
+      "message": "ponovi"
+   },
+   "requiredMsg": {
+      "message": "Obvezno"
+   },
+   "rmvClsTb": {
+      "message": "Odstrani URL za zapiranje zavihka"
+   },
+   "sameTabs": {
+      "message": "Osveži zavihek, če je URL že odprt"
+   },
+   "sameTabsInfo": {
+      "message": "Preprečite odpiranje več zavihkov za isti URL. Na primer, če je www.google.com že odprt, se ta obstoječi zavihek osveži, namesto da se zanj odpre nov zavihek."
+   },
+   "sampleCsvOpenPath": {
+      "message": "../sample_csv/en/open_tab_sample.csv"
+   },
+   "sampleFile": {
+      "message": "Vzorčna datoteka"
+   },
+   "saturday": {
+      "message": "sobota"
+   },
+   "savOpnData": {
+      "message": "Shrani podatke odprtega zavihka"
+   },
+   "save": {
+      "message": "Shrani"
+   },
+   "saveClsTbData": {
+      "message": "Shrani podatke za zapiranje zavihka"
+   },
+   "saveSchedule": {
+      "message": "Shrani urnik"
+   },
+   "scheduleCloseTab": {
+      "message": "Razpored Zapri zavihek"
+   },
+   "scheduleCurrentTab": {
+      "message": "Razporedi trenutni zavihek"
+   },
+   "scheduleOpenTab": {
+      "message": "Razpored Odpri zavihek"
+   },
+   "scheduledTabIsAlreadyExistWithSameTimer": {
+      "message": "Ta načrtovani zavihek že obstaja z istim časovnikom."
+   },
+   "scheduledTabList": {
+      "message": "Seznam načrtovanih zavihkov"
+   },
+   "scheduledType": {
+      "message": "Vrsta urnika"
+   },
+   "search": {
+      "message": "Iskanje"
+   },
+   "secValid": {
+      "message": "Zahteva se najmanj 5 sekund"
+   },
+   "second": {
+      "message": "drugič"
+   },
+   "selectCloseDate": {
+      "message": "Izberite datum zaključka"
+   },
+   "selectCloseDay": {
+      "message": "Izberite dan zaprtja"
+   },
+   "selectCloseTime": {
+      "message": "Izberite čas zaprtja"
+   },
+   "selectColumn": {
+      "message": "Izberite stolpec"
+   },
+   "selectDateAndTime": {
+      "message": "Izberite datum in čas, da odprete nov zavihek"
+   },
+   "selectDateAndTimeClsTb": {
+      "message": "Izberite datum in uro, da zaprete zavihek"
+   },
+   "selectDayToCloseSchTb": {
+      "message": "Izberite dan, da zaprete zavihek urnika."
+   },
+   "selectDayToClsTb": {
+      "message": "Izberite dan za zapiranje zavihka"
+   },
+   "selectDayToSchdule": {
+      "message": "Izberite dan za zavihek urnika."
+   },
+   "selectDaysInWeek": {
+      "message": "Izberite dneve v tednu"
+   },
+   "selectDaysInWeekIClsTime": {
+      "message": "Izberite dneve v tednu v zaprtem časovniku."
+   },
+   "selectDaysInWeekIOpClsTime": {
+      "message": "Izberite dneve v tednu v odprtem ali zaprtem časovniku."
+   },
+   "selectDaysInWeekIOpTime": {
+      "message": "Izberite dneve v tednu v odprtem časovniku."
+   },
+   "selectFrequency": {
+      "message": "Izberite Pogostost"
+   },
+   "selectFrequencyOfScheduleUrl": {
+      "message": "Izberite pogostost načrtovanega URL-ja."
+   },
+   "selectOpenDate": {
+      "message": "Izberite datum odprtja"
+   },
+   "selectOpenDay": {
+      "message": "Izberite dan odprtih vrat"
+   },
+   "selectOpenOrClose": {
+      "message": "Izberite čas odprtja in zaprtja"
+   },
+   "selectOpenOrCloseDate": {
+      "message": "Izberite datum odprtja in zaključka"
+   },
+   "selectOpenOrCloseDay": {
+      "message": "Izberite dan odprtja in zaprtja"
+   },
+   "selectOpenTime": {
+      "message": "Izberite odprti čas"
+   },
+   "selectPreferredLanguage": {
+      "message": "Izberite želeni jezik."
+   },
+   "selectToOpenTab": {
+      "message": "Izberite dan, da odprete nov zavihek"
+   },
+   "selectTypTimerClsTb": {
+      "message": "Izberite vrsto časovnika za zapiranje zavihka"
+   },
+   "selectTypeOfSchedule": {
+      "message": "Izberite vrsto urnika, če želite odpreti in zapreti, izberite \"Oboje\"."
+   },
+   "selectTypeOfTimer": {
+      "message": "Izberite vrsto časovnika, da odprete nov zavihek"
+   },
+   "select_weeks": {
+      "message": "Izberite Tedni"
+   },
+   "september": {
+      "message": "septembra"
+   },
+   "settingSave": {
+      "message": "Nastavitve so uspešno shranjene"
+   },
+   "settingToClose": {
+      "message": "Nastavitev zapiranja zavihka v načinu brez beleženja zgodovine."
+   },
+   "shareYourSuggestionWithUs": {
+      "message": "Delite svoje predloge z nami.."
+   },
+   "slectDayToScheduleWeekly": {
+      "message": "Izberite dneve za tedenski razpored zavihka."
+   },
+   "slectMinute": {
+      "message": "Izberite Minuta"
+   },
+   "smthngWrng": {
+      "message": "Nekaj ​​je šlo narobe"
+   },
+   "softpulseInfotech": {
+      "message": "Softpulse Infotech"
+   },
+   "somethingWentWrong": {
+      "message": "Nekaj ​​je šlo narobe. Osvežite stran in poskusite znova."
+   },
+   "status": {
+      "message": "Stanje"
+   },
+   "subcrKeyShldNEmpt": {
+      "message": "Vnesite naročniški ključ."
+   },
+   "subdomain": {
+      "message": "Poddomena"
+   },
+   "subkeyInputTitle": {
+      "message": "Vnesite naročniški ključ"
+   },
+   "submFeedBack": {
+      "message": "Predloži"
+   },
+   "suggForTbSch": {
+      "message": "Predlog za razporejevalnik zavihkov"
+   },
+   "suggestionAndRateUs": {
+      "message": "Predlagajte in ocenite nas"
+   },
+   "sunday": {
+      "message": "nedelja"
+   },
+   "tabCloseOneTime": {
+      "message": "Zavihek se zapre samo enkrat"
+   },
+   "tabSchTutorial": {
+      "message": "Vadnica za razporejevalnik zavihkov"
+   },
+   "tabScheduler": {
+      "message": "Razporejevalnik zavihkov"
+   },
+   "tabSchedulerOptions": {
+      "message": "Možnosti razporejevalnika zavihkov"
+   },
+   "tabWillOpenOneTime": {
+      "message": "Zavihek se bo odprl samo enkrat"
+   },
+   "tabWillOpenWhenBrowserOpen": {
+      "message": "Zavihek se odpre, ko se odpre brskalnik"
+   },
+   "termCondition": {
+      "message": "Pogoji in določila"
+   },
+   "thanksFrRev": {
+      "message": "Hvala za vašo oceno"
+   },
+   "thnkUFeedBack": {
+      "message": "Hvala za vaš predlog"
+   },
+   "thnkUFrUsngTbSch": {
+      "message": "Prosimo, dajte predlog, da bi nas izboljšali"
+   },
+   "thursday": {
+      "message": "četrtek"
+   },
+   "time": {
+      "message": "Čas"
+   },
+   "timeExpired": {
+      "message": "Čas je potekel"
+   },
+   "timer": {
+      "message": "Časovnik"
+   },
+   "title": {
+      "message": "Naslov"
+   },
+   "titleLengtWarn": {
+      "message": "Dolžina naslova ne sme presegati 200 znakov."
+   },
+   "toScheduledOpenTbMsg": {
+      "message": "Če želite načrtovati odprt zavihek, počistite polje za filtriranje URL-jev."
+   },
+   "toogleCloseTab": {
+      "message": "Zaženite/ustavite urnik alarma za vse URL-je zaprtih zavihkov"
+   },
+   "toogleDarkmode": {
+      "message": "Preklapljajte med temnim in privzetim načinom, da prilagodite svojo izkušnjo gledanja."
+   },
+   "toogleOff": {
+      "message": "Izključeno"
+   },
+   "toogleOn": {
+      "message": "Vklopljeno"
+   },
+   "toogleOpenTab": {
+      "message": "Zaženite/ustavite urnik alarma za URL vseh odprtih zavihkov"
+   },
+   "topLevelDomain": {
+      "message": "Domena najvišje ravni"
+   },
+   "totalProcessed": {
+      "message": "Skupno posneto obdelano"
+   },
+   "tuesday": {
+      "message": "torek"
+   },
+   "tutorialImg1": {
+      "message": "\u003Cimg src=\"../images/en/1.png\">"
+   },
+   "tutorialImg10": {
+      "message": "\u003Cimg src=\"../images/en/10.png\">"
+   },
+   "tutorialImg11": {
+      "message": "\u003Cimg src=\"../images/en/11.png\">"
+   },
+   "tutorialImg12": {
+      "message": "\u003Cimg src=\"../images/en/12.png\">"
+   },
+   "tutorialImg13": {
+      "message": "\u003Cimg src=\"../images/en/13.png\">"
+   },
+   "tutorialImg14": {
+      "message": "\u003Cimg src=\"../images/en/14.png\">"
+   },
+   "tutorialImg2": {
+      "message": "\u003Cimg src=\"../images/en/2.png\">"
+   },
+   "tutorialImg3": {
+      "message": "\u003Cimg src=\"../images/en/3.png\">"
+   },
+   "tutorialImg4": {
+      "message": "\u003Cimg src=\"../images/en/4.png\">"
+   },
+   "tutorialImg5": {
+      "message": "\u003Cimg src=\"../images/en/5.png\">"
+   },
+   "tutorialImg6": {
+      "message": "\u003Cimg src=\"../images/en/6.png\">"
+   },
+   "tutorialImg7": {
+      "message": "\u003Cimg src=\"../images/en/7.png\">"
+   },
+   "tutorialImg8": {
+      "message": "\u003Cimg src=\"../images/en/8.png\">"
+   },
+   "tutorialImg9": {
+      "message": "\u003Cimg src=\"../images/en/9.png\">"
+   },
+   "uncheckAll": {
+      "message": "Odkljukajte vse"
+   },
+   "unlimitedSchedule": {
+      "message": "Neomejena omejitev urnika"
+   },
+   "unspecifiedURL": {
+      "message": "11. URL nedoločena pot"
+   },
+   "unspecifiedURLExm1": {
+      "message": "V zgornjem primeru je dani URL v zaprtem zavihku, kar navaja, da bo dani URL, ki se je odprl v novem zavihku ter se začne in konča z neznanim spletnim naslovom, zaprl po 5 minutah."
+   },
+   "upgradePlan": {
+      "message": "Kupite načrt ALI se prijavite in nadgradite svoj načrt, da odklenete več funkcij."
+   },
+   "upgradePlanUnlock": {
+      "message": "Nadgradite svoj načrt, da odklenete več funkcij."
+   },
+   "uploadValidFormat": {
+      "message": "Naložite veljavno obliko"
+   },
+   "url": {
+      "message": "URL"
+   },
+   "urlContExat": {
+      "message": "Filtriranje URL-jev"
+   },
+   "urlEndWithUnspesifiedPth": {
+      "message": "9. URL se konča z nedoločeno potjo"
+   },
+   "urlEndWithUnspesifiedPthExm1": {
+      "message": "V zgornjem primeru je dani URL v zaprtem zavihku, kar navaja, da bo dani URL, ki se je odprl v novem zavihku in se konča z neznano potjo, zaprl po 5 minutah."
+   },
+   "urlFilterInfo": {
+      "message": "Vsebuje URL, ki se preverja, potrebuje le del URL-ja in natančen URL, ki se preverja, se mora natančno ujemati z navedenim URL-jem"
+   },
+   "urlFilterinCLoseTb": {
+      "message": "14. Filtriranje URL-jev pri zaprtju zavihka URL"
+   },
+   "urlFilterinCLoseTbExample": {
+      "message": "V zgornjem primeru je dani URL na zapiranju zavihka, kar navaja, da se URL že odprtega zavihka ujema z delom danega URL-ja, tako da bo zaprl ta zavihek"
+   },
+   "urlIsRequired": {
+      "message": "Povezava do spletne strani je obvezna"
+   },
+   "urlNotvalid": {
+      "message": "URL ni veljaven"
+   },
+   "urlStartWithUnspesifiedPth": {
+      "message": "10. URL se začne z nedoločeno potjo"
+   },
+   "urlStartWithUnspesifiedPthExm1": {
+      "message": "V zgornjem primeru je dani URL v zaprtem zavihku, kar navaja, da bo dani URL, odprt v novem zavihku in se začne z neznano poddomeno \u003Cb>»www«\u003C/b> ali \u003Cb>»blog«,\u003C/b> zaprt po 5 minutah."
+   },
+   "useSpecificUrl": {
+      "message": "Uporabite posebno povezavo do spletnega mesta"
+   },
+   "useSpecificUrl1": {
+      "message": "Morali ste napisati natančno poddomeno, domeno najvišje ravni, ime domene in pot do strani v polje Povezava do spletne strani do zaprtega zavihka brskalnika."
+   },
+   "useSpecificUrl2": {
+      "message": "Uporabite zaprte vse zavihke brskalnika"
+   },
+   "useSpecificUrl3": {
+      "message": "Uporabite specifično in celotno povezavo do spletnega mesta"
+   },
+   "useUnSpecificUrl1": {
+      "message": "Uporabite nedoločeno spletno povezavo"
+   },
+   "useUnSpecificUrl2": {
+      "message": "Uporabite začetek z nedoločeno spletno povezavo"
+   },
+   "useUnSpecificUrl3": {
+      "message": "Uporabite konec z nedoločeno spletno povezavo"
+   },
+   "used": {
+      "message": "Uporabili ste"
+   },
+   "validFormatCsv": {
+      "message": "Kakšna je veljavna oblika datoteke CSV za uvoz?"
+   },
+   "websiteLink": {
+      "message": "Povezava do spletne strani"
+   },
+   "websiteUrl": {
+      "message": "URL spletnega mesta"
+   },
+   "wednesday": {
+      "message": "sreda"
+   },
+   "weekName": {
+      "message": "Ime tedna"
+   },
+   "weekly": {
+      "message": "Tedensko"
+   },
+   "whenExtensionTabAppears": {
+      "message": "Ko se prikaže zavihek Razširitve, poiščite »Razporejevalnik zavihkov s samodejnim odpiranjem in zapiranjem«, da ga omogočite v načinu brez beleženja zgodovine, in kliknite gumb »Podrobnosti« poleg njega."
+   },
+   "whenMenuPopup": {
+      "message": "Ko se prikaže meni, izberite »Upravljanje razširitev«."
+   },
+   "withSignMustFill": {
+      "message": "Z znakom \u003Cspan>*\u003C/span> mora biti izpolnjen ali izbran, izberite čas odprtja ali zaprtja ali oba časa."
+   },
+   "writeYourDescriptionAboutSchUrl": {
+      "message": "Tukaj napišite svoj opis načrtovanega URL-ja."
+   },
+   "yes": {
+      "message": "ja"
+   },
+   "yourEmailAddress": {
+      "message": "Vaš elektronski naslov"
+   },
+   "yourScheduleUrl": {
+      "message": "URL vašega urnika"
+   }
+}

@@ -1,0 +1,4 @@
+﻿Adres URL,Regulator czasowy,Status,Data otwarcia,Data zamknięcia,Czas otwarcia,Czas zamknięcia,Tydzień Otwarty,Zamknij tydzień,Po otwarciu przeglądarki,Dzień Otwarty,Dzień zamknięcia,Otwarta minuta,Zamknij minutę,Otwórz drugie,Zamknij Drugi,Powiadomienie,Tytuł,Opis,Otwórz adres URL w tle,Otwórz w trybie incognito,Nie zamykaj przypiętych kart,Zamknij tylko karty incognito,Filtrowanie adresów URL,Typ harmonogramu,Każda godzina otwarta minuta,Każda godzina każda minuta,Odśwież kartę jeśli adres URL jest już otwarty
+https://www.google.com/,Każda minuta,Aktywny,,,,,"","","",,,,,,,Nieaktywny,Close Every Minute,,NIE,NIE,NIE,NIE,Tak,Zamknąć,0,0,Tak
+http://www.w3schools.com/,Codziennie,Aktywny,,,16:31,,"","","",,,,,,,Nieaktywny,Every Day Open,,NIE,NIE,NIE,NIE,NIE,Otwarte,0,0,NIE
+https://www.flipkart.com/,Niestandardowa minuta,Aktywny,,,,,"","","",,,120,5,,,Nieaktywny,Open and Close,,NIE,NIE,NIE,NIE,NIE,Obydwa,0,0,NIE

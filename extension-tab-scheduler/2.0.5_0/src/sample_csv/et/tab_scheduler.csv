@@ -1,0 +1,4 @@
+﻿URL,Taimer,Olek,Avamise kuupäev,Sulgemiskuupäev,Avatud aeg,Sulgemisaeg,Avatud uste nädal,Sulge nädal,Ava brauseris,Avatud uste päev,Sulgemispäev,Avatud minut,Sulgemise minut,Ava teine,Sulge teine,Teavitus,Pealkiri,Kirjeldus,Ava URL taustal,Avage inkognito režiimis,Ärge sulgege kinnitatud vahelehti,Sulgege ainult inkognito vahelehed,URL-i filtreerimine,Ajakava tüüp,Iga tund avatud minut,Iga tund ja minut,Värskendage vahekaarti kui URL on juba avatud
+https://www.google.com/,Iga minut,Aktiivne,,,,,"","","",,,,,,,Mitteaktiivne,Close Every Minute,,Ei,Ei,Ei,Ei,Jah,Sule,0,0,Jah
+http://www.w3schools.com/,Iga päev,Aktiivne,,,16:31,,"","","",,,,,,,Mitteaktiivne,Every Day Open,,Ei,Ei,Ei,Ei,Ei,Avatud,0,0,Ei
+https://www.flipkart.com/,Kohandatud minut,Aktiivne,,,,,"","","",,,120,5,,,Mitteaktiivne,Open and Close,,Ei,Ei,Ei,Ei,Ei,Mõlemad,0,0,Ei
