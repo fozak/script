@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>File Metadata Explorer</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        #controls {
+            margin: 20px 0;
+            padding: 15px;
+            background: #f5f5f5;
+            border-radius: 8px;
+        }
+        button {
+            padding: 8px 16px;
+            margin-right: 10px;
+            background: #0066cc;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #0052a3;
+        }
+        #queryBuilder {
+            margin: 15px 0;
+            padding: 10px;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 8px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background: #f2f2f2;
+        }
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+        #saveSection {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>File Metadata Explorer</h1>
+    
+    <div id="controls">
+        <button id="dirSelect">Select Directory</button>
+        <button id="saveJSON">Save as JSON</button>
+        <button id="loadJSON">Load JSON</button>
+        
+        <div id="queryBuilder">
+            <h3>Filter Files</h3>
+            <div>
+                <label>Extension: </label>
+                <input type="text" id="extensionFilter" placeholder=".js">
+            </div>
+            <div>
+                <label>Size larger than (bytes): </label>
+                <input type="number" id="sizeFilter">
+            </div>
+            <div>
+                <label>Modified after: </label>
+                <input type="date" id="dateFilter">
+            </div>
+            <button id="applyFilters">Apply Filters</button>
+        </div>
+    </div>
+
+    <div id="results"></div>
+    
+    <div id="saveSection">
+        <button id="saveHTML">Save as HTML</button>
+    </div>
+
+    <script>
+        let fileMetadata = [];
+        let filteredData = [];
+
+        async function getFileMetadata(dirHandle) {
+            const metadata = [];
+            
+            async function processEntry(entry, relativePath = '') {
+                if (entry.kind === 'file') {
+                    const file = await entry.getFile();
+                    metadata.push({
+                        name: entry.name,
+                        path: relativePath + entry.name,
+                        size: file.size,
+                        modified: file.lastModified,
+                        extension: entry.name.split('.').pop()
+                    });
+                } else if (entry.kind === 'directory') {
+                    for await (const handle of entry.values()) {
+                        await processEntry(handle, relativePath + entry.name + '/');
+                    }
+                }
+            }
+            
+            for await (const entry of dirHandle.values()) {
+                await processEntry(entry);
+            }
+            
+            return metadata;
+        }
+
+        document.getElementById('dirSelect').onclick = async () => {
+            try {
+                const dirHandle = await window.showDirectoryPicker();
+                fileMetadata = await getFileMetadata(dirHandle);
+                filteredData = fileMetadata;
+                displayResults(filteredData);
+            } catch (err) {
+                console.error('Error accessing directory:', err);
+            }
+        };
+
+        document.getElementById('applyFilters').onclick = () => {
+            const extension = document.getElementById('extensionFilter').value;
+            const minSize = document.getElementById('sizeFilter').value;
+            const afterDate = document.getElementById('dateFilter').value;
+            
+            filteredData = fileMetadata.filter(file => {
+                let match = true;
+                if (extension) {
+                    match = match && file.extension === extension.replace('.', '');
+                }
+                if (minSize) {
+                    match = match && file.size > parseInt(minSize);
+                }
+                if (afterDate) {
+                    match = match && new Date(file.modified) > new Date(afterDate);
+                }
+                return match;
+            });
+            
+            displayResults(filteredData);
+        };
+
+        function displayResults(data) {
+            const resultsDiv = document.getElementById('results');
+            
+            const table = `
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Path</th>
+                            <th>Size (bytes)</th>
+                            <th>Modified</th>
+                            <th>Extension</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${data.map(file => `
+                            <tr>
+                                <td>${file.name}</td>
+                                <td>${file.path}</td>
+                                <td>${file.size}</td>
+                                <td>${new Date(file.modified).toLocaleString()}</td>
+                                <td>${file.extension}</td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            `;
+            
+            resultsDiv.innerHTML = table;
+        }
+
+        document.getElementById('saveJSON').onclick = () => {
+            const dataStr = JSON.stringify(filteredData, null, 2);
+            const blob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'file-metadata.json';
+            a.click();
+            URL.revokeObjectURL(url);
+        };
+
+        document.getElementById('loadJSON').onclick = async () => {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = 'application/json';
+            
+            input.onchange = async (e) => {
+                const file = e.target.files[0];
+                const text = await file.text();
+                fileMetadata = JSON.parse(text);
+                filteredData = fileMetadata;
+                displayResults(filteredData);
+            };
+            
+            input.click();
+        };
+
+        document.getElementById('saveHTML').onclick = () => {
+            const style = `
+                <style>
+                    body { font-family: system-ui, sans-serif; padding: 20px; }
+                    table { width: 100%; border-collapse: collapse; }
+                    th, td { padding: 8px; border: 1px solid #ddd; text-align: left; }
+                    th { background: #f2f2f2; }
+                    tr:nth-child(even) { background: #f9f9f9; }
+                </style>
+            `;
+            
+            const html = `
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>File Metadata Report</title>
+                    ${style}
+                </head>
+                <body>
+                    <h1>File Metadata Report</h1>
+                    <p>Generated: ${new Date().toLocaleString()}</p>
+                    ${document.getElementById('results').innerHTML}
+                </body>
+                </html>
+            `;
+            
+            const blob = new Blob([html], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'file-metadata-report.html';
+            a.click();
+            URL.revokeObjectURL(url);
+        };
+    </script>
+</body>
+</html>

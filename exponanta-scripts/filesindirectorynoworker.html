@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Metadata Generator</title>
+</head>
+<body>
+    <input type="file" id="fileInput" webkitdirectory multiple>
+    <button id="generateButton">Generate File Info</button>
+    <pre id="output"></pre>
+
+    <script>
+        const fileInput = document.getElementById('fileInput');
+        const generateButton = document.getElementById('generateButton');
+        const output = document.getElementById('output');
+
+        // Event listener for the button
+        generateButton.addEventListener('click', () => {
+            const files = Array.from(fileInput.files); // Convert FileList to an array
+            if (files.length === 0) {
+                output.textContent = "No files selected. Please select a directory.";
+                return;
+            }
+
+            // Process files and gather metadata
+            const fileInfoOutput = {};
+            files.forEach(file => {
+                const key = file.webkitRelativePath; // Get the file's relative path
+
+                // Store only metadata
+                fileInfoOutput[key] = {
+                    size: file.size,
+                    name: file.name,
+                    path: key,
+                    last_modified: file.lastModifiedDate ? file.lastModifiedDate.toISOString() : null,
+                    created: new Date().toISOString(), // Note: Created date is not available in the browser
+                    format: file.type,
+                    mimetype: file.type,
+                    writable: true,
+                    type: "file" // Just marking as a file
+                };
+            });
+
+            // Display output in preformatted text
+            output.textContent = JSON.stringify(fileInfoOutput, null, 2);
+
+            // Create a script tag to hold the JSON data
+            const scriptTag = document.createElement('script');
+            scriptTag.type = 'application/json'; // Set type to application/json
+            scriptTag.id = 'jsondata'; // Set the id attribute to 'jsondata'
+            scriptTag.textContent = JSON.stringify(fileInfoOutput, null, 2); // Add the JSON data
+
+            // Append the script tag to the body or any other appropriate element
+            document.body.appendChild(scriptTag);
+        });
+    </script>
+</body>
+</html>
