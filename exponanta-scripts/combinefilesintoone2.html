@@ -1,8 +1,3 @@
-<!--added file type checking and size limitations. Here's the updated version:
-
-
--->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -34,16 +29,25 @@
 <button id="combineBtn">Select Directory and Combine Files</button>
 <div id="message"></div>
 <script>
-    // List of image file extensions to exclude
-    const imageExtensions = new Set([
+    // List of non-informative file extensions to exclude
+    const nonInformativeExtensions = new Set([
         'jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp', 
-        'tiff', 'svg', 'ico', 'heic', 'avif'
+        'tiff', 'svg', 'ico', 'heic', 'avif', // Image files
+        'exe', 'bin', 'dll',                   // Executable files
+        'zip', 'tar', 'gz', 'rar',             // Archive files
+        'mp3', 'wav', 'aac',                   // Audio files
+        'mp4', 'avi', 'mov', 'mkv',            // Video files
+        'log',                                 // Log files
+        'tmp', 'bak',                          // Temporary and backup files
+        'ttf', 'otf', 'woff', 'eot', 'woff2',                     // Font files
+        'doc', 'docx', 'odt',                  // Rich text files
+        'css', 'scss', 'less'                  // css and CSS preprocessors (if not needed)
     ]);
 
-    // Function to check if a file is an image based on extension
-    function isImageFile(filename) {
+    // Function to check if a file is non-informative based on extension
+    function isNonInformativeFile(filename) {
         const extension = filename.split('.').pop().toLowerCase();
-        return imageExtensions.has(extension);
+        return nonInformativeExtensions.has(extension);
     }
 
     // Function to get first 10 lines of text
@@ -63,12 +67,13 @@
             const skippedFiles = []; // Track skipped files for reporting
 
             // Recursive function to process files in directories
-            async function processDirectory(directoryHandle) {
+            async function processDirectory(directoryHandle, path = '') {
                 for await (const [name, handle] of directoryHandle.entries()) {
-                    if (handle.kind === 'file' && !processedFiles.has(name)) {
-                        // Skip image files
-                        if (isImageFile(name)) {
-                            skippedFiles.push(`${name} (image file)`);
+                    const fullPath = `${path}${name}`; // Construct full path
+                    if (handle.kind === 'file' && !processedFiles.has(fullPath)) {
+                        // Skip non-informative files
+                        if (isNonInformativeFile(name)) {
+                            skippedFiles.push(`path/name: $path/${fullPath}\n`); // Log skipped files with full path
                             continue;
                         }
 
@@ -80,14 +85,14 @@
                         
                         if (file.size > 6144) {
                             processedText = getFirst10Lines(text);
-                            skippedFiles.push(`${name} (truncated to 10 lines due to size > 6KB)`);
+                            skippedFiles.push(`path/name: $path/${fullPath} (truncated to 10 lines due to size > 6KB)\n`); // Log truncated files
                         }
 
-                        combinedText += `// ${name}\n${processedText}\n\n`;
-                        processedFiles.add(name);
+                        combinedText += `path/name: $path/${fullPath}\n${processedText}\n\n`;
+                        processedFiles.add(fullPath);
                     } else if (handle.kind === 'directory') {
                         // Recur for directories
-                        await processDirectory(handle);
+                        await processDirectory(handle, `${fullPath}/`); // Append current directory to path
                     }
                 }
             }
@@ -98,7 +103,7 @@
             // Create the combined text file
             const combinedFileHandle = await dirHandle.getFileHandle('combined.txt', { create: true });
             const writableStream = await combinedFileHandle.createWritable();
-            await writableStream.write(combinedText);
+            await writableStream.write(combinedText + skippedFiles.join('')); // Include skipped files in the output
             await writableStream.close();
 
             // Display success message and skipped files

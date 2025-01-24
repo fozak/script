@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clean HTML Content</title>
+</head>
+<body>
+    <input type="file" id="fileInput" accept=".html" />
+    <button id="saveButton" style="display:none;">Save Modified File</button>
+    <pre id="output"></pre>
+
+    <script>
+        let modifiedContent = '';
+
+        document.getElementById('fileInput').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (!file) {
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                let content = e.target.result;
+
+                // Step 1: Remove all newline characters
+                content = content.replace(/[\n\r]+/g, ''); // Remove all newline characters including \r; // Remove all newline characters
+
+                // Step 2: Remove all attributes from all HTML elements except for `id`
+                content = content.replace(/<(\w+)([^>]*)>/g, function(fullMatch, tagName, attributes) {
+                    // Extract id attribute if present
+                    const idMatch = attributes.match(/id="([^"]*)"/);
+                    const idAttribute = idMatch ? ` id="${idMatch[1]}"` : '';
+                    return `<${tagName}${idAttribute}>`;
+                });
+
+                // Step 3: Remove any whitespace between tags
+                content = content.replace(/>\s+</g, '><'); // Remove whitespace (including spaces and tabs) between tags
+
+                // Store the modified content
+                modifiedContent = content;
+
+                // Display the modified content
+                document.getElementById('output').textContent = modifiedContent;
+
+                // Show the save button
+                document.getElementById('saveButton').style.display = 'inline';
+            };
+
+            reader.readAsText(file);
+        });
+
+        document.getElementById('saveButton').addEventListener('click', function() {
+            // Create a Blob from the modified content
+            const blob = new Blob([modifiedContent], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+
+            // Create a link to download the file
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'same_name.js.txt'; // Set file name
+            document.body.appendChild(a);
+            a.click();
+
+            // Clean up
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        });
+    </script>
+</body>
+</html>
