@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OPFS File Editor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+        button {
+            margin: 10px;
+            padding: 8px 16px;
+        }
+        #content {
+            width: 100%;
+            min-height: 200px;
+            margin-top: 20px;
+            padding: 10px;
+        }
+        #fileList {
+            margin: 10px 0;
+            padding: 10px;
+            background: #f0f0f0;
+            border-radius: 4px;
+        }
+        .file-link {
+            color: blue;
+            text-decoration: underline;
+            cursor: pointer;
+            display: block;
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>OPFS File Editor</h1>
+    <div>
+        <input type="text" id="filename" placeholder="Enter filename (e.g., notes.txt)">
+        <button id="createFile">Create New File</button>
+    </div>
+    <div id="fileList">
+        <h3>Your Files:</h3>
+    </div>
+    <button id="saveFile">Save Changes</button>
+    <textarea id="content" placeholder="Enter your text here..."></textarea>
+
+    <script>
+        let currentFile = null;
+
+        // Create new file in OPFS
+        async function createFile(filename) {
+            try {
+                const root = await navigator.storage.getDirectory();
+                const fileHandle = await root.getFileHandle(filename, { create: true });
+                await loadFile(filename);
+                await updateFileList();
+                document.getElementById('filename').value = '';
+            } catch (err) {
+                console.error('Error creating file:', err);
+                alert('Error creating file');
+            }
+        }
+
+        // Load file content
+        async function loadFile(filename) {
+            try {
+                const root = await navigator.storage.getDirectory();
+                const fileHandle = await root.getFileHandle(filename);
+                const file = await fileHandle.getFile();
+                const content = await file.text();
+                document.getElementById('content').value = content;
+                currentFile = filename;
+            } catch (err) {
+                console.error('Error loading file:', err);
+                document.getElementById('content').value = '';
+                currentFile = filename;
+            }
+        }
+
+        // Save content to current file
+        async function saveFile() {
+            if (!currentFile) {
+                alert('Please create or select a file first');
+                return;
+            }
+
+            try {
+                const content = document.getElementById('content').value;
+                const root = await navigator.storage.getDirectory();
+                const fileHandle = await root.getFileHandle(currentFile, { create: true });
+                const writable = await fileHandle.createWritable();
+                await writable.write(content);
+                await writable.close();
+                alert('File saved successfully!');
+            } catch (err) {
+                console.error('Error saving file:', err);
+                alert('Error saving file');
+            }
+        }
+
+        // Update the list of files
+        async function updateFileList() {
+            try {
+                const root = await navigator.storage.getDirectory();
+                const fileList = document.getElementById('fileList');
+                
+                // Clear existing list except the header
+                const header = fileList.querySelector('h3');
+                fileList.innerHTML = '';
+                fileList.appendChild(header);
+
+                // List all files
+                for await (const [name, handle] of root.entries()) {
+                    const fileLink = document.createElement('span');
+                    fileLink.textContent = name;
+                    fileLink.className = 'file-link';
+                    fileLink.onclick = () => loadFile(name);
+                    fileList.appendChild(fileLink);
+                }
+            } catch (err) {
+                console.error('Error updating file list:', err);
+            }
+        }
+
+        // Initialize
+        async function init() {
+            document.getElementById('createFile').addEventListener('click', () => {
+                const filename = document.getElementById('filename').value.trim();
+                if (filename) {
+                    createFile(filename);
+                } else {
+                    alert('Please enter a filename');
+                }
+            });
+
+            document.getElementById('saveFile').addEventListener('click', saveFile);
+            
+            await updateFileList();
+        }
+
+        init();
+    </script>
+</body>
+</html>
