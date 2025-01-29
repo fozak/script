@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drag and Drop HTML Example</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        #dropArea {
+            width: 100%;
+            height: 300px;
+            border: 2px dashed #007BFF;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #007BFF;
+        }
+        #contentDisplay {
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 5px;
+            min-height: 100px;
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="dropArea" ondragover="event.preventDefault();" ondrop="handleDrop(event)">
+        Drag and drop HTML content here
+    </div>
+
+    <div id="contentDisplay">
+        <h3>Dropped Content:</h3>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.3.4/purify.min.js"></script>
+    <script>
+ function handleDrop(e) {
+    e.preventDefault(); // Prevent default behavior (e.g., opening as link for some browsers)
+    const dt = e.dataTransfer;
+
+    // Use getData to retrieve HTML content
+    const htmlContent = dt.getData('text/html');
+
+    // Now you can safely append the HTML content to your display area
+    contentDisplay.innerHTML += htmlContent; // Be cautious of XSS risks!
+}
+    </script>
+</body>
+</html>

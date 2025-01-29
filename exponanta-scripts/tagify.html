@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tagify with DataTables</title>
+    
+    <!-- Tagify CSS and JS -->
+    <link href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
+
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        #example {
+            margin-top: 20px;
+        }
+        .tagify {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <h1>Tagify with DataTables Example</h1>
+    <table id="example" class="display" style="width:100%">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Tags</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Example Item 1</td>
+                <td><input name='tags1' value='tag1, tag2' placeholder="Add tags..." class="tagify-input"></td>
+            </tr>
+            <tr>
+                <td>Example Item 2</td>
+                <td><input name='tags2' value='tag3, tag4' placeholder="Add tags..." class="tagify-input"></td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Initialize DataTable
+            var table = $('#example').DataTable();
+
+            // Function to initialize Tagify for all tag inputs
+            function initializeTagify() {
+                $('.tagify-input').each(function() {
+                    new Tagify(this);
+                });
+            }
+
+            // Initialize Tagify on page load
+            initializeTagify();
+
+            // Handle dynamically added rows
+            $('#example tbody').on('change', '.tagify-input', function() {
+                var tags = $(this).tagify().value.map(tag => tag.value).join(', ');
+                var rowData = table.row($(this).closest('tr')).data();
+                rowData[1] = tags; // Update the tags in the DataTable
+                table.row($(this).closest('tr')).data(rowData).draw();
+            });
+        });
+    </script>
+</body>
+</html>

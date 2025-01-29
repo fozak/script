@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Selection Example</title>
+</head>
+<body>
+    <div id="text-container" contenteditable="true">
+        This is some editable text. You can select parts of this text to test the selection restoration.
+    </div>
+    <script>
+        let selectionStart = null;
+        let selectionEnd = null;
+
+        // Function to save selection
+        function saveSelection() {
+            const selection = window.getSelection();
+            if (selection.rangeCount > 0) {
+                const range = selection.getRangeAt(0);
+                const textContent = range.startContainer.textContent;
+
+                selectionStart = range.startOffset;
+                selectionEnd = range.endOffset;
+
+                console.log(`Selected text: "${selection.toString()}"`);
+                console.log(`Start position: ${selectionStart}, End position: ${selectionEnd}`);
+                
+                // Save the selection data to local storage
+                localStorage.setItem('selectionStart', selectionStart);
+                localStorage.setItem('selectionEnd', selectionEnd);
+            }
+        }
+
+        // Function to restore selection
+        function restoreSelection() {
+            const start = parseInt(localStorage.getItem('selectionStart'), 10);
+            const end = parseInt(localStorage.getItem('selectionEnd'), 10);
+            const container = document.getElementById('text-container');
+
+            if (!isNaN(start) && !isNaN(end)) {
+                const range = document.createRange();
+                const selection = window.getSelection();
+                
+                // Clear existing selection
+                selection.removeAllRanges();
+
+                // Create a new range and set the start and end positions
+                range.setStart(container.firstChild, start);
+                range.setEnd(container.firstChild, end);
+                selection.addRange(range);
+            }
+        }
+
+        // Event listener for selection change
+        document.getElementById('text-container').addEventListener('mouseup', saveSelection);
+
+        // Restore selection when the page is loaded
+        window.addEventListener('load', restoreSelection);
+    </script>
+</body>
+</html>

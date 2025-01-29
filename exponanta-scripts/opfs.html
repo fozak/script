@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text File Handler with OPFS</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+        button {
+            margin: 10px;
+            padding: 8px 16px;
+        }
+        #content {
+            width: 100%;
+            min-height: 200px;
+            margin-top: 20px;
+            padding: 10px;
+        }
+        #fileInfo {
+            margin: 10px;
+            padding: 10px;
+            background: #f0f0f0;
+            border-radius: 4px;
+        }
+        #fileLink {
+            color: blue;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Text File Handler with OPFS</h1>
+    <div id="fileInfo" class="hidden">
+        Last file: <span id="fileLink"></span>
+    </div>
+    <button id="openFile">Open Text File</button>
+    <button id="saveFile">Save Changes</button>
+    <textarea id="content" placeholder="File content will appear here..."></textarea>
+
+    <script>
+        let fileHandle = null;
+
+        // Store file handle in OPFS
+        async function storeFileInfo(handle) {
+            try {
+                const root = await navigator.storage.getDirectory();
+                
+                // Store handle
+                const handleFile = await root.getFileHandle('stored-handle.txt', { create: true });
+                const handleWriter = await handleFile.createWritable();
+                await handleWriter.write(handle);
+                await handleWriter.close();
+
+                // Store filename
+                const nameFile = await root.getFileHandle('filename.txt', { create: true });
+                const nameWriter = await nameFile.createWritable();
+                await nameWriter.write(handle.name);
+                await nameWriter.close();
+
+                updateFileInfo(handle.name);
+            } catch (err) {
+                console.error('Error storing file info:', err);
+            }
+        }
+
+        // Load stored file info from OPFS
+        async function loadStoredFileInfo() {
+            try {
+                const root = await navigator.storage.getDirectory();
+                
+                // Load filename
+                try {
+                    const nameFile = await root.getFileHandle('filename.txt');
+                    const nameData = await nameFile.getFile();
+                    const fileName = await nameData.text();
+                    updateFileInfo(fileName);
+                } catch (err) {
+                    console.log('No stored filename found');
+                }
+
+                // Load handle
+                try {
+                    const handleFile = await root.getFileHandle('stored-handle.txt');
+                    const handleData = await handleFile.getFile();
+                    fileHandle = await handleData.text();
+                    if (await verifyPermission(fileHandle)) {
+                        await loadFileContent();
+                    }
+                } catch (err) {
+                    console.log('No stored handle found');
+                }
+            } catch (err) {
+                console.error('Error loading stored file info:', err);
+            }
+        }
+
+        // Verify permission for the file handle
+        async function verifyPermission(fileHandle) {
+            const options = { mode: 'readwrite' };
+            
+            try {
+                if ((await fileHandle.queryPermission(options)) === 'granted') {
+                    return true;
+                }
+                
+                if ((await fileHandle.requestPermission(options)) === 'granted') {
+                    return true;
+                }
+            } catch (err) {
+                console.error('Error verifying permission:', err);
+            }
+            
+            return false;
+        }
+
+        // Update UI with file info
+        function updateFileInfo(fileName) {
+            const fileInfo = document.getElementById('fileInfo');
+            const fileLink = document.getElementById('fileLink');
+            fileLink.textContent = fileName;
+            fileInfo.classList.remove('hidden');
+        }
+
+        // Load content from file
+        async function loadFileContent() {
+            if (!fileHandle) return;
+            
+            try {
+                const file = await fileHandle.getFile();
+                const content = await file.text();
+                document.getElementById('content').value = content;
+            } catch (err) {
+                console.error('Error reading file:', err);
+            }
+        }
+
+        // Save content to file
+        async function saveFileContent() {
+            if (!fileHandle) return;
+            
+            try {
+                const content = document.getElementById('content').value;
+                const writable = await fileHandle.createWritable();
+                await writable.write(content);
+                await writable.close();
+                alert('File saved successfully!');
+            } catch (err) {
+                console.error('Error saving file:', err);
+                alert('Error saving file');
+            }
+        }
+
+        // Handle file opening
+        async function openFile() {
+            try {
+                const [handle] = await window.showOpenFilePicker({
+                    types: [{
+                        description: 'Text Files',
+                        accept: {
+                            'text/plain': ['.txt']
+                        }
+                    }],
+                });
+                
+                if (await verifyPermission(handle)) {
+                    fileHandle = handle;
+                    await storeFileInfo(handle);
+                    await loadFileContent();
+                }
+            } catch (err) {
+                console.error('Error opening file:', err);
+            }
+        }
+
+        // Handle clicking the file link
+        async function handleFileLinkClick() {
+            if (fileHandle && await verifyPermission(fileHandle)) {
+                await loadFileContent();
+            } else {
+                await openFile();
+            }
+        }
+
+        // Initialize
+        async function init() {
+            await loadStoredFileInfo();
+            
+            document.getElementById('openFile').addEventListener('click', openFile);
+            document.getElementById('saveFile').addEventListener('click', saveFileContent);
+            document.getElementById('fileLink').addEventListener('click', handleFileLinkClick);
+        }
+
+        init();
+    </script>
+</body>
+</html>

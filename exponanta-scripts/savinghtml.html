@@ -1,0 +1,40 @@
+<html><head>
+    <title>Self-Saving Page</title>
+    <style>
+        textarea { width: 100%; height: 300px; }
+        button { margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <textarea id="content"></textarea>
+    <button onclick="saveThis()">Save This Page</button>
+
+    <script>
+        let fileHandle;
+
+        async function saveThis() {
+            try {
+                if (!fileHandle) {
+                    [fileHandle] = await window.showOpenFilePicker();
+                }
+                
+                // Capture the entire HTML document as a string
+                const content = document.documentElement.outerHTML;
+
+                // Save to file
+                const writable = await fileHandle.createWritable();
+                await writable.write(content);
+                await writable.close();
+
+                // Update page content without reload (optional)
+                document.documentElement.innerHTML = content;
+            } catch (err) {
+                alert('Error: ' + err.message);
+            }
+        }
+
+        // Load current page content into the textarea
+        document.getElementById('content').value = document.documentElement.outerHTML;
+    </script>
+
+</body></html>

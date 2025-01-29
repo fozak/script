@@ -1,0 +1,2315 @@
+<!DOCTYPE html>
+<!-- saved from url=(0053)file:///C:/Users/i7714/Downloads/File%20Combiner.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="icon" data-savepage-href="file:///C:/favicon.ico" href="file:///C:/favicon.ico">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Combiner</title>
+    <style data-savepage-href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">table.dataTable{width:100%;margin:0 auto;clear:both;border-collapse:separate;border-spacing:0}table.dataTable thead th,table.dataTable tfoot th{font-weight:bold}table.dataTable thead th,table.dataTable thead td{padding:10px 18px;border-bottom:1px solid #111}table.dataTable thead th:active,table.dataTable thead td:active{outline:none}table.dataTable tfoot th,table.dataTable tfoot td{padding:10px 18px 6px 18px;border-top:1px solid #111}table.dataTable thead .sorting,table.dataTable thead .sorting_asc,table.dataTable thead .sorting_desc,table.dataTable thead .sorting_asc_disabled,table.dataTable thead .sorting_desc_disabled{cursor:pointer;*cursor:hand;background-repeat:no-repeat;background-position:center right}table.dataTable thead .sorting{background-image:/*savepage-url=../images/sort_both.png*/var(--savepage-url-3)}table.dataTable thead .sorting_asc{background-image:/*savepage-url=../images/sort_asc.png*/var(--savepage-url-2)}table.dataTable thead .sorting_desc{background-image:/*savepage-url=../images/sort_desc.png*/url(https://cdn.datatables.net/1.10.21/images/sort_desc.png)}table.dataTable thead .sorting_asc_disabled{background-image:/*savepage-url=../images/sort_asc_disabled.png*/url(https://cdn.datatables.net/1.10.21/images/sort_asc_disabled.png)}table.dataTable thead .sorting_desc_disabled{background-image:/*savepage-url=../images/sort_desc_disabled.png*/url(https://cdn.datatables.net/1.10.21/images/sort_desc_disabled.png)}table.dataTable tbody tr{background-color:#ffffff}table.dataTable tbody tr.selected{background-color:#B0BED9}table.dataTable tbody th,table.dataTable tbody td{padding:8px 10px}table.dataTable.row-border tbody th,table.dataTable.row-border tbody td,table.dataTable.display tbody th,table.dataTable.display tbody td{border-top:1px solid #ddd}table.dataTable.row-border tbody tr:first-child th,table.dataTable.row-border tbody tr:first-child td,table.dataTable.display tbody tr:first-child th,table.dataTable.display tbody tr:first-child td{border-top:none}table.dataTable.cell-border tbody th,table.dataTable.cell-border tbody td{border-top:1px solid #ddd;border-right:1px solid #ddd}table.dataTable.cell-border tbody tr th:first-child,table.dataTable.cell-border tbody tr td:first-child{border-left:1px solid #ddd}table.dataTable.cell-border tbody tr:first-child th,table.dataTable.cell-border tbody tr:first-child td{border-top:none}table.dataTable.stripe tbody tr.odd,table.dataTable.display tbody tr.odd{background-color:#f9f9f9}table.dataTable.stripe tbody tr.odd.selected,table.dataTable.display tbody tr.odd.selected{background-color:#acbad4}table.dataTable.hover tbody tr:hover,table.dataTable.display tbody tr:hover{background-color:#f6f6f6}table.dataTable.hover tbody tr:hover.selected,table.dataTable.display tbody tr:hover.selected{background-color:#aab7d1}table.dataTable.order-column tbody tr>.sorting_1,table.dataTable.order-column tbody tr>.sorting_2,table.dataTable.order-column tbody tr>.sorting_3,table.dataTable.display tbody tr>.sorting_1,table.dataTable.display tbody tr>.sorting_2,table.dataTable.display tbody tr>.sorting_3{background-color:#fafafa}table.dataTable.order-column tbody tr.selected>.sorting_1,table.dataTable.order-column tbody tr.selected>.sorting_2,table.dataTable.order-column tbody tr.selected>.sorting_3,table.dataTable.display tbody tr.selected>.sorting_1,table.dataTable.display tbody tr.selected>.sorting_2,table.dataTable.display tbody tr.selected>.sorting_3{background-color:#acbad5}table.dataTable.display tbody tr.odd>.sorting_1,table.dataTable.order-column.stripe tbody tr.odd>.sorting_1{background-color:#f1f1f1}table.dataTable.display tbody tr.odd>.sorting_2,table.dataTable.order-column.stripe tbody tr.odd>.sorting_2{background-color:#f3f3f3}table.dataTable.display tbody tr.odd>.sorting_3,table.dataTable.order-column.stripe tbody tr.odd>.sorting_3{background-color:whitesmoke}table.dataTable.display tbody tr.odd.selected>.sorting_1,table.dataTable.order-column.stripe tbody tr.odd.selected>.sorting_1{background-color:#a6b4cd}table.dataTable.display tbody tr.odd.selected>.sorting_2,table.dataTable.order-column.stripe tbody tr.odd.selected>.sorting_2{background-color:#a8b5cf}table.dataTable.display tbody tr.odd.selected>.sorting_3,table.dataTable.order-column.stripe tbody tr.odd.selected>.sorting_3{background-color:#a9b7d1}table.dataTable.display tbody tr.even>.sorting_1,table.dataTable.order-column.stripe tbody tr.even>.sorting_1{background-color:#fafafa}table.dataTable.display tbody tr.even>.sorting_2,table.dataTable.order-column.stripe tbody tr.even>.sorting_2{background-color:#fcfcfc}table.dataTable.display tbody tr.even>.sorting_3,table.dataTable.order-column.stripe tbody tr.even>.sorting_3{background-color:#fefefe}table.dataTable.display tbody tr.even.selected>.sorting_1,table.dataTable.order-column.stripe tbody tr.even.selected>.sorting_1{background-color:#acbad5}table.dataTable.display tbody tr.even.selected>.sorting_2,table.dataTable.order-column.stripe tbody tr.even.selected>.sorting_2{background-color:#aebcd6}table.dataTable.display tbody tr.even.selected>.sorting_3,table.dataTable.order-column.stripe tbody tr.even.selected>.sorting_3{background-color:#afbdd8}table.dataTable.display tbody tr:hover>.sorting_1,table.dataTable.order-column.hover tbody tr:hover>.sorting_1{background-color:#eaeaea}table.dataTable.display tbody tr:hover>.sorting_2,table.dataTable.order-column.hover tbody tr:hover>.sorting_2{background-color:#ececec}table.dataTable.display tbody tr:hover>.sorting_3,table.dataTable.order-column.hover tbody tr:hover>.sorting_3{background-color:#efefef}table.dataTable.display tbody tr:hover.selected>.sorting_1,table.dataTable.order-column.hover tbody tr:hover.selected>.sorting_1{background-color:#a2aec7}table.dataTable.display tbody tr:hover.selected>.sorting_2,table.dataTable.order-column.hover tbody tr:hover.selected>.sorting_2{background-color:#a3b0c9}table.dataTable.display tbody tr:hover.selected>.sorting_3,table.dataTable.order-column.hover tbody tr:hover.selected>.sorting_3{background-color:#a5b2cb}table.dataTable.no-footer{border-bottom:1px solid #111}table.dataTable.nowrap th,table.dataTable.nowrap td{white-space:nowrap}table.dataTable.compact thead th,table.dataTable.compact thead td{padding:4px 17px}table.dataTable.compact tfoot th,table.dataTable.compact tfoot td{padding:4px}table.dataTable.compact tbody th,table.dataTable.compact tbody td{padding:4px}table.dataTable th.dt-left,table.dataTable td.dt-left{text-align:left}table.dataTable th.dt-center,table.dataTable td.dt-center,table.dataTable td.dataTables_empty{text-align:center}table.dataTable th.dt-right,table.dataTable td.dt-right{text-align:right}table.dataTable th.dt-justify,table.dataTable td.dt-justify{text-align:justify}table.dataTable th.dt-nowrap,table.dataTable td.dt-nowrap{white-space:nowrap}table.dataTable thead th.dt-head-left,table.dataTable thead td.dt-head-left,table.dataTable tfoot th.dt-head-left,table.dataTable tfoot td.dt-head-left{text-align:left}table.dataTable thead th.dt-head-center,table.dataTable thead td.dt-head-center,table.dataTable tfoot th.dt-head-center,table.dataTable tfoot td.dt-head-center{text-align:center}table.dataTable thead th.dt-head-right,table.dataTable thead td.dt-head-right,table.dataTable tfoot th.dt-head-right,table.dataTable tfoot td.dt-head-right{text-align:right}table.dataTable thead th.dt-head-justify,table.dataTable thead td.dt-head-justify,table.dataTable tfoot th.dt-head-justify,table.dataTable tfoot td.dt-head-justify{text-align:justify}table.dataTable thead th.dt-head-nowrap,table.dataTable thead td.dt-head-nowrap,table.dataTable tfoot th.dt-head-nowrap,table.dataTable tfoot td.dt-head-nowrap{white-space:nowrap}table.dataTable tbody th.dt-body-left,table.dataTable tbody td.dt-body-left{text-align:left}table.dataTable tbody th.dt-body-center,table.dataTable tbody td.dt-body-center{text-align:center}table.dataTable tbody th.dt-body-right,table.dataTable tbody td.dt-body-right{text-align:right}table.dataTable tbody th.dt-body-justify,table.dataTable tbody td.dt-body-justify{text-align:justify}table.dataTable tbody th.dt-body-nowrap,table.dataTable tbody td.dt-body-nowrap{white-space:nowrap}table.dataTable,table.dataTable th,table.dataTable td{box-sizing:content-box}.dataTables_wrapper{position:relative;clear:both;*zoom:1;zoom:1}.dataTables_wrapper .dataTables_length{float:left}.dataTables_wrapper .dataTables_filter{float:right;text-align:right}.dataTables_wrapper .dataTables_filter input{margin-left:0.5em}.dataTables_wrapper .dataTables_info{clear:both;float:left;padding-top:0.755em}.dataTables_wrapper .dataTables_paginate{float:right;text-align:right;padding-top:0.25em}.dataTables_wrapper .dataTables_paginate .paginate_button{box-sizing:border-box;display:inline-block;min-width:1.5em;padding:0.5em 1em;margin-left:2px;text-align:center;text-decoration:none !important;cursor:pointer;*cursor:hand;color:#333 !important;border:1px solid transparent;border-radius:2px}.dataTables_wrapper .dataTables_paginate .paginate_button.current,.dataTables_wrapper .dataTables_paginate .paginate_button.current:hover{color:#333 !important;border:1px solid #979797;background-color:white;background:-webkit-gradient(linear, left top, left bottom, color-stop(0%, #fff), color-stop(100%, #dcdcdc));background:-webkit-linear-gradient(top, #fff 0%, #dcdcdc 100%);background:-moz-linear-gradient(top, #fff 0%, #dcdcdc 100%);background:-ms-linear-gradient(top, #fff 0%, #dcdcdc 100%);background:-o-linear-gradient(top, #fff 0%, #dcdcdc 100%);background:linear-gradient(to bottom, #fff 0%, #dcdcdc 100%)}.dataTables_wrapper .dataTables_paginate .paginate_button.disabled,.dataTables_wrapper .dataTables_paginate .paginate_button.disabled:hover,.dataTables_wrapper .dataTables_paginate .paginate_button.disabled:active{cursor:default;color:#666 !important;border:1px solid transparent;background:transparent;box-shadow:none}.dataTables_wrapper .dataTables_paginate .paginate_button:hover{color:white !important;border:1px solid #111;background-color:#585858;background:-webkit-gradient(linear, left top, left bottom, color-stop(0%, #585858), color-stop(100%, #111));background:-webkit-linear-gradient(top, #585858 0%, #111 100%);background:-moz-linear-gradient(top, #585858 0%, #111 100%);background:-ms-linear-gradient(top, #585858 0%, #111 100%);background:-o-linear-gradient(top, #585858 0%, #111 100%);background:linear-gradient(to bottom, #585858 0%, #111 100%)}.dataTables_wrapper .dataTables_paginate .paginate_button:active{outline:none;background-color:#2b2b2b;background:-webkit-gradient(linear, left top, left bottom, color-stop(0%, #2b2b2b), color-stop(100%, #0c0c0c));background:-webkit-linear-gradient(top, #2b2b2b 0%, #0c0c0c 100%);background:-moz-linear-gradient(top, #2b2b2b 0%, #0c0c0c 100%);background:-ms-linear-gradient(top, #2b2b2b 0%, #0c0c0c 100%);background:-o-linear-gradient(top, #2b2b2b 0%, #0c0c0c 100%);background:linear-gradient(to bottom, #2b2b2b 0%, #0c0c0c 100%);box-shadow:inset 0 0 3px #111}.dataTables_wrapper .dataTables_paginate .ellipsis{padding:0 1em}.dataTables_wrapper .dataTables_processing{position:absolute;top:50%;left:50%;width:100%;height:40px;margin-left:-50%;margin-top:-25px;padding-top:20px;text-align:center;font-size:1.2em;background-color:white;background:-webkit-gradient(linear, left top, right top, color-stop(0%, rgba(255,255,255,0)), color-stop(25%, rgba(255,255,255,0.9)), color-stop(75%, rgba(255,255,255,0.9)), color-stop(100%, rgba(255,255,255,0)));background:-webkit-linear-gradient(left, rgba(255,255,255,0) 0%, rgba(255,255,255,0.9) 25%, rgba(255,255,255,0.9) 75%, rgba(255,255,255,0) 100%);background:-moz-linear-gradient(left, rgba(255,255,255,0) 0%, rgba(255,255,255,0.9) 25%, rgba(255,255,255,0.9) 75%, rgba(255,255,255,0) 100%);background:-ms-linear-gradient(left, rgba(255,255,255,0) 0%, rgba(255,255,255,0.9) 25%, rgba(255,255,255,0.9) 75%, rgba(255,255,255,0) 100%);background:-o-linear-gradient(left, rgba(255,255,255,0) 0%, rgba(255,255,255,0.9) 25%, rgba(255,255,255,0.9) 75%, rgba(255,255,255,0) 100%);background:linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.9) 25%, rgba(255,255,255,0.9) 75%, rgba(255,255,255,0) 100%)}.dataTables_wrapper .dataTables_length,.dataTables_wrapper .dataTables_filter,.dataTables_wrapper .dataTables_info,.dataTables_wrapper .dataTables_processing,.dataTables_wrapper .dataTables_paginate{color:#333}.dataTables_wrapper .dataTables_scroll{clear:both}.dataTables_wrapper .dataTables_scroll div.dataTables_scrollBody{*margin-top:-1px;-webkit-overflow-scrolling:touch}.dataTables_wrapper .dataTables_scroll div.dataTables_scrollBody>table>thead>tr>th,.dataTables_wrapper .dataTables_scroll div.dataTables_scrollBody>table>thead>tr>td,.dataTables_wrapper .dataTables_scroll div.dataTables_scrollBody>table>tbody>tr>th,.dataTables_wrapper .dataTables_scroll div.dataTables_scrollBody>table>tbody>tr>td{vertical-align:middle}.dataTables_wrapper .dataTables_scroll div.dataTables_scrollBody>table>thead>tr>th>div.dataTables_sizing,.dataTables_wrapper .dataTables_scroll div.dataTables_scrollBody>table>thead>tr>td>div.dataTables_sizing,.dataTables_wrapper .dataTables_scroll div.dataTables_scrollBody>table>tbody>tr>th>div.dataTables_sizing,.dataTables_wrapper .dataTables_scroll div.dataTables_scrollBody>table>tbody>tr>td>div.dataTables_sizing{height:0;overflow:hidden;margin:0 !important;padding:0 !important}.dataTables_wrapper.no-footer .dataTables_scrollBody{border-bottom:1px solid #111}.dataTables_wrapper.no-footer div.dataTables_scrollHead table.dataTable,.dataTables_wrapper.no-footer div.dataTables_scrollBody>table{border-bottom:none}.dataTables_wrapper:after{visibility:hidden;display:block;content:"";clear:both;height:0}@media screen and (max-width: 767px){.dataTables_wrapper .dataTables_info,.dataTables_wrapper .dataTables_paginate{float:none;text-align:center}.dataTables_wrapper .dataTables_paginate{margin-top:0.5em}}@media screen and (max-width: 640px){.dataTables_wrapper .dataTables_length,.dataTables_wrapper .dataTables_filter{float:none;text-align:center}.dataTables_wrapper .dataTables_filter{margin-top:0.5em}}
+</style>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        button {
+            padding: 10px 15px;
+            margin: 10px 0;
+            font-size: 16px;
+        }
+
+        #message {
+            margin-top: 20px;
+            font-weight: bold;
+            color: green;
+        }
+
+        .error {
+            color: red;
+        }
+
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 8px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        .settings-section {
+            margin-top: 40px;
+        }
+    </style>
+
+<style id="savepage-cssvariables">
+  :root {
+    --savepage-url-2: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAATCAYAAAByUDbMAAAAZ0lEQVQ4y2NgGLKgquEuFxBPAGI2ahhWCsS/gDibUoO0gPgxEP8H4ttArEyuQYxAPBdqEAxPBImTY5gjEL9DM+wTENuQahAvEO9DMwiGdwAxOymGJQLxTyD+jgWDxCMZRsEoGAVoAADeemwtPcZI2wAAAABJRU5ErkJggg==);
+    --savepage-url-3: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAATCAQAAADYWf5HAAAAkElEQVQoz7XQMQ5AQBCF4dWQSJxC5wwax1Cq1e7BAdxD5SL+Tq/QCM1oNiJidwox0355mXnG/DrEtIQ6azioNZQxI0ykPhTQIwhCR+BmBYtlK7kLJYwWCcJA9M4qdrZrd8pPjZWPtOqdRQy320YSV17OatFC4euts6z39GYMKRPCTKY9UnPQ6P+GtMRfGtPnBCiqhAeJPmkqAAAAAElFTkSuQmCC);
+  }
+</style>
+<script id="savepage-shadowloader" type="text/javascript">
+  "use strict";
+  window.addEventListener("DOMContentLoaded",
+  function(event) {
+    savepage_ShadowLoader(5);
+  },false);
+  function savepage_ShadowLoader(c){createShadowDOMs(0,document.documentElement);function createShadowDOMs(a,b){var i;if(b.localName=="iframe"||b.localName=="frame"){if(a<c){try{if(b.contentDocument.documentElement!=null){createShadowDOMs(a+1,b.contentDocument.documentElement)}}catch(e){}}}else{if(b.children.length>=1&&b.children[0].localName=="template"&&b.children[0].hasAttribute("data-savepage-shadowroot")){b.attachShadow({mode:"open"}).appendChild(b.children[0].content);b.removeChild(b.children[0]);for(i=0;i<b.shadowRoot.children.length;i++)if(b.shadowRoot.children[i]!=null)createShadowDOMs(a,b.shadowRoot.children[i])}for(i=0;i<b.children.length;i++)if(b.children[i]!=null)createShadowDOMs(a,b.children[i])}}}
+</script>
+<meta name="savepage-url" content="file:///C:/python/script/exponanta-scripts/combinefilesintoone5.html">
+<meta name="savepage-title" content="File Combiner">
+<meta name="savepage-pubdate" content="Unknown">
+<meta name="savepage-from" content="file:///C:/python/script/exponanta-scripts/combinefilesintoone5.html">
+<meta name="savepage-date" content="Wed Jan 29 2025 10:35:28 GMT-0500 (Eastern Standard Time)">
+<meta name="savepage-state" content="Standard Items; Retain cross-origin frames; Merge CSS images; Load lazy images in existing content; Max frame depth = 5; Max resource size = 50MB; Max resource time = 10s;">
+<meta name="savepage-version" content="33.9">
+<meta name="savepage-comments" content="">
+  </head>
+
+<body>
+    <h1>Combine Files from a Directory</h1>
+    <button id="combineBtn">Select Directory and Combine Files</button>
+    <div id="message">Files processed successfully. Check the table below.</div>
+    <div id="fileTable_wrapper" class="dataTables_wrapper no-footer"><div class="dataTables_length" id="fileTable_length"><label>Show <select name="fileTable_length" aria-controls="fileTable" class=""><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select> entries</label></div><div id="fileTable_filter" class="dataTables_filter"><label>Search:<input type="search" class="" placeholder="" aria-controls="fileTable" value=""></label></div><table id="fileTable" class="dataTable no-footer" role="grid" aria-describedby="fileTable_info">
+        <thead>
+            <tr role="row"><th class="sorting_asc" tabindex="0" aria-controls="fileTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Full Path: activate to sort column descending" style="width: 75.6146px;">Full Path</th><th class="sorting" tabindex="0" aria-controls="fileTable" rowspan="1" colspan="1" aria-label="Comments: activate to sort column ascending" style="width: 84.2292px;">Comments</th><th class="sorting" tabindex="0" aria-controls="fileTable" rowspan="1" colspan="1" aria-label="Mime Type: activate to sort column ascending" style="width: 105.323px;">Mime Type</th><th class="sorting" tabindex="0" aria-controls="fileTable" rowspan="1" colspan="1" aria-label="Size (bytes): activate to sort column ascending" style="width: 52.7083px;">Size (bytes)</th><th class="sorting" tabindex="0" aria-controls="fileTable" rowspan="1" colspan="1" aria-label="Text Content: activate to sort column ascending" style="width: 718.792px;">Text Content</th></tr>
+        </thead>
+        <tbody><tr role="row" class="odd"><td class="sorting_1">adder.tsx</td><td>Truncated to 6000 bytes due to size &gt; 6000</td><td>application/octet-stream</td><td>11808</td><td>import { isTouchDevice } from '../shared/user-agent';
+import type { Destroyable } from '../types/annotator';
+import AdderToolbar from './components/AdderToolbar';
+import type { Command } from './components/AdderToolbar';
+import { PreactContainer } from './util/preact-container';
+
+export enum ArrowDirection {
+  DOWN = 1,
+  UP = 2,
+}
+
+type Target = {
+  /** Offset from left edge of viewport */
+  left: number;
+  /** Offset from top edge of viewport */
+  top: number;
+  /** Direction of the adder's arrow */
+  arrowDirection: ArrowDirection;
+};
+
+function toPx(pixels: number) {
+  return pixels.toString() + 'px';
+}
+
+const ARROW_HEIGHT = 10;
+
+// The preferred gap between the end of the text selection and the adder's
+// arrow position.
+const ARROW_H_MARGIN = 20;
+
+/**
+ * Return the closest ancestor of `el` which has been positioned.
+ * If no ancestor has been positioned, returns the root element.
+ */
+function nearestPositionedAncestor(el: Element): Element {
+  let parentEl = el.parentElement!;
+  while (parentEl.parentElement) {
+    if (getComputedStyle(parentEl).position !== 'static') {
+      break;
+    }
+    parentEl = parentEl.parentElement;
+  }
+  return parentEl;
+}
+
+type AdderOptions = {
+  /** Callback invoked when "Annotate" button is clicked */
+  onAnnotate: () =&gt; void;
+  /** Callback invoked when "Highlight" button is clicked */
+  onHighlight: () =&gt; void;
+  /** Callback invoked when  "Show" button is clicked */
+  onShowAnnotations: (tags: string[]) =&gt; void;
+};
+
+/**
+ * Container for the 'adder' toolbar which provides controls for the user to
+ * annotate and highlight the selected text.
+ *
+ * The toolbar implementation is split between this class, which is
+ * the container for the toolbar that positions it on the page and isolates
+ * it from the page's styles using shadow DOM, and the `AdderToolbar` Preact
+ * component which actually renders the toolbar.
+ */
+export class Adder implements Destroyable {
+  private _container: PreactContainer;
+  private _view: Window;
+  private _isVisible: boolean;
+  private _arrowDirection: 'up' | 'down';
+  private _onAnnotate: () =&gt; void;
+  private _onHighlight: () =&gt; void;
+  private _onShowAnnotations: (tags: string[]) =&gt; void;
+  /** Annotation tags associated with the current selection. */
+  private _annotationsForSelection: string[];
+
+  /**
+   * Create the toolbar's container and hide it.
+   *
+   * The adder is initially hidden.
+   *
+   * @param element - The DOM element into which the adder will be created
+   * @param options - Options object specifying `onAnnotate` and `onHighlight`
+   *        event handlers.
+   */
+  constructor(element: HTMLElement, options: AdderOptions) {
+    this._view = element.ownerDocument.defaultView!;
+    this._isVisible = false;
+    this._arrowDirection = 'up';
+    this._annotationsForSelection = [];
+
+    this._onAnnotate = options.onAnnotate;
+    this._onHighlight = options.onHighlight;
+    this._onShowAnnotations = options.onShowAnnotations;
+
+    this._container = new PreactContainer('adder', () =&gt; this._render());
+    element.appendChild(this._container.element);
+
+    // Take position out of layout flow initially
+    Object.assign(this._container.element.style, {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+    });
+    this._container.render();
+  }
+
+  get annotationsForSelection() {
+    return this._annotationsForSelection;
+  }
+
+  /**
+   * Set the annotation IDs associated with the current selection.
+   *
+   * Setting this to a non-empty list causes the "Show" button to appear in
+   * the toolbar. Clicking the "Show" button  triggers the `onShowAnnotations`
+   * callback passed to the constructor.
+   */
+  set annotationsForSelection(ids) {
+    this._annotationsForSelection = ids;
+    this._container.render();
+  }
+
+  /** Hide the adder */
+  hide() {
+    this._isVisible = false;
+    this._container.render();
+
+    // Reposition the container because it affects the responsiveness of host page
+    // https://github.com/hypothesis/client/issues/3193
+    Object.assign(this._container.element.style, {
+      top: 0,
+      left: 0,
+    });
+  }
+
+  destroy() {
+    this._container.destroy();
+  }
+
+  /**
+   * Display the adder in the best position in order to target the
+   * selected text in `selectionRect`.
+   *
+   * @param selectionRect - The rect of text to target, in viewport coordinates.
+   * @param isRTLselection - True if the selection was made right-to-left, such
+   *        that the focus point is mostly likely at the top-left edge of
+   *        `targetRect`.
+   */
+  show(selectionRect: DOMRect, isRTLselection: boolean) {
+    const { left, top, arrowDirection } = this._calculateTarget(
+      selectionRect,
+      isRTLselection,
+    );
+    this._showAt(left, top);
+
+    this._isVisible = true;
+    this._arrowDirection = arrowDirection === ArrowDirection.UP ? 'up' : 'down';
+    this._container.render();
+  }
+
+  private _firstChild(): Element {
+    return this._container.element.shadowRoot!.firstChild as Element;
+  }
+
+  private _width(): number {
+    return this._firstChild().getBoundingClientRect().width;
+  }
+
+  private _height(): number {
+    return this._firstChild().getBoundingClientRect().height;
+  }
+
+  /**
+   *  Determine the best position for the Adder and its pointer-arrow.
+   * - Position the pointer-arrow near the end of the selection (where the user's
+   *   cursor/input is most likely to be)
+   * - Position the Adder to center horizontally on the pointer-arrow
+   * - Position the Adder below the selection (arrow pointing up) for LTR selections
+   *   and above (arrow down) for RTL selections
+   *
+   * @param selectionRect - The rect of text to target, in viewport coordinates.
+   * @param isRTLselection - True if the selection was made right-to-left, such
+   *        that the focus point is mostly likely at the top-left edge of
+   *     </td></tr><tr role="row" class="even"><td class="sorting_1">annotation-counts.ts</td><td>Included</td><td>application/octet-stream</td><td>1109</td><td>import type { PortRPC } from '../shared/messaging';
+
+const ANNOTATION_COUNT_ATTR = 'data-hypothesis-annotation-count';
+
+/**
+ * Show the current count of public annotations in designated elements.
+ *
+ * Any time the count of public annotations changes, find all elements within
+ * `rootEl` that have the `data-hypothesis-annotation-count` attribute and
+ * replace their text content with the current count of public annotations.
+ *
+ * This allows publishers to add a count of annotations to their web pages.
+ *
+ * See:
+ * https://h.readthedocs.io/projects/client/en/latest/publishers/host-page-integration.html#cmdoption-arg-data-hypothesis-annotation-count
+ *
+ */
+export function annotationCounts(
+  rootEl: Element,
+  rpc: PortRPC&lt;'publicAnnotationCountChanged', string&gt;,
+) {
+  rpc.on('publicAnnotationCountChanged', updateAnnotationCountElems);
+
+  function updateAnnotationCountElems(newCount: number) {
+    const elems = rootEl.querySelectorAll(`[${ANNOTATION_COUNT_ATTR}]`);
+    Array.from(elems).forEach(elem =&gt; {
+      elem.textContent = newCount.toString();
+    });
+  }
+}
+</td></tr><tr role="row" class="odd"><td class="sorting_1">bucket-bar-client.ts</td><td>Included</td><td>application/octet-stream</td><td>2657</td><td>import { ListenerCollection } from '@hypothesis/frontend-shared';
+
+import type { PortRPC } from '../shared/messaging';
+import type { Anchor, Destroyable } from '../types/annotator';
+import type {
+  HostToGuestEvent,
+  GuestToHostEvent,
+} from '../types/port-rpc-events';
+import { computeAnchorPositions } from './util/buckets';
+
+type HostRPC = PortRPC&lt;HostToGuestEvent, GuestToHostEvent&gt;;
+
+export type BucketBarClientOptions = {
+  /**
+   * The scrollable container element for the document content. All the highlights
+   * that the bucket bar's buckets point at should be contained within this element.
+   */
+  contentContainer: Element;
+
+  hostRPC: HostRPC;
+};
+
+/**
+ * Communicate to the host frame when:
+ *
+ * 1. The set of anchors has been changed (due to annotations being added or removed)
+ * 2. The position of anchors relative to the viewport of the guest has changed
+ */
+export class BucketBarClient implements Destroyable {
+  private _hostRPC: HostRPC;
+  private _updatePending: boolean;
+  private _anchors: Anchor[];
+  private _listeners: ListenerCollection;
+
+  constructor({ contentContainer, hostRPC }: BucketBarClientOptions) {
+    this._hostRPC = hostRPC;
+    this._updatePending = false;
+    this._anchors = [];
+    this._listeners = new ListenerCollection();
+
+    this._listeners.add(window, 'resize', () =&gt; this.update());
+    this._listeners.add(window, 'scroll', () =&gt; this.update());
+
+    // Update bucket positions when container or scrollable descendants are
+    // scrolled.
+    this._listeners.add(contentContainer, 'scroll', () =&gt; this.update(), {
+      // "scroll" event does not bubble, so use a capture listener to observe
+      // event in descendants.
+      capture: true,
+    });
+  }
+
+  destroy() {
+    this._listeners.removeAll();
+  }
+
+  /**
+   * Notifies the BucketBar in the host frame when:
+   * 1. The set of anchors has been changed (due to annotations being added or removed)
+   * 2. The position of anchors relative to the viewport of the guest has changed
+   *
+   * Updates are debounced to reduce the overhead of gathering and sending anchor
+   * position data across frames.
+   *
+   * @param anchors - pass this option when anchors are added or deleted
+   */
+  update(anchors?: Anchor[]) {
+    if (anchors) {
+      this._anchors = anchors;
+    }
+
+    if (this._updatePending) {
+      return;
+    }
+
+    this._updatePending = true;
+    requestAnimationFrame(() =&gt; {
+      const positions = computeAnchorPositions(this._anchors);
+      this._hostRPC.call('anchorsChanged', positions);
+      this._updatePending = false;
+    });
+  }
+}
+</td></tr><tr role="row" class="even"><td class="sorting_1">bucket-bar.tsx</td><td>Included</td><td>application/octet-stream</td><td>2692</td><td>import type { AnchorPosition, Destroyable } from '../types/annotator';
+import Buckets from './components/Buckets';
+import { computeBuckets } from './util/buckets';
+import { PreactContainer } from './util/preact-container';
+
+export type BucketBarOptions = {
+  onFocusAnnotations: (tags: string[]) =&gt; void;
+  onScrollToAnnotation: (tag: string) =&gt; void;
+  onSelectAnnotations: (tags: string[], toggle: boolean) =&gt; void;
+};
+
+/**
+ * Controller for the "bucket bar" showing where annotations are in the document.
+ *
+ * This is usually positioned along the edge of the sidebar but can be
+ * rendered elsewhere for certain content viewers.
+ */
+export class BucketBar implements Destroyable {
+  private _container: PreactContainer;
+  private _positions: AnchorPosition[];
+  private _onFocusAnnotations: BucketBarOptions['onFocusAnnotations'];
+  private _onScrollToAnnotation: BucketBarOptions['onScrollToAnnotation'];
+  private _onSelectAnnotations: BucketBarOptions['onSelectAnnotations'];
+
+  constructor(
+    container: HTMLElement,
+    {
+      onFocusAnnotations,
+      onScrollToAnnotation,
+      onSelectAnnotations,
+    }: BucketBarOptions,
+  ) {
+    this._positions = [];
+    this._container = new PreactContainer('bucket-bar', () =&gt; this._render());
+    Object.assign(this._container.element.style, {
+      display: 'block',
+      flexGrow: '1',
+
+      // The bucket bar uses absolute positioning for the buckets and does not
+      // currently have an intrinsic width. This should be revisited so that
+      // host pages using a custom bucket bar container don't need to hardcode
+      // assumptions about its width.
+      width: '100%',
+    });
+
+    container.appendChild(this._container.element);
+    this._onFocusAnnotations = onFocusAnnotations;
+    this._onScrollToAnnotation = onScrollToAnnotation;
+    this._onSelectAnnotations = onSelectAnnotations;
+
+    this._container.render();
+  }
+
+  destroy() {
+    this._container.destroy();
+  }
+
+  /** Update the set of anchors from which buckets are generated. */
+  update(positions: AnchorPosition[]) {
+    this._positions = positions;
+    this._container.render();
+  }
+
+  private _render() {
+    const buckets = computeBuckets(this._positions, this._container.element);
+    return (
+      &lt;Buckets
+        above={buckets.above}
+        below={buckets.below}
+        buckets={buckets.buckets}
+        onFocusAnnotations={tags =&gt; this._onFocusAnnotations(tags)}
+        onScrollToAnnotation={tag =&gt; this._onScrollToAnnotation(tag)}
+        onSelectAnnotations={(tags, toogle) =&gt;
+          this._onSelectAnnotations(tags, toogle)
+        }
+      /&gt;
+    );
+  }
+}
+</td></tr><tr role="row" class="odd"><td class="sorting_1">events.ts</td><td>Included</td><td>application/octet-stream</td><td>412</td><td>import type { SidebarLayout } from '../types/annotator';
+
+type LayoutChangeEventDetail = {
+  sideBySideActive: boolean;
+  sidebarLayout: SidebarLayout;
+};
+
+export class LayoutChangeEvent extends CustomEvent&lt;LayoutChangeEventDetail&gt; {
+  constructor(detail: LayoutChangeEventDetail) {
+    super('hypothesis:layoutchange', {
+      bubbles: true,
+      cancelable: false,
+      detail,
+    });
+  }
+}
+</td></tr><tr role="row" class="even"><td class="sorting_1">features.ts</td><td>Included</td><td>application/octet-stream</td><td>1934</td><td>import { TinyEmitter } from 'tiny-emitter';
+
+import { warnOnce } from '../shared/warn-once';
+import type { FeatureFlags as IFeatureFlags } from '../types/annotator';
+
+/**
+ * List of feature flags that annotator code tests for.
+ */
+const annotatorFlags = ['styled_highlight_clusters'];
+
+/**
+ * An observable container of feature flags.
+ */
+export class FeatureFlags extends TinyEmitter implements IFeatureFlags {
+  /** Map of flag name to enabled state. */
+  private _flags: Map&lt;string, boolean&gt;;
+  private _knownFlags: string[];
+
+  /**
+   * @param knownFlags - Test seam. This is a list of known flags used to catch
+   *        mistakes where code checks for an obsolete feature flag.
+   */
+  constructor(knownFlags: string[] = annotatorFlags) {
+    super();
+
+    this._flags = new Map&lt;string, boolean&gt;();
+    this._knownFlags = knownFlags;
+  }
+
+  /**
+   * Update the stored flags and notify observers via a "flagsChanged" event.
+   */
+  update(flags: Record&lt;string, boolean&gt;) {
+    this._flags.clear();
+    for (const [flag, on] of Object.entries(flags)) {
+      this._flags.set(flag, on);
+    }
+    this.emit('flagsChanged');
+  }
+
+  /**
+   * Test if a feature flag is enabled.
+   *
+   * This will return false if the feature flags have not yet been received from
+   * the backend. Code that uses a feature flag should handle subsequent changes
+   * to the flag's state by listening for the "flagsChanged" event.
+   */
+  flagEnabled(flag: string): boolean {
+    if (!this._knownFlags.includes(flag)) {
+      warnOnce('Looked up unknown feature', flag);
+      return false;
+    }
+    return this._flags.get(flag) ?? false;
+  }
+
+  /**
+   * Return the state of all feature flags.
+   *
+   * To test whether an individual flag is enabled, use {@link flagEnabled}
+   * instead.
+   */
+  allFlags(): Record&lt;string, boolean&gt; {
+    return Object.fromEntries(this._flags);
+  }
+}
+</td></tr><tr role="row" class="odd"><td class="sorting_1">frame-observer.ts</td><td>Truncated to 6000 bytes due to size &gt; 6000</td><td>application/octet-stream</td><td>8447</td><td>import debounce from 'lodash.debounce';
+
+export const DEBOUNCE_WAIT = 40;
+
+type FrameCallback = (frame: HTMLIFrameElement) =&gt; void;
+
+/**
+ * FrameObserver detects iframes added and deleted from the document.
+ *
+ * To enable annotation, an iframe must be opted-in by adding the
+ * `enable-annotation` attribute.
+ *
+ * We require the `enable-annotation` attribute to avoid the overhead of loading
+ * the client into frames which are not useful to annotate. See
+ * https://github.com/hypothesis/client/issues/530
+ */
+export class FrameObserver {
+  private _element: Element;
+  private _onFrameAdded: FrameCallback;
+  private _onFrameRemoved: FrameCallback;
+  private _annotatableFrames: Set&lt;HTMLIFrameElement&gt;;
+  private _isDisconnected: boolean;
+  private _mutationObserver: MutationObserver;
+
+  /**
+   * @param element - root of the DOM subtree to watch for the addition and
+   *   removal of annotatable iframes
+   * @param onFrameAdded - callback fired when an annotatable iframe is added
+   * @param onFrameRemoved - callback triggered when the annotatable iframe is removed
+   */
+  constructor(
+    element: Element,
+    onFrameAdded: FrameCallback,
+    onFrameRemoved: FrameCallback,
+  ) {
+    this._element = element;
+    this._onFrameAdded = onFrameAdded;
+    this._onFrameRemoved = onFrameRemoved;
+    this._annotatableFrames = new Set&lt;HTMLIFrameElement&gt;();
+    this._isDisconnected = false;
+
+    this._mutationObserver = new MutationObserver(
+      debounce(() =&gt; {
+        this._discoverFrames();
+      }, DEBOUNCE_WAIT),
+    );
+    this._discoverFrames();
+    this._mutationObserver.observe(this._element, {
+      childList: true,
+      subtree: true,
+      attributeFilter: ['enable-annotation'],
+    });
+  }
+
+  disconnect() {
+    this._isDisconnected = true;
+    this._mutationObserver.disconnect();
+  }
+
+  private async _addFrame(frame: HTMLIFrameElement) {
+    this._annotatableFrames.add(frame);
+    try {
+      await onNextDocumentReady(frame);
+      if (this._isDisconnected) {
+        return;
+      }
+      const frameWindow = frame.contentWindow;
+      // This line raises an exception if the iframe is from a different origin
+      frameWindow!.addEventListener('unload', () =&gt; {
+        this._removeFrame(frame);
+      });
+      this._onFrameAdded(frame);
+    } catch {
+      console.warn(
+        `Unable to inject the Hypothesis client (from '${document.location.href}' into a cross-origin frame '${frame.src}')`,
+      );
+    }
+  }
+
+  private _removeFrame(frame: HTMLIFrameElement) {
+    this._annotatableFrames.delete(frame);
+    this._onFrameRemoved(frame);
+  }
+
+  private _discoverFrames() {
+    const frames = new Set&lt;HTMLIFrameElement&gt;(
+      this._element.querySelectorAll('iframe[enable-annotation]'),
+    );
+
+    for (const frame of frames) {
+      if (!this._annotatableFrames.has(frame)) {
+        this._addFrame(frame);
+      }
+    }
+
+    for (const frame of this._annotatableFrames) {
+      if (!frames.has(frame)) {
+        this._removeFrame(frame);
+      }
+    }
+  }
+}
+
+/**
+ * Test if this is the empty document that a new iframe has before the URL
+ * specified by its `src` attribute loads.
+ */
+function hasBlankDocumentThatWillNavigate(frame: HTMLIFrameElement): boolean {
+  return (
+    frame.contentDocument?.location.href === 'about:blank' &amp;&amp;
+    // Do we expect the frame to navigate away from about:blank?
+    frame.hasAttribute('src') &amp;&amp;
+    frame.src !== 'about:blank'
+  );
+}
+
+/**
+ * Wrapper around {@link onDocumentReady} which returns a promise that resolves
+ * the first time that a document in `frame` becomes ready.
+ *
+ * See {@link onDocumentReady} for the definition of _ready_.
+ */
+export function onNextDocumentReady(
+  frame: HTMLIFrameElement,
+): Promise&lt;Document&gt; {
+  return new Promise((resolve, reject) =&gt; {
+    const unsubscribe = onDocumentReady(frame, (err, doc) =&gt; {
+      unsubscribe();
+      if (doc) {
+        resolve(doc);
+      } else {
+        reject(err);
+      }
+    });
+  });
+}
+
+/**
+ * Register a callback that is invoked when the content document
+ * (`frame.contentDocument`) in a same-origin iframe becomes _ready_.
+ *
+ * A document is _ready_ when its `readyState` is either "interactive" or
+ * "complete". It must also not be the empty document with URL "about:blank"
+ * that iframes have before they navigate to the URL specified by their "src"
+ * attribute.
+ *
+ * The callback is fired both for the document that is in the frame when
+ * `onDocumentReady` is called, as well as for new documents that are
+ * subsequently loaded into the same frame.
+ *
+ * If at any time the frame navigates to an iframe that is cross-origin,
+ * the callback will fire with an error. It will fire again for subsequent
+ * navigations, but due to platform limitations, it will only fire after the
+ * next document fully loads (ie. when the frame's `load` event fires).
+ *
+ * @return Callback that unsubscribes from future changes
+ */
+export function onDocumentReady(
+  frame: HTMLIFrameElement,
+  callback: (err: Error | null, document?: Document) =&gt; void,
+  { pollInterval = 10 }: { pollInterval?: number } = {},
+): () =&gt; void {
+  let pollTimer: number | undefined;
+  // Two linting rules are conflicting here, so muting one of them.
+  // This should be fixable by refactoring the whole function, as there are
+  // crossed dependencies between local callbacks, that rely on each other
+  // having been called in a specific order.
+  // eslint-disable-next-line prefer-const
+  let pollForDocumentChange: () =&gt; void;
+
+  // Visited documents for which we have fired the callback or are waiting
+  // to become ready.
+  const documents = new WeakSet();
+
+  const cancelPoll = () =&gt; {
+    clearTimeout(pollTimer);
+    pollTimer = undefined;
+  };
+
+  // Begin polling for a document change when the current document is about
+  // to go away.
+  const pollOnUnload = () =&gt;</td></tr><tr role="row" class="even"><td class="sorting_1">guest.ts</td><td>Truncated to 6000 bytes due to size &gt; 6000</td><td>application/octet-stream</td><td>30499</td><td>import { ListenerCollection } from '@hypothesis/frontend-shared';
+import { TinyEmitter } from 'tiny-emitter';
+
+import { PortFinder, PortRPC } from '../shared/messaging';
+import { generateHexString } from '../shared/random';
+import { matchShortcut } from '../shared/shortcut';
+import type {
+  AnnotationData,
+  Annotator,
+  Anchor,
+  ContentInfoConfig,
+  Destroyable,
+  DocumentInfo,
+  Integration,
+  SidebarLayout,
+  SideBySideOptions,
+} from '../types/annotator';
+import type { Target } from '../types/api';
+import type {
+  HostToGuestEvent,
+  GuestToHostEvent,
+  GuestToSidebarEvent,
+  SidebarToGuestEvent,
+} from '../types/port-rpc-events';
+import { Adder } from './adder';
+import { TextRange } from './anchoring/text-range';
+import { BucketBarClient } from './bucket-bar-client';
+import { LayoutChangeEvent } from './events';
+import { FeatureFlags } from './features';
+import { HighlightClusterController } from './highlight-clusters';
+import {
+  getHighlightsContainingNode,
+  highlightRange,
+  removeAllHighlights,
+  removeHighlights,
+  setHighlightsFocused,
+  setHighlightsVisible,
+} from './highlighter';
+import { createIntegration } from './integrations';
+import { OutsideAssignmentNoticeController } from './outside-assignment-notice';
+import {
+  itemsForRange,
+  isSelectionBackwards,
+  selectionFocusRect,
+  selectedRange,
+} from './range-util';
+import { SelectionObserver } from './selection-observer';
+import { frameFillsAncestor } from './util/frame';
+import { normalizeURI } from './util/url';
+
+/** HTML element created by the highlighter with an associated annotation. */
+type AnnotationHighlight = HTMLElement &amp; { _annotation?: AnnotationData };
+
+/** Return all the annotations tags associated with the selected text. */
+function annotationsForSelection(): string[] {
+  const tags = itemsForRange(
+    selectedRange() ?? new Range(),
+    node =&gt; (node as AnnotationHighlight)._annotation?.$tag,
+  );
+  return tags;
+}
+
+/**
+ * Return the annotation tags associated with any highlights that contain a given
+ * DOM node.
+ */
+function annotationsAt(node: Node): string[] {
+  const items = getHighlightsContainingNode(node)
+    .map(h =&gt; (h as AnnotationHighlight)._annotation)
+    .filter(ann =&gt; ann !== undefined)
+    .map(ann =&gt; ann?.$tag);
+  return items as string[];
+}
+
+/**
+ * Resolve an anchor's associated document region to a concrete `Range`.
+ *
+ * This may fail if anchoring failed or if the document has been mutated since
+ * the anchor was created in a way that invalidates the anchor.
+ */
+function resolveAnchor(anchor: Anchor): Range | null {
+  if (!anchor.range) {
+    return null;
+  }
+  try {
+    return anchor.range.toRange();
+  } catch {
+    return null;
+  }
+}
+
+function removeTextSelection() {
+  document.getSelection()?.removeAllRanges();
+}
+
+/**
+ * Subset of the Hypothesis client configuration that is used by {@link Guest}.
+ */
+export type GuestConfig = {
+  /**
+   * An identifier used by this guest to identify the current frame when
+   * communicating with the sidebar. This is only set in non-host frames.
+   */
+  subFrameIdentifier?: string;
+
+  /** Configures a banner or other indicators showing where the content has come from. */
+  contentInfoBanner?: ContentInfoConfig;
+
+  /**
+   * Promise that the guest should wait for before it attempts to anchor
+   * annotations.
+   */
+  contentReady?: Promise&lt;void&gt;;
+
+  sideBySide?: SideBySideOptions;
+};
+
+/**
+ * Event dispatched by the client when it is about to scroll a highlight into
+ * view.
+ *
+ * The host page can listen for this event in order to reveal the content if
+ * not already visible. If the content will be revealed asynchronously,
+ * {@link waitUntil} can be used to notify the client when it is ready.
+ *
+ * For more flexibility the host page can completely take over scrolling to the
+ * range by calling {@link Event.preventDefault} on the event.
+ */
+export class ScrollToRangeEvent extends CustomEvent&lt;Range&gt; {
+  private _ready: Promise&lt;void&gt; | null;
+
+  /**
+   * @param range - The DOM range that Hypothesis will scroll into view.
+   */
+  constructor(range: Range) {
+    super('scrolltorange', {
+      bubbles: true,
+      cancelable: true,
+      detail: range,
+    });
+
+    this._ready = null;
+  }
+
+  /**
+   * If scrolling was deferred using {@link waitUntil}, returns the promise
+   * that must resolve before the highlight is scrolled to.
+   */
+  get ready(): Promise&lt;void&gt; | null {
+    return this._ready;
+  }
+
+  /**
+   * Provide Hypothesis with a promise that resolves when the content
+   * associated with the event's range is ready to be scrolled into view.
+   */
+  waitUntil(ready: Promise&lt;void&gt;) {
+    this._ready = ready;
+  }
+}
+
+/**
+ * `Guest` is the central class of the annotator that handles anchoring (locating)
+ * annotations in the document when they are fetched by the sidebar, rendering
+ * highlights for them and handling subsequent interactions with the highlights.
+ *
+ * It is also responsible for listening to changes in the current selection
+ * and triggering the display of controls to create new annotations. When one
+ * of these controls is clicked, it creates the new annotation and sends it to
+ * the sidebar.
+ *
+ * Within a browser tab, there is typically one `Guest` instance per frame that
+ * loads Hypothesis (not all frames will be annotation-enabled). In one frame,
+ * usually the top-level one, there will also be an instance of the `Sidebar`
+ * class that shows the sidebar app and surrounding UI. The `Guest` instance in
+ * each frame connects to the sidebar and host frames as part of its
+ * initialization.
+ */
+export class Guest extends TinyEmitter implements Annotator, Destroyable {
+  public element: HTMLElement;
+
+  /** Ranges of the current text selection. */
+  public selectedRanges: Range[];
+
+  /**
+   * The anchors generated by resolving annotation selectors to loca</td></tr><tr role="row" class="odd"><td class="sorting_1">highlight-clusters.tsx</td><td>Included</td><td>application/octet-stream</td><td>5844</td><td>import type {
+  Destroyable,
+  FeatureFlags as IFeatureFlags,
+} from '../types/annotator';
+import type { HighlightCluster } from '../types/shared';
+import ClusterToolbar from './components/ClusterToolbar';
+import { updateClusters } from './highlighter';
+import { PreactContainer } from './util/preact-container';
+
+export type HighlightStyle = {
+  color: string;
+  secondColor: string;
+  thirdColor: string;
+};
+
+export type HighlightStyles = Record&lt;string, HighlightStyle&gt;;
+export type AppliedStyles = Record&lt;HighlightCluster, keyof HighlightStyles&gt;;
+
+// Available styles that users can apply to highlight clusters
+export const highlightStyles: HighlightStyles = {
+  transparent: {
+    color: 'transparent',
+    secondColor: 'transparent',
+    thirdColor: 'transparent',
+  },
+  pink: {
+    color: 'var(--hypothesis-color-pink)',
+    secondColor: 'var(--hypothesis-color-pink-1)',
+    thirdColor: 'var(--hypothesis-color-pink-2)',
+  },
+  orange: {
+    color: 'var(--hypothesis-color-orange)',
+    secondColor: 'var(--hypothesis-color-orange-1)',
+    thirdColor: 'var(--hypothesis-color-orange-2)',
+  },
+  yellow: {
+    color: 'var(--hypothesis-color-yellow)',
+    secondColor: 'var(--hypothesis-color-yellow-1)',
+    thirdColor: 'var(--hypothesis-color-yellow-2)',
+  },
+  green: {
+    color: 'var(--hypothesis-color-green)',
+    secondColor: 'var(--hypothesis-color-green-1)',
+    thirdColor: 'var(--hypothesis-color-green-2)',
+  },
+  purple: {
+    color: 'var(--hypothesis-color-purple)',
+    secondColor: 'var(--hypothesis-color-purple-1)',
+    thirdColor: 'var(--hypothesis-color-purple-2)',
+  },
+  grey: {
+    color: 'var(--hypothesis-color-grey)',
+    secondColor: 'var(--hypothesis-color-grey-1)',
+    thirdColor: 'var(--hypothesis-color-grey-2)',
+  },
+};
+
+// The default styles applied to each highlight cluster. For now, this is
+// hard-coded.
+export const defaultClusterStyles: AppliedStyles = {
+  'other-content': 'yellow',
+  'user-annotations': 'orange',
+  'user-highlights': 'purple',
+};
+
+export class HighlightClusterController implements Destroyable {
+  appliedStyles: AppliedStyles;
+  private _container: PreactContainer;
+  private _element: HTMLElement;
+  private _features: IFeatureFlags;
+  private _updateTimeout?: number;
+
+  constructor(element: HTMLElement, options: { features: IFeatureFlags }) {
+    this._element = element;
+    this._features = options.features;
+
+    this._container = new PreactContainer('highlight-cluster-toolbar', () =&gt;
+      this._render(),
+    );
+    this._element.appendChild(this._container.element);
+
+    // For now, the controls are fixed at top-left of screen. This is temporary.
+    Object.assign(this._container.element.style, {
+      position: 'fixed',
+      top: `${this._element.offsetTop + 4}px`,
+      left: '4px',
+    });
+
+    this.appliedStyles = defaultClusterStyles;
+
+    this._init();
+
+    this._features.on('flagsChanged', () =&gt; {
+      this._activate(this._isActive());
+    });
+
+    this._container.render();
+  }
+
+  destroy() {
+    clearTimeout(this._updateTimeout);
+    this._activate(false); // De-activate cluster styling
+    this._container.destroy();
+  }
+
+  /**
+   * Indicate that the set of highlights in the document has been dirtied and we
+   * should schedule an update to highlight data attributes and stacking order.
+   */
+  scheduleClusterUpdates() {
+    clearTimeout(this._updateTimeout);
+    this._updateTimeout = setTimeout(() =&gt; this._updateClusters(), 100);
+  }
+
+  /**
+   * Set initial values for :root CSS custom properties (variables) based on the
+   * applied styles for each cluster. This has no effect if this feature
+   * is not active.
+   */
+  _init() {
+    for (const cluster of Object.keys(this.appliedStyles) as Array&lt;
+      keyof typeof this.appliedStyles
+    &gt;) {
+      this._setClusterStyles(cluster, this.appliedStyles[cluster]);
+    }
+
+    this._activate(this._isActive());
+  }
+
+  _updateClusters() {
+    if (!this._isActive()) {
+      /* istanbul ignore next */
+      return;
+    }
+    updateClusters(this._element);
+  }
+
+  _isActive() {
+    return this._features.flagEnabled('styled_highlight_clusters');
+  }
+
+  /**
+   * Activate cluster highlighting if `active` is set.
+   */
+  _activate(active: boolean) {
+    this._element.classList.toggle('hypothesis-highlights-clustered', active);
+    this._container.render();
+  }
+
+  /**
+   * Set a value for an individual CSS variable at :root
+   */
+  _setClusterStyle(key: string, value: string) {
+    document.documentElement.style.setProperty(key, value);
+  }
+
+  /**
+   * Set CSS variables for the highlight `cluster` to apply the
+   * {@link HighlightStyle} `highlightStyles[styleName]`
+   */
+  _setClusterStyles(
+    cluster: HighlightCluster,
+    styleName: keyof typeof highlightStyles,
+  ) {
+    const styleRules = highlightStyles[styleName];
+
+    for (const ruleName of Object.keys(styleRules) as Array&lt;
+      keyof HighlightStyle
+    &gt;) {
+      this._setClusterStyle(
+        `--hypothesis-${cluster}-${ruleName}`,
+        styleRules[ruleName] as string,
+      );
+    }
+  }
+
+  /**
+   * Respond to user input to change the applied style for a cluster
+   */
+  _onChangeClusterStyle(
+    cluster: HighlightCluster,
+    styleName: keyof typeof highlightStyles,
+  ) {
+    this.appliedStyles[cluster] = styleName;
+    this._setClusterStyles(cluster, styleName);
+    this._container.render();
+  }
+
+  _render() {
+    return (
+      &lt;ClusterToolbar
+        active={this._isActive()}
+        availableStyles={highlightStyles}
+        currentStyles={this.appliedStyles}
+        onStyleChange={(cluster, styleName) =&gt;
+          this._onChangeClusterStyle(cluster, styleName)
+        }
+      /&gt;
+    );
+  }
+}
+</td></tr><tr role="row" class="even"><td class="sorting_1">highlighter.ts</td><td>Truncated to 6000 bytes due to size &gt; 6000</td><td>application/octet-stream</td><td>20625</td><td>import classnames from 'classnames';
+
+import { generateHexString } from '../shared/random';
+import type { HighlightCluster } from '../types/shared';
+import { isInPlaceholder } from './anchoring/placeholder';
+import { isNodeInRange } from './range-util';
+
+const SVG_NAMESPACE = 'http://www.w3.org/2000/svg';
+
+type HighlightProps = {
+  // Associated SVG rect drawn to represent this highlight (in PDFs)
+  svgHighlight?: SVGRectElement;
+};
+
+export type HighlightElement = HTMLElement &amp; HighlightProps;
+
+export const clusterValues: HighlightCluster[] = [
+  'user-annotations',
+  'user-highlights',
+  'other-content',
+];
+
+/**
+ * Return the canvas element underneath a highlight element in a PDF page's
+ * text layer.
+ *
+ * Returns `null` if the highlight is not above a PDF canvas.
+ */
+function getPDFCanvas(highlightEl: HighlightElement): HTMLCanvasElement | null {
+  // This code assumes that PDF.js renders pages with a structure like:
+  //
+  // &lt;div class="page"&gt;
+  //   &lt;div class="canvasWrapper"&gt;
+  //     &lt;canvas&gt;&lt;/canvas&gt; &lt;!-- The rendered PDF page --&gt;
+  //   &lt;/div&gt;
+  //   &lt;div class="textLayer"&gt;
+  //      &lt;!-- Transparent text layer with text spans used to enable text selection --&gt;
+  //   &lt;/div&gt;
+  // &lt;/div&gt;
+  //
+  // It also assumes that the `highlightEl` element is somewhere under
+  // the `.textLayer` div.
+
+  const pageEl = highlightEl.closest('.page');
+  if (!pageEl) {
+    return null;
+  }
+
+  const canvasEl = pageEl.querySelector('.canvasWrapper &gt; canvas');
+  if (!canvasEl) {
+    return null;
+  }
+
+  return canvasEl as HTMLCanvasElement;
+}
+
+/**
+ * Draw highlights in an SVG layer overlaid on top of a PDF.js canvas.
+ *
+ * The created SVG elements are stored in the `svgHighlight` property of
+ * each `HighlightElement`.
+ *
+ * @param highlightEls -
+ *   An element that wraps the highlighted text in the transparent text layer
+ *   above the PDF.
+ * @param [cssClass] - CSS class(es) to add to the SVG highlight elements
+ */
+function drawHighlightsAbovePDFCanvas(
+  highlightEls: HighlightElement[],
+  cssClass?: string,
+) {
+  if (highlightEls.length === 0) {
+    return;
+  }
+
+  // Get the &lt;canvas&gt; for the PDF page containing the highlight. We assume all
+  // the highlights are on the same page.
+  const canvasEl = getPDFCanvas(highlightEls[0]);
+  if (!canvasEl || !canvasEl.parentElement) {
+    return;
+  }
+
+  let svgHighlightLayer = canvasEl.parentElement.querySelector(
+    '.hypothesis-highlight-layer',
+  ) as SVGSVGElement | null;
+
+  if (!svgHighlightLayer) {
+    // Create SVG layer. This must be in the same stacking context as
+    // the canvas so that CSS `mix-blend-mode` can be used to control how SVG
+    // content blends with the canvas below.
+    svgHighlightLayer = document.createElementNS(SVG_NAMESPACE, 'svg');
+    svgHighlightLayer.setAttribute('class', 'hypothesis-highlight-layer');
+    canvasEl.parentElement.appendChild(svgHighlightLayer);
+
+    // Overlay SVG layer above canvas.
+    canvasEl.parentElement.style.position = 'relative';
+
+    const svgStyle = svgHighlightLayer.style;
+    svgStyle.position = 'absolute';
+    svgStyle.left = '0';
+    svgStyle.top = '0';
+    svgStyle.width = '100%';
+    svgStyle.height = '100%';
+
+    // Use multiply blending so that highlights drawn on top of text darken it
+    // rather than making it lighter. This improves contrast and thus readability
+    // of highlighted text, especially for overlapping highlights.
+    //
+    // This choice optimizes for the common case of dark text on a light background.
+    svgStyle.mixBlendMode = 'multiply';
+  }
+
+  const canvasRect = canvasEl.getBoundingClientRect();
+  const highlightRects = highlightEls.map(highlightEl =&gt; {
+    const highlightRect = highlightEl.getBoundingClientRect();
+
+    // Create SVG element for the current highlight element.
+    const rect = document.createElementNS(SVG_NAMESPACE, 'rect');
+    rect.setAttribute('x', (highlightRect.left - canvasRect.left).toString());
+    rect.setAttribute('y', (highlightRect.top - canvasRect.top).toString());
+    rect.setAttribute('width', highlightRect.width.toString());
+    rect.setAttribute('height', highlightRect.height.toString());
+    rect.setAttribute(
+      'class',
+      classnames('hypothesis-svg-highlight', cssClass),
+    );
+
+    // Make the highlight in the text layer transparent.
+    highlightEl.classList.add('is-transparent');
+
+    // Associate SVG element with highlight for use by `removeHighlights`.
+    highlightEl.svgHighlight = rect;
+
+    return rect;
+  });
+
+  svgHighlightLayer.append(...highlightRects);
+}
+
+/**
+ * Return text nodes which are entirely inside `range`.
+ *
+ * If a range starts or ends part-way through a text node, the node is split
+ * and the part inside the range is returned.
+ */
+function wholeTextNodesInRange(range: Range): Text[] {
+  if (range.collapsed) {
+    // Exit early for an empty range to avoid an edge case that breaks the algorithm
+    // below. Splitting a text node at the start of an empty range can leave the
+    // range ending in the left part rather than the right part.
+    return [];
+  }
+
+  let root = range.commonAncestorContainer as Node | null;
+  if (root &amp;&amp; root.nodeType !== Node.ELEMENT_NODE) {
+    // If the common ancestor is not an element, set it to the parent element to
+    // ensure that the loop below visits any text nodes generated by splitting
+    // the common ancestor.
+    //
+    // Note that `parentElement` may be `null`.
+    root = root.parentElement;
+  }
+  if (!root) {
+    // If there is no root element then we won't be able to insert highlights,
+    // so exit here.
+    return [];
+  }
+
+  const textNodes = [];
+  const nodeIter = root!.ownerDocument!.createNodeIterator(
+    root,
+    NodeFilter.SHOW_TEXT, // Only return `Text` nodes.
+  );
+  let node;
+  while ((node = nodeIter.nextNode())) {
+    if (!isNodeInRange(range, node)) {
+      cont</td></tr><tr role="row" class="odd"><td class="sorting_1">hypothesis-injector.ts</td><td>Included</td><td>application/octet-stream</td><td>4760</td><td>import { parseJsonConfig } from '../boot/parse-json-config';
+import { generateHexString } from '../shared/random';
+import type { Destroyable } from '../types/annotator';
+import { onNextDocumentReady, FrameObserver } from './frame-observer';
+
+/**
+ * Options for injecting the client into child frames.
+ *
+ * This includes the URL of the client's boot script, plus configuration
+ * for the client when it loads in the child frame.
+ */
+export type InjectConfig = { clientUrl: string } &amp; Record&lt;string, unknown&gt;;
+
+/**
+ * HypothesisInjector injects the Hypothesis client into same-origin iframes.
+ *
+ * The client will be injected automatically into frames that have the
+ * `enable-annotation` attribute set (see {@link FrameObserver}) and can be
+ * manually injected into other frames using {@link injectClient}.
+ */
+export class HypothesisInjector implements Destroyable {
+  private _config: InjectConfig;
+  private _frameObserver: FrameObserver;
+
+  /**
+   * @param element - root of the DOM subtree to watch for the addition and
+   *   removal of annotatable iframes
+   */
+  constructor(element: Element, config: InjectConfig) {
+    this._config = config;
+    this._frameObserver = new FrameObserver(
+      element,
+      frame =&gt; injectClient(frame, config), // Frame added callback
+      () =&gt; {}, // Frame removed callback
+    );
+  }
+
+  /**
+   * Disables the injection of the Hypothesis client into child iframes.
+   */
+  destroy() {
+    this._frameObserver.disconnect();
+  }
+}
+
+/**
+ * Check if the client was added to a frame by {@link injectClient}.
+ */
+function hasHypothesis(iframe: HTMLIFrameElement) {
+  const iframeDocument = iframe.contentDocument!;
+  return iframeDocument.querySelector('script.js-hypothesis-config') !== null;
+}
+
+/**
+ * Remove the temporary client configuration added to a document by
+ * {@link injectClient} or {@link HypothesisInjector}.
+ */
+export function removeTemporaryClientConfig(document_: Document = document) {
+  const tempConfigEls = Array.from(
+    document_.querySelectorAll(
+      'script.js-hypothesis-config[data-remove-on-unload]',
+    ),
+  );
+  tempConfigEls.forEach(el =&gt; el.remove());
+}
+
+/**
+ * Inject Hypothesis client into a frame.
+ *
+ * IMPORTANT: This method requires that the iframe is same-origin
+ * (frame.contentDocument|contentWindow is not null).
+ *
+ * This waits for the frame to finish loading before injecting the client.
+ * See {@link onDocumentReady}.
+ *
+ * This function does nothing if the client has already been added to the frame.
+ * This is determined by the presence of temporary configuration `&lt;script&gt;`s
+ * added by this function, which can be removed with {@link removeTemporaryClientConfig}.
+ *
+ * @param frameId - The ID for the guest frame. If none is provided, the guest
+ *   will use a new randomly-generated ID.
+ */
+export async function injectClient(
+  frame: HTMLIFrameElement,
+  config: InjectConfig,
+  frameId?: string,
+) {
+  if (hasHypothesis(frame)) {
+    return;
+  }
+
+  await onNextDocumentReady(frame);
+
+  // Propagate the client resource locations from the current frame.
+  //
+  // These settings are set only in the browser extension and not by the
+  // embedded client (served by h).
+  //
+  // We could potentially do this by allowing these settings to be part of
+  // the "annotator" config (see `annotator/config/index.js`) which gets passed
+  // to the constructor.
+  const { assetRoot, notebookAppUrl, profileAppUrl, sidebarAppUrl } =
+    parseJsonConfig(document);
+
+  const injectedConfig = {
+    ...config,
+
+    assetRoot,
+
+    // FIXME - We propagate these settings because the boot script expects them,
+    // but they shouldn't actually be needed when launching the client in a
+    // frame as a guest only (ie. no sidebar). A caveat is that the
+    // `&lt;link&gt;` element generated using the `sidebarAppUrl` value does also get
+    // used for other purposes by the annotator entry point.
+    notebookAppUrl,
+    profileAppUrl,
+    sidebarAppUrl,
+
+    // Tell the client that it should load as a guest only (no sidebar).
+    subFrameIdentifier: frameId ?? generateHexString(10),
+  };
+
+  const configElement = document.createElement('script');
+  configElement.className = 'js-hypothesis-config';
+  configElement.setAttribute('data-remove-on-unload', '');
+  configElement.type = 'application/json';
+  configElement.innerText = JSON.stringify(injectedConfig);
+
+  const bootScript = document.createElement('script');
+  bootScript.async = true;
+  bootScript.src = config.clientUrl;
+
+  const iframeDocument = frame.contentDocument!;
+  iframeDocument.body.appendChild(configElement);
+  iframeDocument.body.appendChild(bootScript);
+}
+</td></tr><tr role="row" class="even"><td class="sorting_1">index.ts</td><td>Truncated to 6000 bytes due to size &gt; 6000</td><td>application/octet-stream</td><td>6758</td><td>// Load polyfill for :focus-visible pseudo-class.
+import 'focus-visible';
+// Enable debug checks for Preact. Removed in prod builds by Rollup config.
+import 'preact/debug';
+
+import {
+  PortProvider,
+  installPortCloseWorkaroundForSafari,
+} from '../shared/messaging';
+import type { Destroyable } from '../types/annotator';
+import type { NotebookConfig } from './components/NotebookModal';
+import type { ProfileConfig } from './components/ProfileModal';
+import { getConfig } from './config/index';
+import { Guest } from './guest';
+import type { GuestConfig } from './guest';
+import {
+  HypothesisInjector,
+  removeTemporaryClientConfig,
+} from './hypothesis-injector';
+import type { InjectConfig } from './hypothesis-injector';
+import {
+  VitalSourceInjector,
+  vitalSourceFrameRole,
+} from './integrations/vitalsource';
+import { Notebook } from './notebook';
+import { Profile } from './profile';
+import { Sidebar } from './sidebar';
+import type { SidebarConfig } from './sidebar';
+import { EventBus } from './util/emitter';
+
+// Look up the URL of the sidebar. This element is added to the page by the
+// boot script before the "annotator" bundle loads.
+const sidebarLinkElement = document.querySelector(
+  'link[type="application/annotator+html"][rel="sidebar"]',
+) as HTMLLinkElement;
+
+/**
+ * Find and remove existing `&lt;hypothesis-sidebar&gt;` elements, and other
+ * Hypothesis application containers, which are created in the host frame.
+ *
+ * These might exist if the current page is a local snapshot of a web page saved
+ * with the browser's "Save Page As" feature. In that case the snapshot can
+ * include both the annotator bundle JS and the DOM elements it created. See
+ * https://github.com/hypothesis/client/issues/5827.
+ *
+ * Having duplicates of these elements is problematic because they contain
+ * iframed apps which will try to communicate with the host frame, and the
+ * host frame assumes there is only one of each.
+ *
+ * Returns true if any such elements were found.
+ */
+function removeExistingHypothesisAppElements(): boolean {
+  const appElements = document.querySelectorAll(
+    ['hypothesis-sidebar', 'hypothesis-notebook', 'hypothesis-profile'].join(
+      ',',
+    ),
+  );
+  appElements.forEach(el =&gt; el.remove());
+  return appElements.length &gt; 0;
+}
+
+/**
+ * Entry point for the part of the Hypothesis client that runs in the page being
+ * annotated.
+ *
+ * Depending on the client configuration in the current frame, this can
+ * initialize different functionality. In "host" frames the sidebar controls and
+ * iframe containing the sidebar application are created. In "guest" frames the
+ * functionality to support anchoring and creating annotations is loaded. An
+ * instance of Hypothesis will have one host frame, one sidebar frame and one or
+ * more guest frames. The most common case is that the host frame, where the
+ * client is initially loaded, is also the only guest frame.
+ */
+function init() {
+  const annotatorConfig = getConfig('annotator') as GuestConfig &amp; InjectConfig;
+
+  let resolveUnloadRequested = () =&gt; {};
+  const unloadRequested = new Promise&lt;void&gt;(resolve =&gt; {
+    resolveUnloadRequested = resolve;
+  });
+  sidebarLinkElement.addEventListener('destroy', resolveUnloadRequested);
+
+  const hostFrame = annotatorConfig.subFrameIdentifier ? window.parent : window;
+
+  const destroyables = [] as Destroyable[];
+
+  if (hostFrame === window) {
+    if (removeExistingHypothesisAppElements()) {
+      // If there were existing `&lt;hypothesis-sidebar&gt;` etc. elements, we are in
+      // an "abnormal" environment such as a snapshot of a web page where
+      // Hypothesis was loaded. We assume we can't function in such an
+      // environment, so we clean up the previous elements and abort.
+      console.warn(
+        'Hypothesis did not load because it found an existing instance on the page.',
+      );
+      return;
+    }
+
+    // Ensure port "close" notifications from eg. guest frames are delivered properly.
+    const removeWorkaround = installPortCloseWorkaroundForSafari();
+    destroyables.push({ destroy: removeWorkaround });
+
+    const sidebarConfig = getConfig('sidebar') as SidebarConfig;
+
+    const hypothesisAppsOrigin = new URL(sidebarConfig.sidebarAppUrl).origin;
+    const portProvider = new PortProvider(hypothesisAppsOrigin);
+
+    const eventBus = new EventBus();
+    const sidebar = new Sidebar(document.body, eventBus, sidebarConfig);
+    const notebook = new Notebook(
+      document.body,
+      eventBus,
+      getConfig('notebook') as NotebookConfig,
+    );
+    const profile = new Profile(
+      document.body,
+      eventBus,
+      getConfig('profile') as ProfileConfig,
+    );
+
+    portProvider.on('frameConnected', (source, port) =&gt;
+      sidebar.onFrameConnected(source, port),
+    );
+    destroyables.push(portProvider, sidebar, notebook, profile);
+  }
+
+  const vsFrameRole = vitalSourceFrameRole();
+  if (vsFrameRole === 'container') {
+    const vitalSourceInjector = new VitalSourceInjector(annotatorConfig);
+    destroyables.push(vitalSourceInjector);
+  } else {
+    // Set up automatic injection of the client into iframes in this frame.
+    const hypothesisInjector = new HypothesisInjector(
+      document.body,
+      annotatorConfig,
+    );
+
+    // Create the guest that handles creating annotations and displaying highlights.
+    const guest = new Guest(document.body, annotatorConfig, hostFrame);
+
+    // When the client is unloaded in the host frame, also unload it from any
+    // connected iframes.
+    guest.on('hostDisconnected', resolveUnloadRequested);
+
+    destroyables.push(hypothesisInjector, guest);
+  }
+
+  unloadRequested.then(() =&gt; {
+    destroyables.forEach(instance =&gt; instance.destroy());
+
+    // Remove all the `&lt;link&gt;`, `&lt;script&gt;` and `&lt;style&gt;` elements added to the
+    // page by the boot script.
+    const clientAssets = document.querySelectorAll('[data-h</td></tr><tr role="row" class="odd"><td class="sorting_1">notebook.tsx</td><td>Included</td><td>application/octet-stream</td><td>870</td><td>import type { Destroyable } from '../types/annotator';
+import NotebookModal from './components/NotebookModal';
+import type { NotebookConfig } from './components/NotebookModal';
+import type { EventBus } from './util/emitter';
+import { PreactContainer } from './util/preact-container';
+
+export class Notebook implements Destroyable {
+  private _container: PreactContainer;
+
+  /**
+   * @param eventBus - Enables communication between components sharing the
+   *   same eventBus
+   */
+  constructor(
+    element: HTMLElement,
+    eventBus: EventBus,
+    config: NotebookConfig,
+  ) {
+    this._container = new PreactContainer('notebook', () =&gt; (
+      &lt;NotebookModal eventBus={eventBus} config={config} /&gt;
+    ));
+    element.append(this._container.element);
+    this._container.render();
+  }
+
+  destroy() {
+    this._container.destroy();
+  }
+}
+</td></tr><tr role="row" class="even"><td class="sorting_1">outside-assignment-notice.tsx</td><td>Included</td><td>application/octet-stream</td><td>1024</td><td>import type { Destroyable } from '../types/annotator';
+import OutsideAssignmentNotice from './components/OutsideAssignmentNotice';
+import { PreactContainer } from './util/preact-container';
+
+/**
+ * Notice displayed in the guest frame informing users that they are viewing
+ * part of the document that is outside the scope of the current activity (eg.
+ * a classroom assignment).
+ */
+export class OutsideAssignmentNoticeController implements Destroyable {
+  private _container: PreactContainer;
+  private _visible: boolean;
+
+  constructor(container: HTMLElement) {
+    this._visible = false;
+    this._container = new PreactContainer('notice', () =&gt; this._render());
+    container.appendChild(this._container.element);
+  }
+
+  destroy() {
+    this._container.destroy();
+  }
+
+  setVisible(visible: boolean) {
+    this._visible = visible;
+    this._container.render();
+  }
+
+  private _render() {
+    if (!this._visible) {
+      return null;
+    }
+    return &lt;OutsideAssignmentNotice /&gt;;
+  }
+}
+</td></tr><tr role="row" class="odd"><td class="sorting_1">profile.tsx</td><td>Included</td><td>application/octet-stream</td><td>734</td><td>import type { Destroyable } from '../types/annotator';
+import type { ProfileConfig } from './components/ProfileModal';
+import ProfileModal from './components/ProfileModal';
+import type { EventBus } from './util/emitter';
+import { PreactContainer } from './util/preact-container';
+
+export class Profile implements Destroyable {
+  private _container: PreactContainer;
+
+  constructor(element: HTMLElement, eventBus: EventBus, config: ProfileConfig) {
+    this._container = new PreactContainer('profile', () =&gt; (
+      &lt;ProfileModal eventBus={eventBus} config={config} /&gt;
+    ));
+    element.append(this._container.element);
+    this._container.render();
+  }
+
+  destroy(): void {
+    this._container.destroy();
+  }
+}
+</td></tr><tr role="row" class="even"><td class="sorting_1">range-util.ts</td><td>Included</td><td>application/octet-stream</td><td>5979</td><td>import { nodeIsText } from './util/node';
+
+/**
+ * Return a range that spans from the earlier of a or b's start point to
+ * the later of a or b's end point, in document order.
+ */
+function unionRanges(a: Range, b: Range): Range {
+  const result = new Range();
+
+  if (a.compareBoundaryPoints(Range.START_TO_START, b) &lt;= 0) {
+    result.setStart(a.startContainer, a.startOffset);
+  } else {
+    result.setStart(b.startContainer, b.startOffset);
+  }
+
+  if (a.compareBoundaryPoints(Range.END_TO_END, b) &gt;= 0) {
+    result.setEnd(a.endContainer, a.endOffset);
+  } else {
+    result.setEnd(b.endContainer, b.endOffset);
+  }
+
+  return result;
+}
+
+/**
+ * Return the currently selected {@link Range} or `null` if there is no
+ * selection.
+ */
+export function selectedRange(
+  selection: Selection | null = document.getSelection(),
+): Range | null {
+  if (!selection || selection.rangeCount === 0) {
+    return null;
+  }
+
+  let range = selection.getRangeAt(0);
+
+  // Work around a Firefox issue [1] where a selection can have multiple ranges,
+  // in contradiction to the Selection API [2] spec. The workaround is to
+  // union the ranges to produce the same single range as other browsers.
+  //
+  // [1] https://bugzilla.mozilla.org/show_bug.cgi?id=1773065
+  // [2] https://w3c.github.io/selection-api/#dom-selection-rangecount
+  for (let i = 1; i &lt; selection.rangeCount; i++) {
+    range = unionRanges(range, selection.getRangeAt(i));
+  }
+
+  if (range.collapsed) {
+    return null;
+  }
+  return range;
+}
+
+/**
+ * Returns true if the start point of a selection occurs after the end point,
+ * in document order.
+ */
+export function isSelectionBackwards(selection: Selection) {
+  if (selection.focusNode === selection.anchorNode) {
+    return selection.focusOffset &lt; selection.anchorOffset;
+  }
+
+  const range = selectedRange(selection)!;
+
+  // Does not work correctly on iOS when selecting nodes backwards.
+  // https://bugs.webkit.org/show_bug.cgi?id=220523
+  return range.startContainer === selection.focusNode;
+}
+
+/**
+ * Returns true if any part of `node` lies within `range`.
+ */
+export function isNodeInRange(range: Range, node: Node) {
+  try {
+    const length = node.nodeValue?.length ?? node.childNodes.length;
+    return (
+      // Check start of node is before end of range.
+      range.comparePoint(node, 0) &lt;= 0 &amp;&amp;
+      // Check end of node is after start of range.
+      range.comparePoint(node, length) &gt;= 0
+    );
+  } catch {
+    // `comparePoint` may fail if the `range` and `node` do not share a common
+    // ancestor or `node` is a doctype.
+    return false;
+  }
+}
+
+/**
+ * Iterate over all Node(s) which overlap `range` in document order and invoke
+ * `callback` for each of them.
+ */
+export function forEachNodeInRange(range: Range, callback: (n: Node) =&gt; void) {
+  const root = range.commonAncestorContainer;
+  const nodeIter: NodeIterator = root.ownerDocument!.createNodeIterator(
+    root,
+    NodeFilter.SHOW_ALL,
+  );
+
+  let currentNode;
+  while ((currentNode = nodeIter.nextNode())) {
+    if (isNodeInRange(range, currentNode)) {
+      callback(currentNode);
+    }
+  }
+}
+
+function textNodeContainsText(textNode: Text): boolean {
+  const whitespaceOnly = /^\s*$/;
+  return !textNode.textContent!.match(whitespaceOnly);
+}
+
+/**
+ * Returns the bounding rectangles of non-whitespace text nodes in `range`.
+ *
+ * @return Array of bounding rects in viewport coordinates.
+ */
+export function getTextBoundingBoxes(range: Range): DOMRect[] {
+  const textNodes: Text[] = [];
+  forEachNodeInRange(range, node =&gt; {
+    if (nodeIsText(node) &amp;&amp; textNodeContainsText(node)) {
+      textNodes.push(node);
+    }
+  });
+
+  return textNodes.flatMap(node =&gt; {
+    const nodeRange = node.ownerDocument.createRange();
+    nodeRange.selectNodeContents(node);
+    if (node === range.startContainer) {
+      nodeRange.setStart(node, range.startOffset);
+    }
+    if (node === range.endContainer) {
+      nodeRange.setEnd(node, range.endOffset);
+    }
+    if (nodeRange.collapsed) {
+      // If the range ends at the start of this text node or starts at the end
+      // of this node then do not include it.
+      return [];
+    }
+
+    // Measure the range and translate from viewport to document coordinates
+    const viewportRects = Array.from(nodeRange.getClientRects());
+    nodeRange.detach();
+    return viewportRects;
+  });
+}
+
+/**
+ * Returns the rectangle, in viewport coordinates, for the line of text
+ * containing the focus point of a Selection.
+ *
+ * Returns null if the selection is empty.
+ */
+export function selectionFocusRect(selection: Selection): DOMRect | null {
+  const range = selectedRange(selection);
+  if (!range) {
+    return null;
+  }
+  const textBoxes = getTextBoundingBoxes(range);
+  if (textBoxes.length === 0) {
+    return null;
+  }
+
+  if (isSelectionBackwards(selection)) {
+    return textBoxes[0];
+  } else {
+    return textBoxes[textBoxes.length - 1];
+  }
+}
+
+/**
+ * Retrieve a set of items associated with nodes in a given range.
+ *
+ * An `item` can be any data that the caller wishes to compute from or associate
+ * with a node. Only unique items, as determined by `Object.is`, are returned.
+ *
+ * @param itemForNode - Callback returning the item for a given node
+ */
+export function itemsForRange&lt;T&gt;(
+  range: Range,
+  itemForNode: (n: Node) =&gt; NonNullable&lt;T&gt; | null | undefined,
+): NonNullable&lt;T&gt;[] {
+  const checkedNodes = new Set&lt;Node&gt;();
+  const items = new Set&lt;NonNullable&lt;T&gt;&gt;();
+
+  forEachNodeInRange(range, (current: Node | null) =&gt; {
+    while (current) {
+      if (checkedNodes.has(current)) {
+        break;
+      }
+      checkedNodes.add(current);
+
+      const item = itemForNode(current);
+      if (item !== null &amp;&amp; item !== undefined) {
+        items.add(item);
+      }
+
+      current = current.parentNode;
+    }
+  });
+
+  return [...items];
+}
+</td></tr><tr role="row" class="odd"><td class="sorting_1">selection-observer.ts</td><td>Included</td><td>application/octet-stream</td><td>2990</td><td>import { ListenerCollection } from '@hypothesis/frontend-shared';
+
+import { selectedRange } from './range-util';
+
+/**
+ * An observer that watches for and buffers changes to the document's current selection.
+ */
+export class SelectionObserver {
+  /** Tracks the timeout ID of the last scheduled callback */
+  private _pendingCallback: number | null;
+  private _document: Document;
+  private _listeners: ListenerCollection;
+
+  /**
+   * Start observing changes to the current selection in the document.
+   *
+   * @param callback - Callback invoked with the selected region of the document
+   *                   when it has changed.
+   * @param document_ - Test seam
+   */
+  constructor(
+    callback: (range: Range | null) =&gt; void,
+    document_: Document = document,
+  ) {
+    let isMouseDown = false;
+
+    this._pendingCallback = null;
+
+    const scheduleCallback = (delay = 10) =&gt; {
+      this._pendingCallback = setTimeout(() =&gt; {
+        callback(selectedRange(document_.getSelection()));
+      }, delay);
+    };
+
+    const eventHandler = (event: Event) =&gt; {
+      if (event.type === 'mousedown') {
+        isMouseDown = true;
+      }
+      if (event.type === 'mouseup') {
+        isMouseDown = false;
+      }
+
+      // If the user makes a selection with the mouse, wait until they release
+      // it before reporting a selection change.
+      if (isMouseDown) {
+        return;
+      }
+
+      this._cancelPendingCallback();
+
+      // Schedule a notification after a short delay. The delay serves two
+      // purposes:
+      //
+      // - If this handler was called as a result of a 'mouseup' event then the
+      //   selection will not be updated until the next tick of the event loop.
+      //   In this case we only need a short delay.
+      //
+      // - If the user is changing the selection with a non-mouse input (eg.
+      //   keyboard or selection handles on mobile) this buffers updates and
+      //   makes sure that we only report one when the update has stopped
+      //   changing. In this case we want a longer delay.
+
+      const delay = event.type === 'mouseup' ? 10 : 100;
+      scheduleCallback(delay);
+    };
+
+    this._document = document_;
+    this._listeners = new ListenerCollection();
+
+    this._listeners.add(document_, 'selectionchange', eventHandler);
+
+    // Mouse events are handled on the body because propagation may be stopped
+    // before they reach the document in some environments (eg. VitalSource).
+    this._listeners.add(document_.body, 'mousedown', eventHandler);
+    this._listeners.add(document_.body, 'mouseup', eventHandler);
+
+    // Report the initial selection.
+    scheduleCallback(1);
+  }
+
+  disconnect() {
+    this._listeners.removeAll();
+    this._cancelPendingCallback();
+  }
+
+  private _cancelPendingCallback() {
+    if (this._pendingCallback) {
+      clearTimeout(this._pendingCallback);
+      this._pendingCallback = null;
+    }
+  }
+}
+</td></tr><tr role="row" class="even"><td class="sorting_1">sidebar-trigger.ts</td><td>Included</td><td>application/octet-stream</td><td>631</td><td>const SIDEBAR_TRIGGER_BTN_ATTR = 'data-hypothesis-trigger';
+
+/**
+ * Show the sidebar when user clicks on an element with the
+ * trigger data attribute.
+ *
+ * @param rootEl - The DOM element which contains the trigger elements.
+ * @param showFn - Function which shows the sidebar.
+ */
+export function sidebarTrigger(rootEl: Element, showFn: () =&gt; void) {
+  const triggerElems = rootEl.querySelectorAll(
+    '[' + SIDEBAR_TRIGGER_BTN_ATTR + ']',
+  );
+
+  Array.from(triggerElems).forEach(triggerElem =&gt; {
+    triggerElem.addEventListener('click', e =&gt; {
+      showFn();
+      e.stopPropagation();
+    });
+  });
+}
+</td></tr><tr role="row" class="odd"><td class="sorting_1">sidebar.tsx</td><td>Truncated to 6000 bytes due to size &gt; 6000</td><td>application/octet-stream</td><td>23784</td><td>import type { ToastMessage } from '@hypothesis/frontend-shared';
+import { ListenerCollection } from '@hypothesis/frontend-shared';
+import classnames from 'classnames';
+import { render } from 'preact';
+
+import { addConfigFragment } from '../shared/config-fragment';
+import { sendErrorsTo } from '../shared/frame-error-capture';
+import { PortRPC } from '../shared/messaging';
+import type {
+  AnchorPosition,
+  SidebarLayout,
+  Destroyable,
+} from '../types/annotator';
+import type { Service } from '../types/config';
+import type {
+  GuestToHostEvent,
+  HostToGuestEvent,
+  HostToSidebarEvent,
+  SidebarToHostEvent,
+} from '../types/port-rpc-events';
+import { annotationCounts } from './annotation-counts';
+import { BucketBar } from './bucket-bar';
+import ToastMessages from './components/ToastMessages';
+import { createAppConfig } from './config/app';
+import { FeatureFlags } from './features';
+import { sidebarTrigger } from './sidebar-trigger';
+import { ToolbarController } from './toolbar';
+import { DragHandler } from './util/drag-handler';
+import type { DragHandlerEvent } from './util/drag-handler';
+import type { Emitter, EventBus } from './util/emitter';
+import { createShadowRoot } from './util/shadow-root';
+
+// Minimum width to which the iframeContainer can be resized.
+export const MIN_RESIZE = 280;
+
+/**
+ * Client configuration used to launch the sidebar application.
+ *
+ * This includes the URL for the iframe and configuration to pass to the
+ * application on launch.
+ */
+export type SidebarConfig = { sidebarAppUrl: string } &amp; Record&lt;string, unknown&gt;;
+
+/**
+ * Client configuration used by the sidebar container ({@link Sidebar}).
+ */
+export type SidebarContainerConfig = {
+  /** CSS selector for the container of the bucket bar. */
+  bucketContainerSelector?: string;
+
+  /**
+   * Details of the annotation service the client should connect to.
+   * This includes callbacks provided by the host page to handle certain actions
+   * in the sidebar (eg. the Login button).
+   */
+  services?: Service[];
+
+  /**
+   * CSS selector of a container element in the host page which the sidebar
+   * should be added into, instead of creating a new container.
+   */
+  externalContainerSelector?: string;
+
+  /**
+   * Callback that allows the host page to react to the sidebar being opened,
+   * closed or resized
+   */
+  onLayoutChange?: (layout: SidebarLayout) =&gt; void;
+};
+
+/**
+ * Create the iframe that will load the sidebar application.
+ */
+function createSidebarIframe(config: SidebarConfig): HTMLIFrameElement {
+  const sidebarURL = config.sidebarAppUrl;
+  const sidebarAppSrc = addConfigFragment(
+    sidebarURL,
+    createAppConfig(sidebarURL, config),
+  );
+
+  const sidebarFrame = document.createElement('iframe');
+
+  sidebarFrame.src = sidebarAppSrc;
+  sidebarFrame.title = 'Hypothesis annotation viewer';
+  sidebarFrame.className = 'sidebar-frame';
+
+  // Enable media in annotations to be shown fullscreen, and allow copying to
+  // the clipboard.
+  sidebarFrame.allow = 'fullscreen; clipboard-write';
+
+  return sidebarFrame;
+}
+
+type DragResizeState = {
+  /** Initial position at the start of a drag/pan resize event (in pixels). */
+  initial: number | null;
+  /** Final position at end of drag resize event. */
+  final: number | null;
+};
+
+/**
+ * The `Sidebar` class creates (1) the sidebar application iframe, (2) its container,
+ * as well as (3) the adjacent controls.
+ */
+export class Sidebar implements Destroyable {
+  private _emitter: Emitter;
+  private _config: SidebarContainerConfig &amp; SidebarConfig;
+  private _dragResizeHandler: DragHandler | undefined;
+  private _dragResizeState: DragResizeState;
+  private _listeners: ListenerCollection;
+  private _layoutState: SidebarLayout;
+  private _hypothesisSidebar: HTMLElement | undefined;
+  private _messagesElement: HTMLElement | undefined;
+  private _toolbarWidth: number;
+  private _renderFrame: number | undefined;
+
+  /**
+   * Tracks which `Guest` has a text selection. `null` indicates to default to
+   * the first connected guest frame.
+   */
+  private _guestWithSelection: PortRPC&lt;
+    GuestToHostEvent,
+    HostToGuestEvent
+  &gt; | null;
+
+  /** Channel for host-sidebar communication. */
+  private _sidebarRPC: PortRPC&lt;SidebarToHostEvent, HostToSidebarEvent&gt;;
+
+  /** Channels for host-guest communication. */
+  private _guestRPC: PortRPC&lt;GuestToHostEvent, HostToGuestEvent&gt;[];
+
+  bucketBar: BucketBar | null;
+  features: FeatureFlags;
+  externalFrame: Element | undefined;
+  iframeContainer: HTMLDivElement | undefined;
+  toolbar: ToolbarController;
+  onLoginRequest: Service['onLoginRequest'];
+  onLogoutRequest: Service['onLogoutRequest'];
+  onSignupRequest: Service['onSignupRequest'];
+  onProfileRequest: Service['onProfileRequest'];
+  onHelpRequest: Service['onHelpRequest'];
+  onLayoutChange: SidebarContainerConfig['onLayoutChange'];
+
+  /** The `&lt;iframe&gt;` element containing the sidebar application. */
+  iframe: HTMLIFrameElement;
+
+  /**
+   * @param eventBus - Enables communication between components sharing the same
+   *                   eventBus
+   */
+  constructor(
+    element: HTMLElement,
+    eventBus: EventBus,
+    config: SidebarContainerConfig &amp; SidebarConfig,
+  ) {
+    this._emitter = eventBus.createEmitter();
+    this._guestWithSelection = null;
+    this._guestRPC = [];
+    this._sidebarRPC = new PortRPC();
+    this.iframe = createSidebarIframe(config);
+    this._config = config;
+    this.bucketBar = null;
+    this.features = new FeatureFlags();
+
+    if (config.externalContainerSelector) {
+      this.externalFrame =
+        document.querySelector(config.externalContainerSelector) ?? element;
+      this.externalFrame.appendChild(this.iframe);
+    } else {
+      this.iframeContainer = document.createElement('div');
+      this.iframeContainer.style.display = 'none';
+      this.iframeContainer.className = 'sidebar-container';</td></tr><tr role="row" class="even"><td class="sorting_1">toolbar.tsx</td><td>Included</td><td>application/octet-stream</td><td>4112</td><td>import { createRef, render } from 'preact';
+import type { RefObject } from 'preact';
+
+import Toolbar from './components/Toolbar';
+
+export type ToolbarOptions = {
+  createAnnotation: () =&gt; void;
+  setSidebarOpen: (open: boolean) =&gt; void;
+  setHighlightsVisible: (visible: boolean) =&gt; void;
+  sidebarContainerId?: string;
+};
+
+/**
+ * Controller for the toolbar on the edge of the sidebar.
+ *
+ * This toolbar provides controls for opening and closing the sidebar, toggling
+ * highlight visibility etc.
+ */
+export class ToolbarController {
+  private _container: HTMLElement;
+  private _newAnnotationType: 'annotation' | 'note';
+  private _useMinimalControls: boolean;
+  private _highlightsVisible: boolean;
+  private _sidebarOpen: boolean;
+  private _sidebarContainerId?: string;
+  private _closeSidebar: () =&gt; void;
+  private _toggleSidebar: () =&gt; void;
+  private _toggleHighlights: () =&gt; void;
+  private _createAnnotation: () =&gt; void;
+  private _sidebarToggleButton: RefObject&lt;HTMLButtonElement&gt;;
+
+  /**
+   * @param container - Element into which the toolbar is rendered
+   */
+  constructor(container: HTMLElement, options: ToolbarOptions) {
+    const { createAnnotation, setSidebarOpen, setHighlightsVisible } = options;
+
+    this._container = container;
+    this._useMinimalControls = false;
+    this._newAnnotationType = 'note';
+    this._highlightsVisible = false;
+    this._sidebarOpen = false;
+    this._sidebarContainerId = options.sidebarContainerId;
+
+    this._closeSidebar = () =&gt; setSidebarOpen(false);
+    this._toggleSidebar = () =&gt; setSidebarOpen(!this._sidebarOpen);
+    this._toggleHighlights = () =&gt;
+      setHighlightsVisible(!this._highlightsVisible);
+    this._createAnnotation = () =&gt; {
+      createAnnotation();
+      setSidebarOpen(true);
+    };
+
+    /** Reference to the sidebar toggle button. */
+    this._sidebarToggleButton = createRef();
+
+    this.render();
+  }
+
+  getWidth() {
+    const content = this._container.firstChild as HTMLElement;
+    return content.getBoundingClientRect().width;
+  }
+
+  /**
+   * Set whether the toolbar is in the "minimal controls" mode where
+   * only the "Close" button is shown.
+   */
+  set useMinimalControls(minimal) {
+    this._useMinimalControls = minimal;
+    this.render();
+  }
+
+  get useMinimalControls() {
+    return this._useMinimalControls;
+  }
+
+  /**
+   * Update the toolbar to reflect whether the sidebar is open or not.
+   */
+  set sidebarOpen(open) {
+    this._sidebarOpen = open;
+    this.render();
+  }
+
+  get sidebarOpen() {
+    return this._sidebarOpen;
+  }
+
+  /**
+   * Update the toolbar to reflect whether the "Create annotation" button will
+   * create a page note (if there is no selection) or an annotation (if there is
+   * a selection).
+   */
+  set newAnnotationType(type) {
+    this._newAnnotationType = type;
+    this.render();
+  }
+
+  get newAnnotationType() {
+    return this._newAnnotationType;
+  }
+
+  /**
+   * Update the toolbar to reflect whether highlights are currently visible.
+   */
+  set highlightsVisible(visible) {
+    this._highlightsVisible = visible;
+    this.render();
+  }
+
+  get highlightsVisible() {
+    return this._highlightsVisible;
+  }
+
+  /**
+   * Return the DOM element that toggles the sidebar's visibility.
+   *
+   * This will be `null` if {@link useMinimalControls} is true.
+   */
+  get sidebarToggleButton(): HTMLButtonElement | null {
+    return this._sidebarToggleButton.current;
+  }
+
+  render() {
+    render(
+      &lt;Toolbar
+        closeSidebar={this._closeSidebar}
+        createAnnotation={this._createAnnotation}
+        newAnnotationType={this._newAnnotationType}
+        isSidebarOpen={this._sidebarOpen}
+        sidebarContainerId={this._sidebarContainerId}
+        showHighlights={this._highlightsVisible}
+        toggleHighlights={this._toggleHighlights}
+        toggleSidebar={this._toggleSidebar}
+        toggleSidebarRef={this._sidebarToggleButton}
+        useMinimalControls={this.useMinimalControls}
+      /&gt;,
+      this._container,
+    );
+  }
+}
+</td></tr></tbody>
+    </table><div class="dataTables_info" id="fileTable_info" role="status" aria-live="polite">Showing 1 to 20 of 20 entries</div><div class="dataTables_paginate paging_simple_numbers" id="fileTable_paginate"><a class="paginate_button previous disabled" aria-controls="fileTable" data-dt-idx="0" tabindex="-1" id="fileTable_previous">Previous</a><span><a class="paginate_button current" aria-controls="fileTable" data-dt-idx="1" tabindex="0">1</a></span><a class="paginate_button next disabled" aria-controls="fileTable" data-dt-idx="2" tabindex="-1" id="fileTable_next">Next</a></div></div>
+
+    <div class="settings-section">
+        <h2>Settings</h2>
+
+        <div>
+            <h3>Non-Informative Extensions</h3>
+            <input type="text" id="nonInformativeInput" placeholder="Add extension e.g., txt" value="">
+            <button id="addNonInformative">Add</button>
+            <ul id="nonInformativeList"></ul>
+        </div>
+
+        <div>
+            <h3>Exclude Files</h3>
+            <input type="text" id="excludeFilesInput" placeholder="Add file e.g., example.txt" value="">
+            <button id="addExcludeFile">Add</button>
+            <ul id="excludeFilesList"></ul>
+        </div>
+
+        <div>
+            <h3>Exclude Directories</h3>
+            <input type="text" id="excludeDirectoriesInput" placeholder="Add directory e.g., temp" value="">
+            <button id="addExcludeDirectory">Add</button>
+            <ul id="excludeDirectoriesList"><li>_locales<button>Remove</button></li><li>_metadata<button>Remove</button></li><li>sample_csv<button>Remove</button></li><li>.git<button>Remove</button></li><li>.github<button>Remove</button></li><li>anchoring<button>Remove</button></li><li>components<button>Remove</button></li><li>tests<button>Remove</button></li><li>test<button>Remove</button></li><li>util<button>Remove</button></li><li>integrations<button>Remove</button></li><li>config<button>Remove</button></li></ul>
+        </div>
+    </div>
+
+    <script data-savepage-type="" type="text/plain" data-savepage-src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script data-savepage-type="" type="text/plain" data-savepage-src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+    <script data-savepage-type="" type="text/plain"></script>
+
+
+</body></html>
