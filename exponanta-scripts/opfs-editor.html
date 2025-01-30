@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OPFS File Editor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+        button {
+            margin: 10px;
+            padding: 8px 16px;
+        }
+        #filepath {
+            width: 300px;
+            padding: 8px;
+            margin-right: 10px;
+        }
+        #content {
+            width: 100%;
+            min-height: 200px;
+            margin-top: 20px;
+            padding: 10px;
+        }
+        #fileList {
+            margin: 10px 0;
+            padding: 10px;
+            background: #f0f0f0;
+            border-radius: 4px;
+        }
+        .file-link {
+            color: blue;
+            text-decoration: underline;
+            cursor: pointer;
+            display: block;
+            margin: 5px 0;
+        }
+        .directory {
+            margin-left: 20px;
+        }
+        .hint {
+            color: #666;
+            font-size: 0.9em;
+            margin: 5px 0;
+        }
+        #fileInput {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>OPFS File Editor</h1>
+    <div>
+        <input type="text" id="filepath" placeholder="Enter path (e.g., folder/file.txt or folder/subfolder)">
+        <button id="createPath">Create</button>
+        <input type="file" id="fileInput" accept=".txt,.md,.js,.html,.css">
+        <button id="loadLocal">Load Local File</button>
+    </div>
+    <div class="hint">
+        Note: Path ending with .txt, .md, etc. will create a file. Path without extension will create a directory.
+    </div>
+    <div id="fileList">
+        <h3>Your Files:</h3>
+    </div>
+    <button id="saveFile">Save Changes</button>
+    <textarea id="content" placeholder="Enter your text here..."></textarea>
+    <script>
+        let currentFile = null;
+        // Get or create nested directories
+        async function getDirectoryFromPath(root, path) {
+            const parts = path.split('/');
+            let current = root;
+            for (const part of parts) {
+                if (part) {
+                    current = await current.getDirectoryHandle(part, { create: true });
+                }
+            }
+            return current;
+        }
+        // Check if path has a file extension
+        function hasFileExtension(path) {
+            const parts = path.split('.');
+            return parts.length > 1 && parts[parts.length - 1].length > 0;
+        }
+        // Create new file in OPFS with support for subdirectories
+        async function createFile(filepath) {
+            try {
+                const root = await navigator.storage.getDirectory();
+                const parts = filepath.split('/');
+                const filename = parts.pop();
+                const dirPath = parts.join('/');
+                let targetDir = root;
+                if (dirPath) {
+                    targetDir = await getDirectoryFromPath(root, dirPath);
+                }
+                const fileHandle = await targetDir.getFileHandle(filename, { create: true });
+                await loadFile(filepath);
+                await updateFileList();
+                document.getElementById('filepath').value = '';
+            } catch (err) {
+                console.error('Error creating file:', err);
+            }
+        }
+        // Create directory
+        async function createDirectory(dirPath) {
+            try {
+                const root = await navigator.storage.getDirectory();
+                await getDirectoryFromPath(root, dirPath);
+                await updateFileList();
+                document.getElementById('filepath').value = '';
+            } catch (err) {
+                console.error('Error creating directory:', err);
+            }
+        }
+        // Handle path creation (file or directory)
+        async function createPath(path) {
+            if (hasFileExtension(path)) {
+                await createFile(path);
+            } else {
+                await createDirectory(path);
+            }
+        }
+        // Load file content
+        async function loadFile(filepath) {
+            try {
+                const root = await navigator.storage.getDirectory();
+                const parts = filepath.split('/');
+                const filename = parts.pop();
+                const dirPath = parts.join('/');
+                let targetDir = root;
+                if (dirPath) {
+                    targetDir = await getDirectoryFromPath(root, dirPath);
+                }
+                const fileHandle = await targetDir.getFileHandle(filename);
+                const file = await fileHandle.getFile();
+                const content = await file.text();
+                document.getElementById('content').value = content;
+                currentFile = filepath;
+            } catch (err) {
+                console.error('Error loading file:', err);
+                document.getElementById('content').value = '';
+                currentFile = filepath;
+            }
+        }
+        // Load local file
+        async function loadLocalFile(file) {
+            try {
+                const content = await file.text();
+                document.getElementById('content').value = content;
+                // Create the file in OPFS
+                const filepath = file.name;
+                await createFile(filepath);
+            } catch (err) {
+                console.error('Error loading local file:', err);
+            }
+        }
+        // Save content to current file
+        async function saveFile() {
+            if (!currentFile) {
+                return;
+            }
+            try {
+                const content = document.getElementById('content').value;
+                const root = await navigator.storage.getDirectory();
+                const parts = currentFile.split('/');
+                const filename = parts.pop();
+                const dirPath = parts.join('/');
+                let targetDir = root;
+                if (dirPath) {
+                    targetDir = await getDirectoryFromPath(root, dirPath);
+                }
+                const fileHandle = await targetDir.getFileHandle(filename, { create: true });
+                const writable = await fileHandle.createWritable();
+                await writable.write(content);
+                await writable.close();
+            } catch (err) {
+                console.error('Error saving file:', err);
+            }
+        }
+        // Recursively list directory contents
+        async function listDirectory(dirHandle, prefix = '') {
+            const entries = [];
+            for await (const [name, handle] of dirHandle.entries()) {
+                if (handle.kind === 'directory') {
+                    entries.push({
+                        name,
+                        kind: 'directory',
+                        prefix,
+                        children: await listDirectory(handle, prefix + name + '/')
+                    });
+                } else {
+                    entries.push({
+                        name,
+                        kind: 'file',
+                        prefix
+                    });
+                }
+            }
+            return entries;
+        }
+        // Create DOM elements for file/directory listing
+        function createFileListElement(entries, container) {
+            entries.forEach(entry => {
+                if (entry.kind === 'directory') {
+                    const dirDiv = document.createElement('div');
+                    dirDiv.className = 'directory';
+                    const dirName = document.createElement('strong');
+                    dirName.textContent = '📁 ' + entry.name;
+                    dirDiv.appendChild(dirName);
+                    container.appendChild(dirDiv);
+                    createFileListElement(entry.children, dirDiv);
+                } else {
+                    const fileLink = document.createElement('span');
+                    fileLink.textContent = '📄 ' + entry.name;
+                    fileLink.className = 'file-link';
+                    fileLink.onclick = () => loadFile(entry.prefix + entry.name);
+                    container.appendChild(fileLink);
+                }
+            });
+        }
+        // Update the list of files
+        async function updateFileList() {
+            try {
+                const root = await navigator.storage.getDirectory();
+                const fileList = document.getElementById('fileList');
+                
+                const header = fileList.querySelector('h3');
+                fileList.innerHTML = '';
+                fileList.appendChild(header);
+                const entries = await listDirectory(root);
+                createFileListElement(entries, fileList);
+            } catch (err) {
+                console.error('Error updating file list:', err);
+            }
+        }
+        // Initialize
+        async function init() {
+            document.getElementById('createPath').addEventListener('click', () => {
+                const filepath = document.getElementById('filepath').value.trim();
+                if (filepath) {
+                    createPath(filepath);
+                }
+            });
+            document.getElementById('saveFile').addEventListener('click', saveFile);
+            
+            // Add enter key support for the input field
+            document.getElementById('filepath').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    const filepath = e.target.value.trim();
+                    if (filepath) {
+                        createPath(filepath);
+                    }
+                }
+            });
+
+            // Add local file loading functionality
+            document.getElementById('loadLocal').addEventListener('click', () => {
+                document.getElementById('fileInput').click();
+            });
+
+            document.getElementById('fileInput').addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    loadLocalFile(file);
+                }
+            });
+            
+            await updateFileList();
+        }
+        init();
+    </script>
+</body>
+</html>

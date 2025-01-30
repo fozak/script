@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OPFS File Editor with Export</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+        button {
+            margin: 10px;
+            padding: 8px 16px;
+        }
+        #content {
+            width: 100%;
+            min-height: 200px;
+            margin-top: 20px;
+            padding: 10px;
+        }
+        #fileList {
+            margin: 10px 0;
+            padding: 10px;
+            background: #f0f0f0;
+            border-radius: 4px;
+        }
+        .file-link {
+            color: blue;
+            text-decoration: underline;
+            cursor: pointer;
+            margin: 5px 0;
+            display: inline-block;
+        }
+        .directory {
+            margin-left: 20px;
+        }
+        .export-button {
+            margin-left: 10px;
+            padding: 2px 6px;
+            font-size: 0.8em;
+        }
+    </style>
+</head>
+<body>
+    <h1>OPFS File Editor with Export</h1>
+    <div>
+        <input type="text" id="filepath" placeholder="Enter path (e.g., folder/notes.txt)">
+        <button id="createFile">Create New File</button>
+        <button id="createDir">Create Directory</button>
+        <button id="exportAll">Export All Files</button>
+    </div>
+    <div id="fileList">
+        <h3>Your Files:</h3>
+    </div>
+    <button id="saveFile">Save Changes</button>
+    <textarea id="content" placeholder="Enter your text here..."></textarea>
+    <script>
+        let currentFile = null;
+
+        // Get or create nested directories
+        async function getDirectoryFromPath(root, path) {
+            const parts = path.split('/');
+            let current = root;
+
+            for (const part of parts) {
+                if (part) {
+                    current = await current.getDirectoryHandle(part, { create: true });
+                }
+            }
+            return current;
+        }
+
+        // Helper function to create a downloadable blob
+        function downloadBlob(blob, filename) {
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        // Export a single file
+        async function exportFile(filepath) {
+            try {
+                const root = await navigator.storage.getDirectory();
+                const parts = filepath.split('/');
+                const filename = parts.pop();
+                const dirPath = parts.join('/');
+
+                let targetDir = root;
+                if (dirPath) {
+                    targetDir = await getDirectoryFromPath(root, dirPath);
+                }
+
+                const fileHandle = await targetDir.getFileHandle(filename);
+                const file = await fileHandle.getFile();
+                downloadBlob(file, filename);
+            } catch (err) {
+                console.error('Error exporting file:', err);
+                alert('Error exporting file: ' + err.message);
+            }
+        }
+
+        // Recursively get all files from a directory
+        async function getAllFiles(dirHandle, path = '') {
+            const files = [];
+            for await (const [name, handle] of dirHandle.entries()) {
+                const newPath = path ? `${path}/${name}` : name;
+                if (handle.kind === 'directory') {
+                    const subFiles = await getAllFiles(handle, newPath);
+                    files.push(...subFiles);
+                } else {
+                    const file = await handle.getFile();
+                    files.push({
+                        path: newPath,
+                        file: file
+                    });
+                }
+            }
+            return files;
+        }
+
+        // Export all files as a zip
+        async function exportAllFiles() {
+            try {
+                // Dynamic import of JSZip
+                const JSZip = (await import('https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js')).default;
+                
+                const root = await navigator.storage.getDirectory();
+                const allFiles = await getAllFiles(root);
+                
+                const zip = new JSZip();
+                
+                // Add all files to the zip
+                for (const {path, file} of allFiles) {
+                    zip.file(path, file);
+                }
+                
+                // Generate and download the zip
+                const blob = await zip.generateAsync({type: 'blob'});
+                downloadBlob(blob, 'opfs_files.zip');
+            } catch (err) {
+                console.error('Error exporting all files:', err);
+                alert('Error exporting files: ' + err.message);
+            }
+        }
+
+        // Create new file in OPFS with support for subdirectories
+        async function createFile(filepath) {
+            try {
+                const root = await navigator.storage.getDirectory();
+                const parts = filepath.split('/');
+                const filename = parts.pop();
+                const dirPath = parts.join('/');
+
+                let targetDir = root;
+                if (dirPath) {
+                    targetDir = await getDirectoryFromPath(root, dirPath);
+                }
+
+                const fileHandle = await targetDir.getFileHandle(filename, { create: true });
+                await loadFile(filepath);
+                await updateFileList();
+                document.getElementById('filepath').value = '';
+            } catch (err) {
+                console.error('Error creating file:', err);
+                alert('Error creating file: ' + err.message);
+            }
+        }
+
+        // Create directory
+        async function createDirectory(dirPath) {
+            try {
+                const root = await navigator.storage.getDirectory();
+                await getDirectoryFromPath(root, dirPath);
+                await updateFileList();
+            } catch (err) {
+                console.error('Error creating directory:', err);
+                alert('Error creating directory: ' + err.message);
+            }
+        }
+
+        // Load file content
+        async function loadFile(filepath) {
+            try {
+                const root = await navigator.storage.getDirectory();
+                const parts = filepath.split('/');
+                const filename = parts.pop();
+                const dirPath = parts.join('/');
+
+                let targetDir = root;
+                if (dirPath) {
+                    targetDir = await getDirectoryFromPath(root, dirPath);
+                }
+
+                const fileHandle = await targetDir.getFileHandle(filename);
+                const file = await fileHandle.getFile();
+                const content = await file.text();
+                document.getElementById('content').value = content;
+                currentFile = filepath;
+            } catch (err) {
+                console.error('Error loading file:', err);
+                document.getElementById('content').value = '';
+                currentFile = filepath;
+            }
+        }
+
+        // Save content to current file
+        async function saveFile() {
+            if (!currentFile) {
+                alert('Please create or select a file first');
+                return;
+            }
+            try {
+                const content = document.getElementById('content').value;
+                const root = await navigator.storage.getDirectory();
+                const parts = currentFile.split('/');
+                const filename = parts.pop();
+                const dirPath = parts.join('/');
+
+                let targetDir = root;
+                if (dirPath) {
+                    targetDir = await getDirectoryFromPath(root, dirPath);
+                }
+
+                const fileHandle = await targetDir.getFileHandle(filename, { create: true });
+                const writable = await fileHandle.createWritable();
+                await writable.write(content);
+                await writable.close();
+                alert('File saved successfully!');
+            } catch (err) {
+                console.error('Error saving file:', err);
+                alert('Error saving file: ' + err.message);
+            }
+        }
+
+        // Create DOM elements for file/directory listing
+        function createFileListElement(entries, container) {
+            entries.forEach(entry => {
+                if (entry.kind === 'directory') {
+                    const dirDiv = document.createElement('div');
+                    dirDiv.className = 'directory';
+                    const dirName = document.createElement('strong');
+                    dirName.textContent = '📁 ' + entry.name;
+                    dirDiv.appendChild(dirName);
+                    container.appendChild(dirDiv);
+                    createFileListElement(entry.children, dirDiv);
+                } else {
+                    const fileDiv = document.createElement('div');
+                    const fileLink = document.createElement('span');
+                    fileLink.textContent = '📄 ' + entry.name;
+                    fileLink.className = 'file-link';
+                    fileLink.onclick = () => loadFile(entry.prefix + entry.name);
+                    fileDiv.appendChild(fileLink);
+
+                    const exportButton = document.createElement('button');
+                    exportButton.textContent = 'Export';
+                    exportButton.className = 'export-button';
+                    exportButton.onclick = (e) => {
+                        e.stopPropagation();
+                        exportFile(entry.prefix + entry.name);
+                    };
+                    fileDiv.appendChild(exportButton);
+                    
+                    container.appendChild(fileDiv);
+                }
+            });
+        }
+
+        // Recursively list directory contents
+        async function listDirectory(dirHandle, prefix = '') {
+            const entries = [];
+            for await (const [name, handle] of dirHandle.entries()) {
+                if (handle.kind === 'directory') {
+                    entries.push({
+                        name,
+                        kind: 'directory',
+                        prefix,
+                        children: await listDirectory(handle, prefix + name + '/')
+                    });
+                } else {
+                    entries.push({
+                        name,
+                        kind: 'file',
+                        prefix
+                    });
+                }
+            }
+            return entries;
+        }
+
+        // Update the list of files
+        async function updateFileList() {
+            try {
+                const root = await navigator.storage.getDirectory();
+                const fileList = document.getElementById('fileList');
+                
+                // Clear existing list except the header
+                const header = fileList.querySelector('h3');
+                fileList.innerHTML = '';
+                fileList.appendChild(header);
+
+                // List all files and directories recursively
+                const entries = await listDirectory(root);
+                createFileListElement(entries, fileList);
+            } catch (err) {
+                console.error('Error updating file list:', err);
+            }
+        }
+
+        // Initialize
+        async function init() {
+            document.getElementById('createFile').addEventListener('click', () => {
+                const filepath = document.getElementById('filepath').value.trim();
+                if (filepath) {
+                    createFile(filepath);
+                } else {
+                    alert('Please enter a filepath');
+                }
+            });
+
+            document.getElementById('createDir').addEventListener('click', () => {
+                const dirPath = prompt('Enter directory path (e.g., folder1/folder2):');
+                if (dirPath) {
+                    createDirectory(dirPath);
+                }
+            });
+
+            document.getElementById('exportAll').addEventListener('click', exportAllFiles);
+            document.getElementById('saveFile').addEventListener('click', saveFile);
+            
+            await updateFileList();
+        }
+
+        init();
+    </script>
+</body>
+</html>
