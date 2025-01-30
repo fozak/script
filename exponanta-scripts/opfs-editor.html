@@ -87,7 +87,7 @@
             return parts.length > 1 && parts[parts.length - 1].length > 0;
         }
         // Create new file in OPFS with support for subdirectories
-        async function createFile(filepath) {
+        async function createFile(filepath, content = '') {
             try {
                 const root = await navigator.storage.getDirectory();
                 const parts = filepath.split('/');
@@ -98,7 +98,14 @@
                     targetDir = await getDirectoryFromPath(root, dirPath);
                 }
                 const fileHandle = await targetDir.getFileHandle(filename, { create: true });
-                await loadFile(filepath);
+                // Write the content if provided
+                if (content) {
+                    const writable = await fileHandle.createWritable();
+                    await writable.write(content);
+                    await writable.close();
+                }
+                currentFile = filepath;
+                document.getElementById('content').value = content;
                 await updateFileList();
                 document.getElementById('filepath').value = '';
             } catch (err) {
@@ -143,17 +150,15 @@
             } catch (err) {
                 console.error('Error loading file:', err);
                 document.getElementById('content').value = '';
-                currentFile = filepath;
+                currentFile = null;
             }
         }
         // Load local file
         async function loadLocalFile(file) {
             try {
                 const content = await file.text();
-                document.getElementById('content').value = content;
-                // Create the file in OPFS
-                const filepath = file.name;
-                await createFile(filepath);
+                // Create the file in OPFS with the content
+                await createFile(file.name, content);
             } catch (err) {
                 console.error('Error loading local file:', err);
             }
