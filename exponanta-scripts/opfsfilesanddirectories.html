@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OPFS File Editor with Subdirectories</title>
+    <title>OPFS File Editor</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -14,6 +14,11 @@
         button {
             margin: 10px;
             padding: 8px 16px;
+        }
+        #filepath {
+            width: 300px;
+            padding: 8px;
+            margin-right: 10px;
         }
         #content {
             width: 100%;
@@ -37,14 +42,21 @@
         .directory {
             margin-left: 20px;
         }
+        .hint {
+            color: #666;
+            font-size: 0.9em;
+            margin: 5px 0;
+        }
     </style>
 </head>
 <body>
-    <h1>OPFS File Editor with Subdirectories</h1>
+    <h1>OPFS File Editor</h1>
     <div>
-        <input type="text" id="filepath" placeholder="Enter path (e.g., folder/notes.txt)">
-        <button id="createFile">Create New File</button>
-        <button id="createDir">Create Directory</button>
+        <input type="text" id="filepath" placeholder="Enter path (e.g., folder/file.txt or folder/subfolder)">
+        <button id="createPath">Create</button>
+    </div>
+    <div class="hint">
+        Note: Path ending with .txt, .md, etc. will create a file. Path without extension will create a directory.
     </div>
     <div id="fileList">
         <h3>Your Files:</h3>
@@ -58,7 +70,6 @@
         async function getDirectoryFromPath(root, path) {
             const parts = path.split('/');
             let current = root;
-
             for (const part of parts) {
                 if (part) {
                     current = await current.getDirectoryHandle(part, { create: true });
@@ -67,13 +78,19 @@
             return current;
         }
 
+        // Check if path has a file extension
+        function hasFileExtension(path) {
+            const parts = path.split('.');
+            return parts.length > 1 && parts[parts.length - 1].length > 0;
+        }
+
         // Create new file in OPFS with support for subdirectories
         async function createFile(filepath) {
             try {
                 const root = await navigator.storage.getDirectory();
                 const parts = filepath.split('/');
-                const filename = parts.pop(); // Get the file name
-                const dirPath = parts.join('/'); // Get the directory path
+                const filename = parts.pop();
+                const dirPath = parts.join('/');
 
                 let targetDir = root;
                 if (dirPath) {
@@ -86,7 +103,6 @@
                 document.getElementById('filepath').value = '';
             } catch (err) {
                 console.error('Error creating file:', err);
-                alert('Error creating file: ' + err.message);
             }
         }
 
@@ -96,9 +112,18 @@
                 const root = await navigator.storage.getDirectory();
                 await getDirectoryFromPath(root, dirPath);
                 await updateFileList();
+                document.getElementById('filepath').value = '';
             } catch (err) {
                 console.error('Error creating directory:', err);
-                alert('Error creating directory: ' + err.message);
+            }
+        }
+
+        // Handle path creation (file or directory)
+        async function createPath(path) {
+            if (hasFileExtension(path)) {
+                await createFile(path);
+            } else {
+                await createDirectory(path);
             }
         }
 
@@ -130,7 +155,6 @@
         // Save content to current file
         async function saveFile() {
             if (!currentFile) {
-                alert('Please create or select a file first');
                 return;
             }
             try {
@@ -149,10 +173,8 @@
                 const writable = await fileHandle.createWritable();
                 await writable.write(content);
                 await writable.close();
-                alert('File saved successfully!');
             } catch (err) {
                 console.error('Error saving file:', err);
-                alert('Error saving file: ' + err.message);
             }
         }
 
@@ -205,12 +227,10 @@
                 const root = await navigator.storage.getDirectory();
                 const fileList = document.getElementById('fileList');
                 
-                // Clear existing list except the header
                 const header = fileList.querySelector('h3');
                 fileList.innerHTML = '';
                 fileList.appendChild(header);
 
-                // List all files and directories recursively
                 const entries = await listDirectory(root);
                 createFileListElement(entries, fileList);
             } catch (err) {
@@ -220,23 +240,24 @@
 
         // Initialize
         async function init() {
-            document.getElementById('createFile').addEventListener('click', () => {
+            document.getElementById('createPath').addEventListener('click', () => {
                 const filepath = document.getElementById('filepath').value.trim();
                 if (filepath) {
-                    createFile(filepath);
-                } else {
-                    alert('Please enter a filepath');
-                }
-            });
-
-            document.getElementById('createDir').addEventListener('click', () => {
-                const dirPath = prompt('Enter directory path (e.g., folder1/folder2):');
-                if (dirPath) {
-                    createDirectory(dirPath);
+                    createPath(filepath);
                 }
             });
 
             document.getElementById('saveFile').addEventListener('click', saveFile);
+            
+            // Add enter key support for the input field
+            document.getElementById('filepath').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    const filepath = e.target.value.trim();
+                    if (filepath) {
+                        createPath(filepath);
+                    }
+                }
+            });
             
             await updateFileList();
         }
