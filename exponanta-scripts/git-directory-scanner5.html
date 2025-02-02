@@ -223,6 +223,9 @@ async function getChangedFilesForCommit(gitDirHandle, commitHash) {
         const arrayBuffer = await file.arrayBuffer();
         const content = new TextDecoder().decode(arrayBuffer);
 
+        // Debugging: Output the raw commit content
+        console.log('Raw commit content:', content);
+
         // Parse the commit object
         const lines = content.split('\n');
         const changedFiles = [];
@@ -230,19 +233,18 @@ async function getChangedFilesForCommit(gitDirHandle, commitHash) {
         let treeHash;
         for (const line of lines) {
             if (line.startsWith('tree ')) {
-                treeHash = line.split(' ')[1];
-                break; // Stop after finding the tree hash
+                // Extract tree hash and trim whitespace
+                treeHash = line.split(' ')[1].trim();
+                console.log(`Found tree hash: ${treeHash}`);
+                break; // Stop once we find the tree hash
             }
         }
 
-        console.log(`Processing commit: ${commitHash}, found treeHash: ${treeHash}`);
-
-        // Now read the tree object to get the file names
-        if (treeHash) {
+        if (!treeHash) {
+            console.warn('No tree hash found in commit object:', commitHash);
+        } else {
             const treeFiles = await getFilesFromTree(gitDirHandle, treeHash);
             changedFiles.push(...treeFiles);
-        } else {
-            console.warn('No tree hash found in commit object:', commitHash);
         }
         
         return changedFiles;
