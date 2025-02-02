@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <title>Self-Saving Page</title>
+    <style>
+        body { padding: 20px; font-family: Arial, sans-serif; }
+        #editor { 
+            width: 100%;
+            min-height: 300px;
+            margin: 20px 0;
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+        #status {
+            color: #666;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <h1>Self-Saving Page</h1>
+    <button id="dirSelect">Select Save Directory</button>
+    <div id="status">Saved at 11:28:37 AM</div>
+    <div id="editor" contenteditable="true">
+        Typing somethingdvsdcjj&nbsp; dcdvdvdvdvdvdvdvdvdvdv OFDJvdvjdvhjdjdvhdvhjhdjvhjdvhdjvhjdvhdvh New.&nbsp; &nbsp;New again. This updates on mutation.&nbsp; Newceec fef ed</div>
+
+    <script>
+        let fileHandle = null;
+        const editor = document.getElementById('editor');
+        const status = document.getElementById('status');
+        let saveTimeout = null;
+        let observer = null;
+
+        // Initialize directory selection
+        document.getElementById('dirSelect').addEventListener('click', async () => {
+            try {
+                const dirHandle = await window.showDirectoryPicker({
+                    mode: 'readwrite'
+                });
+                
+                // Create or get the file handle
+                fileHandle = await dirHandle.getFileHandle('self-saving-page.html', {
+                    create: true
+                });
+                
+                // Load existing content if any
+                const file = await fileHandle.getFile();
+                const content = await file.text();
+                if (content) {
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(content, 'text/html');
+                    const savedEditor = doc.getElementById('editor');
+                    if (savedEditor) {
+                        editor.innerHTML = savedEditor.innerHTML;
+                    }
+                }
+                
+                status.textContent = 'Directory selected - Auto-saving enabled';
+                
+                // Initialize MutationObserver after loading content
+                initializeObserver();
+            } catch (err) {
+                console.error('Error accessing directory:', err);
+                status.textContent = 'Error accessing directory';
+            }
+        });
+
+        // Save function
+        const saveContent = async () => {
+            if (!fileHandle) return;
+
+            try {
+                const writable = await fileHandle.createWritable();
+                
+                // Create a copy of the current document
+                const currentContent = document.documentElement.cloneNode(true);
+                
+                // Update the editor content in the copy
+                const editorInCopy = currentContent.querySelector('#editor');
+                if (editorInCopy) {
+                    editorInCopy.innerHTML = editor.innerHTML;
+                }
+                
+                // Convert to string and save
+                const content = '<!DOCTYPE html>\n' + currentContent.outerHTML;
+                await writable.write(content);
+                await writable.close();
+                
+                status.textContent = 'Saved at ' + new Date().toLocaleTimeString();
+            } catch (err) {
+                console.error('Error saving:', err);
+                status.textContent = 'Error saving content';
+            }
+        };
+
+        // Initialize MutationObserver
+        const initializeObserver = () => {
+            // Disconnect existing observer if any
+            if (observer) {
+                observer.disconnect();
+            }
+
+            // Create new observer
+            observer = new MutationObserver((mutations) => {
+                saveContent();
+            });
+
+            // Configure observer
+            const config = {
+                attributes: true,
+                childList: true,
+                characterData: true,
+                subtree: true
+            };
+
+            // Start observing
+            observer.observe(editor, config);
+        };
+
+        // Add input event listener for immediate keyboard input saving
+        editor.addEventListener('input', saveContent);
+
+        // Add paste event listener to catch paste operations
+        editor.addEventListener('paste', saveContent);
+    </script>
+
+
+</body></html>

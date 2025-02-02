@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Text File Tagger</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        textarea { width: 100%; height: 300px; margin-bottom: 10px; }
+        select, input, button { margin: 5px 0; }
+    </style>
+</head>
+<body>
+    <h1>Text File Tagger</h1>
+    <input type="file" id="fileInput" accept=".txt">
+    <select id="tagSelect">
+        <option value="TODO">TODO</option>
+        <option value="FIXME">FIXME</option>
+    </select>
+    <textarea id="fileContent" placeholder="File contents will appear here"></textarea>
+    <button id="saveButton" disabled>Save File</button>
+
+    <script>
+        const fileInput = document.getElementById('fileInput');
+        const tagSelect = document.getElementById('tagSelect');
+        const fileContent = document.getElementById('fileContent');
+        const saveButton = document.getElementById('saveButton');
+        let fileHandle = null;
+
+        fileInput.addEventListener('change', async (e) => {
+            const file = e.target.files[0];
+            const text = await file.text();
+            fileContent.value = text;
+            saveButton.disabled = false;
+        });
+
+        fileContent.addEventListener('select', () => {
+            const selectedText = fileContent.value.substring(
+                fileContent.selectionStart,
+                fileContent.selectionEnd
+            );
+            const tag = tagSelect.value;
+            const start = fileContent.selectionStart;
+            const beforeSelection = fileContent.value.substring(0, start);
+            const afterSelection = fileContent.value.substring(start);
+            
+            fileContent.value = `${beforeSelection}[${tag}] ${selectedText}${afterSelection}`;
+        });
+
+        saveButton.addEventListener('click', async () => {
+            try {
+                fileHandle = await window.showSaveFilePicker({
+                    suggestedName: 'tagged_file.txt',
+                    types: [{
+                        description: 'Text File',
+                        accept: {'text/plain': ['.txt']}
+                    }]
+                });
+                const writable = await fileHandle.createWritable();
+                await writable.write(fileContent.value);
+                await writable.close();
+                alert('File saved successfully!');
+            } catch (err) {
+                console.error('Save failed:', err);
+            }
+        });
+    </script>
+</body>
+</html>

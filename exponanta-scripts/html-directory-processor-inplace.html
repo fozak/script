@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Link Tag Remover</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .select-dir {
+            border: 2px dashed #ccc;
+            border-radius: 4px;
+            padding: 20px;
+            text-align: center;
+            background-color: white;
+            margin-bottom: 20px;
+            cursor: pointer;
+        }
+        .results {
+            background-color: white;
+            padding: 15px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        .file-item {
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #f8f8f8;
+            border-radius: 4px;
+        }
+        .success {
+            color: #4CAF50;
+        }
+        .error {
+            color: #f44336;
+        }
+        .preview {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #fff3e0;
+            border-radius: 4px;
+            border: 1px solid #ffe0b2;
+        }
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin: 15px 0;
+        }
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .btn-primary {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .btn-secondary {
+            background-color: #f44336;
+            color: white;
+        }
+        .btn:hover {
+            opacity: 0.9;
+        }
+        .matches-found {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>HTML Link Tag Remover</h1>
+    <p>Select a directory containing HTML files to process. All HTML files in the directory (and subdirectories) will have their &lt;link rel="alternate"&gt; tags removed.</p>
+    
+    <div class="select-dir" id="dirSelector">
+        <p>Click to select a directory</p>
+    </div>
+    
+    <div class="preview" id="preview" style="display: none;">
+        <div class="matches-found" id="matchesSummary"></div>
+        <div id="filesList"></div>
+        <div class="button-group">
+            <button class="btn btn-primary" id="confirmBtn">Process Files</button>
+            <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
+        </div>
+    </div>
+
+    <div class="results" id="results"></div>
+
+    <script>
+        const dirSelector = document.getElementById('dirSelector');
+        const results = document.getElementById('results');
+        const preview = document.getElementById('preview');
+        const filesList = document.getElementById('filesList');
+        const matchesSummary = document.getElementById('matchesSummary');
+        const confirmBtn = document.getElementById('confirmBtn');
+        const cancelBtn = document.getElementById('cancelBtn');
+
+        let currentDirHandle = null;
+        let filesToProcess = [];
+
+        dirSelector.addEventListener('click', async () => {
+            try {
+                const dirHandle = await window.showDirectoryPicker({
+                    mode: 'readwrite'
+                });
+                results.innerHTML = '';
+                preview.style.display = 'none';
+                currentDirHandle = dirHandle;
+                await scanDirectory(dirHandle);
+            } catch (err) {
+                console.error('Error selecting directory:', err);
+                results.innerHTML = '<div class="file-item error">Error selecting directory: ' + err.message + '</div>';
+            }
+        });
+
+        async function scanDirectory(dirHandle, path = '') {
+            filesToProcess = [];
+            for await (const entry of dirHandle.values()) {
+                if (entry.kind === 'directory') {
+                    await scanDirectory(await dirHandle.getDirectoryHandle(entry.name), `${path}${entry.name}/`);
+                } else if (entry.kind === 'file' && entry.name.toLowerCase().match(/\.html?$/)) {
+                    const file = await entry.getFile();
+                    const content = await file.text();
+                    const regex = /<link[^>]*\brel=["']?alternate["']?[^>]*>/gi;
+                    const matches = content.match(regex);
+                    
+                    if (matches) {
+                        filesToProcess.push({
+                            handle: entry,
+                            path: `${path}${entry.name}`,
+                            matchCount: matches.length
+                        });
+                    }
+                }
+            }
+            
+            if (filesToProcess.length > 0) {
+                showPreview();
+            } else {
+                results.innerHTML = '<div class="file-item">No files found with alternate link tags.</div>';
+            }
+        }
+
+        function showPreview() {
+            matchesSummary.textContent = `Found ${filesToProcess.length} files containing alternate link tags:`;
+            
+            filesList.innerHTML = filesToProcess
+                .map(file => `<div class="file-item">
+                    ${file.path} (${file.matchCount} tag${file.matchCount > 1 ? 's' : ''} found)
+                </div>`)
+                .join('');
+            
+            preview.style.display = 'block';
+        }
+
+        confirmBtn.addEventListener('click', async () => {
+            preview.style.display = 'none';
+            results.innerHTML = '';
+            
+            for (const file of filesToProcess) {
+                await processFile(file.handle, file.path);
+            }
+        });
+
+        cancelBtn.addEventListener('click', () => {
+            preview.style.display = 'none';
+            results.innerHTML = '<div class="file-item">Operation cancelled.</div>';
+            filesToProcess = [];
+        });
+
+        async function processFile(fileHandle, relativePath) {
+            try {
+                const file = await fileHandle.getFile();
+                const content = await file.text();
+                const regex = /<link[^>]*\brel=["']?alternate["']?[^>]*>/gi;
+                const newContent = content.replace(regex, '');
+
+                const writable = await fileHandle.createWritable();
+                await writable.write(newContent);
+                await writable.close();
+
+                const resultItem = document.createElement('div');
+                resultItem.className = 'file-item success';
+                resultItem.textContent = `✓ Modified: ${relativePath}`;
+                results.appendChild(resultItem);
+
+            } catch (err) {
+                console.error(`Error processing file ${relativePath}:`, err);
+                const resultItem = document.createElement('div');
+                resultItem.className = 'file-item error';
+                resultItem.textContent = `✗ Error processing ${relativePath}: ${err.message}`;
+                results.appendChild(resultItem);
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Git Directory Scanner</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        #fileList {
+            list-style: none;
+            padding: 0;
+        }
+        .file-item {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+        }
+        .commit-info {
+            margin: 10px 0;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 4px;
+            border-left: 4px solid #0066cc;
+        }
+        .changed-files {
+            margin: 10px 0;
+            padding-left: 20px;
+            color: #555;
+            font-size: 0.9em;
+        }
+        .file-status {
+            margin-right: 8px;
+            font-weight: 500;
+        }
+        .file-status.added { color: #28a745; }
+        .file-status.modified { color: #ffc107; }
+        .file-status.deleted { color: #dc3545; }
+        button {
+            padding: 10px 20px;
+            background: #0066cc;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #0052a3;
+        }
+        .loading {
+            display: none;
+            margin: 20px 0;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Git Directory Scanner</h1>
+        <button id="selectDir">Select Directory</button>
+        <div id="loading" class="loading">Scanning directory...</div>
+        <div id="fileList"></div>
+    </div>
+
+    <script>
+        let gitFiles = [];
+
+        async function processDirectory(dirHandle, path = '') {
+            for await (const entry of dirHandle.values()) {
+                if (entry.kind === 'directory') {
+                    if (entry.name === '.git') {
+                        await scanGitDirectory(await dirHandle.getDirectoryHandle(entry.name), path);
+                    } else {
+                        await processDirectory(await dirHandle.getDirectoryHandle(entry.name), `${path}${entry.name}/`);
+                    }
+                }
+            }
+        }
+
+        async function scanGitDirectory(gitDirHandle, repoPath) {
+            try {
+                // Read HEAD file
+                const headHandle = await gitDirHandle.getFileHandle('HEAD');
+                const headFile = await headHandle.getFile();
+                const headContent = await headFile.text();
+
+                // Read config file
+                const configHandle = await gitDirHandle.getFileHandle('config');
+                const configFile = await configHandle.getFile();
+                const configContent = await configFile.text();
+
+                try {
+                    // Read index file for current changes
+                    const indexHandle = await gitDirHandle.getFileHandle('index');
+                    const indexFile = await indexHandle.getFile();
+                    
+                    // Get logs
+                    const logsHandle = await gitDirHandle.getDirectoryHandle('logs');
+                    const headLogHandle = await logsHandle.getFileHandle('HEAD');
+                    const headLogFile = await headLogHandle.getFile();
+                    const headLogContent = await headLogFile.text();
+
+                    // Parse logs with proper date handling
+                    const logEntries = headLogContent.trim().split('\n').map(line => {
+                        const [oldHash, newHash, author, timestamp, timezone, ...messageArr] = line.split(' ');
+                        const message = messageArr.join(' ').replace(/^\t/, '');
+                        
+                        // Extract author email
+                        const authorMatch = author.match(/<(.+?)>/);
+                        const authorEmail = authorMatch ? authorMatch[1] : author;
+                        
+                        // Parse timestamp
+                        const date = new Date(parseInt(timestamp) * 1000);
+                        
+                        return {
+                            commit: newHash,
+                            parentCommit: oldHash,
+                            message,
+                            author: authorEmail,
+                            date,
+                            changedFiles: []
+                        };
+                    });
+
+                    // Read refs to get current branch name
+                    let currentBranch = '';
+                    if (headContent.startsWith('ref: ')) {
+                        const refPath = headContent.slice(5).trim();
+                        try {
+                            const refHandle = await gitDirHandle.getFileHandle(refPath);
+                            const refFile = await refHandle.getFile();
+                            currentBranch = await refFile.text();
+                        } catch (e) {
+                            // Ref file might not exist yet
+                            currentBranch = 'No commits yet';
+                        }
+                    }
+
+                    // For each commit, try to read the commit object
+                    for (const entry of logEntries) {
+                        const commitHash = entry.commit;
+                        try {
+                            const objectsDir = await gitDirHandle.getDirectoryHandle('objects');
+                            const prefixDir = await objectsDir.getDirectoryHandle(commitHash.slice(0, 2));
+                            const objectFile = await prefixDir.getFileHandle(commitHash.slice(2));
+                            const file = await objectFile.getFile();
+                            
+                            // Read commit object
+                            const arrayBuffer = await file.arrayBuffer();
+                            const content = new TextDecoder().decode(arrayBuffer);
+                            
+                            // Parse tree entries
+                            const treeMatch = content.match(/tree ([a-f0-9]+)/);
+                            if (treeMatch) {
+                                entry.changedFiles = [`Tree: ${treeMatch[1]}`];
+                            }
+                        } catch (e) {
+                            // Object might be packed
+                            entry.changedFiles = [`Changes in pack file`];
+                        }
+                    }
+
+                    gitFiles.push({
+                        path: repoPath,
+                        head: headContent.trim(),
+                        currentBranch,
+                        config: parseGitConfig(configContent),
+                        lastCommits: logEntries.slice(-10).reverse()
+                    });
+                } catch (e) {
+                    console.error('Error reading git repository:', e);
+                }
+            } catch (e) {
+                console.error('Error processing git directory:', e);
+            }
+        }
+
+        function parseGitConfig(configContent) {
+            const config = {};
+            let currentSection = '';
+            
+            configContent.split('\n').forEach(line => {
+                line = line.trim();
+                if (line.startsWith('[') && line.endsWith(']')) {
+                    currentSection = line.slice(1, -1);
+                    config[currentSection] = {};
+                } else if (line.includes('=')) {
+                    const [key, value] = line.split('=').map(s => s.trim());
+                    if (currentSection) {
+                        config[currentSection][key] = value;
+                    }
+                }
+            });
+            
+            return config;
+        }
+
+        function formatDate(date) {
+            return new Intl.DateTimeFormat('en-US', {
+                year: 'numeric',
+                month: 'short',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: true
+            }).format(date);
+        }
+
+        function displayResults() {
+            const fileList = document.getElementById('fileList');
+            fileList.innerHTML = '';
+
+            gitFiles.forEach(repo => {
+                const div = document.createElement('div');
+                div.className = 'file-item';
+                
+                div.innerHTML = `
+                    <h3>Repository at ${repo.path}</h3>
+                    <p><strong>Current Branch:</strong> ${repo.head}</p>
+                    <p><strong>Latest Commit:</strong> ${repo.currentBranch || 'N/A'}</p>
+                    <p><strong>Remote URL:</strong> ${repo.config?.remote?.origin?.url || 'Not set'}</p>
+                    <h4>Last 10 Commits:</h4>
+                    <div>
+                        ${repo.lastCommits.map(commit => `
+                            <div class="commit-info">
+                                <strong>${commit.commit.slice(0, 7)}</strong> - 
+                                ${commit.message}
+                                <br>
+                                <small>By ${commit.author} on ${formatDate(commit.date)}</small>
+                                <div class="changed-files">
+                                    ${commit.changedFiles.map(file => `
+                                        <div>${file}</div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+
+                fileList.appendChild(div);
+            });
+        }
+
+        document.getElementById('selectDir').addEventListener('click', async () => {
+            try {
+                const dirHandle = await window.showDirectoryPicker();
+                document.getElementById('loading').style.display = 'block';
+                gitFiles = [];
+                await processDirectory(dirHandle);
+                document.getElementById('loading').style.display = 'none';
+                displayResults();
+            } catch (e) {
+                console.error('Error:', e);
+                document.getElementById('loading').style.display = 'none';
+                alert('Error scanning directory: ' + e.message);
+            }
+        });
+    </script>
+</body>
+</html>

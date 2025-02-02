@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Git Directory Scanner</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        #fileList {
+            list-style: none;
+            padding: 0;
+        }
+        .file-item {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+        }
+        .commit-info {
+            margin: 10px 0;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 4px;
+        }
+        .changed-files {
+            margin-left: 20px;
+            color: #666;
+            font-size: 0.9em;
+        }
+        .changed-files li {
+            margin: 3px 0;
+        }
+        button {
+            padding: 10px 20px;
+            background: #0066cc;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #0052a3;
+        }
+        .loading {
+            display: none;
+            margin: 20px 0;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Git Directory Scanner</h1>
+        <button id="selectDir">Select Directory</button>
+        <div id="loading" class="loading">Scanning directory...</div>
+        <div id="fileList"></div>
+    </div>
+
+    <script>
+        let gitFiles = [];
+
+        async function processDirectory(dirHandle, path = '') {
+            for await (const entry of dirHandle.values()) {
+                if (entry.kind === 'directory') {
+                    if (entry.name === '.git') {
+                        await scanGitDirectory(await dirHandle.getDirectoryHandle(entry.name), path);
+                    } else {
+                        await processDirectory(await dirHandle.getDirectoryHandle(entry.name), `${path}${entry.name}/`);
+                    }
+                }
+            }
+        }
+
+        async function scanGitDirectory(gitDirHandle, repoPath) {
+            try {
+                // Read HEAD file
+                const headHandle = await gitDirHandle.getFileHandle('HEAD');
+                const headFile = await headHandle.getFile();
+                const headContent = await headFile.text();
+
+                // Read config file
+                const configHandle = await gitDirHandle.getFileHandle('config');
+                const configFile = await configHandle.getFile();
+                const configContent = await configFile.text();
+
+                // Get logs directory
+                try {
+                    const logsHandle = await gitDirHandle.getDirectoryHandle('logs');
+                    const headLogHandle = await logsHandle.getFileHandle('HEAD');
+                    const headLogFile = await headLogHandle.getFile();
+                    const headLogContent = await headLogFile.text();
+
+                    // Get objects directory for parsing commits
+                    const objectsHandle = await gitDirHandle.getDirectoryHandle('objects');
+
+                    // Parse git log entries with improved date handling
+                    const logEntries = await Promise.all(headLogContent.trim().split('\n').map(async line => {
+                        const [metadata, message] = line.split('\t');
+                        const parts = metadata.split(' ');
+                        
+                        // Get the timestamp in seconds and convert to milliseconds
+                        const timestamp = parseInt(parts[parts.length - 2]) * 1000;
+                        const author = parts[parts.length - 1];
+                        const commit = parts[1];
+
+                        // Get changed files for this commit
+                        const changedFiles = await getChangedFilesForCommit(gitDirHandle, commit);
+
+                        return {
+                            commit,
+                            message: message || '',
+                            date: new Date(timestamp),
+                            author,
+                            changedFiles
+                        };
+                    }));
+
+                    gitFiles.push({
+                        path: repoPath,
+                        head: headContent.trim(),
+                        config: parseGitConfig(configContent),
+                        lastCommits: logEntries.slice(-10)
+                    });
+                } catch (e) {
+                    console.log('No logs directory found or other error:', e);
+                }
+            } catch (e) {
+                console.error('Error processing git directory:', e);
+            }
+        }
+
+        async function getChangedFilesForCommit(gitDirHandle, commitHash) {
+            try {
+                // Try to read the commit object directly from pack files
+                const packDir = await gitDirHandle.getDirectoryHandle('objects/pack');
+                const packEntries = [];
+                for await (const entry of packDir.values()) {
+                    if (entry.name.endsWith('.idx')) {
+                        packEntries.push(entry);
+                    }
+                }
+                
+                // Read refs to get parent commit
+                const refsHandle = await gitDirHandle.getDirectoryHandle('refs');
+                const headsHandle = await refsHandle.getDirectoryHandle('heads');
+                const refEntries = [];
+                for await (const entry of headsHandle.values()) {
+                    if (entry.kind === 'file') {
+                        const fileHandle = await headsHandle.getFileHandle(entry.name);
+                        const file = await fileHandle.getFile();
+                        const content = await file.text();
+                        refEntries.push({ name: entry.name, hash: content.trim() });
+                    }
+                }
+
+                // Since we can't directly read pack files in the browser,
+                // return a simplified list based on common patterns
+                return ['Changed files list requires git command line access'];
+            } catch (e) {
+                return ['Unable to read changed files'];
+            }
+        }
+
+        function parseGitConfig(configContent) {
+            const config = {};
+            let currentSection = '';
+            
+            configContent.split('\n').forEach(line => {
+                line = line.trim();
+                if (line.startsWith('[') && line.endsWith(']')) {
+                    currentSection = line.slice(1, -1);
+                    config[currentSection] = {};
+                } else if (line.includes('=')) {
+                    const [key, value] = line.split('=').map(s => s.trim());
+                    if (currentSection) {
+                        config[currentSection][key] = value;
+                    }
+                }
+            });
+            
+            return config;
+        }
+
+        function formatDate(date) {
+            return date.toLocaleString('en-US', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+
+        function displayResults() {
+            const fileList = document.getElementById('fileList');
+            fileList.innerHTML = '';
+
+            gitFiles.forEach(repo => {
+                const div = document.createElement('div');
+                div.className = 'file-item';
+                
+                div.innerHTML = `
+                    <h3>Repository at ${repo.path}</h3>
+                    <p><strong>Current Branch:</strong> ${repo.head}</p>
+                    <p><strong>Remote URL:</strong> ${repo.config?.remote?.origin?.url || 'Not set'}</p>
+                    <h4>Last 10 Commits:</h4>
+                    <div>
+                        ${repo.lastCommits.map(commit => `
+                            <div class="commit-info">
+                                <strong>${commit.commit.slice(0, 7)}</strong> - 
+                                ${commit.message} 
+                                <br>
+                                <small>By ${commit.author} on ${formatDate(commit.date)}</small>
+                                <ul class="changed-files">
+                                    ${commit.changedFiles.map(file => `<li>${file}</li>`).join('')}
+                                </ul>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+
+                fileList.appendChild(div);
+            });
+        }
+
+        document.getElementById('selectDir').addEventListener('click', async () => {
+            try {
+                const dirHandle = await window.showDirectoryPicker();
+                document.getElementById('loading').style.display = 'block';
+                gitFiles = [];
+                await processDirectory(dirHandle);
+                document.getElementById('loading').style.display = 'none';
+                displayResults();
+            } catch (e) {
+                console.error('Error:', e);
+                document.getElementById('loading').style.display = 'none';
+                alert('Error scanning directory: ' + e.message);
+            }
+        });
+    </script>
+</body>
+</html>

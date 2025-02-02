@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Link Tag Remover</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .select-dir {
+            border: 2px dashed #ccc;
+            border-radius: 4px;
+            padding: 20px;
+            text-align: center;
+            background-color: white;
+            margin-bottom: 20px;
+            cursor: pointer;
+        }
+        .results {
+            background-color: white;
+            padding: 15px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        .file-item {
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #f8f8f8;
+            border-radius: 4px;
+        }
+        .success {
+            color: #4CAF50;
+        }
+        .error {
+            color: #f44336;
+        }
+    </style>
+</head>
+<body>
+    <h1>HTML Link Tag Remover</h1>
+    <p>Select a directory containing HTML files to process. All HTML files in the directory (and subdirectories) will have their &lt;link rel="alternate"&gt; tags removed.</p>
+    
+    <div class="select-dir" id="dirSelector">
+        <p>Click to select a directory</p>
+    </div>
+    
+    <div class="results" id="results"></div>
+
+    <script>
+        const dirSelector = document.getElementById('dirSelector');
+        const results = document.getElementById('results');
+
+        dirSelector.addEventListener('click', async () => {
+            try {
+                const dirHandle = await window.showDirectoryPicker({
+                    mode: 'readwrite'  // Request write permission
+                });
+                results.innerHTML = '';
+                await processDirectory(dirHandle);
+            } catch (err) {
+                console.error('Error selecting directory:', err);
+                results.innerHTML = '<div class="file-item error">Error selecting directory: ' + err.message + '</div>';
+            }
+        });
+
+        async function processDirectory(dirHandle, path = '') {
+            for await (const entry of dirHandle.values()) {
+                if (entry.kind === 'directory') {
+                    await processDirectory(await dirHandle.getDirectoryHandle(entry.name), `${path}${entry.name}/`);
+                } else if (entry.kind === 'file' && entry.name.toLowerCase().match(/\.html?$/)) {
+                    await processFile(entry, `${path}${entry.name}`);
+                }
+            }
+        }
+
+        async function processFile(fileHandle, relativePath) {
+            try {
+                // Get the file
+                const file = await fileHandle.getFile();
+                const content = await file.text();
+
+                // Process content
+                const regex = /<link[^>]*\brel=["']?alternate["']?[^>]*>/gi;
+                const newContent = content.replace(regex, '');
+
+                // Create writable stream and write the modified content
+                const writable = await fileHandle.createWritable();
+                await writable.write(newContent);
+                await writable.close();
+
+                // Log success
+                const resultItem = document.createElement('div');
+                resultItem.className = 'file-item success';
+                resultItem.textContent = `✓ Modified: ${relativePath}`;
+                results.appendChild(resultItem);
+
+            } catch (err) {
+                console.error(`Error processing file ${relativePath}:`, err);
+                const resultItem = document.createElement('div');
+                resultItem.className = 'file-item error';
+                resultItem.textContent = `✗ Error processing ${relativePath}: ${err.message}`;
+                results.appendChild(resultItem);
+            }
+        }
+    </script>
+</body>
+</html>

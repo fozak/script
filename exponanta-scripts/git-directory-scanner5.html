@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Git Directory Scanner</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .commit-info {
+            margin: 10px 0;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 4px;
+            border-left: 4px solid #0066cc;
+        }
+        button {
+            padding: 10px 20px;
+            background: #0066cc;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .loading {
+            display: none;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Git Directory Scanner</h1>
+        <button id="selectDir">Select Directory</button>
+        <div id="loading" class="loading">Scanning directory...</div>
+        <div id="fileList"></div>
+    </div>
+
+<script>
+let gitFiles = [];
+
+async function processDirectory(dirHandle, path = '') {
+    for await (const entry of dirHandle.values()) {
+        if (entry.kind === 'directory') {
+            if (entry.name === '.git') {
+                await scanGitDirectory(await dirHandle.getDirectoryHandle(entry.name), path);
+            } else {
+                await processDirectory(await dirHandle.getDirectoryHandle(entry.name), `${path}${entry.name}/`);
+            }
+        }
+    }
+}
+
+async function scanGitDirectory(gitDirHandle, repoPath) {
+    try {
+        // Read HEAD file
+        const headHandle = await gitDirHandle.getFileHandle('HEAD');
+        const headFile = await headHandle.getFile();
+        const headContent = await headFile.text();
+
+        // Read config file
+        const configHandle = await gitDirHandle.getFileHandle('config');
+        const configFile = await configHandle.getFile();
+        const configContent = await configFile.text();
+
+        try {
+            const logsHandle = await gitDirHandle.getDirectoryHandle('logs');
+            const headLogHandle = await logsHandle.getFileHandle('HEAD');
+            const headLogFile = await headLogHandle.getFile();
+            const headLogContent = await headLogFile.text();
+
+            // Parse git log entries with improved date handling
+            const logEntries = [];
+            const lines = headLogContent.trim().split('\n');
+            
+            for (const line of lines) {
+                try {
+                    const [metadata, message = ''] = line.split('\t');
+                    const parts = metadata.split(' ');
+                    
+                    // The timestamp is typically the second-to-last field before the timezone
+                    const timestampIndex = parts.length - 2;
+                    const timestamp = parseInt(parts[timestampIndex]);
+                    
+                    if (isNaN(timestamp)) {
+                        console.warn('Invalid timestamp in line:', line);
+                        continue;
+                    }
+
+                    // Convert to milliseconds and create date
+                    const date = new Date(timestamp * 1000);
+                    
+                    // Verify date is valid
+                    if (isNaN(date.getTime())) {
+                        console.warn('Invalid date from timestamp:', timestamp);
+                        continue;
+                    }
+
+                    const commit = parts[1]; // new-sha is always second field
+                    const author = parts.slice(2, -2).join(' '); // Author might contain spaces
+
+                    logEntries.push({
+                        commit,
+                        message: message.trim(),
+                        date,
+                        author,
+                        changedFiles: await getChangedFilesForCommit(gitDirHandle, commit)
+                    });
+                } catch (e) {
+                    console.warn('Error parsing log entry:', e);
+                    continue;
+                }
+            }
+
+            gitFiles.push({
+                path: repoPath,
+                head: headContent.trim(),
+                config: parseGitConfig(configContent),
+                lastCommits: logEntries.slice(-10).reverse()
+            });
+        } catch (e) {
+            console.log('No logs directory found or other error:', e);
+        }
+    } catch (e) {
+        console.error('Error processing git directory:', e);
+    }
+}
+
+function formatDate(date) {
+    if (!date || isNaN(date.getTime())) {
+        return 'Invalid date';
+    }
+    try {
+        return new Intl.DateTimeFormat('en-US', {
+            year: 'numeric',
+            month: 'short',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: true
+        }).format(date);
+    } catch (e) {
+        return 'Date formatting error';
+    }
+}
+
+function parseGitConfig(configContent) {
+    const config = {};
+    let currentSection = '';
+    
+    configContent.split('\n').forEach(line => {
+        line = line.trim();
+        if (line.startsWith('[') && line.endsWith(']')) {
+            currentSection = line.slice(1, -1);
+            config[currentSection] = {};
+        } else if (line.includes('=')) {
+            const [key, value] = line.split('=').map(s => s.trim());
+            if (currentSection) {
+                config[currentSection][key] = value;
+            }
+        }
+    });
+    
+    return config;
+}
+
+function displayResults() {
+    const fileList = document.getElementById('fileList');
+    fileList.innerHTML = '';
+
+    gitFiles.forEach(repo => {
+        const div = document.createElement('div');
+        div.className = 'file-item';
+        
+        div.innerHTML = `
+            <h3>Repository at ${repo.path}</h3>
+            <p><strong>Current Branch:</strong> ${repo.head}</p>
+            <p><strong>Remote URL:</strong> ${repo.config?.remote?.origin?.url || 'Not set'}</p>
+            <h4>Last 10 Commits:</h4>
+            <div>
+                ${repo.lastCommits.map(commit => `
+                    <div class="commit-info">
+                        <strong>${commit.commit.slice(0, 7)}</strong> - 
+                        ${commit.message}
+                        <br>
+                        <small>By ${commit.author} on ${formatDate(commit.date)}</small>
+                        <ul class="changed-files">
+                            ${commit.changedFiles.map(file => `<li>${file}</li>`).join('')}
+                        </ul>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+
+        fileList.appendChild(div);
+    });
+}
+
+async function getChangedFilesForCommit(gitDirHandle, commitHash) {
+    if (!commitHash) {
+        console.warn('Invalid commitHash provided:', commitHash);
+        return [];
+    }
+    try {
+        const prefix = commitHash.slice(0, 2);
+        const rest = commitHash.slice(2);
+        
+        const objectsDir = await gitDirHandle.getDirectoryHandle('objects', { create: false });
+        const prefixDir = await objectsDir.getDirectoryHandle(prefix, { create: false });
+        const commitFile = await prefixDir.getFileHandle(rest, { create: false });
+        const file = await commitFile.getFile();
+        const arrayBuffer = await file.arrayBuffer();
+        const content = new TextDecoder().decode(arrayBuffer);
+
+        // Parse the commit object
+        const lines = content.split('\n');
+        const changedFiles = [];
+        
+        let treeHash;
+        for (const line of lines) {
+            if (line.startsWith('tree ')) {
+                treeHash = line.split(' ')[1];
+                break; // Stop after finding the tree hash
+            }
+        }
+
+        console.log(`Processing commit: ${commitHash}, found treeHash: ${treeHash}`);
+
+        // Now read the tree object to get the file names
+        if (treeHash) {
+            const treeFiles = await getFilesFromTree(gitDirHandle, treeHash);
+            changedFiles.push(...treeFiles);
+        } else {
+            console.warn('No tree hash found in commit object:', commitHash);
+        }
+        
+        return changedFiles;
+    } catch (e) {
+        console.error('Unable to read commit for hash:', commitHash, e);
+        return [];
+    }
+}
+
+async function getFilesFromTree(gitDirHandle, treeHash) {
+    if (!treeHash) {
+        console.warn('Invalid treeHash provided:', treeHash);
+        return [];
+    }
+    const prefix = treeHash.slice(0, 2);
+    const rest = treeHash.slice(2);
+    
+    try {
+        const objectsDir = await gitDirHandle.getDirectoryHandle('objects', { create: false });
+        const prefixDir = await objectsDir.getDirectoryHandle(prefix, { create: false });
+        const treeFile = await prefixDir.getFileHandle(rest, { create: false });
+        const file = await treeFile.getFile();
+        const arrayBuffer = await file.arrayBuffer();
+        const content = new TextDecoder().decode(arrayBuffer);
+        
+        const lines = content.split('\n');
+        const files = [];
+        
+        for (const line of lines) {
+            const parts = line.split('\t');
+            if (parts.length > 1) {
+                files.push(parts[1]); // Add the filename
+            }
+        }
+        
+        return files;
+    } catch (e) {
+        console.error('Unable to read tree for hash:', treeHash, e);
+        return [];
+    }
+}
+
+document.getElementById('selectDir').addEventListener('click', async () => {
+    try {
+        const dirHandle = await window.showDirectoryPicker();
+        document.getElementById('loading').style.display = 'block';
+        gitFiles = [];
+        await processDirectory(dirHandle);
+        document.getElementById('loading').style.display = 'none';
+        displayResults();
+    } catch (e) {
+        console.error('Error:', e);
+        document.getElementById('loading').style.display = 'none';
+        alert('Error scanning directory: ' + e.message);
+    }
+});
+</script>
+</body>
+</html>
