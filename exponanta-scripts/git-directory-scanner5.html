@@ -46,7 +46,7 @@
         <div id="loading" class="loading">Scanning directory...</div>
         <div id="fileList"></div>
     </div>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pako/1.0.11/pako.min.js"></script>
 <script>
 let gitFiles = [];
 
@@ -212,16 +212,30 @@ async function getChangedFilesForCommit(gitDirHandle, commitHash) {
         console.warn('Invalid commitHash provided:', commitHash);
         return [];
     }
+
     try {
+        // Split the commit hash into prefix and the rest
         const prefix = commitHash.slice(0, 2);
         const rest = commitHash.slice(2);
-        
+
         const objectsDir = await gitDirHandle.getDirectoryHandle('objects', { create: false });
         const prefixDir = await objectsDir.getDirectoryHandle(prefix, { create: false });
-        const commitFile = await prefixDir.getFileHandle(rest, { create: false });
+
+        // Attempt to get the commit file handle
+        let commitFile;
+        try {
+            commitFile = await prefixDir.getFileHandle(rest, { create: false });
+        } catch (e) {
+            console.warn(`Commit file ${commitHash} not found. Ensure that the commit hash is correct and the object files are intact.`, e);
+            return []; // Return an empty array if the commit file doesn't exist
+        }
+
         const file = await commitFile.getFile();
         const arrayBuffer = await file.arrayBuffer();
-        const content = new TextDecoder().decode(arrayBuffer);
+
+        // Decompress the commit object
+        const decompressed = pako.inflate(new Uint8Array(arrayBuffer));
+        const content = new TextDecoder().decode(decompressed);
 
         // Debugging: Output the raw commit content
         console.log('Raw commit content:', content);
@@ -229,7 +243,7 @@ async function getChangedFilesForCommit(gitDirHandle, commitHash) {
         // Parse the commit object
         const lines = content.split('\n');
         const changedFiles = [];
-        
+
         let treeHash;
         for (const line of lines) {
             if (line.startsWith('tree ')) {
@@ -242,11 +256,12 @@ async function getChangedFilesForCommit(gitDirHandle, commitHash) {
 
         if (!treeHash) {
             console.warn('No tree hash found in commit object:', commitHash);
+            return changedFiles; // Return empty if no tree hash
         } else {
             const treeFiles = await getFilesFromTree(gitDirHandle, treeHash);
             changedFiles.push(...treeFiles);
         }
-        
+
         return changedFiles;
     } catch (e) {
         console.error('Unable to read commit for hash:', commitHash, e);
