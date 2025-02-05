@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+    <textarea id="input" rows="4" style="width: 100%;">John client ACME</textarea>
+    <button onclick="recognizeEntities()">Recognize Entities</button>
+    <div id="result"></div>
+
+    <script type="module">
+        import { pipeline } from 'https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.3.2';
+
+        window.recognizeEntities = async function() {
+            const input = document.getElementById('input').value;
+            const resultDiv = document.getElementById('result');
+
+            try {
+                // Use a more specialized NER model
+                const ner = await pipeline('ner', 'dslim/bert-base-NER');
+                const results = await ner(input);
+
+                // Custom post-processing for better entity detection
+                const processedEntities = processEntities(results);
+                
+                resultDiv.innerHTML = `
+                    <h3>Detected Entities:</h3>
+                    <pre>${JSON.stringify(processedEntities, null, 2)}</pre>
+                `;
+            } catch (error) {
+                resultDiv.innerText = 'Error: ' + error.message;
+            }
+        }
+
+        function processEntities(entities) {
+            const mergedEntities = [];
+            let currentEntity = null;
+
+            for (let entity of entities) {
+                if (entity.entity.startsWith('B-')) {
+                    // Begin of a new entity
+                    if (currentEntity) mergedEntities.push(currentEntity);
+                    currentEntity = {
+                        word: entity.word,
+                        type: entity.entity.slice(2),
+                        confidence: entity.score
+                    };
+                } else if (entity.entity.startsWith('I-') && currentEntity) {
+                    // Continue an existing entity
+                    currentEntity.word += entity.word.replace('##', '');
+                } else {
+                    // Other entities
+                    if (currentEntity) mergedEntities.push(currentEntity);
+                    currentEntity = null;
+                }
+            }
+
+            if (currentEntity) mergedEntities.push(currentEntity);
+
+            return mergedEntities;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Named Entity Recognition</title>
+    <style>
+        body { font-family: Arial; max-width: 600px; margin: 20px auto; }
+        #result { margin-top: 20px; }
+        .entity { font-weight: bold; }
+        .ORG { color: blue; }
+        .PER { color: green; }
+        .LOC { color: red; }
+    </style>
+</head>
+<body>
+    <h1>Named Entity Recognition</h1>
+    <textarea id="input" rows="4" style="width: 100%;">Apple Inc. was founded by Steve Jobs in Cupertino, California.</textarea>
+    <button onclick="recognizeEntities()">Recognize Entities</button>
+    <div id="result"></div>
+
+    <script type="module">
+        import { pipeline } from 'https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.3.2';
+
+        window.recognizeEntities = async function() {
+            const input = document.getElementById('input').value;
+            const resultDiv = document.getElementById('result');
+
+            try {
+                const ner = await pipeline('ner', 'Xenova/bert-base-NER');
+                const results = await ner(input);
+
+                // Group and highlight entities
+                const highlightedText = highlightEntities(input, results);
+                
+                resultDiv.innerHTML = `
+                    <h3>Detected Entities:</h3>
+                    ${highlightedText}
+                    <pre>${JSON.stringify(results, null, 2)}</pre>
+                `;
+            } catch (error) {
+                console.error('NER Error:', error);
+                document.getElementById('result').innerText = 'Error: ' + error.message;
+            }
+        }
+
+        function highlightEntities(text, entities) {
+            let highlightedText = text;
+            let lastIndex = 0;
+
+            // Sort entities by start index to process them in order
+            const sortedEntities = entities.sort((a, b) => a.start - b.start);
+
+            return sortedEntities.map(entity => {
+                const { start, end, entity: type } = entity;
+                return `<span class="entity ${type}">${text.slice(start, end)} (${type})</span>`;
+            }).join(', ');
+        }
+    </script>
+</body>
+</html>

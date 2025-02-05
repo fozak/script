@@ -1,0 +1,462 @@
+# Query: ripgrep
+# ContextLines: 1
+
+150 results - 39 files
+
+cgmanifest.json:
+  634  				"git": {
+  635: 					"name": "ripgrep",
+  636: 					"repositoryUrl": "https://github.com/BurntSushi/ripgrep",
+  637  					"commitHash": "973de50c9ef451da2cfcdfa86f2b2711d8d6ff48"
+
+eslint.config.js:
+  795  						'@vscode/vscode-languagedetection',
+  796: 						'@vscode/ripgrep',
+  797  						'@vscode/iconv-lite-umd',
+
+package-lock.json:
+    20          "@vscode/proxy-agent": "^0.31.0",
+    21:         "@vscode/ripgrep": "^1.15.10",
+    22          "@vscode/spdlog": "^0.15.0",
+
+  2869      },
+  2870:     "node_modules/@vscode/ripgrep": {
+  2871        "version": "1.15.10",
+  2872:       "resolved": "https://registry.npmjs.org/@vscode/ripgrep/-/ripgrep-1.15.10.tgz",
+  2873        "integrity": "sha512-83Q6qFrELpFgf88bPOcwSWDegfY2r/cb6bIfdLTSZvN73Dg1wviSfO+1v6lTFMd0mAvUYYcTUu+Mn5xMroZMxA==",
+
+  2881      },
+  2882:     "node_modules/@vscode/ripgrep/node_modules/yauzl": {
+  2883        "version": "2.10.0",
+
+  2933        "dependencies": {
+  2934:         "@vscode/ripgrep": "^1.15.9",
+  2935          "command-line-args": "^5.2.1",
+
+package.json:
+  78      "@vscode/proxy-agent": "^0.31.0",
+  79:     "@vscode/ripgrep": "^1.15.10",
+  80      "@vscode/spdlog": "^0.15.0",
+
+build\gulpfile.vscode.js:
+  312  				'**/*.node',
+  313: 				'**/@vscode/ripgrep/bin/*',
+  314  				'**/node-pty/build/Release/*',
+
+build\package-lock.json:
+    44          "@vscode/iconv-lite-umd": "0.7.0",
+    45:         "@vscode/ripgrep": "^1.15.10",
+    46          "@vscode/vsce": "2.20.1",
+
+  1277      },
+  1278:     "node_modules/@vscode/ripgrep": {
+  1279        "version": "1.15.10",
+  1280:       "resolved": "https://registry.npmjs.org/@vscode/ripgrep/-/ripgrep-1.15.10.tgz",
+  1281        "integrity": "sha512-83Q6qFrELpFgf88bPOcwSWDegfY2r/cb6bIfdLTSZvN73Dg1wviSfO+1v6lTFMd0mAvUYYcTUu+Mn5xMroZMxA==",
+
+build\package.json:
+  38      "@vscode/iconv-lite-umd": "0.7.0",
+  39:     "@vscode/ripgrep": "^1.15.10",
+  40      "@vscode/vsce": "2.20.1",
+
+build\lib\policies.ts:
+   9  import byline from 'byline';
+  10: import { rgPath } from '@vscode/ripgrep';
+  11  import Parser from 'tree-sitter';
+
+remote\package-lock.json:
+   16          "@vscode/proxy-agent": "^0.31.0",
+   17:         "@vscode/ripgrep": "^1.15.10",
+   18          "@vscode/spdlog": "^0.15.0",
+
+  438      },
+  439:     "node_modules/@vscode/ripgrep": {
+  440        "version": "1.15.10",
+  441:       "resolved": "https://registry.npmjs.org/@vscode/ripgrep/-/ripgrep-1.15.10.tgz",
+  442        "integrity": "sha512-83Q6qFrELpFgf88bPOcwSWDegfY2r/cb6bIfdLTSZvN73Dg1wviSfO+1v6lTFMd0mAvUYYcTUu+Mn5xMroZMxA==",
+
+  450      },
+  451:     "node_modules/@vscode/ripgrep/node_modules/yauzl": {
+  452        "version": "2.10.0",
+
+remote\package.json:
+  11      "@vscode/proxy-agent": "^0.31.0",
+  12:     "@vscode/ripgrep": "^1.15.10",
+  13      "@vscode/spdlog": "^0.15.0",
+
+src\vs\platform\cssDev\node\cssDevService.ts:
+  46  
+  47: 		const rg = await import('@vscode/ripgrep');
+  48  		return await new Promise<string[]>((resolve) => {
+
+src\vs\platform\environment\test\node\nativeModules.integrationTest.ts:
+  93  
+  94: 	test('@vscode/ripgrep', async () => {
+  95: 		const ripgrep = await import('@vscode/ripgrep');
+  96: 		assert.ok(typeof ripgrep.rgPath === 'string', testErrorMessage('@vscode/ripgrep'));
+  97  	});
+
+src\vs\workbench\api\common\extHostRequireInterceptor.ts:
+  97  	private static readonly aliased: ReadonlyMap<string, string> = new Map([
+  98: 		['vscode-ripgrep', '@vscode/ripgrep'],
+  99  		['vscode-windows-registry', '@vscode/windows-registry'],
+
+src\vs\workbench\api\node\extHostSearch.ts:
+   18  import { SearchService } from '../../services/search/node/rawSearchService.js';
+   19: import { RipgrepSearchProvider } from '../../services/search/node/ripgrepSearchProvider.js';
+   20: import { OutputChannel } from '../../services/search/node/ripgrepSearchUtils.js';
+   21  import { NativeTextSearchManager } from '../../services/search/node/textSearchManager.js';
+
+   49  		this.handleConfigurationChanged = this.handleConfigurationChanged.bind(this);
+   50: 		const outputChannel = new OutputChannel('RipgrepSearchUD', this._logService);
+   51: 		this._disposables.add(this.registerTextSearchProvider(Schemas.vscodeUserData, new RipgrepSearchProvider(outputChannel, this.getNumThreadsCached)));
+   52  		if (initData.remote.isRemote && initData.remote.authority) {
+
+   72  		const configProvider = await this.configurationService.getConfigProvider();
+   73: 		const numThreads = configProvider.getConfiguration('search').get<number>('ripgrep.maxThreads');
+   74  		return numThreads;
+
+   98  		this._registeredEHSearchProvider = true;
+   99: 		const outputChannel = new OutputChannel('RipgrepSearchEH', this._logService);
+  100: 		this._disposables.add(this.registerTextSearchProvider(Schemas.file, new RipgrepSearchProvider(outputChannel, this.getNumThreadsCached)));
+  101  		this._disposables.add(this.registerInternalFileSearchProvider(Schemas.file, new SearchService('fileSearchProvider', this.getNumThreadsCached)));
+
+src\vs\workbench\contrib\search\browser\search.contribution.ts:
+  166  		},
+  167: 		'search.useRipgrep': {
+  168  			type: 'boolean',
+  169: 			description: nls.localize('useRipgrep', "This setting is deprecated and now falls back on \"search.usePCRE2\"."),
+  170: 			deprecationMessage: nls.localize('useRipgrepDeprecated', "Deprecated. Consider \"search.usePCRE2\" for advanced regex feature support."),
+  171  			default: true
+
+  201  		},
+  202: 		'search.ripgrep.maxThreads': {
+  203  			type: 'number',
+  204: 			description: nls.localize('search.ripgrep.maxThreads', "Number of threads to use for searching. When set to 0, the engine automatically determines this value."),
+  205  			default: 0
+
+src\vs\workbench\contrib\terminalContrib\links\browser\terminalMultiLineLinkDetector.ts:
+  28  const lineNumberPrefixMatchers = [
+  29: 	// Ripgrep:
+  30  	//   /some/file
+
+src\vs\workbench\contrib\terminalContrib\suggest\test\browser\testRawPwshCompletions.ts:
+  38566  		ResultType: 2,
+  38567: 		ToolTip: 'C:\\Users\\Daniel\\AppData\\Local\\Microsoft\\WinGet\\Packages\\BurntSushi.ripgrep.MSVC_Microsoft.Winget.Source_8wekyb3d8bbwe\\ripgrep-13.0.0-x86_64-pc-windows-msvc\\rg.exe'
+  38568  	},
+
+src\vs\workbench\contrib\terminalContrib\suggest\test\browser\recordings\windows11_pwsh_getcontent_delete_ghost.ts:
+  29  		"type": "output",
+  30: ⟪ 1178659 characters skipped ⟫ectAccess\\r\\n\"},{\"CompletionText\":\"rg.exe\",\"ListItemText\":\"rg.exe\",\"ResultType\":2,\"ToolTip\":\"C:\\\\Users\\\\Daniel\\\\AppData\\\\Local\\\\Microsoft\\\\WinGet\\\\Packages\\\\BurntSushi.ripgrep.MSVC_Microsoft.Winget.Source_8wekyb3d8bbwe\\\\ripgrep-13.0.0-x86_64-pc-windows-msvc\\\\rg.exe\"},{\"CompletionText\":\"ri\",\"ListItemText\":\"ri\",\"ResultType\":2,\"ToolTip\":\"Remove-Item\"},{\"CompletionText\":\"rjb\",\"ListItemText\":\"rjb\",\"ResultType\":2,\"ToolTip\":\"Remove-Job\"},{\"CompletionText\":\"rksmba\",\"ListItemText\":\"rksmba\",\"ResultType\":2,\"ToolTip\":\"rksmba\"},{\"CompletionText\":\"rksmbclas\",\"ListItemText\":\"rksmbclas\",\"ResultType\":2,\"ToolTip\":\"rksmbclas\"},{\"CompletionText\":\"rlg\",\"ListItemText\":\"rlg\",\"ResultType\":2,\"ToolTip\":\"rlg\"},{\"CompletionText\":\"rlgm\",\"ListItemText\":\"rlgm\",\"ResultType\":2,\"ToolTip\":\"rlgm\"},{\"CompletionText\":\"rlu\",\"ListItemText\":\"rlu\",\"ResultType\":2,\"ToolTip\":\"rlu\"},{\"CompletionText\":\"rm\",\"ListItemText\":\"rm\",\"ResultType\":2,\"ToolTip\":\"Remove-Item\"},{\"CompletionText\":\"RMActivate.exe\",\"ListItemText\":\"RMActivate.exe\",\"ResultType\":2,\"ToolTip\":\"C:\\\\WINDOWS\\\\system32\\\\RMActivate.exe\"},{\"CompletionText\"
+  31  	},
+
+src\vs\workbench\contrib\terminalContrib\suggest\test\browser\recordings\windows11_pwsh_input_ls_complete_ls.ts:
+  29  		"type": "output",
+  30: ⟪ 1178659 characters skipped ⟫ectAccess\\r\\n\"},{\"CompletionText\":\"rg.exe\",\"ListItemText\":\"rg.exe\",\"ResultType\":2,\"ToolTip\":\"C:\\\\Users\\\\Daniel\\\\AppData\\\\Local\\\\Microsoft\\\\WinGet\\\\Packages\\\\BurntSushi.ripgrep.MSVC_Microsoft.Winget.Source_8wekyb3d8bbwe\\\\ripgrep-13.0.0-x86_64-pc-windows-msvc\\\\rg.exe\"},{\"CompletionText\":\"ri\",\"ListItemText\":\"ri\",\"ResultType\":2,\"ToolTip\":\"Remove-Item\"},{\"CompletionText\":\"rjb\",\"ListItemText\":\"rjb\",\"ResultType\":2,\"ToolTip\":\"Remove-Job\"},{\"CompletionText\":\"rksmba\",\"ListItemText\":\"rksmba\",\"ResultType\":2,\"ToolTip\":\"rksmba\"},{\"CompletionText\":\"rksmbclas\",\"ListItemText\":\"rksmbclas\",\"ResultType\":2,\"ToolTip\":\"rksmbclas\"},{\"CompletionText\":\"rlg\",\"ListItemText\":\"rlg\",\"ResultType\":2,\"ToolTip\":\"rlg\"},{\"CompletionText\":\"rlgm\",\"ListItemText\":\"rlgm\",\"ResultType\":2,\"ToolTip\":\"rlgm\"},{\"CompletionText\":\"rlu\",\"ListItemText\":\"rlu\",\"ResultType\":2,\"ToolTip\":\"rlu\"},{\"CompletionText\":\"rm\",\"ListItemText\":\"rm\",\"ResultType\":2,\"ToolTip\":\"Remove-Item\"},{\"CompletionText\":\"RMActivate.exe\",\"ListItemText\":\"RMActivate.exe\",\"ResultType\":2,\"ToolTip\":\"C:\\\\WINDOWS\\\\system32\\\\RMActivate.exe\"},{\"CompletionText\"
+  31  	},
+
+src\vs\workbench\contrib\terminalContrib\suggest\test\browser\recordings\windows11_pwsh_type_before_prompt.ts:
+  33  		"type": "output",
+  34: ⟪ 1178847 characters skipped ⟫ectAccess\\r\\n\"},{\"CompletionText\":\"rg.exe\",\"ListItemText\":\"rg.exe\",\"ResultType\":2,\"ToolTip\":\"C:\\\\Users\\\\Daniel\\\\AppData\\\\Local\\\\Microsoft\\\\WinGet\\\\Packages\\\\BurntSushi.ripgrep.MSVC_Microsoft.Winget.Source_8wekyb3d8bbwe\\\\ripgrep-13.0.0-x86_64-pc-windows-msvc\\\\rg.exe\"},{\"CompletionText\":\"ri\",\"ListItemText\":\"ri\",\"ResultType\":2,\"ToolTip\":\"Remove-Item\"},{\"CompletionText\":\"rjb\",\"ListItemText\":\"rjb\",\"ResultType\":2,\"ToolTip\":\"Remove-Job\"},{\"CompletionText\":\"rksmba\",\"ListItemText\":\"rksmba\",\"ResultType\":2,\"ToolTip\":\"rksmba\"},{\"CompletionText\":\"rksmbclas\",\"ListItemText\":\"rksmbclas\",\"ResultType\":2,\"ToolTip\":\"rksmbclas\"},{\"CompletionText\":\"rlg\",\"ListItemText\":\"rlg\",\"ResultType\":2,\"ToolTip\":\"rlg\"},{\"CompletionText\":\"rlgm\",\"ListItemText\":\"rlgm\",\"ResultType\":2,\"ToolTip\":\"rlgm\"},{\"CompletionText\":\"rlu\",\"ListItemText\":\"rlu\",\"ResultType\":2,\"ToolTip\":\"rlu\"},{\"CompletionText\":\"rm\",\"ListItemText\":\"rm\",\"ResultType\":2,\"ToolTip\":\"Remove-Item\"},{\"CompletionText\":\"RMActivate.exe\",\"ListItemText\":\"RMActivate.exe\",\"ResultType\":2,\"ToolTip\":\"C:\\\\WINDOWS\\\\system32\\\\RMActivate.exe\"},{\"CompletionText\"
+  35  	},
+
+src\vs\workbench\contrib\terminalContrib\suggest\test\browser\recordings\windows11_pwsh_writehost_multiline_nav_up.ts:
+  29  		"type": "output",
+  30: ⟪ 1178847 characters skipped ⟫ectAccess\\r\\n\"},{\"CompletionText\":\"rg.exe\",\"ListItemText\":\"rg.exe\",\"ResultType\":2,\"ToolTip\":\"C:\\\\Users\\\\Daniel\\\\AppData\\\\Local\\\\Microsoft\\\\WinGet\\\\Packages\\\\BurntSushi.ripgrep.MSVC_Microsoft.Winget.Source_8wekyb3d8bbwe\\\\ripgrep-13.0.0-x86_64-pc-windows-msvc\\\\rg.exe\"},{\"CompletionText\":\"ri\",\"ListItemText\":\"ri\",\"ResultType\":2,\"ToolTip\":\"Remove-Item\"},{\"CompletionText\":\"rjb\",\"ListItemText\":\"rjb\",\"ResultType\":2,\"ToolTip\":\"Remove-Job\"},{\"CompletionText\":\"rksmba\",\"ListItemText\":\"rksmba\",\"ResultType\":2,\"ToolTip\":\"rksmba\"},{\"CompletionText\":\"rksmbclas\",\"ListItemText\":\"rksmbclas\",\"ResultType\":2,\"ToolTip\":\"rksmbclas\"},{\"CompletionText\":\"rlg\",\"ListItemText\":\"rlg\",\"ResultType\":2,\"ToolTip\":\"rlg\"},{\"CompletionText\":\"rlgm\",\"ListItemText\":\"rlgm\",\"ResultType\":2,\"ToolTip\":\"rlgm\"},{\"CompletionText\":\"rlu\",\"ListItemText\":\"rlu\",\"ResultType\":2,\"ToolTip\":\"rlu\"},{\"CompletionText\":\"rm\",\"ListItemText\":\"rm\",\"ResultType\":2,\"ToolTip\":\"Remove-Item\"},{\"CompletionText\":\"RMActivate.exe\",\"ListItemText\":\"RMActivate.exe\",\"ResultType\":2,\"ToolTip\":\"C:\\\\WINDOWS\\\\system32\\\\RMActivate.exe\"},{\"CompletionText\"
+  31  	},
+
+src\vs\workbench\contrib\terminalContrib\suggest\test\browser\recordings\windows11_pwsh_writehost_multiline.ts:
+  29  		"type": "output",
+  30: ⟪ 1178847 characters skipped ⟫ectAccess\\r\\n\"},{\"CompletionText\":\"rg.exe\",\"ListItemText\":\"rg.exe\",\"ResultType\":2,\"ToolTip\":\"C:\\\\Users\\\\Daniel\\\\AppData\\\\Local\\\\Microsoft\\\\WinGet\\\\Packages\\\\BurntSushi.ripgrep.MSVC_Microsoft.Winget.Source_8wekyb3d8bbwe\\\\ripgrep-13.0.0-x86_64-pc-windows-msvc\\\\rg.exe\"},{\"CompletionText\":\"ri\",\"ListItemText\":\"ri\",\"ResultType\":2,\"ToolTip\":\"Remove-Item\"},{\"CompletionText\":\"rjb\",\"ListItemText\":\"rjb\",\"ResultType\":2,\"ToolTip\":\"Remove-Job\"},{\"CompletionText\":\"rksmba\",\"ListItemText\":\"rksmba\",\"ResultType\":2,\"ToolTip\":\"rksmba\"},{\"CompletionText\":\"rksmbclas\",\"ListItemText\":\"rksmbclas\",\"ResultType\":2,\"ToolTip\":\"rksmbclas\"},{\"CompletionText\":\"rlg\",\"ListItemText\":\"rlg\",\"ResultType\":2,\"ToolTip\":\"rlg\"},{\"CompletionText\":\"rlgm\",\"ListItemText\":\"rlgm\",\"ResultType\":2,\"ToolTip\":\"rlgm\"},{\"CompletionText\":\"rlu\",\"ListItemText\":\"rlu\",\"ResultType\":2,\"ToolTip\":\"rlu\"},{\"CompletionText\":\"rm\",\"ListItemText\":\"rm\",\"ResultType\":2,\"ToolTip\":\"Remove-Item\"},{\"CompletionText\":\"RMActivate.exe\",\"ListItemText\":\"RMActivate.exe\",\"ResultType\":2,\"ToolTip\":\"C:\\\\WINDOWS\\\\system32\\\\RMActivate.exe\"},{\"CompletionText\"
+  31  	},
+
+src\vs\workbench\services\search\common\fileSearchManager.ts:
+  165  
+  166: 					// TODO: Optimize siblings clauses with ripgrep here.
+  167  					this.addDirectoryEntries(fqFolderInfo.tree, fqFolderInfo.folder, relativePath, onResult);
+
+src\vs\workbench\services\search\common\queryBuilder.ts:
+  145  			const folderConfig = this.configurationService.getValue<ISearchConfiguration>({ resource: folder });
+  146: 			return !folderConfig.search.useRipgrep;
+  147  		});
+
+  661  /**
+  662:  * Note - we used {} here previously but ripgrep can't handle nested {} patterns. See https://github.com/microsoft/vscode/issues/32761
+  663   */
+
+src\vs\workbench\services\search\common\search.ts:
+   95  	folderQueries: IFolderQuery<U>[];
+   96: 	// The include pattern for files that gets passed into ripgrep.
+   97  	// Note that this will override any ignore files if applicable.
+
+  419  	exclude: glob.IExpression;
+  420: 	useRipgrep: boolean;
+  421  	/**
+
+src\vs\workbench\services\search\common\searchExtTypesInternal.ts:
+   6  
+   7: interface RipgrepSearchOptionsCommon {
+   8  	numThreads?: number;
+
+  10  
+  11: export type TextSearchProviderOptionsRipgrep = Omit<Partial<TextSearchProviderOptions>, 'folderOptions'> & {
+  12  	folderOptions: TextSearchProviderFolderOptions;
+
+  14  
+  15: export type FileSearchProviderOptionsRipgrep = & {
+  16  	folderOptions: FileSearchProviderFolderOptions;
+
+  18  
+  19: export interface RipgrepTextSearchOptions extends TextSearchProviderOptionsRipgrep, RipgrepSearchOptionsCommon { }
+  20  
+  21: export interface RipgrepFileSearchOptions extends FileSearchProviderOptionsRipgrep, RipgrepSearchOptionsCommon { }
+
+src\vs\workbench\services\search\common\textSearchManager.ts:
+  245  		// Collects TextSearchResults into IInternalFileMatches and collates using BatchedCollector.
+  246: 		// This is efficient for ripgrep which sends results back one file at a time. It wouldn't be efficient for other search
+  247  		// providers that send results in random order. We could do this step afterwards instead.
+
+  281  function extensionResultToFrontendResult(data: TextSearchResult2): ITextSearchResult {
+  282: 	// Warning: result from RipgrepTextSearchEH has fake Range. Don't depend on any other props beyond these...
+  283  	if (data instanceof TextSearchMatch2) {
+
+src\vs\workbench\services\search\node\fileSearch.ts:
+   22  import { IFileQuery, IFolderQuery, IProgressMessage, ISearchEngineStats, IRawFileMatch, ISearchEngine, ISearchEngineSuccess, isFilePatternMatch, hasSiblingFn } from '../common/search.js';
+   23: import { spawnRipgrepCmd } from './ripgrepFileSearch.js';
+   24  import { prepareQuery } from '../../../../base/common/fuzzyScorer.js';
+
+  206  
+  207: 		const ripgrep = spawnRipgrepCmd(this.config, folderQuery, this.config.includePattern, this.folderExcludePatterns.get(folderQuery.folder.fsPath)!.expression, numThreads);
+  208: 		const cmd = ripgrep.cmd;
+  209: 		const noSiblingsClauses = !Object.keys(ripgrep.siblingClauses).length;
+  210  
+  211: 		const escapedArgs = ripgrep.rgArgs.args
+  212  			.map(arg => arg.match(/^-/) ? arg : `'${arg}'`)
+
+  214  
+  215: 		let rgCmd = `${ripgrep.rgDiskPath} ${escapedArgs}\n - cwd: ${ripgrep.cwd}`;
+  216: 		if (ripgrep.rgArgs.siblingClauses) {
+  217: 			rgCmd += `\n - Sibling clauses: ${JSON.stringify(ripgrep.rgArgs.siblingClauses)}`;
+  218  		}
+
+  267  
+  268: 			// TODO: Optimize siblings clauses with ripgrep here.
+  269  			this.addDirectoryEntries(folderQuery, tree, rootFolder, relativeFiles, onResult);
+
+  352  		cmd.on('close', (code: number) => {
+  353: 			// ripgrep returns code=1 when no results are found
+  354  			let stderrText: string;
+
+  749  	if (firstLine === `Literal '\\n' not allowed.`) {
+  750: 		// I won't localize this because none of the Ripgrep error messages are localized
+  751  		return `Literal '\\n' currently not supported`;
+
+src\vs\workbench\services\search\node\rawSearchService.ts:
+  61  				promise = createCancelablePromise(token => {
+  62: 					return this.ripgrepTextSearch(query, p => emitter.fire(p), token);
+  63  				});
+
+  76  
+  77: 	private async ripgrepTextSearch(config: ITextQuery, progressCallback: IProgressCallback, token: CancellationToken): Promise<ISerializedSearchSuccess> {
+  78  		config.maxFileSize = this.getPlatformFileLimits().maxFileSize;
+
+src\vs\workbench\services\search\node\ripgrepFileSearch.ts:
+   13  import { IFileQuery, IFolderQuery } from '../common/search.js';
+   14: import { anchorGlob } from './ripgrepSearchUtils.js';
+   15: import { rgPath } from '@vscode/ripgrep';
+   16  
+   17: // If @vscode/ripgrep is in an .asar file, then the binary is unpacked.
+   18  const rgDiskPath = rgPath.replace(/\bnode_modules\.asar\b/, 'node_modules.asar.unpacked');
+   19  
+   20: export function spawnRipgrepCmd(config: IFileQuery, folderQuery: IFolderQuery, includePattern?: glob.IExpression, excludePattern?: glob.IExpression, numThreads?: number) {
+   21  	const rgArgs = getRgArgs(config, folderQuery, includePattern, excludePattern, numThreads);
+
+  160   * Resolves a glob like "node_modules/**" in "/foo/bar" to "/foo/bar/node_modules/**".
+  161:  * Special cases C:/foo paths to write the glob like /foo instead - see https://github.com/BurntSushi/ripgrep/issues/530.
+  162   *
+
+src\vs\workbench\services\search\node\ripgrepSearchProvider.ts:
+   6  import { CancellationTokenSource, CancellationToken } from '../../../../base/common/cancellation.js';
+   7: import { OutputChannel } from './ripgrepSearchUtils.js';
+   8: import { RipgrepTextSearchEngine } from './ripgrepTextSearchEngine.js';
+   9  import { TextSearchProvider2, TextSearchComplete2, TextSearchResult2, TextSearchQuery2, TextSearchProviderOptions, } from '../common/searchExtTypes.js';
+
+  11  import { Schemas } from '../../../../base/common/network.js';
+  12: import type { RipgrepTextSearchOptions } from '../common/searchExtTypesInternal.js';
+  13  
+  14: export class RipgrepSearchProvider implements TextSearchProvider2 {
+  15  	private inProgress: Set<CancellationTokenSource> = new Set();
+
+  22  		const numThreads = await this.getNumThreads();
+  23: 		const engine = new RipgrepTextSearchEngine(this.outputChannel, numThreads);
+  24  
+
+  26  
+  27: 			const extendedOptions: RipgrepTextSearchOptions = {
+  28  				folderOptions: folderOption,
+
+  35  			if (folderOption.folder.scheme === Schemas.vscodeUserData) {
+  36: 				// Ripgrep search engine can only provide file-scheme results, but we want to use it to search some schemes that are backed by the filesystem, but with some other provider as the frontend,
+  37  				// case in point vscode-userdata. In these cases we translate the query to a file, and translate the results back to the frontend scheme.
+
+src\vs\workbench\services\search\node\ripgrepTextSearchEngine.ts:
+   18  import { AST as ReAST, RegExpParser, RegExpVisitor } from 'vscode-regexpp';
+   19: import { rgPath } from '@vscode/ripgrep';
+   20: import { anchorGlob, IOutputChannel, Maybe, rangeToSearchRange, searchRangeToRange } from './ripgrepSearchUtils.js';
+   21: import type { RipgrepTextSearchOptions } from '../common/searchExtTypesInternal.js';
+   22  import { newToOldPreviewOptions } from '../common/searchExtConversionTypes.js';
+   23  
+   24: // If @vscode/ripgrep is in an .asar file, then the binary is unpacked.
+   25  const rgDiskPath = rgPath.replace(/\bnode_modules\.asar\b/, 'node_modules.asar.unpacked');
+   26  
+   27: export class RipgrepTextSearchEngine {
+   28  
+
+   32  		return Promise.all(options.folderOptions.map(folderOption => {
+   33: 			const extendedOptions: RipgrepTextSearchOptions = {
+   34  				folderOptions: folderOption,
+
+   50  
+   51: 	provideTextSearchResultsWithRgOptions(query: TextSearchQuery2, options: RipgrepTextSearchOptions, progress: Progress<TextSearchResult2>, token: CancellationToken): Promise<TextSearchComplete2> {
+   52  		this.outputChannel.appendLine(`provideTextSearchResults ${query.pattern}, ${JSON.stringify({
+
+   61  
+   62: 			const extendedOptions: RipgrepTextSearchOptions = {
+   63  				...options,
+
+   82  			let gotResult = false;
+   83: 			const ripgrepParser = new RipgrepParser(options.maxResults ?? DEFAULT_MAX_SEARCH_RESULTS, options.folderOptions.folder, newToOldPreviewOptions(options.previewOptions));
+   84: 			ripgrepParser.on('result', (match: TextSearchResult2) => {
+   85  				gotResult = true;
+
+   95  
+   96: 				ripgrepParser?.cancel();
+   97  			};
+
+   99  			let limitHit = false;
+  100: 			ripgrepParser.on('hitLimit', () => {
+  101  				limitHit = true;
+
+  106  			rgProc.stdout!.on('data', data => {
+  107: 				ripgrepParser.handleData(data);
+  108  				if (!gotResult) {
+
+  138  					// Trigger last result
+  139: 					ripgrepParser.flush();
+  140  					rgProc = null;
+
+  155   * allowed properties.
+  156:  * Ripgrep produces stderr output which is not from a fatal error, and we only want the search to be
+  157   * "failed" when a fatal error was produced.
+
+  203  
+  204: export class RipgrepParser extends EventEmitter {
+  205  	private remainder = '';
+
+  402  // exported for testing
+  403: export function getRgArgs(query: TextSearchQuery2, options: RipgrepTextSearchOptions): string[] {
+  404  	const args = ['--hidden', '--no-require-git'];
+
+  460  
+  461: 	// Ripgrep handles -- as a -- arg separator. Only --.
+  462  	// - is ok, --- is ok, --some-flag is also ok. Need to special case.
+
+  531  function spreadGlobComponents(globComponent: string): string[] {
+  532: 	const globComponentWithBraceExpansion = performBraceExpansionForRipgrep(globComponent);
+  533  
+
+  670  
+  671: // brace expansion for ripgrep
+  672  
+
+  676   * - Does not process escapes that are within the sub-glob.
+  677:  * - If two unescaped `{` occur before `}`, then ripgrep will return an error for brace nesting, so don't split on those.
+  678   */
+  679: function getEscapeAwareSplitStringForRipgrep(pattern: string): { fixedStart?: string; strInBraces: string; fixedEnd?: string } {
+  680  	let inBraces = false;
+
+  711  					if (inBraces) {
+  712: 						// ripgrep treats this as attempting to do a nested alternate group, which is invalid. Return with pattern including changes from escaped braces.
+  713  						return { strInBraces: fixedStart + '{' + strInBraces + '{' + pattern.substring(i + 1) };
+
+  757   */
+  758: export function performBraceExpansionForRipgrep(pattern: string): string[] {
+  759: 	const { fixedStart, strInBraces, fixedEnd } = getEscapeAwareSplitStringForRipgrep(pattern);
+  760  	if (fixedStart === undefined || fixedEnd === undefined) {
+
+  770  
+  771: 	const ends = performBraceExpansionForRipgrep(fixedEnd);
+  772  
+
+src\vs\workbench\services\search\node\textSearchAdapter.ts:
+   8  import { IFileMatch, IProgressMessage, ITextQuery, ITextSearchMatch, ISerializedFileMatch, ISerializedSearchSuccess, resultIsMatch } from '../common/search.js';
+   9: import { RipgrepTextSearchEngine } from './ripgrepTextSearchEngine.js';
+  10  import { NativeTextSearchManager } from './textSearchManager.js';
+
+  32  		};
+  33: 		const textSearchManager = new NativeTextSearchManager(this.query, new RipgrepTextSearchEngine(pretendOutputChannel, this.numThreads), pfs);
+  34  		return new Promise((resolve, reject) => {
+
+src\vs\workbench\services\search\test\browser\queryBuilder.test.ts:
+  25  const DEFAULT_EDITOR_CONFIG = {};
+  26: const DEFAULT_USER_CONFIG = { useRipgrep: true, useIgnoreFiles: true, useGlobalIgnoreFiles: true, useParentIgnoreFiles: true };
+  27  const DEFAULT_QUERY_PROPS = {};
+
+src\vs\workbench\services\search\test\node\ripgrepFileSearch.test.ts:
+   8  import { ensureNoDisposablesAreLeakedInTestSuite } from '../../../../../base/test/common/utils.js';
+   9: import { fixDriveC, getAbsoluteGlob } from '../../node/ripgrepFileSearch.js';
+  10  
+  11: suite('RipgrepFileSearch - etc', () => {
+  12  	ensureNoDisposablesAreLeakedInTestSuite();
+
+src\vs\workbench\services\search\test\node\ripgrepTextSearchEngineUtils.test.ts:
+    8  import { URI } from '../../../../../base/common/uri.js';
+    9: import { fixRegexNewline, IRgMatch, IRgMessage, RipgrepParser, unicodeEscapesToPCRE2, fixNewline, getRgArgs, performBraceExpansionForRipgrep } from '../../node/ripgrepTextSearchEngine.js';
+   10  import { Range, TextSearchMatch2, TextSearchQuery2, TextSearchResult2 } from '../../common/searchExtTypes.js';
+   11  import { ensureNoDisposablesAreLeakedInTestSuite } from '../../../../../base/test/common/utils.js';
+   12: import { RipgrepTextSearchOptions } from '../../common/searchExtTypesInternal.js';
+   13  import { DEFAULT_TEXT_SEARCH_PREVIEW_OPTIONS } from '../../common/search.js';
+   14  
+   15: suite('RipgrepTextSearchEngine', () => {
+   16  	ensureNoDisposablesAreLeakedInTestSuite();
+
+  105  
+  106: 	suite('RipgrepParser', () => {
+  107  		const TEST_FOLDER = URI.file('/foo/bar');
+
+  109  		function testParser(inputData: string[], expectedResults: TextSearchResult2[]): void {
+  110: 			const testParser = new RipgrepParser(1000, TEST_FOLDER, DEFAULT_TEXT_SEARCH_PREVIEW_OPTIONS);
+  111  
+
+  327  
+  328: 				const options: RipgrepTextSearchOptions = {
+  329  					folderOptions: {
+
+  369  
+  370: 	test('brace expansion for ripgrep', () => {
+  371  		function testBraceExpansion(argGlob: string, expectedGlob: string[]): void {
+  372: 			const result = performBraceExpansionForRipgrep(argGlob);
+  373  			assert.deepStrictEqual(result, expectedGlob);
+
+src\vs\workbench\services\search\test\node\search.integrationTest.ts:
+   72  
+   73: 	test('Files: maxResults without Ripgrep', function (done: () => void) {
+   74  		const engine = new FileSearchEngine({
+
+  133  
+  134: 	test('Files: exists without Ripgrep', function (done: () => void) {
+  135  		const engine = new FileSearchEngine({
+
+  154  
+  155: 	test('Files: not exists without Ripgrep', function (done: () => void) {
+  156  		const engine = new FileSearchEngine({
+
+src\vs\workbench\services\search\test\node\textSearch.integrationTest.ts:
+  351  			assert.strictEqual((<ITextSearchContext>results[0].results![0]).text, '        compiler.addUnit(prog,"input.ts");');
+  352: 			// assert.strictEqual((<ITextSearchMatch>results[1].results[0]).preview.text, '        compiler.typeCheck();\n'); // See https://github.com/BurntSushi/ripgrep/issues/1095
+  353  			assert.strictEqual((<ITextSearchContext>results[2].results![0]).lineNumber, 26);
+
+src\vs\workbench\services\textfile\common\encoding.ts:
+  388   * See https://encoding.spec.whatwg.org/#names-and-labels
+  389:  * Iconv-lite strips all non-alphanumeric characters, but ripgrep doesn't. For backcompat, allow these labels.
+  390   */
