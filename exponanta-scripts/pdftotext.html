@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Text Extractor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        #pdf-container {
+            width: 80%;
+            overflow: auto;
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-top: 10px;
+            white-space: pre-wrap; /* Preserve whitespace */
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.min.js"></script>
+</head>
+<body>
+    <h1>PDF Text Extractor</h1>
+    <input type="file" id="fileInput" accept="application/pdf" />
+    <div id="pdf-container"></div>
+
+    <script>
+        const fileInput = document.getElementById('fileInput');
+        const pdfContainer = document.getElementById('pdf-container');
+
+        fileInput.addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            if (file && file.type === 'application/pdf') {
+                const fileReader = new FileReader();
+                fileReader.onload = function() {
+                    const pdfData = new Uint8Array(this.result);
+                    extractTextFromPDF(pdfData);
+                };
+                fileReader.readAsArrayBuffer(file);
+            } else {
+                alert('Please select a valid PDF file.');
+            }
+        });
+
+        async function extractTextFromPDF(pdfData) {
+            const pdf = await pdfjsLib.getDocument(pdfData).promise;
+            pdfContainer.innerHTML = ''; // Clear previous content
+
+            for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+                const page = await pdf.getPage(pageNum);
+                const textContent = await page.getTextContent();
+                const textItems = textContent.items;
+
+                // Extract text and append to the container
+                let pageText = `Page ${pageNum}:\n`;
+                textItems.forEach(item => {
+                    pageText += item.str + ' ';
+                });
+                pageText += '\n\n'; // Separate pages
+
+                pdfContainer.innerText += pageText; // Append page text to the container
+            }
+        }
+    </script>
+</body>
+</html>
