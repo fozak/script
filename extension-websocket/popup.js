@@ -3,7 +3,7 @@ const sendButton = document.getElementById('sendButton');
 const messageInput = document.getElementById('messageInput');
 
 // Establish WebSocket connection (ensure this matches your background script)
-const ws = new WebSocket('ws://localhost:8080');
+const ws = new WebSocket('ws://localhost:8081');
 
 // Event handler for button click
 sendButton.addEventListener('click', function() {
@@ -25,4 +25,4 @@ function sendMessage(message) {
   } else {
     console.error('WebSocket is not open. Cannot send message.');
   }
-});
+}
