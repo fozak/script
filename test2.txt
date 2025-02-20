@@ -1,1 +1,1 @@
-4
+<contact>Ivan Fedorov</contact>
