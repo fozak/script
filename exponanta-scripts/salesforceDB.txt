@@ -1,0 +1,186 @@
+-- ACCOUNT: Stores information about companies (customers, vendors, partners)
+CREATE TABLE Account (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    type TEXT, -- Customer, Vendor, Partner
+    industry TEXT,
+    annual_revenue REAL,
+    phone TEXT,
+    website TEXT,
+    billing_address TEXT,
+    shipping_address TEXT,
+    owner_id INTEGER, -- Sales User responsible
+    created_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (owner_id) REFERENCES SalesUser(id)
+);
+
+-- CONTACT: Stores details of individuals associated with an account
+CREATE TABLE Contact (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    account_id INTEGER,
+    first_name TEXT,
+    last_name TEXT NOT NULL,
+    email TEXT UNIQUE,
+    phone TEXT,
+    title TEXT,
+    department TEXT,
+    mailing_address TEXT,
+    FOREIGN KEY (account_id) REFERENCES Account(id)
+);
+
+-- OPPORTUNITY: Tracks potential sales deals with customers
+CREATE TABLE Opportunity (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    account_id INTEGER,
+    name TEXT NOT NULL,
+    stage TEXT, -- Prospecting, Proposal, Negotiation, Closed Won/Lost
+    amount REAL,
+    close_date DATE,
+    probability INTEGER, -- % chance of closing
+    owner_id INTEGER, -- Sales User managing opportunity
+    created_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (account_id) REFERENCES Account(id),
+    FOREIGN KEY (owner_id) REFERENCES SalesUser(id)
+);
+
+-- LEAD: Tracks potential customers before they become accounts
+CREATE TABLE Lead (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    first_name TEXT,
+    last_name TEXT NOT NULL,
+    company TEXT NOT NULL,
+    title TEXT,
+    email TEXT UNIQUE,
+    phone TEXT,
+    lead_source TEXT, -- Web, Referral, Email Campaign
+    status TEXT, -- Open, Contacted, Qualified, Converted
+    assigned_to INTEGER, -- Sales User responsible
+    created_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (assigned_to) REFERENCES SalesUser(id)
+);
+
+-- CONTRACT: Stores contractual agreements between a company and an account
+CREATE TABLE Contract (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    account_id INTEGER,
+    contract_number TEXT UNIQUE,
+    status TEXT, -- Draft, Signed, Expired, Renewed
+    start_date DATE,
+    end_date DATE,
+    contract_value REAL,
+    owner_id INTEGER,
+    created_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (account_id) REFERENCES Account(id),
+    FOREIGN KEY (owner_id) REFERENCES SalesUser(id)
+);
+
+-- CAMPAIGN: Represents marketing campaigns targeting leads/opportunities
+CREATE TABLE Campaign (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    type TEXT, -- Email, Event, Social Media
+    status TEXT, -- Planned, Active, Completed
+    budget REAL,
+    start_date DATE,
+    end_date DATE,
+    created_date DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+-- CAMPAIGN MEMBER: Tracks leads and contacts involved in a campaign
+CREATE TABLE CampaignMember (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    campaign_id INTEGER,
+    contact_id INTEGER,
+    lead_id INTEGER,
+    status TEXT, -- Sent, Responded, Interested
+    FOREIGN KEY (campaign_id) REFERENCES Campaign(id),
+    FOREIGN KEY (contact_id) REFERENCES Contact(id),
+    FOREIGN KEY (lead_id) REFERENCES Lead(id)
+);
+
+-- PRODUCT: Represents products that can be sold
+CREATE TABLE Product (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    product_code TEXT UNIQUE,
+    description TEXT,
+    list_price REAL,
+    is_active BOOLEAN DEFAULT 1,
+    created_date DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+-- PRICE BOOK: Defines different pricing models for products
+CREATE TABLE PriceBookEntry (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    product_id INTEGER,
+    price REAL NOT NULL,
+    currency TEXT DEFAULT 'USD',
+    is_active BOOLEAN DEFAULT 1,
+    created_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (product_id) REFERENCES Product(id)
+);
+
+-- OPPORTUNITY PRODUCT: Links opportunities with specific products
+CREATE TABLE OpportunityProduct (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    opportunity_id INTEGER,
+    product_id INTEGER,
+    quantity INTEGER,
+    total_price REAL,
+    FOREIGN KEY (opportunity_id) REFERENCES Opportunity(id),
+    FOREIGN KEY (product_id) REFERENCES Product(id)
+);
+
+-- ORDER: Stores customer purchase details
+CREATE TABLE Order (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    account_id INTEGER,
+    order_number TEXT UNIQUE,
+    status TEXT, -- Draft, Processed, Shipped, Cancelled
+    total_amount REAL,
+    order_date DATE,
+    created_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (account_id) REFERENCES Account(id)
+);
+
+-- FORECAST: Sales projections for revenue and opportunities
+CREATE TABLE OpportunityForecast (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    opportunity_id INTEGER,
+    forecast_category TEXT, -- Best Case, Commit, Pipeline
+    expected_revenue REAL,
+    forecast_date DATE,
+    FOREIGN KEY (opportunity_id) REFERENCES Opportunity(id)
+);
+
+-- PARTNER: Represents partner organizations
+CREATE TABLE Partner (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    account_id INTEGER,
+    partner_type TEXT, -- Distributor, Reseller, Referral
+    relationship_status TEXT, -- Active, Inactive
+    created_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (account_id) REFERENCES Account(id)
+);
+
+-- SALES USER: Represents users responsible for accounts, leads, and opportunities
+CREATE TABLE SalesUser (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    first_name TEXT NOT NULL,
+    last_name TEXT NOT NULL,
+    email TEXT UNIQUE NOT NULL,
+    phone TEXT,
+    role TEXT, -- Sales Rep, Manager
+    team TEXT,
+    created_date DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+-- OPPORTUNITY TEAM MEMBER: Associates users with opportunities
+CREATE TABLE OpportunityTeamMember (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    opportunity_id INTEGER,
+    user_id INTEGER,
+    role TEXT, -- Sales Manager, Support Rep
+    FOREIGN KEY (opportunity_id) REFERENCES Opportunity(id),
+    FOREIGN KEY (user_id) REFERENCES SalesUser(id)
+);
