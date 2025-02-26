@@ -1,3 +1,7 @@
+Full prompt 
+https://chatgpt.com/share/67bdf198-ae74-8007-8c48-5a927a7a78c6
+
+
 The four biggest groups from the IT Manager Marketing Segmentation based on demand and common challenges are:
 
 1. The Technical-to-Leadership Transitioner
