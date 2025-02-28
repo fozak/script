@@ -1,0 +1,263 @@
+Table: xc_knex_migrations
+Headers: ['id', 'name', 'batch', 'migration_time']
+One Row: (1, 'project', 1, 1740006442914)
+
+Table: sqlite_sequence
+Headers: ['name', 'seq']
+One Row: ('xc_knex_migrations_lock', 1)
+
+Table: xc_knex_migrations_lock
+Headers: ['index', 'is_locked']
+One Row: (1, 0)
+
+Table: nc_store
+Headers: ['id', 'base_id', 'db_alias', 'key', 'value', 'type', 'env', 'tag', 'created_at', 'updated_at']
+One Row: (1, None, '', 'NC_DEBUG', '{"nc:app":false,"nc:api:rest":false,"nc:api:source":false,"nc:api:gql":false,"nc:api:grpc":false,"nc:migrator":false,"nc:datamapper":false}', None, None, None, None, None)
+
+Table: nc_shared_bases
+Headers: ['id', 'project_id', 'db_alias', 'roles', 'shared_base_id', 'enabled', 'password', 'created_at', 'updated_at']
+One Row: None
+
+Table: xc_knex_migrationsv2
+Headers: ['id', 'name', 'batch', 'migration_time']
+One Row: (1, 'nc_011', 1, 1740006443019)
+
+Table: xc_knex_migrationsv2_lock
+Headers: ['index', 'is_locked']
+One Row: (1, 0)
+
+Table: nc_bases_v2
+Headers: ['id', 'title', 'prefix', 'status', 'description', 'meta', 'color', 'uuid', 'password', 'roles', 'deleted', 'is_meta', 'order', 'created_at', 'updated_at']
+One Row: ('pbcyyyi0a79pmj1', 'Getting Started', 'nc_kx4s__', None, None, '{"iconColor":"#36BFFF"}', None, None, None, None, 0, 1, 1.0, '2025-02-19 23:08:07+00:00', '2025-02-19 23:08:07+00:00')
+
+Table: nc_orgs_v2
+Headers: ['id', 'title', 'created_at', 'updated_at']
+One Row: None
+
+Table: nc_teams_v2
+Headers: ['id', 'title', 'org_id', 'created_at', 'updated_at']
+One Row: None
+
+Table: nc_team_users_v2
+Headers: ['org_id', 'user_id', 'created_at', 'updated_at']
+One Row: None
+
+Table: nc_plugins_v2
+Headers: ['id', 'title', 'description', 'active', 'rating', 'version', 'docs', 'status', 'status_details', 'logo', 'icon', 'tags', 'category', 'input_schema', 'input', 'creator', 'creator_website', 'price', 'created_at', 'updated_at']
+One Row: ('slack', 'Slack', 'Slack brings team communication and collaboration into one place so you can get more work done, whether you belong to a large enterprise or a small business. ', 0, None, '0.0.1', None, 'install', None, 'plugins/slack.webp', None, 'Chat', 'Chat', '{"title":"Configure Slack","array":true,"items":[{"key":"channel","label":"Channel Name","placeholder":"Channel Name","type":"SingleLineText","required":true},{"key":"webhook_url","label":"Webhook URL","placeholder":"Webhook URL","type":"Password","required":true}],"actions":[{"label":"Test","placeholder":"Test","key":"test","actionType":"TEST","type":"Button"},{"label":"Save","placeholder":"Save","key":"save","actionType":"SUBMIT","type":"Button"}],"msgOnInstall":"Successfully installed and Slack is enabled for notification.","msgOnUninstall":""}', None, None, None, None, '2025-02-19 23:07:24+00:00', '2025-02-19 23:07:24+00:00')
+
+Table: nc_col_relations_v2
+Headers: ['id', 'ref_db_alias', 'type', 'virtual', 'db_type', 'fk_column_id', 'fk_related_model_id', 'fk_child_column_id', 'fk_parent_column_id', 'fk_mm_model_id', 'fk_mm_child_column_id', 'fk_mm_parent_column_id', 'ur', 'dr', 'fk_index_name', 'deleted', 'created_at', 'updated_at', 'fk_target_view_id', 'base_id']
+One Row: ('lpqy7nrfxvks58o', None, 'bt', 1, None, 'chhlhxbfe490z6l', 'm16hti3barlcfhg', 'c034oqbkir9lrw3', 'cudhuh2ohi0j9b7', None, None, None, None, None, None, None, '2025-02-21 23:32:56+00:00', '2025-02-21 23:32:56+00:00', None, 'ppvjsslr0rv7ozo')
+
+Table: nc_col_select_options_v2
+Headers: ['id', 'fk_column_id', 'title', 'color', 'order', 'created_at', 'updated_at', 'base_id']
+One Row: None
+
+Table: nc_col_lookup_v2
+Headers: ['id', 'fk_column_id', 'fk_relation_column_id', 'fk_lookup_column_id', 'deleted', 'created_at', 'updated_at', 'base_id']
+One Row: ('lk16k0gz2syap6u2', 'cgzmz3tx9vfb0la', 'cra14g5ciu7mpxq', 'c0dob25ueyggzhj', None, '2025-02-21 23:33:17+00:00', '2025-02-21 23:33:17+00:00', 'ppvjsslr0rv7ozo')
+
+Table: nc_col_qrcode_v2
+Headers: ['id', 'fk_column_id', 'fk_qr_value_column_id', 'deleted', 'order', 'created_at', 'updated_at', 'base_id']
+One Row: None
+
+Table: nc_col_barcode_v2
+Headers: ['id', 'fk_column_id', 'fk_barcode_value_column_id', 'barcode_format', 'deleted', 'created_at', 'updated_at', 'base_id']
+One Row: None
+
+Table: nc_col_formula_v2
+Headers: ['id', 'fk_column_id', 'formula', 'formula_raw', 'error', 'deleted', 'order', 'created_at', 'updated_at', 'parsed_tree', 'base_id']
+One Row: None
+
+Table: nc_col_rollup_v2
+Headers: ['id', 'fk_column_id', 'fk_relation_column_id', 'fk_rollup_column_id', 'rollup_function', 'deleted', 'created_at', 'updated_at', 'base_id']
+One Row: None
+
+Table: nc_shared_views_v2
+Headers: ['id', 'fk_view_id', 'meta', 'query_params', 'view_id', 'show_all_fields', 'allow_copy', 'password', 'deleted', 'order', 'created_at', 'updated_at']
+One Row: None
+
+Table: notification
+Headers: ['id', 'type', 'body', 'is_read', 'is_deleted', 'fk_user_id', 'created_at', 'updated_at']
+One Row: ('nczr8dw13hm7yqod', 'app.welcome', '{}', 0, 0, 'us0p77agkx09x0fz', '2025-02-19 23:08:07+00:00', '2025-02-19 23:08:07+00:00')
+
+Table: nc_calendar_view_range_v2
+Headers: ['id', 'fk_view_id', 'fk_to_column_id', 'label', 'fk_from_column_id', 'created_at', 'updated_at', 'base_id']
+One Row: None
+
+Table: nc_users_v2
+Headers: ['id', 'email', 'password', 'salt', 'invite_token', 'invite_token_expires', 'reset_password_expires', 'reset_password_token', 'email_verification_token', 'email_verified', 'roles', 'created_at', 'updated_at', 'token_version', 'display_name', 'user_name', 'blocked', 'blocked_reason', 'deleted_at', 'is_deleted', 'meta']
+One Row: ('us0p77agkx09x0fz', 'i771468@gmail.com', '$2a$10$GQ3wCccLFfGyjKZmQdJIW.C1ITEQirO0qnW/kJD1opTlD/GLc4Gsm', '$2a$10$GQ3wCccLFfGyjKZmQdJIW.', None, None, None, None, '738739d7-e47a-4247-8749-d3f3bc2d727c', None, 'org-level-creator,super', '2025-02-19 23:08:07+00:00', '2025-02-19 23:08:07+00:00', '0ffcbb81704542532b14a61bba12611e1c5e9bb28b7008843e6dd96bb32cb24f16161ce76ddfc4c8', None, None, 0, None, None, 0, None)
+
+Table: nc_user_refresh_tokens
+Headers: ['fk_user_id', 'token', 'meta', 'expires_at', 'created_at', 'updated_at']
+One Row: ('us0p77agkx09x0fz', 'e216b9ad416ad72bcb743fc676b9b317c4eccb0334622040ec9cf99f44a045f06c6eed3a003b90d2', None, 1742828776377, '2025-02-19 23:08:07+00:00', '2025-02-22 16:06:16+00:00')
+
+Table: nc_extensions
+Headers: ['id', 'base_id', 'fk_user_id', 'extension_id', 'title', 'kv_store', 'meta', 'order', 'created_at', 'updated_at']
+One Row: None
+
+Table: nc_jobs
+Headers: ['id', 'job', 'status', 'result', 'fk_user_id', 'fk_workspace_id', 'base_id', 'created_at', 'updated_at']
+One Row: None
+
+Table: nc_api_tokens
+Headers: ['id', 'base_id', 'db_alias', 'description', 'permissions', 'token', 'expiry', 'enabled', 'created_at', 'updated_at', 'fk_user_id']
+One Row: None
+
+Table: nc_audit_v2
+Headers: ['id', 'user', 'ip', 'source_id', 'base_id', 'fk_model_id', 'row_id', 'op_type', 'op_sub_type', 'status', 'description', 'details', 'created_at', 'updated_at', 'version', 'fk_user_id', 'fk_ref_id', 'fk_parent_id', 'user_agent']
+One Row: ('adtxjlyd9965trmcb', 'i771468@gmail.com', '::1', 'bptdvpq31xbqh4b', 'pbcyyyi0a79pmj1', 'mungqck6xrywv70', '1', 'DATA_INSERT', None, None, None, '{"data":{},"column_meta":{},"table_title":"Features"}', '2025-02-19 23:10:49+00:00', '2025-02-19 23:10:49+00:00', 1, 'us0p77agkx09x0fz', None, None, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36')
+
+Table: nc_comment_reactions
+Headers: ['id', 'row_id', 'comment_id', 'source_id', 'fk_model_id', 'base_id', 'reaction', 'created_by', 'created_at', 'updated_at']
+One Row: None
+
+Table: nc_comments
+Headers: ['id', 'row_id', 'comment', 'created_by', 'created_by_email', 'resolved_by', 'resolved_by_email', 'parent_comment_id', 'source_id', 'base_id', 'fk_model_id', 'is_deleted', 'created_at', 'updated_at']
+One Row: None
+
+Table: nc_disabled_models_for_role_v2
+Headers: ['id', 'source_id', 'base_id', 'fk_view_id', 'role', 'disabled', 'created_at', 'updated_at']
+One Row: None
+
+Table: nc_filter_exp_v2
+Headers: ['id', 'source_id', 'base_id', 'fk_view_id', 'fk_hook_id', 'fk_column_id', 'fk_parent_id', 'logical_op', 'comparison_op', 'value', 'is_group', 'order', 'created_at', 'updated_at', 'comparison_sub_op', 'fk_link_col_id', 'fk_value_col_id', 'fk_parent_column_id']
+One Row: None
+
+Table: nc_form_view_columns_v2
+Headers: ['id', 'source_id', 'base_id', 'fk_view_id', 'fk_column_id', 'uuid', 'label', 'help', 'description', 'required', 'show', 'order', 'created_at', 'updated_at', 'meta', 'enable_scanner']
+One Row: None
+
+Table: nc_form_view_v2
+Headers: ['source_id', 'base_id', 'fk_view_id', 'heading', 'subheading', 'success_msg', 'redirect_url', 'redirect_after_secs', 'email', 'submit_another_form', 'show_blank_form', 'uuid', 'banner_image_url', 'logo_url', 'created_at', 'updated_at', 'meta']
+One Row: None
+
+Table: nc_gallery_view_columns_v2
+Headers: ['id', 'source_id', 'base_id', 'fk_view_id', 'fk_column_id', 'uuid', 'label', 'help', 'show', 'order', 'created_at', 'updated_at']
+One Row: None
+
+Table: nc_gallery_view_v2
+Headers: ['source_id', 'base_id', 'fk_view_id', 'next_enabled', 'prev_enabled', 'cover_image_idx', 'fk_cover_image_col_id', 'cover_image', 'restrict_types', 'restrict_size', 'restrict_number', 'public', 'dimensions', 'responsive_columns', 'created_at', 'updated_at', 'meta']
+One Row: None
+
+Table: nc_grid_view_columns_v2
+Headers: ['id', 'fk_view_id', 'fk_column_id', 'source_id', 'base_id', 'uuid', 'label', 'help', 'width', 'show', 'order', 'created_at', 'updated_at', 'group_by', 'group_by_order', 'group_by_sort', 'aggregation']
+One Row: ('nciptedtm6gxxqhk', 'vwai3bywiit1q8lo', 'c5f5p7ctjfed0in', 'bptdvpq31xbqh4b', 'pbcyyyi0a79pmj1', None, None, None, '200px', 1, 1.0, '2025-02-19 23:08:07+00:00', '2025-02-19 23:08:07+00:00', None, None, None, 'none')
+
+Table: nc_grid_view_v2
+Headers: ['fk_view_id', 'source_id', 'base_id', 'uuid', 'created_at', 'updated_at', 'meta', 'row_height']
+One Row: ('vwai3bywiit1q8lo', 'bptdvpq31xbqh4b', 'pbcyyyi0a79pmj1', None, '2025-02-19 23:08:07+00:00', '2025-02-19 23:08:07+00:00', None, None)
+
+Table: nc_hook_logs_v2
+Headers: ['id', 'source_id', 'base_id', 'fk_hook_id', 'type', 'event', 'operation', 'test_call', 'payload', 'conditions', 'notification', 'error_code', 'error_message', 'error', 'execution_time', 'response', 'triggered_by', 'created_at', 'updated_at']
+One Row: None
+
+Table: nc_hooks_v2
+Headers: ['id', 'source_id', 'base_id', 'fk_model_id', 'title', 'description', 'env', 'type', 'event', 'operation', 'async', 'payload', 'url', 'headers', 'condition', 'notification', 'retries', 'retry_interval', 'timeout', 'active', 'created_at', 'updated_at', 'version']
+One Row: None
+
+Table: nc_kanban_view_columns_v2
+Headers: ['id', 'source_id', 'base_id', 'fk_view_id', 'fk_column_id', 'uuid', 'label', 'help', 'show', 'order', 'created_at', 'updated_at']
+One Row: None
+
+Table: nc_kanban_view_v2
+Headers: ['fk_view_id', 'source_id', 'base_id', 'show', 'order', 'uuid', 'title', 'public', 'password', 'show_all_fields', 'created_at', 'updated_at', 'fk_grp_col_id', 'fk_cover_image_col_id', 'meta']
+One Row: None
+
+Table: nc_map_view_v2
+Headers: ['fk_view_id', 'source_id', 'base_id', 'uuid', 'title', 'fk_geo_data_col_id', 'meta', 'created_at', 'updated_at']
+One Row: None
+
+Table: nc_map_view_columns_v2
+Headers: ['id', 'base_id', 'project_id', 'fk_view_id', 'fk_column_id', 'uuid', 'label', 'help', 'show', 'order', 'created_at', 'updated_at']
+One Row: None
+
+Table: nc_sort_v2
+Headers: ['id', 'source_id', 'base_id', 'fk_view_id', 'fk_column_id', 'direction', 'order', 'created_at', 'updated_at']
+One Row: None
+
+Table: nc_sources_v2
+Headers: ['id', 'base_id', 'alias', 'config', 'meta', 'is_meta', 'type', 'inflection_column', 'inflection_table', 'created_at', 'updated_at', 'enabled', 'order', 'description', 'erd_uuid', 'deleted', 'is_schema_readonly', 'is_data_readonly', 'fk_integration_id', 'is_local', 'is_encrypted']
+One Row: ('bptdvpq31xbqh4b', 'pbcyyyi0a79pmj1', None, None, None, 1, 'sqlite3', 'camelize', 'camelize', '2025-02-19 23:08:07+00:00', '2025-02-19 23:08:07+00:00', 1, 1.0, None, None, 0, 0, 0, None, 0, 0)
+
+Table: nc_sync_logs_v2
+Headers: ['id', 'base_id', 'fk_sync_source_id', 'time_taken', 'status', 'status_details', 'created_at', 'updated_at']
+One Row: None
+
+Table: nc_sync_source_v2
+Headers: ['id', 'title', 'type', 'details', 'deleted', 'enabled', 'order', 'base_id', 'fk_user_id', 'created_at', 'updated_at', 'source_id']
+One Row: None
+
+Table: nc_user_comment_notifications_preference
+Headers: ['id', 'row_id', 'user_id', 'fk_model_id', 'source_id', 'base_id', 'preferences', 'created_at', 'updated_at']
+One Row: None
+
+Table: nc_calendar_view_v2
+Headers: ['fk_view_id', 'base_id', 'source_id', 'title', 'fk_cover_image_col_id', 'meta', 'created_at', 'updated_at']
+One Row: None
+
+Table: nc_calendar_view_columns_v2
+Headers: ['id', 'base_id', 'source_id', 'fk_view_id', 'fk_column_id', 'show', 'bold', 'underline', 'italic', 'order', 'created_at', 'updated_at']
+One Row: None
+
+Table: nc_base_users_v2
+Headers: ['base_id', 'fk_user_id', 'roles', 'starred', 'pinned', 'group', 'color', 'order', 'hidden', 'opened_date', 'created_at', 'updated_at', 'invited_by']
+One Row: ('pbcyyyi0a79pmj1', 'us0p77agkx09x0fz', 'owner', None, None, None, None, None, None, None, '2025-02-19 23:08:07+00:00', '2025-02-19 23:08:07+00:00', None)
+
+Table: nc_integrations_v2
+Headers: ['id', 'title', 'config', 'meta', 'type', 'sub_type', 'is_private', 'deleted', 'created_by', 'order', 'created_at', 'updated_at', 'is_default', 'is_encrypted']
+One Row: None
+
+Table: nc_file_references
+Headers: ['id', 'storage', 'file_url', 'file_size', 'fk_user_id', 'fk_workspace_id', 'base_id', 'source_id', 'fk_model_id', 'fk_column_id', 'is_external', 'deleted', 'created_at', 'updated_at']
+One Row: None
+
+Table: nc_columns_v2
+Headers: ['id', 'source_id', 'base_id', 'fk_model_id', 'title', 'column_name', 'uidt', 'dt', 'np', 'ns', 'clen', 'cop', 'pk', 'pv', 'rqd', 'un', 'ct', 'ai', 'unique', 'cdf', 'cc', 'csn', 'dtx', 'dtxp', 'dtxs', 'au', 'validate', 'virtual', 'deleted', 'system', 'order', 'created_at', 'updated_at', 'meta', 'description']
+One Row: ('c5f5p7ctjfed0in', 'bptdvpq31xbqh4b', 'pbcyyyi0a79pmj1', 'mungqck6xrywv70', 'Id', 'id', 'ID', 'integer', None, '0', None, None, 1, None, 1, 0, 'int(11)', 1, None, None, None, None, 'integer', '', '', None, None, None, None, None, 1.0, '2025-02-19 23:08:07+00:00', '2025-02-19 23:08:07+00:00', None, None)
+
+Table: nc_models_v2
+Headers: ['id', 'source_id', 'base_id', 'table_name', 'title', 'type', 'meta', 'schema', 'enabled', 'mm', 'tags', 'pinned', 'deleted', 'order', 'created_at', 'updated_at', 'description']
+One Row: ('mungqck6xrywv70', 'bptdvpq31xbqh4b', 'pbcyyyi0a79pmj1', 'nc_kx4s___Features', 'Features', 'table', '{"hasNonDefaultViews":false}', None, 1, 0, None, None, None, 1.0, '2025-02-19 23:08:07+00:00', '2025-02-21 22:52:45+00:00', None)
+
+Table: nc_views_v2
+Headers: ['id', 'source_id', 'base_id', 'fk_model_id', 'title', 'type', 'is_default', 'show_system_fields', 'lock_type', 'uuid', 'password', 'show', 'order', 'created_at', 'updated_at', 'meta', 'description', 'created_by', 'owned_by']
+One Row: ('vwai3bywiit1q8lo', 'bptdvpq31xbqh4b', 'pbcyyyi0a79pmj1', 'mungqck6xrywv70', 'Features', 3, 1, None, 'collaborative', None, None, 1, 1.0, '2025-02-19 23:08:07+00:00', '2025-02-19 23:08:07+00:00', '{}', None, None, None)
+
+Table: nc_integrations_store_v2
+Headers: ['id', 'fk_integration_id', 'type', 'sub_type', 'fk_workspace_id', 'fk_user_id', 'created_at', 'updated_at', 'slot_0', 'slot_1', 'slot_2', 'slot_3', 'slot_4', 'slot_5', 'slot_6', 'slot_7', 'slot_8', 'slot_9']
+One Row: None
+
+Table: nc_col_long_text_v2
+Headers: ['id', 'fk_workspace_id', 'base_id', 'fk_model_id', 'fk_column_id', 'fk_integration_id', 'model', 'prompt', 'prompt_raw', 'error', 'created_at', 'updated_at']
+One Row: None
+
+Table: nc_data_reflection
+Headers: ['id', 'fk_workspace_id', 'username', 'password', 'database', 'created_at', 'updated_at']
+One Row: None
+
+Table: nc_col_button_v2
+Headers: ['id', 'base_id', 'type', 'label', 'theme', 'color', 'icon', 'formula', 'formula_raw', 'error', 'parsed_tree', 'fk_webhook_id', 'fk_column_id', 'created_at', 'updated_at', 'fk_integration_id', 'model', 'output_column_ids', 'fk_workspace_id']
+One Row: None
+
+Table: nc_kx4s___Features
+Headers: ['id', 'title', 'created_at', 'updated_at', 'created_by', 'updated_by', 'nc_order']
+One Row: (1, None, '2025-02-19 23:10:49+00:00', None, 'us0p77agkx09x0fz', None, 1.0)
+
+Table: nc_pu2o___Table-1
+Headers: ['id', 'title', 'created_at', 'updated_at', 'created_by', 'updated_by', 'nc_order']
+One Row: (1, None, '2025-02-20 00:19:39+00:00', None, 'us0p77agkx09x0fz', None, 1.0)
+
+Table: nc_lxyu__companies
+Headers: ['name', 'created_by', 'account_owner', 'creation_date', 'employees', 'linkedin', 'address', 'id', 'created_at', 'updated_at', 'updated_by', 'nc_order', 'created_by1', 'domain_name']
+One Row: ('Airbnb', 'System', None, '2 minutes ago', '5000', None, '888 Brannan St', 1, '2025-02-21 23:09:52+00:00', '2025-02-21 23:33:45+00:00', 'us0p77agkx09x0fz', 1.0, 'us0p77agkx09x0fz', 'airbnb.com')
+
+Table: nc_lxyu___People
+Headers: ['Name', 'Emails', 'Company', 'Phones', 'Creation_date', 'City', 'Job_Title', 'Linkedin', 'X', 'id', 'created_at', 'updated_at', 'updated_by', 'nc_order', 'created_by']
+One Row: ('Brian Chesky', 'chesky@airbnb.com', 'Airbnb', '+1 1234567890', '18 minutes ago', 'San Francisco', None, None, None, 1, '2025-02-21 23:16:36+00:00', '2025-02-21 23:33:45+00:00', 'us0p77agkx09x0fz', 1.0, 'us0p77agkx09x0fz')
+
+Table: nc_lxyu___nc_m2m_People_nc_lxyu__compan
+Headers: ['nc_lxyu__companies_id', 'nc_lxyu___People_id']
+One Row: (1, 1)
