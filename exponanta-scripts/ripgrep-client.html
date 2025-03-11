@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Ripgrep Search in Browser</title>
+<style>
+  body { font-family: sans-serif; }
+  #search-container { margin-bottom: 20px; }
+  label { display: block; margin-bottom: 5px; }
+  input[type="text"] { width: 300px; padding: 5px; border: 1px solid #ccc; }
+  button { padding: 8px 15px; background-color: #4CAF50; color: white; border: none; cursor: pointer; }
+  button:disabled { background-color: #ccc; cursor: not-allowed; }
+  #output-container { border: 1px solid #eee; padding: 10px; white-space: pre-wrap; }
+  .error { color: red; }
+  .output { color: black; }
+</style>
+</head>
+<body>
+
+<h1>Ripgrep Search</h1>
+
+<div id="search-container">
+  <label for="search-term">Search Term:</label>
+  <input type="text" id="search-term" placeholder="Enter search term">
+  <button id="search-button" disabled>Search</button>
+</div>
+
+<div id="output-container">
+  <div id="output"></div>
+</div>
+
+
+<script>
+// **  IMPORTANT NOTES BEFORE YOU RUN  **
+// 1.  SERVER-SIDE EXECUTION:  This code needs to be executed on a server with Node.js and ripgrep installed. You CANNOT run this directly in a web browser by opening the HTML file. The ripgrep command needs to run on your server's file system.
+
+// 2.  SECURITY:  This code is a simplified example.  DO NOT DEPLOY THIS DIRECTLY TO A PRODUCTION SERVER without significantly improving security:
+//     * **Input Validation/Sanitization:**  The code currently takes the search term directly from the user.  You *must* validate and sanitize the search term to prevent command injection attacks.  Use libraries designed for this purpose to filter out potentially harmful characters or patterns.
+//     * **Restricted Directories:** Limit the directory that ripgrep searches to a safe directory on the server, preferably one that does not contain sensitive information.  Do not allow the user to specify the search directory.
+//     * **Permissions:**  Run your Node.js server with the least necessary permissions to prevent potential damage if exploited.
+
+// 3.  INSTALL NODE.JS AND RIGNREP
+//     - Make sure nodejs is installed (https://nodejs.org/en/download/)
+//     - Install vscode-ripgrep:  npm install vscode-ripgrep
+//     - Install express: npm install express
+//     - Install cors: npm install cors
+
+// 4.  SERVER CODE (example: server.js)  This is the Node.js server-side code that handles the search requests and executes ripgrep. This example assumes you save this in the same directory as the html and js files.
+/*
+const express = require('express');
+const cors = require('cors'); // Add this line to include the cors module
+const { rgPath } = require('vscode-ripgrep');
+const { spawn } = require('child_process');
+const app = express();
+const port = 3000;
+
+// Enable CORS for all origins (for development; restrict in production!)
+app.use(cors());
+app.use(express.json()); // middleware to parse JSON request bodies
+
+app.post('/search', (req, res) => {
+    const searchTerm = req.body.searchTerm;
+
+    if (!searchTerm) {
+        return res.status(400).json({ error: 'Search term is required' });
+    }
+
+    // ** IMPORTANT:  VALIDATE AND SANITIZE searchTerm HERE BEFORE USING IT. Example below.
+    const sanitizedSearchTerm = searchTerm.replace(/[^a-zA-Z0-9\s._-]/g, ''); // Simple example, enhance as needed.
+
+    // ** IMPORTANT:  Restrict the search directory to prevent unintended access.  For example, if you want to allow searching a 'project' directory:
+    const searchDirectory = './'; // Current directory.  CHANGE THIS FOR SECURITY.   e.g.,  './project'  or a more specific path.
+
+    const rg = spawn(rgPath, ['-e', sanitizedSearchTerm, searchDirectory]);
+
+    let output = '';
+    let error = '';
+
+    rg.stdout.on('data', (data) => {
+        output += data.toString();
+    });
+
+    rg.stderr.on('data', (data) => {
+        error += data.toString();
+    });
+
+    rg.on('close', (code) => {
+        if (code === 0) {
+            res.json({ output: output });
+        } else {
+            console.error(`Ripgrep process exited with code ${code}`);
+            res.status(500).json({ error: error || `Ripgrep process exited with code ${code}` });
+        }
+    });
+});
+
+app.listen(port, () => {
+    console.log(`Server listening at http://localhost:${port}`);
+});
+*/
+
+
+  const searchTermInput = document.getElementById('search-term');
+  const searchButton = document.getElementById('search-button');
+  const outputDiv = document.getElementById('output');
+
+  // Enable search button when input has content.
+  searchTermInput.addEventListener('input', () => {
+    searchButton.disabled = !searchTermInput.value.trim(); // Enable only if not empty string
+  });
+
+  searchButton.addEventListener('click', async () => {
+    const searchTerm = searchTermInput.value.trim();
+
+    if (!searchTerm) {
+      return; // Don't search if empty
+    }
+
+    outputDiv.innerHTML = 'Searching...';
+    searchButton.disabled = true; // Disable the button while searching
+
+    try {
+      const response = await fetch('http://localhost:3000/search', { //  **IMPORTANT: Update the URL if your server runs on a different port or address.**
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ searchTerm: searchTerm }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        outputDiv.innerHTML = `<pre class="output">${data.output}</pre>`;
+      } else {
+        outputDiv.innerHTML = `<pre class="error">Error: ${data.error}</pre>`;
+      }
+    } catch (error) {
+      console.error('Fetch error:', error);
+      outputDiv.innerHTML = `<pre class="error">An error occurred: ${error.message}</pre>`;
+    } finally {
+      searchButton.disabled = false; // Re-enable the search button
+    }
+  });
+</script>
+</body>
+</html>
