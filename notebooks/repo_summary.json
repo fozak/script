@@ -1,0 +1,104 @@
+[
+  {
+    "total_files": 2373,
+    "total_classes": 1088,
+    "total_functions": 3964,
+    "total_methods": 5726,
+    "total_imports": 7054,
+    "common_imports": {
+      "frappe": 1621,
+      "frappe.utils": 1253,
+      "frappe.model.document": 444,
+      "frappe.tests": 413,
+      "unittest": 186,
+      "frappe.query_builder.functions": 152,
+      "erpnext.accounts.utils": 110,
+      "json": 110,
+      "erpnext": 84,
+      "erpnext.stock.doctype.item.test_item": 69,
+      "frappe.query_builder": 63,
+      "erpnext.stock.utils": 61,
+      "frappe.utils.data": 57,
+      "erpnext.accounts.party": 51,
+      "erpnext.stock.get_item_details": 49,
+      "erpnext.accounts.doctype.accounting_dimension.accounting_dimension": 48,
+      "frappe.utils.nestedset": 48,
+      "collections": 45,
+      "erpnext.stock.doctype.serial_and_batch_bundle.test_serial_and_batch_bundle": 42,
+      "erpnext.accounts.doctype.sales_invoice.test_sales_invoice": 41
+    },
+    "largest_files": [],
+    "most_complex_files": [
+      {
+        "filepath": "controllers\\accounts_controller.py",
+        "complexity": 153,
+        "classes": 3,
+        "functions": 31,
+        "methods": 119
+      },
+      {
+        "filepath": "accounts\\doctype\\sales_invoice\\test_sales_invoice.py",
+        "complexity": 133,
+        "classes": 2,
+        "functions": 10,
+        "methods": 121
+      },
+      {
+        "filepath": "accounts\\doctype\\payment_entry\\payment_entry.py",
+        "complexity": 121,
+        "classes": 2,
+        "functions": 38,
+        "methods": 81
+      },
+      {
+        "filepath": "stock\\doctype\\stock_entry\\stock_entry.py",
+        "complexity": 120,
+        "classes": 6,
+        "functions": 17,
+        "methods": 97
+      },
+      {
+        "filepath": "accounts\\doctype\\sales_invoice\\sales_invoice.py",
+        "complexity": 115,
+        "classes": 1,
+        "functions": 34,
+        "methods": 80
+      },
+      {
+        "filepath": "stock\\doctype\\serial_and_batch_bundle\\serial_and_batch_bundle.py",
+        "complexity": 107,
+        "classes": 5,
+        "functions": 47,
+        "methods": 55
+      },
+      {
+        "filepath": "manufacturing\\doctype\\work_order\\work_order.py",
+        "complexity": 105,
+        "classes": 7,
+        "functions": 28,
+        "methods": 70
+      },
+      {
+        "filepath": "accounts\\doctype\\purchase_invoice\\test_purchase_invoice.py",
+        "complexity": 89,
+        "classes": 1,
+        "functions": 8,
+        "methods": 80
+      },
+      {
+        "filepath": "stock\\doctype\\purchase_receipt\\test_purchase_receipt.py",
+        "complexity": 87,
+        "classes": 2,
+        "functions": 6,
+        "methods": 79
+      },
+      {
+        "filepath": "stock\\stock_ledger.py",
+        "complexity": 86,
+        "classes": 3,
+        "functions": 40,
+        "methods": 43
+      }
+    ]
+  }
+]
