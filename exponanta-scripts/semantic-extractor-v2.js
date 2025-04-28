@@ -1,4 +1,4 @@
-// Function to extract text from webpage
+// Function to extract text from webpage - this works
 function extractPageText() {
   try {
     // Step 1: Get the current page URL
@@ -26,7 +26,7 @@ function extractPageText() {
 
       // Create a new <span> element
       const newSpan = document.createElement('span'); 
-      newSpan.textContent = ` ${href || '(no link available)'}`;  // Set the content
+      newSpan.textContent = ` ${href}`;  // Set the content
 
       // Append the new span to the current link
       link.appendChild(newSpan);
