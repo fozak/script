@@ -1,0 +1,1 @@
+.collapsible{display:flex;justify-content:space-between;cursor:pointer}.child-items{padding-left:28px !important}.chevron{transition:transform .3s ease}.child-items{overflow:hidden;height:0;transition:height .3s ease}.child-items.visible{height:auto}.chevron.chevron-flipped{transform:rotate(180deg)}.parent-item{width:100%}
