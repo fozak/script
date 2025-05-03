@@ -1,0 +1,1109 @@
+<!DOCTYPE html>
+<!-- Built on Frappe. https://frappeframework.com/ -->
+<html lang="en" dir="ltr">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="generator" content="frappe">
+
+	
+		<meta name="name" content="ERPNext"><meta name="title" content="ERPNext"><meta name="description" content="Posts filed under ERPNext"><meta name="language" content="en"><meta property="og:type"  content="article"><meta property="og:title"  content="ERPNext"><meta property="og:description"  content="Posts filed under ERPNext"><meta name="twitter:title" content="ERPNext"><meta name="twitter:description" content="Posts filed under ERPNext"><meta name="twitter:card" content="summary">
+	
+
+	<title>ERPNext</title>
+
+	
+	<link
+		rel="shortcut icon"
+		href="/files/frappe-favicon.svg"
+		type="image/x-icon"
+	>
+	<!--for indexing -->
+<meta name="google-site-verification" content="pY8RgHujc1s-KwOQZBldPi1bH5BOZfZBf8cP3oEUc4I" /> 
+ 
+<script type="text/javascript">
+    function getCookie() {
+        return Object.fromEntries(document.cookie.split('; ').map((part) => part.split('=')).map((d) => [d[0], decodeURIComponent(d[1])]));
+    }
+
+    function setCookie(cname, cvalue, exdays, domain) {
+        const d = new Date();
+        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+        let expires = "expires=" + d.toUTCString();
+        if (domain) {
+            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/;" + "domain=" + domain + ";";
+        } else {
+            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/;";
+        }
+    }
+
+    let old_cookie = getCookie();
+
+    // Remove all cookies that are not mentioned in Cookie Policy
+    for (let key in old_cookie) {
+        if (!["sid", "io", "user_id", "user_image", "system_user", "full_name"].includes(key)) {
+            setCookie(key, old_cookie[key], -1);
+            setCookie(key, old_cookie[key], -1, document.domain);
+            setCookie(key, old_cookie[key], -1, "." + document.domain);
+            setCookie(key, old_cookie[key], -1, "analytics.frappe.io");
+        }
+    }
+</script>
+
+
+<!-- Plausible -->
+<script defer data-api="https://frappecloud.com/api/event" data-domain="frappe.io" src="https://frappecloud.com/js/script.js"></script>
+<link type="text/css" rel="stylesheet" href="/assets/frappe/dist/css/website.bundle.LQEHRZZT.css">
+<link type="text/css" rel="stylesheet" href="/assets/erpnext/dist/css/erpnext-web.bundle.TIUGKBCZ.css">
+<link type="text/css" rel="stylesheet" href="/assets/frappe/css/hljs-night-owl.css">
+		
+	
+		
+
+	<script>
+		window.frappe = {};
+		window._version_number = "1746009667.291719";
+		frappe.ready_events = [];
+		frappe.ready = function(fn) {
+			frappe.ready_events.push(fn);
+		}
+		window.dev_server = 0;
+		window.socketio_port = 9000;
+		window.show_language_picker = false;
+	</script>
+</head>
+<body frappe-session-status="logged-out" data-path="list" class="">
+
+		<nav class="navbar navbar-light navbar-expand-lg">
+<div class="container">
+<a class="navbar-brand" href="/"><img src="/files/frappe-footer.png"/></a>
+</div>
+</nav>
+
+
+
+
+
+
+
+
+<div id="page-list" data-path="blog/erpnext">
+	
+<div class="page-content-wrapper">
+	<!-- breadcrumbs -->
+	<div class="page-breadcrumbs">
+		
+			
+		
+	</div>
+
+	
+	<main class="container">
+		<div class="page-header-wrapper">
+			<div class="page-header">
+				
+			</div>
+
+			
+		</div>
+
+		<div class="page_content">
+
+<div class="row py-8">
+	<div class="col-md-8">
+		<div class="hero">
+			<div class="hero-content">
+				<h1>ERPNext</h1>
+				<p>Posts filed under ERPNext</p>
+			</div>
+		</div><div style="max-width: 20rem">
+			<label for="category-select" class="sr-only">Browse by category</label>
+			<select id="category-select" class="custom-select" onchange="window.location.pathname = this.value">
+				<option value=""  disabled>
+					Browse by category
+				</option><option value="blog">Show all blogs</option><option value="blog/announcements" >
+					Announcements
+				</option><option value="blog/book-reviews" >
+					Book Reviews
+				</option><option value="blog/community" >
+					Community
+				</option><option value="blog/community-stories" >
+					Community Stories
+				</option><option value="blog/community-updates" >
+					Community Updates
+				</option><option value="blog/conference" >
+					Conference
+				</option><option value="blog/culture" >
+					Culture
+				</option><option value="blog/development" >
+					Development
+				</option><option value="blog/ecosystem" >
+					Ecosystem
+				</option><option value="blog/engineering" >
+					Engineering
+				</option><option value="blog/erpnext" selected>
+					ERPNext
+				</option><option value="blog/erpnext-features" >
+					ERPNext Features
+				</option><option value="blog/erpnext-stories" >
+					ERPNext Stories
+				</option><option value="blog/frappe-cloud" >
+					Frappe Cloud
+				</option><option value="blog/frappe-hr" >
+					Frappe HR
+				</option><option value="blog/frappe-learning" >
+					Frappe Learning
+				</option><option value="blog/frappe-school" >
+					Frappe School
+				</option><option value="blog/General" >
+					General
+				</option><option value="blog/legal" >
+					Legal
+				</option><option value="blog/manufacturing" >
+					Manufacturing
+				</option><option value="blog/meet-the-team" >
+					Meet the Team
+				</option><option value="blog/open-day" >
+					Open Day
+				</option><option value="blog/open-source" >
+					Open Source
+				</option><option value="blog/partner-success-stories" >
+					Partner Success Stories
+				</option><option value="blog/procurement" >
+					Procurement
+				</option><option value="blog/product-stories" >
+					Product Stories
+				</option><option value="blog/product-updates" >
+					Product Updates
+				</option><option value="blog/release-notes" >
+					Release Notes
+				</option><option value="blog/releases" >
+					Releases
+				</option><option value="blog/Startups" >
+					Startups
+				</option><option value="blog/success-stories" >
+					Success Stories
+				</option><option value="blog/tutorial" >
+					Tutorials
+				</option><option value="blog/warehouse-management" >
+					Warehouse Management
+				</option></select>
+		</div></div>
+</div>
+
+<div class="blog-list-content">
+	<div data-doctype="Blog Post" data-txt="">
+		
+		<div id="blog-list" class="blog-list result row">
+			
+			<div class="blog-card col-sm-12 col-md-4">
+	<div class="card h-100">
+		<div class="card-img-top">
+			
+				<img src="/files/erpnext-launch.png" alt="A fresh new website for ERPNext - Cover Image">
+			
+		</div>
+		<div class="card-body">
+			<div>
+				<div class="text-muted small text-uppercase"><span>ERPNext</span>
+				</div><h5 class="mt-1"><span class="text-dark">A fresh new website for ERPNext</span></h5><p class="post-description text-muted">The journey of making the new website and migrating it to frappe.io/erpnext</p>
+			</div>
+			<div class="blog-card-footer">
+				
+
+<span class="avatar avatar-medium" title="Neha Sankhe" style="">
+	
+	<img
+		class="avatar-frame standard-image"
+		src="/files/Professional Photo92283e.jpg"
+		title="Neha Sankhe">
+	
+</span>
+
+				<div class="text-muted">
+					<a href="/blog?blogger=Neha">Neha Sankhe</a>
+					<div class="small">
+						February 21, 2025
+						 &middot; 5 min read 
+					</div>
+				</div>
+			</div>
+		</div>
+		<a class="stretched-link" href="/blog/erpnext/the-new-website-for-erpnext"></a>
+	</div>
+</div>
+			
+			<div class="blog-card col-sm-12 col-md-4">
+	<div class="card h-100">
+		<div class="card-img-top">
+			
+				<img src="/files/odoo-metro.jpg" alt="Odoo's marketing blitz in India - Cover Image">
+			
+		</div>
+		<div class="card-body">
+			<div>
+				<div class="text-muted small text-uppercase"><span>ERPNext</span>
+				</div><h5 class="mt-1"><span class="text-dark">Odoo's marketing blitz in India</span></h5><p class="post-description text-muted">If you are living in any metro in India, you can’t miss Odoo billboards. What is Frappe / ERPNext doing about it?</p>
+			</div>
+			<div class="blog-card-footer">
+				
+
+<span class="avatar avatar-medium" title="Rushabh Mehta" style="">
+	
+	<img
+		class="avatar-frame standard-image"
+		src="/files/rushabh-1.jpg"
+		title="Rushabh Mehta">
+	
+</span>
+
+				<div class="text-muted">
+					<a href="/blog?blogger=rushabh">Rushabh Mehta</a>
+					<div class="small">
+						August 30, 2024
+						 &middot; 4 min read 
+					</div>
+				</div>
+			</div>
+		</div>
+		<a class="stretched-link" href="/blog/erpnext/odoos-marketing-blitz-in-india"></a>
+	</div>
+</div>
+			
+			<div class="blog-card col-sm-12 col-md-4">
+	<div class="card h-100">
+		<div class="card-img-top">
+			
+				<img src="/files/Cover image - UI.jpeg" alt="Iteration of Frappe and its UI since a decade - Cover Image">
+			
+		</div>
+		<div class="card-body">
+			<div>
+				<div class="text-muted small text-uppercase"><span>ERPNext</span>
+				</div><h5 class="mt-1"><span class="text-dark">Iteration of Frappe and its UI since a decade</span></h5><p class="post-description text-muted">A closer look at the iterations of Frappe / ERPNext iterations over the last decade</p>
+			</div>
+			<div class="blog-card-footer">
+				
+
+<span class="avatar avatar-medium" title="Umair Sayed" style="">
+	
+	<img
+		class="avatar-frame standard-image"
+		src="/files/Offsite_Umair.jpg"
+		title="Umair Sayed">
+	
+</span>
+
+				<div class="text-muted">
+					<a href="/blog?blogger=umair">Umair Sayed</a>
+					<div class="small">
+						November 4, 2021
+						 &middot; 6 min read 
+					</div>
+				</div>
+			</div>
+		</div>
+		<a class="stretched-link" href="/blog/ERPNext Features/Iteration-of-Frappe-and-its-UI-since-a-decade"></a>
+	</div>
+</div>
+			
+			<div class="blog-card col-sm-12 col-md-4">
+	<div class="card h-100">
+		<div class="card-img-top">
+			
+				<img src="/files/base_currency.png" alt="Mastering the Basics of Multi-currency Accounting - Cover Image">
+			
+		</div>
+		<div class="card-body">
+			<div>
+				<div class="text-muted small text-uppercase"><span>ERPNext</span>
+				</div><h5 class="mt-1"><span class="text-dark">Mastering the Basics of Multi-currency Accounting</span></h5><p class="post-description text-muted">With globalization in full force, multicurrency accounting is an important feature of business-management software for smoother operations.</p>
+			</div>
+			<div class="blog-card-footer">
+				
+
+<span class="avatar avatar-medium" title="Basawaraj Savalagi" style="">
+	
+	<img
+		class="avatar-frame standard-image"
+		src="/files/Basawaraj.png"
+		title="Basawaraj Savalagi">
+	
+</span>
+
+				<div class="text-muted">
+					<a href="/blog?blogger=basawaraj">Basawaraj Savalagi</a>
+					<div class="small">
+						April 16, 2020
+						 &middot; 4 min read 
+					</div>
+				</div>
+			</div>
+		</div>
+		<a class="stretched-link" href="/blog/erpnext_features/multi-currency-accounting"></a>
+	</div>
+</div>
+			
+			<div class="blog-card col-sm-12 col-md-4">
+	<div class="card h-100">
+		<div class="card-img-top">
+			
+				<img src="https://frappe.erpnext.com/files/Closing%20Book.jpeg" alt="Closing Accounting Books in ERPNext - Cover Image">
+			
+		</div>
+		<div class="card-body">
+			<div>
+				<div class="text-muted small text-uppercase"><span>ERPNext</span>
+				</div><h5 class="mt-1"><span class="text-dark">Closing Accounting Books in ERPNext</span></h5><p class="post-description text-muted">An important step in the accounting cycle, here's a guide to close accounting books in ERPNext the right way.</p>
+			</div>
+			<div class="blog-card-footer">
+				
+
+<span class="avatar avatar-medium" title="Harshit Agrawal" style="">
+	
+	<img
+		class="avatar-frame standard-image"
+		src="/files/Harshit.jpeg"
+		title="Harshit Agrawal">
+	
+</span>
+
+				<div class="text-muted">
+					<a href="/blog?blogger=Harshit">Harshit Agrawal</a>
+					<div class="small">
+						April 1, 2020
+						 &middot; 3 min read 
+					</div>
+				</div>
+			</div>
+		</div>
+		<a class="stretched-link" href="/blog/erpnext-features/closing-accounting-books-in-erpnext"></a>
+	</div>
+</div>
+			
+			<div class="blog-card col-sm-12 col-md-4">
+	<div class="card h-100">
+		<div class="card-img-top">
+			
+				<img src="https://cdn-images-1.medium.com/max/800/1*aKg6tgqJ0PYpZKjjBpm6jg.jpeg" alt="5 Step POS - All you need to know about Point of Sale in ERPNext - Cover Image">
+			
+		</div>
+		<div class="card-body">
+			<div>
+				<div class="text-muted small text-uppercase"><span>ERPNext</span>
+				</div><h5 class="mt-1"><span class="text-dark">5 Step POS - All you need to know about Point of Sale in ERPNext</span></h5><p class="post-description text-muted">Article 4 from "Must-Know-It Mondays" on an open-source and modern tool for managing retail POS counters effortlessly.</p>
+			</div>
+			<div class="blog-card-footer">
+				
+
+<span class="avatar avatar-medium" title="Jai Chavan" style="">
+	
+	<img
+		class="avatar-frame standard-image"
+		src="/files/photo_2020-06-16 01.30.05.jpeg"
+		title="Jai Chavan">
+	
+</span>
+
+				<div class="text-muted">
+					<a href="/blog?blogger=Chavan">Jai Chavan</a>
+					<div class="small">
+						February 3, 2020
+						 &middot; 3 min read 
+					</div>
+				</div>
+			</div>
+		</div>
+		<a class="stretched-link" href="/blog/erpnext-features/5-step-pos-all-you-need-to-know-about-point-of-sale-in-erpnext"></a>
+	</div>
+</div>
+			
+			<div class="blog-card col-sm-12 col-md-4">
+	<div class="card h-100">
+		<div class="card-img-top">
+			
+				<img src="/files/income-tax-4097292_1920.jpg" alt="How Sales, Purchase, and Perpetual Inventory Accounting Work in an ERP - Cover Image">
+			
+		</div>
+		<div class="card-body">
+			<div>
+				<div class="text-muted small text-uppercase"><span>ERPNext</span>
+				</div><h5 class="mt-1"><span class="text-dark">How Sales, Purchase, and Perpetual Inventory Accounting Work in an ERP</span></h5><p class="post-description text-muted">A basic guide to sales, purchase, and perpetual inventory accounting in ERPNext.</p>
+			</div>
+			<div class="blog-card-footer">
+				
+
+<span class="avatar avatar-medium" title="Kenneth Sequeira" style="">
+	
+	<img
+		class="avatar-frame standard-image"
+		src="/files/kenneth 2018-12-15 23:07:36.jpg"
+		title="Kenneth Sequeira">
+	
+</span>
+
+				<div class="text-muted">
+					<a href="/blog?blogger=Kenneth">Kenneth Sequeira</a>
+					<div class="small">
+						January 27, 2020
+						 &middot; 6 min read 
+					</div>
+				</div>
+			</div>
+		</div>
+		<a class="stretched-link" href="/erpnext-sales-purchase-perpetual-inventory"></a>
+	</div>
+</div>
+			
+			<div class="blog-card col-sm-12 col-md-4">
+	<div class="card h-100">
+		<div class="card-img-top">
+			
+				<img src="https://cdn-images-1.medium.com/max/800/1*zGCSV607Y44x72sblYA0pQ.jpeg" alt="5 Step Invoicing with ERPNext - Cover Image">
+			
+		</div>
+		<div class="card-body">
+			<div>
+				<div class="text-muted small text-uppercase"><span>ERPNext</span>
+				</div><h5 class="mt-1"><span class="text-dark">5 Step Invoicing with ERPNext</span></h5><p class="post-description text-muted">Article 2 from “Must-Know-It Mondays” on an open-source and modern tool for invoicing customers pain-free.</p>
+			</div>
+			<div class="blog-card-footer">
+				
+
+<span class="avatar avatar-medium" title="Jai Chavan" style="">
+	
+	<img
+		class="avatar-frame standard-image"
+		src="/files/photo_2020-06-16 01.30.05.jpeg"
+		title="Jai Chavan">
+	
+</span>
+
+				<div class="text-muted">
+					<a href="/blog?blogger=Chavan">Jai Chavan</a>
+					<div class="small">
+						January 20, 2020
+						 &middot; 6 min read 
+					</div>
+				</div>
+			</div>
+		</div>
+		<a class="stretched-link" href="/blog/erpnext-features/5-step-invoicing-with-erpnext"></a>
+	</div>
+</div>
+			
+			<div class="blog-card col-sm-12 col-md-4">
+	<div class="card h-100">
+		<div class="card-img-top">
+			
+				<img src="https://cdn-images-1.medium.com/max/800/1*Nhb9twlFgAL6CSsP-JcwEQ.jpeg" alt="ERPNext’s 5 Step Payroll - Cover Image">
+			
+		</div>
+		<div class="card-body">
+			<div>
+				<div class="text-muted small text-uppercase"><span>ERPNext</span>
+				</div><h5 class="mt-1"><span class="text-dark">ERPNext’s 5 Step Payroll</span></h5><p class="post-description text-muted">Save tons of time with modern, open-source software that relieves you from the pains of processing payroll.
+</p>
+			</div>
+			<div class="blog-card-footer">
+				
+
+<span class="avatar avatar-medium" title="Jai Chavan" style="">
+	
+	<img
+		class="avatar-frame standard-image"
+		src="/files/photo_2020-06-16 01.30.05.jpeg"
+		title="Jai Chavan">
+	
+</span>
+
+				<div class="text-muted">
+					<a href="/blog?blogger=Chavan">Jai Chavan</a>
+					<div class="small">
+						January 11, 2020
+						 &middot; 5 min read 
+					</div>
+				</div>
+			</div>
+		</div>
+		<a class="stretched-link" href="/blog/erpnext-features/erpnext’s-5-step-payroll-for-managing-the-complexities-of-processing-payroll"></a>
+	</div>
+</div>
+			
+			<div class="blog-card col-sm-12 col-md-4">
+	<div class="card h-100">
+		<div class="card-img-top">
+			
+				<img src="/files/Reality_check_ESA384313.jpg" alt="ERPNext - A Perfect Fit for Electronics Distributors - Cover Image">
+			
+		</div>
+		<div class="card-body">
+			<div>
+				<div class="text-muted small text-uppercase"><span>ERPNext</span>
+				</div><h5 class="mt-1"><span class="text-dark">ERPNext - A Perfect Fit for Electronics Distributors</span></h5><p class="post-description text-muted">In this blog, we go through the issues faced by distributors and dealers in the electronics and how ERPNext helps them grow their business.</p>
+			</div>
+			<div class="blog-card-footer">
+				
+
+<span class="avatar avatar-medium" title="Kenneth Sequeira" style="">
+	
+	<img
+		class="avatar-frame standard-image"
+		src="/files/kenneth 2018-12-15 23:07:36.jpg"
+		title="Kenneth Sequeira">
+	
+</span>
+
+				<div class="text-muted">
+					<a href="/blog?blogger=Kenneth">Kenneth Sequeira</a>
+					<div class="small">
+						March 30, 2018
+						 &middot; 3 min read 
+					</div>
+				</div>
+			</div>
+		</div>
+		<a class="stretched-link" href="/blog/erpnext-features/erpnext-for-electronics-distributors"></a>
+	</div>
+</div>
+			
+			<div class="blog-card col-sm-12 col-md-4">
+	<div class="card h-100">
+		<div class="card-img-top">
+			
+				<img src="/files/SA-VAT_eligibilty.jpg" alt="ERPNext Is UAE/KSA VAT Ready - Cover Image">
+			
+		</div>
+		<div class="card-body">
+			<div>
+				<div class="text-muted small text-uppercase"><span>ERPNext</span>
+				</div><h5 class="mt-1"><span class="text-dark">ERPNext Is UAE/KSA VAT Ready</span></h5><p class="post-description text-muted">How ERPNext helps you to tackle VAT in the UAE and Saudi Arabia.</p>
+			</div>
+			<div class="blog-card-footer">
+				
+
+<span class="avatar avatar-medium" title="Umair Sayed" style="">
+	
+	<img
+		class="avatar-frame standard-image"
+		src="/files/Offsite_Umair.jpg"
+		title="Umair Sayed">
+	
+</span>
+
+				<div class="text-muted">
+					<a href="/blog?blogger=umair">Umair Sayed</a>
+					<div class="small">
+						December 29, 2017
+						 &middot; 3 min read 
+					</div>
+				</div>
+			</div>
+		</div>
+		<a class="stretched-link" href="/blog/erpnext-features/erpnext-is-uae-ksa-vat-ready"></a>
+	</div>
+</div>
+			
+			<div class="blog-card col-sm-12 col-md-4">
+	<div class="card h-100">
+		<div class="card-img-top">
+			
+				<img src="/files/wqTL0Oh.png" alt="New Email Design in ERPNext - Cover Image">
+			
+		</div>
+		<div class="card-body">
+			<div>
+				<div class="text-muted small text-uppercase"><span>ERPNext</span>
+				</div><h5 class="mt-1"><span class="text-dark">New Email Design in ERPNext</span></h5><p class="post-description text-muted">ERPNext emails get a fresh coat of paint</p>
+			</div>
+			<div class="blog-card-footer">
+				
+
+<span class="avatar avatar-medium" title="Faris Ansari" style="">
+	
+	<img
+		class="avatar-frame standard-image"
+		src="/files/faris.png"
+		title="Faris Ansari">
+	
+</span>
+
+				<div class="text-muted">
+					<a href="/blog?blogger=Faris">Faris Ansari</a>
+					<div class="small">
+						July 31, 2017
+						 &middot; 1 min read 
+					</div>
+				</div>
+			</div>
+		</div>
+		<a class="stretched-link" href="/blog/erpnext-features/new-email-design-in-erpnext"></a>
+	</div>
+</div>
+			
+			<div class="blog-card col-sm-12 col-md-4">
+	<div class="card h-100">
+		<div class="card-img-top">
+			
+				<img src="/files/Screen Shot 2017-07-06 at 6.12.08 PM.png" alt="ERPNext is GST Ready - Cover Image">
+			
+		</div>
+		<div class="card-body">
+			<div>
+				<div class="text-muted small text-uppercase"><span>ERPNext</span>
+				</div><h5 class="mt-1"><span class="text-dark">ERPNext is GST Ready</span></h5><p class="post-description text-muted">A brief on the GST India features in ERPNext.</p>
+			</div>
+			<div class="blog-card-footer">
+				
+
+<span class="avatar avatar-medium" title="Umair Sayed" style="">
+	
+	<img
+		class="avatar-frame standard-image"
+		src="/files/Offsite_Umair.jpg"
+		title="Umair Sayed">
+	
+</span>
+
+				<div class="text-muted">
+					<a href="/blog?blogger=umair">Umair Sayed</a>
+					<div class="small">
+						July 6, 2017
+						 &middot; 2 min read 
+					</div>
+				</div>
+			</div>
+		</div>
+		<a class="stretched-link" href="/blog/erpnext-features/erpnext-is-gst-ready"></a>
+	</div>
+</div>
+			
+			<div class="blog-card col-sm-12 col-md-4">
+	<div class="card h-100">
+		<div class="card-img-top">
+			
+				<img src="/files/Screen Shot 2017-06-06 at 2.33.19 PM.png" alt="Most Liked Features in ERPNext - Cover Image">
+			
+		</div>
+		<div class="card-body">
+			<div>
+				<div class="text-muted small text-uppercase"><span>ERPNext</span>
+				</div><h5 class="mt-1"><span class="text-dark">Most Liked Features in ERPNext</span></h5><p class="post-description text-muted">Learning of user behavior based on support issues</p>
+			</div>
+			<div class="blog-card-footer">
+				
+
+<span class="avatar avatar-medium" title="Umair Sayed" style="">
+	
+	<img
+		class="avatar-frame standard-image"
+		src="/files/Offsite_Umair.jpg"
+		title="Umair Sayed">
+	
+</span>
+
+				<div class="text-muted">
+					<a href="/blog?blogger=umair">Umair Sayed</a>
+					<div class="small">
+						June 6, 2017
+						 &middot; 3 min read 
+					</div>
+				</div>
+			</div>
+		</div>
+		<a class="stretched-link" href="/blog/erpnext-features/most-liked-features-in-erpnext"></a>
+	</div>
+</div>
+			
+			<div class="blog-card col-sm-12 col-md-4">
+	<div class="card h-100">
+		<div class="card-img-top">
+			
+				<img src="/files/newkb.png" alt="Kanban Board for ERPNext - Cover Image">
+			
+		</div>
+		<div class="card-body">
+			<div>
+				<div class="text-muted small text-uppercase"><span>ERPNext</span>
+				</div><h5 class="mt-1"><span class="text-dark">Kanban Board for ERPNext</span></h5><p class="post-description text-muted">Knock, knock. Who is there? Kanban Boards.</p>
+			</div>
+			<div class="blog-card-footer">
+				
+
+<span class="avatar avatar-medium" title="Faris Ansari" style="">
+	
+	<img
+		class="avatar-frame standard-image"
+		src="/files/faris.png"
+		title="Faris Ansari">
+	
+</span>
+
+				<div class="text-muted">
+					<a href="/blog?blogger=Faris">Faris Ansari</a>
+					<div class="small">
+						January 21, 2017
+						 &middot; 1 min read 
+					</div>
+				</div>
+			</div>
+		</div>
+		<a class="stretched-link" href="/blog/erpnext-features/kanban-board-for-erpnext"></a>
+	</div>
+</div>
+			
+			<div class="blog-card col-sm-12 col-md-4">
+	<div class="card h-100">
+		<div class="card-img-top">
+			
+				<img src="/files/Screen Shot 2017-01-21 at 1.18.24 AM.png" alt="Manage Student Assessments using ERPNext - Cover Image">
+			
+		</div>
+		<div class="card-body">
+			<div>
+				<div class="text-muted small text-uppercase"><span>ERPNext</span>
+				</div><h5 class="mt-1"><span class="text-dark">Manage Student Assessments using ERPNext</span></h5><p class="post-description text-muted">With this new enhancement to the Schools module in ERPNext, you will be able to easily manage student assessment and assessment results</p>
+			</div>
+			<div class="blog-card-footer">
+				
+
+<span class="avatar avatar-medium" title="Neil Lasrado" style="">
+	
+	<img
+		class="avatar-frame standard-image"
+		src="/files/neil428ce8.jpg"
+		title="Neil Lasrado">
+	
+</span>
+
+				<div class="text-muted">
+					<a href="/blog?blogger=neil">Neil Lasrado</a>
+					<div class="small">
+						January 21, 2017
+						 &middot; 2 min read 
+					</div>
+				</div>
+			</div>
+		</div>
+		<a class="stretched-link" href="/blog/erpnext-features/manage-student-assessments-using-erpnext-schools"></a>
+	</div>
+</div>
+			
+			<div class="blog-card col-sm-12 col-md-4">
+	<div class="card h-100">
+		<div class="card-img-top">
+			
+				<img src="/files/Screen Shot 2017-01-13 at 2.26.24 PM.png" alt="More enhancements in Payroll and Employee Loan Management - Cover Image">
+			
+		</div>
+		<div class="card-body">
+			<div>
+				<div class="text-muted small text-uppercase"><span>ERPNext</span>
+				</div><h5 class="mt-1"><span class="text-dark">More enhancements in Payroll and Employee Loan Management</span></h5><p class="post-description text-muted">More enhancements in Payroll and Employee Loan Management</p>
+			</div>
+			<div class="blog-card-footer">
+				
+
+<span class="avatar avatar-medium" title="Kanchan Chauhan" style="">
+	
+	<img
+		class="avatar-frame standard-image"
+		src="/files/kanchan.jpg"
+		title="Kanchan Chauhan">
+	
+</span>
+
+				<div class="text-muted">
+					<a href="/blog?blogger=Kanchan">Kanchan Chauhan</a>
+					<div class="small">
+						January 13, 2017
+						 &middot; 2 min read 
+					</div>
+				</div>
+			</div>
+		</div>
+		<a class="stretched-link" href="/blog/erpnext-features/more-enhancements-in-payroll-and-employee-loan-management"></a>
+	</div>
+</div>
+			
+			<div class="blog-card col-sm-12 col-md-4">
+	<div class="card h-100">
+		<div class="card-img-top">
+			
+				<img src="https://frappe.io/files/Screen%20Shot%202017-01-02%20at%2011.15.31%20AM.png" alt="Versioning and Audit Trail - Cover Image">
+			
+		</div>
+		<div class="card-body">
+			<div>
+				<div class="text-muted small text-uppercase"><span>ERPNext</span>
+				</div><h5 class="mt-1"><span class="text-dark">Versioning and Audit Trail</span></h5><p class="post-description text-muted">Adding Versioning and Audit Trail in ERPNext</p>
+			</div>
+			<div class="blog-card-footer">
+				
+
+<span class="avatar avatar-medium" title="Rushabh Mehta" style="">
+	
+	<img
+		class="avatar-frame standard-image"
+		src="/files/rushabh-1.jpg"
+		title="Rushabh Mehta">
+	
+</span>
+
+				<div class="text-muted">
+					<a href="/blog?blogger=rushabh">Rushabh Mehta</a>
+					<div class="small">
+						January 2, 2017
+						 &middot; 2 min read 
+					</div>
+				</div>
+			</div>
+		</div>
+		<a class="stretched-link" href="/blog/erpnext-features/versioning-and-audit-trail"></a>
+	</div>
+</div>
+			
+			<div class="blog-card col-sm-12 col-md-4">
+	<div class="card h-100">
+		<div class="card-img-top">
+			
+				<img src="/files/Screen Shot 2016-12-16 at 10.49.23 PM.png" alt="Upcoming UI Changes - Cover Image">
+			
+		</div>
+		<div class="card-body">
+			<div>
+				<div class="text-muted small text-uppercase"><span>ERPNext</span>
+				</div><h5 class="mt-1"><span class="text-dark">Upcoming UI Changes</span></h5><p class="post-description text-muted">UI Improvements across ERPNext.</p>
+			</div>
+			<div class="blog-card-footer">
+				
+
+<span class="avatar avatar-medium" title="Faris Ansari" style="">
+	
+	<img
+		class="avatar-frame standard-image"
+		src="/files/faris.png"
+		title="Faris Ansari">
+	
+</span>
+
+				<div class="text-muted">
+					<a href="/blog?blogger=Faris">Faris Ansari</a>
+					<div class="small">
+						December 16, 2016
+						 &middot; 1 min read 
+					</div>
+				</div>
+			</div>
+		</div>
+		<a class="stretched-link" href="/blog/erpnext-features/upcoming-ui-changes"></a>
+	</div>
+</div>
+			
+			<div class="blog-card col-sm-12 col-md-4">
+	<div class="card h-100">
+		<div class="card-img-top">
+			
+				<img src="https://frappe.io/files/Screen%20Shot%202016-11-15%20at%204.47.16%20PM.png" alt="How DJ Software Inspired the New Filters in ERPNext - Cover Image">
+			
+		</div>
+		<div class="card-body">
+			<div>
+				<div class="text-muted small text-uppercase"><span>ERPNext</span>
+				</div><h5 class="mt-1"><span class="text-dark">How DJ Software Inspired the New Filters in ERPNext</span></h5><p class="post-description text-muted">The story how Andrew from Industrial Automation Group (Australia) got inspired from a DJ software to drive contributions of the new filters</p>
+			</div>
+			<div class="blog-card-footer">
+				
+
+<span class="avatar avatar-medium" title="Andrew Togniolo" style="">
+	
+	<img
+		class="avatar-frame standard-image"
+		src="/files/Screen Shot 2016-11-23 at 11.33.46 AM.png"
+		title="Andrew Togniolo">
+	
+</span>
+
+				<div class="text-muted">
+					<a href="/blog?blogger=andrew">Andrew Togniolo</a>
+					<div class="small">
+						November 23, 2016
+						 &middot; 2 min read 
+					</div>
+				</div>
+			</div>
+		</div>
+		<a class="stretched-link" href="/blog/erpnext-features/how-dj-software-inspired-the-new-filters-in-erpnext"></a>
+	</div>
+</div>
+			
+		</div>
+		
+		<button class="btn btn-light btn-more btn ">Load More</button>
+	</div>
+</div>
+</div>
+
+		<div class="page-footer"></div>
+	</main>
+	
+</div>
+
+</div>
+
+
+<div id="all-symbols" style="display:none"></div><script type="text/javascript">fetch(`/assets/frappe/icons/timeless/icons.svg?v=${window._version_number}`, {credentials: "same-origin"}).then((r) => r.text()).then((svg) => {let c = document.getElementById("all-symbols"); c.insertAdjacentHTML("beforeend", svg);});</script><script type="text/javascript">fetch(`/assets/frappe/icons/espresso/icons.svg?v=${window._version_number}`, {credentials: "same-origin"}).then((r) => r.text()).then((svg) => {let c = document.getElementById("all-symbols"); c.insertAdjacentHTML("beforeend", svg);});</script>
+	<!-- js should be loaded in body! -->
+	<script>
+		frappe.boot = {
+ "apps_data": {
+  "apps": [],
+  "default_path": "",
+  "is_desk_apps": 1
+ },
+ "assets_json": {
+  "bank-reconciliation-tool.bundle.js": "/assets/erpnext/dist/js/bank-reconciliation-tool.bundle.FPQRAOXF.js",
+  "billing.bundle.js": "/assets/frappe/dist/js/billing.bundle.TQHLK7UT.js",
+  "bom_configurator.bundle.js": "/assets/erpnext/dist/js/bom_configurator.bundle.HVCV6OL2.js",
+  "bootstrap-4-web.bundle.js": "/assets/frappe/dist/js/bootstrap-4-web.bundle.FOZOVELL.js",
+  "build_events.bundle.js": "/assets/frappe/dist/js/build_events.bundle.BCX32TWL.js",
+  "buy_credits.bundle.js": "/assets/partner_relationship_management/dist/js/buy_credits.bundle.PTRLR7SB.js",
+  "calendar.bundle.js": "/assets/frappe/dist/js/calendar.bundle.4A4YITIU.js",
+  "charts-demo.bundle.js": "/assets/frappe_io/dist/js/charts-demo.bundle.VNV6RUNF.js",
+  "contributions.bundle.css": "/assets/wiki/dist/css/contributions.bundle.RBO25XZK.css",
+  "controls.bundle.js": "/assets/frappe/dist/js/controls.bundle.OBHXLYSV.js",
+  "data_import_tools.bundle.js": "/assets/frappe/dist/js/data_import_tools.bundle.Q5YT4XP2.js",
+  "datatable.bundle.css": "/assets/frappe_io/dist/css/datatable.bundle.3P2RWE3E.css",
+  "datatable.bundle.js": "/assets/frappe_io/dist/js/datatable.bundle.SOZHUVE4.js",
+  "desk.bundle.css": "/assets/frappe/dist/css/desk.bundle.6QJ7RADB.css",
+  "desk.bundle.js": "/assets/frappe/dist/js/desk.bundle.Q2WZITIR.js",
+  "dialog.bundle.js": "/assets/frappe/dist/js/dialog.bundle.3F5VODSL.js",
+  "education.bundle.js": "/assets/education/dist/js/education.bundle.PSPI3YNS.js",
+  "email.bundle.css": "/assets/frappe/dist/css/email.bundle.J3DSMELI.css",
+  "erpnext-web.bundle.css": "/assets/erpnext/dist/css/erpnext-web.bundle.TIUGKBCZ.css",
+  "erpnext-web.bundle.js": "/assets/erpnext/dist/js/erpnext-web.bundle.J4A2DQB4.js",
+  "erpnext.bundle.css": "/assets/erpnext/dist/css/erpnext.bundle.XD674WRI.css",
+  "erpnext.bundle.js": "/assets/erpnext/dist/js/erpnext.bundle.R5JXFCLX.js",
+  "erpnext_email.bundle.css": "/assets/erpnext/dist/css/erpnext_email.bundle.DFYL6BVU.css",
+  "file_uploader.bundle.js": "/assets/frappe/dist/js/file_uploader.bundle.ZPHNBOZS.js",
+  "form.bundle.js": "/assets/frappe/dist/js/form.bundle.TPF6OHJK.js",
+  "form_builder.bundle.js": "/assets/frappe/dist/js/form_builder.bundle.NRPX4YQU.js",
+  "frappe-web.bundle.js": "/assets/frappe/dist/js/frappe-web.bundle.VFID6Y35.js",
+  "gstr1.bundle.js": "/assets/india_compliance/dist/js/gstr1.bundle.LMOF55ES.js",
+  "hierarchy-chart.bundle.js": "/assets/hrms/dist/js/hierarchy-chart.bundle.5E224PCR.js",
+  "hrms.bundle.css": "/assets/hrms/dist/css/hrms.bundle.WEXO5WM5.css",
+  "hrms.bundle.js": "/assets/hrms/dist/js/hrms.bundle.FNZYA5KG.js",
+  "ims.bundle.js": "/assets/india_compliance/dist/js/ims.bundle.C4HROEWL.js",
+  "india_compliance.bundle.js": "/assets/india_compliance/dist/js/india_compliance.bundle.WV4RD5A3.js",
+  "india_compliance_account.bundle.css": "/assets/india_compliance/dist/css/india_compliance_account.bundle.NYGQSTE6.css",
+  "india_compliance_account.bundle.js": "/assets/india_compliance/dist/js/india_compliance_account.bundle.OPWAD7DA.js",
+  "interview.bundle.js": "/assets/hrms/dist/js/interview.bundle.C7CDEMYA.js",
+  "item-dashboard.bundle.js": "/assets/erpnext/dist/js/item-dashboard.bundle.WEGR7SLR.js",
+  "kanban_board.bundle.js": "/assets/frappe/dist/js/kanban_board.bundle.F6FPXXED.js",
+  "lending.bundle.js": "/assets/lending/dist/js/lending.bundle.EVKAPGTK.js",
+  "libs.bundle.js": "/assets/frappe/dist/js/libs.bundle.TIV7ZGVY.js",
+  "list.bundle.js": "/assets/frappe/dist/js/list.bundle.CTIEC4L7.js",
+  "login.bundle.css": "/assets/frappe/dist/css/login.bundle.LMNP2TEO.css",
+  "logtypes.bundle.js": "/assets/frappe/dist/js/logtypes.bundle.5KO3ZOOI.js",
+  "onboarding_tours.bundle.js": "/assets/frappe/dist/js/onboarding_tours.bundle.RAUR6X4Z.js",
+  "pdfjs.bundle.css": "/assets/print_designer/dist/css/pdfjs.bundle.Z2TQG5OV.css",
+  "performance.bundle.js": "/assets/hrms/dist/js/performance.bundle.63UL5NS7.js",
+  "photoswipe.bundle.js": "/assets/frappe/dist/js/photoswipe.bundle.YSXZQA64.js",
+  "point-of-sale.bundle.js": "/assets/erpnext/dist/js/point-of-sale.bundle.BA7TZAGR.js",
+  "print.bundle.css": "/assets/frappe/dist/css/print.bundle.DKL44YGN.css",
+  "print_designer.bundle.css": "/assets/print_designer/dist/css/print_designer.bundle.6QE4XIB7.css",
+  "print_designer.bundle.js": "/assets/print_designer/dist/js/print_designer.bundle.2JYNBT6J.js",
+  "print_format.bundle.css": "/assets/frappe/dist/css/print_format.bundle.P3PPNHEO.css",
+  "print_format_builder.bundle.js": "/assets/frappe/dist/js/print_format_builder.bundle.VQYWNAGA.js",
+  "purchase_reconciliation_tool.bundle.js": "/assets/india_compliance/dist/js/purchase_reconciliation_tool.bundle.LOLTTYSQ.js",
+  "report.bundle.css": "/assets/frappe/dist/css/report.bundle.VTBDJUHO.css",
+  "report.bundle.js": "/assets/frappe/dist/js/report.bundle.GHAYAFOZ.js",
+  "rtl_contributions.bundle.css": "/assets/wiki/dist/css-rtl/contributions.bundle.IMRLHY4X.css",
+  "rtl_datatable.bundle.css": "/assets/frappe_io/dist/css-rtl/datatable.bundle.NMEYOFTE.css",
+  "rtl_desk.bundle.css": "/assets/frappe/dist/css-rtl/desk.bundle.ES3NLDNQ.css",
+  "rtl_email.bundle.css": "/assets/frappe/dist/css-rtl/email.bundle.USEPIIYM.css",
+  "rtl_erpnext-web.bundle.css": "/assets/erpnext/dist/css-rtl/erpnext-web.bundle.7AAXIH77.css",
+  "rtl_erpnext.bundle.css": "/assets/erpnext/dist/css-rtl/erpnext.bundle.SEKCMKQK.css",
+  "rtl_erpnext_email.bundle.css": "/assets/erpnext/dist/css-rtl/erpnext_email.bundle.ZBNQWHYL.css",
+  "rtl_hrms.bundle.css": "/assets/hrms/dist/css-rtl/hrms.bundle.6EA3NACR.css",
+  "rtl_india_compliance_account.bundle.css": "/assets/india_compliance/dist/css-rtl/india_compliance_account.bundle.2DG5IYSG.css",
+  "rtl_login.bundle.css": "/assets/frappe/dist/css-rtl/login.bundle.RP5DQ6MO.css",
+  "rtl_pdfjs.bundle.css": "/assets/print_designer/dist/css-rtl/pdfjs.bundle.36F3SGAT.css",
+  "rtl_print.bundle.css": "/assets/frappe/dist/css-rtl/print.bundle.4GC44A5A.css",
+  "rtl_print_designer.bundle.css": "/assets/print_designer/dist/css-rtl/print_designer.bundle.KG2ZXMTN.css",
+  "rtl_print_format.bundle.css": "/assets/frappe/dist/css-rtl/print_format.bundle.XNGPGDZU.css",
+  "rtl_report.bundle.css": "/assets/frappe/dist/css-rtl/report.bundle.GEJHBUQQ.css",
+  "rtl_web_form.bundle.css": "/assets/frappe/dist/css-rtl/web_form.bundle.FPS4MTF7.css",
+  "rtl_website.bundle.css": "/assets/frappe/dist/css-rtl/website.bundle.OP52UWVB.css",
+  "rtl_wiki.bundle.css": "/assets/wiki/dist/css-rtl/wiki.bundle.5BUYD3ZL.css",
+  "sentry.bundle.js": "/assets/frappe/dist/js/sentry.bundle.AX44GVWW.js",
+  "telemetry.bundle.js": "/assets/frappe/dist/js/telemetry.bundle.LKEZCADB.js",
+  "video_player.bundle.js": "/assets/frappe/dist/js/video_player.bundle.DUYYLSFO.js",
+  "web_form.bundle.css": "/assets/frappe/dist/css/web_form.bundle.E37HXZGK.css",
+  "web_form.bundle.js": "/assets/frappe/dist/js/web_form.bundle.BLQZ4OBZ.js",
+  "website.bundle.css": "/assets/frappe/dist/css/website.bundle.LQEHRZZT.css",
+  "wiki.bundle.css": "/assets/wiki/dist/css/wiki.bundle.KGGUFANN.css",
+  "wiki.bundle.js": "/assets/wiki/dist/js/wiki.bundle.WQQQOK77.js",
+  "workflow_builder.bundle.js": "/assets/frappe/dist/js/workflow_builder.bundle.MPAFFZ3D.js"
+ },
+ "is_fc_site": 0,
+ "lang": "en",
+ "sitename": "frappeio.frappe.cloud",
+ "sysdefaults": {
+  "currency": null,
+  "date_format": "dd/mm/yyyy",
+  "first_day_of_the_week": "Sunday",
+  "float_precision": 2,
+  "number_format": "#,##,###.##",
+  "time_format": "HH:mm:ss"
+ },
+ "time_zone": {
+  "system": "Asia/Kolkata",
+  "user": "Asia/Kolkata"
+ }
+}
+		// for backward compatibility of some libs
+		frappe.sys_defaults = frappe.boot.sysdefaults;
+	</script>
+	<script type="text/javascript" src="/assets/frappe/dist/js/frappe-web.bundle.VFID6Y35.js"></script>
+	
+	<script type="text/javascript" src="/website_script.js"></script>
+	<script type="text/javascript" src="/assets/erpnext/dist/js/erpnext-web.bundle.J4A2DQB4.js"></script>
+<script>
+	frappe.ready(() => {
+		let result_wrapper = $(".blog-list.result");
+		let next_start = 20;
+
+		$(".blog-list-content .btn-more").on("click", function() {
+			let $btn = $(this);
+			let args = $.extend(frappe.utils.get_query_params(), {
+				doctype: "Blog Post",
+				category: "erpnext",
+				limit_start: next_start,
+				pathname: location.pathname,
+			});
+			$btn.prop("disabled", true);
+			frappe.call('frappe.www.list.get', args)
+				.then(r => {
+					var data = r.message;
+					next_start = data.next_start;
+					$.each(data.result, function(i, d) {
+						$(d).appendTo(result_wrapper);
+					});
+					toggle_more(data.show_more);
+				})
+				.always(() => {
+					$btn.prop("disabled", false);
+				});
+		});
+
+		function toggle_more(show) {
+			if (!show) {
+				$(".btn-more").addClass("hide");
+			}
+		}
+	});
+</script>
+
+	<script>frappe.csrf_token = "None";</script></body>
+</html>

@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<!-- Built on Frappe. https://frappeframework.com/ -->
+<html lang="en" dir="ltr">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="generator" content="frappe">
+
+	
+		<meta name="title" content="The ERPNext Newsletter August 2020"><meta name="language" content="en"><meta property="og:type"  content="article"><meta property="og:title"  content="The ERPNext Newsletter August 2020"><meta name="twitter:title" content="The ERPNext Newsletter August 2020"><meta name="twitter:card" content="summary">
+	
+
+	<title> The ERPNext Newsletter August 2020 </title>
+
+	
+	<link
+		rel="shortcut icon"
+		href="/files/frappe-favicon.svg"
+		type="image/x-icon"
+	>
+	<!--for indexing -->
+<meta name="google-site-verification" content="pY8RgHujc1s-KwOQZBldPi1bH5BOZfZBf8cP3oEUc4I" /> 
+ 
+<script type="text/javascript">
+    function getCookie() {
+        return Object.fromEntries(document.cookie.split('; ').map((part) => part.split('=')).map((d) => [d[0], decodeURIComponent(d[1])]));
+    }
+
+    function setCookie(cname, cvalue, exdays, domain) {
+        const d = new Date();
+        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+        let expires = "expires=" + d.toUTCString();
+        if (domain) {
+            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/;" + "domain=" + domain + ";";
+        } else {
+            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/;";
+        }
+    }
+
+    let old_cookie = getCookie();
+
+    // Remove all cookies that are not mentioned in Cookie Policy
+    for (let key in old_cookie) {
+        if (!["sid", "io", "user_id", "user_image", "system_user", "full_name"].includes(key)) {
+            setCookie(key, old_cookie[key], -1);
+            setCookie(key, old_cookie[key], -1, document.domain);
+            setCookie(key, old_cookie[key], -1, "." + document.domain);
+            setCookie(key, old_cookie[key], -1, "analytics.frappe.io");
+        }
+    }
+</script>
+
+
+<!-- Plausible -->
+<script defer data-api="https://frappecloud.com/api/event" data-domain="frappe.io" src="https://frappecloud.com/js/script.js"></script>
+<link type="text/css" rel="stylesheet" href="/assets/frappe/dist/css/website.bundle.LQEHRZZT.css">
+<link type="text/css" rel="stylesheet" href="/assets/erpnext/dist/css/erpnext-web.bundle.TIUGKBCZ.css">
+<link type="text/css" rel="stylesheet" href="/assets/frappe/css/hljs-night-owl.css">
+		
+	
+		
+
+	<script>
+		window.frappe = {};
+		window._version_number = "{{ build_version }}";
+		frappe.ready_events = [];
+		frappe.ready = function(fn) {
+			frappe.ready_events.push(fn);
+		}
+		window.dev_server = 0;
+		window.socketio_port = 9000;
+		window.show_language_picker = false;
+	</script>
+</head>
+<body frappe-session-status="logged-out" data-path="newsletters/erpnext-newsletter-august-2020" class="">
+
+		<nav class="navbar navbar-light navbar-expand-lg">
+<div class="container">
+<a class="navbar-brand" href="/"><img src="/files/frappe-footer.png"/></a>
+</div>
+</nav>
+
+
+
+
+
+
+
+
+<div id="page-erpnext-newsletter-august-2020" data-path="newsletters/erpnext-newsletter-august-2020"source-type="Generator" data-doctype="Newsletter">
+	
+<div class="page-content-wrapper">
+	<!-- breadcrumbs -->
+	<div class="page-breadcrumbs">
+		
+			
+		
+	</div>
+
+	
+	<main class="container">
+		<div class="page-header-wrapper">
+			<div class="page-header">
+				
+			</div>
+
+			
+		</div>
+
+		<div class="page_content">
+    <style>
+        .blog-container {
+            max-width: 720px;
+            margin: auto;
+        }
+        .blog-header {
+            font-weight: 700;
+            font-size: 1.5em;
+        }
+        .blog-info {
+            text-align:center;
+            margin-top: 30px;
+        }
+        .blog-text {
+            padding-top: 50px;
+            padding-bottom: 50px;
+            font-size: 15px;
+            line-height: 1.5;
+        }
+        .blog-text p {
+            margin-bottom: 30px;
+        }
+    </style>
+
+    <div class="blog-container">
+        <article class="blog-content" itemscope>
+            <div class="blog-info">
+                <h1 itemprop="headline" class="blog-header">The ERPNext Newsletter August 2020</h1>
+                <p class="post-by text-muted">
+                    January 25, 2022
+                </p>
+            </div>
+            <div itemprop="articleBody" class="longform blog-text">
+                <div class="ql-editor read-mode"><p><span style="color: rgb(0, 0, 0); background-color: transparent;">“</span><em style="color: rgb(0, 0, 0); background-color: transparent;">An hour of planning can save you 10 hours of doing</em><span style="color: rgb(0, 0, 0); background-color: transparent;">” - Dale Carnegie</span></p><p><br/></p><p><span style="color: rgb(0, 0, 0); background-color: transparent;">Hey everyone, welcome to the monthly ERPNext newsletter.</span></p><p><span style="color: rgb(0, 0, 0); background-color: transparent;">Thanks for joining!</span></p><p><br/></p><p><span style="color: rgb(0, 0, 0); background-color: transparent;">This month, we bring you answers to questions like—Where is version 13? Why was ERPNext started? How is Frappe doing and what can you learn from us? What more can you do with bill of materials and multi-currency accounting? Oh, there's also an upcoming hackathon for all you developers out there. Read on to know more.</span></p><p><br/></p><h2><span style="color: rgb(0, 0, 0); background-color: transparent;">ERPNext updates</span></h2><p><span style="color: rgb(0, 0, 0); background-color: transparent;">I know it has been a while since you first saw “version 13” but it’ll be worth the wait! Why it's taking so long you may ask. You see, the code being public, you immediately know that the next version is up but there are a lot of rough edges with the flood of features being added. Nabin from product and the team is working hard to bind these features and keep them stable before they reach you for production.</span></p><p><br/></p><p><em style="color: rgb(0, 0, 0); background-color: transparent;">Ok, that’s pretty standard, tell me more!</em><span style="color: rgb(0, 0, 0); background-color: transparent;"> Fine, I’ll let you in on a secret. ERPNext version 13 is going to look very different for the better (shhh, there’s a new design and you didn’t hear that from me).</span></p><p><br/></p><p><span style="color: rgb(0, 0, 0); background-color: transparent;">Perhaps, the most important one other than a new design is that version 13 will change the way you look at data and the way you handle them. (random fact: datum is the singular for data)</span></p><p><br/></p><p><span style="color: rgb(0, 0, 0); background-color: transparent;">Here are two things new in version 13:</span></p><ol><li data-list="bullet"><span class="ql-ui" contenteditable="false"></span><span style="color: rgb(0, 0, 0); background-color: transparent;">The old healthcare module in ERPNext could be a lot better. So Rucha from engineering worked in developing a refreshed Healthcare system that brings more features, faster execution, and better data security. </span><a href="https://erpnext.com/blog/erpnext-features/all-in-one-healthcare-software?utm_source=newsletter&amp;utm_medium=email" rel="noopener noreferrer" style="color: rgb(17, 85, 204); background-color: transparent;">Read her blog about the new healthcare system</a><span style="color: rgb(0, 0, 0); background-color: transparent;">.</span></li><li data-list="bullet"><span class="ql-ui" contenteditable="false"></span><span style="color: rgb(0, 0, 0);">You all saw what dashboards looked like in</span><span style="color: rgb(0, 0, 0); background-color: transparent;"> </span><a href="https://docs.erpnext.com/docs/user/manual/en/using-erpnext/dashboard" rel="noopener noreferrer" style="color: rgb(0, 0, 0); background-color: transparent;">version 12</a><span style="color: rgb(0, 0, 0); background-color: transparent;">. In version 13, they'll be more polished and ready-made for every module.</span></li></ol><p><span style="color: rgb(0, 0, 0); background-color: transparent;">Want to stay updated more frequently? Follow us on </span><a href="https://www.linkedin.com/company/315202/admin/" rel="noopener noreferrer" style="color: rgb(17, 85, 204); background-color: transparent;">LinkedIn</a><span style="color: rgb(0, 0, 0); background-color: transparent;">, </span><a href="https://twitter.com/erpnext" rel="noopener noreferrer" style="color: rgb(17, 85, 204); background-color: transparent;">Twitter</a><span style="color: rgb(0, 0, 0); background-color: transparent;">, and </span><a href="https://www.facebook.com/ERPNext/" rel="noopener noreferrer" style="color: rgb(17, 85, 204); background-color: transparent;">Facebook</a></p><h2><span style="color: rgb(0, 0, 0); background-color: transparent;">Blogs</span></h2><p><span style="color: rgb(0, 0, 0); background-color: transparent;">Read on for blogs on BOMs, multi-currency accounting, GST, and how we took down some fake Facebook pages. </span></p><ol><li data-list="bullet"><span class="ql-ui" contenteditable="false"></span><span style="color: rgb(0, 0, 0); background-color: transparent;">You know what a bill of materials is but ever had specific questions around BOMs? Like do I need software for it? How is BOM costing or comparison done? Questions around the actions before and after creating a BOM. In this blog, read more about </span><a href="https://erpnext.com/blog/manufacturing/bill-of-materials?utm_source=newsletter&amp;utm_medium=email" rel="noopener noreferrer" style="color: rgb(17, 85, 204); background-color: transparent;">all you need to know about bill of materials</a><span style="color: rgb(0, 0, 0); background-color: transparent;">.</span></li><li data-list="bullet"><span class="ql-ui" contenteditable="false"></span><span style="color: rgb(0, 0, 0);">Multi-currency accounting is a bit complicated, even in ERPNext. Setting your base currency, the currency for transactions, exchange rates, the revaluation, well it’s not straightforward. To help you get started, take a look at </span><a href="https://erpnext.com/blog/erpnext_features/multicurrency-accounting?utm_source=newsletter&amp;utm_medium=email" rel="noopener noreferrer" style="color: rgb(17, 85, 204); background-color: transparent;">Mastering the basics of multi-currency accounting</a><span style="color: rgb(0, 0, 0); background-color: transparent;">.</span></li><li data-list="bullet"><span class="ql-ui" contenteditable="false"></span><span style="color: rgb(0, 0, 0);">For our Indian users, automating GST in ERPNext will save a lot of time. </span><a href="https://erpnext.com/blog/erpnext-features/5-steps-to-automate-indian-gst-in-erpnext?utm_source=newsletter&amp;utm_medium=email" rel="noopener noreferrer" style="color: rgb(17, 85, 204); background-color: transparent;">Read this blog to know how</a><span style="color: rgb(0, 0, 0); background-color: transparent;">.</span></li><li data-list="bullet"><span class="ql-ui" contenteditable="false"></span><span style="color: rgb(0, 0, 0);">You must’ve heard that imitation is good flattery but impersonation is not. Recently, Kenneth from sales came across a bunch of fake ERPNext accounts on Facebook. So he decided to</span><a href="https://frappe.io/blog/general/taking-down-fake-facebook-pages?utm_source=Newsletter&amp;utm_medium=web_page" rel="noopener noreferrer" style="color: rgb(0, 0, 0); background-color: transparent;"> </a><a href="https://frappe.io/blog/general/taking-down-fake-facebook-pages?utm_source=Newsletter&amp;utm_medium=web_page" rel="noopener noreferrer" style="color: rgb(17, 85, 204); background-color: transparent;">take those pages down and share his experience in this blog</a><span style="color: rgb(0, 0, 0); background-color: transparent;">. </span></li></ol><p><span style="color: rgb(0, 0, 0); background-color: transparent;">Note: ERPNext doesn’t have any country-specific websites or services yet. There’s only “</span><a href="http://erpnext.com/" rel="noopener noreferrer" style="color: rgb(17, 85, 204); background-color: transparent;">erpnext.com</a><span style="color: rgb(0, 0, 0); background-color: transparent;">”.</span></p><h2><span style="color: rgb(0, 0, 0); background-color: transparent;">Videos</span></h2><p><span style="color: rgb(0, 0, 0); background-color: transparent;">We also have a couple of new videos published every month. </span></p><ol><li data-list="bullet"><span class="ql-ui" contenteditable="false"></span><span style="color: rgb(0, 0, 0); background-color: transparent;">True fans will agree that ERPNext is awesome for its simplicity and open source values. But did you ever wonder how it was created or why? Well, who better to tell the story than the founder, </span><a href="https://www.youtube.com/watch?v=qOXK0OLaPUk" rel="noopener noreferrer" style="color: rgb(17, 85, 204); background-color: transparent;">watch Rushabh talk about the origins of ERPNext</a></li><li data-list="bullet"><span class="ql-ui" contenteditable="false"></span><span style="color: rgb(0, 0, 0);">Recently, Rushabh also talked about the business of open source at one of the top business schools in India, IIM Bangalore. </span><a href="https://www.youtube.com/watch?v=JmOJtYW-0GI" rel="noopener noreferrer" style="color: rgb(17, 85, 204); background-color: transparent;">Check out this video to watch his talk</a><span style="color: rgb(0, 0, 0); background-color: transparent;">.</span></li><li data-list="bullet"><span class="ql-ui" contenteditable="false"></span><span style="color: rgb(0, 0, 0);">We also have a series of educational videos where we teach you how to use ERPNext. This month let’s </span><a href="https://www.youtube.com/watch?v=wA0nKAqhnZM" rel="noopener noreferrer" style="color: rgb(17, 85, 204); background-color: transparent;">understand the foundations, doctypes and fields</a><span style="color: rgb(0, 0, 0); background-color: transparent;">.</span></li></ol><h2><span style="color: rgb(0, 0, 0); background-color: transparent;">FOSS United and FOSS hackathon</span></h2><p><span style="color: rgb(0, 0, 0); background-color: transparent;">Over the last few months, the joint efforts from Frappe and Zerodha made something wonderful for the open source community—the FOSS United Foundation. There have been very few open source projects in India. Hence, FOSS united, as a nonprofit organization aims to help foster the spirit of open source and software development. </span></p><p><br/></p><p><span style="color: rgb(0, 0, 0); background-color: transparent;">What better way to bring you hackers and open source lovers than a hackathon. Mark your calendars for India's biggest FOSS hackathon that'll span 2 days in September and have a cash prize up to ₹10 Lakh.</span></p><p><br/></p><p><span style="color: rgb(0, 0, 0); background-color: transparent;">What are you waiting for? </span><a href="https://fossunited.org/hackathon" rel="noopener noreferrer" style="color: rgb(17, 85, 204); background-color: transparent;">Register your team</a><span style="color: rgb(0, 0, 0); background-color: transparent;"> and show us your code!</span></p><p><span style="color: rgb(0, 0, 0); background-color: transparent;">Convinced yet? Maybe these people </span><a href="https://www.youtube.com/watch?v=pNsKtZ4nQw4" rel="noopener noreferrer" style="color: rgb(17, 85, 204); background-color: transparent;">can convince you better</a><span style="color: rgb(0, 0, 0); background-color: transparent;">.</span></p><h2><span style="color: rgb(0, 0, 0); background-color: transparent;">Webinars</span></h2><p><span style="color: rgb(0, 0, 0); background-color: transparent;">Amidst this lockdown, we’ve been hosting some webinars. </span></p><p><br/></p><p><span style="color: rgb(0, 0, 0); background-color: transparent;">Coming this month, Scaling ERPNext with a logistics company, ElasticRun. Scaling any ERP is a challenge with the multitude of parameters that need configuration. In this upcoming webinar, watch folks from ElasticRun talk about how they are scaling ERPNext to huge levels.</span></p><p><a href="https://frappe.io/webinars?name=WBN00003%3Futm_source%3Dnewsletter&amp;utm_medium=web_page&amp;utm_source=Newsletter" rel="noopener noreferrer" style="color: rgb(17, 85, 204); background-color: transparent;">Go ahead and register for it</a><span style="color: rgb(0, 0, 0); background-color: transparent;">.</span></p><p><br/></p><p><span style="color: rgb(0, 0, 0); background-color: transparent;">To know more about upcoming and older webinars, check out the </span><a href="http://frappe.io/webinars?utm_source=Newsletter&amp;utm_medium=web_page" rel="noopener noreferrer" style="color: rgb(17, 85, 204); background-color: transparent;">webinars page</a><span style="color: rgb(0, 0, 0); background-color: transparent;">.</span></p><h2><span style="color: rgb(0, 0, 0); background-color: transparent;">Help articles</span></h2><p><span style="color: rgb(0, 0, 0); background-color: transparent;">The </span><a href="http://docs.erpnext.com/" rel="noopener noreferrer" style="color: rgb(17, 85, 204); background-color: transparent;">product documentation</a><span style="color: rgb(0, 0, 0); background-color: transparent;"> is a good place to learn about features, but if you’re someone who likes step by step examples, here is a roundup of help articles that answer some common questions:</span></p><ol><li data-list="bullet"><span class="ql-ui" contenteditable="false"></span><a href="https://docs.erpnext.com/docs/v13/user/manual/en/selling/articles/setting-up-buy-1-get-1-free-pricing-rule" rel="noopener noreferrer" style="color: rgb(17, 85, 204); background-color: transparent;">Setting up Buy 1 get 1 free product discounts</a></li><li data-list="bullet"><span class="ql-ui" contenteditable="false"></span><a href="https://docs.erpnext.com/docs/v13/user/manual/en/accounts/articles/balance-in-temporary-account" rel="noopener noreferrer" style="color: rgb(17, 85, 204); background-color: transparent;">Temporary account has balance even after updating opening balances</a></li></ol><h2><span style="color: rgb(0, 0, 0); background-color: transparent;">What’s up at Frappe</span></h2><p><span style="color: rgb(0, 0, 0); background-color: transparent;">In April, we had an appraisal discussion. It was drawn long, and everyone participated. That's right! Everyone had a say in each other's compensation. A bit unusual but a cool experiment, things started out calmly as they do usually, then got uneasy later. But transparency is something we value and Rushabh takes this a step ahead. </span><a href="https://frappe.io/blog/management/performance-and-compensation?utm_source=Newsletter&amp;utm_medium=web_page" rel="noopener noreferrer" style="color: rgb(17, 85, 204); background-color: transparent;">Read his blog</a><span style="color: rgb(0, 0, 0); background-color: transparent;"> for some insider information on what happened during the appraisal discussions. After so many continuous discussions, we were all so tired that we decided to skip an </span><a href="https://frappe.io/blog/open-day?utm_source=Newsletter&amp;utm_medium=web_page" rel="noopener noreferrer" style="color: rgb(17, 85, 204); background-color: transparent;">open day</a><span style="color: rgb(0, 0, 0); background-color: transparent;">.</span></p><h3><span style="color: rgb(67, 67, 67); background-color: transparent;">How is Frappe doing?</span></h3><p><span style="color: rgb(0, 0, 0); background-color: transparent;">The pandemic looks like it’s flattening, countries are still under lockdown, and we like everyone else are embracing the remote culture. </span></p><p><br/></p><p><span style="color: rgb(0, 0, 0); background-color: transparent;">At Frappe, we’re coping in different ways. Some feel lazy, some lazy people have turned into workaholics, while some feel lost. Few got so bored that they went to the office. Well, that was until they realized how serious the virus is and decided to hang back at home instead. To make some sense out of our days, we’re making daily plans to manage our time better. But plans change and that’s ok, the important to do here was to create a plan and organize our days. Without a plan, it’s easy to squander your energy and get caught up in doing random things.</span></p><p><br/></p><p><span style="background-color: transparent; color: rgb(0, 0, 0);">The past few months have been tough for everyone. But it looks like things are getting slightly better, slightly is also an exaggeration at this point but hey this lockdown has given people more time. It gets gloomy sitting at home all day but with all this extra time, you could do all the things that you couldn't before. This applies to both professional and personal lives. Sort your paperwork that you've been putting off since January, explore new processes you didn't have the time for, or pick up the book that was gifted and ever since collecting dust on your shelf. </span></p><p><br/></p><p><span style="background-color: transparent; color: rgb(0, 0, 0);">Hang in there, even make the most of this extra time.</span></p><p><br/></p><p><span style="color: rgb(0, 0, 0); background-color: transparent;">﻿We're trying to help our customers in our capacity. Hit us up via the support app for any assistance. If you’re new, say hello using </span><a href="http://erpnext.com/contact-form?new=1?utm_source=newsletter&amp;utm_medium=email" rel="noopener noreferrer" style="color: rgb(17, 85, 204); background-color: transparent;">the contact form</a><span style="color: rgb(0, 0, 0); background-color: transparent;">.</span></p><p><br/></p><p><span style="background-color: transparent; color: rgb(0, 0, 0);">Think a friend/colleague would like this newsletter? </span><a href="https://erpnext.com/newsletter?utm_source=newsletter&amp;utm_medium=email" rel="noopener noreferrer" style="background-color: transparent; color: rgb(17, 85, 204);">Go ahead and share it</a><span style="background-color: transparent; color: rgb(0, 0, 0);">.</span></p><p><br/></p><p><span style="color: rgb(0, 0, 0); background-color: transparent;">Cheers,</span></p><p><span style="color: rgb(0, 0, 0); background-color: transparent;">Prasad from Frappe</span></p><p><a href="http://erpnext.com?utm_source=newsletter&amp;utm_medium=email" rel="noopener noreferrer" style="color: rgb(17, 85, 204); background-color: transparent;">erpnext.com</a></p></div>
+            </div>
+        </article>
+
+        
+
+    </div>
+</div>
+
+		<div class="page-footer"></div>
+	</main>
+	
+</div>
+
+</div>
+
+
+<div id="all-symbols" style="display:none"></div><script type="text/javascript">fetch(`/assets/frappe/icons/timeless/icons.svg?v=${window._version_number}`, {credentials: "same-origin"}).then((r) => r.text()).then((svg) => {let c = document.getElementById("all-symbols"); c.insertAdjacentHTML("beforeend", svg);});</script><script type="text/javascript">fetch(`/assets/frappe/icons/espresso/icons.svg?v=${window._version_number}`, {credentials: "same-origin"}).then((r) => r.text()).then((svg) => {let c = document.getElementById("all-symbols"); c.insertAdjacentHTML("beforeend", svg);});</script>
+	<!-- js should be loaded in body! -->
+	<script>
+		frappe.boot = {
+ "apps_data": {
+  "apps": [],
+  "default_path": "",
+  "is_desk_apps": 1
+ },
+ "assets_json": {
+  "bank-reconciliation-tool.bundle.js": "/assets/erpnext/dist/js/bank-reconciliation-tool.bundle.FPQRAOXF.js",
+  "billing.bundle.js": "/assets/frappe/dist/js/billing.bundle.TQHLK7UT.js",
+  "bom_configurator.bundle.js": "/assets/erpnext/dist/js/bom_configurator.bundle.HVCV6OL2.js",
+  "bootstrap-4-web.bundle.js": "/assets/frappe/dist/js/bootstrap-4-web.bundle.FOZOVELL.js",
+  "build_events.bundle.js": "/assets/frappe/dist/js/build_events.bundle.BCX32TWL.js",
+  "buy_credits.bundle.js": "/assets/partner_relationship_management/dist/js/buy_credits.bundle.PTRLR7SB.js",
+  "calendar.bundle.js": "/assets/frappe/dist/js/calendar.bundle.4A4YITIU.js",
+  "charts-demo.bundle.js": "/assets/frappe_io/dist/js/charts-demo.bundle.VNV6RUNF.js",
+  "contributions.bundle.css": "/assets/wiki/dist/css/contributions.bundle.RBO25XZK.css",
+  "controls.bundle.js": "/assets/frappe/dist/js/controls.bundle.OBHXLYSV.js",
+  "data_import_tools.bundle.js": "/assets/frappe/dist/js/data_import_tools.bundle.Q5YT4XP2.js",
+  "datatable.bundle.css": "/assets/frappe_io/dist/css/datatable.bundle.3P2RWE3E.css",
+  "datatable.bundle.js": "/assets/frappe_io/dist/js/datatable.bundle.SOZHUVE4.js",
+  "desk.bundle.css": "/assets/frappe/dist/css/desk.bundle.6QJ7RADB.css",
+  "desk.bundle.js": "/assets/frappe/dist/js/desk.bundle.Q2WZITIR.js",
+  "dialog.bundle.js": "/assets/frappe/dist/js/dialog.bundle.3F5VODSL.js",
+  "education.bundle.js": "/assets/education/dist/js/education.bundle.PSPI3YNS.js",
+  "email.bundle.css": "/assets/frappe/dist/css/email.bundle.J3DSMELI.css",
+  "erpnext-web.bundle.css": "/assets/erpnext/dist/css/erpnext-web.bundle.TIUGKBCZ.css",
+  "erpnext-web.bundle.js": "/assets/erpnext/dist/js/erpnext-web.bundle.J4A2DQB4.js",
+  "erpnext.bundle.css": "/assets/erpnext/dist/css/erpnext.bundle.XD674WRI.css",
+  "erpnext.bundle.js": "/assets/erpnext/dist/js/erpnext.bundle.R5JXFCLX.js",
+  "erpnext_email.bundle.css": "/assets/erpnext/dist/css/erpnext_email.bundle.DFYL6BVU.css",
+  "file_uploader.bundle.js": "/assets/frappe/dist/js/file_uploader.bundle.ZPHNBOZS.js",
+  "form.bundle.js": "/assets/frappe/dist/js/form.bundle.TPF6OHJK.js",
+  "form_builder.bundle.js": "/assets/frappe/dist/js/form_builder.bundle.NRPX4YQU.js",
+  "frappe-web.bundle.js": "/assets/frappe/dist/js/frappe-web.bundle.VFID6Y35.js",
+  "gstr1.bundle.js": "/assets/india_compliance/dist/js/gstr1.bundle.LMOF55ES.js",
+  "hierarchy-chart.bundle.js": "/assets/hrms/dist/js/hierarchy-chart.bundle.5E224PCR.js",
+  "hrms.bundle.css": "/assets/hrms/dist/css/hrms.bundle.WEXO5WM5.css",
+  "hrms.bundle.js": "/assets/hrms/dist/js/hrms.bundle.FNZYA5KG.js",
+  "ims.bundle.js": "/assets/india_compliance/dist/js/ims.bundle.C4HROEWL.js",
+  "india_compliance.bundle.js": "/assets/india_compliance/dist/js/india_compliance.bundle.WV4RD5A3.js",
+  "india_compliance_account.bundle.css": "/assets/india_compliance/dist/css/india_compliance_account.bundle.NYGQSTE6.css",
+  "india_compliance_account.bundle.js": "/assets/india_compliance/dist/js/india_compliance_account.bundle.OPWAD7DA.js",
+  "interview.bundle.js": "/assets/hrms/dist/js/interview.bundle.C7CDEMYA.js",
+  "item-dashboard.bundle.js": "/assets/erpnext/dist/js/item-dashboard.bundle.WEGR7SLR.js",
+  "kanban_board.bundle.js": "/assets/frappe/dist/js/kanban_board.bundle.F6FPXXED.js",
+  "lending.bundle.js": "/assets/lending/dist/js/lending.bundle.EVKAPGTK.js",
+  "libs.bundle.js": "/assets/frappe/dist/js/libs.bundle.TIV7ZGVY.js",
+  "list.bundle.js": "/assets/frappe/dist/js/list.bundle.CTIEC4L7.js",
+  "login.bundle.css": "/assets/frappe/dist/css/login.bundle.LMNP2TEO.css",
+  "logtypes.bundle.js": "/assets/frappe/dist/js/logtypes.bundle.5KO3ZOOI.js",
+  "onboarding_tours.bundle.js": "/assets/frappe/dist/js/onboarding_tours.bundle.RAUR6X4Z.js",
+  "pdfjs.bundle.css": "/assets/print_designer/dist/css/pdfjs.bundle.Z2TQG5OV.css",
+  "performance.bundle.js": "/assets/hrms/dist/js/performance.bundle.63UL5NS7.js",
+  "photoswipe.bundle.js": "/assets/frappe/dist/js/photoswipe.bundle.YSXZQA64.js",
+  "point-of-sale.bundle.js": "/assets/erpnext/dist/js/point-of-sale.bundle.BA7TZAGR.js",
+  "print.bundle.css": "/assets/frappe/dist/css/print.bundle.DKL44YGN.css",
+  "print_designer.bundle.css": "/assets/print_designer/dist/css/print_designer.bundle.6QE4XIB7.css",
+  "print_designer.bundle.js": "/assets/print_designer/dist/js/print_designer.bundle.2JYNBT6J.js",
+  "print_format.bundle.css": "/assets/frappe/dist/css/print_format.bundle.P3PPNHEO.css",
+  "print_format_builder.bundle.js": "/assets/frappe/dist/js/print_format_builder.bundle.VQYWNAGA.js",
+  "purchase_reconciliation_tool.bundle.js": "/assets/india_compliance/dist/js/purchase_reconciliation_tool.bundle.LOLTTYSQ.js",
+  "report.bundle.css": "/assets/frappe/dist/css/report.bundle.VTBDJUHO.css",
+  "report.bundle.js": "/assets/frappe/dist/js/report.bundle.GHAYAFOZ.js",
+  "rtl_contributions.bundle.css": "/assets/wiki/dist/css-rtl/contributions.bundle.IMRLHY4X.css",
+  "rtl_datatable.bundle.css": "/assets/frappe_io/dist/css-rtl/datatable.bundle.NMEYOFTE.css",
+  "rtl_desk.bundle.css": "/assets/frappe/dist/css-rtl/desk.bundle.ES3NLDNQ.css",
+  "rtl_email.bundle.css": "/assets/frappe/dist/css-rtl/email.bundle.USEPIIYM.css",
+  "rtl_erpnext-web.bundle.css": "/assets/erpnext/dist/css-rtl/erpnext-web.bundle.7AAXIH77.css",
+  "rtl_erpnext.bundle.css": "/assets/erpnext/dist/css-rtl/erpnext.bundle.SEKCMKQK.css",
+  "rtl_erpnext_email.bundle.css": "/assets/erpnext/dist/css-rtl/erpnext_email.bundle.ZBNQWHYL.css",
+  "rtl_hrms.bundle.css": "/assets/hrms/dist/css-rtl/hrms.bundle.6EA3NACR.css",
+  "rtl_india_compliance_account.bundle.css": "/assets/india_compliance/dist/css-rtl/india_compliance_account.bundle.2DG5IYSG.css",
+  "rtl_login.bundle.css": "/assets/frappe/dist/css-rtl/login.bundle.RP5DQ6MO.css",
+  "rtl_pdfjs.bundle.css": "/assets/print_designer/dist/css-rtl/pdfjs.bundle.36F3SGAT.css",
+  "rtl_print.bundle.css": "/assets/frappe/dist/css-rtl/print.bundle.4GC44A5A.css",
+  "rtl_print_designer.bundle.css": "/assets/print_designer/dist/css-rtl/print_designer.bundle.KG2ZXMTN.css",
+  "rtl_print_format.bundle.css": "/assets/frappe/dist/css-rtl/print_format.bundle.XNGPGDZU.css",
+  "rtl_report.bundle.css": "/assets/frappe/dist/css-rtl/report.bundle.GEJHBUQQ.css",
+  "rtl_web_form.bundle.css": "/assets/frappe/dist/css-rtl/web_form.bundle.FPS4MTF7.css",
+  "rtl_website.bundle.css": "/assets/frappe/dist/css-rtl/website.bundle.OP52UWVB.css",
+  "rtl_wiki.bundle.css": "/assets/wiki/dist/css-rtl/wiki.bundle.5BUYD3ZL.css",
+  "sentry.bundle.js": "/assets/frappe/dist/js/sentry.bundle.AX44GVWW.js",
+  "telemetry.bundle.js": "/assets/frappe/dist/js/telemetry.bundle.LKEZCADB.js",
+  "video_player.bundle.js": "/assets/frappe/dist/js/video_player.bundle.DUYYLSFO.js",
+  "web_form.bundle.css": "/assets/frappe/dist/css/web_form.bundle.E37HXZGK.css",
+  "web_form.bundle.js": "/assets/frappe/dist/js/web_form.bundle.BLQZ4OBZ.js",
+  "website.bundle.css": "/assets/frappe/dist/css/website.bundle.LQEHRZZT.css",
+  "wiki.bundle.css": "/assets/wiki/dist/css/wiki.bundle.KGGUFANN.css",
+  "wiki.bundle.js": "/assets/wiki/dist/js/wiki.bundle.WQQQOK77.js",
+  "workflow_builder.bundle.js": "/assets/frappe/dist/js/workflow_builder.bundle.MPAFFZ3D.js"
+ },
+ "is_fc_site": 0,
+ "lang": "en",
+ "sitename": "frappeio.frappe.cloud",
+ "sysdefaults": {
+  "currency": null,
+  "date_format": "dd/mm/yyyy",
+  "first_day_of_the_week": "Sunday",
+  "float_precision": 2,
+  "number_format": "#,##,###.##",
+  "time_format": "HH:mm:ss"
+ },
+ "time_zone": {
+  "system": "Asia/Kolkata",
+  "user": "Asia/Kolkata"
+ }
+}
+		// for backward compatibility of some libs
+		frappe.sys_defaults = frappe.boot.sysdefaults;
+	</script>
+	<script type="text/javascript" src="/assets/frappe/dist/js/frappe-web.bundle.VFID6Y35.js"></script>
+	
+	<script type="text/javascript" src="/website_script.js"></script>
+	<script type="text/javascript" src="/assets/erpnext/dist/js/erpnext-web.bundle.J4A2DQB4.js"></script>
+		
+	<script>frappe.csrf_token = "None";</script></body>
+</html>

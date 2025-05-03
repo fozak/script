@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<!-- Built on Frappe. https://frappeframework.com/ -->
+<html lang="en" dir="ltr">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="generator" content="frappe">
+
+	
+		<meta name="title" content="The ERPNext Newsletter November 2020"><meta name="language" content="en"><meta property="og:type"  content="article"><meta property="og:title"  content="The ERPNext Newsletter November 2020"><meta name="twitter:title" content="The ERPNext Newsletter November 2020"><meta name="twitter:card" content="summary">
+	
+
+	<title> The ERPNext Newsletter November 2020 </title>
+
+	
+	<link
+		rel="shortcut icon"
+		href="/files/frappe-favicon.svg"
+		type="image/x-icon"
+	>
+	<!--for indexing -->
+<meta name="google-site-verification" content="pY8RgHujc1s-KwOQZBldPi1bH5BOZfZBf8cP3oEUc4I" /> 
+ 
+<script type="text/javascript">
+    function getCookie() {
+        return Object.fromEntries(document.cookie.split('; ').map((part) => part.split('=')).map((d) => [d[0], decodeURIComponent(d[1])]));
+    }
+
+    function setCookie(cname, cvalue, exdays, domain) {
+        const d = new Date();
+        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+        let expires = "expires=" + d.toUTCString();
+        if (domain) {
+            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/;" + "domain=" + domain + ";";
+        } else {
+            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/;";
+        }
+    }
+
+    let old_cookie = getCookie();
+
+    // Remove all cookies that are not mentioned in Cookie Policy
+    for (let key in old_cookie) {
+        if (!["sid", "io", "user_id", "user_image", "system_user", "full_name"].includes(key)) {
+            setCookie(key, old_cookie[key], -1);
+            setCookie(key, old_cookie[key], -1, document.domain);
+            setCookie(key, old_cookie[key], -1, "." + document.domain);
+            setCookie(key, old_cookie[key], -1, "analytics.frappe.io");
+        }
+    }
+</script>
+
+
+<!-- Plausible -->
+<script defer data-api="https://frappecloud.com/api/event" data-domain="frappe.io" src="https://frappecloud.com/js/script.js"></script>
+<link type="text/css" rel="stylesheet" href="/assets/frappe/dist/css/website.bundle.LQEHRZZT.css">
+<link type="text/css" rel="stylesheet" href="/assets/erpnext/dist/css/erpnext-web.bundle.TIUGKBCZ.css">
+<link type="text/css" rel="stylesheet" href="/assets/frappe/css/hljs-night-owl.css">
+		
+	
+		
+
+	<script>
+		window.frappe = {};
+		window._version_number = "{{ build_version }}";
+		frappe.ready_events = [];
+		frappe.ready = function(fn) {
+			frappe.ready_events.push(fn);
+		}
+		window.dev_server = 0;
+		window.socketio_port = 9000;
+		window.show_language_picker = false;
+	</script>
+</head>
+<body frappe-session-status="logged-out" data-path="newsletters/the-erpnext-newsletter-november-2020" class="">
+
+		<nav class="navbar navbar-light navbar-expand-lg">
+<div class="container">
+<a class="navbar-brand" href="/"><img src="/files/frappe-footer.png"/></a>
+</div>
+</nav>
+
+
+
+
+
+
+
+
+<div id="page-the-erpnext-newsletter-november-2020" data-path="newsletters/the-erpnext-newsletter-november-2020"source-type="Generator" data-doctype="Newsletter">
+	
+<div class="page-content-wrapper">
+	<!-- breadcrumbs -->
+	<div class="page-breadcrumbs">
+		
+			
+		
+	</div>
+
+	
+	<main class="container">
+		<div class="page-header-wrapper">
+			<div class="page-header">
+				
+			</div>
+
+			
+		</div>
+
+		<div class="page_content">
+    <style>
+        .blog-container {
+            max-width: 720px;
+            margin: auto;
+        }
+        .blog-header {
+            font-weight: 700;
+            font-size: 1.5em;
+        }
+        .blog-info {
+            text-align:center;
+            margin-top: 30px;
+        }
+        .blog-text {
+            padding-top: 50px;
+            padding-bottom: 50px;
+            font-size: 15px;
+            line-height: 1.5;
+        }
+        .blog-text p {
+            margin-bottom: 30px;
+        }
+    </style>
+
+    <div class="blog-container">
+        <article class="blog-content" itemscope>
+            <div class="blog-info">
+                <h1 itemprop="headline" class="blog-header">The ERPNext Newsletter November 2020</h1>
+                <p class="post-by text-muted">
+                    January 24, 2022
+                </p>
+            </div>
+            <div itemprop="articleBody" class="longform blog-text">
+                <div class="ql-editor read-mode"><p><span style="color: rgb(0, 0, 0); background-color: transparent;">This month we bring you updates like the new v13 beta release, some local and global features, some blogs on inventory management, kitting which may not be quite what you thought. We end with an interesting discussion that happened in the company and remember a kind community member.</span></p><h3><br/></h3><h2><span style="color: rgb(0, 0, 0); background-color: transparent;">ERPNext Updates</span></h2><p><span style="color: rgb(0, 0, 0); background-color: transparent;">Here’s a roundup of product updates for you to read:</span></p><p><br/></p><ol><li data-list="bullet"><span class="ql-ui" contenteditable="false"></span><span style="color: rgb(0, 0, 0); background-color: transparent;">ERPNext v13 beta 5 is out. Before you ask, it’s not in production of course and new sign ups will be able to use it. In a few months is a good expected time. This beta has features like the laboratory module, shift management, new pos and supplier quotation reports, localizations for Luxembourg and Kenya (M-Pesa), and more. Read more in the </span><a href="https://erpnext.com/blog/release-posts/erpnext-v-13-beta-5" rel="noopener noreferrer" style="color: rgb(17, 85, 204); background-color: transparent;">release post</a><span style="color: rgb(0, 0, 0); background-color: transparent;">.</span></li></ol><p><br/></p><ol><li data-list="bullet"><span class="ql-ui" contenteditable="false"></span><span style="color: rgb(0, 0, 0); background-color: transparent;">Speaking of localizations, in India, since E-Invoicing is mandatory from October for certain companies, where every B2B invoice will have unique identification numbers, we’re also working on that. This new feature will help automate GSTR-1 filings since the entries will be submitted on every transaction. </span></li></ol><p><br/></p><ol><li data-list="bullet"><span class="ql-ui" contenteditable="false"></span><span style="color: rgb(0, 0, 0); background-color: transparent;">With the world going remote, we’re seeing most companies having a work from home workforce. Since this pandemic has taught us all that being in the office isn’t the only way to work, companies now may also overlook borders when hiring new employees. There are already some SaaS companies that do this. So we’re also building Multi Currency Payroll that will allow and adjust payroll for employees no matter which country you’re from or they’re from.</span></li></ol><h2><br/></h2><h2><span style="color: rgb(0, 0, 0); background-color: transparent;">Blogs</span></h2><p><span style="color: rgb(0, 0, 0); background-color: transparent;">We all saw a lot on manufacturing, now the next natural way is towards more on inventory management.</span></p><ol><li data-list="bullet"><span class="ql-ui" contenteditable="false"></span><span style="color: rgb(0, 0, 0); background-color: transparent;">And let’s start with just that, inventory management. In the last newsletter, I described inventory control and linked a blog I have since then updated it to draw clear distinctions versus inventory management. They are often confused, similar but different topics. Inventory management is about planning to maintain the optimum inventory levels, learn all about it and more in </span><a href="https://erpnext.com/blog/inventory-management/inventory-management?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=monthly_newsletter" rel="noopener noreferrer" style="color: rgb(17, 85, 204); background-color: transparent;">Inventory management 101: All you need to know from techniques to reporting</a><span style="color: rgb(0, 0, 0); background-color: transparent;">.</span></li></ol><p><br/></p><ol><li data-list="bullet"><span class="ql-ui" contenteditable="false"></span><span style="color: rgb(0, 0, 0); background-color: transparent;">Another quite confused topic is kitting. It’s grouping different products together. Simple enough? Well, kitting is used quite often in eCommerce and retail contexts while in industry, it’s used in manufacturing as a procurement strategy. Confused? Don’t be, read </span><a href="https://erpnext.com/blog/inventory-management/inventory-kitting?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=monthly_newsletter" rel="noopener noreferrer" style="color: rgb(17, 85, 204); background-color: transparent;">Use kitting to simplify inventory management. Save time, money, and space. (it’s not product bundling)</a><span style="color: rgb(0, 0, 0); background-color: transparent;">.</span></li></ol><p><br/></p><ol><li data-list="bullet"><span class="ql-ui" contenteditable="false"></span><span style="color: rgb(0, 0, 0); background-color: transparent;">Wouldn’t selling items without stock be great? No need to hold inventory, worry about perishables, storage space, or dead stock. This is a common practice in many industries. Learn more about it in </span><a href="https://erpnext.com/blog/inventory-management/backordering-inventory?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=monthly_newsletter" rel="noopener noreferrer" style="color: rgb(17, 85, 204); background-color: transparent;">Backordering: The benefits, challenges, and how to do it?</a></li></ol><p><span style="color: rgb(17, 85, 204); background-color: transparent;">﻿</span></p><ol><li data-list="bullet"><span class="ql-ui" contenteditable="false"></span><span style="color: rgb(0, 0, 0); background-color: transparent;">Finally, when shipping orders, you may attach packing slips to orders. It’s a list of all the items that a package contains. You may wonder what’s the need of something like this when there are invoices. Well, then you should check out </span><a href="https://erpnext.com/blog/inventory-management/packing-slip?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=monthly_newsletter" rel="noopener noreferrer" style="color: rgb(17, 85, 204); background-color: transparent;">All you need to know about packing slips and why they’re used</a><span style="color: rgb(0, 0, 0); background-color: transparent;">.</span></li></ol><h2><br/></h2><h2><span style="color: rgb(0, 0, 0); background-color: transparent;">﻿Videos</span></h2><p><span style="color: rgb(0, 0, 0); background-color: transparent;">﻿Let’s see the videos for this month:</span></p><p><br/></p><ol><li data-list="bullet"><span class="ql-ui" contenteditable="false"></span><span style="color: rgb(0, 0, 0); background-color: transparent;">One of the main reasons why ERPNext is so easily configured is DocTypes and Field Types. Creating different forms on the go with different types of fields allows a lot of control over configuration. And all of this is done easily from the UI. Interested? Then let’s take a step towards </span><a href="https://www.youtube.com/watch?v=wA0nKAqhnZM&amp;ab_channel=ERPNext" rel="noopener noreferrer" style="color: rgb(17, 85, 204); background-color: transparent;">Understanding DocTypes and Field Types</a><span style="color: rgb(0, 0, 0); background-color: transparent;">.</span></li></ol><p><br/></p><h2><span style="color: rgb(0, 0, 0); background-color: transparent;">What’s up at frappe</span></h2><p><span style="color: rgb(0, 0, 0); background-color: transparent;">“</span><em style="color: rgb(0, 0, 0); background-color: transparent;">Time moves slowly but passes quickly</em><span style="color: rgb(0, 0, 0); background-color: transparent;">” - Alice Walker</span></p><p><br/></p><p><span style="color: rgb(0, 0, 0); background-color: transparent;">October started and 2 days later it was November. Am I the only one that feels this way? Don’t think so. Staying in more has changed our perception of time almost. Some days feel like there’s no room to breathe while others are spent staring at the wall or here, at frappe, on meta discussions.</span></p><p><br/></p><p><span style="color: rgb(0, 0, 0); background-color: transparent;">Job titles was one such discussion that became the centerpiece of one, rather two Friday Forums at Frappe. The alliteration aside, this evolved into a very interesting discussion that I participated in very actively. One fine evening, Rushabh brought up that we are a flat organization but our titles don’t reflect that. We’re talking about titles like VP/manager/even CEO. Now this may seem nonsensical radical and it is. Hierarchy is how most companies run right?</span></p><p><br/></p><p><span style="color: rgb(0, 0, 0); background-color: transparent;">Be that as it may, having a flat organizational fosters young talent to take initiative, to express their opinions, to speak up when something is wrong, and pave the way for leadership yourself. This is especially true for growing companies and definitely beats promoting machines to leadership. </span></p><p><br/></p><p><span style="color: rgb(0, 0, 0); background-color: transparent;">This whole thing </span><a href="https://frappe.io/blog/general/flat-vs-hierarchical-job-titles-frappe?utm_source=Newsletter&amp;utm_medium=web_page&amp;utm_campaign=erpnext_monthly_newsletter" rel="noopener noreferrer" style="color: rgb(17, 85, 204); background-color: transparent;">deserves its own blog</a><span style="color: rgb(0, 0, 0); background-color: transparent;"> but long story short, after two amazing discussions, Rushabh proposed people pick their own titles. They can be creative or exercise discretion, but the only condition is that other team members shouldn't object to them.</span></p><h3><br/></h3><h3><span style="color: rgb(67, 67, 67); background-color: transparent;">We’re crossing some borders</span></h3><p><span style="color: rgb(0, 0, 0); background-color: transparent;">Frappe has never been strict on office hours or even attending the office. If the pandemic has taught us anything, it’s that this can be taken one step further. While we’re not yet ready to cross international borders, we welcomed two new team members, one from Kerala and one from Tamil Nadu. And the month before that, we welcomed another one from Kerala and one from Delhi. </span></p><h3><br/></h3><h3><span style="color: rgb(67, 67, 67); background-color: transparent;">Remembering a dear community member</span></h3><p><span style="color: rgb(0, 0, 0); background-color: transparent;">And last but not least, we also remember a dear and very active community member John Clarke who is no longer with us. In 2018 he was rightfully given an award for the best forum contributor for his patience, kindness, and propensity to help others. Read our CEO’s post </span><a href="https://discuss.erpnext.com/t/remembering-john-clarke/67614" rel="noopener noreferrer" style="color: rgb(17, 85, 204); background-color: transparent;">remembering him</a><span style="color: rgb(0, 0, 0); background-color: transparent;">.</span></p><p><br/></p><p><span style="color: rgb(0, 0, 0); background-color: transparent;">Think a friend/colleague would like this newsletter? </span><a href="https://erpnext.com/newsletter?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=monthly_newsletter" rel="noopener noreferrer" style="color: rgb(17, 85, 204); background-color: transparent;">Go ahead and share it</a><span style="color: rgb(0, 0, 0); background-color: transparent;">.</span></p><p><br/></p><p><span style="color: rgb(0, 0, 0); background-color: transparent;">Cheers and Happy Diwali in advance,</span></p><p><span style="color: rgb(0, 0, 0); background-color: transparent;">Prasad from Frappe.</span></p><p><a href="http://erpnext.com/?utm_source=newsletter&amp;utm_medium=email&amp;utm_campaign=monthly_newsletter" rel="noopener noreferrer" style="color: rgb(17, 85, 204); background-color: transparent;">erpnext.com</a></p></div>
+            </div>
+        </article>
+
+        
+
+    </div>
+</div>
+
+		<div class="page-footer"></div>
+	</main>
+	
+</div>
+
+</div>
+
+
+<div id="all-symbols" style="display:none"></div><script type="text/javascript">fetch(`/assets/frappe/icons/timeless/icons.svg?v=${window._version_number}`, {credentials: "same-origin"}).then((r) => r.text()).then((svg) => {let c = document.getElementById("all-symbols"); c.insertAdjacentHTML("beforeend", svg);});</script><script type="text/javascript">fetch(`/assets/frappe/icons/espresso/icons.svg?v=${window._version_number}`, {credentials: "same-origin"}).then((r) => r.text()).then((svg) => {let c = document.getElementById("all-symbols"); c.insertAdjacentHTML("beforeend", svg);});</script>
+	<!-- js should be loaded in body! -->
+	<script>
+		frappe.boot = {
+ "apps_data": {
+  "apps": [],
+  "default_path": "",
+  "is_desk_apps": 1
+ },
+ "assets_json": {
+  "bank-reconciliation-tool.bundle.js": "/assets/erpnext/dist/js/bank-reconciliation-tool.bundle.FPQRAOXF.js",
+  "billing.bundle.js": "/assets/frappe/dist/js/billing.bundle.TQHLK7UT.js",
+  "bom_configurator.bundle.js": "/assets/erpnext/dist/js/bom_configurator.bundle.HVCV6OL2.js",
+  "bootstrap-4-web.bundle.js": "/assets/frappe/dist/js/bootstrap-4-web.bundle.FOZOVELL.js",
+  "build_events.bundle.js": "/assets/frappe/dist/js/build_events.bundle.BCX32TWL.js",
+  "buy_credits.bundle.js": "/assets/partner_relationship_management/dist/js/buy_credits.bundle.PTRLR7SB.js",
+  "calendar.bundle.js": "/assets/frappe/dist/js/calendar.bundle.4A4YITIU.js",
+  "charts-demo.bundle.js": "/assets/frappe_io/dist/js/charts-demo.bundle.VNV6RUNF.js",
+  "contributions.bundle.css": "/assets/wiki/dist/css/contributions.bundle.RBO25XZK.css",
+  "controls.bundle.js": "/assets/frappe/dist/js/controls.bundle.OBHXLYSV.js",
+  "data_import_tools.bundle.js": "/assets/frappe/dist/js/data_import_tools.bundle.Q5YT4XP2.js",
+  "datatable.bundle.css": "/assets/frappe_io/dist/css/datatable.bundle.3P2RWE3E.css",
+  "datatable.bundle.js": "/assets/frappe_io/dist/js/datatable.bundle.SOZHUVE4.js",
+  "desk.bundle.css": "/assets/frappe/dist/css/desk.bundle.6QJ7RADB.css",
+  "desk.bundle.js": "/assets/frappe/dist/js/desk.bundle.Q2WZITIR.js",
+  "dialog.bundle.js": "/assets/frappe/dist/js/dialog.bundle.3F5VODSL.js",
+  "education.bundle.js": "/assets/education/dist/js/education.bundle.PSPI3YNS.js",
+  "email.bundle.css": "/assets/frappe/dist/css/email.bundle.J3DSMELI.css",
+  "erpnext-web.bundle.css": "/assets/erpnext/dist/css/erpnext-web.bundle.TIUGKBCZ.css",
+  "erpnext-web.bundle.js": "/assets/erpnext/dist/js/erpnext-web.bundle.J4A2DQB4.js",
+  "erpnext.bundle.css": "/assets/erpnext/dist/css/erpnext.bundle.XD674WRI.css",
+  "erpnext.bundle.js": "/assets/erpnext/dist/js/erpnext.bundle.R5JXFCLX.js",
+  "erpnext_email.bundle.css": "/assets/erpnext/dist/css/erpnext_email.bundle.DFYL6BVU.css",
+  "file_uploader.bundle.js": "/assets/frappe/dist/js/file_uploader.bundle.ZPHNBOZS.js",
+  "form.bundle.js": "/assets/frappe/dist/js/form.bundle.TPF6OHJK.js",
+  "form_builder.bundle.js": "/assets/frappe/dist/js/form_builder.bundle.NRPX4YQU.js",
+  "frappe-web.bundle.js": "/assets/frappe/dist/js/frappe-web.bundle.VFID6Y35.js",
+  "gstr1.bundle.js": "/assets/india_compliance/dist/js/gstr1.bundle.LMOF55ES.js",
+  "hierarchy-chart.bundle.js": "/assets/hrms/dist/js/hierarchy-chart.bundle.5E224PCR.js",
+  "hrms.bundle.css": "/assets/hrms/dist/css/hrms.bundle.WEXO5WM5.css",
+  "hrms.bundle.js": "/assets/hrms/dist/js/hrms.bundle.FNZYA5KG.js",
+  "ims.bundle.js": "/assets/india_compliance/dist/js/ims.bundle.C4HROEWL.js",
+  "india_compliance.bundle.js": "/assets/india_compliance/dist/js/india_compliance.bundle.WV4RD5A3.js",
+  "india_compliance_account.bundle.css": "/assets/india_compliance/dist/css/india_compliance_account.bundle.NYGQSTE6.css",
+  "india_compliance_account.bundle.js": "/assets/india_compliance/dist/js/india_compliance_account.bundle.OPWAD7DA.js",
+  "interview.bundle.js": "/assets/hrms/dist/js/interview.bundle.C7CDEMYA.js",
+  "item-dashboard.bundle.js": "/assets/erpnext/dist/js/item-dashboard.bundle.WEGR7SLR.js",
+  "kanban_board.bundle.js": "/assets/frappe/dist/js/kanban_board.bundle.F6FPXXED.js",
+  "lending.bundle.js": "/assets/lending/dist/js/lending.bundle.EVKAPGTK.js",
+  "libs.bundle.js": "/assets/frappe/dist/js/libs.bundle.TIV7ZGVY.js",
+  "list.bundle.js": "/assets/frappe/dist/js/list.bundle.CTIEC4L7.js",
+  "login.bundle.css": "/assets/frappe/dist/css/login.bundle.LMNP2TEO.css",
+  "logtypes.bundle.js": "/assets/frappe/dist/js/logtypes.bundle.5KO3ZOOI.js",
+  "onboarding_tours.bundle.js": "/assets/frappe/dist/js/onboarding_tours.bundle.RAUR6X4Z.js",
+  "pdfjs.bundle.css": "/assets/print_designer/dist/css/pdfjs.bundle.Z2TQG5OV.css",
+  "performance.bundle.js": "/assets/hrms/dist/js/performance.bundle.63UL5NS7.js",
+  "photoswipe.bundle.js": "/assets/frappe/dist/js/photoswipe.bundle.YSXZQA64.js",
+  "point-of-sale.bundle.js": "/assets/erpnext/dist/js/point-of-sale.bundle.BA7TZAGR.js",
+  "print.bundle.css": "/assets/frappe/dist/css/print.bundle.DKL44YGN.css",
+  "print_designer.bundle.css": "/assets/print_designer/dist/css/print_designer.bundle.6QE4XIB7.css",
+  "print_designer.bundle.js": "/assets/print_designer/dist/js/print_designer.bundle.2JYNBT6J.js",
+  "print_format.bundle.css": "/assets/frappe/dist/css/print_format.bundle.P3PPNHEO.css",
+  "print_format_builder.bundle.js": "/assets/frappe/dist/js/print_format_builder.bundle.VQYWNAGA.js",
+  "purchase_reconciliation_tool.bundle.js": "/assets/india_compliance/dist/js/purchase_reconciliation_tool.bundle.LOLTTYSQ.js",
+  "report.bundle.css": "/assets/frappe/dist/css/report.bundle.VTBDJUHO.css",
+  "report.bundle.js": "/assets/frappe/dist/js/report.bundle.GHAYAFOZ.js",
+  "rtl_contributions.bundle.css": "/assets/wiki/dist/css-rtl/contributions.bundle.IMRLHY4X.css",
+  "rtl_datatable.bundle.css": "/assets/frappe_io/dist/css-rtl/datatable.bundle.NMEYOFTE.css",
+  "rtl_desk.bundle.css": "/assets/frappe/dist/css-rtl/desk.bundle.ES3NLDNQ.css",
+  "rtl_email.bundle.css": "/assets/frappe/dist/css-rtl/email.bundle.USEPIIYM.css",
+  "rtl_erpnext-web.bundle.css": "/assets/erpnext/dist/css-rtl/erpnext-web.bundle.7AAXIH77.css",
+  "rtl_erpnext.bundle.css": "/assets/erpnext/dist/css-rtl/erpnext.bundle.SEKCMKQK.css",
+  "rtl_erpnext_email.bundle.css": "/assets/erpnext/dist/css-rtl/erpnext_email.bundle.ZBNQWHYL.css",
+  "rtl_hrms.bundle.css": "/assets/hrms/dist/css-rtl/hrms.bundle.6EA3NACR.css",
+  "rtl_india_compliance_account.bundle.css": "/assets/india_compliance/dist/css-rtl/india_compliance_account.bundle.2DG5IYSG.css",
+  "rtl_login.bundle.css": "/assets/frappe/dist/css-rtl/login.bundle.RP5DQ6MO.css",
+  "rtl_pdfjs.bundle.css": "/assets/print_designer/dist/css-rtl/pdfjs.bundle.36F3SGAT.css",
+  "rtl_print.bundle.css": "/assets/frappe/dist/css-rtl/print.bundle.4GC44A5A.css",
+  "rtl_print_designer.bundle.css": "/assets/print_designer/dist/css-rtl/print_designer.bundle.KG2ZXMTN.css",
+  "rtl_print_format.bundle.css": "/assets/frappe/dist/css-rtl/print_format.bundle.XNGPGDZU.css",
+  "rtl_report.bundle.css": "/assets/frappe/dist/css-rtl/report.bundle.GEJHBUQQ.css",
+  "rtl_web_form.bundle.css": "/assets/frappe/dist/css-rtl/web_form.bundle.FPS4MTF7.css",
+  "rtl_website.bundle.css": "/assets/frappe/dist/css-rtl/website.bundle.OP52UWVB.css",
+  "rtl_wiki.bundle.css": "/assets/wiki/dist/css-rtl/wiki.bundle.5BUYD3ZL.css",
+  "sentry.bundle.js": "/assets/frappe/dist/js/sentry.bundle.AX44GVWW.js",
+  "telemetry.bundle.js": "/assets/frappe/dist/js/telemetry.bundle.LKEZCADB.js",
+  "video_player.bundle.js": "/assets/frappe/dist/js/video_player.bundle.DUYYLSFO.js",
+  "web_form.bundle.css": "/assets/frappe/dist/css/web_form.bundle.E37HXZGK.css",
+  "web_form.bundle.js": "/assets/frappe/dist/js/web_form.bundle.BLQZ4OBZ.js",
+  "website.bundle.css": "/assets/frappe/dist/css/website.bundle.LQEHRZZT.css",
+  "wiki.bundle.css": "/assets/wiki/dist/css/wiki.bundle.KGGUFANN.css",
+  "wiki.bundle.js": "/assets/wiki/dist/js/wiki.bundle.WQQQOK77.js",
+  "workflow_builder.bundle.js": "/assets/frappe/dist/js/workflow_builder.bundle.MPAFFZ3D.js"
+ },
+ "is_fc_site": 0,
+ "lang": "en",
+ "sitename": "frappeio.frappe.cloud",
+ "sysdefaults": {
+  "currency": null,
+  "date_format": "dd/mm/yyyy",
+  "first_day_of_the_week": "Sunday",
+  "float_precision": 2,
+  "number_format": "#,##,###.##",
+  "time_format": "HH:mm:ss"
+ },
+ "time_zone": {
+  "system": "Asia/Kolkata",
+  "user": "Asia/Kolkata"
+ }
+}
+		// for backward compatibility of some libs
+		frappe.sys_defaults = frappe.boot.sysdefaults;
+	</script>
+	<script type="text/javascript" src="/assets/frappe/dist/js/frappe-web.bundle.VFID6Y35.js"></script>
+	
+	<script type="text/javascript" src="/website_script.js"></script>
+	<script type="text/javascript" src="/assets/erpnext/dist/js/erpnext-web.bundle.J4A2DQB4.js"></script>
+		
+	<script>frappe.csrf_token = "None";</script></body>
+</html>

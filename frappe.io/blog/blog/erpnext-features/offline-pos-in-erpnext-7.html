@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<!-- Built on Frappe. https://frappeframework.com/ -->
+<html lang="en" dir="ltr">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="generator" content="frappe">
+
+	
+	<meta name="description" content="Point of Sale is a simple order / invoice entry screen that is used mostly in shops. The simpl"><meta name="image" content="https://frappe.io/files/point_of_sale.png"><meta name="title" content="Offline POS in ERPNext 7"><meta name="author" content="rohit"><meta name="language" content="en"><meta property="og:type"  content="article"><meta property="og:title"  content="Offline POS in ERPNext 7"><meta property="og:description"  content="Point of Sale is a simple order / invoice entry screen that is used mostly in shops. The simpl"><meta property="og:image"  content="https://frappe.io/files/point_of_sale.png"><meta property="og:author"  content="rohit"><meta property="og:published_on"  content="2016-07-27"><meta name="twitter:title" content="Offline POS in ERPNext 7"><meta name="twitter:description" content="Point of Sale is a simple order / invoice entry screen that is used mostly in shops. The simpl"><meta name="twitter:image" content="https://frappe.io/files/point_of_sale.png"><meta name="twitter:author" content="rohit"><meta name="twitter:published_on" content="2016-07-27"><meta name="twitter:card" content="summary_large_image"><meta name="datePublished" content="2016-07-27">
+
+
+	<title>Offline POS in ERPNext 7</title>
+
+	
+	<link
+		rel="shortcut icon"
+		href="/files/frappe-favicon.svg"
+		type="image/x-icon"
+	>
+	<!--for indexing -->
+<meta name="google-site-verification" content="pY8RgHujc1s-KwOQZBldPi1bH5BOZfZBf8cP3oEUc4I" /> 
+ 
+<script type="text/javascript">
+    function getCookie() {
+        return Object.fromEntries(document.cookie.split('; ').map((part) => part.split('=')).map((d) => [d[0], decodeURIComponent(d[1])]));
+    }
+
+    function setCookie(cname, cvalue, exdays, domain) {
+        const d = new Date();
+        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+        let expires = "expires=" + d.toUTCString();
+        if (domain) {
+            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/;" + "domain=" + domain + ";";
+        } else {
+            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/;";
+        }
+    }
+
+    let old_cookie = getCookie();
+
+    // Remove all cookies that are not mentioned in Cookie Policy
+    for (let key in old_cookie) {
+        if (!["sid", "io", "user_id", "user_image", "system_user", "full_name"].includes(key)) {
+            setCookie(key, old_cookie[key], -1);
+            setCookie(key, old_cookie[key], -1, document.domain);
+            setCookie(key, old_cookie[key], -1, "." + document.domain);
+            setCookie(key, old_cookie[key], -1, "analytics.frappe.io");
+        }
+    }
+</script>
+
+
+<!-- Plausible -->
+<script defer data-api="https://frappecloud.com/api/event" data-domain="frappe.io" src="https://frappecloud.com/js/script.js"></script>
+<link type="text/css" rel="stylesheet" href="/assets/frappe/dist/css/website.bundle.LQEHRZZT.css">
+<link type="text/css" rel="stylesheet" href="/assets/erpnext/dist/css/erpnext-web.bundle.TIUGKBCZ.css">
+<link type="text/css" rel="stylesheet" href="/assets/frappe/css/hljs-night-owl.css">
+		
+	
+		
+
+	<script>
+		window.frappe = {};
+		window._version_number = "{{ build_version }}";
+		frappe.ready_events = [];
+		frappe.ready = function(fn) {
+			frappe.ready_events.push(fn);
+		}
+		window.dev_server = 0;
+		window.socketio_port = 9000;
+		window.show_language_picker = false;
+	</script>
+</head>
+<body frappe-session-status="logged-out" data-path="blog/blog/erpnext-features/offline-pos-in-erpnext-7" class="">
+
+		<nav class="navbar navbar-light navbar-expand-lg">
+<div class="container">
+<a class="navbar-brand" href="/"><img src="/files/frappe-footer.png"/></a>
+</div>
+</nav>
+
+
+
+
+
+
+
+
+<div id="page-offline-pos-in-erpnext-7" data-path="blog/blog/erpnext-features/offline-pos-in-erpnext-7"source-type="Generator" data-doctype="Blog Post">
+	
+<div class="page-content-wrapper">
+	<!-- breadcrumbs -->
+	<div class="page-breadcrumbs">
+		
+			
+		
+	</div>
+
+	
+	<main class="container">
+		<div class="page-header-wrapper">
+			<div class="page-header">
+				
+			</div>
+
+			
+		</div>
+
+		<div class="page_content">
+<div class="blog-container">
+	<article class="blog-content" itemscope itemtype="http://schema.org/BlogPosting">
+		<!-- begin blog content -->
+		<div class="blog-header">
+			<div>
+				<a class="mr-2" href="/blog">Blog</a>
+				<span class="text-muted">/</span>
+				<a class="ml-2" href="/blog/erpnext">ERPNext</a>
+			</div>
+			<h1 itemprop="headline" class="blog-title">Offline POS in ERPNext 7</h1>
+			<p class="blog-intro">
+				Point of Sale is a simple order / invoice entry screen that is used mostly in shops. The simpl
+			</p>
+			<div class="text-muted">
+				<time datetime="2016-07-27">July 27, 2016</time>&nbsp;&middot;
+				<span>2 min read </span></div>
+		</div>
+		<hr class="my-5">
+		<div itemprop="articleBody" class="from-markdown">
+			<p name="5cdc" class="graf--p graf-after--h3">Point of Sale is a simple order / invoice entry screen that is used mostly in shops. The simplicity of POS makes it one of the highly used feature in the ERPNext. <br></p>Here is how POS looks like in ERPNext
+<p name="5cdc" class="graf--p graf-after--h3">
+    <img src="/files/point_of_sale.png">
+    <br>
+</p>
+<p name="5cdc" class="graf--p graf-after--h3" style="text-align: center;"><i style="line-height: 1.42857;">Point of Sale</i>
+</p>
+<p name="5cdc" class="graf--p graf-after--h3">We get a lot of feedback and feature requests for the POS from the community. One common problem was that because of slow or poor internet connection, users were not able to use the POS at their retail outlets. Billing at shops should be fast and smooth and you don't want your
+    customers waiting because you have bad internet. So we have decided to make POS offline for version 7.</p>
+<h3 name="a509" id="a509" class="graf--p graf-after--p">Local Storage<br></h3>
+<p name="a509" class="graf--p graf-after--p">The challenge in POS offline, was to save the order information without internet access. For this we use the browser's memory. Every browser has a built-in data store called <b>localStorage</b>. This can store data from 5MB to 10 MB depending on the browser.
+    Use this, we can build an offline-online solution.<br>
+</p>
+<p name="a509" class="graf--p graf-after--p">First, we have to load all the customer and item information, hence at the time of load, the internet connection must be active. The system keeps all draft/submitted orders into the localStorage even if internet connection is active. Every minute, the
+    system checks whether the internet connection is active or not. If connection is active, then it synchronises the orders from localStorage to the server, and removes the data from localStorage.</p>
+<p name="a509" class="graf--p graf-after--p" style="text-align: center;">
+    <img src="/files/Screen Shot 2016-07-28 at 12.10.58 am.png">
+    <br>
+</p>
+<p name="a509" class="graf--p graf-after--p" style="text-align: center;"><i>Online-Offline in POS</i></p><figure name="ad4e" id="ad4e" class="graf--figure graf-after--p"><h3><figcaption class="imageCaption">Multiple Modes of Payment</figcaption></h3>
+    <h3><figcaption class="imageCaption"></figcaption></h3>
+</figure>
+<p name="1009" id="1009" class="graf--p graf-after--figure">In Version 6, the user can only make payment using one payment mode like cash or credit card etc. In version 7 we have added multiple modes payment, where the user can split the payment using more than one payment option. Also we have added new user
+    interface to enter amount using numeric keyboard.</p>
+<p name="1009" id="1009" class="graf--p graf-after--figure" style="text-align: center;">
+    <img src="/files/Screen Shot 2016-07-27 at 1.01.52 pm.png" class="screenshot">
+    <br>
+</p>
+<p name="1009" id="1009" class="graf--p graf-after--figure" style="text-align: center;"><i style="line-height: 1.42857;">Multiple Modes of Payment</i>
+</p>
+<h3 name="5369" id="5369" class="graf--p graf-after--figure">Change Amount<br></h3>
+<p name="5369" class="graf--p graf-after--figure">In Version 7, we have added feature to calculate change amount, in case the customer pays more than the bill amount. For example if customer has a bill of 1800, from which she has paid 1000 by credit card and 1000 by cash. Then the system will return
+    200 as cash account.</p><p name="5369" class="graf--p graf-after--figure"><br></p>
+<p name="5369" class="graf--p graf-after--figure" style="text-align: center;">
+    <img src="/files/change_amount.png" class="screenshot">
+    <br>
+</p>
+<p name="5369" class="graf--p graf-after--figure">
+    <br>
+</p>
+<p name="579c" class="graf--p graf-after--figure">Hope you enjoy these features and looking forward to receiving some suggestions!</p>
+		</div>
+		<!-- end blog content -->
+	</article><div class="blog-footer">
+		<div class="blog-feedback">
+			
+				<div id="likes" class="feedback-item likes mr-3">
+	<span class="like-icon"></span>
+	<span class="like-count"></span>
+</div>
+
+<script type="text/javascript">
+	frappe.ready(() => {
+		let like = parseInt("0");
+		let like_count = parseInt("44");
+
+		let toggle_like_icon = function(active) {
+			active ? $('.like-icon').addClass('liked') : $('.like-icon').removeClass('liked');
+		}
+
+		$('.like-icon').append(`<svg class="icon icon-sm"><use href="#icon-heart"></use></svg>`)
+		toggle_like_icon(like);
+
+		$('.like-count').text(like_count);
+
+		$('.like-icon').click(() => {
+			update_like();
+		})
+
+		let update_like = function() {
+			like = !like;
+			like ? like_count++ : like_count--;
+			toggle_like_icon(like);
+			$('.like-count').text(like_count);
+
+			return frappe.call({
+				method: "frappe.templates.includes.likes.likes.like",
+				args: {
+					reference_doctype: "Blog Post",
+					reference_name: "offline-pos-in-erpnext-7",
+					like,
+					route: "blog/blog/erpnext-features/offline-pos-in-erpnext-7",
+				}
+			});
+		}
+	});
+</script>
+			
+		</div>
+		
+			<div>
+				
+					<a href="https://twitter.com/intent/tweet?text=Offline POS in ERPNext 7&url=frappeio.frappe.cloud/blog/blog/erpnext-features/offline-pos-in-erpnext-7" class="text-muted ml-2 fa fa-twitter" target="_blank"></a>
+				
+					<a href="https://www.facebook.com/sharer.php?u=frappeio.frappe.cloud/blog/blog/erpnext-features/offline-pos-in-erpnext-7" class="text-muted ml-2 fa fa-facebook" target="_blank"></a>
+				
+					<a href="https://www.linkedin.com/sharing/share-offsite/?url=frappeio.frappe.cloud/blog/blog/erpnext-features/offline-pos-in-erpnext-7" class="text-muted ml-2 fa fa-linkedin" target="_blank"></a>
+				
+					<a href="mailto:?subject=Offline POS in ERPNext 7&body=frappeio.frappe.cloud/blog/blog/erpnext-features/offline-pos-in-erpnext-7" class="text-muted ml-2 fa fa-envelope" target="_blank"></a>
+				
+			</div>
+		
+		<div>
+			Published on <time datetime="2016-07-27">July 27, 2016</time>
+		</div>
+	</div>
+
+	
+		<hr class="mt-2 mb-5">
+		
+
+<div class="media">
+	
+
+<span class="avatar avatar-large" title="Rohit Waghchaure" style="">
+	
+	<img
+		class="avatar-frame standard-image"
+		src="/files/rohit.jpg"
+		title="Rohit Waghchaure">
+	
+</span>
+
+
+	<div class="media-body ml-3">
+		<h5 class="mt-0">
+			<a href="/blog?blogger=rohit" class="text-dark">Rohit Waghchaure</a>
+		</h5>
+		
+		<p class="text-muted">Rohit develops features on ERPNext and is a proud Punekar. In his free time he loves biking around and is an occasional drummer.</p>
+		
+	</div>
+</div>
+	
+
+	
+		<div class="blog-comments">
+			<div class="comment-view mb-6">
+	
+
+	
+		<div class="add-comment-section mb-5">
+			<div class="comment-form-wrapper">
+				<div id="comment-form">
+					<form class="new-comment">
+						<fieldset class="new-comment-fields">
+							<div class="user-details row" style="margin-bottom: 15px; display:none;">
+								<div class="comment-by col-sm-6 pb-4">
+									<div class="form-label mb-1">Your Name</div>
+									<input class="form-control comment_by" name="comment_by" type="text">
+								</div>
+								<div class="col-sm-6">
+									<div class="form-label mb-1">Email</div>
+									<input class="form-control comment_email" name="comment_email" type="email">
+								</div>
+							</div>
+							<div class="comment-text-area">
+								<div class="form-label mb-1">Add a comment</div>
+								<textarea class="form-control" name="comment" rows=5 ></textarea>
+								<div class="text-muted small mt-1 mb-4">Ctrl+Enter to add comment</div>
+							</div>
+							<button class="btn btn-sm btn-primary small" id="submit-comment">Comment</button>
+						</fieldset>
+					</form>
+				</div>
+			</div>
+		</div>
+	
+
+	<hr class="add-comment-hr my-5">
+
+	<div itemscope itemtype="http://schema.org/UserComments" id="comment-list">
+		<div class="add-comment mb-5">
+			<div class="timeline-dot"></div>
+			<button class="btn btn-sm btn-primary small add-comment-button">Add a comment</button>
+		</div>
+		<div class="comment-list">
+			
+				
+
+<div class="my-5 comment-row media">
+	<div class="comment-avatar">
+		
+
+<span class="avatar avatar-medium" title="None" style="">
+	
+	<span
+		class="avatar-frame standard-image"
+		title="None">
+		B
+	</span>
+	
+</span>
+
+	</div>
+	<div class="comment-content">
+		<div class="mb-2 head">
+			<span class="mr-2 title font-weight-bold">
+				Bhavesh Mahavar
+			</span>
+			<span class="time small text-muted">
+				2 years ago
+			</span>
+		</div>
+		<div id="a713fff588" class="content"><p>In frappe v12, i want to add customization for fetch serialized item but we have to add own customization for it, so if there added customization please help me.</p>
+</div>
+	</div>
+</div>
+			
+				
+
+<div class="my-5 comment-row media">
+	<div class="comment-avatar">
+		
+
+<span class="avatar avatar-medium" title="None" style="">
+	
+	<span
+		class="avatar-frame standard-image"
+		title="None">
+		S
+	</span>
+	
+</span>
+
+	</div>
+	<div class="comment-content">
+		<div class="mb-2 head">
+			<span class="mr-2 title font-weight-bold">
+				Sriharsha Eedupuganti
+			</span>
+			<span class="time small text-muted">
+				3 years ago
+			</span>
+		</div>
+		<div id="24bd4e435b" class="content"><p>Hi, Rohit tried installing ERPNext 12 and 13 versions POS online is working fine. Offline mode is not working. Offline mode is deprecated in these versions ? Thanks.</p>
+</div>
+	</div>
+</div>
+			
+				
+
+<div class="my-5 comment-row media">
+	<div class="comment-avatar">
+		
+
+<span class="avatar avatar-medium" title="None" style="">
+	
+	<img
+		class="avatar-frame standard-image"
+		src="https://secure.gravatar.com/avatar/9982beb4e7fa5643e860364a32cab1a3?d=404&s=200"
+		title="None">
+	
+</span>
+
+	</div>
+	<div class="comment-content">
+		<div class="mb-2 head">
+			<span class="mr-2 title font-weight-bold">
+				Moses Gitonga
+			</span>
+			<span class="time small text-muted">
+				5 years ago
+			</span>
+		</div>
+		<div id="fbee9f7d01" class="content"><p>I loved it alot Rohit, your software is the bomb... amazing</p>
+</div>
+	</div>
+</div>
+			
+		</div>
+	</div>
+</div>
+
+<script>
+	frappe.ready(function() {
+		let guest_allowed = parseInt("1");
+		let comment_count = "3";
+		let full_name = ""
+		let user_id = "";
+
+		let update_timeline_line_length = function(direction, size) {
+			if ($('.blog-container').length) {
+				if (direction == 'top') {
+					$('.blog-container')[0].style.setProperty('--comment-timeline-top', size);
+				} else {
+					let comment_timeline_bottom = $('.comment-list .comment-row:last-child').height() - 10;
+					$('.blog-container')[0].style.setProperty('--comment-timeline-bottom', comment_timeline_bottom +'px');
+				}
+			}
+		}
+
+		let show_comment_box = function() {
+			$('.comment-form-wrapper').show();
+			update_timeline_line_length('top', '-20px');
+			$('.add-comment-hr').hide();
+			$('.add-comment').hide();
+		}
+
+		let hide_comment_box = function() {
+			$('.comment-form-wrapper').hide();
+			update_timeline_line_length('top', '8px');
+			update_timeline_line_length('bottom');
+			$('.add-comment-hr').show();
+			$('.add-comment').show();
+		}
+
+		let $comment_count = $(`
+			<div class="feedback-item comments">
+				<span class="comment-icon">${frappe.utils.icon('small-message', 'md')}</span>
+				<span class="comment-count">${comment_count}</span>
+			</div>
+		`);
+
+		$('form').keydown(function(event) {
+			if (event.ctrlKey && event.keyCode === 13) {
+				$(this).find('#submit-comment').trigger('click');
+			}
+		})
+
+		if (!frappe.is_user_logged_in()) {
+			$(".user-details").toggle('hide');
+			if (guest_allowed) {
+				$('.start-discussion').removeClass('hidden');
+			} else {
+				$(".login-required, .comment-form-wrapper").toggleClass("hidden");
+
+				$('.add-comment-button').text('Login to comment');
+				$('.add-comment-button').click(() => {
+					window.location.href = '/login?redirect-to=blog/blog/erpnext-features/offline-pos-in-erpnext-7';
+				});
+			}
+		} else {
+			$('input.comment_by').prop("disabled", true);
+			$('input.comment_email').prop("disabled", true);
+
+			full_name = frappe.get_cookie("full_name");
+			user_id = frappe.get_cookie("user_id");
+			if(user_id != "Guest") {
+				$("[name='comment_email']").val(user_id);
+				$("[name='comment_by']").val(full_name);
+			}
+
+			$('.start-discussion').removeClass('hidden');
+		}
+
+		$('.blog-feedback').append($comment_count);
+		$("#comment-form textarea").val("");
+
+		update_timeline_line_length('bottom');
+
+		let n_comments = $(".comment-row").length;
+		n_comments ? $(".no_comment").toggle(false) : show_comment_box();
+
+		if(n_comments > 50) {
+			$(".add-comment").toggle(false)
+				.parent().append("<div class='text-muted'>Comments are closed.</div>")
+		}
+
+		$('.add-comment-button').click(() => {
+			show_comment_box();
+		});
+
+		$("#submit-comment").click(function() {
+			var args = {
+				comment_by: $("[name='comment_by']").val(),
+				comment_email: $("[name='comment_email']").val(),
+				comment: $("[name='comment']").val(),
+				reference_doctype: "Blog Post",
+				reference_name: "offline-pos-in-erpnext-7",
+				comment_type: "Comment",
+				route: "blog/blog/erpnext-features/offline-pos-in-erpnext-7",
+			}
+
+			if(!args.comment_by || !args.comment_email || !args.comment) {
+				frappe.msgprint('All fields are necessary to submit the comment.');
+				return false;
+			}
+
+			if (args.comment_email!=='Administrator' && !validate_email(args.comment_email)) {
+				frappe.msgprint('Please enter a valid email address.');
+				return false;
+			}
+
+			if(!args.comment || !args.comment.trim()) {
+				frappe.msgprint('Please add a valid comment.');
+				return false;
+			}
+
+			frappe.call({
+				btn: this,
+				type: "POST",
+				method: "frappe.templates.includes.comments.comments.add_comment",
+				args: args,
+				callback: function(r) {
+					if(r.exc) {
+						if(r._server_messages)
+							frappe.msgprint(r._server_messages);
+					} else {
+						if (r.message) {
+							$(r.message).prependTo(".comment-list");
+							comment_count = cint(comment_count) + 1;
+							$('.comment-count').text(comment_count);
+						}
+						$(".no-comment").toggle(false);
+						$("#comment-form textarea").val("");
+						hide_comment_box();
+					}
+				}
+			})
+
+			return false;
+		});
+	});
+</script>
+
+<style>
+
+.add-comment-button {
+	margin-left: 35px;
+}
+
+.timeline-dot {
+	width: 16px;
+	height: 16px;
+	border-radius: 50%;
+	position: absolute;
+	top: 8px;
+	left: 23.5px;
+	background-color: var(--fg-color);
+}
+
+.timeline-dot::before {
+	content: ' ';
+	background: var(--gray-700);
+	position: absolute;
+	top: 5px;
+	left: 5px;
+	border-radius: 50%;
+	height: 4px;
+	width: 4px;
+}
+
+.comment-form-wrapper {
+	display: none;
+}
+
+.login-required {
+	padding: var(--padding-sm);
+	border-radius: var(--border-radius-sm);
+	box-shadow: var(--card-shadow);
+}
+
+.new-comment {
+	display: flex;
+	padding: var(--padding-lg);
+	border: 1px solid var(--border-color);
+	border-radius: var(--border-radius-md);
+	background-color: var(--fg-color);
+}
+
+.new-comment-fields {
+	flex: 1;
+}
+
+.new-comment .form-label {
+	font-weight: var(--text-bold);
+}
+
+.new-comment .comment-text-area textarea {
+	resize: none;
+}
+
+@media (min-width: 576px) {
+	.comment-by {
+		padding-right: 0px !important;
+		padding-bottom: 0px !important;
+	}
+}
+
+#comment-list {
+	position: relative;
+	padding-left: var(--padding-xl);
+}
+
+#comment-list::before {
+	content: " ";
+	position: absolute;
+	top: var(--comment-timeline-top);
+	bottom: var(--comment-timeline-bottom);
+	border-left: 1px solid var(--dark-border-color);
+}
+
+.comment-row {
+	position: relative;
+}
+.comment-avatar {
+	position: absolute;
+	top: 10px;
+	left: -13.75px;
+}
+
+.comment-content {
+	border: 1px solid var(--border-color);
+	background-color: var(--fg-color);
+	border-radius: var(--border-radius-md);
+	padding: var(--padding-md);
+	margin-left: 35px;
+	flex: 1;
+}
+
+.comment-content .content p{
+	margin-bottom: 0px;
+}
+
+</style>
+		</div>
+	
+
+</div>
+<script>
+	frappe.ready(() => {
+		frappe.set_search_path("/blog");
+
+		// scroll to comment or like section if url contain hash
+		if (window.location.hash) {
+			var hash = window.location.hash;
+
+			if ($(hash).length) {
+				$('html, body').animate({
+					scrollTop: $(hash).offset().top - 100
+				}, 900, 'swing');
+			}
+		}
+	})
+</script>
+</div>
+
+		<div class="page-footer"></div>
+	</main>
+	
+</div>
+
+</div>
+
+
+<div id="all-symbols" style="display:none"></div><script type="text/javascript">fetch(`/assets/frappe/icons/timeless/icons.svg?v=${window._version_number}`, {credentials: "same-origin"}).then((r) => r.text()).then((svg) => {let c = document.getElementById("all-symbols"); c.insertAdjacentHTML("beforeend", svg);});</script><script type="text/javascript">fetch(`/assets/frappe/icons/espresso/icons.svg?v=${window._version_number}`, {credentials: "same-origin"}).then((r) => r.text()).then((svg) => {let c = document.getElementById("all-symbols"); c.insertAdjacentHTML("beforeend", svg);});</script>
+	<!-- js should be loaded in body! -->
+	<script>
+		frappe.boot = {
+ "apps_data": {
+  "apps": [],
+  "default_path": "",
+  "is_desk_apps": 1
+ },
+ "assets_json": {
+  "bank-reconciliation-tool.bundle.js": "/assets/erpnext/dist/js/bank-reconciliation-tool.bundle.FPQRAOXF.js",
+  "billing.bundle.js": "/assets/frappe/dist/js/billing.bundle.TQHLK7UT.js",
+  "bom_configurator.bundle.js": "/assets/erpnext/dist/js/bom_configurator.bundle.HVCV6OL2.js",
+  "bootstrap-4-web.bundle.js": "/assets/frappe/dist/js/bootstrap-4-web.bundle.FOZOVELL.js",
+  "build_events.bundle.js": "/assets/frappe/dist/js/build_events.bundle.BCX32TWL.js",
+  "buy_credits.bundle.js": "/assets/partner_relationship_management/dist/js/buy_credits.bundle.PTRLR7SB.js",
+  "calendar.bundle.js": "/assets/frappe/dist/js/calendar.bundle.4A4YITIU.js",
+  "charts-demo.bundle.js": "/assets/frappe_io/dist/js/charts-demo.bundle.VNV6RUNF.js",
+  "contributions.bundle.css": "/assets/wiki/dist/css/contributions.bundle.RBO25XZK.css",
+  "controls.bundle.js": "/assets/frappe/dist/js/controls.bundle.OBHXLYSV.js",
+  "data_import_tools.bundle.js": "/assets/frappe/dist/js/data_import_tools.bundle.Q5YT4XP2.js",
+  "datatable.bundle.css": "/assets/frappe_io/dist/css/datatable.bundle.3P2RWE3E.css",
+  "datatable.bundle.js": "/assets/frappe_io/dist/js/datatable.bundle.SOZHUVE4.js",
+  "desk.bundle.css": "/assets/frappe/dist/css/desk.bundle.6QJ7RADB.css",
+  "desk.bundle.js": "/assets/frappe/dist/js/desk.bundle.Q2WZITIR.js",
+  "dialog.bundle.js": "/assets/frappe/dist/js/dialog.bundle.3F5VODSL.js",
+  "education.bundle.js": "/assets/education/dist/js/education.bundle.PSPI3YNS.js",
+  "email.bundle.css": "/assets/frappe/dist/css/email.bundle.J3DSMELI.css",
+  "erpnext-web.bundle.css": "/assets/erpnext/dist/css/erpnext-web.bundle.TIUGKBCZ.css",
+  "erpnext-web.bundle.js": "/assets/erpnext/dist/js/erpnext-web.bundle.J4A2DQB4.js",
+  "erpnext.bundle.css": "/assets/erpnext/dist/css/erpnext.bundle.XD674WRI.css",
+  "erpnext.bundle.js": "/assets/erpnext/dist/js/erpnext.bundle.R5JXFCLX.js",
+  "erpnext_email.bundle.css": "/assets/erpnext/dist/css/erpnext_email.bundle.DFYL6BVU.css",
+  "file_uploader.bundle.js": "/assets/frappe/dist/js/file_uploader.bundle.ZPHNBOZS.js",
+  "form.bundle.js": "/assets/frappe/dist/js/form.bundle.TPF6OHJK.js",
+  "form_builder.bundle.js": "/assets/frappe/dist/js/form_builder.bundle.NRPX4YQU.js",
+  "frappe-web.bundle.js": "/assets/frappe/dist/js/frappe-web.bundle.VFID6Y35.js",
+  "gstr1.bundle.js": "/assets/india_compliance/dist/js/gstr1.bundle.LMOF55ES.js",
+  "hierarchy-chart.bundle.js": "/assets/hrms/dist/js/hierarchy-chart.bundle.5E224PCR.js",
+  "hrms.bundle.css": "/assets/hrms/dist/css/hrms.bundle.WEXO5WM5.css",
+  "hrms.bundle.js": "/assets/hrms/dist/js/hrms.bundle.FNZYA5KG.js",
+  "ims.bundle.js": "/assets/india_compliance/dist/js/ims.bundle.C4HROEWL.js",
+  "india_compliance.bundle.js": "/assets/india_compliance/dist/js/india_compliance.bundle.WV4RD5A3.js",
+  "india_compliance_account.bundle.css": "/assets/india_compliance/dist/css/india_compliance_account.bundle.NYGQSTE6.css",
+  "india_compliance_account.bundle.js": "/assets/india_compliance/dist/js/india_compliance_account.bundle.OPWAD7DA.js",
+  "interview.bundle.js": "/assets/hrms/dist/js/interview.bundle.C7CDEMYA.js",
+  "item-dashboard.bundle.js": "/assets/erpnext/dist/js/item-dashboard.bundle.WEGR7SLR.js",
+  "kanban_board.bundle.js": "/assets/frappe/dist/js/kanban_board.bundle.F6FPXXED.js",
+  "lending.bundle.js": "/assets/lending/dist/js/lending.bundle.EVKAPGTK.js",
+  "libs.bundle.js": "/assets/frappe/dist/js/libs.bundle.TIV7ZGVY.js",
+  "list.bundle.js": "/assets/frappe/dist/js/list.bundle.CTIEC4L7.js",
+  "login.bundle.css": "/assets/frappe/dist/css/login.bundle.LMNP2TEO.css",
+  "logtypes.bundle.js": "/assets/frappe/dist/js/logtypes.bundle.5KO3ZOOI.js",
+  "onboarding_tours.bundle.js": "/assets/frappe/dist/js/onboarding_tours.bundle.RAUR6X4Z.js",
+  "pdfjs.bundle.css": "/assets/print_designer/dist/css/pdfjs.bundle.Z2TQG5OV.css",
+  "performance.bundle.js": "/assets/hrms/dist/js/performance.bundle.63UL5NS7.js",
+  "photoswipe.bundle.js": "/assets/frappe/dist/js/photoswipe.bundle.YSXZQA64.js",
+  "point-of-sale.bundle.js": "/assets/erpnext/dist/js/point-of-sale.bundle.BA7TZAGR.js",
+  "print.bundle.css": "/assets/frappe/dist/css/print.bundle.DKL44YGN.css",
+  "print_designer.bundle.css": "/assets/print_designer/dist/css/print_designer.bundle.6QE4XIB7.css",
+  "print_designer.bundle.js": "/assets/print_designer/dist/js/print_designer.bundle.2JYNBT6J.js",
+  "print_format.bundle.css": "/assets/frappe/dist/css/print_format.bundle.P3PPNHEO.css",
+  "print_format_builder.bundle.js": "/assets/frappe/dist/js/print_format_builder.bundle.VQYWNAGA.js",
+  "purchase_reconciliation_tool.bundle.js": "/assets/india_compliance/dist/js/purchase_reconciliation_tool.bundle.LOLTTYSQ.js",
+  "report.bundle.css": "/assets/frappe/dist/css/report.bundle.VTBDJUHO.css",
+  "report.bundle.js": "/assets/frappe/dist/js/report.bundle.GHAYAFOZ.js",
+  "rtl_contributions.bundle.css": "/assets/wiki/dist/css-rtl/contributions.bundle.IMRLHY4X.css",
+  "rtl_datatable.bundle.css": "/assets/frappe_io/dist/css-rtl/datatable.bundle.NMEYOFTE.css",
+  "rtl_desk.bundle.css": "/assets/frappe/dist/css-rtl/desk.bundle.ES3NLDNQ.css",
+  "rtl_email.bundle.css": "/assets/frappe/dist/css-rtl/email.bundle.USEPIIYM.css",
+  "rtl_erpnext-web.bundle.css": "/assets/erpnext/dist/css-rtl/erpnext-web.bundle.7AAXIH77.css",
+  "rtl_erpnext.bundle.css": "/assets/erpnext/dist/css-rtl/erpnext.bundle.SEKCMKQK.css",
+  "rtl_erpnext_email.bundle.css": "/assets/erpnext/dist/css-rtl/erpnext_email.bundle.ZBNQWHYL.css",
+  "rtl_hrms.bundle.css": "/assets/hrms/dist/css-rtl/hrms.bundle.6EA3NACR.css",
+  "rtl_india_compliance_account.bundle.css": "/assets/india_compliance/dist/css-rtl/india_compliance_account.bundle.2DG5IYSG.css",
+  "rtl_login.bundle.css": "/assets/frappe/dist/css-rtl/login.bundle.RP5DQ6MO.css",
+  "rtl_pdfjs.bundle.css": "/assets/print_designer/dist/css-rtl/pdfjs.bundle.36F3SGAT.css",
+  "rtl_print.bundle.css": "/assets/frappe/dist/css-rtl/print.bundle.4GC44A5A.css",
+  "rtl_print_designer.bundle.css": "/assets/print_designer/dist/css-rtl/print_designer.bundle.KG2ZXMTN.css",
+  "rtl_print_format.bundle.css": "/assets/frappe/dist/css-rtl/print_format.bundle.XNGPGDZU.css",
+  "rtl_report.bundle.css": "/assets/frappe/dist/css-rtl/report.bundle.GEJHBUQQ.css",
+  "rtl_web_form.bundle.css": "/assets/frappe/dist/css-rtl/web_form.bundle.FPS4MTF7.css",
+  "rtl_website.bundle.css": "/assets/frappe/dist/css-rtl/website.bundle.OP52UWVB.css",
+  "rtl_wiki.bundle.css": "/assets/wiki/dist/css-rtl/wiki.bundle.5BUYD3ZL.css",
+  "sentry.bundle.js": "/assets/frappe/dist/js/sentry.bundle.AX44GVWW.js",
+  "telemetry.bundle.js": "/assets/frappe/dist/js/telemetry.bundle.LKEZCADB.js",
+  "video_player.bundle.js": "/assets/frappe/dist/js/video_player.bundle.DUYYLSFO.js",
+  "web_form.bundle.css": "/assets/frappe/dist/css/web_form.bundle.E37HXZGK.css",
+  "web_form.bundle.js": "/assets/frappe/dist/js/web_form.bundle.BLQZ4OBZ.js",
+  "website.bundle.css": "/assets/frappe/dist/css/website.bundle.LQEHRZZT.css",
+  "wiki.bundle.css": "/assets/wiki/dist/css/wiki.bundle.KGGUFANN.css",
+  "wiki.bundle.js": "/assets/wiki/dist/js/wiki.bundle.WQQQOK77.js",
+  "workflow_builder.bundle.js": "/assets/frappe/dist/js/workflow_builder.bundle.MPAFFZ3D.js"
+ },
+ "is_fc_site": 0,
+ "lang": "en",
+ "sitename": "frappeio.frappe.cloud",
+ "sysdefaults": {
+  "currency": null,
+  "date_format": "dd/mm/yyyy",
+  "first_day_of_the_week": "Sunday",
+  "float_precision": 2,
+  "number_format": "#,##,###.##",
+  "time_format": "HH:mm:ss"
+ },
+ "time_zone": {
+  "system": "Asia/Kolkata",
+  "user": "Asia/Kolkata"
+ }
+}
+		// for backward compatibility of some libs
+		frappe.sys_defaults = frappe.boot.sysdefaults;
+	</script>
+	<script type="text/javascript" src="/assets/frappe/dist/js/frappe-web.bundle.VFID6Y35.js"></script>
+	
+	<script type="text/javascript" src="/website_script.js"></script>
+	<script type="text/javascript" src="/assets/erpnext/dist/js/erpnext-web.bundle.J4A2DQB4.js"></script>
+		
+	<script>frappe.csrf_token = "None";</script></body>
+</html>

@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<!-- Built on Frappe. https://frappeframework.com/ -->
+<html lang="en" dir="ltr">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="generator" content="frappe">
+
+	
+		<meta name="title" content="The Frappe Newsletter - October 2022"><meta name="language" content="en"><meta property="og:type"  content="article"><meta property="og:title"  content="The Frappe Newsletter - October 2022"><meta name="twitter:title" content="The Frappe Newsletter - October 2022"><meta name="twitter:card" content="summary">
+	
+
+	<title> The Frappe Newsletter - October 2022 </title>
+
+	
+	<link
+		rel="shortcut icon"
+		href="/files/frappe-favicon.svg"
+		type="image/x-icon"
+	>
+	<!--for indexing -->
+<meta name="google-site-verification" content="pY8RgHujc1s-KwOQZBldPi1bH5BOZfZBf8cP3oEUc4I" /> 
+ 
+<script type="text/javascript">
+    function getCookie() {
+        return Object.fromEntries(document.cookie.split('; ').map((part) => part.split('=')).map((d) => [d[0], decodeURIComponent(d[1])]));
+    }
+
+    function setCookie(cname, cvalue, exdays, domain) {
+        const d = new Date();
+        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+        let expires = "expires=" + d.toUTCString();
+        if (domain) {
+            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/;" + "domain=" + domain + ";";
+        } else {
+            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/;";
+        }
+    }
+
+    let old_cookie = getCookie();
+
+    // Remove all cookies that are not mentioned in Cookie Policy
+    for (let key in old_cookie) {
+        if (!["sid", "io", "user_id", "user_image", "system_user", "full_name"].includes(key)) {
+            setCookie(key, old_cookie[key], -1);
+            setCookie(key, old_cookie[key], -1, document.domain);
+            setCookie(key, old_cookie[key], -1, "." + document.domain);
+            setCookie(key, old_cookie[key], -1, "analytics.frappe.io");
+        }
+    }
+</script>
+
+
+<!-- Plausible -->
+<script defer data-api="https://frappecloud.com/api/event" data-domain="frappe.io" src="https://frappecloud.com/js/script.js"></script>
+<link type="text/css" rel="stylesheet" href="/assets/frappe/dist/css/website.bundle.LQEHRZZT.css">
+<link type="text/css" rel="stylesheet" href="/assets/erpnext/dist/css/erpnext-web.bundle.TIUGKBCZ.css">
+<link type="text/css" rel="stylesheet" href="/assets/frappe/css/hljs-night-owl.css">
+		
+	
+		
+
+	<script>
+		window.frappe = {};
+		window._version_number = "{{ build_version }}";
+		frappe.ready_events = [];
+		frappe.ready = function(fn) {
+			frappe.ready_events.push(fn);
+		}
+		window.dev_server = 0;
+		window.socketio_port = 9000;
+		window.show_language_picker = false;
+	</script>
+</head>
+<body frappe-session-status="logged-out" data-path="newsletters/the-frappe-newsletter-october-2022" class="">
+
+		<nav class="navbar navbar-light navbar-expand-lg">
+<div class="container">
+<a class="navbar-brand" href="/"><img src="/files/frappe-footer.png"/></a>
+</div>
+</nav>
+
+
+
+
+
+
+
+
+<div id="page-the-frappe-newsletter-october-2022" data-path="newsletters/the-frappe-newsletter-october-2022"source-type="Generator" data-doctype="Newsletter">
+	
+<div class="page-content-wrapper">
+	<!-- breadcrumbs -->
+	<div class="page-breadcrumbs">
+		
+			
+		
+	</div>
+
+	
+	<main class="container">
+		<div class="page-header-wrapper">
+			<div class="page-header">
+				
+			</div>
+
+			
+		</div>
+
+		<div class="page_content">
+    <style>
+        .blog-container {
+            max-width: 720px;
+            margin: auto;
+        }
+        .blog-header {
+            font-weight: 700;
+            font-size: 1.5em;
+        }
+        .blog-info {
+            text-align:center;
+            margin-top: 30px;
+        }
+        .blog-text {
+            padding-top: 50px;
+            padding-bottom: 50px;
+            font-size: 15px;
+            line-height: 1.5;
+        }
+        .blog-text p {
+            margin-bottom: 30px;
+        }
+    </style>
+
+    <div class="blog-container">
+        <article class="blog-content" itemscope>
+            <div class="blog-info">
+                <h1 itemprop="headline" class="blog-header">The Frappe Newsletter - October 2022</h1>
+                <p class="post-by text-muted">
+                    November 1, 2022
+                </p>
+            </div>
+            <div itemprop="articleBody" class="longform blog-text">
+                <p><img alt="cover image" src="/files/Oct%20newsletter%20cover.png" style="width: 100%;"/></p>
+<p>We hope you had a fun, firecracker-free Diwali surrounded by friends and family. This month, much like every other, made us introspect, debate and celebrate some wins.</p>
+<h2 id="do-you-really-like-what-you-do">Do you really like what you do?</h2>
+<p>People are often baffled by our <a href="https://youtu.be/kVVzu0VpbD4">Pick Your Own Work</a> policy. If everyone just does what they like, what happens to those not-so-glamorous tasks that no one wants to pick up? As we pivot from being an ERP company to a tech company, more and more of our devs have started to build their own products. While we’re proud of our new offerings, this often leads to a recurring debate—if everyone starts building their own products, who does the difficult, less flashy job of maintaining our existing ones? It’s a question we have trouble resolving; of course, maintenance is an integral part of creating stable products, but should we force people to work on it when their heart’s set on building new things? <a href="https://www.linkedin.com/in/saqib-ansari-73617a229/">Saqib</a>, in his usual sensible way, helped put things in perspective by pointing out that we’re asking the wrong question—what we should be asking is, do you enjoy what you do?</p>
+<p><img alt="do you enjoy what you do poll" src="/files/i%20enjoy%20what%20i%20do%20at%20Frappe%20poll.png" style="width: 100%;"/></p>
+<h2 id="diwali-at-frappe">Diwali at Frappe</h2>
+<p>Diwali at Frappe was a pollution and noise free affair. We switched out gift bags for games, catering for potlucks and firecrackers for rangolis. The team dressed up and spent a happy afternoon decorating the office together, relishing the dishes their peers had made for them and playing poker. In case you’re wondering how to navigate the festive season while remaining conscious of your environmental impact, do consider joining the <a href="https://rainmatter.org/no-gift-pledge/">No Corporate Gift Box Pledge</a> by <a href="https://rainmatter.org">Rainmatter Foundation</a>.</p>
+<p><img alt="Diwali at Frappe" src="/files/Diwali.png" style="width: 100%;"/></p>
+<p><img alt="Diwali decorations" src="/files/Diwali%20decorations.jpg" style="width: 100%;"/></p>
+<p><img alt="Potluck" src="/files/Potluck.jpg" style="width: 100%;"/></p>
+<h2 id="conference-video-release">Conference Video Release</h2>
+<p>Did <a href="https://frappe.io/newsletters/the-frappe-newsletter-september-2022?utm_source=Newsletter&amp;utm_medium=web_page">our last issue</a> give you a serious case of FOMO about missing <a href="https://conference.erpnext.com">our annual conference</a>? Worry not, there’s always next year, and to keep you going till then, we’ve released <a href="https://www.youtube.com/playlist?list=PL3lFfCEoMxvygt6SKFlpDOF1RlWSf5twx">all the talks (plus some bonus content)</a> from the ERPNext Conference on <a href="https://www.youtube.com/channel/UCn3bV5kx77HsVwtnlCeEi_A">our YouTube channel</a>.</p>
+<h2 id="some-small-wins">Some Small Wins</h2>
+<p>Two of our oldest offerings, <a href="https://erpnext.com">ERPNext</a> and <a href="https://frappeframework.com/docs/v14/user/en/bench">Bench</a>, and one of our newest, Frappe Insights, hit some significant milestones this month. ERPNext hit 12k, Bench reached 1k and Frappe Insights crossed 100 stars on GitHub. In case you haven’t checked them out already, do head on over to <a href="https://github.com/frappe/erpnext">frappe/erpnext</a>, <a href="https://github.com/frappe/bench">frappe/bench</a> and <a href="https://github.com/frappe/insights">frappe/insights</a> on GitHub and show us some love.</p>
+<p><img alt="GitHub stars meme" src="/files/github%20stars%20meme.png" style="width: 100%;"/>
+(Meme courtesy: <a href="https://www.linkedin.com/in/ankushmenat/">Ankush Menat</a>)</p>
+<h2 id="nutrition-session">Nutrition Session</h2>
+<p>The pandemic has brought on some massive changes in pretty much every avenue of our lives. Whether it’s WFH turning us increasingly sedentary or Chloe Ting’s new at-home workout regimen prompting us to get on our feet (or just the desperate need to stay alive when a virus is out to get you), we’re more focused now on health than ever. Good health starts with maintaining a proper diet, but with every self-help book offering conflicting advice, it’s hard to know what’s really good for you. So we invited <a href="https://rajithagopinath.wordpress.com">Rajitha Gopinath</a> to share some of her research on how to eat better.</p>
+<p><img alt="Nutrition session" src="/files/food%20documentaries.png" style="width: 100%;"/></p>
+<h2 id="in-case-you-missed-it">In case you missed it</h2>
+<ul>
+<li>Did you get a chance to check out our new series, Meet the Team, where we introduce you to the brilliant, zany and oftentimes nutty people that make Frappe Frappe? This month, we thought we’d let you get to know <a href="https://frappe.io/blog/meet-the-team/aditya-hase?utm_source=Newsletter&amp;utm_medium=web_page">Aditya Hase</a>, Founder of FC and stirrer of drama.</li>
+<li>October marked the end of <a href="https://www.linkedin.com/in/vrindamenon/">Vrinda Menon</a>’s second year at Frappe. Check out <a href="https://frappe.io/blog/meet-the-team/2-years-at-frappe?utm_source=Newsletter&amp;utm_medium=web_page">this blog post</a> to see what her journey was like.</li>
+</ul>
+<h2 id="partner-updates">Partner Updates</h2>
+<p>Last month, <a href="https://www.dexciss.com">Dexciss Technology LLC</a> from the US, <a href="https://hwsba.com/">Hwsba For Information Technology</a> from Saudi Arabia, and <a href="https://mannlowe.com/">Mannlowe Information Services Pvt. Ltd</a> and <a href="https://finbyz.tech/">Finbyz Tech Pvt Ltd</a> from India joined us to become Bronze Partners. The Frappe Partner program is designed to help our official partners close deals faster, provide guaranteed support and assist in OEM branding. To understand more about it, check out <a href="https://frappe.io/blog/community/evolution-of-frappe-partnership-models-and-benefits?utm_source=Newsletter&amp;utm_medium=web_page">this blog</a> by Umair on how our partnership model evolved and the benefits offered by it today. In case you’d like to become a Frappe Partner yourself, check out <a href="https://erpnext.com/partners/plans">this link</a>.</p>
+<p>—</p>
+<p>That’s it from us this month. If you liked this newsletter, don’t forget to share it with a friend and <a href="https://frappe.io/newsletter?utm_source=Newsletter&amp;utm_medium=web_page">subscribe</a> if you haven’t already. If you think you’d like to join our team, do check out our open positions <a href="https://frappe.io/careers/open-positions?utm_source=Newsletter&amp;utm_medium=web_page">here</a>.</p>
+<p>Cheers,</p>
+<p>Ganga</p>
+            </div>
+        </article>
+
+        
+
+    </div>
+</div>
+
+		<div class="page-footer"></div>
+	</main>
+	
+</div>
+
+</div>
+
+
+<div id="all-symbols" style="display:none"></div><script type="text/javascript">fetch(`/assets/frappe/icons/timeless/icons.svg?v=${window._version_number}`, {credentials: "same-origin"}).then((r) => r.text()).then((svg) => {let c = document.getElementById("all-symbols"); c.insertAdjacentHTML("beforeend", svg);});</script><script type="text/javascript">fetch(`/assets/frappe/icons/espresso/icons.svg?v=${window._version_number}`, {credentials: "same-origin"}).then((r) => r.text()).then((svg) => {let c = document.getElementById("all-symbols"); c.insertAdjacentHTML("beforeend", svg);});</script>
+	<!-- js should be loaded in body! -->
+	<script>
+		frappe.boot = {
+ "apps_data": {
+  "apps": [],
+  "default_path": "",
+  "is_desk_apps": 1
+ },
+ "assets_json": {
+  "bank-reconciliation-tool.bundle.js": "/assets/erpnext/dist/js/bank-reconciliation-tool.bundle.FPQRAOXF.js",
+  "billing.bundle.js": "/assets/frappe/dist/js/billing.bundle.TQHLK7UT.js",
+  "bom_configurator.bundle.js": "/assets/erpnext/dist/js/bom_configurator.bundle.HVCV6OL2.js",
+  "bootstrap-4-web.bundle.js": "/assets/frappe/dist/js/bootstrap-4-web.bundle.FOZOVELL.js",
+  "build_events.bundle.js": "/assets/frappe/dist/js/build_events.bundle.BCX32TWL.js",
+  "buy_credits.bundle.js": "/assets/partner_relationship_management/dist/js/buy_credits.bundle.PTRLR7SB.js",
+  "calendar.bundle.js": "/assets/frappe/dist/js/calendar.bundle.4A4YITIU.js",
+  "charts-demo.bundle.js": "/assets/frappe_io/dist/js/charts-demo.bundle.VNV6RUNF.js",
+  "contributions.bundle.css": "/assets/wiki/dist/css/contributions.bundle.RBO25XZK.css",
+  "controls.bundle.js": "/assets/frappe/dist/js/controls.bundle.OBHXLYSV.js",
+  "data_import_tools.bundle.js": "/assets/frappe/dist/js/data_import_tools.bundle.Q5YT4XP2.js",
+  "datatable.bundle.css": "/assets/frappe_io/dist/css/datatable.bundle.3P2RWE3E.css",
+  "datatable.bundle.js": "/assets/frappe_io/dist/js/datatable.bundle.SOZHUVE4.js",
+  "desk.bundle.css": "/assets/frappe/dist/css/desk.bundle.6QJ7RADB.css",
+  "desk.bundle.js": "/assets/frappe/dist/js/desk.bundle.Q2WZITIR.js",
+  "dialog.bundle.js": "/assets/frappe/dist/js/dialog.bundle.3F5VODSL.js",
+  "education.bundle.js": "/assets/education/dist/js/education.bundle.PSPI3YNS.js",
+  "email.bundle.css": "/assets/frappe/dist/css/email.bundle.J3DSMELI.css",
+  "erpnext-web.bundle.css": "/assets/erpnext/dist/css/erpnext-web.bundle.TIUGKBCZ.css",
+  "erpnext-web.bundle.js": "/assets/erpnext/dist/js/erpnext-web.bundle.J4A2DQB4.js",
+  "erpnext.bundle.css": "/assets/erpnext/dist/css/erpnext.bundle.XD674WRI.css",
+  "erpnext.bundle.js": "/assets/erpnext/dist/js/erpnext.bundle.R5JXFCLX.js",
+  "erpnext_email.bundle.css": "/assets/erpnext/dist/css/erpnext_email.bundle.DFYL6BVU.css",
+  "file_uploader.bundle.js": "/assets/frappe/dist/js/file_uploader.bundle.ZPHNBOZS.js",
+  "form.bundle.js": "/assets/frappe/dist/js/form.bundle.TPF6OHJK.js",
+  "form_builder.bundle.js": "/assets/frappe/dist/js/form_builder.bundle.NRPX4YQU.js",
+  "frappe-web.bundle.js": "/assets/frappe/dist/js/frappe-web.bundle.VFID6Y35.js",
+  "gstr1.bundle.js": "/assets/india_compliance/dist/js/gstr1.bundle.LMOF55ES.js",
+  "hierarchy-chart.bundle.js": "/assets/hrms/dist/js/hierarchy-chart.bundle.5E224PCR.js",
+  "hrms.bundle.css": "/assets/hrms/dist/css/hrms.bundle.WEXO5WM5.css",
+  "hrms.bundle.js": "/assets/hrms/dist/js/hrms.bundle.FNZYA5KG.js",
+  "ims.bundle.js": "/assets/india_compliance/dist/js/ims.bundle.C4HROEWL.js",
+  "india_compliance.bundle.js": "/assets/india_compliance/dist/js/india_compliance.bundle.WV4RD5A3.js",
+  "india_compliance_account.bundle.css": "/assets/india_compliance/dist/css/india_compliance_account.bundle.NYGQSTE6.css",
+  "india_compliance_account.bundle.js": "/assets/india_compliance/dist/js/india_compliance_account.bundle.OPWAD7DA.js",
+  "interview.bundle.js": "/assets/hrms/dist/js/interview.bundle.C7CDEMYA.js",
+  "item-dashboard.bundle.js": "/assets/erpnext/dist/js/item-dashboard.bundle.WEGR7SLR.js",
+  "kanban_board.bundle.js": "/assets/frappe/dist/js/kanban_board.bundle.F6FPXXED.js",
+  "lending.bundle.js": "/assets/lending/dist/js/lending.bundle.EVKAPGTK.js",
+  "libs.bundle.js": "/assets/frappe/dist/js/libs.bundle.TIV7ZGVY.js",
+  "list.bundle.js": "/assets/frappe/dist/js/list.bundle.CTIEC4L7.js",
+  "login.bundle.css": "/assets/frappe/dist/css/login.bundle.LMNP2TEO.css",
+  "logtypes.bundle.js": "/assets/frappe/dist/js/logtypes.bundle.5KO3ZOOI.js",
+  "onboarding_tours.bundle.js": "/assets/frappe/dist/js/onboarding_tours.bundle.RAUR6X4Z.js",
+  "pdfjs.bundle.css": "/assets/print_designer/dist/css/pdfjs.bundle.Z2TQG5OV.css",
+  "performance.bundle.js": "/assets/hrms/dist/js/performance.bundle.63UL5NS7.js",
+  "photoswipe.bundle.js": "/assets/frappe/dist/js/photoswipe.bundle.YSXZQA64.js",
+  "point-of-sale.bundle.js": "/assets/erpnext/dist/js/point-of-sale.bundle.BA7TZAGR.js",
+  "print.bundle.css": "/assets/frappe/dist/css/print.bundle.DKL44YGN.css",
+  "print_designer.bundle.css": "/assets/print_designer/dist/css/print_designer.bundle.6QE4XIB7.css",
+  "print_designer.bundle.js": "/assets/print_designer/dist/js/print_designer.bundle.2JYNBT6J.js",
+  "print_format.bundle.css": "/assets/frappe/dist/css/print_format.bundle.P3PPNHEO.css",
+  "print_format_builder.bundle.js": "/assets/frappe/dist/js/print_format_builder.bundle.VQYWNAGA.js",
+  "purchase_reconciliation_tool.bundle.js": "/assets/india_compliance/dist/js/purchase_reconciliation_tool.bundle.LOLTTYSQ.js",
+  "report.bundle.css": "/assets/frappe/dist/css/report.bundle.VTBDJUHO.css",
+  "report.bundle.js": "/assets/frappe/dist/js/report.bundle.GHAYAFOZ.js",
+  "rtl_contributions.bundle.css": "/assets/wiki/dist/css-rtl/contributions.bundle.IMRLHY4X.css",
+  "rtl_datatable.bundle.css": "/assets/frappe_io/dist/css-rtl/datatable.bundle.NMEYOFTE.css",
+  "rtl_desk.bundle.css": "/assets/frappe/dist/css-rtl/desk.bundle.ES3NLDNQ.css",
+  "rtl_email.bundle.css": "/assets/frappe/dist/css-rtl/email.bundle.USEPIIYM.css",
+  "rtl_erpnext-web.bundle.css": "/assets/erpnext/dist/css-rtl/erpnext-web.bundle.7AAXIH77.css",
+  "rtl_erpnext.bundle.css": "/assets/erpnext/dist/css-rtl/erpnext.bundle.SEKCMKQK.css",
+  "rtl_erpnext_email.bundle.css": "/assets/erpnext/dist/css-rtl/erpnext_email.bundle.ZBNQWHYL.css",
+  "rtl_hrms.bundle.css": "/assets/hrms/dist/css-rtl/hrms.bundle.6EA3NACR.css",
+  "rtl_india_compliance_account.bundle.css": "/assets/india_compliance/dist/css-rtl/india_compliance_account.bundle.2DG5IYSG.css",
+  "rtl_login.bundle.css": "/assets/frappe/dist/css-rtl/login.bundle.RP5DQ6MO.css",
+  "rtl_pdfjs.bundle.css": "/assets/print_designer/dist/css-rtl/pdfjs.bundle.36F3SGAT.css",
+  "rtl_print.bundle.css": "/assets/frappe/dist/css-rtl/print.bundle.4GC44A5A.css",
+  "rtl_print_designer.bundle.css": "/assets/print_designer/dist/css-rtl/print_designer.bundle.KG2ZXMTN.css",
+  "rtl_print_format.bundle.css": "/assets/frappe/dist/css-rtl/print_format.bundle.XNGPGDZU.css",
+  "rtl_report.bundle.css": "/assets/frappe/dist/css-rtl/report.bundle.GEJHBUQQ.css",
+  "rtl_web_form.bundle.css": "/assets/frappe/dist/css-rtl/web_form.bundle.FPS4MTF7.css",
+  "rtl_website.bundle.css": "/assets/frappe/dist/css-rtl/website.bundle.OP52UWVB.css",
+  "rtl_wiki.bundle.css": "/assets/wiki/dist/css-rtl/wiki.bundle.5BUYD3ZL.css",
+  "sentry.bundle.js": "/assets/frappe/dist/js/sentry.bundle.AX44GVWW.js",
+  "telemetry.bundle.js": "/assets/frappe/dist/js/telemetry.bundle.LKEZCADB.js",
+  "video_player.bundle.js": "/assets/frappe/dist/js/video_player.bundle.DUYYLSFO.js",
+  "web_form.bundle.css": "/assets/frappe/dist/css/web_form.bundle.E37HXZGK.css",
+  "web_form.bundle.js": "/assets/frappe/dist/js/web_form.bundle.BLQZ4OBZ.js",
+  "website.bundle.css": "/assets/frappe/dist/css/website.bundle.LQEHRZZT.css",
+  "wiki.bundle.css": "/assets/wiki/dist/css/wiki.bundle.KGGUFANN.css",
+  "wiki.bundle.js": "/assets/wiki/dist/js/wiki.bundle.WQQQOK77.js",
+  "workflow_builder.bundle.js": "/assets/frappe/dist/js/workflow_builder.bundle.MPAFFZ3D.js"
+ },
+ "is_fc_site": 0,
+ "lang": "en",
+ "sitename": "frappeio.frappe.cloud",
+ "sysdefaults": {
+  "currency": null,
+  "date_format": "dd/mm/yyyy",
+  "first_day_of_the_week": "Sunday",
+  "float_precision": 2,
+  "number_format": "#,##,###.##",
+  "time_format": "HH:mm:ss"
+ },
+ "time_zone": {
+  "system": "Asia/Kolkata",
+  "user": "Asia/Kolkata"
+ }
+}
+		// for backward compatibility of some libs
+		frappe.sys_defaults = frappe.boot.sysdefaults;
+	</script>
+	<script type="text/javascript" src="/assets/frappe/dist/js/frappe-web.bundle.VFID6Y35.js"></script>
+	
+	<script type="text/javascript" src="/website_script.js"></script>
+	<script type="text/javascript" src="/assets/erpnext/dist/js/erpnext-web.bundle.J4A2DQB4.js"></script>
+		
+	<script>frappe.csrf_token = "None";</script></body>
+</html>

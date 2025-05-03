@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+<channel>
+        <title>Frappe Blog</title>
+        <description>Read what's happening at Frappe</description>
+        <link>https://frappe.io/blog</link>
+        <lastBuildDate>2025-05-03 13:27:32.614705</lastBuildDate>
+        <pubDate>2025-05-03 13:27:32.614705</pubDate>
+        <ttl>1800</ttl>
+		<item>
+			        <title>Product Updates for April 2025</title>
+			        <description>Post Frappe Build...</description>
+			        <link>https://frappe.io/blog/product-updates/product-updates-for-april</link>
+			        <guid>product-updates-for-april-2025</guid>
+			        <pubDate>2025-04-29</pubDate>
+		</item><item>
+			        <title>Customers at the Core: How Quark Cyber Systems Scaled with Purpose</title>
+			        <description>With a decade of commitment to customer success, Quark Cyber Systems built a thriving ERPNext practice rooted in trust, empathy, and purpose-driven growth.</description>
+			        <link>https://frappe.io/blog/partner-success-stories/customers-at-the-core-how-quark-cyber-systems-scaled-with-purpose</link>
+			        <guid>customers-at-the-core-how-quark-cyber-systems-scaled-with-purpose</guid>
+			        <pubDate>2025-04-28</pubDate>
+		</item><item>
+			        <title>The Power of Simplicity</title>
+			        <description>We choose simplicity — in tools, decisions, and how we work. Here’s why it matters.</description>
+			        <link>https://frappe.io/blog/culture/the-power-of-simplicity</link>
+			        <guid>the-power-of-simplicity</guid>
+			        <pubDate>2025-04-15</pubDate>
+		</item><item>
+			        <title>MariaDB Physical Backup &amp; Restoration</title>
+			        <description>From 20-Minute Waits to 30-Second Backups: The Power of Physical Backups in Frappe Cloud</description>
+			        <link>https://frappe.io/blog/engineering/mariadb-physical-backup-restoration</link>
+			        <guid>mariadb-physical-backup-restoration</guid>
+			        <pubDate>2025-04-10</pubDate>
+		</item><item>
+			        <title>My Return to Frappe: Finding Home in My Second Innings</title>
+			        <description>It&apos;s been exactly three months since I walked back through the doors of Frappe, this time with a deeper purpose and clearer vision than before.</description>
+			        <link>https://frappe.io/blog/culture/my-return-to-frappe-finding-home-in-my-second-innings</link>
+			        <guid>my-return-to-frappe-finding-home-in-my-second-innings</guid>
+			        <pubDate>2025-04-01</pubDate>
+		</item><item>
+			        <title>Building Connected Banking for ERPNext</title>
+			        <description>From payment panic to ‘click-and-done’: A story of troubled payments turned into smart ERP tools.</description>
+			        <link>https://frappe.io/blog/community-updates/building-connected-banking-for-erpnext</link>
+			        <guid>building-connected-banking-for-erpnext</guid>
+			        <pubDate>2025-03-31</pubDate>
+		</item><item>
+			        <title>Product Updates for March 2025</title>
+			        <description>Preparation for Frappe Build</description>
+			        <link>https://frappe.io/blog/product-updates/product-updates-for-march-2025</link>
+			        <guid>product-updates-for-march-2025</guid>
+			        <pubDate>2025-03-28</pubDate>
+		</item><item>
+			        <title>Do CRMs actually improve customer relationships?</title>
+			        <description>CRMs were built to strengthen customer relationships, but are they actually doing the opposite? Read on to find out.</description>
+			        <link>https://frappe.io/blog/product-stories/do-crms-actually-improve-customer-relationships</link>
+			        <guid>do-crms-actually-improve-customer-relationships</guid>
+			        <pubDate>2025-03-18</pubDate>
+		</item><item>
+			        <title>Why open source?</title>
+			        <description>The question is not why open source? Open source has won, but why does a commercial entity care about open source and why principles matter?</description>
+			        <link>https://frappe.io/blog/open-source/why-open-source-principles</link>
+			        <guid>why-open-source-priciples</guid>
+			        <pubDate>2025-03-06</pubDate>
+		</item><item>
+			        <title>Balancing the costs of count(*) and UX</title>
+			        <description>Just how bad is &quot;select count(*)&quot; and can we control it?</description>
+			        <link>https://frappe.io/blog/engineering/balancing-the-costs-of-count-and-ux</link>
+			        <guid>balancing-the-costs-of-count-and-user-experience</guid>
+			        <pubDate>2025-03-06</pubDate>
+		</item><item>
+			        <title>Product Updates for February 2025</title>
+			        <description>Short month, big events.</description>
+			        <link>https://frappe.io/blog/product-updates/product-updates-for-february-2025</link>
+			        <guid>product-updates-for-february-2025</guid>
+			        <pubDate>2025-02-28</pubDate>
+		</item><item>
+			        <title>A fresh new website for ERPNext</title>
+			        <description>The journey of making the new website and migrating it to frappe.io/erpnext</description>
+			        <link>https://frappe.io/blog/erpnext/the-new-website-for-erpnext</link>
+			        <guid>the-new-website-for-erpnext</guid>
+			        <pubDate>2025-02-21</pubDate>
+		</item><item>
+			        <title>On Motivation</title>
+			        <description>The world motivates us to win, but is the journey more important?</description>
+			        <link>https://frappe.io/blog/culture/on-motivation</link>
+			        <guid>on-motivation</guid>
+			        <pubDate>2025-02-17</pubDate>
+		</item><item>
+			        <title>Raven v2 by The Commit Company</title>
+			        <description>No-code AI Chatbots, Workspaces, Custom Emojis, and much more!</description>
+			        <link>https://frappe.io/blog/community-updates/raven-v2-by-the-commit-company</link>
+			        <guid>around-the-frappeverse-community-issue-1</guid>
+			        <pubDate>2025-02-17</pubDate>
+		</item><item>
+			        <title>Fixing Frappe Cloud Uptime</title>
+			        <description>We spent the last 6 months working on Frappe Cloud&apos;s reliability.
+</description>
+			        <link>https://frappe.io/blog/frappe-cloud/fixing-frappe-cloud-uptime</link>
+			        <guid>fixing-frappe-cloud-uptime</guid>
+			        <pubDate>2025-02-11</pubDate>
+		</item><item>
+			        <title>Self-hosting Frappe/ERPNext Apps with Dokploy</title>
+			        <description>A detailed guide to self-host Frappe/ERPNext apps with our ready-made Dokploy templates.</description>
+			        <link>https://frappe.io/blog/tutorial/self-hosting-frappe-erpnext-apps-with-dokploy</link>
+			        <guid>self-hosting-frappe-erpnext-apps-with-dokploy</guid>
+			        <pubDate>2025-02-11</pubDate>
+		</item><item>
+			        <title>Product Updates for January 2025</title>
+			        <description>New year with new updates.</description>
+			        <link>https://frappe.io/blog/product-updates/product-updates-for-january-2025</link>
+			        <guid>product-updates-for-january-2025</guid>
+			        <pubDate>2025-01-30</pubDate>
+		</item><item>
+			        <title>The making of Frappeverse Africa 2025</title>
+			        <description>A behind-the-scenes look at how we brought Frappeverse Africa to life, one challenge at a time and managed to plan a conference 4000 miles away.
+</description>
+			        <link>https://frappe.io/blog/community/the-making-of-frappeverse-africa-2025</link>
+			        <guid>the-making-of-frappeverse-africa-2025</guid>
+			        <pubDate>2025-01-28</pubDate>
+		</item><item>
+			        <title>Leadership update: Neha Sankhe as COO</title>
+			        <description>Welcoming Neha Sankhe as the Chief Operating Officer at Frappe</description>
+			        <link>https://frappe.io/blog/meet-the-team/leadership-update-neha-as-coo</link>
+			        <guid>leadership-update-neha-sankhe-as-coo</guid>
+			        <pubDate>2025-01-27</pubDate>
+		</item><item>
+			        <title>Performance Reviews at Frappe</title>
+			        <description>This year we started a new ritual—quarterly performance reviews. Here are some reflections from the recent one we concluded.</description>
+			        <link>https://frappe.io/blog/culture/performance-reviews-at-frappe</link>
+			        <guid>performance-reviews-at-frappe</guid>
+			        <pubDate>2025-01-21</pubDate>
+		</item>
+</channel>
+</rss>

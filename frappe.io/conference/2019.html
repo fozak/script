@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<!-- Built on Frappe. https://frappeframework.com/ -->
+<html lang="en" dir="ltr">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="generator" content="frappe">
+
+	
+	<meta name="description" content="Interact about the product road-map, learn about the new and exciting features, stories and best practices of 2019"><meta name="title" content="ERPNext Conference 2019"><meta name="language" content="en"><meta property="og:type"  content="article"><meta property="og:title"  content="ERPNext Conference 2019"><meta property="og:description"  content="Interact about the product road-map, learn about the new and exciting features, stories and best practices of 2019"><meta name="twitter:title" content="ERPNext Conference 2019"><meta name="twitter:description" content="Interact about the product road-map, learn about the new and exciting features, stories and best practices of 2019"><meta name="twitter:card" content="summary">
+
+
+	<title>ERPNext Conference 2019</title>
+
+	
+	<link
+		rel="shortcut icon"
+		href="/files/frappe-favicon.svg"
+		type="image/x-icon"
+	>
+	<!--for indexing -->
+<meta name="google-site-verification" content="pY8RgHujc1s-KwOQZBldPi1bH5BOZfZBf8cP3oEUc4I" /> 
+ 
+<script type="text/javascript">
+    function getCookie() {
+        return Object.fromEntries(document.cookie.split('; ').map((part) => part.split('=')).map((d) => [d[0], decodeURIComponent(d[1])]));
+    }
+
+    function setCookie(cname, cvalue, exdays, domain) {
+        const d = new Date();
+        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+        let expires = "expires=" + d.toUTCString();
+        if (domain) {
+            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/;" + "domain=" + domain + ";";
+        } else {
+            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/;";
+        }
+    }
+
+    let old_cookie = getCookie();
+
+    // Remove all cookies that are not mentioned in Cookie Policy
+    for (let key in old_cookie) {
+        if (!["sid", "io", "user_id", "user_image", "system_user", "full_name"].includes(key)) {
+            setCookie(key, old_cookie[key], -1);
+            setCookie(key, old_cookie[key], -1, document.domain);
+            setCookie(key, old_cookie[key], -1, "." + document.domain);
+            setCookie(key, old_cookie[key], -1, "analytics.frappe.io");
+        }
+    }
+</script>
+
+
+<!-- Plausible -->
+<script defer data-api="https://frappecloud.com/api/event" data-domain="frappe.io" src="https://frappecloud.com/js/script.js"></script>
+<link type="text/css" rel="stylesheet" href="/assets/frappe/dist/css/website.bundle.LQEHRZZT.css">
+<link type="text/css" rel="stylesheet" href="/assets/erpnext/dist/css/erpnext-web.bundle.TIUGKBCZ.css">
+<link type="text/css" rel="stylesheet" href="/assets/frappe/css/hljs-night-owl.css">
+		
+	<style>body {
+    font-family: "Inter",-apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Oxygen","Ubuntu","Cantarell","Fira Sans","Droid Sans","Helvetica Neue",sans-serif;
+    letter-spacing: -.011em;
+}
+.exhibitor-content-parent {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(250px, 1fr));
+  column-gap: 32px;
+  row-gap: 32px;
+  align-items: center;
+}
+
+.section-description {
+  margin-bottom: 24px;
+}
+.agenda {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  font-size: 12px;
+  line-height: 21px;
+  min-height: 3rem;
+}
+.card-body {
+  /*word-wrap: break-word;*/
+}
+
+.standard-image {
+  background: #fff;
+  border: 0;
+}
+.exhibitor-card {
+  text-align: center;
+  padding-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  /*margin: 1rem 0;*/
+  border: 1px solid #e2e6e9;
+  border-radius: 8px;
+  background: #fff;
+  padding: 1.5rem 1.2rem;
+  filter: grayscale(100%);
+  transition: filter 300ms ease-in-out;
+}
+
+.exhibitor-card:hover {
+  filter: grayscale(0);
+}
+.exhibitor-card .company-logo {
+  height: 128px;
+  width: 300px;
+  object-fit: contain;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+.card-parents {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(10rem, 1fr));
+  column-gap: 32px;
+  row-gap: 32px;
+  align-items: center;
+}
+
+.card-parents-keynote {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(220px, 1fr));
+  column-gap: 32px;
+  row-gap: 32px;
+  align-items: center;
+}
+.card-img {
+  height: 177px;
+  width: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background: var(--blue-50);
+  background-blend-mode: multiply;
+  mix-blend-mode: multiply;
+}
+
+.card-text {
+  max-height: 55px;
+}
+
+.card-img {
+  min-height: 250px;
+  object-fit: cover;
+}
+
+.card-title-bg {
+  min-height: 3.5rem;
+}
+
+.card-img,
+.card-img-bottom {
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+  /*background*/
+}
+
+@media only screen and (max-width: 768px) {
+  .card-parents {
+    display: flex;
+    flex-direction: column;
+  }
+  .hero-content .btn {
+    width: 100%;
+  }
+  .card {
+    width: 100%;
+  }
+  .exhibitor-card {
+    width: 100%;
+    margin: auto;
+  }
+  .exhibitor-content-parent {
+    display: flex;
+    flex-direction: column;
+  }
+  .about {
+    flex-direction: column;
+    margin: auto;
+  }
+  .about-img {
+    margin-bottom: 2rem;
+  }
+  .agenda {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    font-size: 12px;
+    line-height: 21px;
+    min-height: 1px;
+  }
+  .section-description {
+    margin-bottom: 24px;
+  }
+}
+
+.coming-soon-container {
+  width: 600px;
+  height: 200px;
+  padding: 2rem;
+  margin: auto;
+  vertical-align: middle;
+}
+
+.hero-with-right-image .hero-image {
+  max-width: 32rem;
+}
+
+.stretched-link {
+  font-size: 12px;
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+
+  padding: 1.25rem;
+  /*max-height: 200px;*/
+}
+
+.card-title {
+  font-size: 16px;
+}
+
+.image-container {
+  position: relative;
+  text-align: center;
+  min-height: 250px;
+
+  /*color: white;*/
+  font-weight: bold;
+}
+.image-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 24px;
+  color: #313b44;
+}
+
+.section-padding {
+  padding: 4rem 0;
+}
+.section-title {
+  margin-bottom: 0.5rem;
+}
+.hero-subtitle {
+  color: var(--gray-700);
+}
+.section-cta-container {
+  margin-top: 24px;
+}
+.profile-image {
+  width: 100%;
+  height: 177px;
+  object-fit: cover;
+}
+.card-keynote {
+  align-items: center;
+  text-align: center;
+}
+.speaker-name {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 27.52px;
+  margin: 12px 0 0px 0;
+}
+.speaker-company {
+  color: var(--gray-600);
+  font-size: 14px;
+}
+.speaker-designation {
+  color: var(--gray-600);
+  font-size: 14px;
+  line-height: 23.1px;
+ 
+
+}
+
+.btn-talk {
+  margin-bottom: 0.8rem;
+  width: 80%;
+}
+.text-muted {
+  margin-bottom: 0.2rem;
+}
+
+.talk-btn {
+  font-size: 14px;
+}
+
+.border-btm {
+  border-bottom: 1px solid #e5e5e5;
+  padding-bottom: 4rem;
+}
+.standard-image {
+    /*background-color: #EBF4FC;*/
+    color: #318AD8;
+}
+
+.section-description {
+    font-size: 1.375rem;
+}
+.user-name {
+    cursor: pointer;
+    
+}
+.user-modal-img {
+    height: 140px;
+    width: 140px;
+}
+.user-modal-img .standard-image{
+    border-radius:0.75rem;
+    height: 140px;
+    width: 140px;
+    border: 1px solid rgba(0,0,0,.125);
+    border-color: #fff;
+}
+.user-modal-img .avatar {
+    border-radius:0.75rem;
+    height: 140px;
+    width: 140px;
+    border: 1px solid rgba(0,0,0,.125);
+    border-color: #fff;
+}
+
+.user-name-modal {
+    font-size: 24px;
+    line-height: 37.5px;
+    margin-bottom: 0;
+}
+.modal-dialog {
+    max-width: 750px;
+}
+.modal .modal-body {
+    padding: 2rem;
+}
+.close:focus {
+    outline: none;
+}
+@media only screen and (max-width: 768px) {
+
+  .search-head {
+      display: flex;
+    flex-direction: column;
+    margin-bottom: 1.5rem;
+  }
+  .section-description{
+      margin-bottom: 0.8rem !important;
+  }
+  .col-3 {
+      max-width: 100%;
+  }
+}
+.control-input {
+    width: 360px;
+    font-size: 13px;
+    color: var(--gray-600);
+}
+
+.control-input input {
+    background-image : url(/files/serach.svg);
+    background-repeat: no-repeat; 
+    background-position: 10px 9px;
+    
+padding-left:30px;
+}
+.modal .modal-header {
+    border-bottom: 0;
+}
+.modal-header .close {
+    padding: 0;
+    padding-right: 1rem;
+}</style>
+
+	<script>
+		window.frappe = {};
+		window._version_number = "{{ build_version }}";
+		frappe.ready_events = [];
+		frappe.ready = function(fn) {
+			frappe.ready_events.push(fn);
+		}
+		window.dev_server = 0;
+		window.socketio_port = 9000;
+		window.show_language_picker = false;
+	</script>
+</head>
+<body frappe-session-status="logged-out" data-path="conference/2019" class="">
+
+		<nav class="navbar navbar-light navbar-expand-lg">
+<div class="container">
+<a class="navbar-brand" href="/"><img src="/files/frappe-footer.png"/></a>
+</div>
+</nav>
+
+
+
+
+
+
+
+
+<div id="page-conference-page" data-path="conference/2019"source-type="Generator" data-doctype="Web Page"source-content-type="HTML">
+	
+<div class="page-content-wrapper">
+	<!-- breadcrumbs -->
+	<div class="page-breadcrumbs">
+		
+    
+    
+    
+
+	</div>
+
+	
+	<main class="">
+		<div class="page-header-wrapper">
+			<div class="page-header">
+				
+			</div>
+
+			
+		</div>
+
+		<div class="page_content"><div class="webpage-content">
+	
+	<article class="web-page-content" id="conference-page" style="text-align: Left">
+	<div class="page_content">
+	<section class="section section-padding-top section-padding-bottom" data-section-idx="2"
+		data-section-template="Hero with Right Image">
+		<div class="container">
+			<div class="hero-with-right-image">
+				<div class="hero-content">
+					<div>
+						<h1 class="hero-title">
+							ERPNext Conference 2019
+						</h1>
+						<p class="hero-subtitle">
+							Interact about the product road-map, learn about the new and exciting features, stories and best practices of 2019
+						</p>
+						<div>
+							<p>
+								October 17
+								
+								- October 18
+								
+							</p>
+							<a class="btn btn-lg btn-primary" href="/conference/2019/schedule">
+								View Schedule
+							</a>
+							
+							
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	
+	
+	
+	<section class="section section-padding section-padding-top section-padding-bottom tracks" data-section-idx="2"
+		data-section-template="Section with Cards">
+		<div class="container">
+			<h2 class="section-title" style="margin-bottom: 0.5rem">Tracks</h2>
+			<p class="section-description">
+				All topics covered in the Conference 2019
+			</p>
+			
+			<div class="card-parents">
+				
+				<div class="card">
+					<div class="image-container">
+						<div class="card-img"></div>
+						<span class="image-text">User Stories</span>
+					</div>
+					<div class="card-body">
+						<h4 class="card-title">User Stories</h4>
+						<div class="card-text">
+							<p class="agenda text">Customer success stories are informative and fun to attend. Here is the list of speakers sharing their success stories.</p>
+						</div>
+						<a href="/conference/2019/User Stories/talks"
+							class="btn btn-secondary stretched-link">View Talks</a>
+					</div>
+				</div>
+
+				
+				<div class="card">
+					<div class="image-container">
+						<div class="card-img"></div>
+						<span class="image-text">Partners</span>
+					</div>
+					<div class="card-body">
+						<h4 class="card-title">Partners</h4>
+						<div class="card-text">
+							<p class="agenda text">Unveiling partnership talks to help you understand the execution of timely account expansions.</p>
+						</div>
+						<a href="/conference/2019/Partners/talks"
+							class="btn btn-secondary stretched-link">View Talks</a>
+					</div>
+				</div>
+
+				
+				<div class="card">
+					<div class="image-container">
+						<div class="card-img"></div>
+						<span class="image-text">Enterprise</span>
+					</div>
+					<div class="card-body">
+						<h4 class="card-title">Enterprise</h4>
+						<div class="card-text">
+							<p class="agenda text">Curated talks for Enterprise World. Know how ERPNext is helping the enterprises scale up their work.</p>
+						</div>
+						<a href="/conference/2019/Enterprise/talks"
+							class="btn btn-secondary stretched-link">View Talks</a>
+					</div>
+				</div>
+
+				
+				<div class="card">
+					<div class="image-container">
+						<div class="card-img"></div>
+						<span class="image-text">Foundation</span>
+					</div>
+					<div class="card-body">
+						<h4 class="card-title">Foundation</h4>
+						<div class="card-text">
+							<p class="agenda text">From where it all started? Know the foundation of ERPNext and Frappe from the founder himself.</p>
+						</div>
+						<a href="/conference/2019/Foundation/talks"
+							class="btn btn-secondary stretched-link">View Talks</a>
+					</div>
+				</div>
+
+				
+				<div class="card">
+					<div class="image-container">
+						<div class="card-img"></div>
+						<span class="image-text">Open Source</span>
+					</div>
+					<div class="card-body">
+						<h4 class="card-title">Open Source</h4>
+						<div class="card-text">
+							<p class="agenda text">Learn about the impact of Open source on Businesses</p>
+						</div>
+						<a href="/conference/2019/Open Source/talks"
+							class="btn btn-secondary stretched-link">View Talks</a>
+					</div>
+				</div>
+
+				
+			</div>
+			
+		</div>
+	</section>
+    
+	<section class="section exhibitors section-padding bg-light" data-section-idx="2">
+		<div class="container">
+			<h2 class="section-title">Sponsors</h2>
+			
+			<p class="section-description">
+				Our sponsors for the 2019 conference
+			</p>
+			
+			<div class="exhibitor-content-parent">
+				
+				
+				<a href="https://zerodha.com/" target="_blank">
+				
+					<div class="exhibitor-card">
+						<img class="standard-image company-logo" src="/files/zerodhaf8463c.png" />
+					</div>
+				</a>
+				
+				
+				<a href="https://nusantaradigitalkonsultan.com/" target="_blank">
+				
+					<div class="exhibitor-card">
+						<img class="standard-image company-logo" src="/files/nusantara.png" />
+					</div>
+				</a>
+				
+				
+				<a href="https://indictranstech.com/" target="_blank">
+				
+					<div class="exhibitor-card">
+						<img class="standard-image company-logo" src="/files/indictrans.png" />
+					</div>
+				</a>
+				
+				
+				<a href="https://elastic.run/" target="_blank">
+				
+					<div class="exhibitor-card">
+						<img class="standard-image company-logo" src="/files/elasticrun.png" />
+					</div>
+				</a>
+				
+				
+				<a href="https://smbsolutionkwt.com/" target="_blank">
+				
+					<div class="exhibitor-card">
+						<img class="standard-image company-logo" src="/files/smb.png" />
+					</div>
+				</a>
+				
+			</div>
+            
+		</div>
+	</section>
+	<div class="user hidden">Guest</div>
+</div>
+	</article>
+	
+</div></div>
+
+		<div class="page-footer"></div>
+	</main>
+	
+</div>
+
+</div>
+
+
+<div id="all-symbols" style="display:none"></div><script type="text/javascript">fetch(`/assets/frappe/icons/timeless/icons.svg?v=${window._version_number}`, {credentials: "same-origin"}).then((r) => r.text()).then((svg) => {let c = document.getElementById("all-symbols"); c.insertAdjacentHTML("beforeend", svg);});</script><script type="text/javascript">fetch(`/assets/frappe/icons/espresso/icons.svg?v=${window._version_number}`, {credentials: "same-origin"}).then((r) => r.text()).then((svg) => {let c = document.getElementById("all-symbols"); c.insertAdjacentHTML("beforeend", svg);});</script>
+	<!-- js should be loaded in body! -->
+	<script>
+		frappe.boot = {
+ "apps_data": {
+  "apps": [],
+  "default_path": "",
+  "is_desk_apps": 1
+ },
+ "assets_json": {
+  "bank-reconciliation-tool.bundle.js": "/assets/erpnext/dist/js/bank-reconciliation-tool.bundle.FPQRAOXF.js",
+  "billing.bundle.js": "/assets/frappe/dist/js/billing.bundle.TQHLK7UT.js",
+  "bom_configurator.bundle.js": "/assets/erpnext/dist/js/bom_configurator.bundle.HVCV6OL2.js",
+  "bootstrap-4-web.bundle.js": "/assets/frappe/dist/js/bootstrap-4-web.bundle.FOZOVELL.js",
+  "build_events.bundle.js": "/assets/frappe/dist/js/build_events.bundle.BCX32TWL.js",
+  "buy_credits.bundle.js": "/assets/partner_relationship_management/dist/js/buy_credits.bundle.PTRLR7SB.js",
+  "calendar.bundle.js": "/assets/frappe/dist/js/calendar.bundle.4A4YITIU.js",
+  "charts-demo.bundle.js": "/assets/frappe_io/dist/js/charts-demo.bundle.VNV6RUNF.js",
+  "contributions.bundle.css": "/assets/wiki/dist/css/contributions.bundle.RBO25XZK.css",
+  "controls.bundle.js": "/assets/frappe/dist/js/controls.bundle.OBHXLYSV.js",
+  "data_import_tools.bundle.js": "/assets/frappe/dist/js/data_import_tools.bundle.Q5YT4XP2.js",
+  "datatable.bundle.css": "/assets/frappe_io/dist/css/datatable.bundle.3P2RWE3E.css",
+  "datatable.bundle.js": "/assets/frappe_io/dist/js/datatable.bundle.SOZHUVE4.js",
+  "desk.bundle.css": "/assets/frappe/dist/css/desk.bundle.6QJ7RADB.css",
+  "desk.bundle.js": "/assets/frappe/dist/js/desk.bundle.Q2WZITIR.js",
+  "dialog.bundle.js": "/assets/frappe/dist/js/dialog.bundle.3F5VODSL.js",
+  "education.bundle.js": "/assets/education/dist/js/education.bundle.PSPI3YNS.js",
+  "email.bundle.css": "/assets/frappe/dist/css/email.bundle.J3DSMELI.css",
+  "erpnext-web.bundle.css": "/assets/erpnext/dist/css/erpnext-web.bundle.TIUGKBCZ.css",
+  "erpnext-web.bundle.js": "/assets/erpnext/dist/js/erpnext-web.bundle.J4A2DQB4.js",
+  "erpnext.bundle.css": "/assets/erpnext/dist/css/erpnext.bundle.XD674WRI.css",
+  "erpnext.bundle.js": "/assets/erpnext/dist/js/erpnext.bundle.R5JXFCLX.js",
+  "erpnext_email.bundle.css": "/assets/erpnext/dist/css/erpnext_email.bundle.DFYL6BVU.css",
+  "file_uploader.bundle.js": "/assets/frappe/dist/js/file_uploader.bundle.ZPHNBOZS.js",
+  "form.bundle.js": "/assets/frappe/dist/js/form.bundle.TPF6OHJK.js",
+  "form_builder.bundle.js": "/assets/frappe/dist/js/form_builder.bundle.NRPX4YQU.js",
+  "frappe-web.bundle.js": "/assets/frappe/dist/js/frappe-web.bundle.VFID6Y35.js",
+  "gstr1.bundle.js": "/assets/india_compliance/dist/js/gstr1.bundle.LMOF55ES.js",
+  "hierarchy-chart.bundle.js": "/assets/hrms/dist/js/hierarchy-chart.bundle.5E224PCR.js",
+  "hrms.bundle.css": "/assets/hrms/dist/css/hrms.bundle.WEXO5WM5.css",
+  "hrms.bundle.js": "/assets/hrms/dist/js/hrms.bundle.FNZYA5KG.js",
+  "ims.bundle.js": "/assets/india_compliance/dist/js/ims.bundle.C4HROEWL.js",
+  "india_compliance.bundle.js": "/assets/india_compliance/dist/js/india_compliance.bundle.WV4RD5A3.js",
+  "india_compliance_account.bundle.css": "/assets/india_compliance/dist/css/india_compliance_account.bundle.NYGQSTE6.css",
+  "india_compliance_account.bundle.js": "/assets/india_compliance/dist/js/india_compliance_account.bundle.OPWAD7DA.js",
+  "interview.bundle.js": "/assets/hrms/dist/js/interview.bundle.C7CDEMYA.js",
+  "item-dashboard.bundle.js": "/assets/erpnext/dist/js/item-dashboard.bundle.WEGR7SLR.js",
+  "kanban_board.bundle.js": "/assets/frappe/dist/js/kanban_board.bundle.F6FPXXED.js",
+  "lending.bundle.js": "/assets/lending/dist/js/lending.bundle.EVKAPGTK.js",
+  "libs.bundle.js": "/assets/frappe/dist/js/libs.bundle.TIV7ZGVY.js",
+  "list.bundle.js": "/assets/frappe/dist/js/list.bundle.CTIEC4L7.js",
+  "login.bundle.css": "/assets/frappe/dist/css/login.bundle.LMNP2TEO.css",
+  "logtypes.bundle.js": "/assets/frappe/dist/js/logtypes.bundle.5KO3ZOOI.js",
+  "onboarding_tours.bundle.js": "/assets/frappe/dist/js/onboarding_tours.bundle.RAUR6X4Z.js",
+  "pdfjs.bundle.css": "/assets/print_designer/dist/css/pdfjs.bundle.Z2TQG5OV.css",
+  "performance.bundle.js": "/assets/hrms/dist/js/performance.bundle.63UL5NS7.js",
+  "photoswipe.bundle.js": "/assets/frappe/dist/js/photoswipe.bundle.YSXZQA64.js",
+  "point-of-sale.bundle.js": "/assets/erpnext/dist/js/point-of-sale.bundle.BA7TZAGR.js",
+  "print.bundle.css": "/assets/frappe/dist/css/print.bundle.DKL44YGN.css",
+  "print_designer.bundle.css": "/assets/print_designer/dist/css/print_designer.bundle.6QE4XIB7.css",
+  "print_designer.bundle.js": "/assets/print_designer/dist/js/print_designer.bundle.2JYNBT6J.js",
+  "print_format.bundle.css": "/assets/frappe/dist/css/print_format.bundle.P3PPNHEO.css",
+  "print_format_builder.bundle.js": "/assets/frappe/dist/js/print_format_builder.bundle.VQYWNAGA.js",
+  "purchase_reconciliation_tool.bundle.js": "/assets/india_compliance/dist/js/purchase_reconciliation_tool.bundle.LOLTTYSQ.js",
+  "report.bundle.css": "/assets/frappe/dist/css/report.bundle.VTBDJUHO.css",
+  "report.bundle.js": "/assets/frappe/dist/js/report.bundle.GHAYAFOZ.js",
+  "rtl_contributions.bundle.css": "/assets/wiki/dist/css-rtl/contributions.bundle.IMRLHY4X.css",
+  "rtl_datatable.bundle.css": "/assets/frappe_io/dist/css-rtl/datatable.bundle.NMEYOFTE.css",
+  "rtl_desk.bundle.css": "/assets/frappe/dist/css-rtl/desk.bundle.ES3NLDNQ.css",
+  "rtl_email.bundle.css": "/assets/frappe/dist/css-rtl/email.bundle.USEPIIYM.css",
+  "rtl_erpnext-web.bundle.css": "/assets/erpnext/dist/css-rtl/erpnext-web.bundle.7AAXIH77.css",
+  "rtl_erpnext.bundle.css": "/assets/erpnext/dist/css-rtl/erpnext.bundle.SEKCMKQK.css",
+  "rtl_erpnext_email.bundle.css": "/assets/erpnext/dist/css-rtl/erpnext_email.bundle.ZBNQWHYL.css",
+  "rtl_hrms.bundle.css": "/assets/hrms/dist/css-rtl/hrms.bundle.6EA3NACR.css",
+  "rtl_india_compliance_account.bundle.css": "/assets/india_compliance/dist/css-rtl/india_compliance_account.bundle.2DG5IYSG.css",
+  "rtl_login.bundle.css": "/assets/frappe/dist/css-rtl/login.bundle.RP5DQ6MO.css",
+  "rtl_pdfjs.bundle.css": "/assets/print_designer/dist/css-rtl/pdfjs.bundle.36F3SGAT.css",
+  "rtl_print.bundle.css": "/assets/frappe/dist/css-rtl/print.bundle.4GC44A5A.css",
+  "rtl_print_designer.bundle.css": "/assets/print_designer/dist/css-rtl/print_designer.bundle.KG2ZXMTN.css",
+  "rtl_print_format.bundle.css": "/assets/frappe/dist/css-rtl/print_format.bundle.XNGPGDZU.css",
+  "rtl_report.bundle.css": "/assets/frappe/dist/css-rtl/report.bundle.GEJHBUQQ.css",
+  "rtl_web_form.bundle.css": "/assets/frappe/dist/css-rtl/web_form.bundle.FPS4MTF7.css",
+  "rtl_website.bundle.css": "/assets/frappe/dist/css-rtl/website.bundle.OP52UWVB.css",
+  "rtl_wiki.bundle.css": "/assets/wiki/dist/css-rtl/wiki.bundle.5BUYD3ZL.css",
+  "sentry.bundle.js": "/assets/frappe/dist/js/sentry.bundle.AX44GVWW.js",
+  "telemetry.bundle.js": "/assets/frappe/dist/js/telemetry.bundle.LKEZCADB.js",
+  "video_player.bundle.js": "/assets/frappe/dist/js/video_player.bundle.DUYYLSFO.js",
+  "web_form.bundle.css": "/assets/frappe/dist/css/web_form.bundle.E37HXZGK.css",
+  "web_form.bundle.js": "/assets/frappe/dist/js/web_form.bundle.BLQZ4OBZ.js",
+  "website.bundle.css": "/assets/frappe/dist/css/website.bundle.LQEHRZZT.css",
+  "wiki.bundle.css": "/assets/wiki/dist/css/wiki.bundle.KGGUFANN.css",
+  "wiki.bundle.js": "/assets/wiki/dist/js/wiki.bundle.WQQQOK77.js",
+  "workflow_builder.bundle.js": "/assets/frappe/dist/js/workflow_builder.bundle.MPAFFZ3D.js"
+ },
+ "is_fc_site": 0,
+ "lang": "en",
+ "sitename": "frappeio.frappe.cloud",
+ "sysdefaults": {
+  "currency": null,
+  "date_format": "dd/mm/yyyy",
+  "first_day_of_the_week": "Sunday",
+  "float_precision": 2,
+  "number_format": "#,##,###.##",
+  "time_format": "HH:mm:ss"
+ },
+ "time_zone": {
+  "system": "Asia/Kolkata",
+  "user": "Asia/Kolkata"
+ }
+}
+		// for backward compatibility of some libs
+		frappe.sys_defaults = frappe.boot.sysdefaults;
+	</script>
+	<script type="text/javascript" src="/assets/frappe/dist/js/frappe-web.bundle.VFID6Y35.js"></script>
+	
+	<script type="text/javascript" src="/website_script.js"></script>
+	<script type="text/javascript" src="/assets/erpnext/dist/js/erpnext-web.bundle.J4A2DQB4.js"></script><script>if (!($('.speaker-name').is(':visible'))) {
+    $('.tracks').addClass('bg-light')
+}
+
+if (!($('.speaker-name').is(':visible'))) {
+    $('.exhibitors').removeClass('bg-light')
+}
+
+if($(".participants").is(':visible')) {
+    $('.tracks').addClass('bg-light')
+}
+
+if($(".participants").is(':visible')) {
+    $('.exhibitors').removeClass('bg-light')
+}</script>
+	<script>frappe.csrf_token = "None";</script></body>
+</html>

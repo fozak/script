@@ -1,0 +1,16 @@
+User-agent: Twitterbot
+Allow: /files
+
+User-agent: *
+Disallow: /app/
+Disallow: /files
+Disallow: /pages
+Disallow: /draft
+Allow: /files/*.ico
+Allow: /files/*.png
+Allow: /files/*.jpeg
+Allow: /files/*.jpg
+Allow: /files/*.webp
+
+Sitemap:https://frappe.io/sitemap.xml
+

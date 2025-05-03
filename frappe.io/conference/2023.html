@@ -1,0 +1,1455 @@
+<!DOCTYPE html>
+<!-- Built on Frappe. https://frappeframework.com/ -->
+<html lang="en" dir="ltr">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="generator" content="frappe">
+
+	
+	<meta name="name" content="Frappeverse 2023"><meta name="description" content="Join us for the biggest Frappe community gathering on September 8 and 9, 2023 in Mumbai."><meta name="image" content="https://frappe.io/files/conf_preview_card.png"><meta property="og:type"  content="website"><meta name="title" content="Frappeverse 2023"><meta name="language" content="en"><meta property="og:title"  content="Frappeverse 2023"><meta property="og:description"  content="Join us for the biggest Frappe community gathering on September 8 and 9, 2023 in Mumbai."><meta property="og:image"  content="https://frappe.io/files/conf_preview_card.png"><meta name="twitter:title" content="Frappeverse 2023"><meta name="twitter:description" content="Join us for the biggest Frappe community gathering on September 8 and 9, 2023 in Mumbai."><meta name="twitter:image" content="https://frappe.io/files/conf_preview_card.png"><meta name="twitter:card" content="summary_large_image">
+
+
+	<title>Frappeverse 2023</title>
+
+	
+	<link
+		rel="shortcut icon"
+		href="/files/frappe-favicon.svg"
+		type="image/x-icon"
+	>
+	<!--for indexing -->
+<meta name="google-site-verification" content="pY8RgHujc1s-KwOQZBldPi1bH5BOZfZBf8cP3oEUc4I" /> 
+ 
+<script type="text/javascript">
+    function getCookie() {
+        return Object.fromEntries(document.cookie.split('; ').map((part) => part.split('=')).map((d) => [d[0], decodeURIComponent(d[1])]));
+    }
+
+    function setCookie(cname, cvalue, exdays, domain) {
+        const d = new Date();
+        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+        let expires = "expires=" + d.toUTCString();
+        if (domain) {
+            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/;" + "domain=" + domain + ";";
+        } else {
+            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/;";
+        }
+    }
+
+    let old_cookie = getCookie();
+
+    // Remove all cookies that are not mentioned in Cookie Policy
+    for (let key in old_cookie) {
+        if (!["sid", "io", "user_id", "user_image", "system_user", "full_name"].includes(key)) {
+            setCookie(key, old_cookie[key], -1);
+            setCookie(key, old_cookie[key], -1, document.domain);
+            setCookie(key, old_cookie[key], -1, "." + document.domain);
+            setCookie(key, old_cookie[key], -1, "analytics.frappe.io");
+        }
+    }
+</script>
+
+
+<!-- Plausible -->
+<script defer data-api="https://frappecloud.com/api/event" data-domain="frappe.io" src="https://frappecloud.com/js/script.js"></script>
+<link type="text/css" rel="stylesheet" href="/assets/frappe/dist/css/website.bundle.LQEHRZZT.css">
+<link type="text/css" rel="stylesheet" href="/assets/erpnext/dist/css/erpnext-web.bundle.TIUGKBCZ.css">
+<link type="text/css" rel="stylesheet" href="/assets/frappe/css/hljs-night-owl.css">
+		
+	<style>body {
+    background: black;
+    color: var(--gray-200);
+}
+
+.navbar {
+    position: absolute;
+    width: 100%;
+    background: transparent;
+    z-index: 1;
+    border-bottom: none;
+}
+
+.navbar-nav {
+    gap: 20px;
+    flex-direction: row;
+}
+
+.nav-link {
+    color: #fff !important;
+}
+
+.navbar-brand [data-bg="dark"] {
+    display: inline-block;
+}
+
+.navbar-brand [data-bg="white"] {
+    display: none;
+}
+
+.hero-section {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    background-color: #000;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+}
+
+.hero-title {
+    font-size: 4rem;
+    max-width: unset;
+    color: #fff;
+    text-shadow: 0px 0px 15px var(--dark);
+}
+
+.hero-subtitle {
+    font-size: 1.5rem;
+    max-width: 36rem;
+    color: #fff;
+    text-shadow: 0px 0px 15px var(--dark);
+}
+
+.hero-copy {
+    line-height: 1.4;
+    font-size: var(--font-size-lg);
+    color: #fff;
+}
+
+.hero-buttons {
+    margin-top: 2.5rem;
+}
+
+.section {
+    position: relative;
+}
+
+.section-title {
+    position: static;
+    left: 0;
+    transform: unset;
+    text-align: center;
+    margin-bottom: 2rem;
+    color: var(--gray-400) !important;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.section-title-left-rotate .section-title {
+    transform: rotate(270deg) translateX(-100%);
+}
+
+.section-title-right .section-title {
+    left: 100%;
+    transform: translateX(-200%);
+}
+
+.section-title {
+    color: var(--gray-500);
+    top: 0;
+}
+
+.section-training img {
+    height: 400px;
+    object-fit: cover;
+    object-position: center -196px;
+}
+
+.speaker-designation {
+    color: var(--gray-300) !important;
+}
+
+.speaker-photo-arc {
+    width: 180px !important;
+    height: 180px !important;
+    left: 25px !important;
+}
+
+.speaker-photo img {
+    width: 150px !important;
+    height: 150px !important;
+}
+
+.speaker-photo {
+    height: 165px !important;
+}
+
+.about-frappe, .sponsor-callout {
+    border: 2px solid var(--gray-800) !important;
+}
+
+.web-footer {
+    background: black;
+    border: none;
+    padding: 10rem 0;
+}
+
+.web-footer .container {
+    background: black;
+}
+
+.web-footer .footer-info .ql-editor {
+    color: var(--gray-400);
+}
+
+.footer-group .footer-group-label {
+    color: var(--gray-500);
+}
+
+.footer-group-links .footer-child-item a {
+    color: white;
+}
+
+.btn {
+    padding: 10px 36px;
+    min-width: 150px;
+    width: auto !important;
+}
+
+.btn-dark,
+.btn-primary.navbar-cta {
+    background-color: var(--gray-800);
+    min-width: auto;
+}
+
+.btn-dark:hover,
+.btn-primary.navbar-cta:hover {
+    background-color: var(--gray-700);
+}
+
+@media (min-width: 768px) {
+    .hero-buttons .btn-dark {
+        width: 197px;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-buttons .btn {
+        padding: 0.7rem 1.2rem;
+        font-size: var(--text-base);
+        max-width: 300px;
+        min-width: 250px;
+    }
+    
+    .hero-buttons {
+        display: flex;
+        gap: 20px;
+        flex-direction: column;
+        margin-top: 2rem;
+        align-items: center;
+    }
+
+    .hero-buttons .btn.ml-3 {
+        margin-left: 0px !important;
+    }
+
+    .hero-title {
+        font-size: var(--font-size-4xl);
+    }
+
+    .hero-subtitle {
+        font-size: var(--font-size-lg);
+    }
+
+    .section-title {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+
+    .section-title-left-rotate .section-title,
+    .section-title-right .section-title {
+        position: static;
+        left: 0;
+        transform: unset;
+    }
+
+    .hero-copy {
+        font-size: var(--font-size-sm);
+    }
+
+    .navbar-nav {
+        gap: 20px;
+        flex-direction: row;
+    }
+}
+
+@media (max-width: 500px) {
+    .navbar-cta {
+        display: none;
+    }
+    .event-details {
+        line-height: 1;
+        font-size: var(--text-lg) !important;
+    }
+    .hero-copy {
+        margin-top: 3rem;
+    }
+}
+
+.section-training .section-description {
+    color: #fff;
+}</style><style data-web-template="2023 Schedule">
+    .schedule-tabs .nav-tabs {
+        display: inline-flex;
+    }
+    .schedule-tabs .nav-tabs .nav-link {
+        margin: 0;
+        padding: 1rem 6rem;
+        font-size: var(--font-size-xl);
+    }
+    
+    .schedule-tabs {
+        overflow-x: auto;
+    }
+    
+    .schedule-tabs button {
+        background-color: transparent;
+        padding: 1.5rem 2rem;
+        outline: none;
+    }
+    .schedule-tabs-content {
+        max-width: 768px;
+        margin: 2rem auto;
+    }
+    .schedule-talk-row {
+        margin: 2rem 0;
+        position: relative;
+    }
+    .schedule-talk-row .title, .schedule-talk-row .speaker {
+        margin: 0;
+    }
+    .schedule-talk-row .title {
+        font-size: var(--font-size-lg);
+        color: var(--gray-200);
+    }
+    .schedule-talk-row .slot-time {
+        font-variant-numeric: tabular-nums;
+        text-align: right;
+    }
+    .schedule-talk-row .speaker-image {
+        width: 2.5rem;
+        margin-right: 1rem;
+        flex-shrink: 0;
+    }
+    .schedule-talk-row .speaker-image img {
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+    .day-theme {
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        font-size: var(--font-size-sm);
+        color: var(--gray-600);
+    }
+    .day-theme-label {
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        font-size: var(--font-size-sm);
+        color: var(--gray-600);
+        text-align: right;
+    }
+    @media (max-width: 767px) {
+        .schedule-tabs .nav-tabs .nav-link {
+            padding: 0.5rem 1.5rem;
+            font-size: var(--font-size-base);
+        }
+        
+        .schedule-talk-row .slot-time {
+            font-variant-numeric: unset;
+            text-align: left;
+            margin: 0 0 0.5rem 3.5rem;
+        }
+    }
+</style><style data-web-template="Sponsor Section 2023">
+.sponsor-callout {
+    border: 2px solid var(--blue-100);
+    padding: 2rem 4rem 4rem 4rem;
+    text-align: center;
+}
+
+.sponsor-logo {
+    max-width: 200px;
+    max-height: 85px;
+}
+
+.sponsor-callout p {
+    font-size: var(--font-size-2xl);
+}
+
+.gold-sponsors {
+    height: 200px;
+}
+
+@media (max-width: 767px) {
+    .sponsor-callout {
+        padding: 2rem;
+    }
+    
+    .sponsor-callout p {
+        font-size: var(--font-size-xl);
+    }
+    .gold-sponsors {
+        height: 50px;
+    }
+}
+</style><style data-web-template="Conference Gallery">
+.conference-gallery {
+    display: flex;
+    gap: 2rem;
+    scroll-snap-type: x mandatory;
+    overflow: auto;
+}
+
+.gallery-image {
+    position: relative;
+}
+
+.conference-gallery img {
+    max-height: 500px;
+    scroll-snap-align: center;
+}
+</style><style data-web-template="About Frappe Section">
+.about-frappe {
+    border: 2px solid var(--blue-100);
+    padding: 4rem;
+    font-size: var(--font-size-lg);
+}
+
+@media (max-width: 767px) {
+    .about-frappe {
+        padding: 2rem;
+    }
+}
+
+h4 {
+    color: #ffffff;
+    margin-top: 0;
+}
+</style>
+
+	<script>
+		window.frappe = {};
+		window._version_number = "{{ build_version }}";
+		frappe.ready_events = [];
+		frappe.ready = function(fn) {
+			frappe.ready_events.push(fn);
+		}
+		window.dev_server = 0;
+		window.socketio_port = 9000;
+		window.show_language_picker = false;
+	</script>
+</head>
+<body frappe-session-status="logged-out" data-path="conference/2023" class="">
+
+		<nav class="navbar navbar-light navbar-expand-lg">
+<div class="container">
+<a class="navbar-brand" href="/"><img src="/files/frappe-footer.png"/></a>
+</div>
+</nav>
+
+
+
+
+
+
+
+
+<div id="page-frappeverse-2023" data-path="conference/2023"source-type="Generator" data-doctype="Web Page"source-content-type="Page Builder">
+	
+<div class="page-content-wrapper">
+	<!-- breadcrumbs -->
+	<div class="page-breadcrumbs">
+		
+    
+    
+    
+
+	</div>
+
+	
+	<main class="">
+		<div class="page-header-wrapper">
+			<div class="page-header">
+				
+			</div>
+
+			
+		</div>
+
+		<div class="page_content"><section class="section section-padding-top pb-md-10 pb-1 hero-section" data-section-idx="1" data-section-template="Hero" style="background: url(/files/cover_image_space.png) no-repeat center center; background-size: cover;"><div class="container"><div class="hero align-center">
+<div class="hero-content">
+<h1 class="hero-title">Think Beyond</h1><p class="hero-subtitle">
+<span class="my-4 d-block font-size-lg">
+<span class="d-md-inline event-details bold" style="font-size: 1.4rem">
+   The Frappe + ERPNext Conference with the same spirit and energy in a new avatar!
+  </span>
+</span>
+<span class="hero-copy d-block">
+Join us again next year!
+</span>
+
+</p></div>
+</div></div></section><section class="section section-padding-top section-padding-bottom" data-section-idx="2" data-section-template="Custom HTML"><div class="container"><h3 class="section-title" style="display: flex; justify-content: center; margin-bottom: 20px;">Watch the livestream video</h3>
+<div style="display: flex; justify-content: center;">
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="" frameborder="0" height="315" src="https://www.youtube.com/embed/playlist?list=PL3lFfCEoMxvx4bAfdqFYyVVPT9Fr7B3uV" title="YouTube video player" width="560"></iframe>
+</div></div></section><section class="section section-padding-top section-padding-bottom" data-section-idx="4" data-section-template="2023 Schedule"><div class="container">
+<h2 class="section-title">Schedule</h2>
+<div class="schedule-tabs text-center">
+<ul class="nav nav-tabs" role="tablist">
+<li class="nav-item" role="presentation">
+<button aria-controls="day1" aria-selected="true" class="nav-link active" data-target="#day1" data-toggle="tab" id="day1-tab" role="tab" type="button">
+<div>Day 1</div>
+<div class="font-size-sm">Fri, Sep 8</div>
+</button>
+</li>
+<li class="nav-item" role="presentation">
+<button aria-controls="day2" class="nav-link" data-target="#day2" data-toggle="tab" id="day2-tab" role="tab" type="button">
+<div>Day 2</div>
+<div class="font-size-sm">Sat, Sep 9</div>
+</button>
+</li>
+</ul>
+</div>
+<!-- Tab panes -->
+<div class="schedule-tabs-content tab-content">
+<div aria-labelledby="day1-tab" class="tab-pane fade show active" id="day1" role="tabpanel">
+<div class="schedule-talk-row">
+<div class="row">
+<div class="col-12 col-md-4">
+<!--<div class="day-theme-label">Theme</div>-->
+</div>
+<div class="col-12 col-md-8 flex">
+<div class="speaker-image">
+</div>
+<div class="day-theme">Products day</div>
+</div>
+</div>
+</div>
+<div class="schedule-day">
+<div class="schedule-talk-row">
+<div class="row">
+<div class="col-12 col-md-4">
+<div class="slot-time">
+                08:30 - 09:30
+            </div>
+</div>
+<div class="col-12 col-md-8 flex">
+<div class="speaker-image">
+</div>
+<div>
+<h3 class="title">Registration and morning tea</h3>
+</div>
+</div>
+</div>
+</div>
+<div class="schedule-talk-row">
+<div class="row">
+<div class="col-12 col-md-4">
+<div class="slot-time">
+                09:30 - 11:20
+            </div>
+</div>
+<div class="col-12 col-md-8 flex">
+<div class="speaker-image">
+<img alt="Rushabh M, Faris A, Jannat P, Saqib A, Sabu S, Alan, Arjun C, Shariq A, Suraj S, Hussain N" src="https://frappe.io/files/Offsite_Rushabh.jpg"/>
+</div>
+<div>
+<h3 class="title">Products Keynote - Part 1</h3>
+<p class="speaker">Rushabh M, Faris A, Jannat P, Saqib A, Sabu S, Alan, Arjun C, Shariq A, Suraj S, Hussain N</p>
+</div>
+</div>
+</div>
+<a class="stretched-link" href="/conference/2023/talk/e21215ec5a">
+<span class="sr-only">View talk</span>
+</a>
+</div>
+<div class="schedule-talk-row">
+<div class="row">
+<div class="col-12 col-md-4">
+<div class="slot-time">
+                11:20 - 12:00
+            </div>
+</div>
+<div class="col-12 col-md-8 flex">
+<div class="speaker-image">
+</div>
+<div>
+<h3 class="title">Tea break</h3>
+</div>
+</div>
+</div>
+</div>
+<div class="schedule-talk-row">
+<div class="row">
+<div class="col-12 col-md-4">
+<div class="slot-time">
+                12:00 - 13:20
+            </div>
+</div>
+<div class="col-12 col-md-8 flex">
+<div class="speaker-image">
+<img alt="Nabin H, Ankush M, Shariq A, Deepesh G, Rohit W, Rucha M, Aditya H, Rutwik H, Saurabh P, Balamurali M, Athul C," src="/files/nabin 2018-12-15 23_07_49b86b66.jpeg"/>
+</div>
+<div>
+<h3 class="title">Products Keynote - Part 2</h3>
+<p class="speaker">Nabin H, Ankush M, Shariq A, Deepesh G, Rohit W, Rucha M, Aditya H, Rutwik H, Saurabh P, Balamurali M, Athul C,</p>
+</div>
+</div>
+</div>
+<a class="stretched-link" href="/conference/2023/talk/6b4c27965b">
+<span class="sr-only">View talk</span>
+</a>
+</div>
+<div class="schedule-talk-row">
+<div class="row">
+<div class="col-12 col-md-4">
+<div class="slot-time">
+                13:20 - 14:30
+            </div>
+</div>
+<div class="col-12 col-md-8 flex">
+<div class="speaker-image">
+</div>
+<div>
+<h3 class="title">Lunch break</h3>
+</div>
+</div>
+</div>
+</div>
+<div class="schedule-talk-row">
+<div class="row">
+<div class="col-12 col-md-4">
+<div class="slot-time">
+                14:30 - 14:50
+            </div>
+</div>
+<div class="col-12 col-md-8 flex">
+<div class="speaker-image">
+<img alt="Janhvi Patil, Aditya Patil" src="/files/IMG-3613022b59.jpg"/>
+</div>
+<div>
+<h3 class="title">Raven - A messaging tool built using Frappe</h3>
+<p class="speaker">Janhvi Patil, Aditya Patil</p>
+</div>
+</div>
+</div>
+<a class="stretched-link" href="/conference/2023/talk/c3e0c2ad1e">
+<span class="sr-only">View talk</span>
+</a>
+</div>
+<div class="schedule-talk-row">
+<div class="row">
+<div class="col-12 col-md-4">
+<div class="slot-time">
+                14:50 - 15:10
+            </div>
+</div>
+<div class="col-12 col-md-8 flex">
+<div class="speaker-image">
+<img alt="Rakin Karunakran, Dany Robert" src="/files/1598945571684.jpeg"/>
+</div>
+<div>
+<h3 class="title">NeuPOS and more</h3>
+<p class="speaker">Rakin Karunakran, Dany Robert</p>
+</div>
+</div>
+</div>
+<a class="stretched-link" href="/conference/2023/talk/ce4b17d551">
+<span class="sr-only">View talk</span>
+</a>
+</div>
+<div class="schedule-talk-row">
+<div class="row">
+<div class="col-12 col-md-4">
+<div class="slot-time">
+                15:10 - 15:30
+            </div>
+</div>
+<div class="col-12 col-md-8 flex">
+<div class="speaker-image">
+<img alt="Karan Tamboli, Atul Agrawal" src="/files/Screenshot 2023-07-27 at 4.26.00 PM.png"/>
+</div>
+<div>
+<h3 class="title">Next Generation eCommerce Platform with ERPNext</h3>
+<p class="speaker">Karan Tamboli, Atul Agrawal</p>
+</div>
+</div>
+</div>
+<a class="stretched-link" href="/conference/2023/talk/b1ea05a9ed">
+<span class="sr-only">View talk</span>
+</a>
+</div>
+<div class="schedule-talk-row">
+<div class="row">
+<div class="col-12 col-md-4">
+<div class="slot-time">
+                15:30 - 15:50
+            </div>
+</div>
+<div class="col-12 col-md-8 flex">
+<div class="speaker-image">
+<img alt="Raaj Tailor" src="/files/1675016336355e69e1b.jpeg"/>
+</div>
+<div>
+<h3 class="title">ERPNext CoPilot</h3>
+<p class="speaker">Raaj Tailor</p>
+</div>
+</div>
+</div>
+<a class="stretched-link" href="/conference/2023/talk/0c74e18f74">
+<span class="sr-only">View talk</span>
+</a>
+</div>
+<div class="schedule-talk-row">
+<div class="row">
+<div class="col-12 col-md-4">
+<div class="slot-time">
+                15:50 - 16:00
+            </div>
+</div>
+<div class="col-12 col-md-8 flex">
+<div class="speaker-image">
+<img alt="Atul Agrawal, Vignesh" src="/files/photo.jpg"/>
+</div>
+<div>
+<h3 class="title">HDFC, ICICI and Yes Bank Integration with ERPNext</h3>
+<p class="speaker">Atul Agrawal, Vignesh</p>
+</div>
+</div>
+</div>
+<a class="stretched-link" href="/conference/2023/talk/92c3969054">
+<span class="sr-only">View talk</span>
+</a>
+</div>
+<div class="schedule-talk-row">
+<div class="row">
+<div class="col-12 col-md-4">
+<div class="slot-time">
+                16:00 - 16:30
+            </div>
+</div>
+<div class="col-12 col-md-8 flex">
+<div class="speaker-image">
+</div>
+<div>
+<h3 class="title">Tea break</h3>
+</div>
+</div>
+</div>
+</div>
+<div class="schedule-talk-row">
+<div class="row">
+<div class="col-12 col-md-4">
+<div class="slot-time">
+                16:30 - 17:30
+            </div>
+</div>
+<div class="col-12 col-md-8 flex">
+<div class="speaker-image">
+</div>
+<div>
+<h3 class="title">Flash talks</h3>
+</div>
+</div>
+</div>
+</div>
+<div class="schedule-talk-row">
+<div class="row">
+<div class="col-12 col-md-4">
+<div class="slot-time">
+                17:30 - 18:00
+            </div>
+</div>
+<div class="col-12 col-md-8 flex">
+<div class="speaker-image">
+</div>
+<div>
+<h3 class="title">Award Ceremony</h3>
+</div>
+</div>
+</div>
+</div>
+<div class="schedule-talk-row">
+<div class="row">
+<div class="col-12 col-md-4">
+<div class="slot-time">
+                19:00 - 21:30
+            </div>
+</div>
+<div class="col-12 col-md-8 flex">
+<div class="speaker-image">
+</div>
+<div>
+<h3 class="title">Network over dinner</h3>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div aria-labelledby="day2-tab" class="tab-pane fade" id="day2" role="tabpanel">
+<div class="schedule-talk-row">
+<div class="row">
+<div class="col-12 col-md-4">
+<!--<div class="day-theme-label">Theme</div>-->
+</div>
+<div class="col-12 col-md-8 flex">
+<div class="speaker-image">
+</div>
+<div class="day-theme">Community day</div>
+</div>
+</div>
+</div>
+<div class="schedule-day">
+<div class="schedule-talk-row">
+<div class="row">
+<div class="col-12 col-md-4">
+<div class="slot-time">
+                08:30 - 09:30
+            </div>
+</div>
+<div class="col-12 col-md-8 flex">
+<div class="speaker-image">
+</div>
+<div>
+<h3 class="title">Registration and morning tea</h3>
+</div>
+</div>
+</div>
+</div>
+<div class="schedule-talk-row">
+<div class="row">
+<div class="col-12 col-md-4">
+<div class="slot-time">
+                09:30 - 10:50
+            </div>
+</div>
+<div class="col-12 col-md-8 flex">
+<div class="speaker-image">
+<img alt="Michelle A, Umair S, Pushkar J, Sayali Y,  Mayank N, Mahima G, Ankita R, Kundendu S" src="/files/Offsite_Michelle4bf914a36227.jpg"/>
+</div>
+<div>
+<h3 class="title">Business Keynote</h3>
+<p class="speaker">Michelle A, Umair S, Pushkar J, Sayali Y,  Mayank N, Mahima G, Ankita R, Kundendu S</p>
+</div>
+</div>
+</div>
+<a class="stretched-link" href="/conference/2023/talk/5da238e9ce">
+<span class="sr-only">View talk</span>
+</a>
+</div>
+<div class="schedule-talk-row">
+<div class="row">
+<div class="col-12 col-md-4">
+<div class="slot-time">
+                10:50 - 11:10
+            </div>
+</div>
+<div class="col-12 col-md-8 flex">
+<div class="speaker-image">
+<img alt="Jay" src="/files/1516317379977.jpeg"/>
+</div>
+<div>
+<h3 class="title">Proprietary to Open Source Journey from SAP B1 to ERPNext</h3>
+<p class="speaker">Jay</p>
+</div>
+</div>
+</div>
+<a class="stretched-link" href="/conference/2023/talk/38f361d64c">
+<span class="sr-only">View talk</span>
+</a>
+</div>
+<div class="schedule-talk-row">
+<div class="row">
+<div class="col-12 col-md-4">
+<div class="slot-time">
+                11:10 - 11:30
+            </div>
+</div>
+<div class="col-12 col-md-8 flex">
+<div class="speaker-image">
+<img alt="Abdul Gafoor, Safwan Erooth" src="/files/Gafoorka-Image.jpg"/>
+</div>
+<div>
+<h3 class="title">On the Menu: Dishes, Delights, and Digital Transformation with ERPNext</h3>
+<p class="speaker">Abdul Gafoor, Safwan Erooth</p>
+</div>
+</div>
+</div>
+<a class="stretched-link" href="/conference/2023/talk/d304db487c">
+<span class="sr-only">View talk</span>
+</a>
+</div>
+<div class="schedule-talk-row">
+<div class="row">
+<div class="col-12 col-md-4">
+<div class="slot-time">
+                11:30 - 12:00
+            </div>
+</div>
+<div class="col-12 col-md-8 flex">
+<div class="speaker-image">
+</div>
+<div>
+<h3 class="title">Tea break</h3>
+</div>
+</div>
+</div>
+</div>
+<div class="schedule-talk-row">
+<div class="row">
+<div class="col-12 col-md-4">
+<div class="slot-time">
+                12:00 - 12:20
+            </div>
+</div>
+<div class="col-12 col-md-8 flex">
+<div class="speaker-image">
+<img alt="Essam Alnuman, Mohammed AbuKhamseen" src="/files/Essam AlNuman.jpeg"/>
+</div>
+<div>
+<h3 class="title">Digital Health Transformation with Frappe and ERPNext</h3>
+<p class="speaker">Essam Alnuman, Mohammed AbuKhamseen</p>
+</div>
+</div>
+</div>
+<a class="stretched-link" href="/conference/2023/talk/5306936f3d">
+<span class="sr-only">View talk</span>
+</a>
+</div>
+<div class="schedule-talk-row">
+<div class="row">
+<div class="col-12 col-md-4">
+<div class="slot-time">
+                12:20 - 12:40
+            </div>
+</div>
+<div class="col-12 col-md-8 flex">
+<div class="speaker-image">
+<img alt="Jamsheer, Salwa Shaikh" src="/files/medpfe5a00.png"/>
+</div>
+<div>
+<h3 class="title">ONEFM - A frappeverse inside!!</h3>
+<p class="speaker">Jamsheer, Salwa Shaikh</p>
+</div>
+</div>
+</div>
+<a class="stretched-link" href="/conference/2023/talk/7b6c7609b2">
+<span class="sr-only">View talk</span>
+</a>
+</div>
+<div class="schedule-talk-row">
+<div class="row">
+<div class="col-12 col-md-4">
+<div class="slot-time">
+                12:40 - 13:00
+            </div>
+</div>
+<div class="col-12 col-md-8 flex">
+<div class="speaker-image">
+<img alt="Ganesh Raghupathy" src="/files/IMG_0379.JPG"/>
+</div>
+<div>
+<h3 class="title">Process Manufacturing Case Study: How we used ERPNext to democratise system usage and decision making</h3>
+<p class="speaker">Ganesh Raghupathy</p>
+</div>
+</div>
+</div>
+<a class="stretched-link" href="/conference/2023/talk/3cc471ad78">
+<span class="sr-only">View talk</span>
+</a>
+</div>
+<div class="schedule-talk-row">
+<div class="row">
+<div class="col-12 col-md-4">
+<div class="slot-time">
+                13:00 - 13:20
+            </div>
+</div>
+<div class="col-12 col-md-8 flex">
+<div class="speaker-image">
+<img alt="Marica D'souza" src="/files/profileb2da1f5b1592.jpeg"/>
+</div>
+<div>
+<h3 class="title">Improving the Bank Syncing experience in ERPNext</h3>
+<p class="speaker">Marica D'souza</p>
+</div>
+</div>
+</div>
+<a class="stretched-link" href="/conference/2023/talk/218ba488d7">
+<span class="sr-only">View talk</span>
+</a>
+</div>
+<div class="schedule-talk-row">
+<div class="row">
+<div class="col-12 col-md-4">
+<div class="slot-time">
+                13:20 - 14:20
+            </div>
+</div>
+<div class="col-12 col-md-8 flex">
+<div class="speaker-image">
+</div>
+<div>
+<h3 class="title">Lunch break</h3>
+</div>
+</div>
+</div>
+</div>
+<div class="schedule-talk-row">
+<div class="row">
+<div class="col-12 col-md-4">
+<div class="slot-time">
+                14:20 - 14:40
+            </div>
+</div>
+<div class="col-12 col-md-8 flex">
+<div class="speaker-image">
+<img alt="Laxman Tandon, Ketan Desai" src="/files/Laxman Imageadeca7.jpg"/>
+</div>
+<div>
+<h3 class="title">Data Migration from Traditional to New Age (TallyPrime to ERPNext)</h3>
+<p class="speaker">Laxman Tandon, Ketan Desai</p>
+</div>
+</div>
+</div>
+<a class="stretched-link" href="/conference/2023/talk/edcd610359">
+<span class="sr-only">View talk</span>
+</a>
+</div>
+<div class="schedule-talk-row">
+<div class="row">
+<div class="col-12 col-md-4">
+<div class="slot-time">
+                14:40 - 15:00
+            </div>
+</div>
+<div class="col-12 col-md-8 flex">
+<div class="speaker-image">
+<img alt="Rajiv Sangoi, Asim Nilose" src="/files/1667381514081.jpeg"/>
+</div>
+<div>
+<h3 class="title">ERPNext at Rio - A tranformation journey</h3>
+<p class="speaker">Rajiv Sangoi, Asim Nilose</p>
+</div>
+</div>
+</div>
+<a class="stretched-link" href="/conference/2023/talk/4a4ef00164">
+<span class="sr-only">View talk</span>
+</a>
+</div>
+<div class="schedule-talk-row">
+<div class="row">
+<div class="col-12 col-md-4">
+<div class="slot-time">
+                15:00 - 15:10
+            </div>
+</div>
+<div class="col-12 col-md-8 flex">
+<div class="speaker-image">
+<img alt="Syed Mujeer Hashmi, Adv. Abdul Muqhtadir" src="/files/Mujeer84bc42aff341.jpeg"/>
+</div>
+<div>
+<h3 class="title">ERPNext for Legal Practice Management</h3>
+<p class="speaker">Syed Mujeer Hashmi, Adv. Abdul Muqhtadir</p>
+</div>
+</div>
+</div>
+<a class="stretched-link" href="/conference/2023/talk/71c77a3c14">
+<span class="sr-only">View talk</span>
+</a>
+</div>
+<div class="schedule-talk-row">
+<div class="row">
+<div class="col-12 col-md-4">
+<div class="slot-time">
+                15:10 - 15:20
+            </div>
+</div>
+<div class="col-12 col-md-8 flex">
+<div class="speaker-image">
+<img alt="Sherin KR, Muhammad MP" src="/files/SherinKR.JPG"/>
+</div>
+<div>
+<h3 class="title">AuMMS - Aurum Manufacturing Management System</h3>
+<p class="speaker">Sherin KR, Muhammad MP</p>
+</div>
+</div>
+</div>
+<a class="stretched-link" href="/conference/2023/talk/4ab80f0ce2">
+<span class="sr-only">View talk</span>
+</a>
+</div>
+<div class="schedule-talk-row">
+<div class="row">
+<div class="col-12 col-md-4">
+<div class="slot-time">
+                15:20 - 15:30
+            </div>
+</div>
+<div class="col-12 col-md-8 flex">
+<div class="speaker-image">
+<img alt="Rakesh Chougule, Shweta Chougule" src="/files/RCd8bd0b.jpg"/>
+</div>
+<div>
+<h3 class="title">ERPNext for Sugar Industry</h3>
+<p class="speaker">Rakesh Chougule, Shweta Chougule</p>
+</div>
+</div>
+</div>
+<a class="stretched-link" href="/conference/2023/talk/f070035760">
+<span class="sr-only">View talk</span>
+</a>
+</div>
+<div class="schedule-talk-row">
+<div class="row">
+<div class="col-12 col-md-4">
+<div class="slot-time">
+                15:30 - 16:00
+            </div>
+</div>
+<div class="col-12 col-md-8 flex">
+<div class="speaker-image">
+</div>
+<div>
+<h3 class="title">Growing with Frappe - Partners panel</h3>
+<p class="speaker">Rohit Sharma, Mina Ezzat Aziz, Kanhaiya Kale, Mitesh Chokshi</p>
+</div>
+</div>
+</div>
+</div>
+<div class="schedule-talk-row">
+<div class="row">
+<div class="col-12 col-md-4">
+<div class="slot-time">
+                16:00 - 16:30
+            </div>
+</div>
+<div class="col-12 col-md-8 flex">
+<div class="speaker-image">
+</div>
+<div>
+<h3 class="title">Tea break</h3>
+</div>
+</div>
+</div>
+</div>
+<div class="schedule-talk-row">
+<div class="row">
+<div class="col-12 col-md-4">
+<div class="slot-time">
+                16:30 - 17:00
+            </div>
+</div>
+<div class="col-12 col-md-8 flex">
+<div class="speaker-image">
+</div>
+<div>
+<h3 class="title">Experience with Frappeverse  - Customers Panel</h3>
+<p class="speaker">Chandni Sharma, Pradeep Wakde, Saju George, Harshvardhana Nagaraju</p>
+</div>
+</div>
+</div>
+</div>
+<div class="schedule-talk-row">
+<div class="row">
+<div class="col-12 col-md-4">
+<div class="slot-time">
+                17:00 - 17:45
+            </div>
+</div>
+<div class="col-12 col-md-8 flex">
+<div class="speaker-image">
+</div>
+<div>
+<h3 class="title">Flash Talks</h3>
+</div>
+</div>
+</div>
+</div>
+<div class="schedule-talk-row">
+<div class="row">
+<div class="col-12 col-md-4">
+<div class="slot-time">
+                17:45 - 18:45
+            </div>
+</div>
+<div class="col-12 col-md-8 flex">
+<div class="speaker-image">
+</div>
+<div>
+<h3 class="title">Future of community</h3>
+<p class="speaker">Open Discussion</p>
+</div>
+</div>
+</div>
+</div>
+<div class="schedule-talk-row">
+<div class="row">
+<div class="col-12 col-md-4">
+<div class="slot-time">
+                18:45 - 19:00
+            </div>
+</div>
+<div class="col-12 col-md-8 flex">
+<div class="speaker-image">
+</div>
+<div>
+<h3 class="title">Closing note with group photography</h3>
+</div>
+</div>
+</div>
+</div>
+<div class="schedule-talk-row">
+<div class="row">
+<div class="col-12 col-md-4">
+<div class="slot-time">
+                19:00 - 21:30
+            </div>
+</div>
+<div class="col-12 col-md-8 flex">
+<div class="speaker-image">
+</div>
+<div>
+<h3 class="title">Network over dinner</h3>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p class="text-center font-size-sm">
+    Note: The schedule is tentative and there might be minor changes.
+</p>
+
+</div></section><section class="section" data-section-idx="7" data-section-template="Sponsor Section 2023" id="sponsors"><div class="container"><h2 class="section-title">Sponsors</h2>
+<!--<div class="sponsor-callout">-->
+<!--    <p style="max-width: 40ch; margin-inline: auto; ">-->
+<!--        We’re always looking for supporters to help us throw the biggest open-source conference of the year. -->
+<!--    </p>-->
+<div class="sponsor-callout">
+<div class="mt-8">
+<p style="max-width: 40ch; margin-inline: auto; ">
+       Platinum 
+    </p>
+<div class="align-items-center d-flex flex-wrap" style="justify-content: space-evenly; gap: 1rem;">
+<div>
+<a class="d-block" href="https://www.smbcatalyst.com" target="_blank">
+<img alt="Logo of SMB Catalyst" class="sponsor-logo" src="/files/Rectangle 18642.png"/>
+</a>
+</div>
+<div>
+<a class="d-block" href="https://zerodhacapital.com/" target="_blank">
+<img alt="Logo of Zerodha Technology Private  Limited" class="sponsor-logo" src="/files/zerodha-black.png"/>
+</a>
+</div>
+<div>
+<a class="d-block" href="https://indictranstech.com/" target="_blank">
+<img alt="Logo of New Indictrans Technologies Pvt Ltd" class="sponsor-logo" src="/files/indictrans-black.png"/>
+</a>
+</div>
+<div>
+<a class="d-block" href="http://8848digital.com/erp-solutions" target="_blank">
+<img alt="Logo of 8848 Digital" class="sponsor-logo" src="/files/8848-dark.jpg"/>
+</a>
+</div>
+</div>
+</div>
+<div class="mt-8">
+<p style="max-width: 40ch; margin-inline: auto; ">
+       Gold 
+    </p>
+<div class="align-items-center d-flex flex-wrap" style="justify-content: space-evenly; gap: 1rem;">
+<div>
+<a class="d-block" href="https://nestorbird.com/" target="_blank">
+<img alt="Logo of Nestorbird Ltd" class="sponsor-logo" src="/files/Group 427322348.png"/>
+</a>
+</div>
+<div>
+<a class="d-block" href="www.ibsl-it.com" target="_blank">
+<img alt="Logo of Indiba Business Solutions" class="sponsor-logo" src="/files/Rectangle 1252-2.png"/>
+</a>
+</div>
+<div>
+<a class="d-block" href="https://navari.co.ke/" target="_blank">
+<img alt="Logo of Navari Ltd" class="sponsor-logo" src="/files/NavariLogoWhite.png"/>
+</a>
+</div>
+</div>
+</div>
+<div class="mt-8">
+<p style="max-width: 40ch; margin-inline: auto; ">
+       Silver 
+    </p>
+<div class="align-items-center d-flex flex-wrap" style="justify-content: space-evenly; gap: 1rem;">
+<div>
+<a class="d-block" href="https://wokfoz.com" target="_blank">
+<img alt="Logo of iWEX Infomatics" class="sponsor-logo" src="/files/Rectangle 18641.png"/>
+</a>
+</div>
+<div>
+<a class="d-block" href="axentor.co" target="_blank">
+<img alt="Logo of Axentor, LLC" class="sponsor-logo" src="/files/axentor_light_logo@4x.png"/>
+</a>
+</div>
+</div>
+</div>
+<br/>
+<br/>
+<!--<div class="mt-1">-->
+<!--    <a class="btn btn-lg btn-secondary" href="/sponsor">Become a Sponsor</a>-->
+<!--</div>-->
+</div>
+</div></section><section class="section section-padding-top section-padding-bottom" data-section-idx="9" data-section-template="Conference Gallery" id="gallery"><h2 class="section-title">Over the years</h2>
+<div class="conference-gallery">
+<img src="/files/conf-18-2.JPG"/>
+<img src="/files/conf-18-3.JPG"/>
+<img src="/files/DSC_0109ff217d.JPG"/>
+<img src="/files/conf-19-4.JPG"/>
+<img src="/files/IMG_9367-min.jpg"/>
+<img src="/files/IMG_91534fb739.jpg"/>
+<img src="/files/IMG_9618-min.jpg"/>
+<img src="/files/IMG_9079-min.jpg"/>
+</div>
+</section><section class="section" data-section-idx="10" data-section-template="About Frappe Section" id="about"><div class="container"><!--<h2 class="section-title">About Us</h2>-->
+<div class="about-frappe">
+<img alt="Frappe Logo" class="mb-4" src="https://frappe.io/files/frappe.png" style="width: 100px"/>
+<p>
+        Frappe is committed to building world-class open-source software products and 
+        services. For the past 14 years, alongside a wonderful community, we have been providing and promoting 
+        free and open-source software for businesses worldwide.
+    </p>
+</div>
+</div></section></div>
+
+		<div class="page-footer"></div>
+	</main>
+	
+</div>
+
+</div>
+
+
+<div id="all-symbols" style="display:none"></div><script type="text/javascript">fetch(`/assets/frappe/icons/timeless/icons.svg?v=${window._version_number}`, {credentials: "same-origin"}).then((r) => r.text()).then((svg) => {let c = document.getElementById("all-symbols"); c.insertAdjacentHTML("beforeend", svg);});</script><script type="text/javascript">fetch(`/assets/frappe/icons/espresso/icons.svg?v=${window._version_number}`, {credentials: "same-origin"}).then((r) => r.text()).then((svg) => {let c = document.getElementById("all-symbols"); c.insertAdjacentHTML("beforeend", svg);});</script>
+	<!-- js should be loaded in body! -->
+	<script>
+		frappe.boot = {
+ "apps_data": {
+  "apps": [],
+  "default_path": "",
+  "is_desk_apps": 1
+ },
+ "assets_json": {
+  "bank-reconciliation-tool.bundle.js": "/assets/erpnext/dist/js/bank-reconciliation-tool.bundle.FPQRAOXF.js",
+  "billing.bundle.js": "/assets/frappe/dist/js/billing.bundle.TQHLK7UT.js",
+  "bom_configurator.bundle.js": "/assets/erpnext/dist/js/bom_configurator.bundle.HVCV6OL2.js",
+  "bootstrap-4-web.bundle.js": "/assets/frappe/dist/js/bootstrap-4-web.bundle.FOZOVELL.js",
+  "build_events.bundle.js": "/assets/frappe/dist/js/build_events.bundle.BCX32TWL.js",
+  "buy_credits.bundle.js": "/assets/partner_relationship_management/dist/js/buy_credits.bundle.PTRLR7SB.js",
+  "calendar.bundle.js": "/assets/frappe/dist/js/calendar.bundle.4A4YITIU.js",
+  "charts-demo.bundle.js": "/assets/frappe_io/dist/js/charts-demo.bundle.VNV6RUNF.js",
+  "contributions.bundle.css": "/assets/wiki/dist/css/contributions.bundle.RBO25XZK.css",
+  "controls.bundle.js": "/assets/frappe/dist/js/controls.bundle.OBHXLYSV.js",
+  "data_import_tools.bundle.js": "/assets/frappe/dist/js/data_import_tools.bundle.Q5YT4XP2.js",
+  "datatable.bundle.css": "/assets/frappe_io/dist/css/datatable.bundle.3P2RWE3E.css",
+  "datatable.bundle.js": "/assets/frappe_io/dist/js/datatable.bundle.SOZHUVE4.js",
+  "desk.bundle.css": "/assets/frappe/dist/css/desk.bundle.6QJ7RADB.css",
+  "desk.bundle.js": "/assets/frappe/dist/js/desk.bundle.Q2WZITIR.js",
+  "dialog.bundle.js": "/assets/frappe/dist/js/dialog.bundle.3F5VODSL.js",
+  "education.bundle.js": "/assets/education/dist/js/education.bundle.PSPI3YNS.js",
+  "email.bundle.css": "/assets/frappe/dist/css/email.bundle.J3DSMELI.css",
+  "erpnext-web.bundle.css": "/assets/erpnext/dist/css/erpnext-web.bundle.TIUGKBCZ.css",
+  "erpnext-web.bundle.js": "/assets/erpnext/dist/js/erpnext-web.bundle.J4A2DQB4.js",
+  "erpnext.bundle.css": "/assets/erpnext/dist/css/erpnext.bundle.XD674WRI.css",
+  "erpnext.bundle.js": "/assets/erpnext/dist/js/erpnext.bundle.R5JXFCLX.js",
+  "erpnext_email.bundle.css": "/assets/erpnext/dist/css/erpnext_email.bundle.DFYL6BVU.css",
+  "file_uploader.bundle.js": "/assets/frappe/dist/js/file_uploader.bundle.ZPHNBOZS.js",
+  "form.bundle.js": "/assets/frappe/dist/js/form.bundle.TPF6OHJK.js",
+  "form_builder.bundle.js": "/assets/frappe/dist/js/form_builder.bundle.NRPX4YQU.js",
+  "frappe-web.bundle.js": "/assets/frappe/dist/js/frappe-web.bundle.VFID6Y35.js",
+  "gstr1.bundle.js": "/assets/india_compliance/dist/js/gstr1.bundle.LMOF55ES.js",
+  "hierarchy-chart.bundle.js": "/assets/hrms/dist/js/hierarchy-chart.bundle.5E224PCR.js",
+  "hrms.bundle.css": "/assets/hrms/dist/css/hrms.bundle.WEXO5WM5.css",
+  "hrms.bundle.js": "/assets/hrms/dist/js/hrms.bundle.FNZYA5KG.js",
+  "ims.bundle.js": "/assets/india_compliance/dist/js/ims.bundle.C4HROEWL.js",
+  "india_compliance.bundle.js": "/assets/india_compliance/dist/js/india_compliance.bundle.WV4RD5A3.js",
+  "india_compliance_account.bundle.css": "/assets/india_compliance/dist/css/india_compliance_account.bundle.NYGQSTE6.css",
+  "india_compliance_account.bundle.js": "/assets/india_compliance/dist/js/india_compliance_account.bundle.OPWAD7DA.js",
+  "interview.bundle.js": "/assets/hrms/dist/js/interview.bundle.C7CDEMYA.js",
+  "item-dashboard.bundle.js": "/assets/erpnext/dist/js/item-dashboard.bundle.WEGR7SLR.js",
+  "kanban_board.bundle.js": "/assets/frappe/dist/js/kanban_board.bundle.F6FPXXED.js",
+  "lending.bundle.js": "/assets/lending/dist/js/lending.bundle.EVKAPGTK.js",
+  "libs.bundle.js": "/assets/frappe/dist/js/libs.bundle.TIV7ZGVY.js",
+  "list.bundle.js": "/assets/frappe/dist/js/list.bundle.CTIEC4L7.js",
+  "login.bundle.css": "/assets/frappe/dist/css/login.bundle.LMNP2TEO.css",
+  "logtypes.bundle.js": "/assets/frappe/dist/js/logtypes.bundle.5KO3ZOOI.js",
+  "onboarding_tours.bundle.js": "/assets/frappe/dist/js/onboarding_tours.bundle.RAUR6X4Z.js",
+  "pdfjs.bundle.css": "/assets/print_designer/dist/css/pdfjs.bundle.Z2TQG5OV.css",
+  "performance.bundle.js": "/assets/hrms/dist/js/performance.bundle.63UL5NS7.js",
+  "photoswipe.bundle.js": "/assets/frappe/dist/js/photoswipe.bundle.YSXZQA64.js",
+  "point-of-sale.bundle.js": "/assets/erpnext/dist/js/point-of-sale.bundle.BA7TZAGR.js",
+  "print.bundle.css": "/assets/frappe/dist/css/print.bundle.DKL44YGN.css",
+  "print_designer.bundle.css": "/assets/print_designer/dist/css/print_designer.bundle.6QE4XIB7.css",
+  "print_designer.bundle.js": "/assets/print_designer/dist/js/print_designer.bundle.2JYNBT6J.js",
+  "print_format.bundle.css": "/assets/frappe/dist/css/print_format.bundle.P3PPNHEO.css",
+  "print_format_builder.bundle.js": "/assets/frappe/dist/js/print_format_builder.bundle.VQYWNAGA.js",
+  "purchase_reconciliation_tool.bundle.js": "/assets/india_compliance/dist/js/purchase_reconciliation_tool.bundle.LOLTTYSQ.js",
+  "report.bundle.css": "/assets/frappe/dist/css/report.bundle.VTBDJUHO.css",
+  "report.bundle.js": "/assets/frappe/dist/js/report.bundle.GHAYAFOZ.js",
+  "rtl_contributions.bundle.css": "/assets/wiki/dist/css-rtl/contributions.bundle.IMRLHY4X.css",
+  "rtl_datatable.bundle.css": "/assets/frappe_io/dist/css-rtl/datatable.bundle.NMEYOFTE.css",
+  "rtl_desk.bundle.css": "/assets/frappe/dist/css-rtl/desk.bundle.ES3NLDNQ.css",
+  "rtl_email.bundle.css": "/assets/frappe/dist/css-rtl/email.bundle.USEPIIYM.css",
+  "rtl_erpnext-web.bundle.css": "/assets/erpnext/dist/css-rtl/erpnext-web.bundle.7AAXIH77.css",
+  "rtl_erpnext.bundle.css": "/assets/erpnext/dist/css-rtl/erpnext.bundle.SEKCMKQK.css",
+  "rtl_erpnext_email.bundle.css": "/assets/erpnext/dist/css-rtl/erpnext_email.bundle.ZBNQWHYL.css",
+  "rtl_hrms.bundle.css": "/assets/hrms/dist/css-rtl/hrms.bundle.6EA3NACR.css",
+  "rtl_india_compliance_account.bundle.css": "/assets/india_compliance/dist/css-rtl/india_compliance_account.bundle.2DG5IYSG.css",
+  "rtl_login.bundle.css": "/assets/frappe/dist/css-rtl/login.bundle.RP5DQ6MO.css",
+  "rtl_pdfjs.bundle.css": "/assets/print_designer/dist/css-rtl/pdfjs.bundle.36F3SGAT.css",
+  "rtl_print.bundle.css": "/assets/frappe/dist/css-rtl/print.bundle.4GC44A5A.css",
+  "rtl_print_designer.bundle.css": "/assets/print_designer/dist/css-rtl/print_designer.bundle.KG2ZXMTN.css",
+  "rtl_print_format.bundle.css": "/assets/frappe/dist/css-rtl/print_format.bundle.XNGPGDZU.css",
+  "rtl_report.bundle.css": "/assets/frappe/dist/css-rtl/report.bundle.GEJHBUQQ.css",
+  "rtl_web_form.bundle.css": "/assets/frappe/dist/css-rtl/web_form.bundle.FPS4MTF7.css",
+  "rtl_website.bundle.css": "/assets/frappe/dist/css-rtl/website.bundle.OP52UWVB.css",
+  "rtl_wiki.bundle.css": "/assets/wiki/dist/css-rtl/wiki.bundle.5BUYD3ZL.css",
+  "sentry.bundle.js": "/assets/frappe/dist/js/sentry.bundle.AX44GVWW.js",
+  "telemetry.bundle.js": "/assets/frappe/dist/js/telemetry.bundle.LKEZCADB.js",
+  "video_player.bundle.js": "/assets/frappe/dist/js/video_player.bundle.DUYYLSFO.js",
+  "web_form.bundle.css": "/assets/frappe/dist/css/web_form.bundle.E37HXZGK.css",
+  "web_form.bundle.js": "/assets/frappe/dist/js/web_form.bundle.BLQZ4OBZ.js",
+  "website.bundle.css": "/assets/frappe/dist/css/website.bundle.LQEHRZZT.css",
+  "wiki.bundle.css": "/assets/wiki/dist/css/wiki.bundle.KGGUFANN.css",
+  "wiki.bundle.js": "/assets/wiki/dist/js/wiki.bundle.WQQQOK77.js",
+  "workflow_builder.bundle.js": "/assets/frappe/dist/js/workflow_builder.bundle.MPAFFZ3D.js"
+ },
+ "is_fc_site": 0,
+ "lang": "en",
+ "sitename": "frappeio.frappe.cloud",
+ "sysdefaults": {
+  "currency": null,
+  "date_format": "dd/mm/yyyy",
+  "first_day_of_the_week": "Sunday",
+  "float_precision": 2,
+  "number_format": "#,##,###.##",
+  "time_format": "HH:mm:ss"
+ },
+ "time_zone": {
+  "system": "Asia/Kolkata",
+  "user": "Asia/Kolkata"
+ }
+}
+		// for backward compatibility of some libs
+		frappe.sys_defaults = frappe.boot.sysdefaults;
+	</script>
+	<script type="text/javascript" src="/assets/frappe/dist/js/frappe-web.bundle.VFID6Y35.js"></script>
+	
+	<script type="text/javascript" src="/website_script.js"></script>
+	<script type="text/javascript" src="/assets/erpnext/dist/js/erpnext-web.bundle.J4A2DQB4.js"></script>
+	<script>frappe.csrf_token = "None";</script></body>
+</html>
