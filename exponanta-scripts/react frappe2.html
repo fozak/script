@@ -1,90 +1,122 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Frappe React Browser App</title>
-    <style>
-      body { font-family: sans-serif; padding: 2rem; }
-      button { margin-right: 0.5rem; }
-    </style>
-  </head>
-  <body>
-    <h1>Frappe SDK App</h1>
-    <div id="root">Loading...</div>
+<head>
+  <meta charset="UTF-8" />
+  <title>Frappe + React (Login Form)</title>
+  <style>
+    body { font-family: sans-serif; padding: 2rem; }
+    input, button { margin: 0.3rem 0; display: block; }
+    button { cursor: pointer; }
+  </style>
+</head>
+<body>
+  <h1>Frappe React App (Single File)</h1>
+  <div id="root">Loading...</div>
 
-    <script type="module">
-      import React, { createElement } from "https://esm.sh/react@18";
-      import { createRoot } from "https://esm.sh/react-dom@18/client";
-      import {
-        FrappeProvider,
-        useFrappeAuth,
-        useFrappeGetDocList,
-      } from "https://esm.sh/frappe-react-sdk@1.11.0";
+  <script type="module">
+    import React, { useState, useEffect } from "https://esm.sh/react@18";
+    import { createRoot } from "https://esm.sh/react-dom@18/client";
+    import FrappeClient from "https://esm.sh/frappe-js-sdk@1.3.3";
 
-      const Login = () => {
-        const {
-          login,
-          logout,
-          currentUser,
-          isLoading,
-          error,
-          updateCurrentUser,
-        } = useFrappeAuth();
+    const client = new FrappeClient({
+      server: "https://apfile.com", // Change to your Frappe server URL
+    });
 
-        return createElement(
-          "div",
-          null,
-          createElement("h2", null, "Login"),
-          isLoading
-            ? "Loading..."
-            : currentUser
-            ? `Logged in as: ${currentUser}`
-            : "Not logged in",
-          createElement("br"),
-          createElement("button", { onClick: () => login("administrator", "admin") }, "Login"),
-          createElement("button", { onClick: logout }, "Logout"),
-          createElement("button", { onClick: updateCurrentUser }, "Refresh"),
-          error && createElement("pre", null, JSON.stringify(error))
-        );
+    const Login = ({ onLogin }) => {
+      const [username, setUsername] = useState("");
+      const [password, setPassword] = useState("");
+      const [status, setStatus] = useState("");
+
+      const login = async () => {
+        setStatus("Logging in...");
+        try {
+          await client.auth.loginWithUsernamePassword({ username, password });
+          setStatus("✅ Logged in");
+          onLogin();
+        } catch (err) {
+          console.error(err);
+          setStatus("❌ Login failed: " + (err.message || "Unknown error"));
+        }
       };
 
-      const UserList = () => {
-        const { data, error, isValidating, mutate } = useFrappeGetDocList("User", {
-          fields: ["name", "email"],
-          limit: 5,
-        });
+      return (
+        <div>
+          <h2>Login</h2>
+          <input
+            type="text"
+            placeholder="Username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            autoComplete="username"
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            autoComplete="current-password"
+          />
+          <button onClick={login} disabled={!username || !password}>
+            Login
+          </button>
+          <p>{status}</p>
+        </div>
+      );
+    };
 
-        return createElement(
-          "div",
-          null,
-          createElement("h2", null, "User List"),
-          isValidating && "Loading...",
-          error && createElement("pre", null, JSON.stringify(error)),
-          data &&
-            data.map((user) =>
-              createElement(
-                "p",
-                { key: user.name },
-                `${user.name}: ${user.email}`
-              )
-            ),
-          createElement("button", { onClick: () => mutate() }, "Reload")
-        );
+    const UserList = () => {
+      const [users, setUsers] = useState([]);
+      const [loading, setLoading] = useState(false);
+
+      const loadUsers = async () => {
+        setLoading(true);
+        try {
+          const list = await client.db.getDocList("User", {
+            fields: ["name", "email"],
+            limit: 5,
+          });
+          setUsers(list);
+        } catch (err) {
+          console.error(err);
+          setUsers([]);
+        }
+        setLoading(false);
       };
 
-      const App = () =>
-        createElement(
-          FrappeProvider,
-          { url: "https://apfile.com" },
-          createElement(Login),
-          createElement(UserList)
-        );
+      useEffect(() => {
+        loadUsers();
+      }, []);
 
-      const root = createRoot(document.getElementById("root"));
-      root.render(createElement(App));
-    </script>
-  </body>
+      return (
+        <div>
+          <h2>User List</h2>
+          {loading && <p>Loading...</p>}
+          {!loading && users.length === 0 && <p>No users found.</p>}
+          {users.map((u) => (
+            <p key={u.name}>
+              {u.name} — {u.email}
+            </p>
+          ))}
+          <button onClick={loadUsers}>Reload</button>
+        </div>
+      );
+    };
+
+    const App = () => {
+      const [loggedIn, setLoggedIn] = useState(false);
+      return (
+        <>
+          {!loggedIn ? <Login onLogin={() => setLoggedIn(true)} /> : <UserList />}
+        </>
+      );
+    };
+
+    const root = createRoot(document.getElementById("root"));
+    root.render(<App />);
+  </script>
+</body>
 </html>
+
 
 
 
