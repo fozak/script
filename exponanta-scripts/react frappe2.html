@@ -1,39 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Minimal React Frappe App</title>
-</head>
-<body>
-    <div id="root"></div>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Frappe React Browser App</title>
+    <style>
+      body { font-family: sans-serif; padding: 2rem; }
+      button { margin-right: 0.5rem; }
+    </style>
+  </head>
+  <body>
+    <h1>Frappe SDK App</h1>
+    <div id="root">Loading...</div>
 
     <script type="module">
-        import React from 'https://esm.sh/react@18';
-        import { createRoot } from 'https://esm.sh/react-dom@18/client';
-        import { FrappeProvider, useFrappeAuth } from 'https://esm.sh/frappe-react-sdk@1.11.0';
+      import React, { createElement } from "https://esm.sh/react@18";
+      import { createRoot } from "https://esm.sh/react-dom@18/client";
+      import {
+        FrappeProvider,
+        useFrappeAuth,
+        useFrappeGetDocList,
+      } from "https://esm.sh/frappe-react-sdk@1.11.0";
 
-        function App() {
-            return React.createElement(FrappeProvider, { url: "https://apfile.com" },
-                React.createElement(SimpleAuth)
-            );
-        }
+      const Login = () => {
+        const {
+          login,
+          logout,
+          currentUser,
+          isLoading,
+          error,
+          updateCurrentUser,
+        } = useFrappeAuth();
 
-        function SimpleAuth() {
-            const { currentUser, login, logout } = useFrappeAuth();
+        return createElement(
+          "div",
+          null,
+          createElement("h2", null, "Login"),
+          isLoading
+            ? "Loading..."
+            : currentUser
+            ? `Logged in as: ${currentUser}`
+            : "Not logged in",
+          createElement("br"),
+          createElement("button", { onClick: () => login("administrator", "admin") }, "Login"),
+          createElement("button", { onClick: logout }, "Logout"),
+          createElement("button", { onClick: updateCurrentUser }, "Refresh"),
+          error && createElement("pre", null, JSON.stringify(error))
+        );
+      };
 
-            return React.createElement("div", null,
-                React.createElement("h1", null, "Auth Status"),
-                currentUser ? React.createElement("p", null, `Logged in as ${currentUser}`) : React.createElement("p", null, "Not logged in"),
-                React.createElement("button", { onClick: () => login("administrator", "admin") }, "Login"),
-                React.createElement("button", { onClick: logout }, "Logout")
-            );
-        }
+      const UserList = () => {
+        const { data, error, isValidating, mutate } = useFrappeGetDocList("User", {
+          fields: ["name", "email"],
+          limit: 5,
+        });
 
+        return createElement(
+          "div",
+          null,
+          createElement("h2", null, "User List"),
+          isValidating && "Loading...",
+          error && createElement("pre", null, JSON.stringify(error)),
+          data &&
+            data.map((user) =>
+              createElement(
+                "p",
+                { key: user.name },
+                `${user.name}: ${user.email}`
+              )
+            ),
+          createElement("button", { onClick: () => mutate() }, "Reload")
+        );
+      };
 
-        const root = createRoot(document.getElementById('root'));
-        root.render(React.createElement(App));
+      const App = () =>
+        createElement(
+          FrappeProvider,
+          { url: "https://apfile.com" },
+          createElement(Login),
+          createElement(UserList)
+        );
+
+      const root = createRoot(document.getElementById("root"));
+      root.render(createElement(App));
     </script>
-</body>
+  </body>
 </html>
+
 
 
