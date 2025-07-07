@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>PocketBase Todo App</title>
+  <script src="https://cdn.jsdelivr.net/npm/pocketbase@0.26.1/dist/pocketbase.umd.js"></script>
+  <style>
+    body { font-family: sans-serif; max-width: 600px; margin: 2rem auto; }
+    #todoApp { display: none; }
+    li.done { text-decoration: line-through; color: gray; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <h1>📝 Todo App</h1>
+
+  <div id="login">
+    <h3>Login</h3>
+    <input type="email" id="email" placeholder="Email"><br>
+    <input type="password" id="password" placeholder="Password"><br>
+    <button onclick="login()">Login</button>
+    <p id="loginError" style="color:red;"></p>
+  </div>
+
+  <div id="todoApp">
+    <p>Logged in as: <span id="userEmail"></span></p>
+    <input id="newTodo" placeholder="What to do?" />
+    <button onclick="addTodo()">Add</button>
+    <ul id="todoList"></ul>
+    <button onclick="logout()">Logout</button>
+  </div>
+
+  <script>
+    const pb = new PocketBase('http://127.0.0.1:8090');
+    pb.authStore.load();  // Restore session
+
+    if (pb.authStore.model) {
+      showTodoApp();
+    }
+
+    function showTodoApp() {
+      document.getElementById('login').style.display = 'none';
+      document.getElementById('todoApp').style.display = 'block';
+      document.getElementById('userEmail').textContent = pb.authStore.model.email;
+      loadTodos();
+    }
+
+    async function login() {
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+
+      try {
+        await pb.collection('users').authWithPassword(email, password);
+        showTodoApp();
+      } catch (err) {
+        console.error(err);
+        document.getElementById('loginError').textContent = 'Invalid credentials.';
+      }
+    }
+
+    async function logout() {
+      pb.authStore.clear();
+      location.reload();
+    }
+
+    async function addTodo() {
+      const text = document.getElementById('newTodo').value.trim();
+      if (!text) return;
+
+      await pb.collection('todos').create({
+        text,
+        done: false,
+        user: pb.authStore.model.id
+      });
+
+      document.getElementById('newTodo').value = '';
+      loadTodos();
+    }
+
+    async function loadTodos() {
+      const list = document.getElementById('todoList');
+      list.innerHTML = '';
+
+      const todos = await pb.collection('todos').getFullList({
+        filter: `user = "${pb.authStore.model.id}"`,
+        sort: '-created'
+      });
+
+      for (const todo of todos) {
+        const li = document.createElement('li');
+        li.textContent = todo.text;
+        if (todo.done) li.classList.add('done');
+        li.onclick = async () => {
+          await pb.collection('todos').update(todo.id, { done: !todo.done });
+          loadTodos();
+        };
+        list.appendChild(li);
+      }
+    }
+  </script>
+</body>
+</html>

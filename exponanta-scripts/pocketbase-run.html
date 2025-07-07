@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>PocketBase Code Runner</title>
+  <script src="https://cdn.jsdelivr.net/npm/pocketbase@0.26.1/dist/pocketbase.umd.js"></script>
+  <style>
+    body { font-family: sans-serif; max-width: 800px; margin: 2rem auto; }
+    textarea { width: 100%; height: 100px; margin-top: 10px; }
+    .item { border: 1px solid #ccc; padding: 10px; margin: 10px 0; }
+    .run-btn { background-color: #28a745; color: white; border: none; padding: 6px 12px; cursor: pointer; }
+    .run-btn:hover { background-color: #218838; }
+    button { margin-top: 10px; }
+  </style>
+</head>
+<body>
+
+  <h2>👤 Login</h2>
+  <div id="login">
+    <input type="email" id="email" placeholder="Email"><br>
+    <input type="password" id="password" placeholder="Password"><br>
+    <button onclick="login()">Login</button>
+    <p id="loginError" style="color:red;"></p>
+  </div>
+
+  <div id="codeApp" style="display:none;">
+    <h2>📜 Add Code Snippet</h2>
+    <textarea id="codeInput" placeholder="Write JavaScript code..."></textarea><br>
+    <button onclick="addCode()">Add Snippet</button>
+    <button onclick="logout()">Logout</button>
+
+    <h3>📋 Your Snippets</h3>
+    <div id="codeList"></div>
+  </div>
+
+  <script>
+    const pb = new PocketBase('http://127.0.0.1:8090');
+
+    if (pb.authStore.model) {
+      showApp();
+    }
+
+    function showApp() {
+      document.getElementById('login').style.display = 'none';
+      document.getElementById('codeApp').style.display = 'block';
+      loadCodeSnippets();
+    }
+
+    async function login() {
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+
+      try {
+        await pb.collection('users').authWithPassword(email, password);
+        showApp();
+      } catch (err) {
+        document.getElementById('loginError').textContent = '❌ Login failed.';
+        console.error(err);
+      }
+    }
+
+    function logout() {
+      pb.authStore.clear();
+      location.reload();
+    }
+
+    async function addCode() {
+      const code = document.getElementById('codeInput').value.trim();
+      if (!code) return;
+
+      try {
+        await pb.collection('code').create({
+          code,
+          done: false,
+          user: pb.authStore.model.id
+        });
+
+        document.getElementById('codeInput').value = '';
+        loadCodeSnippets();
+      } catch (err) {
+        alert('Failed to add snippet.');
+        console.error(err);
+      }
+    }
+
+    async function loadCodeSnippets() {
+      const list = document.getElementById('codeList');
+      list.innerHTML = '';
+
+      try {
+        const items = await pb.collection('code').getFullList({
+          filter: `user = "${pb.authStore.model.id}"`,
+          sort: '-created'
+        });
+
+        for (const item of items) {
+          const div = document.createElement('div');
+          div.className = 'item';
+
+          const pre = document.createElement('pre');
+          pre.textContent = item.code;
+
+          const runBtn = document.createElement('button');
+          runBtn.className = 'run-btn';
+          runBtn.textContent = '▶️ Run';
+          runBtn.onclick = () => {
+            try {
+              eval(item.code);
+            } catch (err) {
+              alert('❌ Error:\n' + err.message);
+            }
+          };
+
+          div.appendChild(pre);
+          div.appendChild(runBtn);
+          list.appendChild(div);
+        }
+      } catch (err) {
+        console.error('Error loading snippets:', err);
+      }
+    }
+  </script>
+
+</body>
+</html>
+
