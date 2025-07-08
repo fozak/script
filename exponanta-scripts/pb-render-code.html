@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PocketBase Widget Selector</title>
+    <script src="https://cdn.jsdelivr.net/npm/pocketbase@0.18.0/dist/pocketbase.umd.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .selector-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #e9ecef;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
+        }
+        select, input, button {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        button:disabled {
+            background-color: #6c757d;
+            cursor: not-allowed;
+        }
+        .widget-container {
+            margin-top: 30px;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            min-height: 200px;
+            background: white;
+        }
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #6c757d;
+        }
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+            border: 1px solid #f5c6cb;
+        }
+        .success {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+            border: 1px solid #c3e6cb;
+        }
+        .record-info {
+            background: #e7f3ff;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+            border: 1px solid #b3d9ff;
+        }
+        .record-info h4 {
+            margin: 0 0 10px 0;
+            color: #0056b3;
+        }
+        .record-info p {
+            margin: 5px 0;
+            font-size: 14px;
+        }
+        .code-preview {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+            border: 1px solid #e9ecef;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        .code-preview pre {
+            margin: 0;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        .flex-row {
+            display: flex;
+            gap: 15px;
+            align-items: flex-end;
+        }
+        .flex-row .form-group {
+            flex: 1;
+        }
+        .flex-row button {
+            flex: 0 0 auto;
+            width: auto;
+            padding: 10px 20px;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>PocketBase Widget Selector & Renderer</h1>
+            <p>Select a record from the code collection and render its widget</p>
+        </div>
+
+        <div class="selector-section">
+            <h3>PocketBase Configuration</h3>
+            <div class="flex-row">
+                <div class="form-group">
+                    <label for="pbUrl">PocketBase URL:</label>
+                    <input type="text" id="pbUrl" value="http://127.0.0.1:8090/" placeholder="http://localhost:8090">
+                </div>
+                <button onclick="connectToPocketBase()">Connect</button>
+            </div>
+            <div id="connectionStatus"></div>
+        </div>
+
+        <div class="selector-section">
+            <h3>Select Widget</h3>
+            <div class="flex-row">
+                <div class="form-group">
+                    <label for="recordSelect">Select Record:</label>
+                    <select id="recordSelect" disabled>
+                        <option value="">-- Select a record --</option>
+                    </select>
+                </div>
+                <button onclick="loadRecord()" disabled id="loadBtn">Load Record</button>
+            </div>
+            <button onclick="renderWidget()" disabled id="renderBtn">Render Widget</button>
+        </div>
+
+        <div id="recordInfo"></div>
+        
+        <div class="widget-container" id="widgetContainer">
+            <div class="loading">
+                <p>Connect to PocketBase and select a record to render the widget</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let pb = null;
+        let currentRecord = null;
+
+        // Connect to PocketBase
+        async function connectToPocketBase() {
+            const url = document.getElementById('pbUrl').value;
+            const statusDiv = document.getElementById('connectionStatus');
+            
+            try {
+                pb = new PocketBase(url);
+                
+                // Test connection by fetching records
+                const records = await pb.collection('code').getList(1, 50);
+                
+                statusDiv.innerHTML = `
+                    <div class="success">
+                        ✓ Connected to PocketBase successfully! Found ${records.totalItems} records in 'code' collection.
+                    </div>
+                `;
+                
+                // Populate record selector
+                populateRecordSelector(records.items);
+                
+            } catch (error) {
+                console.error('Connection error:', error);
+                statusDiv.innerHTML = `
+                    <div class="error">
+                        ✗ Failed to connect to PocketBase: ${error.message}
+                    </div>
+                `;
+            }
+        }
+
+        // Populate record selector dropdown
+        function populateRecordSelector(records) {
+            const select = document.getElementById('recordSelect');
+            const loadBtn = document.getElementById('loadBtn');
+            
+            select.innerHTML = '<option value="">-- Select a record --</option>';
+            
+            records.forEach(record => {
+                const option = document.createElement('option');
+                option.value = record.id;
+                option.textContent = `${record.id} - ${new Date(record.created).toLocaleDateString()}`;
+                select.appendChild(option);
+            });
+            
+            select.disabled = false;
+            loadBtn.disabled = false;
+        }
+
+        // Load selected record
+        async function loadRecord() {
+            const recordId = document.getElementById('recordSelect').value;
+            const infoDiv = document.getElementById('recordInfo');
+            const renderBtn = document.getElementById('renderBtn');
+            
+            if (!recordId) {
+                alert('Please select a record first');
+                return;
+            }
+            
+            try {
+                currentRecord = await pb.collection('code').getOne(recordId);
+                
+                infoDiv.innerHTML = `
+                    <div class="record-info">
+                        <h4>Record Information</h4>
+                        <p><strong>ID:</strong> ${currentRecord.id}</p>
+                        <p><strong>Created:</strong> ${new Date(currentRecord.created).toLocaleString()}</p>
+                        <p><strong>Updated:</strong> ${new Date(currentRecord.updated).toLocaleString()}</p>
+                        <p><strong>Has Schema:</strong> ${currentRecord.schema ? '✓ Yes' : '✗ No'}</p>
+                        <p><strong>Has Data:</strong> ${currentRecord.data ? '✓ Yes' : '✗ No'}</p>
+                        <p><strong>Has Code:</strong> ${currentRecord.code ? '✓ Yes' : '✗ No'}</p>
+                    </div>
+                `;
+                
+                if (currentRecord.code) {
+                    infoDiv.innerHTML += `
+                        <div class="code-preview">
+                            <h4>Code Preview (First 500 characters):</h4>
+                            <pre>${currentRecord.code.substring(0, 500)}${currentRecord.code.length > 500 ? '...' : ''}</pre>
+                        </div>
+                    `;
+                }
+                
+                renderBtn.disabled = !currentRecord.code;
+                
+            } catch (error) {
+                console.error('Error loading record:', error);
+                infoDiv.innerHTML = `
+                    <div class="error">
+                        ✗ Failed to load record: ${error.message}
+                    </div>
+                `;
+            }
+        }
+
+        // Render widget using eval()
+        function renderWidget() {
+            const container = document.getElementById('widgetContainer');
+            
+            if (!currentRecord || !currentRecord.code) {
+                alert('No record selected or no code available');
+                return;
+            }
+            
+            try {
+                // Clear previous widget
+                container.innerHTML = '<div class="loading">Rendering widget...</div>';
+                
+                // Make pb globally available for the widget
+                window.pb = pb;
+                
+                // Set up the widget configuration if needed
+                window.WIDGET_RECORD_ID = currentRecord.id;
+                
+                // Add success message
+                container.innerHTML = `
+                    <div class="success">
+                        ✓ Widget rendered successfully! Check below for the rendered output.
+                    </div>
+                `;
+                
+                // Execute the widget code
+                eval(currentRecord.code);
+                
+            } catch (error) {
+                console.error('Error rendering widget:', error);
+                container.innerHTML = `
+                    <div class="error">
+                        ✗ Error rendering widget: ${error.message}
+                        <br><br>
+                        <strong>Stack trace:</strong>
+                        <pre>${error.stack}</pre>
+                    </div>
+                `;
+            }
+        }
+
+        // Clear widget container
+        function clearWidget() {
+            const container = document.getElementById('widgetContainer');
+            container.innerHTML = `
+                <div class="loading">
+                    <p>Widget cleared. Select a record and click "Render Widget" to display a new widget.</p>
+                </div>
+            `;
+        }
+
+        // Auto-connect on page load if URL is provided
+        window.onload = function() {
+            const urlInput = document.getElementById('pbUrl');
+            if (urlInput.value) {
+                connectToPocketBase();
+            }
+        };
+
+        // Handle record selection change
+        document.getElementById('recordSelect').addEventListener('change', function() {
+            document.getElementById('recordInfo').innerHTML = '';
+            document.getElementById('renderBtn').disabled = true;
+            currentRecord = null;
+        });
+    </script>
+</body>
+</html>
