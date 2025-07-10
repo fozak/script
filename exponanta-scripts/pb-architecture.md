@@ -1063,3 +1063,314 @@ async function getChildrenByParent(parentId) {
 
 // Usage - just need the parent ID
 const children = await getChildrenByParent("xh1o0yu55vlorl5");
+
+<!--added child table--->
+(function() {
+  const recordId = window.WIDGET_RECORD_ID;
+  const pb = window.pb;
+  
+  async function init() {
+    const currentRecord = await pb.collection('items').getOne(recordId);
+    window.currentRecord = currentRecord;
+    window.schema = currentRecord.schema;
+    window.initialData = currentRecord.data || {};
+    renderTaskForm();
+  }
+  
+  function renderTaskForm() {
+    const containerId = 'widgetContainer';
+    const schema = window.schema;
+    const initialData = window.initialData || {};
+    const recordId = window.currentRecord?.id;
+    
+    async function renderForm(schema, data = {}, containerId) {
+      const fields = schema.fields || [];
+      const fieldOrder = schema.field_order || [];
+      const container = document.getElementById(containerId);
+      container.innerHTML = '';
+      const fieldMap = Object.fromEntries(fields.map(f => [f.fieldname, f]));
+      
+      for (const fieldname of fieldOrder) {
+        const field = fieldMap[fieldname];
+        if (!field || field.hidden) continue;
+        if (['Section Break', 'Column Break'].includes(field.fieldtype)) continue;
+        
+        const wrapper = document.createElement('div');
+        wrapper.style.marginBottom = '10px';
+        
+        const label = document.createElement('label');
+        label.innerText = field.label || fieldname;
+        
+        let input;
+        
+        switch (field.fieldtype) {
+          case 'Data':
+          case 'Int':
+          case 'Float':
+          case 'Currency':
+            input = document.createElement('input');
+            input.type = 'text';
+            break;
+            
+          case 'Link':
+            input = document.createElement('select');
+            // Add empty option
+            const emptyOption = document.createElement('option');
+            emptyOption.value = '';
+            emptyOption.innerText = '-- Select --';
+            input.appendChild(emptyOption);
+            
+            // If field has options, fetch records where data.name matches options
+            if (field.options) {
+              try {
+                const records = await pb.collection('items').getFullList({
+                  filter: `data.name = "${field.options}"`
+                });
+                
+                records.forEach(record => {
+                  const option = document.createElement('option');
+                  // Store the record ID as value, but we'll change the field name during save
+                  option.value = record.id;
+                  option.innerText = record.data.name || record.id;
+                  // Store the parent name for later use
+                  option.setAttribute('data-parent-name', record.data.name);
+                  input.appendChild(option);
+                });
+              } catch (error) {
+                console.error(`Error fetching options for ${field.fieldname}:`, error);
+              }
+            }
+            break;
+            
+          case 'Text Editor':
+            input = document.createElement('textarea');
+            break;
+            
+          case 'Date':
+          case 'Datetime':
+            input = document.createElement('input');
+            input.type = 'datetime-local';
+            break;
+            
+          case 'Check':
+            input = document.createElement('input');
+            input.type = 'checkbox';
+            input.checked = !!data[field.fieldname];
+            break;
+            
+          case 'Select':
+            input = document.createElement('select');
+            const options = (field.options || '').split('\n');
+            options.forEach(opt => {
+              const option = document.createElement('option');
+              option.value = opt;
+              option.innerText = opt;
+              input.appendChild(option);
+            });
+            input.value = data[field.fieldname] || '';
+            break;
+            
+          case 'Percent':
+            input = document.createElement('input');
+            input.type = 'number';
+            input.min = 0;
+            input.max = 100;
+            break;
+            
+          default:
+            input = document.createElement('input');
+            input.type = 'text';
+        }
+        
+        input.name = field.fieldname;
+        input.id = field.fieldname;
+        
+        if (field.fieldtype !== 'Check' && data[field.fieldname]) {
+          input.value = data[field.fieldname];
+        }
+        
+        wrapper.appendChild(label);
+        wrapper.appendChild(document.createElement('br'));
+        wrapper.appendChild(input);
+        container.appendChild(wrapper);
+      }
+    }
+    
+    function getFormData(schema) {
+      const result = {};
+      (schema.fields || []).forEach(field => {
+        if (!field || field.hidden) return;
+        const el = document.getElementById(field.fieldname);
+        if (!el) return;
+        
+        if (field.fieldtype === 'Check') {
+          result[field.fieldname] = el.checked;
+        } else if (field.fieldtype === 'Link' && el.value) {
+          // For Link fields, get the selected option and its parent name
+          const selectedOption = el.options[el.selectedIndex];
+          if (selectedOption && selectedOption.getAttribute('data-parent-name')) {
+            const parentName = selectedOption.getAttribute('data-parent-name');
+            const fieldName = `parent_id_${parentName.toLowerCase()}`;
+            result[fieldName] = el.value; // Store the record ID
+          }
+        } else {
+          result[field.fieldname] = el.value;
+        }
+      });
+      return result;
+    }
+    
+    async function getChildrenByParent(parentId) {
+      // Get the parent record to determine its type
+      const parentRecord = await pb.collection('items').getOne(parentId);
+      const parentType = parentRecord.data.name.toLowerCase();
+      
+      const filter = `data.parent_id_${parentType} = "${parentId}"`;
+      return await pb.collection('items').getFullList({ filter });
+    }
+    
+    async function renderChildrenTable(parentId, containerId) {
+      try {
+        const children = await getChildrenByParent(parentId);
+        
+        if (children.length === 0) {
+          return; // No children to display
+        }
+        
+        // Group children by their data.name (type)
+        const groupedChildren = {};
+        children.forEach(child => {
+          const childType = child.data.name || 'Unknown';
+          if (!groupedChildren[childType]) {
+            groupedChildren[childType] = [];
+          }
+          groupedChildren[childType].push(child);
+        });
+        
+        const container = document.getElementById(containerId);
+        
+        // Create children section
+        const childrenSection = document.createElement('div');
+        childrenSection.style.marginTop = '30px';
+        childrenSection.style.borderTop = '2px solid #ccc';
+        childrenSection.style.paddingTop = '20px';
+        
+        const title = document.createElement('h3');
+        title.innerText = 'Related Records';
+        title.style.marginBottom = '15px';
+        childrenSection.appendChild(title);
+        
+        // Create table for each group
+        Object.keys(groupedChildren).forEach(groupName => {
+          const group = groupedChildren[groupName];
+          
+          const groupTitle = document.createElement('h4');
+          groupTitle.innerText = `${groupName} (${group.length})`;
+          groupTitle.style.marginTop = '20px';
+          groupTitle.style.marginBottom = '10px';
+          childrenSection.appendChild(groupTitle);
+          
+          const table = document.createElement('table');
+          table.style.width = '100%';
+          table.style.borderCollapse = 'collapse';
+          table.style.marginBottom = '20px';
+          
+          // Create table header
+          const thead = document.createElement('thead');
+          const headerRow = document.createElement('tr');
+          
+          // Get all unique field names from the group
+          const allFields = new Set();
+          group.forEach(item => {
+            if (item.data) {
+              Object.keys(item.data).forEach(key => {
+                if (key !== 'name' && !key.startsWith('parent_id_')) {
+                  allFields.add(key);
+                }
+              });
+            }
+          });
+          
+          // Add ID column
+          const idHeader = document.createElement('th');
+          idHeader.innerText = 'ID';
+          idHeader.style.border = '1px solid #ddd';
+          idHeader.style.padding = '8px';
+          idHeader.style.backgroundColor = '#f2f2f2';
+          headerRow.appendChild(idHeader);
+          
+          // Add field columns
+          allFields.forEach(field => {
+            const th = document.createElement('th');
+            th.innerText = field;
+            th.style.border = '1px solid #ddd';
+            th.style.padding = '8px';
+            th.style.backgroundColor = '#f2f2f2';
+            headerRow.appendChild(th);
+          });
+          
+          thead.appendChild(headerRow);
+          table.appendChild(thead);
+          
+          // Create table body
+          const tbody = document.createElement('tbody');
+          
+          group.forEach(item => {
+            const row = document.createElement('tr');
+            
+            // ID column
+            const idCell = document.createElement('td');
+            idCell.innerText = item.id;
+            idCell.style.border = '1px solid #ddd';
+            idCell.style.padding = '8px';
+            row.appendChild(idCell);
+            
+            // Field columns
+            allFields.forEach(field => {
+              const cell = document.createElement('td');
+              cell.innerText = item.data[field] || '';
+              cell.style.border = '1px solid #ddd';
+              cell.style.padding = '8px';
+              row.appendChild(cell);
+            });
+            
+            tbody.appendChild(row);
+          });
+          
+          table.appendChild(tbody);
+          childrenSection.appendChild(table);
+        });
+        
+        container.appendChild(childrenSection);
+        
+      } catch (error) {
+        console.error('Error rendering children table:', error);
+      }
+    }
+    
+    async function saveData() {
+      const formData = getFormData(schema);
+      
+      // Always preserve the record name from the schema
+      formData.name = window.currentRecord.schema.name;
+      
+      await pb.collection('items').update(recordId, { data: formData });
+      alert('Form data saved.');
+    }
+    
+    // Initial render (now async)
+    renderForm(schema, initialData, containerId).then(async () => {
+      // Add save button after form is rendered
+      const saveBtn = document.createElement('button');
+      saveBtn.innerText = 'Save';
+      saveBtn.onclick = saveData;
+      document.getElementById(containerId).appendChild(saveBtn);
+      
+      // Render children table
+      await renderChildrenTable(recordId, containerId);
+    });
+  }
+  
+  // Initialize
+  init();
+})();
