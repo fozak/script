@@ -191,7 +191,7 @@
                 pb = new PocketBase(url);
                 
                 // Test connection by fetching records
-                const records = await pb.collection('code').getList(1, 50);
+                const records = await pb.collection('items').getList(1, 50);
                 
                 statusDiv.innerHTML = `
                     <div class="success">
@@ -242,7 +242,7 @@
             }
             
             try {
-                currentRecord = await pb.collection('code').getOne(recordId);
+                currentRecord = await pb.collection('items').getOne(recordId);
                 
                 infoDiv.innerHTML = `
                     <div class="record-info">

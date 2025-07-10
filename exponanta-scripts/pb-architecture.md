@@ -14,6 +14,89 @@ store all data 1 pocketbase collection - items
 - 
 
 <!--data.users section --> 
+<!--issue with ACL -->
+
+Exactly, you nailed a common tricky point:
+
+---
+
+## The Problem Recap
+
+* **Users can self-register** via public registration — no admin needed.
+* But **non-admin users cannot list or query all users** because listing users is an admin-level permission.
+* Therefore, if you want to let non-admin users assign or select other users (e.g., in your `items.users` field), they **cannot get the full user list from PocketBase directly**.
+* This makes things like dropdown user selectors or assigning users difficult for non-admin clients.
+
+---
+
+## How to Overcome This?
+
+### 1. **Expose a Custom API Endpoint for User Listing**
+
+* Create a **custom backend or cloud function** that:
+
+  * Authenticates the caller (checks their role or permissions).
+  * Retrieves a **safe, filtered list of users** (e.g., only active users, or a subset).
+  * Returns user info needed for selection (e.g., `id`, `name`, `email`).
+* Your non-admin clients call this endpoint to get the user list for assignment.
+* This backend uses admin-level credentials to read users but only exposes a limited, controlled view.
+
+---
+
+### 2. **Use PocketBase Collection Rules for Limited Access**
+
+* PocketBase's default **Users collection is admin-only**, but you can create a **separate "profiles" collection** that contains public info of users.
+* When users register:
+
+  * Use PocketBase hooks or client code to **create or sync a "profile" record** with publicly visible info.
+* Then:
+
+  * Non-admin users can read this `profiles` collection without admin rights.
+  * Use this collection to populate user selectors and assign users in `items.users`.
+* This keeps sensitive user data protected but allows non-admin access to basic user info.
+
+---
+
+### 3. **Embed User Info in the Client After Signup**
+
+* If your app is closed or limited in scale:
+
+  * When a user signs up, store their basic info locally or share it securely with other users in the app.
+  * This is only feasible in small or trusted environments.
+* Not recommended for larger or public apps.
+
+---
+
+## Example Workflow Using Profiles Collection
+
+1. User signs up via public registration.
+2. A PocketBase hook or client logic creates a corresponding record in the `profiles` collection with `{ userId, displayName, email }`.
+3. Non-admin users have read access to `profiles`.
+4. When assigning users to an item, your client fetches from `profiles` collection instead of `users`.
+5. Use the `userId` from profiles to assign to `items.users`.
+
+---
+
+## Summary
+
+| Solution                    | Description                                     |
+| --------------------------- | ----------------------------------------------- |
+| Custom Backend API          | Controlled user list returned to clients        |
+| Separate Public Profiles    | Mirror minimal user info in a public collection |
+| Client-side User Info Cache | Share or cache user info within the app         |
+
+---
+
+If you want, I can help with:
+
+* How to set up a `profiles` collection and sync it on signup.
+* Sample PocketBase hook code or API design.
+* Collection rule configurations.
+
+Just let me know!
+
+<!--descision --->
+- to use the hybrid approach (items.users and items.data.users)
 - 
 Great question — since you're already thinking deeply about architecture, here's a grounded recommendation based on how PocketBase works **today (as of 2025)** and your use case.
 
@@ -569,3 +652,414 @@ so architecure is
 3) browser renders it, after user click on Save button, it goes to currentRecord.data
 
 currentRecord.data is 
+
+other
+
+search 
+
+const tasks2 = pb.collection('items').getFullList({
+  filter: 'data.project ~ "[a-z0-9]{15}"'
+});
+<!--Parent child-->
+
+-Issue in initial version: 
+links child->parent was establblished in items.data field "project": "xh1o0yu55vlorl5", from items.schema like: (items.data): 
+
+{
+  "act_end_date": "",
+  "act_start_date": "",
+  "actual_time": "",
+  "closing_date": "",
+  "color": "",
+  "company": "",
+  "completed_by": "",
+  "completed_on": "",
+  "department": "",
+  "depends_on": "",
+  "description": "Edited 2",
+  "duration": "",
+  "exp_end_date": "2025-07-09T11:30",
+  "exp_start_date": "2025-07-10T11:58",
+  "expected_time": "",
+  "is_group": false,
+  "is_milestone": false,
+  "is_template": false,
+  "issue": "",
+  "name": "Task",
+  "parent_task": "",
+  "priority": "High",
+  "progress": "",
+  "project": "xh1o0yu55vlorl5",
+  "review_date": "",
+  "start": "",
+  "status": "Pending Review",
+  "subject": "Task2 - the same project",
+  "task_weight": "",
+  "total_billing_amount": "",
+  "total_costing_amount": "",
+  "type": ""
+}
+
+with part of code: 
+
+(function() {
+  const recordId = window.WIDGET_RECORD_ID;
+  const pb = window.pb;
+  
+  async function init() {
+    const currentRecord = await pb.collection('items').getOne(recordId);
+    window.currentRecord = currentRecord;
+    window.schema = currentRecord.schema;
+    window.initialData = currentRecord.data || {};
+    renderTaskForm();
+  }
+  
+  function renderTaskForm() {
+    const containerId = 'widgetContainer';
+    const schema = window.schema;
+    const initialData = window.initialData || {};
+    const recordId = window.currentRecord?.id;
+    
+    async function renderForm(schema, data = {}, containerId) {
+      const fields = schema.fields || [];
+      const fieldOrder = schema.field_order || [];
+      const container = document.getElementById(containerId);
+      container.innerHTML = '';
+      const fieldMap = Object.fromEntries(fields.map(f => [f.fieldname, f]));
+      
+      for (const fieldname of fieldOrder) {
+        const field = fieldMap[fieldname];
+        if (!field || field.hidden) continue;
+        if (['Section Break', 'Column Break'].includes(field.fieldtype)) continue;
+        
+        const wrapper = document.createElement('div');
+        wrapper.style.marginBottom = '10px';
+        
+        const label = document.createElement('label');
+        label.innerText = field.label || fieldname;
+        
+        let input;
+        
+        switch (field.fieldtype) {
+          case 'Data':
+          case 'Int':
+          case 'Float':
+          case 'Currency':
+            input = document.createElement('input');
+            input.type = 'text';
+            break;
+            
+          case 'Link':
+            input = document.createElement('select');
+            // Add empty option
+            const emptyOption = document.createElement('option');
+            emptyOption.value = '';
+            emptyOption.innerText = '-- Select --';
+            input.appendChild(emptyOption);
+            
+            // If field has options, fetch records where data.name matches options
+            if (field.options) {
+              try {
+                const records = await pb.collection('items').getFullList({
+                  filter: `data.name = "${field.options}"`
+                });
+                
+                records.forEach(record => {
+                  const option = document.createElement('option');
+                  option.value = record.id;
+                  option.innerText = record.data.name || record.id;
+                  input.appendChild(option);
+                });
+              } catch (error) {
+                console.error(`Error fetching options for ${field.fieldname}:`, error);
+              }
+            }
+            break;
+            
+          case 'Text Editor':
+            input = document.createElement('textarea');
+            break;
+            
+          case 'Date':
+          case 'Datetime':
+            input = document.createElement('input');
+            input.type = 'datetime-local';
+            break;
+            
+          case 'Check':
+            input = document.createElement('input');
+            input.type = 'checkbox';
+            input.checked = !!data[field.fieldname];
+            break;
+            
+          case 'Select':
+            input = document.createElement('select');
+            const options = (field.options || '').split('\n');
+            options.forEach(opt => {
+              const option = document.createElement('option');
+              option.value = opt;
+              option.innerText = opt;
+              input.appendChild(option);
+            });
+            input.value = data[field.fieldname] || '';
+            break;
+            
+          case 'Percent':
+            input = document.createElement('input');
+            input.type = 'number';
+            input.min = 0;
+            input.max = 100;
+            break;
+            
+          default:
+            input = document.createElement('input');
+            input.type = 'text';
+        }
+        
+        input.name = field.fieldname;
+        input.id = field.fieldname;
+        
+        if (field.fieldtype !== 'Check' && data[field.fieldname]) {
+          input.value = data[field.fieldname];
+        }
+        
+        wrapper.appendChild(label);
+        wrapper.appendChild(document.createElement('br'));
+        wrapper.appendChild(input);
+        container.appendChild(wrapper);
+      }
+    }
+    
+    function getFormData(schema) {
+      const result = {};
+      (schema.fields || []).forEach(field => {
+        if (!field || field.hidden) return;
+        const el = document.getElementById(field.fieldname);
+        if (!el) return;
+        
+        if (field.fieldtype === 'Check') {
+          result[field.fieldname] = el.checked;
+        } else {
+          result[field.fieldname] = el.value;
+        }
+      });
+      return result;
+    }
+    
+    async function saveData() {
+      const formData = getFormData(schema);
+      
+      // Always preserve the record name from the schema
+      formData.name = window.currentRecord.schema.name;
+      
+      await pb.collection('items').update(recordId, { data: formData });
+      alert('Form data saved.');
+    }
+    
+    // Initial render (now async)
+    renderForm(schema, initialData, containerId).then(() => {
+      // Add save button after form is rendered
+      const saveBtn = document.createElement('button');
+      saveBtn.innerText = 'Save';
+      saveBtn.onclick = saveData;
+      document.getElementById(containerId).appendChild(saveBtn);
+    });
+  }
+  
+  // Initialize
+  init();
+})();
+
+<!--Replaced by https://claude.ai/chat/36bfd7ec-ffd5-4e8c-8497-ed8d0ed62f61 v4-->
+
+(function() {
+  const recordId = window.WIDGET_RECORD_ID;
+  const pb = window.pb;
+  
+  async function init() {
+    const currentRecord = await pb.collection('items').getOne(recordId);
+    window.currentRecord = currentRecord;
+    window.schema = currentRecord.schema;
+    window.initialData = currentRecord.data || {};
+    renderTaskForm();
+  }
+  
+  function renderTaskForm() {
+    const containerId = 'widgetContainer';
+    const schema = window.schema;
+    const initialData = window.initialData || {};
+    const recordId = window.currentRecord?.id;
+    
+    async function renderForm(schema, data = {}, containerId) {
+      const fields = schema.fields || [];
+      const fieldOrder = schema.field_order || [];
+      const container = document.getElementById(containerId);
+      container.innerHTML = '';
+      const fieldMap = Object.fromEntries(fields.map(f => [f.fieldname, f]));
+      
+      for (const fieldname of fieldOrder) {
+        const field = fieldMap[fieldname];
+        if (!field || field.hidden) continue;
+        if (['Section Break', 'Column Break'].includes(field.fieldtype)) continue;
+        
+        const wrapper = document.createElement('div');
+        wrapper.style.marginBottom = '10px';
+        
+        const label = document.createElement('label');
+        label.innerText = field.label || fieldname;
+        
+        let input;
+        
+        switch (field.fieldtype) {
+          case 'Data':
+          case 'Int':
+          case 'Float':
+          case 'Currency':
+            input = document.createElement('input');
+            input.type = 'text';
+            break;
+            
+          case 'Link':
+            input = document.createElement('select');
+            // Add empty option
+            const emptyOption = document.createElement('option');
+            emptyOption.value = '';
+            emptyOption.innerText = '-- Select --';
+            input.appendChild(emptyOption);
+            
+            // If field has options, fetch records where data.name matches options
+            if (field.options) {
+              try {
+                const records = await pb.collection('items').getFullList({
+                  filter: `data.name = "${field.options}"`
+                });
+                
+                records.forEach(record => {
+                  const option = document.createElement('option');
+                  // Store the record ID as value, but we'll change the field name during save
+                  option.value = record.id;
+                  option.innerText = record.data.name || record.id;
+                  // Store the parent name for later use
+                  option.setAttribute('data-parent-name', record.data.name);
+                  input.appendChild(option);
+                });
+              } catch (error) {
+                console.error(`Error fetching options for ${field.fieldname}:`, error);
+              }
+            }
+            break;
+            
+          case 'Text Editor':
+            input = document.createElement('textarea');
+            break;
+            
+          case 'Date':
+          case 'Datetime':
+            input = document.createElement('input');
+            input.type = 'datetime-local';
+            break;
+            
+          case 'Check':
+            input = document.createElement('input');
+            input.type = 'checkbox';
+            input.checked = !!data[field.fieldname];
+            break;
+            
+          case 'Select':
+            input = document.createElement('select');
+            const options = (field.options || '').split('\n');
+            options.forEach(opt => {
+              const option = document.createElement('option');
+              option.value = opt;
+              option.innerText = opt;
+              input.appendChild(option);
+            });
+            input.value = data[field.fieldname] || '';
+            break;
+            
+          case 'Percent':
+            input = document.createElement('input');
+            input.type = 'number';
+            input.min = 0;
+            input.max = 100;
+            break;
+            
+          default:
+            input = document.createElement('input');
+            input.type = 'text';
+        }
+        
+        input.name = field.fieldname;
+        input.id = field.fieldname;
+        
+        if (field.fieldtype !== 'Check' && data[field.fieldname]) {
+          input.value = data[field.fieldname];
+        }
+        
+        wrapper.appendChild(label);
+        wrapper.appendChild(document.createElement('br'));
+        wrapper.appendChild(input);
+        container.appendChild(wrapper);
+      }
+    }
+    
+    function getFormData(schema) {
+      const result = {};
+      (schema.fields || []).forEach(field => {
+        if (!field || field.hidden) return;
+        const el = document.getElementById(field.fieldname);
+        if (!el) return;
+        
+        if (field.fieldtype === 'Check') {
+          result[field.fieldname] = el.checked;
+        } else if (field.fieldtype === 'Link' && el.value) {
+          // For Link fields, get the selected option and its parent name
+          const selectedOption = el.options[el.selectedIndex];
+          if (selectedOption && selectedOption.getAttribute('data-parent-name')) {
+            const parentName = selectedOption.getAttribute('data-parent-name');
+            const fieldName = `parent_id_${parentName.toLowerCase()}`;
+            result[fieldName] = el.value; // Store the record ID
+          }
+        } else {
+          result[field.fieldname] = el.value;
+        }
+      });
+      return result;
+    }
+    
+    async function saveData() {
+      const formData = getFormData(schema);
+      
+      // Always preserve the record name from the schema
+      formData.name = window.currentRecord.schema.name;
+      
+      await pb.collection('items').update(recordId, { data: formData });
+      alert('Form data saved.');
+    }
+    
+    // Initial render (now async)
+    renderForm(schema, initialData, containerId).then(() => {
+      // Add save button after form is rendered
+      const saveBtn = document.createElement('button');
+      saveBtn.innerText = 'Save';
+      saveBtn.onclick = saveData;
+      document.getElementById(containerId).appendChild(saveBtn);
+    });
+  }
+  
+  // Initialize
+  init();
+})();
+
+<!--Example of v4-->
+async function getChildrenByParent(parentId) {
+  // Get the parent record to determine its type
+  const parentRecord = await pb.collection('items').getOne(parentId);
+  const parentType = parentRecord.data.name.toLowerCase(); // assuming data.name contains the type
+  
+  const filter = `data.parent_id_${parentType} = "${parentId}"`;
+  return await pb.collection('items').getFullList({ filter });
+}
+
+// Usage - just need the parent ID
+const children = await getChildrenByParent("xh1o0yu55vlorl5");
