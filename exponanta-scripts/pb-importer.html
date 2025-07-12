@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ERPNext SQL Importer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, select, button {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        .file-info {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+        .progress {
+            background: #e9ecef;
+            border-radius: 4px;
+            height: 20px;
+            margin: 10px 0;
+        }
+        .progress-bar {
+            background: #28a745;
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.3s;
+        }
+        .log {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            padding: 15px;
+            margin-top: 20px;
+            max-height: 300px;
+            overflow-y: auto;
+            font-family: monospace;
+            font-size: 14px;
+        }
+        .error {
+            color: #dc3545;
+        }
+        .success {
+            color: #28a745;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>ERPNext SQL Importer</h1>
+        
+        <div class="form-group">
+            <label for="pbUrl">PocketBase URL:</label>
+            <input type="text" id="pbUrl" value="http://127.0.0.1:8090" placeholder="http://127.0.0.1:8090">
+        </div>
+
+        <div class="form-group">
+            <label for="sqlFile">Select SQL File:</label>
+            <input type="file" id="sqlFile" accept=".sql" onchange="handleFileSelect(event)">
+        </div>
+
+        <div id="fileInfo" class="file-info" style="display: none;">
+            <div id="fileName"></div>
+            <div id="fileSize"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="tableName">Table Name:</label>
+            <input type="text" id="tableName" placeholder="tabTask" value="tabTask">
+        </div>
+
+        <div class="form-group">
+            <label for="collectionName">Collection Name:</label>
+            <input type="text" id="collectionName" placeholder="items" value="items">
+        </div>
+
+        <button id="importBtn" onclick="startImport()" disabled>Import Data</button>
+
+        <div id="progress" style="display: none;">
+            <div class="progress">
+                <div id="progressBar" class="progress-bar" style="width: 0%"></div>
+            </div>
+            <div id="progressText">Preparing import...</div>
+        </div>
+
+        <div id="log" class="log" style="display: none;"></div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pocketbase/0.21.3/pocketbase.umd.js"></script>
+    <script>
+        let selectedFile = null;
+        let pb = null;
+
+        function handleFileSelect(event) {
+            selectedFile = event.target.files[0];
+            const importBtn = document.getElementById('importBtn');
+            const fileInfo = document.getElementById('fileInfo');
+            
+            if (selectedFile) {
+                document.getElementById('fileName').textContent = `File: ${selectedFile.name}`;
+                document.getElementById('fileSize').textContent = `Size: ${(selectedFile.size / 1024).toFixed(2)} KB`;
+                fileInfo.style.display = 'block';
+                importBtn.disabled = false;
+            } else {
+                fileInfo.style.display = 'none';
+                importBtn.disabled = true;
+            }
+        }
+
+        function log(message, type = 'info') {
+            const logDiv = document.getElementById('log');
+            const timestamp = new Date().toLocaleTimeString();
+            const className = type === 'error' ? 'error' : type === 'success' ? 'success' : '';
+            
+            logDiv.innerHTML += `<div class="${className}">[${timestamp}] ${message}</div>`;
+            logDiv.scrollTop = logDiv.scrollHeight;
+            logDiv.style.display = 'block';
+        }
+
+        function updateProgress(percent, text) {
+            const progressDiv = document.getElementById('progress');
+            const progressBar = document.getElementById('progressBar');
+            const progressText = document.getElementById('progressText');
+            
+            progressDiv.style.display = 'block';
+            progressBar.style.width = `${percent}%`;
+            progressText.textContent = text;
+        }
+
+        async function startImport() {
+            if (!selectedFile) return;
+
+            const pbUrl = document.getElementById('pbUrl').value;
+            const tableName = document.getElementById('tableName').value;
+            const collectionName = document.getElementById('collectionName').value;
+            const importBtn = document.getElementById('importBtn');
+
+            if (!pbUrl || !tableName || !collectionName) {
+                alert('Please fill in all fields');
+                return;
+            }
+
+            importBtn.disabled = true;
+            document.getElementById('log').innerHTML = '';
+            
+            try {
+                pb = new PocketBase(pbUrl);
+                log('Connected to PocketBase');
+                
+                updateProgress(10, 'Reading SQL file...');
+                const sqlContent = await selectedFile.text();
+                
+                updateProgress(20, 'Parsing SQL content...');
+                const importer = new ERPNextImporter();
+                const tableData = importer.parseSQLTable(sqlContent, tableName);
+                
+                if (!tableData.length) {
+                    throw new Error(`No data found for table ${tableName}`);
+                }
+
+                log(`Found ${tableData.length} records to import`, 'success');
+                
+                updateProgress(30, 'Starting import...');
+                let imported = 0;
+                let errors = 0;
+
+                for (let i = 0; i < tableData.length; i++) {
+                    const row = tableData[i];
+                    const record = {
+                        name: row.name,
+                        doctype: tableName.replace('tab', ''),
+                        data: row,
+                        meta: {
+                            imported_from: tableName,
+                            imported_at: new Date().toISOString(),
+                            original_creation: row.creation,
+                            original_modified: row.modified
+                        }
+                    };
+
+                    try {
+                        await pb.collection(collectionName).create(record);
+                        imported++;
+                        
+                        if (imported % 10 === 0) {
+                            const percent = 30 + (imported / tableData.length) * 60;
+                            updateProgress(percent, `Imported ${imported}/${tableData.length} records...`);
+                        }
+                    } catch (error) {
+                        errors++;
+                        log(`Error importing ${row.name}: ${error.message}`, 'error');
+                    }
+                }
+
+                updateProgress(100, 'Import complete!');
+                log(`Import finished: ${imported} successful, ${errors} errors`, 'success');
+                
+            } catch (error) {
+                log(`Import failed: ${error.message}`, 'error');
+                updateProgress(0, 'Import failed');
+            } finally {
+                importBtn.disabled = false;
+            }
+        }
+
+        class ERPNextImporter {
+            parseSQLTable(sqlContent, tableName) {
+                const insertRegex = new RegExp(`INSERT INTO \`${tableName}\` VALUES\\s*([^;]+);`, 'g');
+                const matches = [...sqlContent.matchAll(insertRegex)];
+                
+                if (!matches.length) return [];
+
+                const createTableRegex = new RegExp(`CREATE TABLE \`${tableName}\`\\s*\\(([^)]+)\\)`, 's');
+                const createMatch = sqlContent.match(createTableRegex);
+                if (!createMatch) return [];
+
+                const columnNames = this.extractColumnNames(createMatch[1]);
+                
+                const allRows = [];
+                for (const match of matches) {
+                    const rows = this.parseInsertValues(match[1], columnNames);
+                    allRows.push(...rows);
+                }
+
+                return allRows;
+            }
+
+            extractColumnNames(createTableContent) {
+                const columns = [];
+                
+                // Split by lines and process each line
+                const lines = createTableContent.split(/\r?\n/);
+                
+                for (const line of lines) {
+                    const trimmed = line.trim();
+                    
+                    // Skip empty lines, comments, and constraints
+                    if (!trimmed || 
+                        trimmed.startsWith('--') || 
+                        trimmed.startsWith('PRIMARY KEY') || 
+                        trimmed.startsWith('KEY ') || 
+                        trimmed.startsWith('UNIQUE') ||
+                        trimmed.startsWith('INDEX') ||
+                        trimmed.startsWith('CONSTRAINT') ||
+                        trimmed.includes('ENGINE=') ||
+                        trimmed === ')' ||
+                        trimmed === '(' ||
+                        !trimmed.startsWith('`')) {
+                        continue;
+                    }
+                    
+                    // Extract column name from lines like: `name` varchar(140) NOT NULL,
+                    const columnMatch = trimmed.match(/^`([^`]+)`/);
+                    if (columnMatch) {
+                        columns.push(columnMatch[1]);
+                    }
+                }
+                
+                console.log('Extracted columns:', columns);
+                return columns;
+            }
+
+            parseInsertValues(valuesString, columnNames) {
+                const rows = [];
+                let currentPos = 0;
+                
+                while (currentPos < valuesString.length) {
+                    const rowStart = valuesString.indexOf('(', currentPos);
+                    if (rowStart === -1) break;
+                    
+                    const rowEnd = this.findMatchingParen(valuesString, rowStart);
+                    if (rowEnd === -1) break;
+                    
+                    const rowValues = valuesString.substring(rowStart + 1, rowEnd);
+                    const parsedRow = this.parseRowValues(rowValues, columnNames);
+                    rows.push(parsedRow);
+                    
+                    currentPos = rowEnd + 1;
+                }
+                
+                return rows;
+            }
+
+            findMatchingParen(str, start) {
+                let count = 1;
+                let inString = false;
+                let stringChar = null;
+                
+                for (let i = start + 1; i < str.length; i++) {
+                    const char = str[i];
+                    
+                    if (!inString) {
+                        if (char === "'" || char === '"') {
+                            inString = true;
+                            stringChar = char;
+                        } else if (char === '(') {
+                            count++;
+                        } else if (char === ')') {
+                            count--;
+                            if (count === 0) return i;
+                        }
+                    } else {
+                        if (char === stringChar && str[i-1] !== '\\') {
+                            inString = false;
+                            stringChar = null;
+                        }
+                    }
+                }
+                
+                return -1;
+            }
+
+            parseRowValues(rowString, columnNames) {
+                const values = [];
+                let currentValue = '';
+                let inString = false;
+                let stringChar = null;
+                let parenCount = 0;
+                
+                for (let i = 0; i < rowString.length; i++) {
+                    const char = rowString[i];
+                    const nextChar = rowString[i + 1];
+                    
+                    if (!inString) {
+                        if (char === "'" || char === '"') {
+                            inString = true;
+                            stringChar = char;
+                            currentValue += char;
+                        } else if (char === '(') {
+                            parenCount++;
+                            currentValue += char;
+                        } else if (char === ')') {
+                            parenCount--;
+                            currentValue += char;
+                        } else if (char === ',' && parenCount === 0) {
+                            values.push(this.convertValue(currentValue.trim()));
+                            currentValue = '';
+                            continue;
+                        } else {
+                            currentValue += char;
+                        }
+                    } else {
+                        currentValue += char;
+                        if (char === stringChar && rowString[i-1] !== '\\') {
+                            inString = false;
+                            stringChar = null;
+                        }
+                    }
+                }
+                
+                if (currentValue.trim()) {
+                    values.push(this.convertValue(currentValue.trim()));
+                }
+                
+                // Debug logging
+                console.log('Column names:', columnNames);
+                console.log('Parsed values:', values);
+                console.log('Values count:', values.length, 'Columns count:', columnNames.length);
+                
+                const row = {};
+                for (let i = 0; i < columnNames.length && i < values.length; i++) {
+                    row[columnNames[i]] = values[i];
+                }
+                
+                return row;
+            }
+
+            convertValue(value) {
+                if (value === 'NULL' || value === '') return null;
+                
+                // Handle quoted strings
+                if ((value.startsWith("'") && value.endsWith("'")) || 
+                    (value.startsWith('"') && value.endsWith('"'))) {
+                    return value.slice(1, -1)
+                        .replace(/\\'/g, "'")
+                        .replace(/\\"/g, '"')
+                        .replace(/\\\\/g, '\\');
+                }
+                
+                // Handle numbers (including decimals)
+                if (/^-?\d+(\.\d+)?$/.test(value)) {
+                    return value.includes('.') ? parseFloat(value) : parseInt(value);
+                }
+                
+                // Handle dates and timestamps
+                if (/^\d{4}-\d{2}-\d{2}/.test(value)) {
+                    return value;
+                }
+                
+                return value;
+            }
+        }
+    </script>
+</body>
+</html>

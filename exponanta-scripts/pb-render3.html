@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Widget Selector</title>
+    <script src="https://cdn.jsdelivr.net/npm/pocketbase@0.18.0/dist/pocketbase.umd.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .record-list {
+            margin-bottom: 20px;
+        }
+        .record-link {
+            display: block;
+            padding: 10px;
+            margin: 5px 0;
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 5px;
+            text-decoration: none;
+            color: #333;
+            cursor: pointer;
+        }
+        .record-link:hover {
+            background: #e9ecef;
+        }
+        .widget-container {
+            margin-top: 20px;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            min-height: 200px;
+            background: white;
+            padding: 20px;
+        }
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #6c757d;
+        }
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+            border: 1px solid #f5c6cb;
+        }
+        .success {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+            border: 1px solid #c3e6cb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Widget Selector</h1>
+        
+        <div id="status" class="loading">Connecting to PocketBase...</div>
+        
+        <div class="record-list" id="recordList"></div>
+        
+        <div class="widget-container" id="widgetContainer">
+            <div class="loading">
+                <p>Select a record to render the widget</p>
+            </div>
+        </div>
+    </div>
+    <script>
+        let pb = null;
+        let currentRecord = null;
+        // Auto-connect on page load
+        window.onload = function() {
+            connectToPocketBase();
+        };
+        // Connect to PocketBase
+        async function connectToPocketBase() {
+            const statusDiv = document.getElementById('status');
+            
+            try {
+                pb = new PocketBase('http://127.0.0.1:8090/');
+                
+                // Test connection by fetching records
+                const records = await pb.collection('items').getList(1, 50);
+                
+                statusDiv.innerHTML = `
+                    <div class="success">
+                        ✓ Connected! Found ${records.totalItems} records.
+                    </div>
+                `;
+                
+                // Show records as clickable links
+                showRecordLinks(records.items);
+                
+            } catch (error) {
+                console.error('Connection error:', error);
+                statusDiv.innerHTML = `
+                    <div class="error">
+                        ✗ Failed to connect: ${error.message}
+                    </div>
+                `;
+            }
+        }
+        // Show all records as clickable links
+        function showRecordLinks(records) {
+            const listDiv = document.getElementById('recordList');
+            
+            if (records.length === 0) {
+                listDiv.innerHTML = '<p>No records found.</p>';
+                return;
+            }
+            
+            listDiv.innerHTML = '<h3>Available Widgets:</h3>';
+            
+            records.forEach(record => {
+                const link = document.createElement('a');
+                link.className = 'record-link';
+                link.onclick = () => renderWidgetById(record.id);
+                
+                const name = record.data?.name || 'Unnamed Widget';
+                link.textContent = `${name} (ID: ${record.id})`;
+                
+                listDiv.appendChild(link);
+            });
+        }
+        // Render widget by ID
+        async function renderWidgetById(recordId) {
+            const container = document.getElementById('widgetContainer');
+            
+            try {
+                // Load the record
+                currentRecord = await pb.collection('items').getOne(recordId);
+                
+                // Check if record has a schema reference
+                if (!currentRecord.schema) {
+                    container.innerHTML = `
+                        <div class="error">
+                            ✗ No schema reference found for this record
+                        </div>
+                    `;
+                    return;
+                }
+                
+                // Render the widget
+                renderWidget();
+                
+            } catch (error) {
+                console.error('Error loading record:', error);
+                container.innerHTML = `
+                    <div class="error">
+                        ✗ Failed to load record: ${error.message}
+                    </div>
+                `;
+            }
+        }
+        // Render widget using code from schema
+        async function renderWidget() {
+            const container = document.getElementById('widgetContainer');
+            
+            if (!currentRecord || !currentRecord.schema) {
+                container.innerHTML = `
+                    <div class="error">
+                        ✗ No record selected or no schema reference available
+                    </div>
+                `;
+                return;
+            }
+            
+            try {
+                // Clear previous widget
+                container.innerHTML = '<div class="loading">Loading schema and rendering widget...</div>';
+                
+                // Load schema record by ID
+                const schemaRecord = await pb.collection('items').getOne(currentRecord.schema);
+                
+                if (!schemaRecord || !schemaRecord.code) {
+                    container.innerHTML = `
+                        <div class="error">
+                            ✗ No code found in schema record (ID: ${currentRecord.schema})
+                        </div>
+                    `;
+                    return;
+                }
+                
+                // Make pb globally available for the widget
+                window.pb = pb;
+                
+                // Set up the widget configuration
+                window.WIDGET_RECORD_ID = currentRecord.id;
+                window.SCHEMA_RECORD = schemaRecord;
+                
+                // Add success message
+                container.innerHTML = `
+                    <div class="success">
+                        ✓ Widget rendered successfully using schema code! (Schema ID: ${currentRecord.schema})
+                    </div>
+                `;
+                
+                // Execute the widget code from schema
+                eval(schemaRecord.code);
+                
+            } catch (error) {
+                console.error('Error rendering widget:', error);
+                container.innerHTML = `
+                    <div class="error">
+                        ✗ Error rendering widget: ${error.message}
+                        <br><br>
+                        <strong>Stack trace:</strong>
+                        <pre>${error.stack}</pre>
+                    </div>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>

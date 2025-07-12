@@ -1,13 +1,72 @@
 store all data 1 pocketbase collection - items
 
 - items.id - pocketbase ids
-- items.schema (json) - schema in json using (like task.json). then items.schema.name = Task
+- items.schema (json) - schema Using Erpnext doctypes json  (like task.json). then items.schema.name = Task
 - items.code (text) - code that reads schema, displays UI and saving result into items.data
 - items.data (json) - data, generated from schema on client side and saves
 - items.children [itemid1, itemid2] - establishing relationships in between items
 - items.users - [userid1, userid2] - pocketbase users collection ids
+child-parent relationships are established in childen by have ids in childer items.data.parent_id_project, where in parent_id_{doctype} {doctype} is doctype of parent and value is id
 
+async function getChildrenByParent(parentId) {
+      // Get the parent record to determine its type
+      const parentRecord = await pb.collection('items').getOne(parentId);
+      const parentType = parentRecord.data.name.toLowerCase();
+      
+      const filter = `data.parent_id_${parentType} = "${parentId}"`;
+      return await pb.collection('items').getFullList({ filter });
+    }
 
+how to simplify the user management knowing I am unsing ERPdoctypes,I want to have very relaxed access rights, I want to propagate by default access to all parent-child 
+
+<!--Storing schemas -->
+
+Decision 
+// Step 1: Get the schema template for "User"
+const schema = await pb.collection('items').getFirstListItem(
+  'schema.name = "User" && schema.doctype = "Schema"'
+);
+
+// Step 2: Create the new item referencing that schema
+const newItem = await pb.collection('items').create({
+  schema: {
+    id: schema.id,             // Reference to the full schema template
+    name: schema.schema.name   // Usually "User"
+  },
+
+});
+
+<!--Storing Code -->
+const schema = await pb.collection('items').getFirstListItem(
+  'schema.doctype = "Code"'
+);
+
+<!--Use all fields in doctypes definitions-->
+Nested tables = children:
+- Use TABLE field tp link parent->child link (now only child->parent like parent_id_project in items.data)
+- Use all logic including list_view of child 
+fix the naming serieas and names(subject, project_name, or even missing name)
+Best practice when building your own Doctypes
+Use title or subject as a descriptive label.
+
+Set name to a custom naming series or field (via autoname).
+
+Use title_field in the DocType to show a clean title in lists.
+
+{
+  "autoname": "field:subject",
+  "title_field": "subject"
+}
+
+<!--Users and user managment-->
+async function getChildrenByParent(parentId) {
+      // Get the parent record to determine its type
+      const parentRecord = await pb.collection('items').getOne(parentId);
+      const parentType = parentRecord.data.name.toLowerCase();
+      
+      const filter = `data.parent_id_${parentType} = "${parentId}"`;
+      return await pb.collection('items').getFullList({ filter });
+    }
 
 <!--issues-->
 - items.schema (issue IS-missing universal data) (json) is document specific, and lacks  universal non-document spesific like assigned_to, files_attached, workflow related and tagging etc
