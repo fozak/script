@@ -1,4 +1,13 @@
-store all data 1 pocketbase collection - items
+this is possible to mock global objects and use 
+- https://chatgpt.com/c/68751c97-2254-8007-9097-46241b24bb15 
+- https://claude.ai/chat/7f0eaf96-a570-49b5-a847-2ad953af017e
+
+
+
+
+
+
+store all data 1 pocketbase collection - items v2
 
 - items.id - pocketbase ids
 - items.schema (json) - schema Using Erpnext doctypes json  (like task.json). then items.schema.name = Task
@@ -6,6 +15,530 @@ store all data 1 pocketbase collection - items
 - items.data (json) - data, generated from schema on client side and saves
 - items.children [itemid1, itemid2] - establishing relationships in between items
 - items.users - [userid1, userid2] - pocketbase users collection ids
+
+<!--S  SCHEMAS----->
+special type of item -> schema for doctype. doctype = "Schema", the link to Schema is defined bi-directonally in each doctype like doctype = "Task", then in its meta.schema = "SCHEMA-0001"
+in "SCHEMA-0001" meta.for_doctype = "Task" (should be further thinking on setting up default schemas)
+
+
+<!--U -UI--->
+
+<!----------v2--->
+all data and schemas are from ERPnext and stored in 1 collection item in PocketBase
+item.name - used as id for all db operations - TASK-2025-00027 
+item.doctype - text, doctype type - Task
+item.meta - json, storing the doctype, and schema id of doctype schema 
+{
+  "doctype": "Task",
+  "schema": "SCHEMA-0001"
+}
+item.data - json, json data of doc (Erpnext format)
+{
+  "_assign": null,
+  "_comments": null,
+  "_liked_by": null,
+  "_seen": "[\"Administrator\"]",
+  "_user_tags": null,
+  "act_end_date": null,
+  "act_start_date": null,
+  "actual_time": 0,
+  "closing_date": null,
+  "color": "#39E4A5",
+  "company": "Expo (Demo)",
+  "completed_by": null,
+  "completed_on": null,
+  "creation": "2025-06-11 12:34:12.818353",
+  "custom_attach": null,
+  "custom_itemgroup": null,
+  "custom_new_check": 0,
+  "department": null,
+  "depends_on_tasks": "",
+  "description": "<div class=\"ql-editor read-mode\"><p><img src=\"/private/files/vYfr6wt.jpg?fid=3e162b69a8\" style=\"\" width=\"272\"></p></div>",
+  "docstatus": 0,
+  "duration": 0,
+  "exp_end_date": "2025-06-11",
+  "exp_start_date": "2025-06-11",
+  "expected_time": 0,
+  "idx": 1,
+  "is_group": 1,
+  "is_milestone": 0,
+  "is_template": 0,
+  "issue": null,
+  "lft": 53,
+  "modified": "2025-06-11 21:28:44.330211",
+  "modified_by": "Administrator",
+  "name": "TASK-2025-00027",
+  "old_parent": "",
+  "owner": "Administrator",
+  "parent_task": null,
+  "priority": "Low",
+  "progress": 0,
+  "project": "PROJ-0009",
+  "project_code": null,
+  "review_date": null,
+  "rgt": 54,
+  "start": 0,
+  "status": "Overdue",
+  "subject": "Interior inspections for 18-point inspections",
+  "task_code": null,
+  "task_weight": 0,
+  "template_task": "TASK-2025-00020",
+  "total_billing_amount": 0,
+  "total_costing_amount": 0,
+  "total_expense_claim": 0,
+  "type": null,
+  "workflow_state": null
+}
+
+in the same collection 'item', stored the SCHEMA for this doctype 
+{
+  "collectionId": "pbc_940982958",
+  "collectionName": "item",
+  "created": "2025-07-14 13:59:41.446Z",
+  "data": {
+    "actions": [],
+    "allow_import": 1,
+    "autoname": "TASK-.YYYY.-.#####",
+    "creation": "2013-01-29 19:25:50",
+    "doctype": "DocType",
+    "document_type": "Setup",
+    "engine": "InnoDB",
+    "field_order": [
+      "subject",
+      "project",
+      "issue",
+      "type",
+      "color",
+      "is_group",
+      "is_template",
+      "column_break0",
+      "status",
+      "priority",
+      "task_weight",
+      "parent_task",
+      "completed_by",
+      "completed_on",
+      "sb_timeline",
+      "exp_start_date",
+      "expected_time",
+      "start",
+      "column_break_11",
+      "exp_end_date",
+      "progress",
+      "duration",
+      "is_milestone",
+      "sb_details",
+      "description",
+      "sb_depends_on",
+      "depends_on",
+      "depends_on_tasks",
+      "sb_actual",
+      "act_start_date",
+      "actual_time",
+      "column_break_15",
+      "act_end_date",
+      "sb_costing",
+      "total_costing_amount",
+      "column_break_20",
+      "total_billing_amount",
+      "sb_more_info",
+      "review_date",
+      "closing_date",
+      "column_break_22",
+      "department",
+      "company",
+      "lft",
+      "rgt",
+      "old_parent",
+      "template_task"
+    ],
+    "fields": [
+      {
+        "allow_in_quick_entry": 1,
+        "fieldname": "subject",
+        "fieldtype": "Data",
+        "in_global_search": 1,
+        "in_standard_filter": 1,
+        "label": "Subject",
+        "reqd": 1,
+        "search_index": 1
+      },
+      {
+        "allow_in_quick_entry": 1,
+        "bold": 1,
+        "fieldname": "project",
+        "fieldtype": "Link",
+        "in_global_search": 1,
+        "in_list_view": 1,
+        "in_standard_filter": 1,
+        "label": "Project",
+        "oldfieldname": "project",
+        "oldfieldtype": "Link",
+        "options": "Project",
+        "remember_last_selected_value": 1,
+        "search_index": 1
+      },
+      {
+        "fieldname": "issue",
+        "fieldtype": "Link",
+        "label": "Issue",
+        "options": "Issue"
+      },
+      {
+        "fieldname": "type",
+        "fieldtype": "Link",
+        "label": "Type",
+        "options": "Task Type"
+      },
+      {
+        "bold": 1,
+        "default": "0",
+        "fieldname": "is_group",
+        "fieldtype": "Check",
+        "in_list_view": 1,
+        "label": "Is Group"
+      },
+      {
+        "fieldname": "column_break0",
+        "fieldtype": "Column Break",
+        "oldfieldtype": "Column Break",
+        "print_width": "50%",
+        "width": "50%"
+      },
+      {
+        "bold": 1,
+        "fieldname": "status",
+        "fieldtype": "Select",
+        "in_list_view": 1,
+        "in_standard_filter": 1,
+        "label": "Status",
+        "no_copy": 1,
+        "oldfieldname": "status",
+        "oldfieldtype": "Select",
+        "options": "Open\nWorking\nPending Review\nOverdue\nTemplate\nCompleted\nCancelled"
+      },
+      {
+        "fieldname": "priority",
+        "fieldtype": "Select",
+        "in_list_view": 1,
+        "in_standard_filter": 1,
+        "label": "Priority",
+        "oldfieldname": "priority",
+        "oldfieldtype": "Select",
+        "options": "Low\nMedium\nHigh\nUrgent",
+        "search_index": 1
+      },
+      {
+        "fieldname": "color",
+        "fieldtype": "Color",
+        "label": "Color"
+      },
+      {
+        "bold": 1,
+        "fieldname": "parent_task",
+        "fieldtype": "Link",
+        "ignore_user_permissions": 1,
+        "label": "Parent Task",
+        "options": "Task",
+        "search_index": 1
+      },
+      {
+        "collapsible": 1,
+        "collapsible_depends_on": "exp_start_date",
+        "fieldname": "sb_timeline",
+        "fieldtype": "Section Break",
+        "label": "Timeline"
+      },
+      {
+        "bold": 1,
+        "fieldname": "exp_start_date",
+        "fieldtype": "Datetime",
+        "label": "Expected Start Date",
+        "oldfieldname": "exp_start_date",
+        "oldfieldtype": "Date"
+      },
+      {
+        "default": "0",
+        "fieldname": "expected_time",
+        "fieldtype": "Float",
+        "label": "Expected Time (in hours)",
+        "oldfieldname": "exp_total_hrs",
+        "oldfieldtype": "Data"
+      },
+      {
+        "fetch_from": "type.weight",
+        "fieldname": "task_weight",
+        "fieldtype": "Float",
+        "label": "Weight"
+      },
+      {
+        "fieldname": "column_break_11",
+        "fieldtype": "Column Break"
+      },
+      {
+        "bold": 1,
+        "fieldname": "exp_end_date",
+        "fieldtype": "Datetime",
+        "label": "Expected End Date",
+        "oldfieldname": "exp_end_date",
+        "oldfieldtype": "Date",
+        "search_index": 1
+      },
+      {
+        "fieldname": "progress",
+        "fieldtype": "Percent",
+        "label": "% Progress",
+        "no_copy": 1
+      },
+      {
+        "default": "0",
+        "fieldname": "is_milestone",
+        "fieldtype": "Check",
+        "in_list_view": 1,
+        "label": "Is Milestone"
+      },
+      {
+        "fieldname": "sb_details",
+        "fieldtype": "Section Break",
+        "label": "Details",
+        "oldfieldtype": "Section Break"
+      },
+      {
+        "fieldname": "description",
+        "fieldtype": "Text Editor",
+        "label": "Task Description",
+        "oldfieldname": "description",
+        "oldfieldtype": "Text Editor",
+        "print_width": "300px",
+        "width": "300px"
+      },
+      {
+        "fieldname": "sb_depends_on",
+        "fieldtype": "Section Break",
+        "label": "Dependencies",
+        "oldfieldtype": "Section Break"
+      },
+      {
+        "fieldname": "depends_on",
+        "fieldtype": "Table",
+        "label": "Dependent Tasks",
+        "options": "Task Depends On"
+      },
+      {
+        "fieldname": "depends_on_tasks",
+        "fieldtype": "Code",
+        "hidden": 1,
+        "label": "Depends on Tasks",
+        "read_only": 1
+      },
+      {
+        "fieldname": "sb_actual",
+        "fieldtype": "Section Break",
+        "oldfieldtype": "Column Break",
+        "print_width": "50%",
+        "width": "50%"
+      },
+      {
+        "fieldname": "act_start_date",
+        "fieldtype": "Date",
+        "label": "Actual Start Date (via Timesheet)",
+        "oldfieldname": "act_start_date",
+        "oldfieldtype": "Date",
+        "read_only": 1
+      },
+      {
+        "fieldname": "actual_time",
+        "fieldtype": "Float",
+        "label": "Actual Time in Hours (via Timesheet)",
+        "read_only": 1
+      },
+      {
+        "fieldname": "column_break_15",
+        "fieldtype": "Column Break"
+      },
+      {
+        "fieldname": "act_end_date",
+        "fieldtype": "Date",
+        "label": "Actual End Date (via Timesheet)",
+        "oldfieldname": "act_end_date",
+        "oldfieldtype": "Date",
+        "read_only": 1
+      },
+      {
+        "collapsible": 1,
+        "fieldname": "sb_costing",
+        "fieldtype": "Section Break",
+        "label": "Costing"
+      },
+      {
+        "fieldname": "total_costing_amount",
+        "fieldtype": "Currency",
+        "label": "Total Costing Amount (via Timesheet)",
+        "oldfieldname": "actual_budget",
+        "oldfieldtype": "Currency",
+        "options": "Company:company:default_currency",
+        "read_only": 1
+      },
+      {
+        "fieldname": "column_break_20",
+        "fieldtype": "Column Break"
+      },
+      {
+        "fieldname": "total_billing_amount",
+        "fieldtype": "Currency",
+        "label": "Total Billable Amount (via Timesheet)",
+        "read_only": 1
+      },
+      {
+        "collapsible": 1,
+        "fieldname": "sb_more_info",
+        "fieldtype": "Section Break",
+        "label": "More Info"
+      },
+      {
+        "depends_on": "eval:doc.status == \"Closed\" || doc.status == \"Pending Review\"",
+        "fieldname": "review_date",
+        "fieldtype": "Date",
+        "label": "Review Date",
+        "oldfieldname": "review_date",
+        "oldfieldtype": "Date"
+      },
+      {
+        "depends_on": "eval:doc.status == \"Closed\"",
+        "fieldname": "closing_date",
+        "fieldtype": "Date",
+        "label": "Closing Date",
+        "oldfieldname": "closing_date",
+        "oldfieldtype": "Date"
+      },
+      {
+        "fieldname": "column_break_22",
+        "fieldtype": "Column Break"
+      },
+      {
+        "fieldname": "department",
+        "fieldtype": "Link",
+        "label": "Department",
+        "options": "Department"
+      },
+      {
+        "fetch_from": "project.company",
+        "fieldname": "company",
+        "fieldtype": "Link",
+        "label": "Company",
+        "options": "Company",
+        "remember_last_selected_value": 1
+      },
+      {
+        "fieldname": "lft",
+        "fieldtype": "Int",
+        "hidden": 1,
+        "label": "lft",
+        "read_only": 1
+      },
+      {
+        "fieldname": "rgt",
+        "fieldtype": "Int",
+        "hidden": 1,
+        "label": "rgt",
+        "read_only": 1
+      },
+      {
+        "fieldname": "old_parent",
+        "fieldtype": "Data",
+        "hidden": 1,
+        "ignore_user_permissions": 1,
+        "label": "Old Parent",
+        "read_only": 1
+      },
+      {
+        "depends_on": "eval: doc.status == \"Completed\"",
+        "fieldname": "completed_by",
+        "fieldtype": "Link",
+        "label": "Completed By",
+        "no_copy": 1,
+        "options": "User"
+      },
+      {
+        "default": "0",
+        "fieldname": "is_template",
+        "fieldtype": "Check",
+        "label": "Is Template"
+      },
+      {
+        "depends_on": "is_template",
+        "fieldname": "start",
+        "fieldtype": "Int",
+        "label": "Begin On (Days)"
+      },
+      {
+        "depends_on": "is_template",
+        "fieldname": "duration",
+        "fieldtype": "Int",
+        "label": "Duration (Days)"
+      },
+      {
+        "depends_on": "eval: doc.status == \"Completed\"",
+        "fieldname": "completed_on",
+        "fieldtype": "Date",
+        "label": "Completed On",
+        "mandatory_depends_on": "eval: doc.status == \"Completed\""
+      },
+      {
+        "fieldname": "template_task",
+        "fieldtype": "Data",
+        "hidden": 1,
+        "label": "Template Task"
+      }
+    ],
+    "icon": "fa fa-check",
+    "idx": 1,
+    "is_tree": 1,
+    "links": [],
+    "max_attachments": 5,
+    "modified": "2024-05-24 12:36:12.214577",
+    "modified_by": "Administrator",
+    "module": "Projects",
+    "name": "Task",
+    "naming_rule": "Expression (old style)",
+    "nsm_parent_field": "parent_task",
+    "owner": "Administrator",
+    "permissions": [
+      {
+        "create": 1,
+        "delete": 1,
+        "email": 1,
+        "print": 1,
+        "read": 1,
+        "report": 1,
+        "role": "Projects User",
+        "share": 1,
+        "write": 1
+      }
+    ],
+    "quick_entry": 1,
+    "search_fields": "subject",
+    "show_name_in_global_search": 1,
+    "show_preview_popup": 1,
+    "sort_field": "creation",
+    "sort_order": "DESC",
+    "states": [],
+    "timeline_field": "project",
+    "title_field": "subject",
+    "track_seen": 1
+  },
+  "doctype": "Schema",
+  "id": "a6v04us71cjkpp7",
+  "meta": {
+    "doctype": "Schema"
+  },
+  "name": "SCHEMA-0001",
+  "updated": "2025-07-14 13:59:41.446Z"
+}
+
+
+
+
 child-parent relationships are established in childen by have ids in childer items.data.parent_id_project, where in parent_id_{doctype} {doctype} is doctype of parent and value is id
 
 async function getChildrenByParent(parentId) {
@@ -1433,3 +1966,385 @@ const children = await getChildrenByParent("xh1o0yu55vlorl5");
   // Initialize
   init();
 })();
+
+- Sets of documents 
+
+I couldn't find any evidence of an official discussion or feature request in ERPNext forums or GitHub proposing a **universal "document set" or "collection" type** that could group arbitrary documents with quantities or metadata. The approach you're advocating is still best implemented as a **custom doctype or app**, rather than a native ERPNext feature. Here’s what I found:
+
+---
+
+### 🔍 Search Results
+
+* **GitHub Issue #29226**: A year ago someone requested the ability to *change a document's doctype on the fly* (for GTD-style workflows), suggesting higher flexibility — but that idea was closed without expanding into a general collection mechanism ([github.com][1]).
+* **Forum & Reddit posts**: Many discussions on customizing doctypes, linking documents, or creating wrappers, but nothing about a universal set-of-documents doctype .
+
+---
+
+### 🚧 Conclusion
+
+ERPNext doesn't include any form of built-in **generic set or collection doctype** that can reference multiple other document types with quantities or metadata.
+
+---
+
+### ✅ Your Best Course of Action
+
+To implement this fully and cleanly:
+
+1. **Create a custom doctype**, e.g., `Document Set`, with a **Link to Doctype**.
+2. Add a child table `Document Set Entry` with:
+
+   * `docname` (Data or Dynamic Link)
+   * `doctype_name`
+   * `qty`
+   * `meta_json` (optional)
+3. If needed, add a script or button to **expand or apply the set** into another document (like Sales Order, Task List, etc.).
+
+This gives you the **flexibility and reusability** you want, and it neatly sidesteps the lack of native support in ERPNext.
+
+---
+
+Would you like me to draft the JSON schema and example scripts for this kind of universal collection mechanism?
+
+[1]: https://github.com/frappe/erpnext/issues/29226?utm_source=chatgpt.com "Change Doctype · Issue #29226 · frappe/erpnext · GitHub"
+
+---
+Single query
+"in_list_view": 1// SINGLE QUERY MINIMAL VERSION
+(async () => {
+  const pb = new PocketBase('http://127.0.0.1:8090');
+  const itemSetId = 'SET-2025-00001';
+  
+  // ONE QUERY TO GET EVERYTHING
+  const docs = await pb.collection('item').getFullList(1000, {
+    filter: `(name="${itemSetId}" && doctype="Item Set") || 
+             (data.parent="${itemSetId}" && doctype="Line Item" && data.parenttype="Item Set") ||
+             (doctype="Item Price" && data.selling=1)`
+  });
+  
+  // Separate and build lookups
+  const itemSet = docs.find(d => d.name === itemSetId && d.doctype === "Item Set");
+  const lineItems = docs.filter(d => d.doctype === "Line Item");
+  const prices = new Map(docs.filter(d => d.doctype === "Item Price")
+    .map(p => [p.data.item_code, p]));
+  
+  // Get child names and fetch them
+  const childNames = [...new Set(lineItems.map(l => l.data.child).filter(Boolean))];
+  const childDocs = childNames.length ? await pb.collection('item').getFullList(200, {
+    filter: childNames.map(name => `name="${name}"`).join(' || ')
+  }) : [];
+  
+  const childMap = new Map(childDocs.map(d => [d.name, d]));
+  
+  // Resolve
+  const resolvedLineItems = lineItems.map(line => ({
+    lineItem: line,
+    childDoc: childMap.get(line.data.child) || null,
+    priceEntry: line.data.is_priced && childMap.get(line.data.child) ? 
+      prices.get(childMap.get(line.data.child).data?.item_code || childMap.get(line.data.child).name) || null : null
+  }));
+  
+  console.log(JSON.stringify({ itemSet, lineItems: resolvedLineItems }, null, 2));
+})();
+Promise {<pending>}
+VM286:35 {
+  "itemSet": {
+    "collectionId": "pbc_940982958",
+    "collectionName": "item",
+    "created": "2025-07-15 18:05:17.242Z",
+    "data": {
+      "doctype": "Item Set",
+      "name": "SET-2025-00001",
+      "set_name": "Brake Service Kit",
+      "price_list": "Retail USD",
+      "item_group": "Brakes"
+    },
+    "doctype": "Item Set",
+    "id": "3susp3yzbzadsjo",
+    "meta": null,
+    "name": "SET-2025-00001",
+    "updated": "2025-07-15 18:05:17.242Z"
+  },
+  "lineItems": [
+    {
+      "lineItem": {
+        "collectionId": "pbc_940982958",
+        "collectionName": "item",
+        "created": "2025-07-15 18:09:25.618Z",
+        "data": {
+          "doctype": "Line Item",
+          "name": "LINE-2025-00001",
+          "parent": "SET-2025-00001",
+          "parenttype": "Item Set",
+          "parentfield": "entries",
+          "doctype_name": "Task",
+          "child": "TASK-2025-00027",
+          "qty": 1,
+          "is_priced": 0,
+          "price": null,
+          "label": "Front Brake Insp"
+        },
+        "doctype": "Line Item",
+        "id": "frfn79vl8eo3kb8",
+        "meta": null,
+        "name": "LINE-2025-00001",
+        "updated": "2025-07-15 18:12:11.015Z"
+      },
+      "childDoc": {
+        "collectionId": "pbc_940982958",
+        "collectionName": "item",
+        "created": "2025-07-12 20:43:08.625Z",
+        "data": {
+          "_assign": null,
+          "_comments": null,
+          "_liked_by": null,
+          "_seen": "[\"Administrator\"]",
+          "_user_tags": null,
+          "act_end_date": null,
+          "act_start_date": null,
+          "actual_time": 0,
+          "closing_date": null,
+          "color": "#39E4A5",
+          "company": "Expo (Demo)",
+          "completed_by": null,
+          "completed_on": null,
+          "creation": "2025-06-11 12:34:12.818353",
+          "custom_attach": null,
+          "custom_itemgroup": null,
+          "custom_new_check": 0,
+          "department": null,
+          "depends_on_tasks": "",
+          "description": "<div class=\"ql-editor read-mode\"><p><img src=\"/private/files/vYfr6wt.jpg?fid=3e162b69a8\" style=\"\" width=\"272\"></p></div>",
+          "docstatus": 0,
+          "duration": 0,
+          "exp_end_date": "2025-06-11",
+          "exp_start_date": "2025-06-11",
+          "expected_time": 0,
+          "idx": 1,
+          "is_group": 1,
+          "is_milestone": 0,
+          "is_template": 0,
+          "issue": null,
+          "lft": 53,
+          "modified": "2025-06-11 21:28:44.330211",
+          "modified_by": "Administrator",
+          "name": "TASK-2025-00027",
+          "old_parent": "",
+          "owner": "Administrator",
+          "parent_task": null,
+          "priority": "Low",
+          "progress": 0,
+          "project": "PROJ-0009",
+          "project_code": null,
+          "review_date": null,
+          "rgt": 54,
+          "start": 0,
+          "status": "Overdue",
+          "subject": "Interior inspections for 18-point inspections",
+          "task_code": null,
+          "task_weight": 0,
+          "template_task": "TASK-2025-00020",
+          "total_billing_amount": 0,
+          "total_costing_amount": 0,
+          "total_expense_claim": 0,
+          "type": null,
+          "workflow_state": null
+        },
+        "doctype": "Task",
+        "id": "a8a3vvdb2zf6bun",
+        "meta": {
+          "doctype": "Task",
+          "schema": "SCHEMA-0001"
+        },
+        "name": "TASK-2025-00027",
+        "updated": "2025-07-14 14:13:28.014Z"
+      },
+      "priceEntry": null
+    },
+    {
+      "lineItem": {
+        "collectionId": "pbc_940982958",
+        "collectionName": "item",
+        "created": "2025-07-15 18:11:48.137Z",
+        "data": {
+          "doctype": "Line Item",
+          "name": "LINE-2025-00002",
+          "parent": "SET-2025-00001",
+          "parenttype": "Item Set",
+          "parentfield": "entries",
+          "doctype_name": "Item",
+          "child": "SKU009",
+          "qty": 2,
+          "is_priced": 1,
+          "price": 120,
+          "label": "Brake Pad Set"
+        },
+        "doctype": "Line Item",
+        "id": "swploj8bmxjpxrq",
+        "meta": null,
+        "name": "LINE-2025-00002",
+        "updated": "2025-07-15 18:12:19.435Z"
+      },
+      "childDoc": {
+        "collectionId": "pbc_940982958",
+        "collectionName": "item",
+        "created": "2025-07-15 16:13:10.445Z",
+        "data": {
+          "_assign": null,
+          "_comments": null,
+          "_liked_by": null,
+          "_user_tags": null,
+          "allow_alternative_item": 0,
+          "allow_negative_stock": 0,
+          "asset_category": null,
+          "asset_naming_series": null,
+          "auto_create_assets": 0,
+          "batch_number_series": null,
+          "brand": null,
+          "country_of_origin": null,
+          "create_new_batch": 0,
+          "creation": "2025-04-14 12:43:43.558210",
+          "custom_geolocation": null,
+          "custom_projects": null,
+          "customer": null,
+          "customer_code": "",
+          "customs_tariff_number": null,
+          "default_bom": null,
+          "default_item_manufacturer": null,
+          "default_manufacturer_part_no": null,
+          "default_material_request_type": "Purchase",
+          "delivered_by_supplier": 0,
+          "description": "Headphones",
+          "disabled": 0,
+          "docstatus": 0,
+          "enable_deferred_expense": 0,
+          "enable_deferred_revenue": 0,
+          "end_of_life": "2099-12-31",
+          "grant_commission": 1,
+          "has_batch_no": 0,
+          "has_expiry_date": 0,
+          "has_serial_no": 0,
+          "has_variants": 0,
+          "idx": 0,
+          "image": "https://images.pexels.com/photos/3587478/pexels-photo-3587478.jpeg",
+          "include_item_in_manufacturing": 1,
+          "inspection_required_before_delivery": 0,
+          "inspection_required_before_purchase": 0,
+          "is_customer_provided_item": 0,
+          "is_fixed_asset": 0,
+          "is_grouped_asset": 0,
+          "is_purchase_item": 1,
+          "is_sales_item": 1,
+          "is_stock_item": 1,
+          "is_sub_contracted_item": 0,
+          "item_code": "SKU009",
+          "item_group": "Demo Item Group",
+          "item_name": "Headphones",
+          "last_purchase_rate": 700,
+          "lead_time_days": 0,
+          "max_discount": 0,
+          "min_order_qty": 0,
+          "modified": "2025-04-14 12:43:50.587212",
+          "modified_by": "mbl.acc4@gmail.com",
+          "name": "SKU009",
+          "naming_series": "STO-ITEM-.YYYY.-",
+          "no_of_months": 0,
+          "no_of_months_exp": 0,
+          "opening_stock": 0,
+          "over_billing_allowance": 0,
+          "over_delivery_receipt_allowance": 0,
+          "owner": "mbl.acc4@gmail.com",
+          "purchase_uom": null,
+          "quality_inspection_template": null,
+          "retain_sample": 0,
+          "safety_stock": 0,
+          "sales_uom": null,
+          "sample_quantity": 0,
+          "serial_no_series": null,
+          "shelf_life_in_days": 0,
+          "standard_rate": 0,
+          "stock_uom": "Nos",
+          "total_projected_qty": 0,
+          "valuation_method": "",
+          "valuation_rate": 700,
+          "variant_based_on": "Item Attribute",
+          "variant_of": null,
+          "warranty_period": null,
+          "weight_per_unit": 0,
+          "weight_uom": null
+        },
+        "doctype": "Item",
+        "id": "t1af6zbo95mp99r",
+        "meta": {
+          "doctype": "Item"
+        },
+        "name": "SKU009",
+        "updated": "2025-07-15 16:13:10.445Z"
+      },
+      "priceEntry": {
+        "collectionId": "pbc_940982958",
+        "collectionName": "item",
+        "created": "2025-07-15 16:17:46.360Z",
+        "data": {
+          "_assign": null,
+          "_comments": null,
+          "_liked_by": null,
+          "_user_tags": null,
+          "batch_no": null,
+          "brand": null,
+          "buying": 0,
+          "creation": "2025-04-14 12:43:49.058814",
+          "currency": "USD",
+          "customer": null,
+          "docstatus": 0,
+          "idx": 0,
+          "item_code": "SKU009",
+          "item_description": "Headphones",
+          "item_name": "Headphones",
+          "lead_time_days": 0,
+          "modified": "2025-04-14 12:43:49.058814",
+          "modified_by": "mbl.acc4@gmail.com",
+          "name": "k5i10fk8as",
+          "note": null,
+          "owner": "mbl.acc4@gmail.com",
+          "packing_unit": 0,
+          "price_list": "Standard Selling",
+          "price_list_rate": 300,
+          "reference": null,
+          "selling": 1,
+          "supplier": null,
+          "uom": "Nos",
+          "valid_from": "2025-04-14",
+          "valid_upto": null
+        },
+        "doctype": "Item Price",
+        "id": "jo9b3qrhz9j9qy8",
+        "meta": {
+          "doctype": "Item Price"
+        },
+        "name": "k5i10fk8as",
+        "updated": "2025-07-15 16:17:46.360Z"
+      }
+    }
+  ]
+}
+Client.ts:346 Fetch finished loading: GET "http://127.0.0.1:8090/api/collections/item/records?page=1&perPage=1000&skipTotal=1&filter=(name%3D%22SET-2025-00001%22%20%26%26%20doctype%3D%22Item%20Set%22)%20%7C%7C%20%0A%20%20%20%20%20%20%20%20%20%20%20%20%20(data.parent%3D%22SET-2025-00001%22%20%26%26%20doctype%3D%22Line%20Item%22%20%26%26%20data.parenttype%3D%22Item%20Set%22)%20%7C%7C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20(doctype%3D%22Item%20Price%22%20%26%26%20data.selling%3D1)".
+send @ Client.ts:346
+getList @ CrudService.ts:80
+getList @ RecordService.ts:196
+request @ CrudService.ts:254
+_getFullList @ CrudService.ts:268
+getFullList @ CrudService.ts:39
+getFullList @ RecordService.ts:180
+(anonymous) @ VM286:7
+(anonymous) @ VM286:36
+Client.ts:346 Fetch finished loading: GET "http://127.0.0.1:8090/api/collections/item/records?page=1&perPage=200&skipTotal=1&filter=name%3D%22TASK-2025-00027%22%20%7C%7C%20name%3D%22SKU009%22".
+send @ Client.ts:346
+getList @ CrudService.ts:80
+getList @ RecordService.ts:196
+request @ CrudService.ts:254
+_getFullList @ CrudService.ts:268
+getFullList @ CrudService.ts:39
+getFullList @ RecordService.ts:180
+(anonymous) @ VM286:21
+await in (anonymous)
+(anonymous) @ VM286:36

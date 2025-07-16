@@ -1,80 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ERPNext SQL Importer</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-
-        input,
-        button {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
-
-        button {
-            background: #007bff;
-            color: white;
-            border: none;
-            cursor: pointer;
-            margin-top: 10px;
-        }
-
-        button:hover {
-            background: #0056b3;
-        }
-
-        .log {
-            background: #f8f9fa;
-            border: 1px solid #dee2e6;
-            padding: 15px;
-            margin-top: 20px;
-            max-height: 300px;
-            overflow-y: auto;
-            font-family: monospace;
-            font-size: 14px;
-        }
-
-        .error {
-            color: #dc3545;
-        }
-
-        .success {
-            color: #28a745;
-        }
-
-        .preview {
-            background: #e9ecef;
-            padding: 10px;
-            margin-top: 10px;
-            font-family: monospace;
-            font-size: 12px;
-        }
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input, button { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; }
+        button { background: #007bff; color: white; border: none; cursor: pointer; margin-top: 10px; }
+        button:hover { background: #0056b3; }
+        .log { background: #f8f9fa; border: 1px solid #dee2e6; padding: 15px; margin-top: 20px; 
+               max-height: 300px; overflow-y: auto; font-family: monospace; font-size: 14px; }
+        .error { color: #dc3545; }
+        .success { color: #28a745; }
+        .preview { background: #e9ecef; padding: 10px; margin-top: 10px; font-family: monospace; font-size: 12px; }
     </style>
 </head>
-
 <body>
     <h1>ERPNext SQL Importer</h1>
-
+    
     <div class="form-group">
         <label>PocketBase URL:</label>
         <input type="text" id="pbUrl" value="http://127.0.0.1:8090">
@@ -117,20 +63,23 @@
             const file = document.getElementById('sqlFile').files[0];
             const table = document.getElementById('tableName').value;
             const previewDiv = document.getElementById('preview');
-
-            if (!file || !table) return (previewDiv.style.display = 'none');
+            
+            if (!file || !table) {
+                previewDiv.style.display = 'none';
+                return;
+            }
 
             try {
                 sqlContent = await file.text();
                 columns = getColumns(sqlContent, table);
-
+                
                 if (columns.length) {
                     previewDiv.innerHTML = `Found ${columns.length} columns: ${columns.join(', ')}`;
+                    previewDiv.style.display = 'block';
                 } else {
                     previewDiv.innerHTML = `No columns found for table: ${table}`;
+                    previewDiv.style.display = 'block';
                 }
-
-                previewDiv.style.display = 'block';
             } catch (error) {
                 previewDiv.innerHTML = `Error: ${error.message}`;
                 previewDiv.style.display = 'block';
@@ -138,23 +87,27 @@
         }
 
         function getColumns(sql, tableName) {
+            // Find CREATE TABLE section
             const createStart = sql.indexOf(`CREATE TABLE \`${tableName}\``);
             if (createStart === -1) return [];
-
+            
             const openParen = sql.indexOf('(', createStart);
             const closeParen = findMatchingParen(sql, openParen);
+            
             if (openParen === -1 || closeParen === -1) return [];
-
+            
             const tableBody = sql.substring(openParen + 1, closeParen);
             const lines = tableBody.split('\n');
             const cols = [];
-
+            
             for (const line of lines) {
                 const trimmed = line.trim();
-                const match = trimmed.match(/^`([^`]+)`/);
-                if (match && !trimmed.includes('KEY')) cols.push(match[1]);
+                if (trimmed.startsWith('`') && !trimmed.includes('KEY')) {
+                    const match = trimmed.match(/`([^`]+)`/);
+                    if (match) cols.push(match[1]);
+                }
             }
-
+            
             return cols;
         }
 
@@ -168,31 +121,23 @@
             return -1;
         }
 
-        function parseInsertBlocks(sql, tableName) {
-            const regex = new RegExp(`INSERT INTO \\\`${tableName}\\\` VALUES\\s*(.*?);`, 'gs');
-            const blocks = [];
-            let match;
-            while ((match = regex.exec(sql)) !== null) {
-                blocks.push(match[1]);
-            }
-            return blocks;
-        }
-
         function parseInsertValues(valuesStr) {
             const rows = [];
             let i = 0;
+            
             while (i < valuesStr.length) {
                 const start = valuesStr.indexOf('(', i);
                 if (start === -1) break;
-
+                
                 const end = findMatchingParen(valuesStr, start);
                 if (end === -1) break;
-
+                
                 const rowStr = valuesStr.substring(start + 1, end);
                 const values = parseRow(rowStr);
                 rows.push(values);
                 i = end + 1;
             }
+            
             return rows;
         }
 
@@ -200,46 +145,42 @@
             const values = [];
             let current = '';
             let inQuote = false;
-            let escape = false;
-
+            let quoteChar = '';
+            
             for (let i = 0; i < rowStr.length; i++) {
                 const char = rowStr[i];
-
-                if (inQuote) {
-                    if (escape) {
-                        current += char;
-                        escape = false;
-                    } else if (char === '\\') {
-                        escape = true;
-                    } else if (char === "'") {
-                        inQuote = false;
-                        current += char;
-                    } else {
-                        current += char;
-                    }
-                } else {
-                    if (char === "'") {
+                
+                if (!inQuote) {
+                    if (char === "'" || char === '"') {
                         inQuote = true;
+                        quoteChar = char;
                         current += char;
                     } else if (char === ',') {
-                        values.push(cleanValue(current));
+                        values.push(cleanValue(current.trim()));
                         current = '';
                     } else {
                         current += char;
                     }
+                } else {
+                    current += char;
+                    if (char === quoteChar && rowStr[i-1] !== '\\') {
+                        inQuote = false;
+                        quoteChar = '';
+                    }
                 }
             }
-
-            if (current.trim()) values.push(cleanValue(current));
-
+            
+            if (current.trim()) {
+                values.push(cleanValue(current.trim()));
+            }
+            
             return values;
         }
 
         function cleanValue(val) {
-            val = val.trim();
             if (val === 'NULL') return null;
             if (val.startsWith("'") && val.endsWith("'")) {
-                return val.slice(1, -1).replace(/\\'/g, "'");
+                return val.slice(1, -1);
             }
             if (/^\d+$/.test(val)) return parseInt(val);
             if (/^\d+\.\d+$/.test(val)) return parseFloat(val);
@@ -263,53 +204,53 @@
 
             try {
                 const pb = new PocketBase(pbUrl);
-                const insertBlocks = parseInsertBlocks(sqlContent, tableName);
-
-                if (insertBlocks.length === 0) {
-                    log('No INSERT INTO blocks found', 'error');
+                
+                // Find INSERT statements
+                const insertPattern = `INSERT INTO \`${tableName}\` VALUES`;
+                const insertStart = sqlContent.indexOf(insertPattern);
+                
+                if (insertStart === -1) {
+                    log('No INSERT statements found', 'error');
                     return;
                 }
-
+                
+                const valuesStart = insertStart + insertPattern.length;
+                const valuesEnd = sqlContent.indexOf(';', valuesStart);
+                const valuesStr = sqlContent.substring(valuesStart, valuesEnd);
+                
+                const rows = parseInsertValues(valuesStr);
+                log(`Found ${rows.length} rows to import`);
+                
                 let imported = 0;
                 let errors = 0;
-                const batchSize = 10;
-
-                for (const block of insertBlocks) {
-                    const rows = parseInsertValues(block);
-                    log(`Parsed ${rows.length} rows from one INSERT block`);
-
-                    for (let i = 0; i < rows.length; i += batchSize) {
-                        const batch = rows.slice(i, i + batchSize);
-                        await Promise.all(batch.map(async (row) => {
-                            try {
-                                const record = {};
-                                for (let j = 0; j < columns.length && j < row.length; j++) {
-                                    record[columns[j]] = row[j];
-                                }
-
-                                await pb.collection(collectionName).create({
-                                    name: record.name || 'unknown',
-                                    doctype: tableName.replace('tab', ''),
-                                    data: record,
-                                    meta: { doctype: tableName.replace('tab', '') }
-                                }, { $autoCancel: false });
-
-                                imported++;
-                            } catch (error) {
-                                errors++;
-                                if (errors < 5) log(`Insert error: ${error.message}`, 'error');
-                            }
-                        }));
+                
+                for (const row of rows) {
+                    try {
+                        const record = {};
+                        for (let i = 0; i < columns.length && i < row.length; i++) {
+                            record[columns[i]] = row[i];
+                        }
+                        
+                        await pb.collection(collectionName).create({
+                            name: record.name || 'unknown',
+                            doctype: tableName.replace('tab', ''),
+                            data: record
+                        });
+                        
+                        imported++;
+                        if (imported % 10 === 0) log(`Imported ${imported} records`);
+                    } catch (error) {
+                        errors++;
+                        if (errors < 5) log(`Error: ${error.message}`, 'error');
                     }
                 }
-
-                log(`✅ Import complete: ${imported} records, ${errors} errors`, 'success');
+                
+                log(`Complete: ${imported} imported, ${errors} errors`, 'success');
+                
             } catch (error) {
-                log(`Import failed: ${error.message}`, 'error');
+                log(`Failed: ${error.message}`, 'error');
             }
         }
     </script>
-
 </body>
-
 </html>
