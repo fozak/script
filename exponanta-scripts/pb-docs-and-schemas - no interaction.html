@@ -57,16 +57,6 @@
                                 </button>
                             </div>
                         </form>
-                        <!-- Smart Filter Input UI -->
-<div class="mt-4">
-    <label for="smartFilterInput" class="form-label">Smart Filters</label>
-    <div class="input-group mb-3">
-        <input type="text" class="form-control" id="smartFilterInput" placeholder='Try: + Task or + TASK-2025-00024'>
-        <button class="btn btn-outline-primary" type="button" onclick="applySmartFilter()">Add</button>
-    </div>
-    <div id="smartFiltersContainer" class="d-flex flex-wrap gap-2"></div>
-</div>
-
                         
                         <div class="alert alert-danger d-none" id="errorMessage"></div>
                         
@@ -107,10 +97,9 @@
         </div>
     </div>
 
-<script>
+    <script>
     // Initialize PocketBase
     const pb = new PocketBase('http://127.0.0.1:8090');
-    let smartFilters = [];  // { type: 'doctype'|'docname', value: 'Task' }
 
     async function fetchWithFilters(docType, name, filterParams) {
         try {
@@ -147,12 +136,13 @@
                 filter: fullFilter
             });
 
+            // Group results
             const schemas = records.filter(r => r.doctype === 'Schema');
             const documents = records.filter(r => r.doctype !== 'Schema');
 
             return documents.map(doc => {
-                const matchedSchemas = schemas.filter(s => s.meta?.for_doctype === doc.doctype);
-                return { document: doc, schemas: matchedSchemas };
+                const schema = schemas.find(s => s.meta?.for_doctype === doc.doctype);
+                return { document: doc, schema: schema || null };
             });
 
         } catch (error) {
@@ -255,19 +245,13 @@
                                 <pre>${JSON.stringify(pair.document.data, null, 2)}</pre>
                             </div>
                             <div class="col-md-6">
-                                <h6 class="text-success"><i class="fas fa-cogs"></i> Schemas</h6>
-                                ${
-                                    pair.schemas.length
-                                        ? pair.schemas.map(schema => `
-                                            <div class="border rounded p-2 mb-2">
-                                                <p><strong>ID:</strong> ${schema.id}</p>
-                                                <p><strong>Name:</strong> ${schema.name}</p>
-                                                <p><strong>For:</strong> ${schema.meta?.for_doctype || 'N/A'}</p>
-                                                <pre>${JSON.stringify(schema.data, null, 2)}</pre>
-                                            </div>
-                                        `).join('')
-                                        : `<div class="alert alert-warning"><i class="fas fa-exclamation-triangle"></i> No schema found</div>`
-                                }
+                                <h6 class="text-success"><i class="fas fa-cogs"></i> Schema</h6>
+                                ${pair.schema ? `
+                                    <p><strong>ID:</strong> ${pair.schema.id}</p>
+                                    <p><strong>Name:</strong> ${pair.schema.name}</p>
+                                    <p><strong>For:</strong> ${pair.schema.meta?.for_doctype || 'N/A'}</p>
+                                    <pre>${JSON.stringify(pair.schema.data, null, 2)}</pre>
+                                ` : `<div class="alert alert-warning"><i class="fas fa-exclamation-triangle"></i> No schema found</div>`}
                             </div>
                         </div>
                     </div>
@@ -294,83 +278,6 @@
             handleSearch();
         }
     });
-
-    // ---------- Smart Filter Feature ----------
-
-    function applySmartFilter() {
-        const input = document.getElementById('smartFilterInput').value.trim();
-        document.getElementById('smartFilterInput').value = '';
-
-        if (!input) return;
-
-        const op = input[0];
-        const content = input.slice(1).trim();
-
-        if (!content) return;
-
-        if (op === '+') {
-            const type = /^[A-Z]+-\d{4}-\d{5}$/i.test(content) ? 'docname' : 'doctype';
-            if (!smartFilters.find(f => f.value === content)) {
-                smartFilters.push({ type, value: content });
-            }
-        } else if (op === '-') {
-            smartFilters = smartFilters.filter(f => f.value !== content);
-        }
-
-        renderSmartFilters();
-    }
-
-    function renderSmartFilters() {
-        const container = document.getElementById('smartFiltersContainer');
-        container.innerHTML = '';
-
-        smartFilters.forEach(filter => {
-            const btn = document.createElement('button');
-            btn.className = 'btn btn-sm btn-outline-success';
-            btn.innerHTML = `<i class="fas fa-filter me-1"></i> ${filter.value}`;
-            btn.onclick = () => {
-                runSmartSearch(filter);
-            };
-            container.appendChild(btn);
-        });
-    }
-
-    async function runSmartSearch(filter) {
-        let filterString = '';
-        if (filter.type === 'doctype') {
-            filterString = `doctype = "${filter.value}" || (doctype = "Schema" && meta.for_doctype = "${filter.value}")`;
-        } else if (filter.type === 'docname') {
-            const parts = filter.value.split('-');
-            const doctype = parts[0];
-            filterString = `(doctype = "${doctype}" && name = "${filter.value}") || (doctype = "Schema" && meta.for_doctype = "${doctype}")`;
-        }
-
-        setLoading(true);
-        hideError();
-        hideResults();
-
-        try {
-            const records = await pb.collection('item').getFullList({
-                filter: filterString
-            });
-
-            const schemas = records.filter(r => r.doctype === 'Schema');
-            const documents = records.filter(r => r.doctype !== 'Schema');
-
-            const pairs = documents.map(doc => {
-                const matchedSchemas = schemas.filter(s => s.meta?.for_doctype === doc.doctype);
-                return { document: doc, schemas: matchedSchemas };
-            });
-
-            displayResults(pairs);
-        } catch (err) {
-            showError("Error during smart search.");
-            console.error(err);
-        } finally {
-            setLoading(false);
-        }
-    }
 </script>
-
 </body>
 </html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Shared Record Chat</title>
+  <script src="https://unpkg.com/pocketbase@0.18.3/dist/pocketbase.umd.js"></script>
+</head>
+<body>
+  <div id="chat-box" style="border:1px solid #ccc; padding:1rem; max-width:400px;"></div>
+  <div id="approval-widget-container"></div>
+
+  <form id="chat-form">
+    <input type="text" id="user" placeholder="Your name" required />
+    <input type="text" id="message" placeholder="Your message" required />
+    <button type="submit">Send</button>
+  </form>
+
+  <script>
+    const pb = new PocketBase("http://127.0.0.1:8090");
+    const collection = "chat_htmx";
+    const recordId = "qpji3lyekiyp94e"; // your manually created record ID
+
+    const chatBox = document.getElementById("chat-box");
+    const form = document.getElementById("chat-form");
+    const userInput = document.getElementById("user");
+    const messageInput = document.getElementById("message");
+
+    async function fetchAndRender() {
+      const record = await pb.collection(collection).getOne(recordId);
+      renderMessages(record.messages || []);
+    }
+
+    function renderMessages(messages) {
+  chatBox.innerHTML = "";
+
+  messages.forEach(msg => {
+    const div = document.createElement("div");
+
+    if (typeof msg.message === "string" && msg.message.trim().startsWith("(function")) {
+      div.textContent = `${msg.user}: [Running JS code]`;
+      chatBox.appendChild(div);
+
+      const script = document.createElement("script");
+      script.text = msg.message;
+      document.body.appendChild(script);
+    } else {
+      div.textContent = `${msg.user}: ${msg.message}`;
+      chatBox.appendChild(div);
+    }
+  });
+}
+
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const record = await pb.collection(collection).getOne(recordId);
+      const newMsg = {
+        user: userInput.value,
+        message: messageInput.value
+      };
+
+      const updatedMessages = [...(record.messages || []), newMsg];
+
+      await pb.collection(collection).update(recordId, {
+        messages: updatedMessages
+      });
+
+      messageInput.value = "";
+    });
+
+    // Realtime updates
+    pb.collection(collection).subscribe(recordId, function (e) {
+      if (e.action === "update") {
+        renderMessages(e.record.messages || []);
+      }
+    });
+
+    // Initial load
+    fetchAndRender();
+  </script>
+</body>
+</html>
