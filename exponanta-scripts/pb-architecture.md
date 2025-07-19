@@ -1,3 +1,88 @@
+Version 4
+the goal was to reimplement some elements of ERPnext on base of PocketBase
+- 1 collection for documents - item
+- default collection for users
+- records in item 
+
+Implemented 
+- Storing documents and schemas in 1 collection with links to each other using item.meta
+- Rendering form based on document and its schema 
+- Securty based on item.meta and rules
+- login based on pocketbase js sdk
+- UI for seaching and storing selected documents with rendering 
+
+
+Version 3
+- Added code doctype 
+
+Give me standalong html page page that 
+1) Select all records from item collection that  doctype=Code. Records have this structure
+{collectionId: 'pbc_940982958', collectionName: 'item', created: '2025-07-17 16:39:57.850Z', data: {…}, doctype: 'Code', …}
+collectionId
+: 
+"pbc_940982958"
+collectionName
+: 
+"item"
+created
+: 
+"2025-07-17 16:39:57.850Z"
+data
+: 
+{actions: Array(0), allow_import: 1, allow_rename: 1, autoname: 'naming_series:', code: '', …}
+doctype
+: 
+"Code"
+id
+: 
+"ds0mm3oz2rrlljs"
+meta
+: 
+doctype
+: 
+"Code"
+for_doctype
+: 
+"Project"
+[[Prototype]]
+: 
+Object
+name
+: 
+"CODE-0001"
+updated
+: 
+"2025-07-17 16:40:49.988Z"
+[[Prototype]]
+: 
+Object
+2) when user select 1 record of this type it loads current record data.code (data is json field) into like monaco editor allowing to read and edit code. 
+3) code input has Save button, and its saving it back into current record data.code
+4) as code doctype record has the meta: (meta for_doctype : 
+"Project") then it loads all records (idsonly) of this doctype (Project) and allows to select 1 record of this doctype. 
+5) it has ran button. On run, it loads selected doctype, rans code over it with eval(), the code in widget will reference data inside itself, so no need to take care of it, just eval() 
+use like    <script>
+        let pb = null;
+        let currentRecord = null;
+        // Auto-connect on page load
+        window.onload = function() {
+            connectToPocketBase();
+        };
+        // Connect to PocketBase
+        async function connectToPocketBase() {
+            const statusDiv = document.getElementById('status');
+            
+            try {
+                pb = new PocketBase('http://127.0.0.1:8090/');
+                
+                // Test connection by fetching records
+                const records = await pb.collection('item').getList(1, 50);
+
+So this is a kind of dynamic widjet testing tool 
+ html that has input Window for js code and 2 buttons save and load. 
+
+
+
 this is possible to mock global objects and use 
 - https://chatgpt.com/c/68751c97-2254-8007-9097-46241b24bb15 
 - https://claude.ai/chat/7f0eaf96-a570-49b5-a847-2ad953af017e

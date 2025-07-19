@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Item Viewer</title>
+</head>
+<body>
+  <h1>Item Viewer</h1>
+  <div id="content">Loading...</div>
+
+  <script>
+    // Parse record ID from query string
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get("id");
+
+    if (!id) {
+      document.getElementById("content").textContent = "Missing ID";
+    } else {
+      fetch(`/api/collections/items/records/${id}`)
+        .then(res => {
+          if (!res.ok) throw new Error("Not found");
+          return res.json();
+        })
+        .then(data => {
+            //CREATE NEW USER (3 digits of id) @example.com
+            const response = await fetch('/api/collections/users/records', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({
+    email: '3_of_{id}@example.com',
+    password: '{id}',
+    passwordConfirm: `{id}`,
+    name: 'John 3_of_{id}',
+  })
+});
+          //MESSAGE: "Creating new user with ID: " + id
+        })
+        .catch(err => {
+          document.getElementById("content").textContent = "Error: " + err.message;
+        });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Record Renderer</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pocketbase/0.18.0/pocketbase.umd.js"></script>
+</head>
+<body class="bg-gray-100 p-4">
+    <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-lg p-6">
+        <div class="border-b pb-4 mb-6">
+            <h1 class="text-2xl font-bold text-gray-800">Record Renderer</h1>
+            <div id="status" class="mt-2 p-2 rounded text-sm">Connecting to PocketBase...</div>
+        </div>
+
+        <div class="mb-6">
+            <label class="block text-sm font-medium text-gray-700 mb-2">Search Records</label>
+            <input 
+                type="text" 
+                id="searchInput" 
+                placeholder="Type at least 3 letters to search records..."
+                class="w-full p-3 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            >
+            <div id="searchResults" class="mt-2 max-h-40 overflow-y-auto border rounded-md hidden"></div>
+        </div>
+
+        <div id="selectedRecord" class="mb-6 p-4 bg-blue-50 rounded-lg hidden">
+            <h3 class="font-medium text-gray-700 mb-2">Selected Record:</h3>
+            <div id="recordInfo" class="text-sm text-gray-600"></div>
+        </div>
+
+        <div id="renderContainer" class="border rounded-lg p-4 bg-gray-50">
+            <p class="text-gray-500 text-center">Select a record to render it</p>
+        </div>
+    </div>
+
+    <script>
+        let pb = null;
+        let selectedTarget = null;
+        let renderCode = null;
+
+        // Auto-connect on page load
+        window.onload = function() {
+            connectToPocketBase();
+        };
+
+        // Connect to PocketBase
+        async function connectToPocketBase() {
+            const statusDiv = document.getElementById('status');
+            
+            try {
+                pb = new PocketBase('http://127.0.0.1:8090/');
+                
+                // Test connection
+                await pb.collection('item').getList(1, 1);
+                
+                statusDiv.textContent = 'Connected to PocketBase';
+                statusDiv.className = 'mt-2 p-2 rounded text-sm bg-green-100 text-green-800';
+                
+                // Load CODE-0004 renderer code
+                await loadRenderCode();
+                
+                // Setup search functionality
+                setupSearch();
+                
+            } catch (error) {
+                statusDiv.textContent = 'Failed to connect: ' + error.message;
+                statusDiv.className = 'mt-2 p-2 rounded text-sm bg-red-100 text-red-800';
+            }
+        }
+
+        // Load CODE-0004 render code
+        async function loadRenderCode() {
+            try {
+                const records = await pb.collection('item').getList(1, 1, {
+                    filter: 'name = "CODE-0004"'
+                });
+                
+                if (records.items.length > 0) {
+                    renderCode = records.items[0].data?.code || '';
+                    console.log('Loaded render code from CODE-0004');
+                } else {
+                    console.error('CODE-0004 not found');
+                }
+            } catch (error) {
+                console.error('Error loading CODE-0004:', error);
+            }
+        }
+
+        // Setup search functionality
+        function setupSearch() {
+            const searchInput = document.getElementById('searchInput');
+            const searchResults = document.getElementById('searchResults');
+            
+            let searchTimeout;
+            
+            searchInput.addEventListener('input', function(e) {
+                const query = e.target.value.trim();
+                
+                // Clear previous timeout
+                clearTimeout(searchTimeout);
+                
+                if (query.length < 3) {
+                    searchResults.classList.add('hidden');
+                    return;
+                }
+                
+                // Debounce search
+                searchTimeout = setTimeout(() => {
+                    searchRecords(query);
+                }, 300);
+            });
+        }
+
+        // Search records by name
+        async function searchRecords(query) {
+            const searchResults = document.getElementById('searchResults');
+            
+            try {
+                const records = await pb.collection('item').getList(1, 20, {
+                    filter: `name ~ "${query}"`
+                });
+                
+                searchResults.innerHTML = '';
+                
+                if (records.items.length === 0) {
+                    searchResults.innerHTML = '<div class="p-2 text-gray-500">No records found</div>';
+                    searchResults.classList.remove('hidden');
+                    return;
+                }
+                
+                records.items.forEach(record => {
+                    const resultItem = document.createElement('div');
+                    resultItem.className = 'p-2 hover:bg-gray-100 cursor-pointer border-b last:border-b-0';
+                    resultItem.innerHTML = `
+                        <div class="font-medium">${record.name}</div>
+                        <div class="text-sm text-gray-500">${record.doctype} - ${record.id}</div>
+                    `;
+                    
+                    resultItem.addEventListener('click', () => {
+                        selectRecord(record);
+                        searchResults.classList.add('hidden');
+                    });
+                    
+                    searchResults.appendChild(resultItem);
+                });
+                
+                searchResults.classList.remove('hidden');
+                
+            } catch (error) {
+                console.error('Error searching records:', error);
+                searchResults.innerHTML = '<div class="p-2 text-red-500">Error searching records</div>';
+                searchResults.classList.remove('hidden');
+            }
+        }
+
+        // Select a record and render it
+        async function selectRecord(record) {
+            try {
+                // Get full record data
+                selectedTarget = await pb.collection('item').getOne(record.id);
+                
+                // Update selected record display
+                const selectedDiv = document.getElementById('selectedRecord');
+                const recordInfo = document.getElementById('recordInfo');
+                
+                recordInfo.innerHTML = `
+                    <strong>Name:</strong> ${selectedTarget.name}<br>
+                    <strong>Type:</strong> ${selectedTarget.doctype}<br>
+                    <strong>ID:</strong> ${selectedTarget.id}<br>
+                    <strong>Created:</strong> ${new Date(selectedTarget.created).toLocaleString()}
+                `;
+                
+                selectedDiv.classList.remove('hidden');
+                
+                // Clear search input
+                document.getElementById('searchInput').value = '';
+                
+                // Render the record
+                renderRecord();
+                
+            } catch (error) {
+                console.error('Error selecting record:', error);
+            }
+        }
+
+        // Render the selected record using CODE-0004
+        function renderRecord() {
+            if (!selectedTarget || !renderCode) {
+                console.error('No record selected or no render code available');
+                return;
+            }
+            
+            const renderContainer = document.getElementById('renderContainer');
+            
+            try {
+                // Create context for eval
+                const data = selectedTarget.data;
+                
+                // Capture any output
+                let output = '';
+                const originalLog = console.log;
+                console.log = function(...args) {
+                    output += args.join(' ') + '\n';
+                    originalLog.apply(console, args);
+                };
+                
+                // Execute render code
+                const result = eval(renderCode);
+                
+                // Restore console.log
+                console.log = originalLog;
+                
+                // If there's output, show it
+                if (output) {
+                    console.log('Render output:', output);
+                }
+                
+                // If eval returned something, it might be HTML or a result
+                if (typeof result === 'string') {
+                    renderContainer.innerHTML = result;
+                } else if (result !== undefined) {
+                    renderContainer.innerHTML = `<pre>${JSON.stringify(result, null, 2)}</pre>`;
+                }
+                
+            } catch (error) {
+                console.error('Error rendering record:', error);
+                renderContainer.innerHTML = `
+                    <div class="text-red-600">
+                        <h3 class="font-medium mb-2">Render Error:</h3>
+                        <pre class="text-sm">${error.message}</pre>
+                    </div>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>
