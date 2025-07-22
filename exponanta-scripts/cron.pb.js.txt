@@ -1,0 +1,4 @@
+// prints "Hello!" every 2 minutes
+cronAdd("hello", "*/2 * * * *", () => {
+    console.log("Hello!")
+})

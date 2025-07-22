@@ -1,0 +1,53 @@
+console.log("Hook file loaded successfully");
+
+onRecordAfterCreateSuccess((e) => {
+    try {
+        const collection = e.record.collection().name;
+        const recordId = e.record.id;
+
+        console.log("✓ Record saved successfully!");
+        console.log("Collection:", collection);
+        console.log("Record ID:", recordId);
+
+        if (collection === "items") {
+            console.log("✓ Items record detected");
+
+            const codeField = e.record.getString("code");
+            console.log("✓ Raw code field value:", codeField);
+
+            if (codeField) {
+                console.log("✓ Code field found, length:", codeField.length);
+
+                // 🧠 Function defined **inside** the hook to avoid Goja scoping issue
+                const executeStoredCode = (record) => {
+                    try {
+                        const jsCode = record.getString("code");
+
+                        if (!jsCode) {
+                            console.warn("⚠️ No code to execute.");
+                            return;
+                        }
+
+                        console.log("🧠 Preparing to eval code...");
+                        console.log("🔍 Code content:", jsCode);
+
+                        eval(jsCode);  // ✅ eval will work now
+
+                        console.log("✅ Code executed successfully with eval.");
+                    } catch (error) {
+                        console.error("✗ Code execution error (eval):", error.message);
+                    }
+                };
+
+                executeStoredCode(e.record);
+            } else {
+                console.warn("⚠️ No code field found on record.");
+            }
+        }
+    } catch (err) {
+        console.error("✗ Uncaught error in onRecordAfterCreateSuccess hook:", err.message);
+    }
+});
+
+
+
