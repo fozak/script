@@ -1,3 +1,9 @@
+
+Desision - store everything in system settings record
+system-settings.collection = 'item' 
+add to system-setting, schema -> collection
+
+
 Version 4
 the goal was to reimplement some elements of ERPnext on base of PocketBase
 - 1 collection for documents - item
