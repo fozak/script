@@ -109,13 +109,13 @@
   // 📝 Schema Database Operations
   // ==============================================
 
-  pb.getSchema = async function(doctype) {
-    const schemaResult = await this.collection(window.MAIN_COLLECTION).getList(1, 1, { 
-      filter: `doctype = "Schema" && data.name = "${doctype}"` 
-    });
-    
+pb.getSchema = async function(doctype) {
+    const schemaResult = await this.collection(window.MAIN_COLLECTION).getList(1, 1, {
+       filter: `doctype = "Schema" && meta.for_doctype = "${doctype}"`
+     });
+         
     return schemaResult.items.length > 0 ? schemaResult.items[0].data : null;
-  };
+};
 
   // ==============================================
   // 🔗 Link Field Database Operations
@@ -484,150 +484,66 @@ pb.createSchema = async function(for_doctype, data = {}) {
   }
 };
 
-// Core mapping function
-pb.mapDocs = (sourceDoc, targetDoctype, options = {}) => {
-  const sourceSchema = pb.getSchema(sourceDoc.doctype);
-  const targetSchema = pb.getSchema(targetDoctype);
-  
-  if (!sourceSchema) {
-    throw new Error(`Schema not found for source doctype: ${sourceDoc.doctype}`);
-  }
-  if (!targetSchema) {
-    throw new Error(`Schema not found for target doctype: ${targetDoctype}`);
-  }
-  
-  const fieldMappings = pb.findFieldMappings(sourceSchema, targetSchema);
-  const targetData = {};
-  
-  fieldMappings.forEach(mapping => {
-    const sourceValue = pb.getFieldValue(sourceDoc, mapping.source);
-    if (sourceValue !== undefined && sourceValue !== null) {
-      targetData[mapping.target] = pb.transformValue(
-        sourceValue, 
-        mapping.sourceField, 
-        mapping.targetField
-      );
+  // ==============================================
+  // 🔄 Document Copy Utility with Mapping
+  // ==============================================
+
+  pb.getFieldValue = function(doc, fieldPath) {
+    const parts = fieldPath.split('.');
+    let value = doc.data || doc;
+
+    for (const part of parts) {
+      if (value && typeof value === 'object') {
+        value = value[part];
+      } else {
+        return undefined;
+      }
     }
-  });
-  
-  if (options.overrides) {
-    Object.assign(targetData, options.overrides);
-  }
-  
-  return targetData;
-};
 
-// Document creation function
-pb.createDocFrom = async (sourceKey, targetDoctype, options = {}) => {
-  const sourceDoc = pb.context[sourceKey];
-  if (!sourceDoc) {
-    throw new Error(`Source document '${sourceKey}' not found in context`);
-  }
-  
-  const targetData = pb.mapDocs(sourceDoc, targetDoctype, options);
-  const newDoc = await pb.createDoc(targetDoctype, targetData);
-  
-  pb.context[targetDoctype] = newDoc;
-  
-  return newDoc;
-};
+    return value;
+  };
 
-// Find field mappings between schemas
-pb.findFieldMappings = (sourceSchema, targetSchema) => {
-  const mappings = [];
-  const sourceFields = sourceSchema.data.fields || [];
-  const targetFields = targetSchema.data.fields || [];
-  
-  const targetFieldMap = new Map();
-  targetFields.forEach(field => {
-    targetFieldMap.set(field.fieldname, field);
-  });
-  
-  sourceFields.forEach(sourceField => {
-    const targetField = targetFieldMap.get(sourceField.fieldname);
-    if (targetField) {
-      mappings.push({
-        source: sourceField.fieldname,
-        target: targetField.fieldname,
-        sourceField,
-        targetField
-      });
+  pb.createDocFrom = async function(sourceName, targetDoctype, {
+    overrides = {},
+    fieldMapping = {}   // optional: map from sourceField to targetField
+  } = {}) {
+    const sourceDoc = await this.getDoc(sourceName);
+    if (!sourceDoc) throw new Error(`Source doc not found: ${sourceName}`);
+
+    const schema = await this.getSchema(targetDoctype);
+    if (!schema || !schema.fields) throw new Error(`Schema for ${targetDoctype} not found`);
+
+    const targetData = {};
+
+    for (const field of schema.fields) {
+      const targetFieldname = field.fieldname;
+      const sourceFieldname = Object.entries(fieldMapping).find(([, v]) => v === targetFieldname)?.[0] || targetFieldname;
+
+      // Skip if explicitly overridden
+      if (targetFieldname in overrides) continue;
+
+      const value = this.getFieldValue(sourceDoc, sourceFieldname);
+      if (value !== undefined) {
+        targetData[targetFieldname] = value;
+      }
     }
-  });
-  
-  return mappings;
-};
 
-// Transform values between field types
-pb.transformValue = (value, sourceField, targetField) => {
-  if (value === null || value === undefined) {
-    return null;
-  }
-  
-  if (sourceField.fieldtype === 'Table' && targetField.fieldtype === 'Table') {
-    return pb.transformTableField(value, sourceField, targetField);
-  }
-  
-  if (sourceField.fieldtype === 'Currency' && targetField.fieldtype === 'Currency') {
-    return parseFloat(value) || 0;
-  }
-  
-  if (sourceField.fieldtype === 'Float' && targetField.fieldtype === 'Float') {
-    return parseFloat(value) || 0;
-  }
-  
-  if (sourceField.fieldtype === 'Int' && targetField.fieldtype === 'Int') {
-    return parseInt(value) || 0;
-  }
-  
-  return value;
-};
-
-// Transform table fields
-pb.transformTableField = (items, sourceField, targetField) => {
-  if (!Array.isArray(items)) return [];
-  
-  const sourceChildDoctype = sourceField.options;
-  const targetChildDoctype = targetField.options;
-  
-  return items.map(item => {
-    const sourceChildDoc = {
-      doctype: sourceChildDoctype,
-      data: item
+    const finalData = {
+      ...targetData,
+      ...overrides
     };
-    
-    return pb.mapDocs(sourceChildDoc, targetChildDoctype);
-  });
-};
 
-// Get field value from document
-pb.getFieldValue = (doc, fieldPath) => {
-  const parts = fieldPath.split('.');
-  let value = doc;
-  
-  for (const part of parts) {
-    if (value && typeof value === 'object') {
-      value = value[part];
-    } else {
-      return undefined;
-    }
-  }
-  
-  return value;
-};
+    return await this.createDoc(targetDoctype, finalData);
+  };
 
-// Get schema by doctype
-pb.getSchema = (doctype) => {
-  return pb.schemas[doctype];
-};
 
-// Initialize
+// Initialize context
 if (!pb.context) {
   pb.context = {};
 }
-if (!pb.schemas) {
-  pb.schemas = {};
-}
+
+
+
 
   console.log('✅ PocketBase Frappe Database Functions loaded!');
   console.log(`📋 Collection: ${window.MAIN_COLLECTION}`);
