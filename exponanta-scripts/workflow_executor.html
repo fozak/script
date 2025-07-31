@@ -1,0 +1,423 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Workflow Code Executor</title>
+  <script src="https://unpkg.com/blockly@12.2.0/blockly.min.js"></script>
+  <style>
+    body {
+      background-color: #fff;
+      font-family: sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      font-weight: normal;
+      font-size: 140%;
+    }
+    #controls {
+      margin: 10px 0;
+    }
+    button {
+      margin: 5px;
+      padding: 8px 15px;
+      font-size: 14px;
+    }
+    #blocklyDiv {
+      height: 600px;
+      width: 100%;
+      border: 1px solid #ccc;
+    }
+    #output {
+      margin-top: 20px;
+      padding: 10px;
+      background: #f5f5f5;
+      border: 1px solid #ddd;
+      white-space: pre-wrap;
+      font-family: monospace;
+    }
+  </style>
+</head>
+<body>
+  <h1>Workflow Code Executor</h1>
+  <p>Build workflow logic with field selectors, conditions, and actions.</p>
+  
+  <div id="controls">
+    <button onclick="showCode()">Show JavaScript</button>
+    <button onclick="runCode()">Execute Workflow</button>
+    <button onclick="clearOutput()">Clear Output</button>
+  </div>
+  
+  <div id="blocklyDiv"></div>
+  
+  <div id="output">Output will appear here...</div>
+
+  <script>
+    // Sample data context
+    window.workflowData = {
+      salesInvoice: {
+        total: 1500,
+        customer: "Acme Corp",
+        items: ["Widget A", "Widget B"],
+        date: "2024-01-15"
+      },
+      user: {
+        name: "John Smith",
+        email: "john@company.com",
+        role: "manager"
+      }
+    };
+
+    // Define custom blocks
+    Blockly.defineBlocksWithJsonArray([
+      {
+        type: "field_selector",
+        message0: "Get %1 . %2",
+        args0: [
+          {
+            type: "field_dropdown",
+            name: "OBJECT",
+            options: [
+              ["sales invoice", "salesInvoice"],
+              ["user", "user"]
+            ]
+          },
+          {
+            type: "field_dropdown",
+            name: "FIELD",
+            options: [
+              ["total", "total"],
+              ["customer", "customer"],
+              ["items", "items"],
+              ["date", "date"],
+              ["name", "name"],
+              ["email", "email"],
+              ["role", "role"]
+            ]
+          }
+        ],
+        output: null,
+        colour: 160,
+        tooltip: "Get a field value from an object"
+      },
+      {
+        type: "create_email",
+        message0: "Create email to %1 subject %2 body %3",
+        args0: [
+          { type: "input_value", name: "TO" },
+          { type: "input_value", name: "SUBJECT" },
+          { type: "input_value", name: "BODY" }
+        ],
+        previousStatement: null,
+        nextStatement: null,
+        colour: 65,
+        tooltip: "Create an email"
+      },
+      {
+        type: "create_document",
+        message0: "Create %1 document with data %2",
+        args0: [
+          {
+            type: "field_dropdown",
+            name: "TYPE",
+            options: [
+              ["Invoice", "invoice"],
+              ["Report", "report"],
+              ["Contract", "contract"]
+            ]
+          },
+          { type: "input_value", name: "DATA" }
+        ],
+        previousStatement: null,
+        nextStatement: null,
+        colour: 230,
+        tooltip: "Create a document"
+      },
+      {
+        type: "log_message",
+        message0: "Log %1",
+        args0: [
+          { type: "input_value", name: "MESSAGE" }
+        ],
+        previousStatement: null,
+        nextStatement: null,
+        colour: 120,
+        tooltip: "Log a message to output"
+      }
+    ]);
+
+    // Code generators for custom blocks
+    javascript.javascriptGenerator.forBlock['field_selector'] = function(block) {
+      const object = block.getFieldValue('OBJECT');
+      const field = block.getFieldValue('FIELD');
+      const code = `workflowData.${object}.${field}`;
+      return [code, javascript.Order.MEMBER];
+    };
+
+    javascript.javascriptGenerator.forBlock['create_email'] = function(block) {
+      const to = javascript.javascriptGenerator.valueToCode(block, 'TO', javascript.Order.ATOMIC) || '""';
+      const subject = javascript.javascriptGenerator.valueToCode(block, 'SUBJECT', javascript.Order.ATOMIC) || '""';
+      const body = javascript.javascriptGenerator.valueToCode(block, 'BODY', javascript.Order.ATOMIC) || '""';
+      
+      return `createEmail(${to}, ${subject}, ${body});\n`;
+    };
+
+    javascript.javascriptGenerator.forBlock['create_document'] = function(block) {
+      const type = block.getFieldValue('TYPE');
+      const data = javascript.javascriptGenerator.valueToCode(block, 'DATA', javascript.Order.ATOMIC) || 'null';
+      
+      return `createDocument("${type}", ${data});\n`;
+    };
+
+    javascript.javascriptGenerator.forBlock['log_message'] = function(block) {
+      const message = javascript.javascriptGenerator.valueToCode(block, 'MESSAGE', javascript.Order.ATOMIC) || '""';
+      
+      return `logMessage(${message});\n`;
+    };
+
+    // Workflow functions
+    function createEmail(to, subject, body) {
+      const output = document.getElementById('output');
+      output.textContent += `📧 EMAIL CREATED:\n`;
+      output.textContent += `  To: ${to}\n`;
+      output.textContent += `  Subject: ${subject}\n`;
+      output.textContent += `  Body: ${body}\n\n`;
+    }
+
+    function createDocument(type, data) {
+      const output = document.getElementById('output');
+      output.textContent += `📄 DOCUMENT CREATED:\n`;
+      output.textContent += `  Type: ${type}\n`;
+      output.textContent += `  Data: ${JSON.stringify(data)}\n\n`;
+    }
+
+    function logMessage(message) {
+      const output = document.getElementById('output');
+      output.textContent += `💬 LOG: ${message}\n\n`;
+    }
+
+    // Toolbox configuration
+    const toolbox = {
+      kind: 'categoryToolbox',
+      contents: [
+        {
+          kind: 'category',
+          name: 'Data',
+          categorystyle: 'variable_category',
+          contents: [
+            {
+              kind: 'block',
+              type: 'field_selector'
+            }
+          ]
+        },
+        {
+          kind: 'category',
+          name: 'Actions',
+          categorystyle: 'procedure_category',
+          contents: [
+            {
+              kind: 'block',
+              type: 'create_email'
+            },
+            {
+              kind: 'block',
+              type: 'create_document'
+            },
+            {
+              kind: 'block',
+              type: 'log_message'
+            }
+          ]
+        },
+        {
+          kind: 'category',
+          name: 'Logic',
+          categorystyle: 'logic_category',
+          contents: [
+            {
+              kind: 'block',
+              type: 'controls_if'
+            },
+            {
+              kind: 'block',
+              type: 'logic_compare'
+            },
+            {
+              kind: 'block',
+              type: 'logic_operation'
+            },
+            {
+              kind: 'block',
+              type: 'logic_boolean'
+            }
+          ]
+        },
+        {
+          kind: 'category',
+          name: 'Math',
+          categorystyle: 'math_category',
+          contents: [
+            {
+              kind: 'block',
+              type: 'math_number',
+              fields: {
+                NUM: 1000
+              }
+            },
+            {
+              kind: 'block',
+              type: 'math_arithmetic'
+            }
+          ]
+        },
+        {
+          kind: 'category',
+          name: 'Text',
+          categorystyle: 'text_category',
+          contents: [
+            {
+              kind: 'block',
+              type: 'text'
+            },
+            {
+              kind: 'block',
+              type: 'text_join'
+            }
+          ]
+        }
+      ]
+    };
+
+    // Initialize workspace
+    const workspace = Blockly.inject('blocklyDiv', {
+      toolbox: toolbox,
+      scrollbars: true,
+      trashcan: true,
+      zoom: {
+        controls: true,
+        wheel: true,
+        startScale: 1.0,
+        maxScale: 3,
+        minScale: 0.3,
+        scaleSpeed: 1.2
+      }
+    });
+
+    // Sample workflow
+    const sampleWorkflow = {
+      blocks: {
+        languageVersion: 0,
+        blocks: [
+          {
+            type: 'controls_if',
+            x: 20,
+            y: 20,
+            inputs: {
+              IF0: {
+                block: {
+                  type: 'logic_compare',
+                  fields: { OP: 'GT' },
+                  inputs: {
+                    A: {
+                      block: {
+                        type: 'field_selector',
+                        fields: {
+                          OBJECT: 'salesInvoice',
+                          FIELD: 'total'
+                        }
+                      }
+                    },
+                    B: {
+                      block: {
+                        type: 'math_number',
+                        fields: { NUM: 1000 }
+                      }
+                    }
+                  }
+                }
+              },
+              DO0: {
+                block: {
+                  type: 'create_email',
+                  inputs: {
+                    TO: {
+                      block: {
+                        type: 'text',
+                        fields: { TEXT: 'manager@company.com' }
+                      }
+                    },
+                    SUBJECT: {
+                      block: {
+                        type: 'text',
+                        fields: { TEXT: 'High Value Invoice Alert' }
+                      }
+                    },
+                    BODY: {
+                      block: {
+                        type: 'text_join',
+                        extraState: { itemCount: 3 },
+                        inputs: {
+                          ADD0: {
+                            block: {
+                              type: 'text',
+                              fields: { TEXT: 'Invoice total: $' }
+                            }
+                          },
+                          ADD1: {
+                            block: {
+                              type: 'field_selector',
+                              fields: {
+                                OBJECT: 'salesInvoice',
+                                FIELD: 'total'
+                              }
+                            }
+                          },
+                          ADD2: {
+                            block: {
+                              type: 'text',
+                              fields: { TEXT: ' requires approval.' }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    };
+
+    // Load sample workflow
+    Blockly.serialization.workspaces.load(sampleWorkflow, workspace);
+
+    function showCode() {
+      javascript.javascriptGenerator.INFINITE_LOOP_TRAP = null;
+      const code = javascript.javascriptGenerator.workspaceToCode(workspace);
+      alert(code);
+    }
+
+    function runCode() {
+      const output = document.getElementById('output');
+      output.textContent = 'Executing workflow...\n\n';
+      
+      javascript.javascriptGenerator.INFINITE_LOOP_TRAP = null;
+      const code = javascript.javascriptGenerator.workspaceToCode(workspace);
+      
+      try {
+        eval(code);
+        output.textContent += 'Workflow completed successfully!';
+      } catch (e) {
+        output.textContent += `❌ Error: ${e}`;
+      }
+    }
+
+    function clearOutput() {
+      document.getElementById('output').textContent = 'Output cleared...';
+    }
+  </script>
+</body>
+</html>

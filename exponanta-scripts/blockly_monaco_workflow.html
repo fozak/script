@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Workflow Editor: Blockly + Monaco</title>
+  <script src="https://unpkg.com/blockly/blockly.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.44.0/min/vs/loader.min.js"></script>
+  <style>
+    body { display: flex; gap: 10px; height: 100vh; margin: 0; }
+    #blocklyDiv { height: 100%; width: 50%; }
+    #monacoDiv { height: 100%; width: 50%; border-left: 1px solid #ccc; }
+    #controls { position: absolute; top: 10px; left: 10px; z-index: 100; background: white; padding: 10px; }
+  </style>
+</head>
+<body>
+<div id="controls">
+  <button onclick="exportJson()">Export to Monaco</button>
+  <button onclick="loadJson()">Load from Monaco</button>
+</div>
+<div id="blocklyDiv"></div>
+<div id="monacoDiv"></div>
+<xml id="toolbox" style="display: none">
+  <category name="Workflow">
+    <block type="step_createDoc"></block>
+    <block type="step_sync"></block>
+    <block type="step_conditional"></block>
+  </category>
+</xml>
+<script>
+  let editor;
+  
+  // Blockly Setup
+  const workspace = Blockly.inject('blocklyDiv', { 
+    toolbox: document.getElementById('toolbox') 
+  });
+  
+  Blockly.defineBlocksWithJsonArray([
+    {
+      type: "step_createDoc",
+      message0: "Create from %1 to %2 as %3",
+      args0: [
+        { type: "field_input", name: "FROM", text: "input" },
+        { type: "field_input", name: "TO", text: "Sales Invoice" },
+        { type: "field_input", name: "SAVEAS", text: "invoice" }
+      ],
+      previousStatement: null,
+      nextStatement: null,
+      colour: 230
+    },
+    {
+      type: "step_sync",
+      message0: "Sync %1 with handler %2",
+      args0: [
+        { type: "field_input", name: "INPUT", text: "input" },
+        { type: "field_input", name: "HANDLER", text: "validateOrder" }
+      ],
+      previousStatement: null,
+      nextStatement: null,
+      colour: 200
+    },
+    {
+      type: "step_conditional",
+      message0: "If %1 from %2",
+      args0: [
+        { type: "field_input", name: "IF", text: "checkHighValue" },
+        { type: "field_input", name: "INPUT", text: "invoice" }
+      ],
+      previousStatement: null,
+      nextStatement: null,
+      colour: 160
+    }
+  ]);
+  
+  Blockly.JavaScript['step_createDoc'] = function (block) {
+    return JSON.stringify({
+      step: block.id,
+      type: "createDoc",
+      from: block.getFieldValue('FROM'),
+      to: block.getFieldValue('TO'),
+      saveAs: block.getFieldValue('SAVEAS')
+    }) + ',\n';
+  };
+  
+  Blockly.JavaScript['step_sync'] = function (block) {
+    return JSON.stringify({
+      step: block.id,
+      type: "sync",
+      input: block.getFieldValue('INPUT'),
+      handler: block.getFieldValue('HANDLER')
+    }) + ',\n';
+  };
+  
+  Blockly.JavaScript['step_conditional'] = function (block) {
+    return JSON.stringify({
+      step: block.id,
+      type: "conditional",
+      input: block.getFieldValue('INPUT'),
+      if: block.getFieldValue('IF')
+    }) + ',\n';
+  };
+  
+  function exportJson() {
+    if (!editor) return;
+    const code = Blockly.JavaScript.workspaceToCode(workspace);
+    if (code.trim()) {
+      const cleanCode = code.trim().replace(/,$/, '');
+      const jsonStr = '[\n' + cleanCode + '\n]';
+      editor.setValue(jsonStr);
+    } else {
+      editor.setValue('[]');
+    }
+  }
+  
+  function loadJson() {
+    if (!editor) return;
+    try {
+      const jsonStr = editor.getValue().trim();
+      const jsonData = JSON.parse(jsonStr);
+      workspace.clear();
+      
+      jsonData.forEach((item, i) => {
+        let blockType = 'step_' + item.type;
+        const block = workspace.newBlock(blockType);
+        
+        if (item.type === 'createDoc') {
+          block.setFieldValue(item.from || 'input', 'FROM');
+          block.setFieldValue(item.to || 'Sales Invoice', 'TO');
+          block.setFieldValue(item.saveAs || 'invoice', 'SAVEAS');
+        } else if (item.type === 'sync') {
+          block.setFieldValue(item.input || item.step || 'input', 'INPUT');
+          block.setFieldValue(item.handler || 'validateOrder', 'HANDLER');
+        } else if (item.type === 'conditional') {
+          block.setFieldValue(item.if || 'checkHighValue', 'IF');
+          block.setFieldValue(item.input || item.step || 'invoice', 'INPUT');
+        }
+        
+        block.moveBy(20, 20 + i * 80);
+        block.initSvg();
+        block.render();
+      });
+    } catch (e) {
+      alert('JSON Error: ' + e.message);
+    }
+  }
+  
+  // Monaco Setup
+  require.config({ paths: { vs: 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.44.0/min/vs' }});
+  require(["vs/editor/editor.main"], function () {
+    editor = monaco.editor.create(document.getElementById("monacoDiv"), {
+      value: '[]',
+      language: 'json',
+      theme: 'vs-dark'
+    });
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,139 @@
+https://claude.ai/chat/a73f4a81-c7fb-401b-b871-d9dcb5c752ee
+
+You're experiencing the classic "N+1 query problem" and excessive API calls. Here's how to optimize:
+🚨 Main Issues:
+
+Loading all Link options upfront - Your form is fetching every possible Link field option even if not needed
+No caching - Same data fetched multiple times
+Eager loading - Loading everything at once instead of on-demand
+
+🎯 Optimization Strategies:
+1. Lazy Load Link Options
+Only fetch Link field options when the user actually clicks/focuses on the field:
+javascript// Instead of loading all Link options upfront, load them on demand
+const handleFieldFocus = async (field) => {
+  if (!linkOptions[field.fieldname] && field.fieldtype === 'Link') {
+    const options = await pb.getLinkOptions(field.options);
+    setLinkOptions(prev => ({ ...prev, [field.fieldname]: options }));
+  }
+};
+2. Add Caching Layer to Your Library
+Modify your pb-document-lib.js to add a simple cache:
+javascript// Add this to your library
+const linkOptionsCache = new Map();
+
+pb.getLinkOptions = async function(doctype, titleField = 'subject') {
+  const cacheKey = `${doctype}-${titleField}`;
+  
+  if (linkOptionsCache.has(cacheKey)) {
+    return linkOptionsCache.get(cacheKey);
+  }
+  
+  const records = await this.collection(window.MAIN_COLLECTION).getFullList({
+    filter: `doctype = "${doctype}"`
+  });
+  
+  const options = records.map(record => ({
+    value: record.name,
+    text: record.data[titleField] || record.name
+  }));
+  
+  linkOptionsCache.set(cacheKey, options);
+  return options;
+};
+3. Batch Link Requests
+Instead of 8 separate requests, make fewer batched requests:
+javascript// Load only essential Link fields initially (maybe top 3-4 most common)
+const essentialLinkFields = schema.fields
+  .filter(f => f.fieldtype === 'Link' && f.reqd) // Only required fields
+  .slice(0, 3); // Limit to first few
+4. Debounce Dynamic Link Loading
+Don't load dynamic options immediately - wait for user to stop typing:
+javascriptconst debouncedLoadDynamicOptions = useMemo(
+  () => debounce(async (field, sourceValue) => {
+    const options = await pb.getDynamicLinkOptions(sourceValue);
+    setLinkOptions(prev => ({ ...prev, [field.fieldname]: options }));
+  }, 300),
+  []
+);
+5. Smart Schema Loading
+Cache schemas aggressively since they rarely change:
+javascript// Add to your library
+const schemaCache = new Map();
+
+pb.getSchema = async function(doctype) {
+  if (schemaCache.has(doctype)) {
+    return schemaCache.get(doctype);
+  }
+  
+  const schema = await this.collection(window.MAIN_COLLECTION).getList(1, 1, { 
+    filter: `doctype = "Schema" && data.name = "${doctype}"` 
+  });
+  
+  const result = schema.items.length > 0 ? schema.items[0].data : null;
+  schemaCache.set(doctype, result);
+  return result;
+};
+🎯 Quick Wins:
+
+Remove eager loading from loadFormData() - don't load all Link options upfront
+Add onFocus handlers to Link fields to load options only when needed
+Cache everything that doesn't change frequently (schemas, common Link options)
+Limit initial load to only required/visible fields
+
+Expected Result:
+
+From 10+ requests to 2-3 requests on initial load
+Faster initial render (300ms vs 2+ seconds)
+Better user experience with progressive loading
+
+The key is shifting from "load everything upfront" to "load what's needed, when it's needed" with smart caching.RetryClaude does not have the ability to run the code it generates yet.DDdont give code, but approach, I am rendering form based on doc.data and its linked schema. I need shema loading  link fileds a kind of later if I am starting to CHANGE form unless changing, I can render it with 1 call of dataEdit2 / 2🎯 Smart Loading Strategy:
+Phase 1: Initial Render (1 API call)
+
+Load only the document data and schema
+Render form fields immediately with empty dropdowns for Link fields
+Show placeholders like "-- Select --" or "Click to load options"
+Form is functional for viewing/reading instantly
+
+Phase 2: Interactive Loading (On-Demand)
+
+Trigger: User clicks/focuses on a Link field for the first time
+Action: Fetch options for that specific Link field only
+UX: Show loading spinner in that dropdown while fetching
+Caching: Cache the results so subsequent clicks are instant
+
+Phase 3: Batch Optimization
+
+Smart Batching: If user focuses on multiple Link fields quickly, batch those requests
+Predictive Loading: After user interacts with first Link field, silently preload the most common ones
+Priority Loading: Load required fields first, optional fields last
+
+🧠 Decision Logic:
+"View Mode" vs "Edit Mode"
+
+View Mode: Just render the form with current values, no Link options needed
+Edit Mode: Only triggered when user actually tries to change something
+Hybrid: Start in view mode, upgrade to edit mode on first interaction
+
+Smart Field Classification
+
+Critical: Required fields (load immediately on first edit)
+Common: Frequently used fields (load on second interaction)
+Rare: Specialty fields (load only when accessed)
+
+🚀 User Experience Flow:
+
+Page loads: Form appears instantly (view mode)
+User clicks field: "Loading options..." appears briefly
+Options load: Dropdown populates smoothly
+Second click: Instant (cached)
+Related fields: May auto-preload based on first selection
+
+🎨 Visual Feedback Strategy:
+
+Empty dropdowns: Show "Click to load" instead of being disabled
+Loading states: Skeleton loading or spinner in specific field
+Progressive enhancement: Form gets more interactive as user needs it
+Context awareness: Smart preloading based on user patterns
+
+This approach gives you instant page loads with smart progressive enhancement - best of both worlds!

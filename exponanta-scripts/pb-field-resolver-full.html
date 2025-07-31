@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Field Resolver with Monaco</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pocketbase/0.18.0/pocketbase.umd.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.44.0/min/vs/loader.min.js"></script>
+  <style>
+    #editor { height: 300px; border: 1px solid #ccc; }
+    #output { white-space: pre-wrap; background: #f9f9f9; padding: 10px; margin-top: 10px; border: 1px solid #ccc; }
+  </style>
+</head>
+<body>
+  <h1>Monaco Editor Field Resolver</h1>
+  <div id="editor"></div>
+  <button id="runBtn">Run & Resolve</button>
+  <div id="output"></div>
+
+  <script>
+  // Blockly Setup
+  const workspace = Blockly.inject('blocklyDiv', {
+    toolbox: document.getElementById('toolbox')
+  });
+
+  Blockly.defineBlocksWithJsonArray([
+    {
+      type: "step_createDoc",
+      message0: "Create from %1 to %2 as %3",
+      args0: [
+        { type: "field_input", name: "FROM", text: "input" },
+        { type: "field_input", name: "TO", text: "Sales Invoice" },
+        { type: "field_input", name: "SAVEAS", text: "invoice" }
+      ],
+      previousStatement: null,
+      nextStatement: null,
+      colour: 230
+    },
+    {
+      type: "step_sync",
+      message0: "Sync %1 with handler %2",
+      args0: [
+        { type: "field_input", name: "INPUT", text: "input" },
+        { type: "field_input", name: "HANDLER", text: "validateOrder" }
+      ],
+      previousStatement: null,
+      nextStatement: null,
+      colour: 200
+    },
+    {
+      type: "step_conditional",
+      message0: "If %1 from %2",
+      args0: [
+        { type: "field_input", name: "IF", text: "checkHighValue" },
+        { type: "field_input", name: "INPUT", text: "invoice" }
+      ],
+      previousStatement: null,
+      nextStatement: null,
+      colour: 160
+    }
+  ]);
+
+  Blockly.JavaScript['step_createDoc'] = function (block) {
+    return `{"step": "${block.id}", "type": "createDoc", "from": "${block.getFieldValue('FROM')}", "to": "${block.getFieldValue('TO')}", "saveAs": "${block.getFieldValue('SAVEAS')}"},`;
+  };
+
+  Blockly.JavaScript['step_sync'] = function (block) {
+    return `{"step": "${block.id}", "type": "sync", "input": "${block.getFieldValue('INPUT')}", "handler": "${block.getFieldValue('HANDLER')}"},`;
+  };
+
+  Blockly.JavaScript['step_conditional'] = function (block) {
+    return `{"step": "${block.id}", "type": "conditional", "input": "${block.getFieldValue('INPUT')}", "if": "${block.getFieldValue('IF')}"},`;
+  };
+
+  document.getElementById('generateJson').onclick = () => {
+    console.log("📤 Exporting workflow from Blockly to Monaco...");
+    const code = Blockly.JavaScript.workspaceToCode(workspace);
+    const jsonArr = `[\n${code.trim().replace(/,$/, '')}\n]`;
+    if (window.editor) {
+      editor.setValue(jsonArr);
+      console.log("✅ Monaco updated.");
+    } else {
+      console.warn("⚠️ Monaco editor not ready.");
+    }
+  };
+
+  document.getElementById('loadFromMonaco').onclick = () => {
+    console.log("📥 Loading workflow from Monaco...");
+    if (!window.editor) {
+      console.warn("❌ Monaco editor is not initialized.");
+      return;
+    }
+
+    const raw = editor.getValue();
+    try {
+      const parsed = eval(raw); // Use eval carefully — expects JS-style arrays
+      console.log("✅ Parsed workflow steps:", parsed);
+    } catch (err) {
+      console.error("❌ Failed to parse Monaco content:", err.message);
+    }
+  };
+
+  // Monaco Editor Setup
+  let editor;
+  require.config({ paths: { vs: 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.44.0/min/vs' }});
+  require(["vs/editor/editor.main"], function () {
+    editor = monaco.editor.create(document.getElementById("monacoDiv"), {
+      value: "[]",
+      language: "javascript",  // switched from JSON to JS for eval to work
+      theme: "vs-dark",
+      automaticLayout: true
+    });
+    console.log("✅ Monaco editor initialized.");
+  });
+</script>
+
+</body>
+</html>

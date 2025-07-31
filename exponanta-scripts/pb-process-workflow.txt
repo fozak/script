@@ -1,0 +1,618 @@
+//https://claude.ai/chat/dc3fb4e5-7688-45a8-b319-a12bfe587b50
+
+// ==============================================
+// 🏗️ Process Engine Schema & Data Setup
+// Following Frappe doctype pattern
+// ==============================================
+
+// ==============================================
+// 📋 Process Schema Definition
+// ==============================================
+
+const processSchema = {
+  name: "Process",
+  fields: [
+    {
+      fieldname: "process_name",
+      fieldtype: "Data",
+      label: "Process Name",
+      reqd: 1,
+      in_list_view: 1,
+      bold: 1
+    },
+    {
+      fieldname: "trigger_event",
+      fieldtype: "Data", 
+      label: "Trigger Event",
+      reqd: 1,
+      in_list_view: 1,
+      description: "Event that triggers this process (e.g., sales_order.confirmed)"
+    },
+    {
+      fieldname: "description",
+      fieldtype: "Text",
+      label: "Description",
+      in_list_view: 1
+    },
+    {
+      fieldname: "status",
+      fieldtype: "Select",
+      label: "Status",
+      options: "Active\nInactive\nDraft\nTesting",
+      default: "Active",
+      in_list_view: 1,
+      in_standard_filter: 1
+    },
+    {
+      fieldname: "priority",
+      fieldtype: "Select",
+      label: "Priority",
+      options: "Low\nNormal\nHigh\nCritical",
+      default: "Normal",
+      in_list_view: 1
+    },
+    {
+      fieldname: "execution_mode",
+      fieldtype: "Select",
+      label: "Execution Mode",
+      options: "Sequential\nParallel",
+      default: "Sequential"
+    },
+    {
+      fieldname: "condition_script",
+      fieldtype: "Code",
+      label: "Condition Script",
+      description: "JavaScript code to determine if process should run"
+    },
+    {
+      fieldname: "timeout_seconds",
+      fieldtype: "Int",
+      label: "Timeout (Seconds)",
+      default: 30
+    },
+    {
+      fieldname: "retry_count",
+      fieldtype: "Int", 
+      label: "Retry Count",
+      default: 0
+    },
+    {
+      fieldname: "continue_on_error",
+      fieldtype: "Check",
+      label: "Continue on Error"
+    },
+    {
+      fieldname: "process_steps",
+      fieldtype: "Table",
+      label: "Process Steps",
+      options: "Process Step"
+    }
+  ],
+  title_field: "process_name",
+  field_order: [
+    "process_name", "trigger_event", "description", "status", 
+    "priority", "execution_mode", "condition_script", 
+    "timeout_seconds", "retry_count", "continue_on_error", 
+    "process_steps"
+  ]
+};
+
+// ==============================================
+// 📋 Process Step Schema (Child Table)
+// ==============================================
+
+const processStepSchema = {
+  name: "Process Step",
+  fields: [
+    {
+      fieldname: "step_name",
+      fieldtype: "Data",
+      label: "Step Name",
+      reqd: 1,
+      in_list_view: 1
+    },
+    {
+      fieldname: "function_name",
+      fieldtype: "Data",
+      label: "Function Name", 
+      reqd: 1,
+      in_list_view: 1,
+      description: "Name of the JavaScript function to execute"
+    },
+    {
+      fieldname: "step_order",
+      fieldtype: "Int",
+      label: "Order",
+      default: 1,
+      in_list_view: 1
+    },
+    {
+      fieldname: "step_description",
+      fieldtype: "Text",
+      label: "Description"
+    },
+    {
+      fieldname: "is_active",
+      fieldtype: "Check",
+      label: "Is Active",
+      default: 1,
+      in_list_view: 1
+    },
+    {
+      fieldname: "skip_on_error",
+      fieldtype: "Check", 
+      label: "Skip on Error"
+    },
+    {
+      fieldname: "parameters",
+      fieldtype: "JSON",
+      label: "Parameters",
+      description: "JSON parameters to pass to the function"
+    }
+  ],
+  title_field: "step_name",
+  field_order: [
+    "step_name", "function_name", "step_order", 
+    "step_description", "is_active", "skip_on_error", "parameters"
+  ]
+};
+
+// ==============================================
+// 📋 Process Execution Log Schema
+// ==============================================
+
+const processExecutionLogSchema = {
+  name: "Process Execution Log",
+  fields: [
+    {
+      fieldname: "process_name",
+      fieldtype: "Link",
+      label: "Process",
+      options: "Process",
+      reqd: 1,
+      in_list_view: 1
+    },
+    {
+      fieldname: "trigger_event", 
+      fieldtype: "Data",
+      label: "Trigger Event",
+      in_list_view: 1
+    },
+    {
+      fieldname: "document_type",
+      fieldtype: "Data",
+      label: "Document Type",
+      in_list_view: 1
+    },
+    {
+      fieldname: "document_name",
+      fieldtype: "Data", 
+      label: "Document Name",
+      in_list_view: 1
+    },
+    {
+      fieldname: "status",
+      fieldtype: "Select",
+      label: "Status",
+      options: "Queued\nRunning\nCompleted\nFailed\nTimeout",
+      default: "Queued",
+      in_list_view: 1,
+      in_standard_filter: 1
+    },
+    {
+      fieldname: "started_at",
+      fieldtype: "Datetime",
+      label: "Started At",
+      in_list_view: 1
+    },
+    {
+      fieldname: "completed_at",
+      fieldtype: "Datetime", 
+      label: "Completed At"
+    },
+    {
+      fieldname: "execution_time_ms",
+      fieldtype: "Int",
+      label: "Execution Time (ms)",
+      in_list_view: 1
+    },
+    {
+      fieldname: "error_message",
+      fieldtype: "Text",
+      label: "Error Message"
+    },
+    {
+      fieldname: "step_results",
+      fieldtype: "Table",
+      label: "Step Results",
+      options: "Process Step Result"
+    },
+    {
+      fieldname: "context_data",
+      fieldtype: "JSON",
+      label: "Context Data"
+    }
+  ],
+  title_field: "process_name",
+  field_order: [
+    "process_name", "trigger_event", "document_type", "document_name",
+    "status", "started_at", "completed_at", "execution_time_ms",
+    "error_message", "step_results", "context_data"
+  ]
+};
+
+// ==============================================
+// 📋 Process Step Result Schema (Child Table)
+// ==============================================
+
+const processStepResultSchema = {
+  name: "Process Step Result",
+  fields: [
+    {
+      fieldname: "step_name",
+      fieldtype: "Data",
+      label: "Step Name",
+      in_list_view: 1
+    },
+    {
+      fieldname: "function_name",
+      fieldtype: "Data",
+      label: "Function Name",
+      in_list_view: 1
+    },
+    {
+      fieldname: "status",
+      fieldtype: "Select",
+      label: "Status", 
+      options: "Success\nFailed\nSkipped\nTimeout",
+      in_list_view: 1
+    },
+    {
+      fieldname: "execution_time_ms",
+      fieldtype: "Int",
+      label: "Execution Time (ms)",
+      in_list_view: 1
+    },
+    {
+      fieldname: "result_data",
+      fieldtype: "JSON",
+      label: "Result Data"
+    },
+    {
+      fieldname: "error_message",
+      fieldtype: "Text",
+      label: "Error Message"
+    },
+    {
+      fieldname: "started_at",
+      fieldtype: "Datetime",
+      label: "Started At"
+    },
+    {
+      fieldname: "completed_at",
+      fieldtype: "Datetime",
+      label: "Completed At"
+    }
+  ],
+  title_field: "step_name",
+  field_order: [
+    "step_name", "function_name", "status", "execution_time_ms",
+    "result_data", "error_message", "started_at", "completed_at"
+  ]
+};
+
+// ==============================================
+// 🚀 Enhanced Process Engine using Schemas
+// ==============================================
+
+// Function registry for business functions
+window.businessFunctionRegistry = window.businessFunctionRegistry || {};
+
+// Register a business function
+pb.registerBusinessFunction = function(functionName, functionImpl, description = '') {
+  window.businessFunctionRegistry[functionName] = {
+    impl: functionImpl,
+    description,
+    registeredAt: new Date().toISOString()
+  };
+  
+  console.log(`✅ Registered business function: ${functionName}`);
+};
+
+// Get business function
+pb.getBusinessFunction = function(functionName) {
+  const func = window.businessFunctionRegistry[functionName];
+  return func ? func.impl : null;
+};
+
+// Load and execute process
+pb.executeProcessByName = async function(processName, document, metadata = {}) {
+  try {
+    // Get process definition
+    const process = await this.getDoc(processName);
+    if (!process || process.doctype !== 'Process') {
+      throw new Error(`Process not found: ${processName}`);
+    }
+    
+    // Check if process is active
+    if (process.data.status !== 'Active') {
+      console.log(`⏭️ Process ${processName} is not active, skipping`);
+      return null;
+    }
+    
+    // Check condition if specified
+    if (process.data.condition_script) {
+      const conditionFunction = new Function('document', 'metadata', process.data.condition_script);
+      if (!conditionFunction(document, metadata)) {
+        console.log(`⏭️ Process ${processName} condition not met, skipping`);
+        return null;
+      }
+    }
+    
+    // Create execution log
+    const executionLog = await this.createDoc('Process Execution Log', {
+      process_name: processName,
+      trigger_event: process.data.trigger_event,
+      document_type: document.doctype,
+      document_name: document.name,
+      status: 'Running',
+      started_at: new Date().toISOString(),
+      context_data: metadata
+    });
+    
+    console.log(`🚀 Executing process: ${processName} for document: ${document.name}`);
+    
+    const startTime = Date.now();
+    const stepResults = [];
+    
+    try {
+      // Get process steps
+      const processSteps = await this.getChildren('Process Step', processName);
+      const activeSteps = processSteps
+        .filter(step => step.data.is_active)
+        .sort((a, b) => (a.data.step_order || 0) - (b.data.step_order || 0));
+      
+      if (process.data.execution_mode === 'Parallel') {
+        // Execute steps in parallel
+        const stepPromises = activeSteps.map(step => 
+          this.executeProcessStep(step, document, metadata, executionLog.name)
+        );
+        
+        const parallelResults = await Promise.allSettled(stepPromises);
+        parallelResults.forEach((result, index) => {
+          if (result.status === 'fulfilled') {
+            stepResults.push(result.value);
+          } else {
+            stepResults.push({
+              step_name: activeSteps[index].data.step_name,
+              status: 'Failed',
+              error_message: result.reason.message
+            });
+          }
+        });
+      } else {
+        // Execute steps sequentially
+        for (const step of activeSteps) {
+          try {
+            const stepResult = await this.executeProcessStep(step, document, metadata, executionLog.name);
+            stepResults.push(stepResult);
+          } catch (error) {
+            const failedStepResult = {
+              step_name: step.data.step_name,
+              function_name: step.data.function_name,
+              status: 'Failed',
+              error_message: error.message,
+              started_at: new Date().toISOString(),
+              completed_at: new Date().toISOString()
+            };
+            stepResults.push(failedStepResult);
+            
+            // Stop on error unless configured to continue
+            if (!process.data.continue_on_error && !step.data.skip_on_error) {
+              break;
+            }
+          }
+        }
+      }
+      
+      const executionTime = Date.now() - startTime;
+      const hasErrors = stepResults.some(r => r.status === 'Failed');
+      
+      // Update execution log
+      await this.updateDoc(executionLog.name, {
+        status: hasErrors ? 'Failed' : 'Completed',
+        completed_at: new Date().toISOString(),
+        execution_time_ms: executionTime
+      });
+      
+      // Add step results as child records
+      for (const stepResult of stepResults) {
+        await this.createChild('Process Step Result', executionLog.name, 'Process Execution Log', 'step_results', stepResult);
+      }
+      
+      console.log(`✅ Process ${processName} completed in ${executionTime}ms`);
+      
+      return {
+        success: !hasErrors,
+        executionLogName: executionLog.name,
+        executionTime,
+        stepResults
+      };
+      
+    } catch (error) {
+      // Update execution log with error
+      await this.updateDoc(executionLog.name, {
+        status: 'Failed',
+        completed_at: new Date().toISOString(),
+        execution_time_ms: Date.now() - startTime,
+        error_message: error.message
+      });
+      
+      throw error;
+    }
+    
+  } catch (error) {
+    console.error(`❌ Process execution failed: ${processName}`, error);
+    throw error;
+  }
+};
+
+// Execute single process step
+pb.executeProcessStep = async function(step, document, metadata, executionLogName) {
+  const stepStartTime = Date.now();
+  const stepName = step.data.step_name;
+  const functionName = step.data.function_name;
+  
+  console.log(`  🔄 Executing step: ${stepName} (${functionName})`);
+  
+  try {
+    // Get business function
+    const businessFunction = this.getBusinessFunction(functionName);
+    if (!businessFunction) {
+      throw new Error(`Business function not found: ${functionName}`);
+    }
+    
+    // Parse parameters if provided
+    let parameters = {};
+    if (step.data.parameters) {
+      try {
+        parameters = typeof step.data.parameters === 'string' 
+          ? JSON.parse(step.data.parameters) 
+          : step.data.parameters;
+      } catch (e) {
+        console.warn(`Invalid parameters for step ${stepName}:`, e);
+      }
+    }
+    
+    // Create execution context
+    const context = {
+      document,
+      metadata,
+      parameters,
+      stepName,
+      executionLogName,
+      timestamp: new Date().toISOString()
+    };
+    
+    // Execute function with timeout
+    const timeoutMs = 30000; // 30 seconds default
+    const timeoutPromise = new Promise((_, reject) => {
+      setTimeout(() => reject(new Error(`Step timeout: ${stepName}`)), timeoutMs);
+    });
+    
+    const functionPromise = businessFunction(document, context);
+    const result = await Promise.race([functionPromise, timeoutPromise]);
+    
+    const executionTime = Date.now() - stepStartTime;
+    
+    console.log(`  ✅ Step completed: ${stepName} (${executionTime}ms)`);
+    
+    return {
+      step_name: stepName,
+      function_name: functionName,
+      status: 'Success',
+      execution_time_ms: executionTime,
+      result_data: result,
+      started_at: new Date(stepStartTime).toISOString(),
+      completed_at: new Date().toISOString()
+    };
+    
+  } catch (error) {
+    const executionTime = Date.now() - stepStartTime;
+    
+    console.error(`  ❌ Step failed: ${stepName} (${executionTime}ms)`, error);
+    
+    return {
+      step_name: stepName,
+      function_name: functionName,
+      status: 'Failed',
+      execution_time_ms: executionTime,
+      error_message: error.message,
+      started_at: new Date(stepStartTime).toISOString(),
+      completed_at: new Date().toISOString()
+    };
+  }
+};
+
+// Enhanced updateDoc with process trigger
+pb.updateDocWithProcesses = async function(name, data) {
+  const existingDoc = await this.getDoc(name);
+  if (!existingDoc) throw new Error(`Document not found: ${name}`);
+  
+  const oldStatus = existingDoc.data?.status;
+  const newStatus = data?.status;
+  
+  // Update the document first
+  const updatedDoc = await this.collection(window.MAIN_COLLECTION).update(existingDoc.id, { data });
+  const fullUpdatedDoc = { ...existingDoc, data: { ...existingDoc.data, ...data } };
+  
+  // Detect status change and trigger processes
+  if (oldStatus !== newStatus && newStatus) {
+    const triggerEvent = `${existingDoc.doctype.toLowerCase()}.${newStatus.toLowerCase().replace(/\s+/g, '_')}`;
+    
+    // Find processes for this trigger
+    const processes = await this.listDocs('Process', 
+      `data.trigger_event = "${triggerEvent}" && data.status = "Active"`
+    );
+    
+    // Execute each matching process
+    for (const process of processes) {
+      try {
+        await this.executeProcessByName(process.name, fullUpdatedDoc, {
+          oldStatus,
+          newStatus,
+          changeType: 'status_update',
+          triggeredAt: new Date().toISOString()
+        });
+      } catch (error) {
+        console.error(`Process execution failed: ${process.name}`, error);
+      }
+    }
+  }
+  
+  return updatedDoc;
+};
+
+// ==============================================
+// 🔧 Schema Setup Function
+// ==============================================
+
+// Setup all process-related schemas
+pb.setupProcessSchemas = async function() {
+  try {
+    console.log('🏗️ Setting up Process Engine schemas...');
+    
+    // Create Process schema
+    await this.createDoc('Schema', {
+      name: 'Process',
+      ...processSchema
+    });
+    
+    // Create Process Step schema
+    await this.createDoc('Schema', {
+      name: 'Process Step', 
+      ...processStepSchema
+    });
+    
+    // Create Process Execution Log schema
+    await this.createDoc('Schema', {
+      name: 'Process Execution Log',
+      ...processExecutionLogSchema
+    });
+    
+    // Create Process Step Result schema
+    await this.createDoc('Schema', {
+      name: 'Process Step Result',
+      ...processStepResultSchema
+    });
+    
+    console.log('✅ Process Engine schemas created successfully!');
+    
+  } catch (error) {
+    console.error('❌ Failed to setup process schemas:', error);
+    throw error;
+  }
+};
+
+console.log('🏗️ Process Engine Schema & Data structure loaded!');
+console.log('💡 Run pb.setupProcessSchemas() to create the schemas');

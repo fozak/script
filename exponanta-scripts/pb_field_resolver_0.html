@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Field Resolver with Monaco</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pocketbase/0.18.0/pocketbase.umd.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.44.0/min/vs/loader.min.js"></script>
+  <style>
+    #editor { height: 300px; border: 1px solid #ccc; }
+    #output { white-space: pre-wrap; background: #f9f9f9; padding: 10px; margin-top: 10px; border: 1px solid #ccc; }
+  </style>
+</head>
+<body>
+  <h1>Monaco Editor Field Resolver</h1>
+  <div id="editor"></div>
+  <button id="runBtn">Run & Resolve</button>
+  <div id="output"></div>
+
+  <script>
+    let pb = new PocketBase("http://127.0.0.1:8090");
+    let editor;
+
+    require.config({ paths: { vs: 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.44.0/min/vs' }});
+    require(["vs/editor/editor.main"], function () {
+      editor = monaco.editor.create(document.getElementById("editor"), {
+        value: "sales-invoice.data.total\nsales-invoice.meta.fields\ncustomer.data.email",
+        language: "javascript",
+        theme: "vs-dark"
+      });
+
+      monaco.languages.registerCompletionItemProvider('javascript', {
+        triggerCharacters: ['.'],
+        provideCompletionItems: async (model, position) => {
+          const textUntilNow = model.getValueInRange({
+            startLineNumber: position.lineNumber,
+            startColumn: 1,
+            endLineNumber: position.lineNumber,
+            endColumn: position.column
+          });
+
+          const lastExpr = textUntilNow.split('\n').pop().trim();
+          const match = lastExpr.match(/([\w\-\.]+)\.$/);
+          if (!match) return { suggestions: [] };
+
+          const expression = match[1];
+          const resolved = await pb.resolveRaw(expression);
+
+          if (!resolved) return { suggestions: [] };
+
+          const keys = Array.isArray(resolved) ? resolved : Object.keys(resolved);
+
+          const suggestions = keys.map(key => ({
+            label: key,
+            kind: monaco.languages.CompletionItemKind.Property,
+            insertText: key
+          }));
+
+          return { suggestions };
+        }
+      });
+    });
+
+    pb.getFullSchema = async function(doctype) {
+      const schemaResult = await pb.collection(window.MAIN_COLLECTION || 'item').getList(1, 1, {
+        filter: `doctype = "Schema" && meta.for_doctype = "${doctype}"`
+      });
+      return schemaResult.items.length > 0 ? schemaResult.items[0] : null;
+    };
+
+    pb.resolveField = async function(expression) {
+      const [key, ...rest] = expression.split('.');
+      const doctype = key.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+      const record = await pb.getFullSchema(doctype);
+      if (!record) return `${expression} → ❌ Not found`;
+
+      const value = rest.reduce((acc, k) => acc?.[k], record);
+      return `${expression} → ${JSON.stringify(value)}`;
+    };
+
+    pb.resolveRaw = async function(expression) {
+      const [key, ...rest] = expression.split('.');
+      const doctype = key.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+      const record = await pb.getFullSchema(doctype);
+      if (!record) return null;
+
+      return rest.reduce((acc, k) => acc?.[k], record);
+    };
+
+    document.getElementById("runBtn").addEventListener("click", async () => {
+      const lines = editor.getValue().split('\n').filter(Boolean);
+      const results = [];
+      for (const line of lines) {
+        const resolved = await pb.resolveField(line);
+        results.push(resolved);
+      }
+      document.getElementById("output").innerText = results.join('\n');
+    });
+  </script>
+</body>
+</html>

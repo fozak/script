@@ -1,0 +1,55 @@
+i now have function pb.runCode(name)
+pb.runCode = async function(name) {
+  const record = await this.getDoc(name);
+  if (!record || !record.data?.code) {
+    throw new Error("Code not found");
+  }
+
+  // This will execute the code inside the current scope
+  eval(record.data.code);
+};
+
+
+
+ in main library  is I have all functions from above loaded 
+  pb.runCode("Code-0puxv2w8xngrbfi"):
+  (function () {
+  function initLib() {
+    if (typeof pb === 'undefined' || typeof PocketBase === 'undefined') {
+      console.warn('PocketBase not ready, retrying in 100ms...');
+      setTimeout(initPocketBaseFrappeLib, 100);
+      return;
+    }
+
+    // 🌐 Global config
+    window.MAIN_COLLECTION = window.MAIN_COLLECTION || 'item';
+
+    // ==============================================
+    // 📦 Universal Logic Functions
+    // ==============================================
+    pb.sendEmail = (to, subject, payload) => {
+      console.log(`📧 Sending email to ${to} with subject "${subject}"`, payload);
+      return true; // mock
+    };
+
+    pb.validateOrder = (input, ctx) => {
+      if (!input.customer) throw new Error("Missing customer");
+      return { valid: true };
+    };
+
+    pb.checkHighValue = (input, ctx) => input.total > 1000;
+
+    // Optional: make available for workflows
+    pb.functionRegistry = {
+      sendEmail: pb.sendEmail,
+      validateOrder: pb.validateOrder,
+      checkHighValue: pb.checkHighValue,
+    };
+
+    console.log("✅ PocketBase Frappe Lib initialized with universal functions.");
+  }
+
+  initLib();
+})();
+
+now move also runner into Code-0puxv2w8xngrbfi
