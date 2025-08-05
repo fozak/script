@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Approval-Enhanced Document Status UI</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script>
+        const { useState, useEffect } = React;
+        
+        const Icon = ({ name, size = 16 }) => {
+            useEffect(() => {
+                lucide.createIcons();
+            }, []);
+            return React.createElement('i', {
+                'data-lucide': name,
+                className: 'inline',
+                style: { width: size, height: size }
+            });
+        };
+
+        const ApprovalEnhancedDocumentUI = () => {
+            const [currentDoc, setCurrentDoc] = useState({
+                id: 'SI-001',
+                title: 'Sales Invoice #2024-001',
+                doctype: 'Sales Invoice',
+                docstatus: 1,
+                workflow_state: 'pending_l1_approval',
+                amount: 15000,
+                owner: 'john@company.com',
+                current_user: 'sarah@company.com',
+                
+                // Approval tracking
+                approval_flow: 'sales-invoice-approval-flow',
+                approval_level: 1,
+                max_approval_levels: 3,
+                approvals: [
+                    {
+                        level: 1,
+                        approver: 'sales_manager',
+                        status: 'pending',
+                        assigned_to: 'sarah@company.com',
+                        assigned_date: '2024-01-15'
+                    },
+                    {
+                        level: 2,
+                        approver: 'finance_manager',
+                        status: 'waiting',
+                        assigned_to: 'mike@company.com'
+                    },
+                    {
+                        level: 3,
+                        approver: 'ceo',
+                        status: 'waiting',
+                        assigned_to: 'ceo@company.com'
+                    }
+                ]
+            });
+
+            const getApprovalStatus = (doc) => {
+                if (doc.docstatus === 0) return 'draft';
+                if (doc.docstatus === 2) return 'cancelled';
+                
+                if (doc.docstatus === 1) {
+                    if (doc.workflow_state?.includes('pending_l1')) return 'pending_l1';
+                    if (doc.workflow_state?.includes('pending_l2')) return 'pending_l2';
+                    if (doc.workflow_state?.includes('pending_l3')) return 'pending_l3';
+                    if (doc.workflow_state === 'approved') return 'approved';
+                    if (doc.workflow_state === 'rejected') return 'rejected';
+                    return 'submitted';
+                }
+                return 'unknown';
+            };
+
+            const getApprovalConfig = (status) => {
+                const configs = {
+                    draft: {
+                        label: 'Working Draft',
+                        color: 'bg-gray-100 text-gray-700',
+                        icon: 'edit-3',
+                        description: 'Document is being prepared'
+                    },
+                    pending_l1: {
+                        label: 'Pending L1 Approval',
+                        color: 'bg-yellow-100 text-yellow-700',
+                        icon: 'user-check',
+                        description: 'Awaiting Level 1 (Sales Manager) approval'
+                    },
+                    pending_l2: {
+                        label: 'Pending L2 Approval',
+                        color: 'bg-orange-100 text-orange-700',
+                        icon: 'users',
+                        description: 'Awaiting Level 2 (Finance Manager) approval'
+                    },
+                    pending_l3: {
+                        label: 'Pending L3 Approval',
+                        color: 'bg-purple-100 text-purple-700',
+                        icon: 'crown',
+                        description: 'Awaiting Level 3 (CEO) approval'
+                    },
+                    approved: {
+                        label: 'Fully Approved',
+                        color: 'bg-green-100 text-green-700',
+                        icon: 'check-circle-2',
+                        description: 'All required approvals completed'
+                    },
+                    rejected: {
+                        label: 'Rejected',
+                        color: 'bg-red-100 text-red-700',
+                        icon: 'x-circle',
+                        description: 'Approval was rejected'
+                    },
+                    cancelled: {
+                        label: 'Cancelled',
+                        color: 'bg-gray-100 text-gray-500',
+                        icon: 'x-circle', 
+                        description: 'Document has been cancelled'
+                    }
+                };
+                return configs[status] || configs.draft;
+            };
+
+            const canUserApprove = (doc, level) => {
+                const approval = doc.approvals.find(a => a.level === level);
+                return approval?.assigned_to === doc.current_user && approval?.status === 'pending';
+            };
+
+            const getAvailableActions = (doc) => {
+                const status = getApprovalStatus(doc);
+                const actions = [];
+                const add = (key, label, icon, variant) =>
+                    actions.push({ key, label, icon, variant });
+
+                switch (status) {
+                    case 'draft':
+                        if (doc.owner === doc.current_user) {
+                            add('edit', 'Edit', 'edit-3', 'primary');
+                            add('submit_for_approval', 'Submit for Approval', 'send', 'success');
+                            add('delete', 'Delete', 'trash-2', 'danger');
+                        }
+                        add('clone', 'Clone', 'copy', 'secondary');
+                        break;
+
+                    case 'pending_l1':
+                        if (canUserApprove(doc, 1)) {
+                            add('approve_l1', 'Approve (L1)', 'check', 'success');
+                            add('reject', 'Reject', 'x', 'danger');
+                        }
+                        if (doc.owner === doc.current_user) {
+                            add('recall', 'Recall', 'undo', 'warning');
+                        }
+                        add('view', 'View', 'eye', 'secondary');
+                        break;
+
+                    case 'pending_l2':
+                        if (canUserApprove(doc, 2)) {
+                            add('approve_l2', 'Approve (L2)', 'check', 'success');
+                            add('reject', 'Reject', 'x', 'danger');
+                        }
+                        add('view', 'View', 'eye', 'secondary');
+                        break;
+
+                    case 'pending_l3':
+                        if (canUserApprove(doc, 3)) {
+                            add('approve_l3', 'Final Approve', 'check-circle-2', 'success');
+                            add('reject', 'Reject', 'x', 'danger');
+                        }
+                        add('view', 'View', 'eye', 'secondary');
+                        break;
+
+                    case 'approved':
+                        add('view', 'View', 'eye', 'secondary');
+                        add('clone', 'Clone', 'copy', 'secondary');
+                        add('cancel', 'Cancel', 'x-circle', 'danger');
+                        add('amend', 'Amend', 'file-edit', 'warning');
+                        break;
+
+                    case 'rejected':
+                        if (doc.owner === doc.current_user) {
+                            add('revise', 'Revise & Resubmit', 'edit-3', 'primary');
+                        }
+                        add('clone', 'Clone', 'copy', 'secondary');
+                        break;
+
+                    case 'cancelled':
+                        add('view', 'View', 'eye', 'secondary');
+                        add('clone', 'Clone', 'copy', 'secondary');
+                        break;
+                }
+
+                return actions;
+            };
+
+            const handleApprovalAction = (actionKey) => {
+                console.log(`Executing approval action: ${actionKey}`);
+
+                if (actionKey === 'submit_for_approval') {
+                    setCurrentDoc(prev => ({
+                        ...prev,
+                        docstatus: 1,
+                        workflow_state: 'pending_l1_approval',
+                        approvals: prev.approvals.map(a =>
+                            a.level === 1 ? { ...a, status: 'pending' } : a
+                        )
+                    }));
+
+                } else if (actionKey === 'approve_l1') {
+                    setCurrentDoc(prev => ({
+                        ...prev,
+                        workflow_state: 'pending_l2_approval',
+                        approval_level: 2,
+                        approvals: prev.approvals.map(a => {
+                            if (a.level === 1) return { ...a, status: 'approved', approved_date: new Date().toISOString() };
+                            if (a.level === 2) return { ...a, status: 'pending' };
+                            return a;
+                        })
+                    }));
+
+                } else if (actionKey === 'approve_l2') {
+                    setCurrentDoc(prev => ({
+                        ...prev,  
+                        workflow_state: 'pending_l3_approval',
+                        approval_level: 3,
+                        approvals: prev.approvals.map(a => {
+                            if (a.level === 2) return { ...a, status: 'approved', approved_date: new Date().toISOString() };
+                            if (a.level === 3) return { ...a, status: 'pending' };
+                            return a;
+                        })
+                    }));
+
+                } else if (actionKey === 'approve_l3') {
+                    setCurrentDoc(prev => ({
+                        ...prev,
+                        workflow_state: 'approved',
+                        approvals: prev.approvals.map(a =>
+                            a.level === 3 ? { ...a, status: 'approved', approved_date: new Date().toISOString() } : a
+                        )
+                    }));
+
+                } else if (actionKey === 'reject') {
+                    setCurrentDoc(prev => ({
+                        ...prev,
+                        workflow_state: 'rejected'
+                    }));
+
+                } else if (actionKey === 'recall') {
+                    setCurrentDoc(prev => ({
+                        ...prev,
+                        docstatus: 0,
+                        workflow_state: 'draft',
+                        approval_level: 1,
+                        approvals: prev.approvals.map(a => ({ ...a, status: 'waiting' }))
+                    }));
+
+                } else if (actionKey === 'revise') {
+                    setCurrentDoc(prev => ({
+                        ...prev,
+                        docstatus: 0,
+                        workflow_state: 'draft',
+                        approval_level: 1,
+                        approvals: prev.approvals.map(a => ({ ...a, status: 'waiting' }))
+                    }));
+
+                } else if (actionKey === 'cancel') {
+                    setCurrentDoc(prev => ({
+                        ...prev,
+                        docstatus: 2,
+                        workflow_state: 'cancelled'
+                    }));
+                }
+            };
+
+            const getButtonStyle = (variant) => {
+                const styles = {
+                    primary: 'bg-blue-600 hover:bg-blue-700 text-white',
+                    success: 'bg-green-600 hover:bg-green-700 text-white',
+                    warning: 'bg-yellow-600 hover:bg-yellow-700 text-white',
+                    danger: 'bg-red-600 hover:bg-red-700 text-white',
+                    secondary: 'bg-gray-200 hover:bg-gray-300 text-gray-700'
+                };
+                return styles[variant] || styles.secondary;
+            };
+
+            const ApprovalTimeline = ({ approvals }) => {
+                return React.createElement('div', { className: 'bg-gray-50 p-4 rounded-lg' }, [
+                    React.createElement('h4', { key: 'title', className: 'font-semibold text-gray-700 mb-3' }, 'Approval Timeline'),
+                    React.createElement('div', { key: 'timeline', className: 'space-y-3' },
+                        approvals.map((approval, index) =>
+                            React.createElement('div', { 
+                                key: approval.level, 
+                                className: 'flex items-center space-x-3' 
+                            }, [
+                                React.createElement('div', {
+                                    key: 'status-icon',
+                                    className: `w-8 h-8 rounded-full flex items-center justify-center ${
+                                        approval.status === 'approved' ? 'bg-green-500 text-white' :
+                                        approval.status === 'pending' ? 'bg-yellow-500 text-white' :
+                                        approval.status === 'rejected' ? 'bg-red-500 text-white' :
+                                        'bg-gray-300 text-gray-600'
+                                    }`
+                                }, 
+                                    approval.status === 'approved' ? React.createElement(Icon, { name: 'check', size: 16 }) :
+                                    approval.status === 'pending' ? React.createElement(Icon, { name: 'clock', size: 16 }) :
+                                    approval.status === 'rejected' ? React.createElement(Icon, { name: 'x', size: 16 }) :
+                                    approval.level
+                                ),
+                                React.createElement('div', { key: 'details', className: 'flex-1' }, [
+                                    React.createElement('div', { key: 'title', className: 'font-medium text-sm' },
+                                        `Level ${approval.level} - ${approval.approver.replace('_', ' ').toUpperCase()}`
+                                    ),
+                                    React.createElement('div', { key: 'subtitle', className: 'text-xs text-gray-500' }, [
+                                        approval.assigned_to,
+                                        approval.approved_date && ` • Approved ${new Date(approval.approved_date).toLocaleDateString()}`,
+                                        approval.assigned_date && approval.status === 'pending' && ` • Assigned ${new Date(approval.assigned_date).toLocaleDateString()}`
+                                    ].filter(Boolean).join(''))
+                                ]),
+                                React.createElement('div', {
+                                    key: 'badge',
+                                    className: `px-2 py-1 rounded text-xs font-medium ${
+                                        approval.status === 'approved' ? 'bg-green-100 text-green-700' :
+                                        approval.status === 'pending' ? 'bg-yellow-100 text-yellow-700' :
+                                        approval.status === 'rejected' ? 'bg-red-100 text-red-700' :
+                                        'bg-gray-100 text-gray-600'
+                                    }`
+                                }, approval.status || 'waiting')
+                            ])
+                        )
+                    )
+                ]);
+            };
+
+            const approvalStatus = getApprovalStatus(currentDoc);
+            const statusConfig = getApprovalConfig(approvalStatus);
+            const availableActions = getAvailableActions(currentDoc);
+
+            return React.createElement('div', { className: 'max-w-4xl mx-auto p-6 bg-white rounded-xl shadow' }, [
+                // Header
+                React.createElement('div', { key: 'header', className: 'border-b pb-4 mb-6' }, [
+                    React.createElement('div', { key: 'header-content', className: 'flex items-center justify-between' }, [
+                        React.createElement('div', { key: 'title-section' }, [
+                            React.createElement('h1', { key: 'title', className: 'text-2xl font-bold text-gray-900' }, currentDoc.title),
+                            React.createElement('p', { key: 'subtitle', className: 'text-sm text-gray-500 mt-1' },
+                                `Document ID: ${currentDoc.id} • Amount: $${currentDoc.amount.toLocaleString()} • User: ${currentDoc.current_user}`
+                            )
+                        ]),
+                        React.createElement('div', { key: 'status-section', className: 'text-right' }, [
+                            React.createElement('div', {
+                                key: 'status-badge',
+                                className: `flex items-center space-x-2 px-4 py-2 rounded-full ${statusConfig.color}`
+                            }, [
+                                React.createElement(Icon, { key: 'icon', name: statusConfig.icon }),
+                                React.createElement('span', { key: 'label', className: 'font-medium' }, statusConfig.label)
+                            ]),
+                            currentDoc.docstatus === 1 && React.createElement('div', {
+                                key: 'level-info',
+                                className: 'text-xs text-gray-500 mt-1'
+                            }, `Level ${currentDoc.approval_level} of ${currentDoc.max_approval_levels}`)
+                        ])
+                    ]),
+                    React.createElement('p', { key: 'description', className: 'text-sm text-gray-600 mt-2' }, statusConfig.description)
+                ]),
+
+                // Approval Timeline
+                currentDoc.docstatus === 1 && React.createElement('div', { key: 'timeline', className: 'mb-6' },
+                    React.createElement(ApprovalTimeline, { approvals: currentDoc.approvals })
+                ),
+
+                // Actions
+                React.createElement('div', { key: 'actions', className: 'mb-6' }, [
+                    React.createElement('h3', { key: 'actions-title', className: 'text-lg font-semibold text-gray-900 mb-3' }, 'Available Actions'),
+                    React.createElement('div', { key: 'actions-buttons', className: 'flex flex-wrap gap-3' },
+                        availableActions.length > 0 ? availableActions.map((action) =>
+                            React.createElement('button', {
+                                key: action.key,
+                                onClick: () => handleApprovalAction(action.key),
+                                className: `flex items-center space-x-2 px-4 py-2 rounded-lg font-medium transition-colors ${getButtonStyle(action.variant)}`
+                            }, [
+                                React.createElement(Icon, { key: 'icon', name: action.icon }),
+                                React.createElement('span', { key: 'label' }, action.label)
+                            ])
+                        ) : React.createElement('p', { className: 'text-gray-500 italic' }, 'No actions available for current status')
+                    )
+                ]),
+
+                // Debug info
+                React.createElement('div', { key: 'debug', className: 'bg-gray-50 p-4 rounded-lg text-sm' }, [
+                    React.createElement('h4', { key: 'debug-title', className: 'font-semibold text-gray-700 mb-2' }, 'Current State (Debug)'),
+                    React.createElement('div', { key: 'debug-grid', className: 'grid grid-cols-2 gap-4' }, [
+                        React.createElement('div', { key: 'docstatus' }, [React.createElement('strong', {}, 'docstatus: '), currentDoc.docstatus]),
+                        React.createElement('div', { key: 'workflow' }, [React.createElement('strong', {}, 'workflow_state: '), currentDoc.workflow_state]),
+                        React.createElement('div', { key: 'unified' }, [React.createElement('strong', {}, 'Unified Status: '), approvalStatus]),
+                        React.createElement('div', { key: 'level' }, [React.createElement('strong', {}, 'Approval Level: '), `${currentDoc.approval_level}/${currentDoc.max_approval_levels}`])
+                    ])
+                ]),
+
+                // Test buttons
+                React.createElement('div', { key: 'test', className: 'mt-6 pt-6 border-t' }, [
+                    React.createElement('h4', { key: 'test-title', className: 'font-semibold text-gray-700 mb-3' }, 'Test Different States & Users'),
+                    React.createElement('div', { key: 'test-buttons', className: 'flex flex-wrap gap-2 text-sm mb-4' }, [
+                        React.createElement('button', {
+                            key: 'draft',
+                            onClick: () => setCurrentDoc(prev => ({ ...prev, docstatus: 0, workflow_state: 'draft' })),
+                            className: 'px-3 py-1 bg-gray-200 rounded hover:bg-gray-300'
+                        }, 'Set Draft'),
+                        React.createElement('button', {
+                            key: 'pending1',
+                            onClick: () => setCurrentDoc(prev => ({ ...prev, docstatus: 1, workflow_state: 'pending_l1_approval', approval_level: 1 })),
+                            className: 'px-3 py-1 bg-yellow-200 rounded hover:bg-yellow-300'
+                        }, 'Set Pending L1'),
+                        React.createElement('button', {
+                            key: 'pending2',
+                            onClick: () => setCurrentDoc(prev => ({ ...prev, docstatus: 1, workflow_state: 'pending_l2_approval', approval_level: 2 })),
+                            className: 'px-3 py-1 bg-orange-200 rounded hover:bg-orange-300'
+                        }, 'Set Pending L2'),
+                        React.createElement('button', {
+                            key: 'approved',
+                            onClick: () => setCurrentDoc(prev => ({ ...prev, docstatus: 1, workflow_state: 'approved' })),
+                            className: 'px-3 py-1 bg-green-200 rounded hover:bg-green-300'
+                        }, 'Set Approved'),
+                        React.createElement('button', {
+                            key: 'rejected',
+                            onClick: () => setCurrentDoc(prev => ({ ...prev, docstatus: 1, workflow_state: 'rejected' })),
+                            className: 'px-3 py-1 bg-red-200 rounded hover:bg-red-300'
+                        }, 'Set Rejected')
+                    ]),
+                    React.createElement('div', { key: 'user-buttons', className: 'flex flex-wrap gap-2 text-sm' }, [
+                        React.createElement('button', {
+                            key: 'owner',
+                            onClick: () => setCurrentDoc(prev => ({ ...prev, current_user: 'john@company.com' })),
+                            className: 'px-3 py-1 bg-blue-200 rounded hover:bg-blue-300'
+                        }, 'Switch to Owner'),
+                        React.createElement('button', {
+                            key: 'sales',
+                            onClick: () => setCurrentDoc(prev => ({ ...prev, current_user: 'sarah@company.com' })),
+                            className: 'px-3 py-1 bg-blue-200 rounded hover:bg-blue-300'
+                        }, 'Switch to Sales Manager'),
+                        React.createElement('button', {
+                            key: 'finance',
+                            onClick: () => setCurrentDoc(prev => ({ ...prev, current_user: 'mike@company.com' })),
+                            className: 'px-3 py-1 bg-blue-200 rounded hover:bg-blue-300'
+                        }, 'Switch to Finance Manager'),
+                        React.createElement('button', {
+                            key: 'ceo',
+                            onClick: () => setCurrentDoc(prev => ({ ...prev, current_user: 'ceo@company.com' })),
+                            className: 'px-3 py-1 bg-blue-200 rounded hover:bg-blue-300'
+                        }, 'Switch to CEO')
+                    ])
+                ])
+            ]);
+        };
+
+        ReactDOM.createRoot(document.getElementById('root')).render(
+            React.createElement(ApprovalEnhancedDocumentUI)
+        );
+    </script>
+</body>
+</html>

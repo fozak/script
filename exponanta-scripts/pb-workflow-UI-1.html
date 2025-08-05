@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Document Status UI</title>
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="bg-gray-50">
+  <div id="root" class="p-6"></div>
+
+  <script type="text/babel">
+
+    const { useState, useEffect } = React;
+
+    const Icon = ({ name, size = 16 }) => {
+      useEffect(() => {
+        lucide.createIcons();
+      }, []);
+      return <i data-lucide={name} className="inline" style={{ width: size, height: size }}></i>;
+    };
+
+    const DocumentStatusUI = () => {
+      const [currentDoc, setCurrentDoc] = useState({
+        id: 'DOC-001',
+        title: 'Sales Invoice #2024-001',
+        docstatus: 0,
+        status: 'Draft',
+        owner: 'john@company.com',
+        workflow_state: 'pending_approval',
+        can_submit: true,
+        can_cancel: false,
+        can_approve: false,
+        is_owner: true
+      });
+
+      const getUnifiedStatus = (doc) => {
+        if (doc.docstatus === 0) return 'draft';
+        if (doc.docstatus === 2) return 'cancelled';
+        if (doc.docstatus === 1) {
+          if (doc.workflow_state === 'pending_approval') return 'pending';
+          if (doc.workflow_state === 'approved') return 'approved';
+          if (doc.workflow_state === 'rejected') return 'rejected';
+          return 'submitted';
+        }
+        return 'unknown';
+      };
+
+      const getStatusConfig = (status) => {
+        const configs = {
+          draft: {
+            label: 'Working Draft',
+            color: 'bg-gray-100 text-gray-700',
+            icon: 'edit-3',
+            description: 'Document is being prepared'
+          },
+          pending: {
+            label: 'Awaiting Approval',
+            color: 'bg-yellow-100 text-yellow-700',
+            icon: 'clock',
+            description: 'Submitted and waiting for approval'
+          },
+          approved: {
+            label: 'Approved & Active',
+            color: 'bg-green-100 text-green-700',
+            icon: 'check-circle',
+            description: 'Document is approved and in effect'
+          },
+          rejected: {
+            label: 'Rejected',
+            color: 'bg-red-100 text-red-700',
+            icon: 'x-circle',
+            description: 'Document was rejected and needs revision'
+          },
+          submitted: {
+            label: 'Final',
+            color: 'bg-blue-100 text-blue-700',
+            icon: 'check-circle',
+            description: 'Document is finalized'
+          },
+          cancelled: {
+            label: 'Cancelled',
+            color: 'bg-gray-100 text-gray-500',
+            icon: 'x-circle',
+            description: 'Document has been cancelled'
+          }
+        };
+        return configs[status] || configs.unknown;
+      };
+
+      const getAvailableActions = (doc) => {
+        const status = getUnifiedStatus(doc);
+        const actions = [];
+
+        const add = (key, label, icon, variant) =>
+          actions.push({ key, label, icon, variant });
+
+        switch (status) {
+          case 'draft':
+            if (doc.is_owner) {
+              add('edit', 'Edit', 'edit-3', 'primary');
+              add('submit', 'Submit', 'send', 'success');
+              add('delete', 'Delete', 'trash-2', 'danger');
+            }
+            add('clone', 'Clone', 'copy', 'secondary');
+            break;
+
+          case 'pending':
+            if (doc.is_owner) add('recall', 'Recall', 'alert-circle', 'warning');
+            if (doc.can_approve) {
+              add('approve', 'Approve', 'check-circle', 'success');
+              add('reject', 'Reject', 'x-circle', 'danger');
+            }
+            add('view', 'View', 'eye', 'secondary');
+            add('clone', 'Clone', 'copy', 'secondary');
+            break;
+
+          case 'approved':
+          case 'submitted':
+            add('view', 'View', 'eye', 'secondary');
+            add('clone', 'Clone', 'copy', 'secondary');
+            if (doc.can_cancel) add('cancel', 'Cancel', 'x', 'danger');
+            if (['Sales Invoice', 'Purchase Order'].some(type => doc.title.includes(type))) {
+              add('amend', 'Amend', 'file-edit', 'warning');
+            }
+            break;
+
+          case 'rejected':
+            if (doc.is_owner) add('edit', 'Revise', 'edit-3', 'primary');
+            add('clone', 'Clone', 'copy', 'secondary');
+            break;
+
+          case 'cancelled':
+            add('view', 'View', 'eye', 'secondary');
+            add('clone', 'Clone', 'copy', 'secondary');
+            break;
+        }
+
+        return actions;
+      };
+
+      const handleAction = (actionKey) => {
+        console.log(`Executing action: ${actionKey} on document ${currentDoc.id}`);
+        if (actionKey === 'submit') {
+          setCurrentDoc(prev => ({ ...prev, docstatus: 1, workflow_state: 'pending_approval' }));
+        } else if (actionKey === 'approve') {
+          setCurrentDoc(prev => ({ ...prev, workflow_state: 'approved' }));
+        } else if (actionKey === 'cancel') {
+          setCurrentDoc(prev => ({ ...prev, docstatus: 2 }));
+        }
+      };
+
+      const getButtonStyle = (variant) => {
+        const styles = {
+          primary: 'bg-blue-600 hover:bg-blue-700 text-white',
+          success: 'bg-green-600 hover:bg-green-700 text-white',
+          warning: 'bg-yellow-600 hover:bg-yellow-700 text-white',
+          danger: 'bg-red-600 hover:bg-red-700 text-white',
+          secondary: 'bg-gray-200 hover:bg-gray-300 text-gray-700'
+        };
+        return styles[variant] || styles.secondary;
+      };
+
+      const unifiedStatus = getUnifiedStatus(currentDoc);
+      const statusConfig = getStatusConfig(unifiedStatus);
+      const availableActions = getAvailableActions(currentDoc);
+
+      return (
+        <div className="max-w-4xl mx-auto p-6 bg-white rounded-xl shadow">
+          <div className="border-b pb-4 mb-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <h1 className="text-2xl font-bold text-gray-900">{currentDoc.title}</h1>
+                <p className="text-sm text-gray-500 mt-1">Document ID: {currentDoc.id}</p>
+              </div>
+              <div className={`flex items-center space-x-2 px-4 py-2 rounded-full ${statusConfig.color}`}>
+                <Icon name={statusConfig.icon} />
+                <span className="font-medium">{statusConfig.label}</span>
+              </div>
+            </div>
+            <p className="text-sm text-gray-600 mt-2">{statusConfig.description}</p>
+          </div>
+
+          <div className="mb-6">
+            <h3 className="text-lg font-semibold text-gray-900 mb-3">Available Actions</h3>
+            <div className="flex flex-wrap gap-3">
+              {availableActions.map((action) => (
+                <button
+                  key={action.key}
+                  onClick={() => handleAction(action.key)}
+                  className={`flex items-center space-x-2 px-4 py-2 rounded-lg font-medium transition-colors ${getButtonStyle(action.variant)}`}
+                >
+                  <Icon name={action.icon} />
+                  <span>{action.label}</span>
+                </button>
+              ))}
+              {availableActions.length === 0 && (
+                <p className="text-gray-500 italic">No actions available for current status</p>
+              )}
+            </div>
+          </div>
+
+          <div className="bg-gray-50 p-4 rounded-lg text-sm">
+            <h4 className="font-semibold text-gray-700 mb-2">Current State (Debug)</h4>
+            <div className="grid grid-cols-2 gap-4">
+              <div><strong>docstatus:</strong> {currentDoc.docstatus}</div>
+              <div><strong>workflow_state:</strong> {currentDoc.workflow_state}</div>
+              <div><strong>Unified Status:</strong> {unifiedStatus}</div>
+              <div><strong>Original Status:</strong> {currentDoc.status}</div>
+            </div>
+          </div>
+
+          <div className="mt-6 pt-6 border-t">
+            <h4 className="font-semibold text-gray-700 mb-3">Test Different States</h4>
+            <div className="flex flex-wrap gap-2 text-sm">
+              <button onClick={() => setCurrentDoc(prev => ({ ...prev, docstatus: 0, workflow_state: 'draft' }))} className="px-3 py-1 bg-gray-200 rounded">Set Draft</button>
+              <button onClick={() => setCurrentDoc(prev => ({ ...prev, docstatus: 1, workflow_state: 'pending_approval' }))} className="px-3 py-1 bg-yellow-200 rounded">Set Pending</button>
+              <button onClick={() => setCurrentDoc(prev => ({ ...prev, docstatus: 1, workflow_state: 'approved' }))} className="px-3 py-1 bg-green-200 rounded">Set Approved</button>
+              <button onClick={() => setCurrentDoc(prev => ({ ...prev, docstatus: 2 }))} className="px-3 py-1 bg-red-200 rounded">Set Cancelled</button>
+            </div>
+          </div>
+        </div>
+      );
+    };
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<DocumentStatusUI />);
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+
+https://claude.ai/chat/821371af-e9ae-4bf7-a965-ecc3ceba37c5
+
+Refined Action Context for Your System
+Draft (docstatus = 0):
+[Edit] [Submit] [Delete] [Clone]
+
+Edit = continue working on draft
+Submit = finalize and lock (equivalent to Salesforce's "Submit for Approval")
+Delete = remove draft entirely
+Clone = create copy as new draft
+
+Submitted (docstatus = 1):
+[View] [Clone] [Cancel] [Amend]
+
+View = read-only access
+Clone = create new draft copy
+Cancel = set docstatus to 2 (if business rules allow)
+Amend = create amendable copy (Frappe-specific workflow)
+
+Cancelled (docstatus = 2):
+[View] [Clone]
+
+View = read-only access to cancelled document
+Clone = create new draft from cancelled doc
+
+Key Improvements from Salesforce Model
+Simpler Labels:
+
+"Submit" instead of "Submit for Approval" (clearer for business users)
+"Cancel" instead of complex status changes
+
+Always Available Actions:
+
+Clone is available in all states (very useful for templates)
+View is explicit when editing isn't allowed
+
+Business Logic Alignment:
+
+Amend follows Frappe's amendment workflow
+Cancel respects your business rules about who can cancel
+
+Status-Driven UI:
+
+Buttons appear/disappear based on docstatus
+No confusion about what's possible in each state
+
+This gives you the clarity of Salesforce's approach while respecting Frappe's document lifecycle model. The key is making the docstatus consequences obvious through the available actions!
