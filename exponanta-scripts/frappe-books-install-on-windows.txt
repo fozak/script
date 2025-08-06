@@ -1,0 +1,218 @@
+Microsoft Windows [Version 10.0.26100.4652]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Windows\System32>cd ..
+
+C:\Windows>cd ..
+
+C:\>cd python
+
+C:\python>mkdir books
+
+C:\python>cd books
+
+C:\python\books>git clone https://github.com/frappe/books.git
+Cloning into 'books'...
+remote: Enumerating objects: 33865, done.
+remote: Counting objects: 100% (2413/2413), done.
+remote: Compressing objects: 100% (524/524), done.
+remote: Total 33865 (delta 2216), reused 1889 (delta 1889), pack-reused 31452 (from 5)
+Receiving objects: 100% (33865/33865), 16.30 MiB | 18.59 MiB/s, done.
+Resolving deltas: 100% (23085/23085), done.
+
+C:\python\books>cd books
+
+C:\python\books\books>npm install
+npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+npm warn deprecated @volar/vue-typescript@1.6.5: WARNING: This project has been renamed to @vue/typescript. Install using @vue/typescript instead.
+npm warn deprecated lodash.isequal@4.5.0: This package is deprecated. Use require('node:util').isDeepStrictEqual instead.
+npm warn deprecated rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+npm warn deprecated @npmcli/move-file@2.0.1: This functionality has been moved to @npmcli/fs
+npm warn deprecated trim@0.0.1: Use String.prototype.trim() instead
+npm warn deprecated npmlog@6.0.2: This package is no longer supported.
+npm warn deprecated sourcemap-codec@1.4.8: Please use @jridgewell/sourcemap-codec instead
+npm warn deprecated @humanwhocodes/config-array@0.11.10: Use @eslint/config-array instead
+npm warn deprecated are-we-there-yet@3.0.0: This package is no longer supported.
+npm warn deprecated @humanwhocodes/object-schema@1.2.1: Use @eslint/object-schema instead
+npm warn deprecated gauge@4.0.4: This package is no longer supported.
+npm warn deprecated glob@8.0.3: Glob versions prior to v9 are no longer supported
+npm warn deprecated boolean@3.2.0: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
+npm warn deprecated eslint@8.43.0: This version is no longer supported. Please see https://eslint.org/version-support for other options.
+npm warn deprecated core-js@3.19.0: core-js@<3.23.3 is no longer maintained and not recommended for usage due to the number of issues. Because of the V8 engine whims, feature detection in old core-js versions could cause a slowdown up to 100x even if nothing is polyfilled. Some versions have web compatibility issues. Please, upgrade your dependencies to the actual version of core-js.
+
+> frappe-books@0.33.0 postinstall
+> electron-rebuild
+
+√ Rebuild Complete
+
+added 810 packages, and audited 811 packages in 2m
+
+150 packages are looking for funding
+  run `npm fund` for details
+
+24 vulnerabilities (1 low, 14 moderate, 8 high, 1 critical)
+
+To address issues that do not require attention, run:
+  npm audit fix
+
+To address all issues possible (including breaking changes), run:
+  npm audit fix --force
+
+Some issues need review, and may require choosing
+a different dependency.
+
+Run `npm audit` for details.
+
+C:\python\books\books>
+C:\python\books\books>npm run dist
+npm error Missing script: "dist"
+npm error
+npm error To see a list of scripts, run:
+npm error   npm run
+npm error A complete log of this run can be found in: C:\Users\i7714\AppData\Local\npm-cache\_logs\2025-08-04T17_29_52_362Z-debug-0.log
+
+C:\python\books\books>
+C:\python\books\books>npm start
+npm error Missing script: "start"
+npm error
+npm error Did you mean one of these?
+npm error   npm star # Mark your favorite packages
+npm error   npm stars # View packages marked as favorites
+npm error
+npm error To see a list of scripts, run:
+npm error   npm run
+npm error A complete log of this run can be found in: C:\Users\i7714\AppData\Local\npm-cache\_logs\2025-08-04T17_30_47_033Z-debug-0.log
+
+C:\python\books\books>
+C:\python\books\books>dir package.json
+ Volume in drive C has no label.
+ Volume Serial Number is C884-DC56
+
+ Directory of C:\python\books\books
+
+08/04/2025  01:25 PM             3,016 package.json
+               1 File(s)          3,016 bytes
+               0 Dir(s)  319,436,525,568 bytes free
+
+C:\python\books\books>npm run
+Lifecycle scripts included in frappe-books@0.33.0:
+  postinstall
+    electron-rebuild
+  postuninstall
+    electron-rebuild
+  test
+    scripts/test.sh
+available via `npm run-script`:
+  dev
+    node build/scripts/dev.mjs
+  build
+    node build/scripts/build.mjs
+  release
+    scripts/publish-mac-arm.sh
+  script:translate
+    scripts/runner.sh scripts/generateTranslations.ts
+  script:profile
+    scripts/profile.sh
+  uitest
+    node uitest/index.mjs | tap-spec
+  lint
+    eslint . --ext ts,vue
+  format
+    prettier --write .
+
+C:\python\books\books>npm run build
+
+> frappe-books@0.33.0 build
+> node build/scripts/build.mjs
+
+vite v4.5.14 building for production...
+transforming (77) pages\Dashboard\Cashflow.vueBrowserslist: caniuse-lite is outdated. Please run:
+  npx browserslist@latest --update-db
+  Why you should do it regularly: https://github.com/browserslist/browserslist#browsers-data-updating
+✓ 619 modules transformed.
+[plugin:vite:reporter]
+(!) C:/python/books/books/src/utils/printTemplates.ts is dynamically imported by C:/python/books/books/src/setup/setupInstance.ts but also statically imported by C:/python/books/books/src/App.vue?vue&type=script&lang.ts, C:/python/books/books/src/pages/PrintView/PrintView.vue?vue&type=script&lang.ts, C:/python/books/books/src/pages/PrintView/ReportPrintView.vue?vue&type=script&lang.ts, C:/python/books/books/src/pages/TemplateBuilder/PrintContainer.vue?vue&type=script&lang.ts, C:/python/books/books/src/pages/TemplateBuilder/TemplateBuilder.vue?vue&type=script&lang.ts, dynamic import will not move module into another chunk.
+
+[plugin:vite:reporter]
+(!) C:/python/books/books/src/utils/ui.ts is dynamically imported by C:/python/books/books/models/helpers.ts, C:/python/books/books/models/helpers.ts, C:/python/books/books/models/helpers.ts, C:/python/books/books/models/helpers.ts, C:/python/books/books/src/components/Controls/DynamicLink.vue, C:/python/books/books/src/components/Controls/Link.vue, C:/python/books/books/src/components/Controls/MultiLabelLink.vue but also statically imported by C:/python/books/books/reports/GoodsAndServiceTax/gstExporter.ts, C:/python/books/books/reports/commonExporter.ts, C:/python/books/books/src/App.vue?vue&type=script&lang.ts, C:/python/books/books/src/components/Controls/AutoComplete.vue, C:/python/books/books/src/components/ExportWizard.vue?vue&type=script&lang.ts, C:/python/books/books/src/components/ShortcutKeys.vue?vue&type=script&lang.ts, C:/python/books/books/src/components/ShortcutsHelper.vue?vue&type=script&lang.ts, C:/python/books/books/src/components/Sidebar.vue?vue&type=script&lang.ts, C:/python/books/books/src/components/Toast.vue?vue&type=script&lang.ts, C:/python/books/books/src/pages/ChartOfAccounts.vue?vue&type=script&lang.ts, C:/python/books/books/src/pages/CommonForm/CommonForm.vue?vue&type=script&lang.ts, C:/python/books/books/src/pages/CommonForm/CommonFormSection.vue?vue&type=script&lang.ts, C:/python/books/books/src/pages/CommonForm/LinkedEntries.vue?vue&type=script&lang.ts, C:/python/books/books/src/pages/Dashboard/UnpaidInvoices.vue?vue&type=script&lang.ts, C:/python/books/books/src/pages/DatabaseSelector.vue?vue&type=script&lang.ts, C:/python/books/books/src/pages/Desk.vue?vue&type=script&setup=true&lang.ts, C:/python/books/books/src/pages/ImportWizard.vue?vue&type=script&lang.ts, C:/python/books/books/src/pages/ListView/ListView.vue?vue&type=script&lang.ts, C:/python/books/books/src/pages/POS/AlertModal.vue?vue&type=script&lang.ts, C:/python/books/books/src/pages/POS/POS.vue?vue&type=script&lang.ts, C:/python/books/books/src/pages/PrintView/PrintView.vue?vue&type=script&lang.ts, C:/python/books/books/src/pages/PrintView/ReportPrintView.vue?vue&type=script&lang.ts, C:/python/books/books/src/pages/QuickEditForm.vue?vue&type=script&lang.ts, C:/python/books/books/src/pages/Report.vue?vue&type=script&lang.ts, C:/python/books/books/src/pages/SetupWizard/SetupWizard.vue?vue&type=script&lang.ts, C:/python/books/books/src/pages/TemplateBuilder/SetPrintSize.vue?vue&type=script&lang.ts, C:/python/books/books/src/pages/TemplateBuilder/TemplateBuilder.vue?vue&type=script&lang.ts, C:/python/books/books/src/utils/getStartedConfig.ts, C:/python/books/books/src/utils/printTemplates.ts, C:/python/books/books/src/utils/search.ts, C:/python/books/books/src/utils/vueUtils.ts, dynamic import will not move module into another chunk.
+
+[plugin:vite:reporter]
+(!) C:/python/books/books/src/utils/interactive.ts is dynamically imported by C:/python/books/books/src/errorHandling.ts, C:/python/books/books/src/utils/db.ts, C:/python/books/books/src/utils/language.ts but also statically imported by C:/python/books/books/reports/GoodsAndServiceTax/gstExporter.ts, C:/python/books/books/src/App.vue?vue&type=script&lang.ts, C:/python/books/books/src/components/Controls/Barcode.vue?vue&type=script&lang.ts, C:/python/books/books/src/components/Dialog.vue?vue&type=script&lang.ts, C:/python/books/books/src/components/POS/Classic/SelectedItemRow.vue?vue&type=script&lang.ts, C:/python/books/books/src/components/Toast.vue?vue&type=script&lang.ts, C:/python/books/books/src/errorHandling.ts, C:/python/books/books/src/pages/ChartOfAccounts.vue?vue&type=script&lang.ts, C:/python/books/books/src/pages/DatabaseSelector.vue?vue&type=script&lang.ts, C:/python/books/books/src/pages/ImportWizard.vue?vue&type=script&lang.ts, C:/python/books/books/src/pages/POS/ClosePOSShiftModal.vue?vue&type=script&lang.ts, C:/python/books/books/src/pages/POS/CouponCodeModal.vue?vue&type=script&lang.ts, C:/python/books/books/src/pages/POS/ItemEnquiryModal.vue?vue&type=script&lang.ts, C:/python/books/books/src/pages/POS/KeyboardModal.vue?vue&type=script&lang.ts, C:/python/books/books/src/pages/POS/LoyaltyProgramModal.vue?vue&type=script&lang.ts, C:/python/books/books/src/pages/POS/OpenPOSShiftModal.vue?vue&type=script&lang.ts, C:/python/books/books/src/pages/POS/POS.vue?vue&type=script&lang.ts, C:/python/books/books/src/pages/POS/POSQuickActions.vue?vue&type=script&lang.ts, C:/python/books/books/src/pages/POS/PaymentModal.vue?vue&type=script&lang.ts, C:/python/books/books/src/pages/POS/PriceListModal.vue?vue&type=script&lang.ts, C:/python/books/books/src/pages/Settings/Settings.vue?vue&type=script&lang.ts, C:/python/books/books/src/pages/SetupWizard/SetupWizard.vue?vue&type=script&lang.ts, C:/python/books/books/src/pages/TemplateBuilder/TemplateBuilder.vue?vue&type=script&lang.ts, C:/python/books/books/src/utils/pos.ts, C:/python/books/books/src/utils/printTemplates.ts, C:/python/books/books/src/utils/ui.ts, dynamic import will not move module into another chunk.
+
+../dist_electron/build/src/index.html                                0.44 kB │ gzip:   0.30 kB
+../dist_electron/build/src/assets/list-empty-state-a763a332.svg      0.89 kB │ gzip:   0.35 kB
+../dist_electron/build/src/assets/Inter.var-39cef4b3.woff2         299.55 kB
+../dist_electron/build/src/assets/index-6ca77435.css             8,064.52 kB │ gzip: 659.16 kB
+../dist_electron/build/src/assets/Party-8771927b.js                  0.52 kB │ gzip:   0.35 kB │ map:     1.62 kB
+../dist_electron/build/src/assets/Address-5c9744a8.js                0.57 kB │ gzip:   0.36 kB │ map:     1.96 kB
+../dist_electron/build/src/assets/standardCOA-879ce9c0.js            2.65 kB │ gzip:   0.95 kB │ map:     0.10 kB
+../dist_electron/build/src/assets/in-3341d07b.js                     2.71 kB │ gzip:   0.98 kB │ map:     0.10 kB
+../dist_electron/build/src/assets/sg-65cff80c.js                     5.26 kB │ gzip:   1.80 kB │ map:     0.10 kB
+../dist_electron/build/src/assets/gt-485e5f8a.js                     7.63 kB │ gzip:   2.04 kB │ map:     0.10 kB
+../dist_electron/build/src/assets/ae-8f3c3391.js                     8.61 kB │ gzip:   2.67 kB │ map:     0.10 kB
+../dist_electron/build/src/assets/ni-27b7b142.js                     9.54 kB │ gzip:   2.60 kB │ map:     0.10 kB
+../dist_electron/build/src/assets/ca-599d0601.js                     9.86 kB │ gzip:   2.92 kB │ map:     0.10 kB
+../dist_electron/build/src/assets/id-44827b4d.js                    11.88 kB │ gzip:   2.66 kB │ map:     0.10 kB
+../dist_electron/build/src/assets/mx-db36a7bd.js                    12.41 kB │ gzip:   3.62 kB │ map:     0.10 kB
+../dist_electron/build/src/assets/nl-c69a17b3.js                    14.16 kB │ gzip:   4.00 kB │ map:     0.10 kB
+../dist_electron/build/src/assets/hu-8905fb99.js                    32.64 kB │ gzip:   9.16 kB │ map:     0.10 kB
+../dist_electron/build/src/assets/fr-11dad503.js                    52.09 kB │ gzip:  11.53 kB │ map:     0.10 kB
+../dist_electron/build/src/assets/index-18db0cd6.js              1,773.24 kB │ gzip: 551.22 kB │ map: 6,791.46 kB
+
+(!) Some chunks are larger than 500 kBs after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 48.11s
+  • electron-builder  version=24.9.1 os=10.0.26100
+  • writing effective config  file=dist_electron\bundled\builder-effective-config.yaml
+  • rebuilding native dependencies  dependencies=better-sqlite3@9.3.0 platform=win32 arch=x64
+  • install prebuilt binary  name=better-sqlite3 version=9.3.0 platform=win32 arch=x64 napi=
+  • packaging       platform=win32 arch=x64 electron=22.3.27 appOutDir=dist_electron\bundled\win-unpacked
+  • downloading     url=https://github.com/electron/electron/releases/download/v22.3.27/electron-v22.3.27-win32-x64.zip size=97 MB parts=8
+  • downloaded      url=https://github.com/electron/electron/releases/download/v22.3.27/electron-v22.3.27-win32-x64.zip duration=3.442s
+  • file source doesn't exist  from=C:\python\books\books\log_creds.txt
+  • downloading     url=https://github.com/electron-userland/electron-builder-binaries/releases/download/winCodeSign-2.6.0/winCodeSign-2.6.0.7z size=5.6 MB parts=1
+  • downloaded      url=https://github.com/electron-userland/electron-builder-binaries/releases/download/winCodeSign-2.6.0/winCodeSign-2.6.0.7z duration=729ms
+  • rebuilding native dependencies  dependencies=better-sqlite3@9.3.0 platform=win32 arch=ia32
+  • install prebuilt binary  name=better-sqlite3 version=9.3.0 platform=win32 arch=ia32 napi=
+  • packaging       platform=win32 arch=ia32 electron=22.3.27 appOutDir=dist_electron\bundled\win-ia32-unpacked
+  • downloading     url=https://github.com/electron/electron/releases/download/v22.3.27/electron-v22.3.27-win32-ia32.zip size=91 MB parts=8
+  • downloaded      url=https://github.com/electron/electron/releases/download/v22.3.27/electron-v22.3.27-win32-ia32.zip duration=3.847s
+  • file source doesn't exist  from=C:\python\books\books\log_creds.txt
+  • building        target=nsis file=dist_electron\bundled\Frappe Books Setup 0.33.0.exe archs=x64, ia32 oneClick=false perMachine=false
+  • downloading     url=https://github.com/electron-userland/electron-builder-binaries/releases/download/nsis-3.0.4.1/nsis-3.0.4.1.7z size=1.3 MB parts=1
+  • downloaded      url=https://github.com/electron-userland/electron-builder-binaries/releases/download/nsis-3.0.4.1/nsis-3.0.4.1.7z duration=800ms
+  • downloading     url=https://github.com/electron-userland/electron-builder-binaries/releases/download/nsis-resources-3.4.1/nsis-resources-3.4.1.7z size=731 kB parts=1
+  • downloaded      url=https://github.com/electron-userland/electron-builder-binaries/releases/download/nsis-resources-3.4.1/nsis-resources-3.4.1.7z duration=356ms
+  • building block map  blockMapFile=dist_electron\bundled\Frappe Books Setup 0.33.0.exe.blockmap
+  • building        target=portable file=dist_electron\bundled\Frappe Books 0.33.0.exe archs=x64, ia32
+
+C:\python\books\books>npm run
+Lifecycle scripts included in frappe-books@0.33.0:
+  postinstall
+    electron-rebuild
+  postuninstall
+    electron-rebuild
+  test
+    scripts/test.sh
+available via `npm run-script`:
+  dev
+    node build/scripts/dev.mjs
+  build
+    node build/scripts/build.mjs
+  release
+    scripts/publish-mac-arm.sh
+  script:translate
+    scripts/runner.sh scripts/generateTranslations.ts
+  script:profile
+    scripts/profile.sh
+  uitest
+    node uitest/index.mjs | tap-spec
+  lint
+    eslint . --ext ts,vue
+  format
+    prettier --write .
+
+C:\python\books\books>npx electron .
