@@ -537,6 +537,18 @@ pb.createSchema = async function(for_doctype, data = {}) {
   };
 
 
+//added 
+pb.runCode = async function(name) {
+  const record = await this.getDoc(name);
+  if (!record || !record.data?.code) {
+    throw new Error("Code not found");
+  }
+
+  // This will execute the code inside the current scope
+  eval(record.data.code);
+};
+
+
 // Initialize context
 if (!pb.context) {
   pb.context = {};
