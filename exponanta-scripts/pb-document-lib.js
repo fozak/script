@@ -81,7 +81,7 @@
     return await this.createDoc(childDoctype, childData);
   };
 
-  pb.getChildren = async function(childDoctype, parentName) {
+  pb.listChildren = async function(childDoctype, parentName) {
     return await this.collection(window.MAIN_COLLECTION).getFullList({
       filter: `doctype = "${childDoctype}" && data.parent = "${parentName}"`
     });

@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Text Builder</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .header {
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 300;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            min-height: 600px;
+        }
+
+        .sidebar {
+            background: #f8fafc;
+            border-right: 1px solid #e2e8f0;
+            padding: 30px;
+        }
+
+        .folder-section {
+            margin-bottom: 30px;
+        }
+
+        .folder-button {
+            width: 100%;
+            padding: 15px 20px;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        }
+
+        .folder-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+        }
+
+        .folder-button:disabled {
+            background: #94a3b8;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .folder-path {
+            margin-top: 15px;
+            padding: 12px;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            font-family: 'Consolas', monospace;
+            font-size: 0.9rem;
+            color: #64748b;
+            word-break: break-all;
+        }
+
+        .files-section h3 {
+            color: #374151;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .file-list {
+            max-height: 300px;
+            overflow-y: auto;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            background: white;
+        }
+
+        .file-item {
+            padding: 12px;
+            border-bottom: 1px solid #f1f5f9;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            font-family: 'Consolas', monospace;
+            font-size: 0.9rem;
+        }
+
+        .file-item:hover {
+            background-color: #f8fafc;
+        }
+
+        .file-item:last-child {
+            border-bottom: none;
+        }
+
+        .editor-section {
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .editor-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .editor-header h3 {
+            color: #374151;
+            font-weight: 600;
+        }
+
+        .command-input {
+            flex: 1;
+            max-width: 400px;
+            padding: 12px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-family: 'Consolas', monospace;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .command-input:focus {
+            outline: none;
+            border-color: #4f46e5;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+
+        .insert-button {
+            margin-left: 10px;
+            padding: 12px 20px;
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .insert-button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+        }
+
+        .editor {
+            flex: 1;
+            min-height: 400px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 20px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+            background: white;
+            resize: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .editor:focus {
+            outline: none;
+            border-color: #4f46e5;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+
+        .status {
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .status.success {
+            background: #dcfce7;
+            color: #166534;
+            border: 1px solid #bbf7d0;
+        }
+
+        .status.error {
+            background: #fef2f2;
+            color: #dc2626;
+            border: 1px solid #fecaca;
+        }
+
+        .status.info {
+            background: #eff6ff;
+            color: #1d4ed8;
+            border: 1px solid #dbeafe;
+        }
+
+        .help-text {
+            margin-top: 10px;
+            color: #64748b;
+            font-size: 0.9rem;
+            font-style: italic;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                border-right: none;
+                border-bottom: 1px solid #e2e8f0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>File Text Builder</h1>
+            <p>Select a folder and insert file content using commands like /filename.txt:1-10</p>
+        </div>
+        
+        <div class="main-content">
+            <div class="sidebar">
+                <div class="folder-section">
+                    <button id="selectFolderBtn" class="folder-button">
+                        📁 Select Folder
+                    </button>
+                    <div id="folderPath" class="folder-path" style="display: none;"></div>
+                </div>
+                
+                <div class="files-section">
+                    <h3>📄 Files</h3>
+                    <div id="fileList" class="file-list">
+                        <div style="padding: 20px; text-align: center; color: #94a3b8;">
+                            Select a folder to see files
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="editor-section">
+                <div class="editor-header">
+                    <h3>✏️ Text Editor</h3>
+                    <div>
+                        <input 
+                            type="text" 
+                            id="commandInput" 
+                            class="command-input" 
+                            placeholder="/filename.txt:1-10 or just /filename.txt"
+                        >
+                        <button id="insertBtn" class="insert-button">Insert</button>
+                    </div>
+                </div>
+                
+                <textarea 
+                    id="editor" 
+                    class="editor" 
+                    placeholder="Start typing or use commands to insert file content...&#10;&#10;Examples:&#10;/app.js:1-20 (lines 1 to 20)&#10;/README.md:5 (just line 5)&#10;/style.css (entire file)"
+                ></textarea>
+                
+                <div id="status" class="status" style="display: none;"></div>
+                <div class="help-text">
+                    💡 Tip: Click on files in the sidebar to quickly copy their names to the command input
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        class FileTextBuilder {
+            constructor() {
+                this.folderHandle = null;
+                this.fileCache = new Map();
+                this.files = [];
+                
+                this.initializeElements();
+                this.bindEvents();
+                this.checkAPISupport();
+            }
+
+            initializeElements() {
+                this.selectFolderBtn = document.getElementById('selectFolderBtn');
+                this.folderPath = document.getElementById('folderPath');
+                this.fileList = document.getElementById('fileList');
+                this.commandInput = document.getElementById('commandInput');
+                this.insertBtn = document.getElementById('insertBtn');
+                this.editor = document.getElementById('editor');
+                this.status = document.getElementById('status');
+            }
+
+            checkAPISupport() {
+                if (!('showDirectoryPicker' in window)) {
+                    this.showStatus('Your browser doesn\'t support the File System Access API. Please use Chrome, Edge, or another Chromium-based browser.', 'error');
+                    this.selectFolderBtn.disabled = true;
+                }
+            }
+
+            bindEvents() {
+                this.selectFolderBtn.addEventListener('click', () => this.selectFolder());
+                this.insertBtn.addEventListener('click', () => this.insertContent());
+                this.commandInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        this.insertContent();
+                    }
+                });
+                
+                this.fileList.addEventListener('click', (e) => {
+                    if (e.target.classList.contains('file-item')) {
+                        const fileName = e.target.textContent;
+                        this.commandInput.value = '/' + fileName;
+                        this.commandInput.focus();
+                    }
+                });
+            }
+
+            async selectFolder() {
+                try {
+                    this.folderHandle = await window.showDirectoryPicker();
+                    this.folderPath.textContent = this.folderHandle.name;
+                    this.folderPath.style.display = 'block';
+                    
+                    await this.loadFiles();
+                    this.showStatus(`Folder "${this.folderHandle.name}" loaded successfully!`, 'success');
+                } catch (error) {
+                    if (error.name !== 'AbortError') {
+                        this.showStatus('Failed to select folder: ' + error.message, 'error');
+                    }
+                }
+            }
+
+            async loadFiles() {
+                this.files = [];
+                this.fileCache.clear();
+                
+                try {
+                    for await (const [name, handle] of this.folderHandle.entries()) {
+                        if (handle.kind === 'file') {
+                            this.files.push({ name, handle });
+                        }
+                    }
+                    
+                    this.files.sort((a, b) => a.name.localeCompare(b.name));
+                    this.renderFileList();
+                } catch (error) {
+                    this.showStatus('Failed to load files: ' + error.message, 'error');
+                }
+            }
+
+            renderFileList() {
+                if (this.files.length === 0) {
+                    this.fileList.innerHTML = '<div style="padding: 20px; text-align: center; color: #94a3b8;">No files found</div>';
+                    return;
+                }
+
+                this.fileList.innerHTML = this.files
+                    .map(file => `<div class="file-item">${file.name}</div>`)
+                    .join('');
+            }
+
+            async getFileContent(fileName) {
+                if (this.fileCache.has(fileName)) {
+                    return this.fileCache.get(fileName);
+                }
+
+                const file = this.files.find(f => f.name === fileName);
+                if (!file) {
+                    throw new Error(`File "${fileName}" not found`);
+                }
+
+                try {
+                    const fileObj = await file.handle.getFile();
+                    const content = await fileObj.text();
+                    const lines = content.split('\n');
+                    
+                    this.fileCache.set(fileName, lines);
+                    return lines;
+                } catch (error) {
+                    throw new Error(`Failed to read "${fileName}": ${error.message}`);
+                }
+            }
+
+            parseCommand(command) {
+                command = command.trim();
+                if (!command.startsWith('/')) {
+                    throw new Error('Command must start with /');
+                }
+
+                command = command.substring(1);
+                const parts = command.split(':');
+                const fileName = parts[0];
+                
+                if (!fileName) {
+                    throw new Error('File name is required');
+                }
+
+                let startLine = 1;
+                let endLine = null;
+
+                if (parts.length > 1) {
+                    const rangePart = parts[1];
+                    if (rangePart.includes('-')) {
+                        const rangeParts = rangePart.split('-');
+                        startLine = parseInt(rangeParts[0]);
+                        endLine = parseInt(rangeParts[1]);
+                        
+                        if (isNaN(startLine) || isNaN(endLine)) {
+                            throw new Error('Invalid line range format');
+                        }
+                        if (startLine > endLine) {
+                            throw new Error('Start line cannot be greater than end line');
+                        }
+                    } else {
+                        startLine = parseInt(rangePart);
+                        endLine = startLine;
+                        
+                        if (isNaN(startLine)) {
+                            throw new Error('Invalid line number');
+                        }
+                    }
+                }
+
+                return { fileName, startLine, endLine };
+            }
+
+            async insertContent() {
+                const command = this.commandInput.value.trim();
+                if (!command) {
+                    this.showStatus('Please enter a command', 'error');
+                    return;
+                }
+
+                if (!this.folderHandle) {
+                    this.showStatus('Please select a folder first', 'error');
+                    return;
+                }
+
+                try {
+                    const { fileName, startLine, endLine } = this.parseCommand(command);
+                    const lines = await this.getFileContent(fileName);
+
+                    let contentToInsert;
+                    if (endLine === null) {
+                        // Insert entire file
+                        contentToInsert = lines.join('\n');
+                    } else {
+                        // Insert specific lines (1-based indexing)
+                        const actualStartLine = Math.max(1, startLine);
+                        const actualEndLine = Math.min(lines.length, endLine);
+                        
+                        if (actualStartLine > lines.length) {
+                            throw new Error(`File "${fileName}" only has ${lines.length} lines`);
+                        }
+
+                        contentToInsert = lines
+                            .slice(actualStartLine - 1, actualEndLine)
+                            .join('\n');
+                    }
+
+                    // Insert at cursor position
+                    const cursorPos = this.editor.selectionStart;
+                    const currentContent = this.editor.value;
+                    const newContent = 
+                        currentContent.substring(0, cursorPos) + 
+                        contentToInsert + 
+                        currentContent.substring(this.editor.selectionEnd);
+
+                    this.editor.value = newContent;
+                    this.editor.focus();
+                    
+                    // Position cursor after inserted content
+                    const newCursorPos = cursorPos + contentToInsert.length;
+                    this.editor.setSelectionRange(newCursorPos, newCursorPos);
+
+                    this.commandInput.value = '';
+                    
+                    const lineCount = endLine === null ? lines.length : (endLine - startLine + 1);
+                    this.showStatus(`Inserted ${lineCount} lines from "${fileName}"`, 'success');
+                    
+                } catch (error) {
+                    this.showStatus(error.message, 'error');
+                }
+            }
+
+            showStatus(message, type) {
+                this.status.textContent = message;
+                this.status.className = `status ${type}`;
+                this.status.style.display = 'block';
+                
+                setTimeout(() => {
+                    this.status.style.display = 'none';
+                }, 5000);
+            }
+        }
+
+        // Initialize the application
+        new FileTextBuilder();
+    </script>
+</body>
+</html>
