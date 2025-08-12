@@ -275,6 +275,19 @@ pb.getSchema = async function(doctype) {
 
 
 // I am working on describing the frontend with React on abbstrct level like this 
+
+/*currentUser is pb.collection('users') 
+  .authWithPassword('xxx@example.com', '8o16dhxxxzmg4o9')
+  .then(() => {
+    console.log('✅ Login successful');
+    console.log('📛 Username:', pb.authStore.model?.username);
+    console.log('📧 Email:', pb.authStore.model?.email);
+    console.log('🔐 Token:', pb.authStore.token);
+  })
+  .catch((err) => {
+    console.error('❌ Login failed:', err);
+  });
+*/
  
 function App({ currentUser }) {
   const [context, setContext] = React.useState(null);
@@ -282,7 +295,9 @@ function App({ currentUser }) {
   // Build context on mount (or when currentUserName changes)
   React.useEffect(() => {
     async function buildAppContext(currentUser) {
-      const currentUser = await pb.getDoc("User", currentUserName); //remove this current user is defined by pb.AuthStore
+
+
+      const currentUser = await pb.getDoc(pb.authStore.model?.email); //this is correct as username defined by email is defined by pb.AuthStore
 
       const browsingHistory = await pb.listDocs("BrowsingHistory"); // pb filters itself and should provide only the current user's history
 

@@ -1,3 +1,8 @@
+TODO how to interlink the workflow, flow and enclosed doctype 
+
+Decision - store in polymorphic junction Has Role etc
+https://claude.ai/chat/4215bd3d-e409-4d06-a235-081d65e1a825
+
 
 Desision - store everything in system settings record
 system-settings.collection = 'item' 
