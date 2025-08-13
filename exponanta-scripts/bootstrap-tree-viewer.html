@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Universal Doctype Tree Viewer</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .children {
+            display: none;
+            margin-left: 20px;
+            border-left: 2px solid #dee2e6;
+            padding-left: 15px;
+        }
+        .children.show {
+            display: block;
+        }
+        .toggle-icon {
+            transition: transform 0.3s ease;
+        }
+        .toggle-icon.rotated {
+            transform: rotate(90deg);
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-primary text-white text-center py-4">
+                        <h1 class="display-4 mb-2">🌳 Universal Doctype Tree Viewer</h1>
+                        <p class="lead mb-0">Visualize your converted Frappe data in parent-child relationships</p>
+                    </div>
+                    
+                    <div class="card-body p-4 text-center border-bottom">
+                        <input type="file" class="form-control d-none" accept=".json" id="jsonFile">
+                        <button class="btn btn-primary btn-lg" onclick="document.getElementById('jsonFile').click()">
+                            📁 Choose JSON File
+                        </button>
+                    </div>
+                    
+                    <div class="row p-3 bg-light d-none" id="stats">
+                        <div class="col-3 text-center">
+                            <h3 class="text-primary mb-1" id="totalRecords">0</h3>
+                            <small class="text-muted">Total Records</small>
+                        </div>
+                        <div class="col-3 text-center">
+                            <h3 class="text-primary mb-1" id="parentCount">0</h3>
+                            <small class="text-muted">Parent Documents</small>
+                        </div>
+                        <div class="col-3 text-center">
+                            <h3 class="text-primary mb-1" id="childCount">0</h3>
+                            <small class="text-muted">Child Records</small>
+                        </div>
+                        <div class="col-3 text-center">
+                            <h3 class="text-primary mb-1" id="doctypeCount">0</h3>
+                            <small class="text-muted">Document Types</small>
+                        </div>
+                    </div>
+                    
+                    <div class="card-body p-4" style="max-height: 600px; overflow-y: auto;" id="treeContainer">
+                        <div class="text-center py-5 text-muted">
+                            <div style="font-size: 4rem; opacity: 0.5;">📂</div>
+                            <h3>No data loaded</h3>
+                            <p>Please select a JSON file to view the tree structure</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        class UniversalTreeViewer {
+            constructor() {
+                this.data = null;
+                this.parentChildMap = new Map();
+                this.init();
+            }
+
+            init() {
+                document.getElementById('jsonFile').addEventListener('change', (e) => {
+                    this.handleFileSelect(e);
+                });
+            }
+
+            async handleFileSelect(event) {
+                const file = event.target.files[0];
+                if (!file) return;
+
+                try {
+                    const text = await file.text();
+                    this.data = JSON.parse(text);
+                    this.processData();
+                    this.renderTree();
+                    this.updateStats();
+                } catch (error) {
+                    alert('Error reading file: ' + error.message);
+                }
+            }
+
+            processData() {
+                this.parentChildMap.clear();
+                
+                // Identify records that have a parent (child records)
+                const children = this.data.filter(record => record.data.parent);
+                
+                // Group children by their parent
+                children.forEach(child => {
+                    const parentKey = `${child.data.parentSchemaName}:${child.data.parent}`;
+                    
+                    if (!this.parentChildMap.has(parentKey)) {
+                        this.parentChildMap.set(parentKey, []);
+                    }
+                    this.parentChildMap.get(parentKey).push(child);
+                });
+
+                console.log('Processed data:', {
+                    totalRecords: this.data.length,
+                    childRecords: children.length,
+                    parentChildMap: this.parentChildMap
+                });
+            }
+
+            renderTree() {
+                const container = document.getElementById('treeContainer');
+                container.innerHTML = '';
+
+                // Get all unique parent references from child records
+                const parentRefs = new Set();
+                this.data.filter(record => record.data.parent).forEach(child => {
+                    parentRefs.add(`${child.data.parentSchemaName}:${child.data.parent}`);
+                });
+
+                // Group parent references by doctype (parentSchemaName)
+                const parentsByDoctype = new Map();
+                parentRefs.forEach(parentRef => {
+                    const [doctype, name] = parentRef.split(':');
+                    if (!parentsByDoctype.has(doctype)) {
+                        parentsByDoctype.set(doctype, []);
+                    }
+                    parentsByDoctype.get(doctype).push({
+                        doctype: doctype,
+                        name: name
+                    });
+                });
+
+                // Render each doctype group
+                for (const [doctype, parents] of parentsByDoctype) {
+                    parents.forEach(parent => {
+                        const parentElement = this.createParentNode(parent);
+                        container.appendChild(parentElement);
+                    });
+                }
+
+                if (parentRefs.size === 0) {
+                    container.innerHTML = `
+                        <div class="text-center py-5 text-muted">
+                            <div style="font-size: 4rem; opacity: 0.5;">📄</div>
+                            <h3>No parent-child relationships found</h3>
+                            <p>All records appear to be standalone documents</p>
+                        </div>
+                    `;
+                }
+            }
+
+            createParentNode(parent) {
+                const parentDiv = document.createElement('div');
+                parentDiv.className = 'mb-2';
+                
+                const parentKey = `${parent.doctype}:${parent.name}`;
+                const children = this.parentChildMap.get(parentKey) || [];
+                
+                const parentNode = document.createElement('div');
+                parentNode.className = 'btn btn-outline-primary w-100 text-start d-flex justify-content-between align-items-center';
+                parentNode.innerHTML = `
+                    <span><strong>${parent.doctype}</strong>: ${parent.name || 'Unnamed'}</span>
+                    <span>
+                        <small class="text-muted me-2">(${children.length} children)</small>
+                        <span class="toggle-icon">${children.length > 0 ? '▶' : '📄'}</span>
+                    </span>
+                `;
+                
+                if (children.length > 0) {
+                    parentNode.addEventListener('click', () => {
+                        this.toggleChildren(parentNode, children);
+                    });
+                } else {
+                    parentNode.disabled = true;
+                }
+                
+                const childrenContainer = document.createElement('div');
+                childrenContainer.className = 'children mt-2';
+                
+                if (children.length === 0) {
+                    const noChildren = document.createElement('div');
+                    noChildren.className = 'text-muted fst-italic ms-3 p-2';
+                    noChildren.textContent = 'No child records';
+                    childrenContainer.appendChild(noChildren);
+                } else {
+                    children.forEach(child => {
+                        const childNode = this.createChildNode(child);
+                        childrenContainer.appendChild(childNode);
+                    });
+                }
+                
+                parentDiv.appendChild(parentNode);
+                parentDiv.appendChild(childrenContainer);
+                return parentDiv;
+            }
+
+            createChildNode(child) {
+                const childDiv = document.createElement('div');
+                childDiv.className = 'card mb-2';
+                
+                const additionalFields = Object.entries(child.data)
+                    .filter(([key, value]) => 
+                        !['parent', 'parenttype', 'link_doctype', 'link_name'].includes(key) && 
+                        value !== null && value !== undefined && value !== ''
+                    )
+                    .map(([key, value]) => 
+                        `<div><span class="fw-bold">${key}:</span> ${value}</div>`
+                    )
+                    .join('');
+                
+                childDiv.innerHTML = `
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span>🔗 ${child.data.link_name || 'Unnamed'}</span>
+                            <span class="badge bg-secondary">${child.data.link_doctype}</span>
+                        </div>
+                        <div class="text-muted small">
+                            ${additionalFields || '<em>No additional data</em>'}
+                        </div>
+                    </div>
+                `;
+                
+                return childDiv;
+            }
+
+            toggleChildren(parentNode, children) {
+                const childrenContainer = parentNode.nextElementSibling;
+                const icon = parentNode.querySelector('.toggle-icon');
+                
+                if (childrenContainer.classList.contains('show')) {
+                    childrenContainer.classList.remove('show');
+                    icon.textContent = '▶';
+                    icon.classList.remove('rotated');
+                    parentNode.classList.remove('btn-primary');
+                    parentNode.classList.add('btn-outline-primary');
+                } else {
+                    childrenContainer.classList.add('show');
+                    icon.textContent = '▼';
+                    icon.classList.add('rotated');
+                    parentNode.classList.remove('btn-outline-primary');
+                    parentNode.classList.add('btn-primary');
+                }
+            }
+
+            updateStats() {
+                if (!this.data) return;
+
+                const totalRecords = this.data.length;
+                const childRecords = this.data.filter(r => r.doctype === 'Child').length;
+                const parentRecords = totalRecords - childRecords;
+                const doctypes = new Set(this.data.map(r => r.doctype)).size;
+
+                document.getElementById('totalRecords').textContent = totalRecords;
+                document.getElementById('parentCount').textContent = parentRecords;
+                document.getElementById('childCount').textContent = childRecords;
+                document.getElementById('doctypeCount').textContent = doctypes;
+                document.getElementById('stats').classList.remove('d-none');
+            }
+        }
+
+        // Initialize the viewer
+        new UniversalTreeViewer();
+    </script>
+</body>
+</html>
