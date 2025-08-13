@@ -549,7 +549,7 @@ pb.runCode = async function(name) {
 };
 
 
-//commit-workflow-1
+//commit-workflow-2
 // ==============================================
 // 🔄 WORKFLOW & APPROVAL OPERATIONS
 // ==============================================
@@ -559,23 +559,77 @@ pb.getWorkflow = async function(doctype) {
     filter: `doctype = "Workflow" && data.document_type = "${doctype}"`
   });
   
-  return workflowResult.items.length > 0 ? workflowResult.items[0].data : null;
+  if (workflowResult.items.length === 0) return null;
+  
+  const workflow = workflowResult.items[0];
+  
+  // Get all workflow states for this workflow
+  const states = await this.collection(window.MAIN_COLLECTION).getFullList({
+    filter: `doctype = "Workflow Document State" && data.parent = "${workflow.name}"`
+  });
+  
+  // Get all workflow transitions for this workflow  
+  const transitions = await this.collection(window.MAIN_COLLECTION).getFullList({
+    filter: `doctype = "Workflow Transition" && data.parent = "${workflow.name}"`
+  });
+  
+  // Build complete workflow object
+  return {
+    ...workflow.data,
+    name: workflow.name,
+    states: states.map(state => ({
+      state: state.data.state,
+      doc_status: state.data.doc_status,
+      allow_edit: state.data.allow_edit,
+      is_optional_state: state.data.is_optional_state,
+      allow_self_approval: state.data.allow_self_approval,
+      name: state.name
+    })),
+    transitions: transitions.map(transition => ({
+      action: transition.data.action,
+      state: transition.data.state,
+      next_state: transition.data.next_state,
+      allowed: transition.data.allowed,
+      condition: transition.data.condition,
+      allow_self_approval: transition.data.allow_self_approval,
+      name: transition.name
+    }))
+  };
 };
 
 pb.getWorkflowState = async function(docName) {
   const doc = await this.getDoc(docName);
-  return doc?.data?.workflow_state || doc?.data?.status || 'Draft';
-};
-
-pb.getAvailableTransitions = async function(doctype, currentState) {
-  const workflow = await this.getWorkflow(doctype);
-  if (!workflow || !workflow.states) return [];
+  if (!doc) return null;
   
-  const state = workflow.states.find(s => s.state === currentState);
-  return state ? state.transitions || [] : [];
+  // Get the workflow for this doctype
+  const workflow = await this.getWorkflow(doc.doctype);
+  if (!workflow) return doc.data?.status || 'Draft';
+  
+  // Use the workflow state field if specified, otherwise fall back to common fields
+  const stateField = workflow.workflow_state_field || 'workflow_state';
+  return doc.data?.[stateField] || doc.data?.status || 'Draft';
 };
 
-pb.executeWorkflowTransition = async function(docName, transition, comments = '') {
+pb.getAvailableTransitions = async function(doctype, currentState, userRole = null) {
+  const workflow = await this.getWorkflow(doctype);
+  if (!workflow || !workflow.transitions) return [];
+  
+  // Filter transitions that start from the current state
+  let availableTransitions = workflow.transitions.filter(t => 
+    t.state === currentState
+  );
+  
+  // If userRole is provided, filter by allowed roles
+  if (userRole) {
+    availableTransitions = availableTransitions.filter(t => 
+      !t.allowed || t.allowed === userRole || t.allowed.includes(userRole)
+    );
+  }
+  
+  return availableTransitions;
+};
+
+pb.executeWorkflowTransition = async function(docName, transitionAction, comments = '', userRole = null) {
   const doc = await this.getDoc(docName);
   if (!doc) throw new Error(`Document not found: ${docName}`);
   
@@ -583,35 +637,53 @@ pb.executeWorkflowTransition = async function(docName, transition, comments = ''
   if (!workflow) throw new Error(`No workflow found for doctype: ${doc.doctype}`);
   
   const currentState = await this.getWorkflowState(docName);
-  const availableTransitions = await this.getAvailableTransitions(doc.doctype, currentState);
+  const availableTransitions = await this.getAvailableTransitions(doc.doctype, currentState, userRole);
   
-  const validTransition = availableTransitions.find(t => t.action === transition);
+  // Find the transition by action
+  const validTransition = availableTransitions.find(t => t.action === transitionAction);
   if (!validTransition) {
-    throw new Error(`Invalid transition: ${transition} from state: ${currentState}`);
+    const availableActions = availableTransitions.map(t => t.action).join(', ');
+    throw new Error(`Invalid transition: ${transitionAction} from state: ${currentState}. Available: ${availableActions}`);
   }
+  
+  const stateField = workflow.workflow_state_field || 'workflow_state';
   
   const updatedData = {
     ...doc.data,
-    workflow_state: validTransition.next_state,
-    status: validTransition.next_state
+    [stateField]: validTransition.next_state
   };
   
+  // Also update status field for compatibility
+  if (stateField !== 'status') {
+    updatedData.status = validTransition.next_state;
+  }
+  
+  // Update docstatus based on the new state
+  const newStateInfo = workflow.states.find(s => s.state === validTransition.next_state);
+  if (newStateInfo && newStateInfo.doc_status !== undefined) {
+    updatedData.docstatus = parseInt(newStateInfo.doc_status);
+  }
+  
+  // Add to workflow history
   if (!updatedData.workflow_history) {
     updatedData.workflow_history = [];
   }
   
   updatedData.workflow_history.push({
     timestamp: new Date().toISOString(),
-    action: transition,
+    action: transitionAction,
     from_state: currentState,
     to_state: validTransition.next_state,
     comments: comments,
-    user: 'Current User'
+    user: userRole || 'Current User'
   });
   
   await this.updateDoc(docName, updatedData);
   return validTransition.next_state;
 };
+
+// ==============================================
+// 
 
 
 // Initialize context
