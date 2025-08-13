@@ -271,7 +271,7 @@ pb.getSchema = async function(doctype) {
   pb.loadChildTableData = async function(childDoctype, parentName) {
     const promises = [
       this.getSchema(childDoctype),
-      this.getChildren(childDoctype, parentName)
+      this.listChildren(childDoctype, parentName)
     ];
 
     const [childSchema, childRecords] = await Promise.all(promises);
