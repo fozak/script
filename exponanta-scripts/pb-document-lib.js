@@ -549,6 +549,71 @@ pb.runCode = async function(name) {
 };
 
 
+//commit-workflow-1
+// ==============================================
+// 🔄 WORKFLOW & APPROVAL OPERATIONS
+// ==============================================
+
+pb.getWorkflow = async function(doctype) {
+  const workflowResult = await this.collection(window.MAIN_COLLECTION).getList(1, 1, {
+    filter: `doctype = "Workflow" && data.document_type = "${doctype}"`
+  });
+  
+  return workflowResult.items.length > 0 ? workflowResult.items[0].data : null;
+};
+
+pb.getWorkflowState = async function(docName) {
+  const doc = await this.getDoc(docName);
+  return doc?.data?.workflow_state || doc?.data?.status || 'Draft';
+};
+
+pb.getAvailableTransitions = async function(doctype, currentState) {
+  const workflow = await this.getWorkflow(doctype);
+  if (!workflow || !workflow.states) return [];
+  
+  const state = workflow.states.find(s => s.state === currentState);
+  return state ? state.transitions || [] : [];
+};
+
+pb.executeWorkflowTransition = async function(docName, transition, comments = '') {
+  const doc = await this.getDoc(docName);
+  if (!doc) throw new Error(`Document not found: ${docName}`);
+  
+  const workflow = await this.getWorkflow(doc.doctype);
+  if (!workflow) throw new Error(`No workflow found for doctype: ${doc.doctype}`);
+  
+  const currentState = await this.getWorkflowState(docName);
+  const availableTransitions = await this.getAvailableTransitions(doc.doctype, currentState);
+  
+  const validTransition = availableTransitions.find(t => t.action === transition);
+  if (!validTransition) {
+    throw new Error(`Invalid transition: ${transition} from state: ${currentState}`);
+  }
+  
+  const updatedData = {
+    ...doc.data,
+    workflow_state: validTransition.next_state,
+    status: validTransition.next_state
+  };
+  
+  if (!updatedData.workflow_history) {
+    updatedData.workflow_history = [];
+  }
+  
+  updatedData.workflow_history.push({
+    timestamp: new Date().toISOString(),
+    action: transition,
+    from_state: currentState,
+    to_state: validTransition.next_state,
+    comments: comments,
+    user: 'Current User'
+  });
+  
+  await this.updateDoc(docName, updatedData);
+  return validTransition.next_state;
+};
+
+
 // Initialize context
 if (!pb.context) {
   pb.context = {};
