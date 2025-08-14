@@ -1,3 +1,56 @@
+Security and docstatus
+
+new_document_created
+│
+└── check if Workflow exists for this.doc.doctype AND is_active = 1
+    │
+    ├── YES → Workflow active
+    │   │
+    │   └── docstatus initially set to 0 (Draft)
+    │       │
+    │       └── Workflow state = workflow.default_state
+    │           │
+    │           ├── User actions follow workflow transitions (not standard submit/cancel)
+    │           │
+    │           ├── Each transition may:
+    │           │   - Change workflow state (e.g., Draft → Review → Approved)
+    │           │   - Optionally change docstatus (e.g., move to 1 on "Submit for Approval")
+    │           │
+    │           └── Final workflow state may set docstatus = 1 (Submitted) or 2 (Cancelled)
+    │               │
+    │               └── Read-only behavior depends on workflow state rules, not just docstatus
+    │
+    └── NO → No active workflow
+        │
+        └── check is_submittable?
+            │
+            ├── is_submittable = 0
+            │   │
+            │   └── docstatus = 0 (Draft)
+            │       │
+            │       └── Fully editable, no submit/cancel
+            │
+            └── is_submittable = 1
+                │
+                └── docstatus = 0 (Draft)
+                    │
+                    ├── User chooses "Submit"
+                    │   │
+                    │   └── docstatus → 1 (Submitted)
+                    │       │
+                    │       ├── Becomes read-only
+                    │       │
+                    │       ├── User can "Cancel" → docstatus → 2 (Cancelled, read-only)
+                    │       │
+                    │       └── No return to Draft; must create a new document
+                    │
+                    └── User chooses "Save" only
+                        │
+                        └── Remains Draft (editable)
+
+
+
+
 TODO how to interlink the workflow, flow and enclosed doctype 
 
 Decision - store in polymorphic junction Has Role etc

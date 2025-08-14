@@ -1,7 +1,13 @@
 
 Initial settings are empty - everyone can access
 then settings 
+#
 meta.public = true || (@request.auth.id != "" && meta ~ @request.auth.email)
+## we keep doc_status 
+ updateRule is: @request.auth.id != "" && data.doc_status = "0"
+Then any document with data.doc_status ≠ "0" becomes read-only for the user, regardless of other fields.
+for every document @request.auth.id != "" && data.doc_status = "0"
+
 
 should give nothing on search, as items are not set as public or with emails
 CODE should be public
