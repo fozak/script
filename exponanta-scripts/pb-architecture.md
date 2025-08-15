@@ -1,4 +1,68 @@
+# Security
+
+## @todo
+- [x] FIXED: decided on security model for records (@decisions.security.1-3)
+- [] TODO: Test @snippet.request.auth.id with real records
+- [] TODO: Understand how to manage childrecords security https://claude.ai/chat/ad082e08-4c1f-41ac-af71-f0b6b22e522a
+
+## @decisions.security:
+1) Keep the hybrid security for records. Add record.user and list names=emails directly for like _assign or _share case
+2) use data.owner field to allow owner to access
+3) use Frappe roles in @collection.users.doctype 
+
+                      ## My access rule become: 
+
+                      ```js @snippet.request.auth.id
+                      @request.auth.id != "" && (
+                          data.owner ?= @request.auth.email ||
+                          users ~ @request.auth.email ||
+                          @request.auth.doctype ?~ data.doctype
+                      )
+                      ```
+                      - the SQL to form the list (in view collection in Pocketbase ): 
+
+                      ```js
+                      -- Optimized query using CTE to pre-compute schema permissions
+                      WITH schema_perms AS (
+                          SELECT
+                              json_extract(s.data, '$.name') AS doctype_name,
+                              json_extract(p.value, '$.role') AS role
+                          FROM item s
+                          JOIN json_each(s.data, '$.permissions') AS p
+                          WHERE s.doctype = 'Schema'
+                            AND (
+                                json_extract(p.value, '$.read') = 1 OR
+                                json_extract(p.value, '$.write') = 1 OR
+                                json_extract(p.value, '$.create') = 1 OR
+                                json_extract(p.value, '$.delete') = 1
+                            )
+                          GROUP BY doctype_name, role
+                      )
+                      SELECT
+                          u.name AS id,
+                          u.name AS user_name,
+                          json_group_array(DISTINCT sp.doctype_name) AS permitted_doctypes
+                      FROM item u
+                      JOIN item r
+                          ON r.doctype = 'Has Role'
+                        AND json_extract(r.data, '$.parent') = u.name
+                      JOIN schema_perms sp
+                          ON sp.role = json_extract(r.data, '$.role')
+                      WHERE u.doctype = 'User'
+                      GROUP BY u.name;
+                      ```
+4) 
+
+new_document_created
+│
+└── check if Workflow exists for this.doc.doctype AND is_active = 1
+    │
+    ├── YES → Workflow active
+    │   │
+    │   └── docstatus initially set to 0 (Draft)
+
 Security and docstatus
+
 
 new_document_created
 │
