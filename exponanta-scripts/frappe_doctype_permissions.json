@@ -1,0 +1,1094 @@
+{
+  "doctypes_without_permissions": [
+    {
+      "name": "About Us Team Member",
+      "file": "C:\\python\\frappe\\frappe\\website\\doctype\\about_us_team_member\\about_us_team_member.json"
+    },
+    {
+      "name": "Amended Document Naming Settings",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\amended_document_naming_settings\\amended_document_naming_settings.json"
+    },
+    {
+      "name": "Assignment Rule Day",
+      "file": "C:\\python\\frappe\\frappe\\automation\\doctype\\assignment_rule_day\\assignment_rule_day.json"
+    },
+    {
+      "name": "Assignment Rule User",
+      "file": "C:\\python\\frappe\\frappe\\automation\\doctype\\assignment_rule_user\\assignment_rule_user.json"
+    },
+    {
+      "name": "Auto Repeat Day",
+      "file": "C:\\python\\frappe\\frappe\\automation\\doctype\\auto_repeat_day\\auto_repeat_day.json"
+    },
+    {
+      "name": "Block Module",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\block_module\\block_module.json"
+    },
+    {
+      "name": "Communication Link",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\communication_link\\communication_link.json"
+    },
+    {
+      "name": "Company History",
+      "file": "C:\\python\\frappe\\frappe\\website\\doctype\\company_history\\company_history.json"
+    },
+    {
+      "name": "Contact Email",
+      "file": "C:\\python\\frappe\\frappe\\contacts\\doctype\\contact_email\\contact_email.json"
+    },
+    {
+      "name": "Contact Phone",
+      "file": "C:\\python\\frappe\\frappe\\contacts\\doctype\\contact_phone\\contact_phone.json"
+    },
+    {
+      "name": "Customize Form Field",
+      "file": "C:\\python\\frappe\\frappe\\custom\\doctype\\customize_form_field\\customize_form_field.json"
+    },
+    {
+      "name": "Dashboard Chart Field",
+      "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\dashboard_chart_field\\dashboard_chart_field.json"
+    },
+    {
+      "name": "Dashboard Chart Link",
+      "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\dashboard_chart_link\\dashboard_chart_link.json"
+    },
+    {
+      "name": "DefaultValue",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\defaultvalue\\defaultvalue.json"
+    },
+    {
+      "name": "DocField",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\docfield\\docfield.json"
+    },
+    {
+      "name": "DocPerm",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\docperm\\docperm.json"
+    },
+    {
+      "name": "DocType Action",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype_action\\doctype_action.json"
+    },
+    {
+      "name": "DocType Layout Field",
+      "file": "C:\\python\\frappe\\frappe\\custom\\doctype\\doctype_layout_field\\doctype_layout_field.json"
+    },
+    {
+      "name": "DocType Link",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype_link\\doctype_link.json"
+    },
+    {
+      "name": "DocType State",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype_state\\doctype_state.json"
+    },
+    {
+      "name": "Document Naming Rule Condition",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\document_naming_rule_condition\\document_naming_rule_condition.json"
+    },
+    {
+      "name": "Dynamic Link",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\dynamic_link\\dynamic_link.json"
+    },
+    {
+      "name": "Email Queue Recipient",
+      "file": "C:\\python\\frappe\\frappe\\email\\doctype\\email_queue_recipient\\email_queue_recipient.json"
+    },
+    {
+      "name": "Event Participants",
+      "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\event_participants\\event_participants.json"
+    },
+    {
+      "name": "Form Tour Step",
+      "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\form_tour_step\\form_tour_step.json"
+    },
+    {
+      "name": "Global Search DocType",
+      "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\global_search_doctype\\global_search_doctype.json"
+    },
+    {
+      "name": "Has Domain",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\has_domain\\has_domain.json"
+    },
+    {
+      "name": "Has Role",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\has_role\\has_role.json"
+    },
+    {
+      "name": "IMAP Folder",
+      "file": "C:\\python\\frappe\\frappe\\email\\doctype\\imap_folder\\imap_folder.json"
+    },
+    {
+      "name": "Installed Application",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\installed_application\\installed_application.json"
+    },
+    {
+      "name": "Kanban Board Column",
+      "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\kanban_board_column\\kanban_board_column.json"
+    },
+    {
+      "name": "LDAP Group Mapping",
+      "file": "C:\\python\\frappe\\frappe\\integrations\\doctype\\ldap_group_mapping\\ldap_group_mapping.json"
+    },
+    {
+      "name": "Log Setting User",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\log_setting_user\\log_setting_user.json"
+    },
+    {
+      "name": "Navbar Item",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\navbar_item\\navbar_item.json"
+    },
+    {
+      "name": "Newsletter Attachment",
+      "file": "C:\\python\\frappe\\frappe\\email\\doctype\\newsletter_attachment\\newsletter_attachment.json"
+    },
+    {
+      "name": "Newsletter Email Group",
+      "file": "C:\\python\\frappe\\frappe\\email\\doctype\\newsletter_email_group\\newsletter_email_group.json"
+    },
+    {
+      "name": "Note Seen By",
+      "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\note_seen_by\\note_seen_by.json"
+    },
+    {
+      "name": "Notification Recipient",
+      "file": "C:\\python\\frappe\\frappe\\email\\doctype\\notification_recipient\\notification_recipient.json"
+    },
+    {
+      "name": "Notification Subscribed Document",
+      "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\notification_subscribed_document\\notification_subscribed_document.json"
+    },
+    {
+      "name": "Number Card Link",
+      "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\number_card_link\\number_card_link.json"
+    },
+    {
+      "name": "OAuth Client Role",
+      "file": "C:\\python\\frappe\\frappe\\integrations\\doctype\\oauth_client_role\\oauth_client_role.json"
+    },
+    {
+      "name": "OAuth Scope",
+      "file": "C:\\python\\frappe\\frappe\\integrations\\doctype\\oauth_scope\\oauth_scope.json"
+    },
+    {
+      "name": "Onboarding Permission",
+      "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\onboarding_permission\\onboarding_permission.json"
+    },
+    {
+      "name": "Onboarding Step Map",
+      "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\onboarding_step_map\\onboarding_step_map.json"
+    },
+    {
+      "name": "Personal Data Deletion Step",
+      "file": "C:\\python\\frappe\\frappe\\website\\doctype\\personal_data_deletion_step\\personal_data_deletion_step.json"
+    },
+    {
+      "name": "Portal Menu Item",
+      "file": "C:\\python\\frappe\\frappe\\website\\doctype\\portal_menu_item\\portal_menu_item.json"
+    },
+    {
+      "name": "Query Parameters",
+      "file": "C:\\python\\frappe\\frappe\\integrations\\doctype\\query_parameters\\query_parameters.json"
+    },
+    {
+      "name": "Recorder Query",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\recorder_query\\recorder_query.json"
+    },
+    {
+      "name": "Recorder Suggested Index",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\recorder_suggested_index\\recorder_suggested_index.json"
+    },
+    {
+      "name": "Report Column",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\report_column\\report_column.json"
+    },
+    {
+      "name": "Report Filter",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\report_filter\\report_filter.json"
+    },
+    {
+      "name": "Review Level",
+      "file": "C:\\python\\frappe\\frappe\\social\\doctype\\review_level\\review_level.json"
+    },
+    {
+      "name": "SMS Parameter",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\sms_parameter\\sms_parameter.json"
+    },
+    {
+      "name": "Session Default",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\session_default\\session_default.json"
+    },
+    {
+      "name": "Social Link Settings",
+      "file": "C:\\python\\frappe\\frappe\\website\\doctype\\social_link_settings\\social_link_settings.json"
+    },
+    {
+      "name": "System Health Report Errors",
+      "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\system_health_report_errors\\system_health_report_errors.json"
+    },
+    {
+      "name": "System Health Report Failing Jobs",
+      "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\system_health_report_failing_jobs\\system_health_report_failing_jobs.json"
+    },
+    {
+      "name": "System Health Report Queue",
+      "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\system_health_report_queue\\system_health_report_queue.json"
+    },
+    {
+      "name": "System Health Report Tables",
+      "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\system_health_report_tables\\system_health_report_tables.json"
+    },
+    {
+      "name": "System Health Report Workers",
+      "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\system_health_report_workers\\system_health_report_workers.json"
+    },
+    {
+      "name": "Top Bar Item",
+      "file": "C:\\python\\frappe\\frappe\\website\\doctype\\top_bar_item\\top_bar_item.json"
+    },
+    {
+      "name": "User Document Type",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\user_document_type\\user_document_type.json"
+    },
+    {
+      "name": "User Email",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\user_email\\user_email.json"
+    },
+    {
+      "name": "User Group Member",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\user_group_member\\user_group_member.json"
+    },
+    {
+      "name": "User Role Profile",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\user_role_profile\\user_role_profile.json"
+    },
+    {
+      "name": "User Select Document Type",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\user_select_document_type\\user_select_document_type.json"
+    },
+    {
+      "name": "User Social Login",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\user_social_login\\user_social_login.json"
+    },
+    {
+      "name": "User Type Module",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\user_type_module\\user_type_module.json"
+    },
+    {
+      "name": "Web Form Field",
+      "file": "C:\\python\\frappe\\frappe\\website\\doctype\\web_form_field\\web_form_field.json"
+    },
+    {
+      "name": "Web Form List Column",
+      "file": "C:\\python\\frappe\\frappe\\website\\doctype\\web_form_list_column\\web_form_list_column.json"
+    },
+    {
+      "name": "Web Page Block",
+      "file": "C:\\python\\frappe\\frappe\\website\\doctype\\web_page_block\\web_page_block.json"
+    },
+    {
+      "name": "Web Template Field",
+      "file": "C:\\python\\frappe\\frappe\\website\\doctype\\web_template_field\\web_template_field.json"
+    },
+    {
+      "name": "Webhook Data",
+      "file": "C:\\python\\frappe\\frappe\\integrations\\doctype\\webhook_data\\webhook_data.json"
+    },
+    {
+      "name": "Webhook Header",
+      "file": "C:\\python\\frappe\\frappe\\integrations\\doctype\\webhook_header\\webhook_header.json"
+    },
+    {
+      "name": "Website Meta Tag",
+      "file": "C:\\python\\frappe\\frappe\\website\\doctype\\website_meta_tag\\website_meta_tag.json"
+    },
+    {
+      "name": "Website Route Redirect",
+      "file": "C:\\python\\frappe\\frappe\\website\\doctype\\website_route_redirect\\website_route_redirect.json"
+    },
+    {
+      "name": "Website Sidebar Item",
+      "file": "C:\\python\\frappe\\frappe\\website\\doctype\\website_sidebar_item\\website_sidebar_item.json"
+    },
+    {
+      "name": "Website Slideshow Item",
+      "file": "C:\\python\\frappe\\frappe\\website\\doctype\\website_slideshow_item\\website_slideshow_item.json"
+    },
+    {
+      "name": "Website Theme Ignore App",
+      "file": "C:\\python\\frappe\\frappe\\website\\doctype\\website_theme_ignore_app\\website_theme_ignore_app.json"
+    },
+    {
+      "name": "Workflow Action Permitted Role",
+      "file": "C:\\python\\frappe\\frappe\\workflow\\doctype\\workflow_action_permitted_role\\workflow_action_permitted_role.json"
+    },
+    {
+      "name": "Workflow Document State",
+      "file": "C:\\python\\frappe\\frappe\\workflow\\doctype\\workflow_document_state\\workflow_document_state.json"
+    },
+    {
+      "name": "Workflow Transition",
+      "file": "C:\\python\\frappe\\frappe\\workflow\\doctype\\workflow_transition\\workflow_transition.json"
+    },
+    {
+      "name": "Workspace Chart",
+      "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\workspace_chart\\workspace_chart.json"
+    },
+    {
+      "name": "Workspace Custom Block",
+      "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\workspace_custom_block\\workspace_custom_block.json"
+    },
+    {
+      "name": "Workspace Link",
+      "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\workspace_link\\workspace_link.json"
+    },
+    {
+      "name": "Workspace Number Card",
+      "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\workspace_number_card\\workspace_number_card.json"
+    },
+    {
+      "name": "Workspace Quick List",
+      "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\workspace_quick_list\\workspace_quick_list.json"
+    },
+    {
+      "name": "Workspace Shortcut",
+      "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\workspace_shortcut\\workspace_shortcut.json"
+    }
+  ],
+  "doctypes_with_permissions": [
+    {
+      "name": "About Us Settings",
+      "file": "C:\\python\\frappe\\frappe\\website\\doctype\\about_us_settings\\about_us_settings.json"
+    },
+    {
+      "name": "Access Log",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\access_log\\access_log.json"
+    },
+    {
+      "name": "Activity Log",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\activity_log\\activity_log.json"
+    },
+    {
+      "name": "Address",
+      "file": "C:\\python\\frappe\\frappe\\contacts\\doctype\\address\\address.json"
+    },
+    {
+      "name": "Address Template",
+      "file": "C:\\python\\frappe\\frappe\\contacts\\doctype\\address_template\\address_template.json"
+    },
+    {
+      "name": "Assignment Rule",
+      "file": "C:\\python\\frappe\\frappe\\automation\\doctype\\assignment_rule\\assignment_rule.json"
+    },
+    {
+      "name": "Audit Trail",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\audit_trail\\audit_trail.json"
+    },
+    {
+      "name": "Auto Email Report",
+      "file": "C:\\python\\frappe\\frappe\\email\\doctype\\auto_email_report\\auto_email_report.json"
+    },
+    {
+      "name": "Auto Repeat",
+      "file": "C:\\python\\frappe\\frappe\\automation\\doctype\\auto_repeat\\auto_repeat.json"
+    },
+    {
+      "name": "Blog Category",
+      "file": "C:\\python\\frappe\\frappe\\website\\doctype\\blog_category\\blog_category.json"
+    },
+    {
+      "name": "Blog Post",
+      "file": "C:\\python\\frappe\\frappe\\website\\doctype\\blog_post\\blog_post.json"
+    },
+    {
+      "name": "Blog Settings",
+      "file": "C:\\python\\frappe\\frappe\\website\\doctype\\blog_settings\\blog_settings.json"
+    },
+    {
+      "name": "Blogger",
+      "file": "C:\\python\\frappe\\frappe\\website\\doctype\\blogger\\blogger.json"
+    },
+    {
+      "name": "Bulk Update",
+      "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\bulk_update\\bulk_update.json"
+    },
+    {
+      "name": "Calendar View",
+      "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\calendar_view\\calendar_view.json"
+    },
+    {
+      "name": "Changelog Feed",
+      "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\changelog_feed\\changelog_feed.json"
+    },
+    {
+      "name": "Client Script",
+      "file": "C:\\python\\frappe\\frappe\\custom\\doctype\\client_script\\client_script.json"
+    },
+    {
+      "name": "Color",
+      "file": "C:\\python\\frappe\\frappe\\website\\doctype\\color\\color.json"
+    },
+    {
+      "name": "Comment",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\comment\\comment.json"
+    },
+    {
+      "name": "Communication",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\communication\\communication.json"
+    },
+    {
+      "name": "Connected App",
+      "file": "C:\\python\\frappe\\frappe\\integrations\\doctype\\connected_app\\connected_app.json"
+    },
+    {
+      "name": "Console Log",
+      "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\console_log\\console_log.json"
+    },
+    {
+      "name": "Contact",
+      "file": "C:\\python\\frappe\\frappe\\contacts\\doctype\\contact\\contact.json"
+    },
+    {
+      "name": "Contact Us Settings",
+      "file": "C:\\python\\frappe\\frappe\\website\\doctype\\contact_us_settings\\contact_us_settings.json"
+    },
+    {
+      "name": "Country",
+      "file": "C:\\python\\frappe\\frappe\\geo\\doctype\\country\\country.json"
+    },
+    {
+      "name": "Currency",
+      "file": "C:\\python\\frappe\\frappe\\geo\\doctype\\currency\\currency.json"
+    },
+    {
+      "name": "Custom DocPerm",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\custom_docperm\\custom_docperm.json"
+    },
+    {
+      "name": "Custom Field",
+      "file": "C:\\python\\frappe\\frappe\\custom\\doctype\\custom_field\\custom_field.json"
+    },
+    {
+      "name": "Custom HTML Block",
+      "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\custom_html_block\\custom_html_block.json"
+    },
+    {
+      "name": "Custom Role",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\custom_role\\custom_role.json"
+    },
+    {
+      "name": "Customize Form",
+      "file": "C:\\python\\frappe\\frappe\\custom\\doctype\\customize_form\\customize_form.json"
+    },
+    {
+      "name": "Dashboard",
+      "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\dashboard\\dashboard.json"
+    },
+    {
+      "name": "Dashboard Chart",
+      "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\dashboard_chart\\dashboard_chart.json"
+    },
+    {
+      "name": "Dashboard Chart Source",
+      "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\dashboard_chart_source\\dashboard_chart_source.json"
+    },
+    {
+      "name": "Dashboard Settings",
+      "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\dashboard_settings\\dashboard_settings.json"
+    },
+    {
+      "name": "Data Export",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\data_export\\data_export.json"
+    },
+    {
+      "name": "Data Import",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\data_import\\data_import.json"
+    },
+    {
+      "name": "Data Import Log",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\data_import_log\\data_import_log.json"
+    },
+    {
+      "name": "Deleted Document",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\deleted_document\\deleted_document.json"
+    },
+    {
+      "name": "Desktop Icon",
+      "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\desktop_icon\\desktop_icon.json"
+    },
+    {
+      "name": "Discussion Reply",
+      "file": "C:\\python\\frappe\\frappe\\website\\doctype\\discussion_reply\\discussion_reply.json"
+    },
+    {
+      "name": "Discussion Topic",
+      "file": "C:\\python\\frappe\\frappe\\website\\doctype\\discussion_topic\\discussion_topic.json"
+    },
+    {
+      "name": "DocShare",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\docshare\\docshare.json"
+    },
+    {
+      "name": "DocType",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype\\doctype.json"
+    },
+    {
+      "name": "DocType Layout",
+      "file": "C:\\python\\frappe\\frappe\\custom\\doctype\\doctype_layout\\doctype_layout.json"
+    },
+    {
+      "name": "Document Follow",
+      "file": "C:\\python\\frappe\\frappe\\email\\doctype\\document_follow\\document_follow.json"
+    },
+    {
+      "name": "Document Naming Rule",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\document_naming_rule\\document_naming_rule.json"
+    },
+    {
+      "name": "Document Naming Settings",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\document_naming_settings\\document_naming_settings.json"
+    },
+    {
+      "name": "Document Share Key",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\document_share_key\\document_share_key.json"
+    },
+    {
+      "name": "Domain",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\domain\\domain.json"
+    },
+    {
+      "name": "Domain Settings",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\domain_settings\\domain_settings.json"
+    },
+    {
+      "name": "Dropbox Settings",
+      "file": "C:\\python\\frappe\\frappe\\integrations\\doctype\\dropbox_settings\\dropbox_settings.json"
+    },
+    {
+      "name": "Email Account",
+      "file": "C:\\python\\frappe\\frappe\\email\\doctype\\email_account\\email_account.json"
+    },
+    {
+      "name": "Email Domain",
+      "file": "C:\\python\\frappe\\frappe\\email\\doctype\\email_domain\\email_domain.json"
+    },
+    {
+      "name": "Email Flag Queue",
+      "file": "C:\\python\\frappe\\frappe\\email\\doctype\\email_flag_queue\\email_flag_queue.json"
+    },
+    {
+      "name": "Email Group",
+      "file": "C:\\python\\frappe\\frappe\\email\\doctype\\email_group\\email_group.json"
+    },
+    {
+      "name": "Email Group Member",
+      "file": "C:\\python\\frappe\\frappe\\email\\doctype\\email_group_member\\email_group_member.json"
+    },
+    {
+      "name": "Email Queue",
+      "file": "C:\\python\\frappe\\frappe\\email\\doctype\\email_queue\\email_queue.json"
+    },
+    {
+      "name": "Email Rule",
+      "file": "C:\\python\\frappe\\frappe\\email\\doctype\\email_rule\\email_rule.json"
+    },
+    {
+      "name": "Email Template",
+      "file": "C:\\python\\frappe\\frappe\\email\\doctype\\email_template\\email_template.json"
+    },
+    {
+      "name": "Email Unsubscribe",
+      "file": "C:\\python\\frappe\\frappe\\email\\doctype\\email_unsubscribe\\email_unsubscribe.json"
+    },
+    {
+      "name": "Energy Point Log",
+      "file": "C:\\python\\frappe\\frappe\\social\\doctype\\energy_point_log\\energy_point_log.json"
+    },
+    {
+      "name": "Energy Point Rule",
+      "file": "C:\\python\\frappe\\frappe\\social\\doctype\\energy_point_rule\\energy_point_rule.json"
+    },
+    {
+      "name": "Energy Point Settings",
+      "file": "C:\\python\\frappe\\frappe\\social\\doctype\\energy_point_settings\\energy_point_settings.json"
+    },
+    {
+      "name": "Error Log",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\error_log\\error_log.json"
+    },
+    {
+      "name": "Event",
+      "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\event\\event.json"
+    },
+    {
+      "name": "File",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\file\\file.json"
+    },
+    {
+      "name": "Form Tour",
+      "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\form_tour\\form_tour.json"
+    },
+    {
+      "name": "Gender",
+      "file": "C:\\python\\frappe\\frappe\\contacts\\doctype\\gender\\gender.json"
+    },
+    {
+      "name": "Geolocation Settings",
+      "file": "C:\\python\\frappe\\frappe\\integrations\\doctype\\geolocation_settings\\geolocation_settings.json"
+    },
+    {
+      "name": "Global Search Settings",
+      "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\global_search_settings\\global_search_settings.json"
+    },
+    {
+      "name": "Google Calendar",
+      "file": "C:\\python\\frappe\\frappe\\integrations\\doctype\\google_calendar\\google_calendar.json"
+    },
+    {
+      "name": "Google Contacts",
+      "file": "C:\\python\\frappe\\frappe\\integrations\\doctype\\google_contacts\\google_contacts.json"
+    },
+    {
+      "name": "Google Drive",
+      "file": "C:\\python\\frappe\\frappe\\integrations\\doctype\\google_drive\\google_drive.json"
+    },
+    {
+      "name": "Google Settings",
+      "file": "C:\\python\\frappe\\frappe\\integrations\\doctype\\google_settings\\google_settings.json"
+    },
+    {
+      "name": "Help Article",
+      "file": "C:\\python\\frappe\\frappe\\website\\doctype\\help_article\\help_article.json"
+    },
+    {
+      "name": "Help Category",
+      "file": "C:\\python\\frappe\\frappe\\website\\doctype\\help_category\\help_category.json"
+    },
+    {
+      "name": "Installed Applications",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\installed_applications\\installed_applications.json"
+    },
+    {
+      "name": "Integration Request",
+      "file": "C:\\python\\frappe\\frappe\\integrations\\doctype\\integration_request\\integration_request.json"
+    },
+    {
+      "name": "Kanban Board",
+      "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\kanban_board\\kanban_board.json"
+    },
+    {
+      "name": "LDAP Settings",
+      "file": "C:\\python\\frappe\\frappe\\integrations\\doctype\\ldap_settings\\ldap_settings.json"
+    },
+    {
+      "name": "Language",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\language\\language.json"
+    },
+    {
+      "name": "Letter Head",
+      "file": "C:\\python\\frappe\\frappe\\printing\\doctype\\letter_head\\letter_head.json"
+    },
+    {
+      "name": "List Filter",
+      "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\list_filter\\list_filter.json"
+    },
+    {
+      "name": "List View Settings",
+      "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\list_view_settings\\list_view_settings.json"
+    },
+    {
+      "name": "Log Settings",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\log_settings\\log_settings.json"
+    },
+    {
+      "name": "Milestone",
+      "file": "C:\\python\\frappe\\frappe\\automation\\doctype\\milestone\\milestone.json"
+    },
+    {
+      "name": "Milestone Tracker",
+      "file": "C:\\python\\frappe\\frappe\\automation\\doctype\\milestone_tracker\\milestone_tracker.json"
+    },
+    {
+      "name": "Module Def",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\module_def\\module_def.json"
+    },
+    {
+      "name": "Module Onboarding",
+      "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\module_onboarding\\module_onboarding.json"
+    },
+    {
+      "name": "Module Profile",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\module_profile\\module_profile.json"
+    },
+    {
+      "name": "Navbar Settings",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\navbar_settings\\navbar_settings.json"
+    },
+    {
+      "name": "Network Printer Settings",
+      "file": "C:\\python\\frappe\\frappe\\printing\\doctype\\network_printer_settings\\network_printer_settings.json"
+    },
+    {
+      "name": "Newsletter",
+      "file": "C:\\python\\frappe\\frappe\\email\\doctype\\newsletter\\newsletter.json"
+    },
+    {
+      "name": "Note",
+      "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\note\\note.json"
+    },
+    {
+      "name": "Notification",
+      "file": "C:\\python\\frappe\\frappe\\email\\doctype\\notification\\notification.json"
+    },
+    {
+      "name": "Notification Log",
+      "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\notification_log\\notification_log.json"
+    },
+    {
+      "name": "Notification Settings",
+      "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\notification_settings\\notification_settings.json"
+    },
+    {
+      "name": "Number Card",
+      "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\number_card\\number_card.json"
+    },
+    {
+      "name": "OAuth Authorization Code",
+      "file": "C:\\python\\frappe\\frappe\\integrations\\doctype\\oauth_authorization_code\\oauth_authorization_code.json"
+    },
+    {
+      "name": "OAuth Bearer Token",
+      "file": "C:\\python\\frappe\\frappe\\integrations\\doctype\\oauth_bearer_token\\oauth_bearer_token.json"
+    },
+    {
+      "name": "OAuth Client",
+      "file": "C:\\python\\frappe\\frappe\\integrations\\doctype\\oauth_client\\oauth_client.json"
+    },
+    {
+      "name": "OAuth Provider Settings",
+      "file": "C:\\python\\frappe\\frappe\\integrations\\doctype\\oauth_provider_settings\\oauth_provider_settings.json"
+    },
+    {
+      "name": "Onboarding Step",
+      "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\onboarding_step\\onboarding_step.json"
+    },
+    {
+      "name": "Package",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\package\\package.json"
+    },
+    {
+      "name": "Package Import",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\package_import\\package_import.json"
+    },
+    {
+      "name": "Package Release",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\package_release\\package_release.json"
+    },
+    {
+      "name": "Page",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\page\\page.json"
+    },
+    {
+      "name": "Patch Log",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\patch_log\\patch_log.json"
+    },
+    {
+      "name": "Permission Inspector",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\permission_inspector\\permission_inspector.json"
+    },
+    {
+      "name": "Permission Log",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\permission_log\\permission_log.json"
+    },
+    {
+      "name": "Personal Data Deletion Request",
+      "file": "C:\\python\\frappe\\frappe\\website\\doctype\\personal_data_deletion_request\\personal_data_deletion_request.json"
+    },
+    {
+      "name": "Personal Data Download Request",
+      "file": "C:\\python\\frappe\\frappe\\website\\doctype\\personal_data_download_request\\personal_data_download_request.json"
+    },
+    {
+      "name": "Portal Settings",
+      "file": "C:\\python\\frappe\\frappe\\website\\doctype\\portal_settings\\portal_settings.json"
+    },
+    {
+      "name": "Prepared Report",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\prepared_report\\prepared_report.json"
+    },
+    {
+      "name": "Print Format",
+      "file": "C:\\python\\frappe\\frappe\\printing\\doctype\\print_format\\print_format.json"
+    },
+    {
+      "name": "Print Format Field Template",
+      "file": "C:\\python\\frappe\\frappe\\printing\\doctype\\print_format_field_template\\print_format_field_template.json"
+    },
+    {
+      "name": "Print Heading",
+      "file": "C:\\python\\frappe\\frappe\\printing\\doctype\\print_heading\\print_heading.json"
+    },
+    {
+      "name": "Print Settings",
+      "file": "C:\\python\\frappe\\frappe\\printing\\doctype\\print_settings\\print_settings.json"
+    },
+    {
+      "name": "Print Style",
+      "file": "C:\\python\\frappe\\frappe\\printing\\doctype\\print_style\\print_style.json"
+    },
+    {
+      "name": "Property Setter",
+      "file": "C:\\python\\frappe\\frappe\\custom\\doctype\\property_setter\\property_setter.json"
+    },
+    {
+      "name": "Push Notification Settings",
+      "file": "C:\\python\\frappe\\frappe\\integrations\\doctype\\push_notification_settings\\push_notification_settings.json"
+    },
+    {
+      "name": "RQ Job",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\rq_job\\rq_job.json"
+    },
+    {
+      "name": "RQ Worker",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\rq_worker\\rq_worker.json"
+    },
+    {
+      "name": "Recorder",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\recorder\\recorder.json"
+    },
+    {
+      "name": "Reminder",
+      "file": "C:\\python\\frappe\\frappe\\automation\\doctype\\reminder\\reminder.json"
+    },
+    {
+      "name": "Report",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\report\\report.json"
+    },
+    {
+      "name": "Role",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\role\\role.json"
+    },
+    {
+      "name": "Role Permission for Page and Report",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\role_permission_for_page_and_report\\role_permission_for_page_and_report.json"
+    },
+    {
+      "name": "Role Profile",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\role_profile\\role_profile.json"
+    },
+    {
+      "name": "Role Replication",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\role_replication\\role_replication.json"
+    },
+    {
+      "name": "Route History",
+      "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\route_history\\route_history.json"
+    },
+    {
+      "name": "S3 Backup Settings",
+      "file": "C:\\python\\frappe\\frappe\\integrations\\doctype\\s3_backup_settings\\s3_backup_settings.json"
+    },
+    {
+      "name": "SMS Log",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\sms_log\\sms_log.json"
+    },
+    {
+      "name": "SMS Settings",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\sms_settings\\sms_settings.json"
+    },
+    {
+      "name": "Salutation",
+      "file": "C:\\python\\frappe\\frappe\\contacts\\doctype\\salutation\\salutation.json"
+    },
+    {
+      "name": "Scheduled Job Log",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\scheduled_job_log\\scheduled_job_log.json"
+    },
+    {
+      "name": "Scheduled Job Type",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\scheduled_job_type\\scheduled_job_type.json"
+    },
+    {
+      "name": "Scheduler Event",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\scheduler_event\\scheduler_event.json"
+    },
+    {
+      "name": "Server Script",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\server_script\\server_script.json"
+    },
+    {
+      "name": "Session Default Settings",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\session_default_settings\\session_default_settings.json"
+    },
+    {
+      "name": "Slack Webhook URL",
+      "file": "C:\\python\\frappe\\frappe\\integrations\\doctype\\slack_webhook_url\\slack_webhook_url.json"
+    },
+    {
+      "name": "Social Login Key",
+      "file": "C:\\python\\frappe\\frappe\\integrations\\doctype\\social_login_key\\social_login_key.json"
+    },
+    {
+      "name": "Submission Queue",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\submission_queue\\submission_queue.json"
+    },
+    {
+      "name": "Success Action",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\success_action\\success_action.json"
+    },
+    {
+      "name": "System Console",
+      "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\system_console\\system_console.json"
+    },
+    {
+      "name": "System Health Report",
+      "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\system_health_report\\system_health_report.json"
+    },
+    {
+      "name": "System Settings",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\system_settings\\system_settings.json"
+    },
+    {
+      "name": "Tag",
+      "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\tag\\tag.json"
+    },
+    {
+      "name": "Tag Link",
+      "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\tag_link\\tag_link.json"
+    },
+    {
+      "name": "ToDo",
+      "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\todo\\todo.json"
+    },
+    {
+      "name": "Token Cache",
+      "file": "C:\\python\\frappe\\frappe\\integrations\\doctype\\token_cache\\token_cache.json"
+    },
+    {
+      "name": "Transaction Log",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\transaction_log\\transaction_log.json"
+    },
+    {
+      "name": "Translation",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\translation\\translation.json"
+    },
+    {
+      "name": "UTM Campaign",
+      "file": "C:\\python\\frappe\\frappe\\website\\doctype\\utm_campaign\\utm_campaign.json"
+    },
+    {
+      "name": "UTM Medium",
+      "file": "C:\\python\\frappe\\frappe\\website\\doctype\\utm_medium\\utm_medium.json"
+    },
+    {
+      "name": "UTM Source",
+      "file": "C:\\python\\frappe\\frappe\\website\\doctype\\utm_source\\utm_source.json"
+    },
+    {
+      "name": "Unhandled Email",
+      "file": "C:\\python\\frappe\\frappe\\email\\doctype\\unhandled_email\\unhandled_email.json"
+    },
+    {
+      "name": "User",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\user\\user.json"
+    },
+    {
+      "name": "User Group",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\user_group\\user_group.json"
+    },
+    {
+      "name": "User Permission",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\user_permission\\user_permission.json"
+    },
+    {
+      "name": "User Type",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\user_type\\user_type.json"
+    },
+    {
+      "name": "Version",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\version\\version.json"
+    },
+    {
+      "name": "View Log",
+      "file": "C:\\python\\frappe\\frappe\\core\\doctype\\view_log\\view_log.json"
+    },
+    {
+      "name": "Web Form",
+      "file": "C:\\python\\frappe\\frappe\\website\\doctype\\web_form\\web_form.json"
+    },
+    {
+      "name": "Web Page",
+      "file": "C:\\python\\frappe\\frappe\\website\\doctype\\web_page\\web_page.json"
+    },
+    {
+      "name": "Web Page View",
+      "file": "C:\\python\\frappe\\frappe\\website\\doctype\\web_page_view\\web_page_view.json"
+    },
+    {
+      "name": "Web Template",
+      "file": "C:\\python\\frappe\\frappe\\website\\doctype\\web_template\\web_template.json"
+    },
+    {
+      "name": "Webhook",
+      "file": "C:\\python\\frappe\\frappe\\integrations\\doctype\\webhook\\webhook.json"
+    },
+    {
+      "name": "Webhook Request Log",
+      "file": "C:\\python\\frappe\\frappe\\integrations\\doctype\\webhook_request_log\\webhook_request_log.json"
+    },
+    {
+      "name": "Website Route Meta",
+      "file": "C:\\python\\frappe\\frappe\\website\\doctype\\website_route_meta\\website_route_meta.json"
+    },
+    {
+      "name": "Website Script",
+      "file": "C:\\python\\frappe\\frappe\\website\\doctype\\website_script\\website_script.json"
+    },
+    {
+      "name": "Website Settings",
+      "file": "C:\\python\\frappe\\frappe\\website\\doctype\\website_settings\\website_settings.json"
+    },
+    {
+      "name": "Website Sidebar",
+      "file": "C:\\python\\frappe\\frappe\\website\\doctype\\website_sidebar\\website_sidebar.json"
+    },
+    {
+      "name": "Website Slideshow",
+      "file": "C:\\python\\frappe\\frappe\\website\\doctype\\website_slideshow\\website_slideshow.json"
+    },
+    {
+      "name": "Website Theme",
+      "file": "C:\\python\\frappe\\frappe\\website\\doctype\\website_theme\\website_theme.json"
+    },
+    {
+      "name": "Workflow",
+      "file": "C:\\python\\frappe\\frappe\\workflow\\doctype\\workflow\\workflow.json"
+    },
+    {
+      "name": "Workflow Action",
+      "file": "C:\\python\\frappe\\frappe\\workflow\\doctype\\workflow_action\\workflow_action.json"
+    },
+    {
+      "name": "Workflow Action Master",
+      "file": "C:\\python\\frappe\\frappe\\workflow\\doctype\\workflow_action_master\\workflow_action_master.json"
+    },
+    {
+      "name": "Workflow State",
+      "file": "C:\\python\\frappe\\frappe\\workflow\\doctype\\workflow_state\\workflow_state.json"
+    },
+    {
+      "name": "Workspace",
+      "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\workspace\\workspace.json"
+    },
+    {
+      "name": "Workspace Settings",
+      "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\workspace_settings\\workspace_settings.json"
+    },
+    {
+      "name": "new-doctype-1",
+      "file": "C:\\python\\frappe\\frappe\\custom\\fixtures\\temp_singles.json"
+    },
+    {
+      "name": "new-doctype-2",
+      "file": "C:\\python\\frappe\\frappe\\custom\\fixtures\\temp_doctype.json"
+    }
+  ]
+}

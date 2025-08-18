@@ -1,0 +1,2390 @@
+Account [root] <PERMISSIONS>
+  Accounting Dimension Detail [named_child] (field: offsetting_account)
+    Company [lookup] (field: company) <PERMISSIONS>
+    Account [lookup] (field: offsetting_account) <PERMISSIONS>
+  Account Closing Balance [named_child] (field: account) <PERMISSIONS>
+    Account [lookup] (field: account) <PERMISSIONS>
+    Cost Center [lookup] (field: cost_center) <PERMISSIONS>
+    Project [lookup] (field: project) <PERMISSIONS>
+    Company [lookup] (field: company) <PERMISSIONS>
+    Finance Book [lookup] (field: finance_book) <PERMISSIONS>
+    Period Closing Voucher [lookup] (field: period_closing_voucher) <PERMISSIONS>
+  Applicable On Account [named_child] (field: applicable_on_account)
+    Account [lookup] (field: applicable_on_account) <PERMISSIONS>
+  Bank Account [named_child] (field: account) <PERMISSIONS>
+    Account [lookup] (field: account) <PERMISSIONS>
+    Bank [lookup] (field: bank) <PERMISSIONS>
+    Bank Account Type [lookup] (field: account_type) <PERMISSIONS>
+    Bank Account Subtype [lookup] (field: account_subtype) <PERMISSIONS>
+    Company [lookup] (field: company) <PERMISSIONS>
+  Budget Account [named_child] (field: account)
+    Account [lookup] (field: account) <PERMISSIONS>
+  Exchange Rate Revaluation Account [named_child] (field: account)
+    Account [lookup] (field: account) <PERMISSIONS>
+  Journal Entry Account [named_child] (field: account)
+    Account [lookup] (field: account) <PERMISSIONS>
+    Cost Center [lookup] (field: cost_center) <PERMISSIONS>
+    Project [lookup] (field: project) <PERMISSIONS>
+    Bank Account [lookup] (field: bank_account) <PERMISSIONS>
+  Journal Entry Template Account [named_child] (field: account)
+    Account [lookup] (field: account) <PERMISSIONS>
+  Ledger Merge Accounts [named_child] (field: account)
+    Account [lookup] (field: account) <PERMISSIONS>
+  Mode of Payment Account [named_child] (field: default_account)
+    Company [lookup] (field: company) <PERMISSIONS>
+    Account [lookup] (field: default_account) <PERMISSIONS>
+  Party Account [named_child] (field: account)
+    Company [lookup] (field: company) <PERMISSIONS>
+    Account [lookup] (field: account) <PERMISSIONS>
+  Payment Gateway Account [named_child] (field: payment_account) <PERMISSIONS>
+    Account [lookup] (field: payment_account) <PERMISSIONS>
+  Process Deferred Accounting [named_child] (field: account) <PERMISSIONS>
+    Process Deferred Accounting [lookup] (field: amended_from) <PERMISSIONS>
+    Account [lookup] (field: account) <PERMISSIONS>
+    Company [lookup] (field: company) <PERMISSIONS>
+  Process Statement Of Accounts [named_child] (field: account) <PERMISSIONS>
+    Process Statement Of Accounts Customer [table_child] (field: customers)
+      Customer [lookup] (field: customer) <PERMISSIONS>
+    Company [lookup] (field: company) <PERMISSIONS>
+    Account [lookup] (field: account) <PERMISSIONS>
+    Finance Book [lookup] (field: finance_book) <PERMISSIONS>
+    Terms and Conditions [lookup] (field: terms_and_conditions) <PERMISSIONS>
+    Payment Terms Template [lookup] (field: payment_terms_template) <PERMISSIONS>
+    Sales Partner [lookup] (field: sales_partner) <PERMISSIONS>
+    Sales Person [lookup] (field: sales_person) <PERMISSIONS>
+    Territory [lookup] (field: territory) <PERMISSIONS>
+  South Africa VAT Account [named_child] (field: account)
+    Account [lookup] (field: account) <PERMISSIONS>
+  Tax Withholding Account [named_child] (field: account)
+    Company [lookup] (field: company) <PERMISSIONS>
+    Account [lookup] (field: account) <PERMISSIONS>
+  UAE VAT Account [named_child] (field: account)
+    Account [lookup] (field: account) <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+  Account [lookup] (field: parent_account) <PERMISSIONS>
+Accounting Dimension [root] <PERMISSIONS>
+  Accounting Dimension Detail [table_child] (field: dimension_defaults)
+    Company [lookup] (field: company) <PERMISSIONS>
+    Account [lookup] (field: offsetting_account) <PERMISSIONS>
+Accounting Dimension Filter [root] <PERMISSIONS>
+  Applicable On Account [table_child] (field: accounts)
+    Account [lookup] (field: applicable_on_account) <PERMISSIONS>
+  Allowed Dimension [table_child] (field: dimensions)
+  Company [lookup] (field: company) <PERMISSIONS>
+Accounting Period [root] <PERMISSIONS>
+  Closed Document [table_child] (field: closed_documents)
+  Company [lookup] (field: company) <PERMISSIONS>
+Accounts Settings [root] <PERMISSIONS>
+Advance Payment Ledger Entry [root] <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+Bank [root] <PERMISSIONS>
+  Bank Transaction Mapping [table_child] (field: bank_transaction_mapping)
+  Bank Account [named_child] (field: bank) <PERMISSIONS>
+    Account [lookup] (field: account) <PERMISSIONS>
+    Bank [lookup] (field: bank) <PERMISSIONS>
+    Bank Account Type [lookup] (field: account_type) <PERMISSIONS>
+    Bank Account Subtype [lookup] (field: account_subtype) <PERMISSIONS>
+    Company [lookup] (field: company) <PERMISSIONS>
+  Bank Guarantee [named_child] (field: bank) <PERMISSIONS>
+    Customer [lookup] (field: customer) <PERMISSIONS>
+    Supplier [lookup] (field: supplier) <PERMISSIONS>
+    Project [lookup] (field: project) <PERMISSIONS>
+    Bank [lookup] (field: bank) <PERMISSIONS>
+    Bank Account [lookup] (field: bank_account) <PERMISSIONS>
+    Account [lookup] (field: account) <PERMISSIONS>
+    Bank Guarantee [lookup] (field: amended_from) <PERMISSIONS>
+  Bank Statement Import [named_child] (field: bank) <PERMISSIONS>
+    Company [lookup] (field: company) <PERMISSIONS>
+    Bank Account [lookup] (field: bank_account) <PERMISSIONS>
+    Bank [lookup] (field: bank) <PERMISSIONS>
+Bank Account Subtype [root] <PERMISSIONS>
+Bank Account Type [root] <PERMISSIONS>
+Bank Clearance [root] <PERMISSIONS>
+  Bank Clearance Detail [table_child] (field: payment_entries)
+  Account [lookup] (field: account) <PERMISSIONS>
+  Bank Account [lookup] (field: bank_account) <PERMISSIONS>
+Bank Reconciliation Tool [root] <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+  Bank Account [lookup] (field: bank_account) <PERMISSIONS>
+Bank Transaction [root] <PERMISSIONS>
+  Bank Transaction Payments [table_child] (field: payment_entries)
+  Bank Account [lookup] (field: bank_account) <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+  Bank Transaction [lookup] (field: amended_from) <PERMISSIONS>
+Bisect Accounting Statements [root] <PERMISSIONS>
+  Bisect Nodes [lookup] (field: current_node) <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+Bisect Nodes [root] <PERMISSIONS>
+  Bisect Nodes [lookup] (field: root) <PERMISSIONS>
+Budget [root] <PERMISSIONS>
+  Budget Account [table_child] (field: accounts)
+    Account [lookup] (field: account) <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+  Cost Center [lookup] (field: cost_center) <PERMISSIONS>
+  Project [lookup] (field: project) <PERMISSIONS>
+  Fiscal Year [lookup] (field: fiscal_year) <PERMISSIONS>
+  Monthly Distribution [lookup] (field: monthly_distribution) <PERMISSIONS>
+  Budget [lookup] (field: amended_from) <PERMISSIONS>
+Campaign Item [root]
+Cashier Closing [root] <PERMISSIONS>
+  Cashier Closing Payments [table_child] (field: payments)
+    Mode of Payment [lookup] (field: mode_of_payment) <PERMISSIONS>
+  Cashier Closing [lookup] (field: amended_from) <PERMISSIONS>
+Chart of Accounts Importer [root] <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+Cheque Print Template [root] <PERMISSIONS>
+Cost Center [root] <PERMISSIONS>
+  Cost Center Allocation [named_child] (field: main_cost_center) <PERMISSIONS>
+    Cost Center Allocation Percentage [table_child] (field: allocation_percentages)
+      Cost Center [lookup] (field: cost_center) <PERMISSIONS>
+    Cost Center [lookup] (field: main_cost_center) <PERMISSIONS>
+    Company [lookup] (field: company) <PERMISSIONS>
+    Cost Center Allocation [lookup] (field: amended_from) <PERMISSIONS>
+  Cost Center Allocation Percentage [named_child] (field: cost_center)
+    Cost Center [lookup] (field: cost_center) <PERMISSIONS>
+  PSOA Cost Center [named_child] (field: cost_center_name)
+    Cost Center [lookup] (field: cost_center_name) <PERMISSIONS>
+  Cost Center [lookup] (field: parent_cost_center) <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+Coupon Code [root] <PERMISSIONS>
+  Customer [lookup] (field: customer) <PERMISSIONS>
+  Pricing Rule [lookup] (field: pricing_rule) <PERMISSIONS>
+  Coupon Code [lookup] (field: amended_from) <PERMISSIONS>
+Currency Exchange Settings [root] <PERMISSIONS>
+  Currency Exchange Settings Details [table_child] (field: req_params)
+  Currency Exchange Settings Result [table_child] (field: result_key)
+Dunning [root] <PERMISSIONS>
+  Overdue Payment [table_child] (field: overdue_payments)
+    Payment Term [lookup] (field: payment_term) <PERMISSIONS>
+    Mode of Payment [lookup] (field: mode_of_payment) <PERMISSIONS>
+    Sales Invoice [lookup] (field: sales_invoice) <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+  Dunning Type [lookup] (field: dunning_type) <PERMISSIONS>
+  Dunning [lookup] (field: amended_from) <PERMISSIONS>
+  Customer [lookup] (field: customer) <PERMISSIONS>
+  Account [lookup] (field: income_account) <PERMISSIONS>
+  Cost Center [lookup] (field: cost_center) <PERMISSIONS>
+Dunning Type [root] <PERMISSIONS>
+  Dunning Letter Text [table_child] (field: dunning_letter_text)
+  Account [lookup] (field: income_account) <PERMISSIONS>
+  Cost Center [lookup] (field: cost_center) <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+Exchange Rate Revaluation [root] <PERMISSIONS>
+  Exchange Rate Revaluation Account [table_child] (field: accounts)
+    Account [lookup] (field: account) <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+  Exchange Rate Revaluation [lookup] (field: amended_from) <PERMISSIONS>
+Finance Book [root] <PERMISSIONS>
+Fiscal Year [root] <PERMISSIONS>
+  Fiscal Year Company [table_child] (field: companies)
+    Company [lookup] (field: company) <PERMISSIONS>
+GL Entry [root] <PERMISSIONS>
+  Account [lookup] (field: account) <PERMISSIONS>
+  Cost Center [lookup] (field: cost_center) <PERMISSIONS>
+  Project [lookup] (field: project) <PERMISSIONS>
+  Fiscal Year [lookup] (field: fiscal_year) <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+  Finance Book [lookup] (field: finance_book) <PERMISSIONS>
+Invoice Discounting [root] <PERMISSIONS>
+  Discounted Invoice [table_child] (field: invoices)
+    Sales Invoice [lookup] (field: sales_invoice) <PERMISSIONS>
+    Customer [lookup] (field: customer) <PERMISSIONS>
+    Account [lookup] (field: debit_to) <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+  Account [lookup] (field: short_term_loan) <PERMISSIONS>
+  Invoice Discounting [lookup] (field: amended_from) <PERMISSIONS>
+Item Tax Template [root] <PERMISSIONS>
+  Item Tax Template Detail [table_child] (field: taxes)
+    Account [lookup] (field: tax_type) <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+Journal Entry [root] <PERMISSIONS>
+  Journal Entry Account [table_child] (field: accounts)
+    Account [lookup] (field: account) <PERMISSIONS>
+    Cost Center [lookup] (field: cost_center) <PERMISSIONS>
+    Project [lookup] (field: project) <PERMISSIONS>
+    Bank Account [lookup] (field: bank_account) <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+  Finance Book [lookup] (field: finance_book) <PERMISSIONS>
+  Journal Entry [lookup] (field: inter_company_journal_entry_reference) <PERMISSIONS>
+  Print Heading [lookup] (field: select_print_heading) <PERMISSIONS>
+  Mode of Payment [lookup] (field: mode_of_payment) <PERMISSIONS>
+  Payment Order [lookup] (field: payment_order) <PERMISSIONS>
+  Stock Entry [lookup] (field: stock_entry) <PERMISSIONS>
+  Journal Entry Template [lookup] (field: from_template) <PERMISSIONS>
+  Tax Withholding Category [lookup] (field: tax_withholding_category) <PERMISSIONS>
+  Process Deferred Accounting [lookup] (field: process_deferred_accounting) <PERMISSIONS>
+Journal Entry Template [root] <PERMISSIONS>
+  Journal Entry Template Account [table_child] (field: accounts)
+    Account [lookup] (field: account) <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+Ledger Health [root] <PERMISSIONS>
+Ledger Health Monitor [root] <PERMISSIONS>
+  Ledger Health Monitor Company [table_child] (field: companies)
+    Company [lookup] (field: company) <PERMISSIONS>
+Ledger Merge [root] <PERMISSIONS>
+  Ledger Merge Accounts [table_child] (field: merge_accounts)
+    Account [lookup] (field: account) <PERMISSIONS>
+  Account [lookup] (field: account) <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+Loyalty Point Entry [root] <PERMISSIONS>
+  Loyalty Program [lookup] (field: loyalty_program) <PERMISSIONS>
+  Customer [lookup] (field: customer) <PERMISSIONS>
+  Loyalty Point Entry [lookup] (field: redeem_against) <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+Loyalty Point Entry Redemption [root]
+Loyalty Program [root] <PERMISSIONS>
+  Loyalty Program Collection [table_child] (field: collection_rules)
+  Customer Group [lookup] (field: customer_group) <PERMISSIONS>
+  Territory [lookup] (field: customer_territory) <PERMISSIONS>
+  Account [lookup] (field: expense_account) <PERMISSIONS>
+  Cost Center [lookup] (field: cost_center) <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+Mode of Payment [root] <PERMISSIONS>
+  Mode of Payment Account [table_child] (field: accounts)
+    Company [lookup] (field: company) <PERMISSIONS>
+    Account [lookup] (field: default_account) <PERMISSIONS>
+Monthly Distribution [root] <PERMISSIONS>
+  Monthly Distribution Percentage [table_child] (field: percentages)
+  Fiscal Year [lookup] (field: fiscal_year) <PERMISSIONS>
+Opening Invoice Creation Tool [root] <PERMISSIONS>
+  Opening Invoice Creation Tool Item [table_child] (field: invoices)
+    Account [lookup] (field: temporary_opening_account) <PERMISSIONS>
+    Cost Center [lookup] (field: cost_center) <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+  Cost Center [lookup] (field: cost_center) <PERMISSIONS>
+Party Link [root] <PERMISSIONS>
+Payment Entry [root] <PERMISSIONS>
+  Payment Entry Reference [table_child] (field: references)
+    Payment Term [lookup] (field: payment_term) <PERMISSIONS>
+    Account [lookup] (field: account) <PERMISSIONS>
+    Payment Request [lookup] (field: payment_request) <PERMISSIONS>
+  Payment Entry Deduction [table_child] (field: deductions)
+    Account [lookup] (field: account) <PERMISSIONS>
+    Cost Center [lookup] (field: cost_center) <PERMISSIONS>
+  Advance Taxes and Charges [table_child] (field: taxes)
+    Account [lookup] (field: account_head) <PERMISSIONS>
+    Cost Center [lookup] (field: cost_center) <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+  Cost Center [lookup] (field: cost_center) <PERMISSIONS>
+  Mode of Payment [lookup] (field: mode_of_payment) <PERMISSIONS>
+  Account [lookup] (field: paid_from) <PERMISSIONS>
+  Project [lookup] (field: project) <PERMISSIONS>
+  Print Heading [lookup] (field: print_heading) <PERMISSIONS>
+  Payment Order [lookup] (field: payment_order) <PERMISSIONS>
+  Payment Entry [lookup] (field: amended_from) <PERMISSIONS>
+  Bank Account [lookup] (field: bank_account) <PERMISSIONS>
+  Tax Withholding Category [lookup] (field: tax_withholding_category) <PERMISSIONS>
+  Purchase Taxes and Charges Template [lookup] (field: purchase_taxes_and_charges_template) <PERMISSIONS>
+  Sales Taxes and Charges Template [lookup] (field: sales_taxes_and_charges_template) <PERMISSIONS>
+Payment Ledger Entry [root] <PERMISSIONS>
+  Account [lookup] (field: account) <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+  Cost Center [lookup] (field: cost_center) <PERMISSIONS>
+  Finance Book [lookup] (field: finance_book) <PERMISSIONS>
+Payment Order [root] <PERMISSIONS>
+  Payment Order Reference [table_child] (field: references)
+    Supplier [lookup] (field: supplier) <PERMISSIONS>
+    Payment Request [lookup] (field: payment_request) <PERMISSIONS>
+    Mode of Payment [lookup] (field: mode_of_payment) <PERMISSIONS>
+    Bank Account [lookup] (field: bank_account) <PERMISSIONS>
+    Account [lookup] (field: account) <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+  Supplier [lookup] (field: party) <PERMISSIONS>
+  Payment Order [lookup] (field: amended_from) <PERMISSIONS>
+  Bank Account [lookup] (field: company_bank_account) <PERMISSIONS>
+  Bank [lookup] (field: company_bank) <PERMISSIONS>
+Payment Reconciliation [root] <PERMISSIONS>
+  Payment Reconciliation Payment [table_child] (field: payments)
+    Cost Center [lookup] (field: cost_center) <PERMISSIONS>
+  Payment Reconciliation Invoice [table_child] (field: invoices)
+  Payment Reconciliation Allocation [table_child] (field: allocation)
+    Account [lookup] (field: difference_account) <PERMISSIONS>
+    Cost Center [lookup] (field: cost_center) <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+  Account [lookup] (field: receivable_payable_account) <PERMISSIONS>
+  Cost Center [lookup] (field: cost_center) <PERMISSIONS>
+Payment Request [root] <PERMISSIONS>
+  Subscription Plan Detail [table_child] (field: subscription_plans)
+    Subscription Plan [lookup] (field: plan) <PERMISSIONS>
+  Mode of Payment [lookup] (field: mode_of_payment) <PERMISSIONS>
+  Bank Account [lookup] (field: bank_account) <PERMISSIONS>
+  Bank [lookup] (field: bank) <PERMISSIONS>
+  Cost Center [lookup] (field: cost_center) <PERMISSIONS>
+  Project [lookup] (field: project) <PERMISSIONS>
+  Payment Gateway Account [lookup] (field: payment_gateway_account) <PERMISSIONS>
+  Payment Order [lookup] (field: payment_order) <PERMISSIONS>
+  Payment Request [lookup] (field: amended_from) <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+Payment Term [root] <PERMISSIONS>
+  Payment Terms Template Detail [named_child] (field: payment_term)
+    Payment Term [lookup] (field: payment_term) <PERMISSIONS>
+    Mode of Payment [lookup] (field: mode_of_payment) <PERMISSIONS>
+  Mode of Payment [lookup] (field: mode_of_payment) <PERMISSIONS>
+Payment Terms Template [root] <PERMISSIONS>
+  Payment Terms Template Detail [table_child] (field: terms)
+    Payment Term [lookup] (field: payment_term) <PERMISSIONS>
+    Mode of Payment [lookup] (field: mode_of_payment) <PERMISSIONS>
+Period Closing Voucher [root] <PERMISSIONS>
+  Fiscal Year [lookup] (field: fiscal_year) <PERMISSIONS>
+  Period Closing Voucher [lookup] (field: amended_from) <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+  Account [lookup] (field: closing_account_head) <PERMISSIONS>
+POS Closing Entry [root] <PERMISSIONS>
+  POS Closing Entry Detail [table_child] (field: payment_reconciliation)
+    Mode of Payment [lookup] (field: mode_of_payment) <PERMISSIONS>
+  POS Closing Entry Taxes [table_child] (field: taxes)
+    Account [lookup] (field: account_head) <PERMISSIONS>
+  POS Invoice Reference [table_child] (field: pos_transactions)
+    POS Invoice [lookup] (field: pos_invoice) <PERMISSIONS>
+    Customer [lookup] (field: customer) <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+  POS Profile [lookup] (field: pos_profile) <PERMISSIONS>
+  POS Closing Entry [lookup] (field: amended_from) <PERMISSIONS>
+  POS Opening Entry [lookup] (field: pos_opening_entry) <PERMISSIONS>
+POS Invoice [root] <PERMISSIONS>
+  POS Invoice Item [table_child] (field: items)
+    Item [lookup] (field: item_code) <PERMISSIONS>
+    Item Group [lookup] (field: item_group) <PERMISSIONS>
+    UOM [lookup] (field: stock_uom) <PERMISSIONS>
+    Item Tax Template [lookup] (field: item_tax_template) <PERMISSIONS>
+    Account [lookup] (field: income_account) <PERMISSIONS>
+    Finance Book [lookup] (field: finance_book) <PERMISSIONS>
+    Warehouse [lookup] (field: warehouse) <PERMISSIONS>
+    Quality Inspection [lookup] (field: quality_inspection) <PERMISSIONS>
+    Batch [lookup] (field: batch_no) <PERMISSIONS>
+    Sales Order [lookup] (field: sales_order) <PERMISSIONS>
+    Delivery Note [lookup] (field: delivery_note) <PERMISSIONS>
+    Cost Center [lookup] (field: cost_center) <PERMISSIONS>
+    Project [lookup] (field: project) <PERMISSIONS>
+    Serial and Batch Bundle [lookup] (field: serial_and_batch_bundle) <PERMISSIONS>
+  Pricing Rule Detail [table_child] (field: pricing_rules)
+    Pricing Rule [lookup] (field: pricing_rule) <PERMISSIONS>
+  Packed Item [table_child] (field: packed_items)
+    Item [lookup] (field: parent_item) <PERMISSIONS>
+    Warehouse [lookup] (field: warehouse) <PERMISSIONS>
+    Batch [lookup] (field: batch_no) <PERMISSIONS>
+    UOM [lookup] (field: uom) <PERMISSIONS>
+    Serial and Batch Bundle [lookup] (field: serial_and_batch_bundle) <PERMISSIONS>
+  Sales Invoice Timesheet [table_child] (field: timesheets)
+    Timesheet [lookup] (field: time_sheet) <PERMISSIONS>
+    Activity Type [lookup] (field: activity_type) <PERMISSIONS>
+  Sales Taxes and Charges [table_child] (field: taxes)
+    Account [lookup] (field: account_head) <PERMISSIONS>
+    Cost Center [lookup] (field: cost_center) <PERMISSIONS>
+  Sales Invoice Advance [table_child] (field: advances)
+  Payment Schedule [table_child] (field: payment_schedule)
+    Payment Term [lookup] (field: payment_term) <PERMISSIONS>
+    Mode of Payment [lookup] (field: mode_of_payment) <PERMISSIONS>
+  Sales Invoice Payment [table_child] (field: payments)
+    Mode of Payment [lookup] (field: mode_of_payment) <PERMISSIONS>
+    Account [lookup] (field: account) <PERMISSIONS>
+  Sales Team [table_child] (field: sales_team)
+    Sales Person [lookup] (field: sales_person) <PERMISSIONS>
+  POS Invoice Reference [named_child] (field: pos_invoice)
+    POS Invoice [lookup] (field: pos_invoice) <PERMISSIONS>
+    Customer [lookup] (field: customer) <PERMISSIONS>
+  Customer [lookup] (field: customer) <PERMISSIONS>
+  POS Profile [lookup] (field: pos_profile) <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+  POS Invoice [lookup] (field: amended_from) <PERMISSIONS>
+  Project [lookup] (field: project) <PERMISSIONS>
+  Cost Center [lookup] (field: cost_center) <PERMISSIONS>
+  Territory [lookup] (field: territory) <PERMISSIONS>
+  Price List [lookup] (field: selling_price_list) <PERMISSIONS>
+  Warehouse [lookup] (field: set_warehouse) <PERMISSIONS>
+  Sales Taxes and Charges Template [lookup] (field: taxes_and_charges) <PERMISSIONS>
+  Shipping Rule [lookup] (field: shipping_rule) <PERMISSIONS>
+  Tax Category [lookup] (field: tax_category) <PERMISSIONS>
+  Loyalty Program [lookup] (field: loyalty_program) <PERMISSIONS>
+  Account [lookup] (field: loyalty_redemption_account) <PERMISSIONS>
+  Payment Terms Template [lookup] (field: payment_terms_template) <PERMISSIONS>
+  Terms and Conditions [lookup] (field: tc_name) <PERMISSIONS>
+  Print Heading [lookup] (field: select_print_heading) <PERMISSIONS>
+  Purchase Invoice [lookup] (field: inter_company_invoice_reference) <PERMISSIONS>
+  Customer Group [lookup] (field: customer_group) <PERMISSIONS>
+  Sales Partner [lookup] (field: sales_partner) <PERMISSIONS>
+  Sales Invoice [lookup] (field: consolidated_invoice) <PERMISSIONS>
+  Coupon Code [lookup] (field: coupon_code) <PERMISSIONS>
+POS Invoice Merge Log [root] <PERMISSIONS>
+  POS Invoice Reference [table_child] (field: pos_invoices)
+    POS Invoice [lookup] (field: pos_invoice) <PERMISSIONS>
+    Customer [lookup] (field: customer) <PERMISSIONS>
+  Customer [lookup] (field: customer) <PERMISSIONS>
+  POS Invoice Merge Log [lookup] (field: amended_from) <PERMISSIONS>
+  Sales Invoice [lookup] (field: consolidated_invoice) <PERMISSIONS>
+  POS Closing Entry [lookup] (field: pos_closing_entry) <PERMISSIONS>
+  Customer Group [lookup] (field: customer_group) <PERMISSIONS>
+POS Opening Entry [root] <PERMISSIONS>
+  POS Opening Entry Detail [table_child] (field: balance_details)
+    Mode of Payment [lookup] (field: mode_of_payment) <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+  POS Profile [lookup] (field: pos_profile) <PERMISSIONS>
+  POS Opening Entry [lookup] (field: amended_from) <PERMISSIONS>
+POS Profile [root] <PERMISSIONS>
+  POS Profile User [table_child] (field: applicable_for_users)
+  POS Payment Method [table_child] (field: payments)
+    Mode of Payment [lookup] (field: mode_of_payment) <PERMISSIONS>
+  POS Item Group [table_child] (field: item_groups)
+    Item Group [lookup] (field: item_group) <PERMISSIONS>
+  POS Customer Group [table_child] (field: customer_groups)
+    Customer Group [lookup] (field: customer_group) <PERMISSIONS>
+  Customer [lookup] (field: customer) <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+  Terms and Conditions [lookup] (field: tc_name) <PERMISSIONS>
+  Print Heading [lookup] (field: select_print_heading) <PERMISSIONS>
+  Price List [lookup] (field: selling_price_list) <PERMISSIONS>
+  Account [lookup] (field: write_off_account) <PERMISSIONS>
+  Cost Center [lookup] (field: write_off_cost_center) <PERMISSIONS>
+  Sales Taxes and Charges Template [lookup] (field: taxes_and_charges) <PERMISSIONS>
+  Tax Category [lookup] (field: tax_category) <PERMISSIONS>
+  Warehouse [lookup] (field: warehouse) <PERMISSIONS>
+  Project [lookup] (field: project) <PERMISSIONS>
+POS Settings [root] <PERMISSIONS>
+  POS Field [table_child] (field: invoice_fields)
+  POS Search Fields [table_child] (field: pos_search_fields)
+Pricing Rule [root] <PERMISSIONS>
+  Pricing Rule Item Code [table_child] (field: items)
+    Item [lookup] (field: item_code) <PERMISSIONS>
+    UOM [lookup] (field: uom) <PERMISSIONS>
+  Pricing Rule Item Group [table_child] (field: item_groups)
+    Item Group [lookup] (field: item_group) <PERMISSIONS>
+    UOM [lookup] (field: uom) <PERMISSIONS>
+  Pricing Rule Brand [table_child] (field: brands)
+    Brand [lookup] (field: brand) <PERMISSIONS>
+    UOM [lookup] (field: uom) <PERMISSIONS>
+  Pricing Rule Detail [named_child] (field: pricing_rule)
+    Pricing Rule [lookup] (field: pricing_rule) <PERMISSIONS>
+  Warehouse [lookup] (field: warehouse) <PERMISSIONS>
+  Item [lookup] (field: other_item_code) <PERMISSIONS>
+  Item Group [lookup] (field: other_item_group) <PERMISSIONS>
+  Brand [lookup] (field: other_brand) <PERMISSIONS>
+  Customer [lookup] (field: customer) <PERMISSIONS>
+  Customer Group [lookup] (field: customer_group) <PERMISSIONS>
+  Territory [lookup] (field: territory) <PERMISSIONS>
+  Sales Partner [lookup] (field: sales_partner) <PERMISSIONS>
+  Supplier [lookup] (field: supplier) <PERMISSIONS>
+  Supplier Group [lookup] (field: supplier_group) <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+  Price List [lookup] (field: for_price_list) <PERMISSIONS>
+  UOM [lookup] (field: free_item_uom) <PERMISSIONS>
+  Promotional Scheme [lookup] (field: promotional_scheme) <PERMISSIONS>
+Process Payment Reconciliation [root] <PERMISSIONS>
+  Process Payment Reconciliation Log [named_child] (field: process_pr) <PERMISSIONS>
+    Process Payment Reconciliation Log Allocations [table_child] (field: allocations)
+      Account [lookup] (field: difference_account) <PERMISSIONS>
+    Process Payment Reconciliation [lookup] (field: process_pr) <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+  Account [lookup] (field: receivable_payable_account) <PERMISSIONS>
+  Cost Center [lookup] (field: cost_center) <PERMISSIONS>
+  Process Payment Reconciliation [lookup] (field: amended_from) <PERMISSIONS>
+Process Statement Of Accounts CC [root]
+Promotional Scheme [root] <PERMISSIONS>
+  Pricing Rule Item Code [table_child] (field: items)
+    Item [lookup] (field: item_code) <PERMISSIONS>
+    UOM [lookup] (field: uom) <PERMISSIONS>
+  Pricing Rule Item Group [table_child] (field: item_groups)
+    Item Group [lookup] (field: item_group) <PERMISSIONS>
+    UOM [lookup] (field: uom) <PERMISSIONS>
+  Pricing Rule Brand [table_child] (field: brands)
+    Brand [lookup] (field: brand) <PERMISSIONS>
+    UOM [lookup] (field: uom) <PERMISSIONS>
+  Promotional Scheme Price Discount [table_child] (field: price_discount_slabs)
+    Price List [lookup] (field: for_price_list) <PERMISSIONS>
+    Warehouse [lookup] (field: warehouse) <PERMISSIONS>
+  Promotional Scheme Product Discount [table_child] (field: product_discount_slabs)
+    Item [lookup] (field: free_item) <PERMISSIONS>
+    UOM [lookup] (field: free_item_uom) <PERMISSIONS>
+    Warehouse [lookup] (field: warehouse) <PERMISSIONS>
+  Item [lookup] (field: other_item_code) <PERMISSIONS>
+  Item Group [lookup] (field: other_item_group) <PERMISSIONS>
+  Brand [lookup] (field: other_brand) <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+Purchase Invoice [root] <PERMISSIONS>
+  Purchase Invoice Item [table_child] (field: items)
+    Item [lookup] (field: item_code) <PERMISSIONS>
+    UOM [lookup] (field: stock_uom) <PERMISSIONS>
+    Warehouse [lookup] (field: warehouse) <PERMISSIONS>
+    Quality Inspection [lookup] (field: quality_inspection) <PERMISSIONS>
+    Batch [lookup] (field: batch_no) <PERMISSIONS>
+    Account [lookup] (field: expense_account) <PERMISSIONS>
+    Item Tax Template [lookup] (field: item_tax_template) <PERMISSIONS>
+    Project [lookup] (field: project) <PERMISSIONS>
+    Cost Center [lookup] (field: cost_center) <PERMISSIONS>
+    Brand [lookup] (field: brand) <PERMISSIONS>
+    Item Group [lookup] (field: item_group) <PERMISSIONS>
+    Purchase Order [lookup] (field: purchase_order) <PERMISSIONS>
+    BOM [lookup] (field: bom) <PERMISSIONS>
+    Purchase Receipt [lookup] (field: purchase_receipt) <PERMISSIONS>
+    Manufacturer [lookup] (field: manufacturer) <PERMISSIONS>
+    Product Bundle [lookup] (field: product_bundle) <PERMISSIONS>
+    Serial and Batch Bundle [lookup] (field: serial_and_batch_bundle) <PERMISSIONS>
+    Material Request [lookup] (field: material_request) <PERMISSIONS>
+  Pricing Rule Detail [table_child] (field: pricing_rules)
+    Pricing Rule [lookup] (field: pricing_rule) <PERMISSIONS>
+  Purchase Receipt Item Supplied [table_child] (field: supplied_items)
+    Item [lookup] (field: main_item_code) <PERMISSIONS>
+    Batch [lookup] (field: batch_no) <PERMISSIONS>
+    UOM [lookup] (field: stock_uom) <PERMISSIONS>
+    Purchase Order [lookup] (field: purchase_order) <PERMISSIONS>
+  Purchase Taxes and Charges [table_child] (field: taxes)
+    Account [lookup] (field: account_head) <PERMISSIONS>
+    Cost Center [lookup] (field: cost_center) <PERMISSIONS>
+  Purchase Invoice Advance [table_child] (field: advances)
+  Payment Schedule [table_child] (field: payment_schedule)
+    Payment Term [lookup] (field: payment_term) <PERMISSIONS>
+    Mode of Payment [lookup] (field: mode_of_payment) <PERMISSIONS>
+  Advance Tax [table_child] (field: advance_tax)
+    Account [lookup] (field: account_head) <PERMISSIONS>
+  Tax Withheld Vouchers [table_child] (field: tax_withheld_vouchers)
+  Supplier [lookup] (field: supplier) <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+  Cost Center [lookup] (field: cost_center) <PERMISSIONS>
+  Purchase Invoice [lookup] (field: amended_from) <PERMISSIONS>
+  Price List [lookup] (field: buying_price_list) <PERMISSIONS>
+  Warehouse [lookup] (field: set_warehouse) <PERMISSIONS>
+  Tax Category [lookup] (field: tax_category) <PERMISSIONS>
+  Shipping Rule [lookup] (field: shipping_rule) <PERMISSIONS>
+  Purchase Taxes and Charges Template [lookup] (field: taxes_and_charges) <PERMISSIONS>
+  Mode of Payment [lookup] (field: mode_of_payment) <PERMISSIONS>
+  Account [lookup] (field: cash_bank_account) <PERMISSIONS>
+  Payment Terms Template [lookup] (field: payment_terms_template) <PERMISSIONS>
+  Terms and Conditions [lookup] (field: tc_name) <PERMISSIONS>
+  Print Heading [lookup] (field: select_print_heading) <PERMISSIONS>
+  Sales Invoice [lookup] (field: inter_company_invoice_reference) <PERMISSIONS>
+  Tax Withholding Category [lookup] (field: tax_withholding_category) <PERMISSIONS>
+  Project [lookup] (field: project) <PERMISSIONS>
+  Subscription [lookup] (field: subscription) <PERMISSIONS>
+  Incoterm [lookup] (field: incoterm) <PERMISSIONS>
+  Supplier Group [lookup] (field: supplier_group) <PERMISSIONS>
+Purchase Taxes and Charges Template [root] <PERMISSIONS>
+  Purchase Taxes and Charges [table_child] (field: taxes)
+    Account [lookup] (field: account_head) <PERMISSIONS>
+    Cost Center [lookup] (field: cost_center) <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+  Tax Category [lookup] (field: tax_category) <PERMISSIONS>
+Repost Accounting Ledger [root] <PERMISSIONS>
+  Repost Accounting Ledger Items [table_child] (field: vouchers)
+  Company [lookup] (field: company) <PERMISSIONS>
+  Repost Accounting Ledger [lookup] (field: amended_from) <PERMISSIONS>
+Repost Accounting Ledger Settings [root] <PERMISSIONS>
+  Repost Allowed Types [table_child] (field: allowed_types)
+Repost Payment Ledger [root] <PERMISSIONS>
+  Repost Payment Ledger Items [table_child] (field: repost_vouchers)
+  Repost Payment Ledger [lookup] (field: amended_from) <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+Sales Invoice [root] <PERMISSIONS>
+  Sales Invoice Item [table_child] (field: items)
+    Item [lookup] (field: item_code) <PERMISSIONS>
+    UOM [lookup] (field: stock_uom) <PERMISSIONS>
+    Account [lookup] (field: income_account) <PERMISSIONS>
+    Item Tax Template [lookup] (field: item_tax_template) <PERMISSIONS>
+    Cost Center [lookup] (field: cost_center) <PERMISSIONS>
+    Warehouse [lookup] (field: warehouse) <PERMISSIONS>
+    Quality Inspection [lookup] (field: quality_inspection) <PERMISSIONS>
+    Batch [lookup] (field: batch_no) <PERMISSIONS>
+    Item Group [lookup] (field: item_group) <PERMISSIONS>
+    Sales Order [lookup] (field: sales_order) <PERMISSIONS>
+    Delivery Note [lookup] (field: delivery_note) <PERMISSIONS>
+    Finance Book [lookup] (field: finance_book) <PERMISSIONS>
+    Project [lookup] (field: project) <PERMISSIONS>
+    Purchase Order [lookup] (field: purchase_order) <PERMISSIONS>
+    Serial and Batch Bundle [lookup] (field: serial_and_batch_bundle) <PERMISSIONS>
+    POS Invoice [lookup] (field: pos_invoice) <PERMISSIONS>
+  Pricing Rule Detail [table_child] (field: pricing_rules)
+    Pricing Rule [lookup] (field: pricing_rule) <PERMISSIONS>
+  Packed Item [table_child] (field: packed_items)
+    Item [lookup] (field: parent_item) <PERMISSIONS>
+    Warehouse [lookup] (field: warehouse) <PERMISSIONS>
+    Batch [lookup] (field: batch_no) <PERMISSIONS>
+    UOM [lookup] (field: uom) <PERMISSIONS>
+    Serial and Batch Bundle [lookup] (field: serial_and_batch_bundle) <PERMISSIONS>
+  Sales Invoice Timesheet [table_child] (field: timesheets)
+    Timesheet [lookup] (field: time_sheet) <PERMISSIONS>
+    Activity Type [lookup] (field: activity_type) <PERMISSIONS>
+  Sales Taxes and Charges [table_child] (field: taxes)
+    Account [lookup] (field: account_head) <PERMISSIONS>
+    Cost Center [lookup] (field: cost_center) <PERMISSIONS>
+  Sales Invoice Advance [table_child] (field: advances)
+  Payment Schedule [table_child] (field: payment_schedule)
+    Payment Term [lookup] (field: payment_term) <PERMISSIONS>
+    Mode of Payment [lookup] (field: mode_of_payment) <PERMISSIONS>
+  Sales Invoice Payment [table_child] (field: payments)
+    Mode of Payment [lookup] (field: mode_of_payment) <PERMISSIONS>
+    Account [lookup] (field: account) <PERMISSIONS>
+  Sales Team [table_child] (field: sales_team)
+    Sales Person [lookup] (field: sales_person) <PERMISSIONS>
+  Customer [lookup] (field: customer) <PERMISSIONS>
+  Project [lookup] (field: project) <PERMISSIONS>
+  POS Profile [lookup] (field: pos_profile) <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+  Cost Center [lookup] (field: cost_center) <PERMISSIONS>
+  Sales Invoice [lookup] (field: amended_from) <PERMISSIONS>
+  Territory [lookup] (field: territory) <PERMISSIONS>
+  Price List [lookup] (field: selling_price_list) <PERMISSIONS>
+  Warehouse [lookup] (field: set_warehouse) <PERMISSIONS>
+  Sales Taxes and Charges Template [lookup] (field: taxes_and_charges) <PERMISSIONS>
+  Shipping Rule [lookup] (field: shipping_rule) <PERMISSIONS>
+  Tax Category [lookup] (field: tax_category) <PERMISSIONS>
+  Loyalty Program [lookup] (field: loyalty_program) <PERMISSIONS>
+  Account [lookup] (field: loyalty_redemption_account) <PERMISSIONS>
+  Payment Terms Template [lookup] (field: payment_terms_template) <PERMISSIONS>
+  Terms and Conditions [lookup] (field: tc_name) <PERMISSIONS>
+  Print Heading [lookup] (field: select_print_heading) <PERMISSIONS>
+  Purchase Invoice [lookup] (field: inter_company_invoice_reference) <PERMISSIONS>
+  Customer Group [lookup] (field: customer_group) <PERMISSIONS>
+  Sales Partner [lookup] (field: sales_partner) <PERMISSIONS>
+  Subscription [lookup] (field: subscription) <PERMISSIONS>
+  Incoterm [lookup] (field: incoterm) <PERMISSIONS>
+  Coupon Code [lookup] (field: coupon_code) <PERMISSIONS>
+Sales Taxes and Charges Template [root] <PERMISSIONS>
+  Sales Taxes and Charges [table_child] (field: taxes)
+    Account [lookup] (field: account_head) <PERMISSIONS>
+    Cost Center [lookup] (field: cost_center) <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+  Tax Category [lookup] (field: tax_category) <PERMISSIONS>
+Shareholder [root] <PERMISSIONS>
+  Share Balance [table_child] (field: share_balance)
+    Share Type [lookup] (field: share_type) <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+Share Transfer [root] <PERMISSIONS>
+  Shareholder [lookup] (field: from_shareholder) <PERMISSIONS>
+  Account [lookup] (field: equity_or_liability_account) <PERMISSIONS>
+  Share Type [lookup] (field: share_type) <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+  Share Transfer [lookup] (field: amended_from) <PERMISSIONS>
+Share Type [root] <PERMISSIONS>
+Shipping Rule [root] <PERMISSIONS>
+  Shipping Rule Condition [table_child] (field: conditions)
+  Shipping Rule Country [table_child] (field: countries)
+  Company [lookup] (field: company) <PERMISSIONS>
+  Account [lookup] (field: account) <PERMISSIONS>
+  Cost Center [lookup] (field: cost_center) <PERMISSIONS>
+Subscription [root] <PERMISSIONS>
+  Subscription Plan Detail [table_child] (field: plans)
+    Subscription Plan [lookup] (field: plan) <PERMISSIONS>
+  Process Subscription [named_child] (field: subscription) <PERMISSIONS>
+    Process Subscription [lookup] (field: amended_from) <PERMISSIONS>
+    Subscription [lookup] (field: subscription) <PERMISSIONS>
+  Sales Taxes and Charges Template [lookup] (field: sales_tax_template) <PERMISSIONS>
+  Purchase Taxes and Charges Template [lookup] (field: purchase_tax_template) <PERMISSIONS>
+  Cost Center [lookup] (field: cost_center) <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+Subscription Invoice [root]
+Subscription Plan [root] <PERMISSIONS>
+  Subscription Plan Detail [named_child] (field: plan)
+    Subscription Plan [lookup] (field: plan) <PERMISSIONS>
+  Item [lookup] (field: item) <PERMISSIONS>
+  Price List [lookup] (field: price_list) <PERMISSIONS>
+  Payment Gateway Account [lookup] (field: payment_gateway) <PERMISSIONS>
+  Cost Center [lookup] (field: cost_center) <PERMISSIONS>
+Subscription Settings [root] <PERMISSIONS>
+Tax Category [root] <PERMISSIONS>
+Tax Rule [root] <PERMISSIONS>
+  Sales Taxes and Charges Template [lookup] (field: sales_tax_template) <PERMISSIONS>
+  Purchase Taxes and Charges Template [lookup] (field: purchase_tax_template) <PERMISSIONS>
+  Customer [lookup] (field: customer) <PERMISSIONS>
+  Supplier [lookup] (field: supplier) <PERMISSIONS>
+  Item [lookup] (field: item) <PERMISSIONS>
+  Tax Category [lookup] (field: tax_category) <PERMISSIONS>
+  Customer Group [lookup] (field: customer_group) <PERMISSIONS>
+  Supplier Group [lookup] (field: supplier_group) <PERMISSIONS>
+  Item Group [lookup] (field: item_group) <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+Tax Withholding Category [root] <PERMISSIONS>
+  Tax Withholding Rate [table_child] (field: rates)
+  Tax Withholding Account [table_child] (field: accounts)
+    Company [lookup] (field: company) <PERMISSIONS>
+    Account [lookup] (field: account) <PERMISSIONS>
+Unreconcile Payment [root] <PERMISSIONS>
+  Unreconcile Payment Entries [table_child] (field: allocations)
+  Unreconcile Payment [lookup] (field: amended_from) <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+Bulk Transaction Log [root] <PERMISSIONS>
+Bulk Transaction Log Detail [root] <PERMISSIONS>
+Buying Settings [root] <PERMISSIONS>
+  Supplier Group [lookup] (field: supplier_group) <PERMISSIONS>
+  Price List [lookup] (field: buying_price_list) <PERMISSIONS>
+Purchase Order [root] <PERMISSIONS>
+  Purchase Order Item [table_child] (field: items)
+    Item [lookup] (field: item_code) <PERMISSIONS>
+    UOM [lookup] (field: stock_uom) <PERMISSIONS>
+    Warehouse [lookup] (field: warehouse) <PERMISSIONS>
+    Project [lookup] (field: project) <PERMISSIONS>
+    Material Request [lookup] (field: material_request) <PERMISSIONS>
+    Sales Order [lookup] (field: sales_order) <PERMISSIONS>
+    Supplier Quotation [lookup] (field: supplier_quotation) <PERMISSIONS>
+    Supplier Quotation Item [lookup] (field: supplier_quotation_item)
+    Blanket Order [lookup] (field: blanket_order) <PERMISSIONS>
+    Item Group [lookup] (field: item_group) <PERMISSIONS>
+    Brand [lookup] (field: brand) <PERMISSIONS>
+    BOM [lookup] (field: bom) <PERMISSIONS>
+    Account [lookup] (field: expense_account) <PERMISSIONS>
+    Cost Center [lookup] (field: cost_center) <PERMISSIONS>
+    Item Tax Template [lookup] (field: item_tax_template) <PERMISSIONS>
+    Manufacturer [lookup] (field: manufacturer) <PERMISSIONS>
+    Production Plan [lookup] (field: production_plan) <PERMISSIONS>
+    Product Bundle [lookup] (field: product_bundle) <PERMISSIONS>
+    Job Card [lookup] (field: job_card) <PERMISSIONS>
+  Pricing Rule Detail [table_child] (field: pricing_rules)
+    Pricing Rule [lookup] (field: pricing_rule) <PERMISSIONS>
+  Purchase Order Item Supplied [table_child] (field: supplied_items)
+    Item [lookup] (field: main_item_code) <PERMISSIONS>
+    UOM [lookup] (field: stock_uom) <PERMISSIONS>
+    Warehouse [lookup] (field: reserve_warehouse) <PERMISSIONS>
+  Purchase Taxes and Charges [table_child] (field: taxes)
+    Account [lookup] (field: account_head) <PERMISSIONS>
+    Cost Center [lookup] (field: cost_center) <PERMISSIONS>
+  Payment Schedule [table_child] (field: payment_schedule)
+    Payment Term [lookup] (field: payment_term) <PERMISSIONS>
+    Mode of Payment [lookup] (field: mode_of_payment) <PERMISSIONS>
+  Supplier [lookup] (field: supplier) <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+  Purchase Order [lookup] (field: amended_from) <PERMISSIONS>
+  Customer [lookup] (field: customer) <PERMISSIONS>
+  Price List [lookup] (field: buying_price_list) <PERMISSIONS>
+  Warehouse [lookup] (field: set_warehouse) <PERMISSIONS>
+  Purchase Taxes and Charges Template [lookup] (field: taxes_and_charges) <PERMISSIONS>
+  Shipping Rule [lookup] (field: shipping_rule) <PERMISSIONS>
+  Payment Terms Template [lookup] (field: payment_terms_template) <PERMISSIONS>
+  Terms and Conditions [lookup] (field: tc_name) <PERMISSIONS>
+  Supplier Quotation [lookup] (field: ref_sq) <PERMISSIONS>
+  Sales Order [lookup] (field: inter_company_order_reference) <PERMISSIONS>
+  Print Heading [lookup] (field: select_print_heading) <PERMISSIONS>
+  Tax Category [lookup] (field: tax_category) <PERMISSIONS>
+  Tax Withholding Category [lookup] (field: tax_withholding_category) <PERMISSIONS>
+  Cost Center [lookup] (field: cost_center) <PERMISSIONS>
+  Project [lookup] (field: project) <PERMISSIONS>
+  Incoterm [lookup] (field: incoterm) <PERMISSIONS>
+Request for Quotation [root] <PERMISSIONS>
+  Request for Quotation Supplier [table_child] (field: suppliers)
+    Supplier [lookup] (field: supplier) <PERMISSIONS>
+  Request for Quotation Item [table_child] (field: items)
+    Item [lookup] (field: item_code) <PERMISSIONS>
+    UOM [lookup] (field: uom) <PERMISSIONS>
+    Warehouse [lookup] (field: warehouse) <PERMISSIONS>
+    Project [lookup] (field: project_name) <PERMISSIONS>
+    Material Request [lookup] (field: material_request) <PERMISSIONS>
+    Brand [lookup] (field: brand) <PERMISSIONS>
+    Item Group [lookup] (field: item_group) <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+  Supplier [lookup] (field: vendor) <PERMISSIONS>
+  Terms and Conditions [lookup] (field: tc_name) <PERMISSIONS>
+  Print Heading [lookup] (field: select_print_heading) <PERMISSIONS>
+  Opportunity [lookup] (field: opportunity) <PERMISSIONS>
+  Request for Quotation [lookup] (field: amended_from) <PERMISSIONS>
+  Incoterm [lookup] (field: incoterm) <PERMISSIONS>
+Supplier [root] <PERMISSIONS>
+  Allowed To Transact With [table_child] (field: companies)
+    Company [lookup] (field: company) <PERMISSIONS>
+  Party Account [table_child] (field: accounts)
+    Company [lookup] (field: company) <PERMISSIONS>
+    Account [lookup] (field: account) <PERMISSIONS>
+  Portal User [table_child] (field: portal_users)
+  Supplier Item [named_child] (field: supplier)
+    Supplier [lookup] (field: supplier) <PERMISSIONS>
+  Request for Quotation Supplier [named_child] (field: supplier)
+    Supplier [lookup] (field: supplier) <PERMISSIONS>
+  Supplier Quotation [named_child] (field: supplier) <PERMISSIONS>
+    Supplier Quotation Item [table_child] (field: items)
+      Item [lookup] (field: item_code) <PERMISSIONS>
+      UOM [lookup] (field: stock_uom) <PERMISSIONS>
+      Warehouse [lookup] (field: warehouse) <PERMISSIONS>
+      Project [lookup] (field: project) <PERMISSIONS>
+      Material Request [lookup] (field: material_request) <PERMISSIONS>
+      Sales Order [lookup] (field: sales_order) <PERMISSIONS>
+      Request for Quotation [lookup] (field: request_for_quotation) <PERMISSIONS>
+      Item Tax Template [lookup] (field: item_tax_template) <PERMISSIONS>
+      Brand [lookup] (field: brand) <PERMISSIONS>
+      Item Group [lookup] (field: item_group) <PERMISSIONS>
+      Manufacturer [lookup] (field: manufacturer) <PERMISSIONS>
+      Cost Center [lookup] (field: cost_center) <PERMISSIONS>
+    Pricing Rule Detail [table_child] (field: pricing_rules)
+      Pricing Rule [lookup] (field: pricing_rule) <PERMISSIONS>
+    Purchase Taxes and Charges [table_child] (field: taxes)
+      Account [lookup] (field: account_head) <PERMISSIONS>
+      Cost Center [lookup] (field: cost_center) <PERMISSIONS>
+    Supplier [lookup] (field: supplier) <PERMISSIONS>
+    Supplier Quotation [lookup] (field: amended_from) <PERMISSIONS>
+    Company [lookup] (field: company) <PERMISSIONS>
+    Price List [lookup] (field: buying_price_list) <PERMISSIONS>
+    Tax Category [lookup] (field: tax_category) <PERMISSIONS>
+    Shipping Rule [lookup] (field: shipping_rule) <PERMISSIONS>
+    Purchase Taxes and Charges Template [lookup] (field: taxes_and_charges) <PERMISSIONS>
+    Terms and Conditions [lookup] (field: tc_name) <PERMISSIONS>
+    Print Heading [lookup] (field: select_print_heading) <PERMISSIONS>
+    Opportunity [lookup] (field: opportunity) <PERMISSIONS>
+    Incoterm [lookup] (field: incoterm) <PERMISSIONS>
+    Cost Center [lookup] (field: cost_center) <PERMISSIONS>
+    Project [lookup] (field: project) <PERMISSIONS>
+  Supplier Scorecard [named_child] (field: supplier) <PERMISSIONS>
+    Supplier Scorecard Scoring Standing [table_child] (field: standings)
+      Supplier Scorecard Standing [lookup] (field: standing_name) <PERMISSIONS>
+      Employee [lookup] (field: employee_link) <PERMISSIONS>
+    Supplier Scorecard Scoring Criteria [table_child] (field: criteria)
+      Supplier Scorecard Criteria [lookup] (field: criteria_name) <PERMISSIONS>
+    Supplier Scorecard Period [named_child] (field: scorecard) <PERMISSIONS>
+      Supplier Scorecard Scoring Criteria [table_child] (field: criteria)
+        Supplier Scorecard Criteria [lookup] (field: criteria_name) <PERMISSIONS>
+      Supplier Scorecard Scoring Variable [table_child] (field: variables)
+        Supplier Scorecard Variable [lookup] (field: variable_label) <PERMISSIONS>
+      Supplier [lookup] (field: supplier) <PERMISSIONS>
+      Supplier Scorecard [lookup] (field: scorecard) <PERMISSIONS>
+      Supplier Scorecard Period [lookup] (field: amended_from) <PERMISSIONS>
+    Supplier [lookup] (field: supplier) <PERMISSIONS>
+    Employee [lookup] (field: employee) <PERMISSIONS>
+  Supplier Scorecard Period [named_child] (field: supplier) <PERMISSIONS>
+    Supplier Scorecard Scoring Criteria [table_child] (field: criteria)
+      Supplier Scorecard Criteria [lookup] (field: criteria_name) <PERMISSIONS>
+    Supplier Scorecard Scoring Variable [table_child] (field: variables)
+      Supplier Scorecard Variable [lookup] (field: variable_label) <PERMISSIONS>
+    Supplier [lookup] (field: supplier) <PERMISSIONS>
+    Supplier Scorecard [lookup] (field: scorecard) <PERMISSIONS>
+    Supplier Scorecard Period [lookup] (field: amended_from) <PERMISSIONS>
+  Item Supplier [named_child] (field: supplier)
+    Supplier [lookup] (field: supplier) <PERMISSIONS>
+  Bank Account [lookup] (field: default_bank_account) <PERMISSIONS>
+  Tax Category [lookup] (field: tax_category) <PERMISSIONS>
+  Tax Withholding Category [lookup] (field: tax_withholding_category) <PERMISSIONS>
+  Company [lookup] (field: represents_company) <PERMISSIONS>
+  Supplier Group [lookup] (field: supplier_group) <PERMISSIONS>
+  Price List [lookup] (field: default_price_list) <PERMISSIONS>
+  Payment Terms Template [lookup] (field: payment_terms) <PERMISSIONS>
+Supplier Scorecard Criteria [root] <PERMISSIONS>
+Supplier Scorecard Standing [root] <PERMISSIONS>
+  Employee [lookup] (field: employee_link) <PERMISSIONS>
+Supplier Scorecard Variable [root] <PERMISSIONS>
+Communication Medium [root] <PERMISSIONS>
+  Communication Medium Timeslot [table_child] (field: timeslots)
+    Employee Group [lookup] (field: employee_group) <PERMISSIONS>
+  Employee Group [lookup] (field: catch_all) <PERMISSIONS>
+  Supplier [lookup] (field: provider) <PERMISSIONS>
+Appointment [root] <PERMISSIONS>
+Appointment Booking Settings [root] <PERMISSIONS>
+  Appointment Booking Slots [table_child] (field: availability_of_slots)
+  Holiday List [lookup] (field: holiday_list) <PERMISSIONS>
+Availability Of Slots [root]
+Campaign [root] <PERMISSIONS>
+  Campaign Email Schedule [table_child] (field: campaign_schedules)
+  Email Campaign [named_child] (field: campaign_name) <PERMISSIONS>
+    Campaign [lookup] (field: campaign_name) <PERMISSIONS>
+Competitor [root] <PERMISSIONS>
+  Competitor Detail [named_child] (field: competitor)
+    Competitor [lookup] (field: competitor) <PERMISSIONS>
+Contract [root] <PERMISSIONS>
+  Contract Fulfilment Checklist [table_child] (field: fulfilment_terms)
+    Contract Fulfilment Checklist [lookup] (field: amended_from)
+  Contract Template [lookup] (field: contract_template) <PERMISSIONS>
+  Contract [lookup] (field: amended_from) <PERMISSIONS>
+Contract Template [root] <PERMISSIONS>
+  Contract Template Fulfilment Terms [table_child] (field: fulfilment_terms)
+CRM Settings [root] <PERMISSIONS>
+Lead [root] <PERMISSIONS>
+  CRM Note [table_child] (field: notes)
+  Prospect Lead [named_child] (field: lead)
+    Lead [lookup] (field: lead) <PERMISSIONS>
+  Customer [lookup] (field: customer) <PERMISSIONS>
+  Market Segment [lookup] (field: market_segment) <PERMISSIONS>
+  Industry Type [lookup] (field: industry) <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+  Territory [lookup] (field: territory) <PERMISSIONS>
+Lost Reason Detail [root]
+  Opportunity Lost Reason [lookup] (field: lost_reason) <PERMISSIONS>
+Market Segment [root] <PERMISSIONS>
+Opportunity [root] <PERMISSIONS>
+  Opportunity Item [table_child] (field: items)
+    Item [lookup] (field: item_code) <PERMISSIONS>
+    Item Group [lookup] (field: item_group) <PERMISSIONS>
+    Brand [lookup] (field: brand) <PERMISSIONS>
+    UOM [lookup] (field: uom) <PERMISSIONS>
+  CRM Note [table_child] (field: notes)
+  Prospect Opportunity [named_child] (field: opportunity)
+    Opportunity [lookup] (field: opportunity) <PERMISSIONS>
+  Opportunity Type [lookup] (field: opportunity_type) <PERMISSIONS>
+  Sales Stage [lookup] (field: sales_stage) <PERMISSIONS>
+  Territory [lookup] (field: territory) <PERMISSIONS>
+  Customer Group [lookup] (field: customer_group) <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+  Opportunity [lookup] (field: amended_from) <PERMISSIONS>
+  Industry Type [lookup] (field: industry) <PERMISSIONS>
+  Market Segment [lookup] (field: market_segment) <PERMISSIONS>
+Opportunity Lost Reason [root] <PERMISSIONS>
+  Opportunity Lost Reason Detail [named_child] (field: lost_reason)
+    Opportunity Lost Reason [lookup] (field: lost_reason) <PERMISSIONS>
+Opportunity Type [root] <PERMISSIONS>
+Prospect [root] <PERMISSIONS>
+  Prospect Opportunity [table_child] (field: opportunities)
+    Opportunity [lookup] (field: opportunity) <PERMISSIONS>
+  Prospect Lead [table_child] (field: leads)
+    Lead [lookup] (field: lead) <PERMISSIONS>
+  CRM Note [table_child] (field: notes)
+  Industry Type [lookup] (field: industry) <PERMISSIONS>
+  Market Segment [lookup] (field: market_segment) <PERMISSIONS>
+  Customer Group [lookup] (field: customer_group) <PERMISSIONS>
+  Territory [lookup] (field: territory) <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+Sales Stage [root] <PERMISSIONS>
+Code List [root] <PERMISSIONS>
+  Common Code [lookup] (field: default_common_code) <PERMISSIONS>
+Common Code [root] <PERMISSIONS>
+  Code List [lookup] (field: code_list) <PERMISSIONS>
+Plaid Settings [root] <PERMISSIONS>
+Maintenance Schedule [root] <PERMISSIONS>
+  Maintenance Schedule Item [table_child] (field: items)
+    Item [lookup] (field: item_code) <PERMISSIONS>
+    Sales Person [lookup] (field: sales_person) <PERMISSIONS>
+    Sales Order [lookup] (field: sales_order) <PERMISSIONS>
+    Serial and Batch Bundle [lookup] (field: serial_and_batch_bundle) <PERMISSIONS>
+  Maintenance Schedule Detail [table_child] (field: schedules)
+    Item [lookup] (field: item_code) <PERMISSIONS>
+    Sales Person [lookup] (field: sales_person) <PERMISSIONS>
+    Maintenance Schedule Item [lookup] (field: item_reference)
+  Customer [lookup] (field: customer) <PERMISSIONS>
+  Territory [lookup] (field: territory) <PERMISSIONS>
+  Customer Group [lookup] (field: customer_group) <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+  Maintenance Schedule [lookup] (field: amended_from) <PERMISSIONS>
+Maintenance Visit [root] <PERMISSIONS>
+  Maintenance Visit Purpose [table_child] (field: purposes)
+    Item [lookup] (field: item_code) <PERMISSIONS>
+    Serial No [lookup] (field: serial_no) <PERMISSIONS>
+    Sales Person [lookup] (field: service_person) <PERMISSIONS>
+  Customer [lookup] (field: customer) <PERMISSIONS>
+  Maintenance Visit [lookup] (field: amended_from) <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+  Territory [lookup] (field: territory) <PERMISSIONS>
+  Customer Group [lookup] (field: customer_group) <PERMISSIONS>
+  Maintenance Schedule [lookup] (field: maintenance_schedule) <PERMISSIONS>
+  Maintenance Schedule Detail [lookup] (field: maintenance_schedule_detail)
+Blanket Order [root] <PERMISSIONS>
+  Blanket Order Item [table_child] (field: items)
+    Item [lookup] (field: item_code) <PERMISSIONS>
+  Customer [lookup] (field: customer) <PERMISSIONS>
+  Supplier [lookup] (field: supplier) <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+  Blanket Order [lookup] (field: amended_from) <PERMISSIONS>
+  Terms and Conditions [lookup] (field: tc_name) <PERMISSIONS>
+BOM [root] <PERMISSIONS>
+  BOM Operation [table_child] (field: operations)
+    Operation [lookup] (field: operation) <PERMISSIONS>
+    Workstation [lookup] (field: workstation) <PERMISSIONS>
+    Workstation Type [lookup] (field: workstation_type) <PERMISSIONS>
+    Item [lookup] (field: finished_good) <PERMISSIONS>
+    BOM [lookup] (field: bom_no) <PERMISSIONS>
+    Warehouse [lookup] (field: wip_warehouse) <PERMISSIONS>
+  BOM Item [table_child] (field: items)
+    Item [lookup] (field: item_code) <PERMISSIONS>
+    Operation [lookup] (field: operation) <PERMISSIONS>
+    BOM [lookup] (field: bom_no) <PERMISSIONS>
+    Warehouse [lookup] (field: source_warehouse) <PERMISSIONS>
+    UOM [lookup] (field: uom) <PERMISSIONS>
+  BOM Scrap Item [table_child] (field: scrap_items)
+    Item [lookup] (field: item_code) <PERMISSIONS>
+    UOM [lookup] (field: stock_uom) <PERMISSIONS>
+  BOM Explosion Item [table_child] (field: exploded_items)
+    Item [lookup] (field: item_code) <PERMISSIONS>
+    Warehouse [lookup] (field: source_warehouse) <PERMISSIONS>
+    Operation [lookup] (field: operation) <PERMISSIONS>
+    UOM [lookup] (field: stock_uom) <PERMISSIONS>
+  BOM Update Log [named_child] (field: current_bom) <PERMISSIONS>
+    BOM Update Batch [table_child] (field: bom_batches)
+    BOM [lookup] (field: current_bom) <PERMISSIONS>
+    BOM Update Log [lookup] (field: amended_from) <PERMISSIONS>
+  BOM Update Tool [named_child] (field: current_bom) <PERMISSIONS>
+    BOM [lookup] (field: current_bom) <PERMISSIONS>
+  Subcontracting BOM [named_child] (field: finished_good_bom) <PERMISSIONS>
+    Item [lookup] (field: finished_good) <PERMISSIONS>
+    BOM [lookup] (field: finished_good_bom) <PERMISSIONS>
+    UOM [lookup] (field: service_item_uom) <PERMISSIONS>
+  Item [lookup] (field: item) <PERMISSIONS>
+  UOM [lookup] (field: uom) <PERMISSIONS>
+  Quality Inspection Template [lookup] (field: quality_inspection_template) <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+  Price List [lookup] (field: buying_price_list) <PERMISSIONS>
+  Routing [lookup] (field: routing) <PERMISSIONS>
+  Project [lookup] (field: project) <PERMISSIONS>
+  BOM [lookup] (field: amended_from) <PERMISSIONS>
+  BOM Creator [lookup] (field: bom_creator) <PERMISSIONS>
+  Warehouse [lookup] (field: default_source_warehouse) <PERMISSIONS>
+BOM Creator [root] <PERMISSIONS>
+  BOM Creator Item [table_child] (field: items)
+    Item [lookup] (field: item_code) <PERMISSIONS>
+    Item Group [lookup] (field: item_group) <PERMISSIONS>
+    UOM [lookup] (field: uom) <PERMISSIONS>
+    Operation [lookup] (field: operation) <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+  Price List [lookup] (field: buying_price_list) <PERMISSIONS>
+  Project [lookup] (field: project) <PERMISSIONS>
+  Item [lookup] (field: item_code) <PERMISSIONS>
+  UOM [lookup] (field: uom) <PERMISSIONS>
+  Item Group [lookup] (field: item_group) <PERMISSIONS>
+  BOM Creator [lookup] (field: amended_from) <PERMISSIONS>
+  Warehouse [lookup] (field: default_warehouse) <PERMISSIONS>
+  Routing [lookup] (field: routing) <PERMISSIONS>
+Downtime Entry [root] <PERMISSIONS>
+  Workstation [lookup] (field: workstation) <PERMISSIONS>
+  Employee [lookup] (field: operator) <PERMISSIONS>
+Job Card [root] <PERMISSIONS>
+  Job Card Time Log [table_child] (field: time_logs)
+    Employee [lookup] (field: employee) <PERMISSIONS>
+    Operation [lookup] (field: operation) <PERMISSIONS>
+  Job Card Item [table_child] (field: items)
+    Item [lookup] (field: item_code) <PERMISSIONS>
+    Warehouse [lookup] (field: source_warehouse) <PERMISSIONS>
+    UOM [lookup] (field: uom) <PERMISSIONS>
+    Item Group [lookup] (field: item_group) <PERMISSIONS>
+  Job Card Operation [table_child] (field: sub_operations)
+    Operation [lookup] (field: sub_operation) <PERMISSIONS>
+  Job Card Scrap Item [table_child] (field: scrap_items)
+    Item [lookup] (field: item_code) <PERMISSIONS>
+    UOM [lookup] (field: stock_uom) <PERMISSIONS>
+  Job Card Scheduled Time [table_child] (field: scheduled_time_logs)
+  Work Order [lookup] (field: work_order) <PERMISSIONS>
+  BOM [lookup] (field: bom_no) <PERMISSIONS>
+  Workstation [lookup] (field: workstation) <PERMISSIONS>
+  Operation [lookup] (field: operation) <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+  Warehouse [lookup] (field: wip_warehouse) <PERMISSIONS>
+  Project [lookup] (field: project) <PERMISSIONS>
+  Job Card [lookup] (field: amended_from) <PERMISSIONS>
+  Item [lookup] (field: production_item) <PERMISSIONS>
+  Quality Inspection [lookup] (field: quality_inspection) <PERMISSIONS>
+  Batch [lookup] (field: batch_no) <PERMISSIONS>
+  Quality Inspection Template [lookup] (field: quality_inspection_template) <PERMISSIONS>
+  Workstation Type [lookup] (field: workstation_type) <PERMISSIONS>
+  Serial and Batch Bundle [lookup] (field: serial_and_batch_bundle) <PERMISSIONS>
+Manufacturing Settings [root] <PERMISSIONS>
+  Warehouse [lookup] (field: default_wip_warehouse) <PERMISSIONS>
+Operation [root] <PERMISSIONS>
+  Sub Operation [table_child] (field: sub_operations)
+    Operation [lookup] (field: operation) <PERMISSIONS>
+  BOM Operation [named_child] (field: operation)
+    Operation [lookup] (field: operation) <PERMISSIONS>
+    Workstation [lookup] (field: workstation) <PERMISSIONS>
+    Workstation Type [lookup] (field: workstation_type) <PERMISSIONS>
+    Item [lookup] (field: finished_good) <PERMISSIONS>
+    BOM [lookup] (field: bom_no) <PERMISSIONS>
+    Warehouse [lookup] (field: wip_warehouse) <PERMISSIONS>
+  BOM Website Operation [named_child] (field: operation)
+    Operation [lookup] (field: operation) <PERMISSIONS>
+    Workstation [lookup] (field: workstation) <PERMISSIONS>
+  Job Card Operation [named_child] (field: sub_operation)
+    Operation [lookup] (field: sub_operation) <PERMISSIONS>
+  Work Order Operation [named_child] (field: operation)
+    Operation [lookup] (field: operation) <PERMISSIONS>
+    BOM [lookup] (field: bom) <PERMISSIONS>
+    Workstation [lookup] (field: workstation) <PERMISSIONS>
+    Workstation Type [lookup] (field: workstation_type) <PERMISSIONS>
+    Item [lookup] (field: finished_good) <PERMISSIONS>
+    Warehouse [lookup] (field: wip_warehouse) <PERMISSIONS>
+  Workstation [lookup] (field: workstation) <PERMISSIONS>
+  Quality Inspection Template [lookup] (field: quality_inspection_template) <PERMISSIONS>
+Plant Floor [root] <PERMISSIONS>
+  Warehouse [lookup] (field: warehouse) <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+Production Plan [root] <PERMISSIONS>
+  Production Plan Sales Order [table_child] (field: sales_orders)
+    Sales Order [lookup] (field: sales_order) <PERMISSIONS>
+    Customer [lookup] (field: customer) <PERMISSIONS>
+  Production Plan Material Request [table_child] (field: material_requests)
+    Material Request [lookup] (field: material_request) <PERMISSIONS>
+  Production Plan Item [table_child] (field: po_items)
+    Item [lookup] (field: item_code) <PERMISSIONS>
+    BOM [lookup] (field: bom_no) <PERMISSIONS>
+    Warehouse [lookup] (field: warehouse) <PERMISSIONS>
+    UOM [lookup] (field: stock_uom) <PERMISSIONS>
+    Sales Order [lookup] (field: sales_order) <PERMISSIONS>
+    Material Request [lookup] (field: material_request) <PERMISSIONS>
+  Material Request Plan Item [table_child] (field: mr_items)
+    Item [lookup] (field: item_code) <PERMISSIONS>
+    Warehouse [lookup] (field: warehouse) <PERMISSIONS>
+    Sales Order [lookup] (field: sales_order) <PERMISSIONS>
+    UOM [lookup] (field: uom) <PERMISSIONS>
+  Production Plan Item Reference [table_child] (field: prod_plan_references)
+    Sales Order [lookup] (field: sales_order) <PERMISSIONS>
+  Production Plan Sub Assembly Item [table_child] (field: sub_assembly_items)
+    Purchase Order [lookup] (field: purchase_order) <PERMISSIONS>
+    BOM [lookup] (field: bom_no) <PERMISSIONS>
+    Item [lookup] (field: parent_item_code) <PERMISSIONS>
+    UOM [lookup] (field: uom) <PERMISSIONS>
+    Warehouse [lookup] (field: fg_warehouse) <PERMISSIONS>
+    Supplier [lookup] (field: supplier) <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+  Item [lookup] (field: item_code) <PERMISSIONS>
+  Customer [lookup] (field: customer) <PERMISSIONS>
+  Warehouse [lookup] (field: warehouse) <PERMISSIONS>
+  Project [lookup] (field: project) <PERMISSIONS>
+  Production Plan [lookup] (field: amended_from) <PERMISSIONS>
+Routing [root] <PERMISSIONS>
+  BOM Operation [table_child] (field: operations)
+    Operation [lookup] (field: operation) <PERMISSIONS>
+    Workstation [lookup] (field: workstation) <PERMISSIONS>
+    Workstation Type [lookup] (field: workstation_type) <PERMISSIONS>
+    Item [lookup] (field: finished_good) <PERMISSIONS>
+    BOM [lookup] (field: bom_no) <PERMISSIONS>
+    Warehouse [lookup] (field: wip_warehouse) <PERMISSIONS>
+Workstation [root] <PERMISSIONS>
+  Workstation Working Hour [table_child] (field: working_hours)
+  Holiday List [lookup] (field: holiday_list) <PERMISSIONS>
+  Workstation Type [lookup] (field: workstation_type) <PERMISSIONS>
+  Plant Floor [lookup] (field: plant_floor) <PERMISSIONS>
+  Warehouse [lookup] (field: warehouse) <PERMISSIONS>
+Workstation Type [root] <PERMISSIONS>
+Work Order [root] <PERMISSIONS>
+  Work Order Item [table_child] (field: required_items)
+    Operation [lookup] (field: operation) <PERMISSIONS>
+    Item [lookup] (field: item_code) <PERMISSIONS>
+    Warehouse [lookup] (field: source_warehouse) <PERMISSIONS>
+    UOM [lookup] (field: stock_uom) <PERMISSIONS>
+  Work Order Operation [table_child] (field: operations)
+    Operation [lookup] (field: operation) <PERMISSIONS>
+    BOM [lookup] (field: bom) <PERMISSIONS>
+    Workstation [lookup] (field: workstation) <PERMISSIONS>
+    Workstation Type [lookup] (field: workstation_type) <PERMISSIONS>
+    Item [lookup] (field: finished_good) <PERMISSIONS>
+    Warehouse [lookup] (field: wip_warehouse) <PERMISSIONS>
+  Item [lookup] (field: production_item) <PERMISSIONS>
+  BOM [lookup] (field: bom_no) <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+  Sales Order [lookup] (field: sales_order) <PERMISSIONS>
+  Project [lookup] (field: project) <PERMISSIONS>
+  Warehouse [lookup] (field: wip_warehouse) <PERMISSIONS>
+  UOM [lookup] (field: stock_uom) <PERMISSIONS>
+  Material Request [lookup] (field: material_request) <PERMISSIONS>
+  Production Plan [lookup] (field: production_plan) <PERMISSIONS>
+  Work Order [lookup] (field: amended_from) <PERMISSIONS>
+Website Attribute [root]
+  Item Attribute [lookup] (field: attribute) <PERMISSIONS>
+Website Filter Field [root]
+Activity Cost [root] <PERMISSIONS>
+  Activity Type [lookup] (field: activity_type) <PERMISSIONS>
+  Employee [lookup] (field: employee) <PERMISSIONS>
+  Department [lookup] (field: department) <PERMISSIONS>
+Activity Type [root] <PERMISSIONS>
+Project [root] <PERMISSIONS>
+  Project User [table_child] (field: users)
+  PSOA Project [named_child] (field: project_name)
+    Project [lookup] (field: project_name) <PERMISSIONS>
+  Project Update [named_child] (field: project) <PERMISSIONS>
+    Project User [table_child] (field: users)
+    Project [lookup] (field: project) <PERMISSIONS>
+    Project Update [lookup] (field: amended_from) <PERMISSIONS>
+  Project Type [lookup] (field: project_type) <PERMISSIONS>
+  Project Template [lookup] (field: project_template) <PERMISSIONS>
+  Department [lookup] (field: department) <PERMISSIONS>
+  Customer [lookup] (field: customer) <PERMISSIONS>
+  Sales Order [lookup] (field: sales_order) <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+  Cost Center [lookup] (field: cost_center) <PERMISSIONS>
+  Holiday List [lookup] (field: holiday_list) <PERMISSIONS>
+Projects Settings [root] <PERMISSIONS>
+Project Template [root] <PERMISSIONS>
+  Project Template Task [table_child] (field: tasks)
+    Task [lookup] (field: task) <PERMISSIONS>
+  Project Type [lookup] (field: project_type) <PERMISSIONS>
+Project Type [root] <PERMISSIONS>
+Task [root] <PERMISSIONS>
+  Task Depends On [table_child] (field: depends_on)
+    Task [lookup] (field: task) <PERMISSIONS>
+  Dependent Task [named_child] (field: task)
+    Task [lookup] (field: task) <PERMISSIONS>
+  Project Template Task [named_child] (field: task)
+    Task [lookup] (field: task) <PERMISSIONS>
+  Project [lookup] (field: project) <PERMISSIONS>
+  Issue [lookup] (field: issue) <PERMISSIONS>
+  Task Type [lookup] (field: type) <PERMISSIONS>
+  Task [lookup] (field: parent_task) <PERMISSIONS>
+  Department [lookup] (field: department) <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+Task Type [root] <PERMISSIONS>
+Timesheet [root] <PERMISSIONS>
+  Timesheet Detail [table_child] (field: time_logs)
+    Activity Type [lookup] (field: activity_type) <PERMISSIONS>
+    Project [lookup] (field: project) <PERMISSIONS>
+    Task [lookup] (field: task) <PERMISSIONS>
+    Sales Invoice [lookup] (field: sales_invoice) <PERMISSIONS>
+  Sales Invoice Timesheet [named_child] (field: time_sheet)
+    Timesheet [lookup] (field: time_sheet) <PERMISSIONS>
+    Activity Type [lookup] (field: activity_type) <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+  Sales Invoice [lookup] (field: sales_invoice) <PERMISSIONS>
+  Employee [lookup] (field: employee) <PERMISSIONS>
+  Department [lookup] (field: department) <PERMISSIONS>
+  Timesheet [lookup] (field: amended_from) <PERMISSIONS>
+  Project [lookup] (field: parent_project) <PERMISSIONS>
+  Customer [lookup] (field: customer) <PERMISSIONS>
+Non Conformance [root] <PERMISSIONS>
+  Quality Procedure [lookup] (field: procedure) <PERMISSIONS>
+Quality Action [root] <PERMISSIONS>
+  Quality Action Resolution [table_child] (field: resolutions)
+  Quality Goal [lookup] (field: goal) <PERMISSIONS>
+  Quality Procedure [lookup] (field: procedure) <PERMISSIONS>
+  Quality Review [lookup] (field: review) <PERMISSIONS>
+  Quality Feedback [lookup] (field: feedback) <PERMISSIONS>
+Quality Feedback [root] <PERMISSIONS>
+  Quality Feedback Parameter [table_child] (field: parameters)
+  Quality Feedback Template [lookup] (field: template) <PERMISSIONS>
+Quality Feedback Template [root] <PERMISSIONS>
+  Quality Feedback Template Parameter [table_child] (field: parameters)
+Quality Goal [root] <PERMISSIONS>
+  Quality Goal Objective [table_child] (field: objectives)
+    UOM [lookup] (field: uom) <PERMISSIONS>
+  Quality Procedure [lookup] (field: procedure) <PERMISSIONS>
+Quality Meeting [root] <PERMISSIONS>
+  Quality Meeting Minutes [table_child] (field: minutes)
+  Quality Meeting Agenda [table_child] (field: agenda)
+Quality Procedure [root] <PERMISSIONS>
+  Quality Procedure Process [table_child] (field: processes)
+    Quality Procedure [lookup] (field: procedure) <PERMISSIONS>
+  Quality Procedure [lookup] (field: parent_quality_procedure) <PERMISSIONS>
+Quality Review [root] <PERMISSIONS>
+  Quality Review Objective [table_child] (field: reviews)
+    UOM [lookup] (field: uom) <PERMISSIONS>
+  Quality Procedure [lookup] (field: procedure) <PERMISSIONS>
+  Quality Goal [lookup] (field: goal) <PERMISSIONS>
+Import Supplier Invoice [root]
+  Company [lookup] (field: company) <PERMISSIONS>
+  Item [lookup] (field: item_code) <PERMISSIONS>
+  Supplier Group [lookup] (field: supplier_group) <PERMISSIONS>
+  Account [lookup] (field: tax_account) <PERMISSIONS>
+  Price List [lookup] (field: default_buying_price_list) <PERMISSIONS>
+Lower Deduction Certificate [root] <PERMISSIONS>
+  Supplier [lookup] (field: supplier) <PERMISSIONS>
+  Fiscal Year [lookup] (field: fiscal_year) <PERMISSIONS>
+  Tax Withholding Category [lookup] (field: tax_withholding_category) <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+South Africa VAT Settings [root] <PERMISSIONS>
+  South Africa VAT Account [table_child] (field: vat_accounts)
+    Account [lookup] (field: account) <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+UAE VAT Settings [root]
+  UAE VAT Account [table_child] (field: uae_vat_accounts)
+    Account [lookup] (field: account) <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+Customer [root] <PERMISSIONS>
+  Allowed To Transact With [table_child] (field: companies)
+    Company [lookup] (field: company) <PERMISSIONS>
+  Party Account [table_child] (field: accounts)
+    Company [lookup] (field: company) <PERMISSIONS>
+    Account [lookup] (field: account) <PERMISSIONS>
+  Sales Team [table_child] (field: sales_team)
+    Sales Person [lookup] (field: sales_person) <PERMISSIONS>
+  Customer Credit Limit [table_child] (field: credit_limits)
+    Company [lookup] (field: company) <PERMISSIONS>
+  Portal User [table_child] (field: portal_users)
+  Customer Item [named_child] (field: customer)
+    Customer [lookup] (field: customer) <PERMISSIONS>
+  Process Statement Of Accounts Customer [named_child] (field: customer)
+    Customer [lookup] (field: customer) <PERMISSIONS>
+  Item Customer Detail [named_child] (field: customer_name)
+    Customer [lookup] (field: customer_name) <PERMISSIONS>
+    Customer Group [lookup] (field: customer_group) <PERMISSIONS>
+  Bank Account [lookup] (field: default_bank_account) <PERMISSIONS>
+  Lead [lookup] (field: lead_name) <PERMISSIONS>
+  Customer Group [lookup] (field: customer_group) <PERMISSIONS>
+  Territory [lookup] (field: territory) <PERMISSIONS>
+  Tax Category [lookup] (field: tax_category) <PERMISSIONS>
+  Company [lookup] (field: represents_company) <PERMISSIONS>
+  Price List [lookup] (field: default_price_list) <PERMISSIONS>
+  Payment Terms Template [lookup] (field: payment_terms) <PERMISSIONS>
+  Market Segment [lookup] (field: market_segment) <PERMISSIONS>
+  Industry Type [lookup] (field: industry) <PERMISSIONS>
+  Loyalty Program [lookup] (field: loyalty_program) <PERMISSIONS>
+  Sales Partner [lookup] (field: default_sales_partner) <PERMISSIONS>
+  Tax Withholding Category [lookup] (field: tax_withholding_category) <PERMISSIONS>
+  Opportunity [lookup] (field: opportunity_name) <PERMISSIONS>
+  Prospect [lookup] (field: prospect_name) <PERMISSIONS>
+Industry Type [root] <PERMISSIONS>
+Installation Note [root] <PERMISSIONS>
+  Installation Note Item [table_child] (field: items)
+    Item [lookup] (field: item_code) <PERMISSIONS>
+    Serial and Batch Bundle [lookup] (field: serial_and_batch_bundle) <PERMISSIONS>
+  Customer [lookup] (field: customer) <PERMISSIONS>
+  Territory [lookup] (field: territory) <PERMISSIONS>
+  Customer Group [lookup] (field: customer_group) <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+  Installation Note [lookup] (field: amended_from) <PERMISSIONS>
+  Project [lookup] (field: project) <PERMISSIONS>
+Party Specific Item [root] <PERMISSIONS>
+Product Bundle [root] <PERMISSIONS>
+  Product Bundle Item [table_child] (field: items)
+    Item [lookup] (field: item_code) <PERMISSIONS>
+    UOM [lookup] (field: uom) <PERMISSIONS>
+  Item [lookup] (field: new_item_code) <PERMISSIONS>
+Quotation [root] <PERMISSIONS>
+  Quotation Item [table_child] (field: items)
+    Item [lookup] (field: item_code) <PERMISSIONS>
+    UOM [lookup] (field: stock_uom) <PERMISSIONS>
+    Warehouse [lookup] (field: warehouse) <PERMISSIONS>
+    Item Tax Template [lookup] (field: item_tax_template) <PERMISSIONS>
+    Item Group [lookup] (field: item_group) <PERMISSIONS>
+    Brand [lookup] (field: brand) <PERMISSIONS>
+    Blanket Order [lookup] (field: blanket_order) <PERMISSIONS>
+  Pricing Rule Detail [table_child] (field: pricing_rules)
+    Pricing Rule [lookup] (field: pricing_rule) <PERMISSIONS>
+  Sales Taxes and Charges [table_child] (field: taxes)
+    Account [lookup] (field: account_head) <PERMISSIONS>
+    Cost Center [lookup] (field: cost_center) <PERMISSIONS>
+  Payment Schedule [table_child] (field: payment_schedule)
+    Payment Term [lookup] (field: payment_term) <PERMISSIONS>
+    Mode of Payment [lookup] (field: mode_of_payment) <PERMISSIONS>
+  Packed Item [table_child] (field: packed_items)
+    Item [lookup] (field: parent_item) <PERMISSIONS>
+    Warehouse [lookup] (field: warehouse) <PERMISSIONS>
+    Batch [lookup] (field: batch_no) <PERMISSIONS>
+    UOM [lookup] (field: uom) <PERMISSIONS>
+    Serial and Batch Bundle [lookup] (field: serial_and_batch_bundle) <PERMISSIONS>
+  Quotation [lookup] (field: amended_from) <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+  Customer Group [lookup] (field: customer_group) <PERMISSIONS>
+  Territory [lookup] (field: territory) <PERMISSIONS>
+  Price List [lookup] (field: selling_price_list) <PERMISSIONS>
+  Tax Category [lookup] (field: tax_category) <PERMISSIONS>
+  Shipping Rule [lookup] (field: shipping_rule) <PERMISSIONS>
+  Sales Taxes and Charges Template [lookup] (field: taxes_and_charges) <PERMISSIONS>
+  Coupon Code [lookup] (field: coupon_code) <PERMISSIONS>
+  Sales Partner [lookup] (field: referral_sales_partner) <PERMISSIONS>
+  Payment Terms Template [lookup] (field: payment_terms_template) <PERMISSIONS>
+  Terms and Conditions [lookup] (field: tc_name) <PERMISSIONS>
+  Print Heading [lookup] (field: select_print_heading) <PERMISSIONS>
+  Supplier Quotation [lookup] (field: supplier_quotation) <PERMISSIONS>
+  Opportunity [lookup] (field: opportunity) <PERMISSIONS>
+  Incoterm [lookup] (field: incoterm) <PERMISSIONS>
+Sales Order [root] <PERMISSIONS>
+  Sales Order Item [table_child] (field: items)
+    Item [lookup] (field: item_code) <PERMISSIONS>
+    UOM [lookup] (field: stock_uom) <PERMISSIONS>
+    Supplier [lookup] (field: supplier) <PERMISSIONS>
+    Warehouse [lookup] (field: warehouse) <PERMISSIONS>
+    Quotation [lookup] (field: prevdoc_docname) <PERMISSIONS>
+    Brand [lookup] (field: brand) <PERMISSIONS>
+    Item Group [lookup] (field: item_group) <PERMISSIONS>
+    Blanket Order [lookup] (field: blanket_order) <PERMISSIONS>
+    Item Tax Template [lookup] (field: item_tax_template) <PERMISSIONS>
+    BOM [lookup] (field: bom_no) <PERMISSIONS>
+    Purchase Order [lookup] (field: purchase_order) <PERMISSIONS>
+    Material Request [lookup] (field: material_request) <PERMISSIONS>
+    Cost Center [lookup] (field: cost_center) <PERMISSIONS>
+    Project [lookup] (field: project) <PERMISSIONS>
+  Pricing Rule Detail [table_child] (field: pricing_rules)
+    Pricing Rule [lookup] (field: pricing_rule) <PERMISSIONS>
+  Sales Taxes and Charges [table_child] (field: taxes)
+    Account [lookup] (field: account_head) <PERMISSIONS>
+    Cost Center [lookup] (field: cost_center) <PERMISSIONS>
+  Packed Item [table_child] (field: packed_items)
+    Item [lookup] (field: parent_item) <PERMISSIONS>
+    Warehouse [lookup] (field: warehouse) <PERMISSIONS>
+    Batch [lookup] (field: batch_no) <PERMISSIONS>
+    UOM [lookup] (field: uom) <PERMISSIONS>
+    Serial and Batch Bundle [lookup] (field: serial_and_batch_bundle) <PERMISSIONS>
+  Payment Schedule [table_child] (field: payment_schedule)
+    Payment Term [lookup] (field: payment_term) <PERMISSIONS>
+    Mode of Payment [lookup] (field: mode_of_payment) <PERMISSIONS>
+  Sales Team [table_child] (field: sales_team)
+    Sales Person [lookup] (field: sales_person) <PERMISSIONS>
+  Production Plan Sales Order [named_child] (field: sales_order)
+    Sales Order [lookup] (field: sales_order) <PERMISSIONS>
+    Customer [lookup] (field: customer) <PERMISSIONS>
+  Customer [lookup] (field: customer) <PERMISSIONS>
+  Sales Order [lookup] (field: amended_from) <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+  Customer Group [lookup] (field: customer_group) <PERMISSIONS>
+  Territory [lookup] (field: territory) <PERMISSIONS>
+  Price List [lookup] (field: selling_price_list) <PERMISSIONS>
+  Warehouse [lookup] (field: set_warehouse) <PERMISSIONS>
+  Tax Category [lookup] (field: tax_category) <PERMISSIONS>
+  Shipping Rule [lookup] (field: shipping_rule) <PERMISSIONS>
+  Sales Taxes and Charges Template [lookup] (field: taxes_and_charges) <PERMISSIONS>
+  Coupon Code [lookup] (field: coupon_code) <PERMISSIONS>
+  Payment Terms Template [lookup] (field: payment_terms_template) <PERMISSIONS>
+  Terms and Conditions [lookup] (field: tc_name) <PERMISSIONS>
+  Purchase Order [lookup] (field: inter_company_order_reference) <PERMISSIONS>
+  Project [lookup] (field: project) <PERMISSIONS>
+  Print Heading [lookup] (field: select_print_heading) <PERMISSIONS>
+  Sales Partner [lookup] (field: sales_partner) <PERMISSIONS>
+  Cost Center [lookup] (field: cost_center) <PERMISSIONS>
+  Incoterm [lookup] (field: incoterm) <PERMISSIONS>
+Sales Partner Type [root] <PERMISSIONS>
+Selling Settings [root] <PERMISSIONS>
+  Customer Group [lookup] (field: customer_group) <PERMISSIONS>
+  Territory [lookup] (field: territory) <PERMISSIONS>
+  Price List [lookup] (field: selling_price_list) <PERMISSIONS>
+SMS Center [root] <PERMISSIONS>
+  Customer [lookup] (field: customer) <PERMISSIONS>
+  Supplier [lookup] (field: supplier) <PERMISSIONS>
+  Sales Partner [lookup] (field: sales_partner) <PERMISSIONS>
+  Department [lookup] (field: department) <PERMISSIONS>
+  Branch [lookup] (field: branch) <PERMISSIONS>
+Authorization Control [root]
+Authorization Rule [root] <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+  Employee [lookup] (field: to_emp) <PERMISSIONS>
+  Designation [lookup] (field: to_designation) <PERMISSIONS>
+Branch [root] <PERMISSIONS>
+Brand [root] <PERMISSIONS>
+  Item Default [table_child] (field: brand_defaults)
+    Company [lookup] (field: company) <PERMISSIONS>
+    Warehouse [lookup] (field: default_warehouse) <PERMISSIONS>
+    Price List [lookup] (field: default_price_list) <PERMISSIONS>
+    Cost Center [lookup] (field: buying_cost_center) <PERMISSIONS>
+    Supplier [lookup] (field: default_supplier) <PERMISSIONS>
+    Account [lookup] (field: expense_account) <PERMISSIONS>
+  Pricing Rule Brand [named_child] (field: brand)
+    Brand [lookup] (field: brand) <PERMISSIONS>
+    UOM [lookup] (field: uom) <PERMISSIONS>
+Company [root] <PERMISSIONS>
+  Fiscal Year Company [named_child] (field: company)
+    Company [lookup] (field: company) <PERMISSIONS>
+  Ledger Health Monitor Company [named_child] (field: company)
+    Company [lookup] (field: company) <PERMISSIONS>
+  Finance Book [lookup] (field: default_finance_book) <PERMISSIONS>
+  Company [lookup] (field: parent_company) <PERMISSIONS>
+  Holiday List [lookup] (field: default_holiday_list) <PERMISSIONS>
+  Warehouse [lookup] (field: default_warehouse_for_sales_return) <PERMISSIONS>
+  Account [lookup] (field: default_bank_account) <PERMISSIONS>
+  Cost Center [lookup] (field: round_off_cost_center) <PERMISSIONS>
+  Payment Terms Template [lookup] (field: payment_terms) <PERMISSIONS>
+  Terms and Conditions [lookup] (field: default_selling_terms) <PERMISSIONS>
+Currency Exchange [root] <PERMISSIONS>
+Customer Group [root] <PERMISSIONS>
+  Party Account [table_child] (field: accounts)
+    Company [lookup] (field: company) <PERMISSIONS>
+    Account [lookup] (field: account) <PERMISSIONS>
+  Customer Credit Limit [table_child] (field: credit_limits)
+    Company [lookup] (field: company) <PERMISSIONS>
+  Customer Group Item [named_child] (field: customer_group)
+    Customer Group [lookup] (field: customer_group) <PERMISSIONS>
+  POS Customer Group [named_child] (field: customer_group)
+    Customer Group [lookup] (field: customer_group) <PERMISSIONS>
+  Customer Group [lookup] (field: parent_customer_group) <PERMISSIONS>
+  Price List [lookup] (field: default_price_list) <PERMISSIONS>
+  Payment Terms Template [lookup] (field: payment_terms) <PERMISSIONS>
+Department [root] <PERMISSIONS>
+  Department [lookup] (field: parent_department) <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+Designation [root] <PERMISSIONS>
+Driver [root] <PERMISSIONS>
+  Driving License Category [table_child] (field: driving_license_category)
+  Supplier [lookup] (field: transporter) <PERMISSIONS>
+  Employee [lookup] (field: employee) <PERMISSIONS>
+Email Digest [root] <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+Email Digest Recipient [root]
+Employee [root] <PERMISSIONS>
+  Employee Education [table_child] (field: education)
+  Employee External Work History [table_child] (field: external_work_history)
+  Employee Internal Work History [table_child] (field: internal_work_history)
+    Branch [lookup] (field: branch) <PERMISSIONS>
+    Department [lookup] (field: department) <PERMISSIONS>
+    Designation [lookup] (field: designation) <PERMISSIONS>
+  Employee Group Table [named_child] (field: employee)
+    Employee [lookup] (field: employee) <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+  Department [lookup] (field: department) <PERMISSIONS>
+  Designation [lookup] (field: designation) <PERMISSIONS>
+  Employee [lookup] (field: reports_to) <PERMISSIONS>
+  Branch [lookup] (field: branch) <PERMISSIONS>
+  Holiday List [lookup] (field: holiday_list) <PERMISSIONS>
+Employee Group [root] <PERMISSIONS>
+  Employee Group Table [table_child] (field: employee_list)
+    Employee [lookup] (field: employee) <PERMISSIONS>
+Global Defaults [root] <PERMISSIONS>
+  Company [lookup] (field: default_company) <PERMISSIONS>
+  UOM [lookup] (field: default_distance_unit) <PERMISSIONS>
+Holiday List [root] <PERMISSIONS>
+  Holiday [table_child] (field: holidays)
+Incoterm [root] <PERMISSIONS>
+Item Group [root] <PERMISSIONS>
+  Item Default [table_child] (field: item_group_defaults)
+    Company [lookup] (field: company) <PERMISSIONS>
+    Warehouse [lookup] (field: default_warehouse) <PERMISSIONS>
+    Price List [lookup] (field: default_price_list) <PERMISSIONS>
+    Cost Center [lookup] (field: buying_cost_center) <PERMISSIONS>
+    Supplier [lookup] (field: default_supplier) <PERMISSIONS>
+    Account [lookup] (field: expense_account) <PERMISSIONS>
+  Item Tax [table_child] (field: taxes)
+    Item Tax Template [lookup] (field: item_tax_template) <PERMISSIONS>
+    Tax Category [lookup] (field: tax_category) <PERMISSIONS>
+  POS Item Group [named_child] (field: item_group)
+    Item Group [lookup] (field: item_group) <PERMISSIONS>
+  Pricing Rule Item Group [named_child] (field: item_group)
+    Item Group [lookup] (field: item_group) <PERMISSIONS>
+    UOM [lookup] (field: uom) <PERMISSIONS>
+  Website Item Group [named_child] (field: item_group)
+    Item Group [lookup] (field: item_group) <PERMISSIONS>
+  Item Group [lookup] (field: parent_item_group) <PERMISSIONS>
+Party Type [root] <PERMISSIONS>
+Print Heading [root] <PERMISSIONS>
+Quotation Lost Reason [root] <PERMISSIONS>
+  Quotation Lost Reason Detail [named_child] (field: lost_reason)
+    Quotation Lost Reason [lookup] (field: lost_reason) <PERMISSIONS>
+Sales Partner [root] <PERMISSIONS>
+  Target Detail [table_child] (field: targets)
+    Item Group [lookup] (field: item_group) <PERMISSIONS>
+    Fiscal Year [lookup] (field: fiscal_year) <PERMISSIONS>
+    Monthly Distribution [lookup] (field: distribution_id) <PERMISSIONS>
+  Sales Partner Item [named_child] (field: sales_partner)
+    Sales Partner [lookup] (field: sales_partner) <PERMISSIONS>
+  Sales Partner Type [lookup] (field: partner_type) <PERMISSIONS>
+  Territory [lookup] (field: territory) <PERMISSIONS>
+Sales Person [root] <PERMISSIONS>
+  Target Detail [table_child] (field: targets)
+    Item Group [lookup] (field: item_group) <PERMISSIONS>
+    Fiscal Year [lookup] (field: fiscal_year) <PERMISSIONS>
+    Monthly Distribution [lookup] (field: distribution_id) <PERMISSIONS>
+  Sales Person [lookup] (field: parent_sales_person) <PERMISSIONS>
+  Employee [lookup] (field: employee) <PERMISSIONS>
+  Department [lookup] (field: department) <PERMISSIONS>
+Supplier Group [root] <PERMISSIONS>
+  Party Account [table_child] (field: accounts)
+    Company [lookup] (field: company) <PERMISSIONS>
+    Account [lookup] (field: account) <PERMISSIONS>
+  Supplier Group Item [named_child] (field: supplier_group)
+    Supplier Group [lookup] (field: supplier_group) <PERMISSIONS>
+  Supplier Group [lookup] (field: parent_supplier_group) <PERMISSIONS>
+  Payment Terms Template [lookup] (field: payment_terms) <PERMISSIONS>
+Terms and Conditions [root] <PERMISSIONS>
+Territory [root] <PERMISSIONS>
+  Target Detail [table_child] (field: targets)
+    Item Group [lookup] (field: item_group) <PERMISSIONS>
+    Fiscal Year [lookup] (field: fiscal_year) <PERMISSIONS>
+    Monthly Distribution [lookup] (field: distribution_id) <PERMISSIONS>
+  Territory Item [named_child] (field: territory)
+    Territory [lookup] (field: territory) <PERMISSIONS>
+  Territory [lookup] (field: parent_territory) <PERMISSIONS>
+  Sales Person [lookup] (field: territory_manager) <PERMISSIONS>
+Transaction Deletion Record [root] <PERMISSIONS>
+  Transaction Deletion Record Details [table_child] (field: doctypes)
+  Transaction Deletion Record Item [table_child] (field: doctypes_to_be_ignored)
+  Company [lookup] (field: company) <PERMISSIONS>
+  Transaction Deletion Record [lookup] (field: amended_from) <PERMISSIONS>
+UOM [root] <PERMISSIONS>
+  UOM Conversion Factor [named_child] (field: from_uom) <PERMISSIONS>
+    UOM Category [lookup] (field: category) <PERMISSIONS>
+    UOM [lookup] (field: from_uom) <PERMISSIONS>
+  UOM Conversion Detail [named_child] (field: uom)
+    UOM [lookup] (field: uom) <PERMISSIONS>
+Vehicle [root] <PERMISSIONS>
+  Employee [lookup] (field: employee) <PERMISSIONS>
+  UOM [lookup] (field: uom) <PERMISSIONS>
+  Vehicle [lookup] (field: amended_from) <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+Batch [root] <PERMISSIONS>
+  Serial and Batch Entry [named_child] (field: batch_no)
+    Serial No [lookup] (field: serial_no) <PERMISSIONS>
+    Batch [lookup] (field: batch_no) <PERMISSIONS>
+    Warehouse [lookup] (field: warehouse) <PERMISSIONS>
+  Item [lookup] (field: item) <PERMISSIONS>
+  Batch [lookup] (field: parent_batch) <PERMISSIONS>
+  Supplier [lookup] (field: supplier) <PERMISSIONS>
+  UOM [lookup] (field: stock_uom) <PERMISSIONS>
+Bin [root] <PERMISSIONS>
+  Warehouse [lookup] (field: warehouse) <PERMISSIONS>
+  Item [lookup] (field: item_code) <PERMISSIONS>
+  UOM [lookup] (field: stock_uom) <PERMISSIONS>
+Customs Tariff Number [root] <PERMISSIONS>
+Delivery Note [root] <PERMISSIONS>
+  Delivery Note Item [table_child] (field: items)
+    Item [lookup] (field: item_code) <PERMISSIONS>
+    UOM [lookup] (field: stock_uom) <PERMISSIONS>
+    Warehouse [lookup] (field: warehouse) <PERMISSIONS>
+    Quality Inspection [lookup] (field: quality_inspection) <PERMISSIONS>
+    Item Group [lookup] (field: item_group) <PERMISSIONS>
+    Brand [lookup] (field: brand) <PERMISSIONS>
+    Account [lookup] (field: expense_account) <PERMISSIONS>
+    Item Tax Template [lookup] (field: item_tax_template) <PERMISSIONS>
+    Cost Center [lookup] (field: cost_center) <PERMISSIONS>
+    Sales Order [lookup] (field: against_sales_order) <PERMISSIONS>
+    Sales Invoice [lookup] (field: against_sales_invoice) <PERMISSIONS>
+    Project [lookup] (field: project) <PERMISSIONS>
+    Purchase Order [lookup] (field: purchase_order) <PERMISSIONS>
+    Material Request [lookup] (field: material_request) <PERMISSIONS>
+    Serial and Batch Bundle [lookup] (field: serial_and_batch_bundle) <PERMISSIONS>
+    Batch [lookup] (field: batch_no) <PERMISSIONS>
+  Pricing Rule Detail [table_child] (field: pricing_rules)
+    Pricing Rule [lookup] (field: pricing_rule) <PERMISSIONS>
+  Packed Item [table_child] (field: packed_items)
+    Item [lookup] (field: parent_item) <PERMISSIONS>
+    Warehouse [lookup] (field: warehouse) <PERMISSIONS>
+    Batch [lookup] (field: batch_no) <PERMISSIONS>
+    UOM [lookup] (field: uom) <PERMISSIONS>
+    Serial and Batch Bundle [lookup] (field: serial_and_batch_bundle) <PERMISSIONS>
+  Sales Taxes and Charges [table_child] (field: taxes)
+    Account [lookup] (field: account_head) <PERMISSIONS>
+    Cost Center [lookup] (field: cost_center) <PERMISSIONS>
+  Sales Team [table_child] (field: sales_team)
+    Sales Person [lookup] (field: sales_person) <PERMISSIONS>
+  Shipment Delivery Note [named_child] (field: delivery_note)
+    Delivery Note [lookup] (field: delivery_note) <PERMISSIONS>
+  Customer [lookup] (field: customer) <PERMISSIONS>
+  Delivery Note [lookup] (field: amended_from) <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+  Price List [lookup] (field: selling_price_list) <PERMISSIONS>
+  Warehouse [lookup] (field: set_warehouse) <PERMISSIONS>
+  Tax Category [lookup] (field: tax_category) <PERMISSIONS>
+  Shipping Rule [lookup] (field: shipping_rule) <PERMISSIONS>
+  Sales Taxes and Charges Template [lookup] (field: taxes_and_charges) <PERMISSIONS>
+  Terms and Conditions [lookup] (field: tc_name) <PERMISSIONS>
+  Supplier [lookup] (field: transporter) <PERMISSIONS>
+  Driver [lookup] (field: driver) <PERMISSIONS>
+  Project [lookup] (field: project) <PERMISSIONS>
+  Customer Group [lookup] (field: customer_group) <PERMISSIONS>
+  Territory [lookup] (field: territory) <PERMISSIONS>
+  Print Heading [lookup] (field: select_print_heading) <PERMISSIONS>
+  Sales Partner [lookup] (field: sales_partner) <PERMISSIONS>
+  Pick List [lookup] (field: pick_list) <PERMISSIONS>
+  Purchase Receipt [lookup] (field: inter_company_reference) <PERMISSIONS>
+  Cost Center [lookup] (field: cost_center) <PERMISSIONS>
+  Incoterm [lookup] (field: incoterm) <PERMISSIONS>
+  Delivery Trip [lookup] (field: delivery_trip) <PERMISSIONS>
+Delivery Settings [root] <PERMISSIONS>
+Delivery Trip [root] <PERMISSIONS>
+  Delivery Stop [table_child] (field: delivery_stops)
+    Customer [lookup] (field: customer) <PERMISSIONS>
+    Delivery Note [lookup] (field: delivery_note) <PERMISSIONS>
+    UOM [lookup] (field: uom) <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+  Driver [lookup] (field: driver) <PERMISSIONS>
+  UOM [lookup] (field: uom) <PERMISSIONS>
+  Vehicle [lookup] (field: vehicle) <PERMISSIONS>
+  Delivery Trip [lookup] (field: amended_from) <PERMISSIONS>
+  Employee [lookup] (field: employee) <PERMISSIONS>
+Inventory Dimension [root] <PERMISSIONS>
+Item [root] <PERMISSIONS>
+  Item Barcode [table_child] (field: barcodes)
+    UOM [lookup] (field: uom) <PERMISSIONS>
+  Item Reorder [table_child] (field: reorder_levels)
+    Warehouse [lookup] (field: warehouse_group) <PERMISSIONS>
+  UOM Conversion Detail [table_child] (field: uoms)
+    UOM [lookup] (field: uom) <PERMISSIONS>
+  Item Variant Attribute [table_child] (field: attributes)
+    Item [lookup] (field: variant_of) <PERMISSIONS>
+    Item Attribute [lookup] (field: attribute) <PERMISSIONS>
+  Item Default [table_child] (field: item_defaults)
+    Company [lookup] (field: company) <PERMISSIONS>
+    Warehouse [lookup] (field: default_warehouse) <PERMISSIONS>
+    Price List [lookup] (field: default_price_list) <PERMISSIONS>
+    Cost Center [lookup] (field: buying_cost_center) <PERMISSIONS>
+    Supplier [lookup] (field: default_supplier) <PERMISSIONS>
+    Account [lookup] (field: expense_account) <PERMISSIONS>
+  Item Supplier [table_child] (field: supplier_items)
+    Supplier [lookup] (field: supplier) <PERMISSIONS>
+  Item Customer Detail [table_child] (field: customer_items)
+    Customer [lookup] (field: customer_name) <PERMISSIONS>
+    Customer Group [lookup] (field: customer_group) <PERMISSIONS>
+  Item Tax [table_child] (field: taxes)
+    Item Tax Template [lookup] (field: item_tax_template) <PERMISSIONS>
+    Tax Category [lookup] (field: tax_category) <PERMISSIONS>
+  POS Invoice Item [named_child] (field: item_code)
+    Item [lookup] (field: item_code) <PERMISSIONS>
+    Item Group [lookup] (field: item_group) <PERMISSIONS>
+    UOM [lookup] (field: stock_uom) <PERMISSIONS>
+    Item Tax Template [lookup] (field: item_tax_template) <PERMISSIONS>
+    Account [lookup] (field: income_account) <PERMISSIONS>
+    Finance Book [lookup] (field: finance_book) <PERMISSIONS>
+    Warehouse [lookup] (field: warehouse) <PERMISSIONS>
+    Quality Inspection [lookup] (field: quality_inspection) <PERMISSIONS>
+    Batch [lookup] (field: batch_no) <PERMISSIONS>
+    Sales Order [lookup] (field: sales_order) <PERMISSIONS>
+    Delivery Note [lookup] (field: delivery_note) <PERMISSIONS>
+    Cost Center [lookup] (field: cost_center) <PERMISSIONS>
+    Project [lookup] (field: project) <PERMISSIONS>
+    Serial and Batch Bundle [lookup] (field: serial_and_batch_bundle) <PERMISSIONS>
+  Pricing Rule Item Code [named_child] (field: item_code)
+    Item [lookup] (field: item_code) <PERMISSIONS>
+    UOM [lookup] (field: uom) <PERMISSIONS>
+  Purchase Invoice Item [named_child] (field: item_code)
+    Item [lookup] (field: item_code) <PERMISSIONS>
+    UOM [lookup] (field: stock_uom) <PERMISSIONS>
+    Warehouse [lookup] (field: warehouse) <PERMISSIONS>
+    Quality Inspection [lookup] (field: quality_inspection) <PERMISSIONS>
+    Batch [lookup] (field: batch_no) <PERMISSIONS>
+    Account [lookup] (field: expense_account) <PERMISSIONS>
+    Item Tax Template [lookup] (field: item_tax_template) <PERMISSIONS>
+    Project [lookup] (field: project) <PERMISSIONS>
+    Cost Center [lookup] (field: cost_center) <PERMISSIONS>
+    Brand [lookup] (field: brand) <PERMISSIONS>
+    Item Group [lookup] (field: item_group) <PERMISSIONS>
+    Purchase Order [lookup] (field: purchase_order) <PERMISSIONS>
+    BOM [lookup] (field: bom) <PERMISSIONS>
+    Purchase Receipt [lookup] (field: purchase_receipt) <PERMISSIONS>
+    Manufacturer [lookup] (field: manufacturer) <PERMISSIONS>
+    Product Bundle [lookup] (field: product_bundle) <PERMISSIONS>
+    Serial and Batch Bundle [lookup] (field: serial_and_batch_bundle) <PERMISSIONS>
+    Material Request [lookup] (field: material_request) <PERMISSIONS>
+  Sales Invoice Item [named_child] (field: item_code)
+    Item [lookup] (field: item_code) <PERMISSIONS>
+    UOM [lookup] (field: stock_uom) <PERMISSIONS>
+    Account [lookup] (field: income_account) <PERMISSIONS>
+    Item Tax Template [lookup] (field: item_tax_template) <PERMISSIONS>
+    Cost Center [lookup] (field: cost_center) <PERMISSIONS>
+    Warehouse [lookup] (field: warehouse) <PERMISSIONS>
+    Quality Inspection [lookup] (field: quality_inspection) <PERMISSIONS>
+    Batch [lookup] (field: batch_no) <PERMISSIONS>
+    Item Group [lookup] (field: item_group) <PERMISSIONS>
+    Sales Order [lookup] (field: sales_order) <PERMISSIONS>
+    Delivery Note [lookup] (field: delivery_note) <PERMISSIONS>
+    Finance Book [lookup] (field: finance_book) <PERMISSIONS>
+    Project [lookup] (field: project) <PERMISSIONS>
+    Purchase Order [lookup] (field: purchase_order) <PERMISSIONS>
+    Serial and Batch Bundle [lookup] (field: serial_and_batch_bundle) <PERMISSIONS>
+    POS Invoice [lookup] (field: pos_invoice) <PERMISSIONS>
+  Purchase Order Item [named_child] (field: item_code)
+    Item [lookup] (field: item_code) <PERMISSIONS>
+    UOM [lookup] (field: stock_uom) <PERMISSIONS>
+    Warehouse [lookup] (field: warehouse) <PERMISSIONS>
+    Project [lookup] (field: project) <PERMISSIONS>
+    Material Request [lookup] (field: material_request) <PERMISSIONS>
+    Sales Order [lookup] (field: sales_order) <PERMISSIONS>
+    Supplier Quotation [lookup] (field: supplier_quotation) <PERMISSIONS>
+    Supplier Quotation Item [lookup] (field: supplier_quotation_item)
+    Blanket Order [lookup] (field: blanket_order) <PERMISSIONS>
+    Item Group [lookup] (field: item_group) <PERMISSIONS>
+    Brand [lookup] (field: brand) <PERMISSIONS>
+    BOM [lookup] (field: bom) <PERMISSIONS>
+    Account [lookup] (field: expense_account) <PERMISSIONS>
+    Cost Center [lookup] (field: cost_center) <PERMISSIONS>
+    Item Tax Template [lookup] (field: item_tax_template) <PERMISSIONS>
+    Manufacturer [lookup] (field: manufacturer) <PERMISSIONS>
+    Production Plan [lookup] (field: production_plan) <PERMISSIONS>
+    Product Bundle [lookup] (field: product_bundle) <PERMISSIONS>
+    Job Card [lookup] (field: job_card) <PERMISSIONS>
+  Purchase Order Item Supplied [named_child] (field: main_item_code)
+    Item [lookup] (field: main_item_code) <PERMISSIONS>
+    UOM [lookup] (field: stock_uom) <PERMISSIONS>
+    Warehouse [lookup] (field: reserve_warehouse) <PERMISSIONS>
+  Purchase Receipt Item Supplied [named_child] (field: main_item_code)
+    Item [lookup] (field: main_item_code) <PERMISSIONS>
+    Batch [lookup] (field: batch_no) <PERMISSIONS>
+    UOM [lookup] (field: stock_uom) <PERMISSIONS>
+    Purchase Order [lookup] (field: purchase_order) <PERMISSIONS>
+  Request for Quotation Item [named_child] (field: item_code)
+    Item [lookup] (field: item_code) <PERMISSIONS>
+    UOM [lookup] (field: uom) <PERMISSIONS>
+    Warehouse [lookup] (field: warehouse) <PERMISSIONS>
+    Project [lookup] (field: project_name) <PERMISSIONS>
+    Material Request [lookup] (field: material_request) <PERMISSIONS>
+    Brand [lookup] (field: brand) <PERMISSIONS>
+    Item Group [lookup] (field: item_group) <PERMISSIONS>
+  Supplier Quotation Item [named_child] (field: item_code)
+    Item [lookup] (field: item_code) <PERMISSIONS>
+    UOM [lookup] (field: stock_uom) <PERMISSIONS>
+    Warehouse [lookup] (field: warehouse) <PERMISSIONS>
+    Project [lookup] (field: project) <PERMISSIONS>
+    Material Request [lookup] (field: material_request) <PERMISSIONS>
+    Sales Order [lookup] (field: sales_order) <PERMISSIONS>
+    Request for Quotation [lookup] (field: request_for_quotation) <PERMISSIONS>
+    Item Tax Template [lookup] (field: item_tax_template) <PERMISSIONS>
+    Brand [lookup] (field: brand) <PERMISSIONS>
+    Item Group [lookup] (field: item_group) <PERMISSIONS>
+    Manufacturer [lookup] (field: manufacturer) <PERMISSIONS>
+    Cost Center [lookup] (field: cost_center) <PERMISSIONS>
+  Opportunity Item [named_child] (field: item_code)
+    Item [lookup] (field: item_code) <PERMISSIONS>
+    Item Group [lookup] (field: item_group) <PERMISSIONS>
+    Brand [lookup] (field: brand) <PERMISSIONS>
+    UOM [lookup] (field: uom) <PERMISSIONS>
+  Maintenance Schedule Item [named_child] (field: item_code)
+    Item [lookup] (field: item_code) <PERMISSIONS>
+    Sales Person [lookup] (field: sales_person) <PERMISSIONS>
+    Sales Order [lookup] (field: sales_order) <PERMISSIONS>
+    Serial and Batch Bundle [lookup] (field: serial_and_batch_bundle) <PERMISSIONS>
+  Blanket Order Item [named_child] (field: item_code)
+    Item [lookup] (field: item_code) <PERMISSIONS>
+  BOM Creator Item [named_child] (field: item_code)
+    Item [lookup] (field: item_code) <PERMISSIONS>
+    Item Group [lookup] (field: item_group) <PERMISSIONS>
+    UOM [lookup] (field: uom) <PERMISSIONS>
+    Operation [lookup] (field: operation) <PERMISSIONS>
+  BOM Explosion Item [named_child] (field: item_code)
+    Item [lookup] (field: item_code) <PERMISSIONS>
+    Warehouse [lookup] (field: source_warehouse) <PERMISSIONS>
+    Operation [lookup] (field: operation) <PERMISSIONS>
+    UOM [lookup] (field: stock_uom) <PERMISSIONS>
+  BOM Item [named_child] (field: item_code)
+    Item [lookup] (field: item_code) <PERMISSIONS>
+    Operation [lookup] (field: operation) <PERMISSIONS>
+    BOM [lookup] (field: bom_no) <PERMISSIONS>
+    Warehouse [lookup] (field: source_warehouse) <PERMISSIONS>
+    UOM [lookup] (field: uom) <PERMISSIONS>
+  BOM Scrap Item [named_child] (field: item_code)
+    Item [lookup] (field: item_code) <PERMISSIONS>
+    UOM [lookup] (field: stock_uom) <PERMISSIONS>
+  BOM Website Item [named_child] (field: item_code)
+    Item [lookup] (field: item_code) <PERMISSIONS>
+  Job Card Item [named_child] (field: item_code)
+    Item [lookup] (field: item_code) <PERMISSIONS>
+    Warehouse [lookup] (field: source_warehouse) <PERMISSIONS>
+    UOM [lookup] (field: uom) <PERMISSIONS>
+    Item Group [lookup] (field: item_group) <PERMISSIONS>
+  Job Card Scrap Item [named_child] (field: item_code)
+    Item [lookup] (field: item_code) <PERMISSIONS>
+    UOM [lookup] (field: stock_uom) <PERMISSIONS>
+  Material Request Plan Item [named_child] (field: item_code)
+    Item [lookup] (field: item_code) <PERMISSIONS>
+    Warehouse [lookup] (field: warehouse) <PERMISSIONS>
+    Sales Order [lookup] (field: sales_order) <PERMISSIONS>
+    UOM [lookup] (field: uom) <PERMISSIONS>
+  Production Plan Item [named_child] (field: item_code)
+    Item [lookup] (field: item_code) <PERMISSIONS>
+    BOM [lookup] (field: bom_no) <PERMISSIONS>
+    Warehouse [lookup] (field: warehouse) <PERMISSIONS>
+    UOM [lookup] (field: stock_uom) <PERMISSIONS>
+    Sales Order [lookup] (field: sales_order) <PERMISSIONS>
+    Material Request [lookup] (field: material_request) <PERMISSIONS>
+  Production Plan Sub Assembly Item [named_child] (field: parent_item_code)
+    Purchase Order [lookup] (field: purchase_order) <PERMISSIONS>
+    BOM [lookup] (field: bom_no) <PERMISSIONS>
+    Item [lookup] (field: parent_item_code) <PERMISSIONS>
+    UOM [lookup] (field: uom) <PERMISSIONS>
+    Warehouse [lookup] (field: fg_warehouse) <PERMISSIONS>
+    Supplier [lookup] (field: supplier) <PERMISSIONS>
+  Work Order Item [named_child] (field: item_code)
+    Operation [lookup] (field: operation) <PERMISSIONS>
+    Item [lookup] (field: item_code) <PERMISSIONS>
+    Warehouse [lookup] (field: source_warehouse) <PERMISSIONS>
+    UOM [lookup] (field: stock_uom) <PERMISSIONS>
+  Installation Note Item [named_child] (field: item_code)
+    Item [lookup] (field: item_code) <PERMISSIONS>
+    Serial and Batch Bundle [lookup] (field: serial_and_batch_bundle) <PERMISSIONS>
+  Product Bundle Item [named_child] (field: item_code)
+    Item [lookup] (field: item_code) <PERMISSIONS>
+    UOM [lookup] (field: uom) <PERMISSIONS>
+  Quotation Item [named_child] (field: item_code)
+    Item [lookup] (field: item_code) <PERMISSIONS>
+    UOM [lookup] (field: stock_uom) <PERMISSIONS>
+    Warehouse [lookup] (field: warehouse) <PERMISSIONS>
+    Item Tax Template [lookup] (field: item_tax_template) <PERMISSIONS>
+    Item Group [lookup] (field: item_group) <PERMISSIONS>
+    Brand [lookup] (field: brand) <PERMISSIONS>
+    Blanket Order [lookup] (field: blanket_order) <PERMISSIONS>
+  Sales Order Item [named_child] (field: item_code)
+    Item [lookup] (field: item_code) <PERMISSIONS>
+    UOM [lookup] (field: stock_uom) <PERMISSIONS>
+    Supplier [lookup] (field: supplier) <PERMISSIONS>
+    Warehouse [lookup] (field: warehouse) <PERMISSIONS>
+    Quotation [lookup] (field: prevdoc_docname) <PERMISSIONS>
+    Brand [lookup] (field: brand) <PERMISSIONS>
+    Item Group [lookup] (field: item_group) <PERMISSIONS>
+    Blanket Order [lookup] (field: blanket_order) <PERMISSIONS>
+    Item Tax Template [lookup] (field: item_tax_template) <PERMISSIONS>
+    BOM [lookup] (field: bom_no) <PERMISSIONS>
+    Purchase Order [lookup] (field: purchase_order) <PERMISSIONS>
+    Material Request [lookup] (field: material_request) <PERMISSIONS>
+    Cost Center [lookup] (field: cost_center) <PERMISSIONS>
+    Project [lookup] (field: project) <PERMISSIONS>
+  Delivery Note Item [named_child] (field: item_code)
+    Item [lookup] (field: item_code) <PERMISSIONS>
+    UOM [lookup] (field: stock_uom) <PERMISSIONS>
+    Warehouse [lookup] (field: warehouse) <PERMISSIONS>
+    Quality Inspection [lookup] (field: quality_inspection) <PERMISSIONS>
+    Item Group [lookup] (field: item_group) <PERMISSIONS>
+    Brand [lookup] (field: brand) <PERMISSIONS>
+    Account [lookup] (field: expense_account) <PERMISSIONS>
+    Item Tax Template [lookup] (field: item_tax_template) <PERMISSIONS>
+    Cost Center [lookup] (field: cost_center) <PERMISSIONS>
+    Sales Order [lookup] (field: against_sales_order) <PERMISSIONS>
+    Sales Invoice [lookup] (field: against_sales_invoice) <PERMISSIONS>
+    Project [lookup] (field: project) <PERMISSIONS>
+    Purchase Order [lookup] (field: purchase_order) <PERMISSIONS>
+    Material Request [lookup] (field: material_request) <PERMISSIONS>
+    Serial and Batch Bundle [lookup] (field: serial_and_batch_bundle) <PERMISSIONS>
+    Batch [lookup] (field: batch_no) <PERMISSIONS>
+  Item Alternative [named_child] (field: item_code) <PERMISSIONS>
+    Item [lookup] (field: item_code) <PERMISSIONS>
+  Item Manufacturer [named_child] (field: item_code) <PERMISSIONS>
+    Manufacturer [lookup] (field: manufacturer) <PERMISSIONS>
+    Item [lookup] (field: item_code) <PERMISSIONS>
+  Item Price [named_child] (field: item_code) <PERMISSIONS>
+    Item [lookup] (field: item_code) <PERMISSIONS>
+    UOM [lookup] (field: uom) <PERMISSIONS>
+    Brand [lookup] (field: brand) <PERMISSIONS>
+    Price List [lookup] (field: price_list) <PERMISSIONS>
+    Customer [lookup] (field: customer) <PERMISSIONS>
+    Supplier [lookup] (field: supplier) <PERMISSIONS>
+    Batch [lookup] (field: batch_no) <PERMISSIONS>
+  Landed Cost Item [named_child] (field: item_code)
+    Item [lookup] (field: item_code) <PERMISSIONS>
+    Cost Center [lookup] (field: cost_center) <PERMISSIONS>
+  Material Request Item [named_child] (field: item_code)
+    Item [lookup] (field: item_code) <PERMISSIONS>
+    UOM [lookup] (field: uom) <PERMISSIONS>
+    Warehouse [lookup] (field: warehouse) <PERMISSIONS>
+    Item Group [lookup] (field: item_group) <PERMISSIONS>
+    Brand [lookup] (field: brand) <PERMISSIONS>
+    Sales Order [lookup] (field: sales_order) <PERMISSIONS>
+    Project [lookup] (field: project) <PERMISSIONS>
+    Production Plan [lookup] (field: production_plan) <PERMISSIONS>
+    Account [lookup] (field: expense_account) <PERMISSIONS>
+    Cost Center [lookup] (field: cost_center) <PERMISSIONS>
+    Manufacturer [lookup] (field: manufacturer) <PERMISSIONS>
+    BOM [lookup] (field: bom_no) <PERMISSIONS>
+  Packed Item [named_child] (field: parent_item)
+    Item [lookup] (field: parent_item) <PERMISSIONS>
+    Warehouse [lookup] (field: warehouse) <PERMISSIONS>
+    Batch [lookup] (field: batch_no) <PERMISSIONS>
+    UOM [lookup] (field: uom) <PERMISSIONS>
+    Serial and Batch Bundle [lookup] (field: serial_and_batch_bundle) <PERMISSIONS>
+  Packing Slip Item [named_child] (field: item_code)
+    Item [lookup] (field: item_code) <PERMISSIONS>
+    Batch [lookup] (field: batch_no) <PERMISSIONS>
+    UOM [lookup] (field: stock_uom) <PERMISSIONS>
+  Pick List Item [named_child] (field: item_code)
+    Warehouse [lookup] (field: warehouse) <PERMISSIONS>
+    Batch [lookup] (field: batch_no) <PERMISSIONS>
+    UOM [lookup] (field: stock_uom) <PERMISSIONS>
+    Item [lookup] (field: item_code) <PERMISSIONS>
+    Sales Order [lookup] (field: sales_order) <PERMISSIONS>
+    Material Request [lookup] (field: material_request) <PERMISSIONS>
+    Serial and Batch Bundle [lookup] (field: serial_and_batch_bundle) <PERMISSIONS>
+  Purchase Receipt Item [named_child] (field: item_code)
+    Item [lookup] (field: item_code) <PERMISSIONS>
+    UOM [lookup] (field: uom) <PERMISSIONS>
+    Warehouse [lookup] (field: warehouse) <PERMISSIONS>
+    Quality Inspection [lookup] (field: quality_inspection) <PERMISSIONS>
+    Purchase Order [lookup] (field: purchase_order) <PERMISSIONS>
+    Item Tax Template [lookup] (field: item_tax_template) <PERMISSIONS>
+    Project [lookup] (field: project) <PERMISSIONS>
+    Cost Center [lookup] (field: cost_center) <PERMISSIONS>
+    BOM [lookup] (field: bom) <PERMISSIONS>
+    Brand [lookup] (field: brand) <PERMISSIONS>
+    Item Group [lookup] (field: item_group) <PERMISSIONS>
+    Material Request [lookup] (field: material_request) <PERMISSIONS>
+    Account [lookup] (field: expense_account) <PERMISSIONS>
+    Manufacturer [lookup] (field: manufacturer) <PERMISSIONS>
+    Putaway Rule [lookup] (field: putaway_rule) <PERMISSIONS>
+    Purchase Invoice [lookup] (field: purchase_invoice) <PERMISSIONS>
+    Product Bundle [lookup] (field: product_bundle) <PERMISSIONS>
+    Serial and Batch Bundle [lookup] (field: serial_and_batch_bundle) <PERMISSIONS>
+    Batch [lookup] (field: batch_no) <PERMISSIONS>
+    Sales Order [lookup] (field: sales_order) <PERMISSIONS>
+  Repost Item Valuation [named_child] (field: item_code) <PERMISSIONS>
+    Item [lookup] (field: item_code) <PERMISSIONS>
+    Warehouse [lookup] (field: warehouse) <PERMISSIONS>
+    Repost Item Valuation [lookup] (field: amended_from) <PERMISSIONS>
+    Company [lookup] (field: company) <PERMISSIONS>
+  Stock Reconciliation Item [named_child] (field: item_code)
+    Item [lookup] (field: item_code) <PERMISSIONS>
+    Warehouse [lookup] (field: warehouse) <PERMISSIONS>
+    Batch [lookup] (field: batch_no) <PERMISSIONS>
+    Serial and Batch Bundle [lookup] (field: serial_and_batch_bundle) <PERMISSIONS>
+    Item Group [lookup] (field: item_group) <PERMISSIONS>
+  Subcontracting Order Item [named_child] (field: item_code)
+    Item [lookup] (field: item_code) <PERMISSIONS>
+    UOM [lookup] (field: stock_uom) <PERMISSIONS>
+    Warehouse [lookup] (field: warehouse) <PERMISSIONS>
+    Account [lookup] (field: expense_account) <PERMISSIONS>
+    Manufacturer [lookup] (field: manufacturer) <PERMISSIONS>
+    BOM [lookup] (field: bom) <PERMISSIONS>
+    Cost Center [lookup] (field: cost_center) <PERMISSIONS>
+    Project [lookup] (field: project) <PERMISSIONS>
+    Material Request [lookup] (field: material_request) <PERMISSIONS>
+    Job Card [lookup] (field: job_card) <PERMISSIONS>
+  Subcontracting Order Service Item [named_child] (field: item_code)
+    Item [lookup] (field: item_code) <PERMISSIONS>
+    Material Request [lookup] (field: material_request) <PERMISSIONS>
+  Subcontracting Order Supplied Item [named_child] (field: main_item_code)
+    Item [lookup] (field: main_item_code) <PERMISSIONS>
+    UOM [lookup] (field: stock_uom) <PERMISSIONS>
+    Warehouse [lookup] (field: reserve_warehouse) <PERMISSIONS>
+  Subcontracting Receipt Item [named_child] (field: item_code)
+    Item [lookup] (field: item_code) <PERMISSIONS>
+    UOM [lookup] (field: stock_uom) <PERMISSIONS>
+    Warehouse [lookup] (field: warehouse) <PERMISSIONS>
+    Quality Inspection [lookup] (field: quality_inspection) <PERMISSIONS>
+    Subcontracting Order [lookup] (field: subcontracting_order) <PERMISSIONS>
+    Batch [lookup] (field: batch_no) <PERMISSIONS>
+    BOM [lookup] (field: bom) <PERMISSIONS>
+    Brand [lookup] (field: brand) <PERMISSIONS>
+    Account [lookup] (field: expense_account) <PERMISSIONS>
+    Manufacturer [lookup] (field: manufacturer) <PERMISSIONS>
+    Project [lookup] (field: project) <PERMISSIONS>
+    Cost Center [lookup] (field: cost_center) <PERMISSIONS>
+    Serial and Batch Bundle [lookup] (field: serial_and_batch_bundle) <PERMISSIONS>
+    Purchase Order [lookup] (field: purchase_order) <PERMISSIONS>
+    Job Card [lookup] (field: job_card) <PERMISSIONS>
+  Subcontracting Receipt Supplied Item [named_child] (field: main_item_code)
+    Item [lookup] (field: main_item_code) <PERMISSIONS>
+    Batch [lookup] (field: batch_no) <PERMISSIONS>
+    UOM [lookup] (field: stock_uom) <PERMISSIONS>
+    Subcontracting Order [lookup] (field: subcontracting_order) <PERMISSIONS>
+    Serial and Batch Bundle [lookup] (field: serial_and_batch_bundle) <PERMISSIONS>
+  Item [lookup] (field: variant_of) <PERMISSIONS>
+  Item Group [lookup] (field: item_group) <PERMISSIONS>
+  UOM [lookup] (field: stock_uom) <PERMISSIONS>
+  Brand [lookup] (field: brand) <PERMISSIONS>
+  Customer [lookup] (field: customer) <PERMISSIONS>
+  Customs Tariff Number [lookup] (field: customs_tariff_number) <PERMISSIONS>
+  Quality Inspection Template [lookup] (field: quality_inspection_template) <PERMISSIONS>
+  BOM [lookup] (field: default_bom) <PERMISSIONS>
+  Manufacturer [lookup] (field: default_item_manufacturer) <PERMISSIONS>
+Item Attribute [root] <PERMISSIONS>
+  Item Attribute Value [table_child] (field: item_attribute_values)
+Item Variant [root]
+  Item Attribute [lookup] (field: item_attribute) <PERMISSIONS>
+Item Variant Settings [root] <PERMISSIONS>
+  Variant Field [table_child] (field: fields)
+Item Website Specification [root]
+Landed Cost Voucher [root] <PERMISSIONS>
+  Landed Cost Purchase Receipt [table_child] (field: purchase_receipts)
+    Supplier [lookup] (field: supplier) <PERMISSIONS>
+  Landed Cost Item [table_child] (field: items)
+    Item [lookup] (field: item_code) <PERMISSIONS>
+    Cost Center [lookup] (field: cost_center) <PERMISSIONS>
+  Landed Cost Taxes and Charges [table_child] (field: taxes)
+    Account [lookup] (field: expense_account) <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+  Landed Cost Voucher [lookup] (field: amended_from) <PERMISSIONS>
+Manufacturer [root] <PERMISSIONS>
+  Item Manufacturer [named_child] (field: manufacturer) <PERMISSIONS>
+    Manufacturer [lookup] (field: manufacturer) <PERMISSIONS>
+    Item [lookup] (field: item_code) <PERMISSIONS>
+Material Request [root] <PERMISSIONS>
+  Material Request Item [table_child] (field: items)
+    Item [lookup] (field: item_code) <PERMISSIONS>
+    UOM [lookup] (field: uom) <PERMISSIONS>
+    Warehouse [lookup] (field: warehouse) <PERMISSIONS>
+    Item Group [lookup] (field: item_group) <PERMISSIONS>
+    Brand [lookup] (field: brand) <PERMISSIONS>
+    Sales Order [lookup] (field: sales_order) <PERMISSIONS>
+    Project [lookup] (field: project) <PERMISSIONS>
+    Production Plan [lookup] (field: production_plan) <PERMISSIONS>
+    Account [lookup] (field: expense_account) <PERMISSIONS>
+    Cost Center [lookup] (field: cost_center) <PERMISSIONS>
+    Manufacturer [lookup] (field: manufacturer) <PERMISSIONS>
+    BOM [lookup] (field: bom_no) <PERMISSIONS>
+  Production Plan Material Request [named_child] (field: material_request)
+    Material Request [lookup] (field: material_request) <PERMISSIONS>
+  Customer [lookup] (field: customer) <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+  Material Request [lookup] (field: amended_from) <PERMISSIONS>
+  Print Heading [lookup] (field: select_print_heading) <PERMISSIONS>
+  Terms and Conditions [lookup] (field: tc_name) <PERMISSIONS>
+  Job Card [lookup] (field: job_card) <PERMISSIONS>
+  Warehouse [lookup] (field: set_warehouse) <PERMISSIONS>
+  Work Order [lookup] (field: work_order) <PERMISSIONS>
+Packing Slip [root] <PERMISSIONS>
+  Packing Slip Item [table_child] (field: items)
+    Item [lookup] (field: item_code) <PERMISSIONS>
+    Batch [lookup] (field: batch_no) <PERMISSIONS>
+    UOM [lookup] (field: stock_uom) <PERMISSIONS>
+  Delivery Note [lookup] (field: delivery_note) <PERMISSIONS>
+  UOM [lookup] (field: net_weight_uom) <PERMISSIONS>
+  Packing Slip [lookup] (field: amended_from) <PERMISSIONS>
+Pick List [root] <PERMISSIONS>
+  Pick List Item [table_child] (field: locations)
+    Warehouse [lookup] (field: warehouse) <PERMISSIONS>
+    Batch [lookup] (field: batch_no) <PERMISSIONS>
+    UOM [lookup] (field: stock_uom) <PERMISSIONS>
+    Item [lookup] (field: item_code) <PERMISSIONS>
+    Sales Order [lookup] (field: sales_order) <PERMISSIONS>
+    Material Request [lookup] (field: material_request) <PERMISSIONS>
+    Serial and Batch Bundle [lookup] (field: serial_and_batch_bundle) <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+  Warehouse [lookup] (field: parent_warehouse) <PERMISSIONS>
+  Customer [lookup] (field: customer) <PERMISSIONS>
+  Work Order [lookup] (field: work_order) <PERMISSIONS>
+  Pick List [lookup] (field: amended_from) <PERMISSIONS>
+  Material Request [lookup] (field: material_request) <PERMISSIONS>
+Price List [root] <PERMISSIONS>
+  Price List Country [table_child] (field: countries)
+Purchase Receipt [root] <PERMISSIONS>
+  Purchase Receipt Item [table_child] (field: items)
+    Item [lookup] (field: item_code) <PERMISSIONS>
+    UOM [lookup] (field: uom) <PERMISSIONS>
+    Warehouse [lookup] (field: warehouse) <PERMISSIONS>
+    Quality Inspection [lookup] (field: quality_inspection) <PERMISSIONS>
+    Purchase Order [lookup] (field: purchase_order) <PERMISSIONS>
+    Item Tax Template [lookup] (field: item_tax_template) <PERMISSIONS>
+    Project [lookup] (field: project) <PERMISSIONS>
+    Cost Center [lookup] (field: cost_center) <PERMISSIONS>
+    BOM [lookup] (field: bom) <PERMISSIONS>
+    Brand [lookup] (field: brand) <PERMISSIONS>
+    Item Group [lookup] (field: item_group) <PERMISSIONS>
+    Material Request [lookup] (field: material_request) <PERMISSIONS>
+    Account [lookup] (field: expense_account) <PERMISSIONS>
+    Manufacturer [lookup] (field: manufacturer) <PERMISSIONS>
+    Putaway Rule [lookup] (field: putaway_rule) <PERMISSIONS>
+    Purchase Invoice [lookup] (field: purchase_invoice) <PERMISSIONS>
+    Product Bundle [lookup] (field: product_bundle) <PERMISSIONS>
+    Serial and Batch Bundle [lookup] (field: serial_and_batch_bundle) <PERMISSIONS>
+    Batch [lookup] (field: batch_no) <PERMISSIONS>
+    Sales Order [lookup] (field: sales_order) <PERMISSIONS>
+  Pricing Rule Detail [table_child] (field: pricing_rules)
+    Pricing Rule [lookup] (field: pricing_rule) <PERMISSIONS>
+  Purchase Receipt Item Supplied [table_child] (field: supplied_items)
+    Item [lookup] (field: main_item_code) <PERMISSIONS>
+    Batch [lookup] (field: batch_no) <PERMISSIONS>
+    UOM [lookup] (field: stock_uom) <PERMISSIONS>
+    Purchase Order [lookup] (field: purchase_order) <PERMISSIONS>
+  Purchase Taxes and Charges [table_child] (field: taxes)
+    Account [lookup] (field: account_head) <PERMISSIONS>
+    Cost Center [lookup] (field: cost_center) <PERMISSIONS>
+  Supplier [lookup] (field: supplier) <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+  Purchase Receipt [lookup] (field: return_against) <PERMISSIONS>
+  Price List [lookup] (field: buying_price_list) <PERMISSIONS>
+  Warehouse [lookup] (field: set_warehouse) <PERMISSIONS>
+  Tax Category [lookup] (field: tax_category) <PERMISSIONS>
+  Shipping Rule [lookup] (field: shipping_rule) <PERMISSIONS>
+  Purchase Taxes and Charges Template [lookup] (field: taxes_and_charges) <PERMISSIONS>
+  Terms and Conditions [lookup] (field: tc_name) <PERMISSIONS>
+  Project [lookup] (field: project) <PERMISSIONS>
+  Print Heading [lookup] (field: select_print_heading) <PERMISSIONS>
+  Delivery Note [lookup] (field: inter_company_reference) <PERMISSIONS>
+  Cost Center [lookup] (field: cost_center) <PERMISSIONS>
+  Incoterm [lookup] (field: incoterm) <PERMISSIONS>
+  Subcontracting Receipt [lookup] (field: subcontracting_receipt) <PERMISSIONS>
+Putaway Rule [root] <PERMISSIONS>
+  Item [lookup] (field: item_code) <PERMISSIONS>
+  Warehouse [lookup] (field: warehouse) <PERMISSIONS>
+  UOM [lookup] (field: stock_uom) <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+Quality Inspection [root] <PERMISSIONS>
+  Quality Inspection Reading [table_child] (field: readings)
+    Quality Inspection Parameter [lookup] (field: specification) <PERMISSIONS>
+    Quality Inspection Parameter Group [lookup] (field: parameter_group) <PERMISSIONS>
+  Item [lookup] (field: item_code) <PERMISSIONS>
+  Serial No [lookup] (field: item_serial_no) <PERMISSIONS>
+  Batch [lookup] (field: batch_no) <PERMISSIONS>
+  BOM [lookup] (field: bom_no) <PERMISSIONS>
+  Quality Inspection [lookup] (field: amended_from) <PERMISSIONS>
+  Quality Inspection Template [lookup] (field: quality_inspection_template) <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+Quality Inspection Parameter [root] <PERMISSIONS>
+  Item Quality Inspection Parameter [named_child] (field: specification)
+    Quality Inspection Parameter [lookup] (field: specification) <PERMISSIONS>
+    Quality Inspection Parameter Group [lookup] (field: parameter_group) <PERMISSIONS>
+  Quality Inspection Parameter Group [lookup] (field: parameter_group) <PERMISSIONS>
+Quality Inspection Parameter Group [root] <PERMISSIONS>
+Quality Inspection Template [root] <PERMISSIONS>
+  Item Quality Inspection Parameter [table_child] (field: item_quality_inspection_parameter)
+    Quality Inspection Parameter [lookup] (field: specification) <PERMISSIONS>
+    Quality Inspection Parameter Group [lookup] (field: parameter_group) <PERMISSIONS>
+Quick Stock Balance [root] <PERMISSIONS>
+  Warehouse [lookup] (field: warehouse) <PERMISSIONS>
+  Item [lookup] (field: item) <PERMISSIONS>
+Serial and Batch Bundle [root] <PERMISSIONS>
+  Serial and Batch Entry [table_child] (field: entries)
+    Serial No [lookup] (field: serial_no) <PERMISSIONS>
+    Batch [lookup] (field: batch_no) <PERMISSIONS>
+    Warehouse [lookup] (field: warehouse) <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+  Item Group [lookup] (field: item_group) <PERMISSIONS>
+  Item [lookup] (field: item_code) <PERMISSIONS>
+  Serial and Batch Bundle [lookup] (field: amended_from) <PERMISSIONS>
+  Warehouse [lookup] (field: warehouse) <PERMISSIONS>
+Serial No [root] <PERMISSIONS>
+  Item [lookup] (field: item_code) <PERMISSIONS>
+  Item Group [lookup] (field: item_group) <PERMISSIONS>
+  Brand [lookup] (field: brand) <PERMISSIONS>
+  Employee [lookup] (field: employee) <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+  Work Order [lookup] (field: work_order) <PERMISSIONS>
+  Warehouse [lookup] (field: warehouse) <PERMISSIONS>
+  Batch [lookup] (field: batch_no) <PERMISSIONS>
+Shipment [root] <PERMISSIONS>
+  Shipment Parcel [table_child] (field: shipment_parcel)
+  Shipment Delivery Note [table_child] (field: shipment_delivery_note)
+    Delivery Note [lookup] (field: delivery_note) <PERMISSIONS>
+  Company [lookup] (field: pickup_company) <PERMISSIONS>
+  Customer [lookup] (field: pickup_customer) <PERMISSIONS>
+  Supplier [lookup] (field: pickup_supplier) <PERMISSIONS>
+  Shipment Parcel Template [lookup] (field: parcel_template) <PERMISSIONS>
+  Shipment [lookup] (field: amended_from) <PERMISSIONS>
+  Incoterm [lookup] (field: incoterm) <PERMISSIONS>
+Shipment Parcel Template [root] <PERMISSIONS>
+Stock Closing Balance [root] <PERMISSIONS>
+  Item [lookup] (field: item_code) <PERMISSIONS>
+  Warehouse [lookup] (field: warehouse) <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+  UOM [lookup] (field: stock_uom) <PERMISSIONS>
+  Item Group [lookup] (field: item_group) <PERMISSIONS>
+  Stock Closing Entry [lookup] (field: stock_closing_entry) <PERMISSIONS>
+  Batch [lookup] (field: batch_no) <PERMISSIONS>
+Stock Closing Entry [root] <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+  Stock Closing Entry [lookup] (field: amended_from) <PERMISSIONS>
+Stock Entry [root] <PERMISSIONS>
+  Stock Entry Detail [table_child] (field: items)
+    Warehouse [lookup] (field: s_warehouse) <PERMISSIONS>
+    Item [lookup] (field: item_code) <PERMISSIONS>
+    UOM [lookup] (field: uom) <PERMISSIONS>
+    Batch [lookup] (field: batch_no) <PERMISSIONS>
+    Quality Inspection [lookup] (field: quality_inspection) <PERMISSIONS>
+    Account [lookup] (field: expense_account) <PERMISSIONS>
+    Cost Center [lookup] (field: cost_center) <PERMISSIONS>
+    BOM [lookup] (field: bom_no) <PERMISSIONS>
+    Material Request [lookup] (field: material_request) <PERMISSIONS>
+    Material Request Item [lookup] (field: material_request_item)
+    Stock Entry [lookup] (field: against_stock_entry) <PERMISSIONS>
+    Purchase Receipt [lookup] (field: reference_purchase_receipt) <PERMISSIONS>
+    Project [lookup] (field: project) <PERMISSIONS>
+    Putaway Rule [lookup] (field: putaway_rule) <PERMISSIONS>
+    Serial and Batch Bundle [lookup] (field: serial_and_batch_bundle) <PERMISSIONS>
+  Landed Cost Taxes and Charges [table_child] (field: additional_costs)
+    Account [lookup] (field: expense_account) <PERMISSIONS>
+  Stock Entry Type [lookup] (field: stock_entry_type) <PERMISSIONS>
+  Stock Entry [lookup] (field: outgoing_stock_entry) <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+  Work Order [lookup] (field: work_order) <PERMISSIONS>
+  Purchase Order [lookup] (field: purchase_order) <PERMISSIONS>
+  Subcontracting Order [lookup] (field: subcontracting_order) <PERMISSIONS>
+  Delivery Note [lookup] (field: delivery_note_no) <PERMISSIONS>
+  Sales Invoice [lookup] (field: sales_invoice_no) <PERMISSIONS>
+  Purchase Receipt [lookup] (field: purchase_receipt_no) <PERMISSIONS>
+  BOM [lookup] (field: bom_no) <PERMISSIONS>
+  Warehouse [lookup] (field: from_warehouse) <PERMISSIONS>
+  Supplier [lookup] (field: supplier) <PERMISSIONS>
+  Print Heading [lookup] (field: select_print_heading) <PERMISSIONS>
+  Project [lookup] (field: project) <PERMISSIONS>
+  Job Card [lookup] (field: job_card) <PERMISSIONS>
+  Journal Entry [lookup] (field: credit_note) <PERMISSIONS>
+  Pick List [lookup] (field: pick_list) <PERMISSIONS>
+Stock Entry Type [root] <PERMISSIONS>
+Stock Ledger Entry [root] <PERMISSIONS>
+  Item [lookup] (field: item_code) <PERMISSIONS>
+  Warehouse [lookup] (field: warehouse) <PERMISSIONS>
+  UOM [lookup] (field: stock_uom) <PERMISSIONS>
+  Project [lookup] (field: project) <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+  Serial and Batch Bundle [lookup] (field: serial_and_batch_bundle) <PERMISSIONS>
+Stock Reconciliation [root] <PERMISSIONS>
+  Stock Reconciliation Item [table_child] (field: items)
+    Item [lookup] (field: item_code) <PERMISSIONS>
+    Warehouse [lookup] (field: warehouse) <PERMISSIONS>
+    Batch [lookup] (field: batch_no) <PERMISSIONS>
+    Serial and Batch Bundle [lookup] (field: serial_and_batch_bundle) <PERMISSIONS>
+    Item Group [lookup] (field: item_group) <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+  Account [lookup] (field: expense_account) <PERMISSIONS>
+  Cost Center [lookup] (field: cost_center) <PERMISSIONS>
+  Stock Reconciliation [lookup] (field: amended_from) <PERMISSIONS>
+  Warehouse [lookup] (field: set_warehouse) <PERMISSIONS>
+Stock Reposting Settings [root] <PERMISSIONS>
+Stock Reservation Entry [root] <PERMISSIONS>
+  Serial and Batch Entry [table_child] (field: sb_entries)
+    Serial No [lookup] (field: serial_no) <PERMISSIONS>
+    Batch [lookup] (field: batch_no) <PERMISSIONS>
+    Warehouse [lookup] (field: warehouse) <PERMISSIONS>
+  Item [lookup] (field: item_code) <PERMISSIONS>
+  Warehouse [lookup] (field: warehouse) <PERMISSIONS>
+  UOM [lookup] (field: stock_uom) <PERMISSIONS>
+  Project [lookup] (field: project) <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+  Stock Reservation Entry [lookup] (field: amended_from) <PERMISSIONS>
+Stock Settings [root] <PERMISSIONS>
+  Item Group [lookup] (field: item_group) <PERMISSIONS>
+  UOM [lookup] (field: stock_uom) <PERMISSIONS>
+  Warehouse [lookup] (field: default_warehouse) <PERMISSIONS>
+UOM Category [root] <PERMISSIONS>
+Warehouse [root] <PERMISSIONS>
+  Production Plan Material Request Warehouse [named_child] (field: warehouse)
+    Warehouse [lookup] (field: warehouse) <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+  Account [lookup] (field: account) <PERMISSIONS>
+  Warehouse [lookup] (field: parent_warehouse) <PERMISSIONS>
+  Warehouse Type [lookup] (field: warehouse_type) <PERMISSIONS>
+Warehouse Type [root] <PERMISSIONS>
+Subcontracting Order [root] <PERMISSIONS>
+  Subcontracting Order Item [table_child] (field: items)
+    Item [lookup] (field: item_code) <PERMISSIONS>
+    UOM [lookup] (field: stock_uom) <PERMISSIONS>
+    Warehouse [lookup] (field: warehouse) <PERMISSIONS>
+    Account [lookup] (field: expense_account) <PERMISSIONS>
+    Manufacturer [lookup] (field: manufacturer) <PERMISSIONS>
+    BOM [lookup] (field: bom) <PERMISSIONS>
+    Cost Center [lookup] (field: cost_center) <PERMISSIONS>
+    Project [lookup] (field: project) <PERMISSIONS>
+    Material Request [lookup] (field: material_request) <PERMISSIONS>
+    Job Card [lookup] (field: job_card) <PERMISSIONS>
+  Subcontracting Order Service Item [table_child] (field: service_items)
+    Item [lookup] (field: item_code) <PERMISSIONS>
+    Material Request [lookup] (field: material_request) <PERMISSIONS>
+  Subcontracting Order Supplied Item [table_child] (field: supplied_items)
+    Item [lookup] (field: main_item_code) <PERMISSIONS>
+    UOM [lookup] (field: stock_uom) <PERMISSIONS>
+    Warehouse [lookup] (field: reserve_warehouse) <PERMISSIONS>
+  Landed Cost Taxes and Charges [table_child] (field: additional_costs)
+    Account [lookup] (field: expense_account) <PERMISSIONS>
+  Purchase Order [lookup] (field: purchase_order) <PERMISSIONS>
+  Supplier [lookup] (field: supplier) <PERMISSIONS>
+  Warehouse [lookup] (field: supplier_warehouse) <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+  Subcontracting Order [lookup] (field: amended_from) <PERMISSIONS>
+  Print Heading [lookup] (field: select_print_heading) <PERMISSIONS>
+  Cost Center [lookup] (field: cost_center) <PERMISSIONS>
+  Project [lookup] (field: project) <PERMISSIONS>
+Subcontracting Receipt [root] <PERMISSIONS>
+  Subcontracting Receipt Item [table_child] (field: items)
+    Item [lookup] (field: item_code) <PERMISSIONS>
+    UOM [lookup] (field: stock_uom) <PERMISSIONS>
+    Warehouse [lookup] (field: warehouse) <PERMISSIONS>
+    Quality Inspection [lookup] (field: quality_inspection) <PERMISSIONS>
+    Subcontracting Order [lookup] (field: subcontracting_order) <PERMISSIONS>
+    Batch [lookup] (field: batch_no) <PERMISSIONS>
+    BOM [lookup] (field: bom) <PERMISSIONS>
+    Brand [lookup] (field: brand) <PERMISSIONS>
+    Account [lookup] (field: expense_account) <PERMISSIONS>
+    Manufacturer [lookup] (field: manufacturer) <PERMISSIONS>
+    Project [lookup] (field: project) <PERMISSIONS>
+    Cost Center [lookup] (field: cost_center) <PERMISSIONS>
+    Serial and Batch Bundle [lookup] (field: serial_and_batch_bundle) <PERMISSIONS>
+    Purchase Order [lookup] (field: purchase_order) <PERMISSIONS>
+    Job Card [lookup] (field: job_card) <PERMISSIONS>
+  Subcontracting Receipt Supplied Item [table_child] (field: supplied_items)
+    Item [lookup] (field: main_item_code) <PERMISSIONS>
+    Batch [lookup] (field: batch_no) <PERMISSIONS>
+    UOM [lookup] (field: stock_uom) <PERMISSIONS>
+    Subcontracting Order [lookup] (field: subcontracting_order) <PERMISSIONS>
+    Serial and Batch Bundle [lookup] (field: serial_and_batch_bundle) <PERMISSIONS>
+  Landed Cost Taxes and Charges [table_child] (field: additional_costs)
+    Account [lookup] (field: expense_account) <PERMISSIONS>
+  Supplier [lookup] (field: supplier) <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+  Warehouse [lookup] (field: set_warehouse) <PERMISSIONS>
+  Subcontracting Receipt [lookup] (field: amended_from) <PERMISSIONS>
+  Print Heading [lookup] (field: select_print_heading) <PERMISSIONS>
+  Cost Center [lookup] (field: cost_center) <PERMISSIONS>
+  Project [lookup] (field: project) <PERMISSIONS>
+Issue [root] <PERMISSIONS>
+  Customer [lookup] (field: customer) <PERMISSIONS>
+  Issue Priority [lookup] (field: priority) <PERMISSIONS>
+  Issue Type [lookup] (field: issue_type) <PERMISSIONS>
+  Service Level Agreement [lookup] (field: service_level_agreement) <PERMISSIONS>
+  Lead [lookup] (field: lead) <PERMISSIONS>
+  Project [lookup] (field: project) <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+  Issue [lookup] (field: issue_split_from) <PERMISSIONS>
+Issue Priority [root] <PERMISSIONS>
+Issue Type [root] <PERMISSIONS>
+Service Level Agreement [root] <PERMISSIONS>
+  Service Day [table_child] (field: support_and_resolution)
+  Service Level Priority [table_child] (field: priorities)
+    Issue Priority [lookup] (field: priority) <PERMISSIONS>
+  Pause SLA On Status [table_child] (field: pause_sla_on)
+  SLA Fulfilled On Status [table_child] (field: sla_fulfilled_on)
+  Holiday List [lookup] (field: holiday_list) <PERMISSIONS>
+  Issue Priority [lookup] (field: default_priority) <PERMISSIONS>
+Support Settings [root] <PERMISSIONS>
+  Support Search Source [table_child] (field: search_apis)
+Warranty Claim [root] <PERMISSIONS>
+  Serial No [lookup] (field: serial_no) <PERMISSIONS>
+  Customer [lookup] (field: customer) <PERMISSIONS>
+  Item [lookup] (field: item_code) <PERMISSIONS>
+  Territory [lookup] (field: territory) <PERMISSIONS>
+  Customer Group [lookup] (field: customer_group) <PERMISSIONS>
+  Company [lookup] (field: company) <PERMISSIONS>
+  Warranty Claim [lookup] (field: amended_from) <PERMISSIONS>
+Call Log [root] <PERMISSIONS>
+  Customer [lookup] (field: customer) <PERMISSIONS>
+  Telephony Call Type [lookup] (field: type_of_call) <PERMISSIONS>
+  Employee [lookup] (field: call_received_by) <PERMISSIONS>
+Incoming Call Settings [root] <PERMISSIONS>
+  Incoming Call Handling Schedule [table_child] (field: call_handling_schedule)
+    Employee Group [lookup] (field: agent_group) <PERMISSIONS>
+Telephony Call Type [root] <PERMISSIONS>
+  Telephony Call Type [lookup] (field: amended_from) <PERMISSIONS>
+Voice Call Settings [root] <PERMISSIONS>
+Rename Tool [root] <PERMISSIONS>
+Video [root] <PERMISSIONS>
+Video Settings [root] <PERMISSIONS>

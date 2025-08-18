@@ -1,0 +1,4325 @@
+[
+  {
+    "name": "Assignment Rule",
+    "file": "C:\\python\\frappe\\frappe\\automation\\doctype\\assignment_rule\\assignment_rule.json",
+    "type": "root",
+    "module": "Automation",
+    "children": [
+      {
+        "name": "Assignment Rule Day",
+        "file": "C:\\python\\frappe\\frappe\\automation\\doctype\\assignment_rule_day\\assignment_rule_day.json",
+        "type": "table_child",
+        "field": "assignment_days",
+        "children": []
+      },
+      {
+        "name": "DocType",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype\\doctype.json",
+        "type": "lookup",
+        "field": "document_type",
+        "children": []
+      },
+      {
+        "name": "User",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\user\\user.json",
+        "type": "lookup",
+        "field": "last_user",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Auto Repeat",
+    "file": "C:\\python\\frappe\\frappe\\automation\\doctype\\auto_repeat\\auto_repeat.json",
+    "type": "root",
+    "module": "Automation",
+    "children": [
+      {
+        "name": "Auto Repeat Day",
+        "file": "C:\\python\\frappe\\frappe\\automation\\doctype\\auto_repeat_day\\auto_repeat_day.json",
+        "type": "table_child",
+        "field": "repeat_on_days",
+        "children": []
+      },
+      {
+        "name": "DocType",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype\\doctype.json",
+        "type": "lookup",
+        "field": "reference_doctype",
+        "children": []
+      },
+      {
+        "name": "Email Template",
+        "file": "C:\\python\\frappe\\frappe\\email\\doctype\\email_template\\email_template.json",
+        "type": "lookup",
+        "field": "template",
+        "children": []
+      },
+      {
+        "name": "Print Format",
+        "file": "C:\\python\\frappe\\frappe\\printing\\doctype\\print_format\\print_format.json",
+        "type": "lookup",
+        "field": "print_format",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Milestone",
+    "file": "C:\\python\\frappe\\frappe\\automation\\doctype\\milestone\\milestone.json",
+    "type": "root",
+    "module": "Automation",
+    "children": [
+      {
+        "name": "DocType",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype\\doctype.json",
+        "type": "lookup",
+        "field": "reference_type",
+        "children": []
+      },
+      {
+        "name": "Milestone Tracker",
+        "file": "C:\\python\\frappe\\frappe\\automation\\doctype\\milestone_tracker\\milestone_tracker.json",
+        "type": "lookup",
+        "field": "milestone_tracker",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Milestone Tracker",
+    "file": "C:\\python\\frappe\\frappe\\automation\\doctype\\milestone_tracker\\milestone_tracker.json",
+    "type": "root",
+    "module": "Automation",
+    "children": [
+      {
+        "name": "DocType",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype\\doctype.json",
+        "type": "lookup",
+        "field": "document_type",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Reminder",
+    "file": "C:\\python\\frappe\\frappe\\automation\\doctype\\reminder\\reminder.json",
+    "type": "root",
+    "module": "Automation",
+    "children": [
+      {
+        "name": "User",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\user\\user.json",
+        "type": "lookup",
+        "field": "user",
+        "children": []
+      },
+      {
+        "name": "DocType",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype\\doctype.json",
+        "type": "lookup",
+        "field": "reminder_doctype",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Address",
+    "file": "C:\\python\\frappe\\frappe\\contacts\\doctype\\address\\address.json",
+    "type": "root",
+    "module": "Contacts",
+    "children": [
+      {
+        "name": "Dynamic Link",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\dynamic_link\\dynamic_link.json",
+        "type": "table_child",
+        "field": "links",
+        "children": [
+          {
+            "name": "DocType",
+            "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype\\doctype.json",
+            "type": "lookup",
+            "field": "link_doctype",
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "Country",
+        "file": "C:\\python\\frappe\\frappe\\geo\\doctype\\country\\country.json",
+        "type": "lookup",
+        "field": "country",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Address Template",
+    "file": "C:\\python\\frappe\\frappe\\contacts\\doctype\\address_template\\address_template.json",
+    "type": "root",
+    "module": "Contacts",
+    "children": [
+      {
+        "name": "Country",
+        "file": "C:\\python\\frappe\\frappe\\geo\\doctype\\country\\country.json",
+        "type": "lookup",
+        "field": "country",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Contact",
+    "file": "C:\\python\\frappe\\frappe\\contacts\\doctype\\contact\\contact.json",
+    "type": "root",
+    "module": "Contacts",
+    "children": [
+      {
+        "name": "Dynamic Link",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\dynamic_link\\dynamic_link.json",
+        "type": "table_child",
+        "field": "links",
+        "children": [
+          {
+            "name": "DocType",
+            "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype\\doctype.json",
+            "type": "lookup",
+            "field": "link_doctype",
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "Contact Email",
+        "file": "C:\\python\\frappe\\frappe\\contacts\\doctype\\contact_email\\contact_email.json",
+        "type": "table_child",
+        "field": "email_ids",
+        "children": []
+      },
+      {
+        "name": "Contact Phone",
+        "file": "C:\\python\\frappe\\frappe\\contacts\\doctype\\contact_phone\\contact_phone.json",
+        "type": "table_child",
+        "field": "phone_nos",
+        "children": []
+      },
+      {
+        "name": "User",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\user\\user.json",
+        "type": "lookup",
+        "field": "user",
+        "children": []
+      },
+      {
+        "name": "Salutation",
+        "file": "C:\\python\\frappe\\frappe\\contacts\\doctype\\salutation\\salutation.json",
+        "type": "lookup",
+        "field": "salutation",
+        "children": []
+      },
+      {
+        "name": "Gender",
+        "file": "C:\\python\\frappe\\frappe\\contacts\\doctype\\gender\\gender.json",
+        "type": "lookup",
+        "field": "gender",
+        "children": []
+      },
+      {
+        "name": "Address",
+        "file": "C:\\python\\frappe\\frappe\\contacts\\doctype\\address\\address.json",
+        "type": "lookup",
+        "field": "address",
+        "children": []
+      },
+      {
+        "name": "Google Contacts",
+        "file": "C:\\python\\frappe\\frappe\\integrations\\doctype\\google_contacts\\google_contacts.json",
+        "type": "lookup",
+        "field": "google_contacts",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Gender",
+    "file": "C:\\python\\frappe\\frappe\\contacts\\doctype\\gender\\gender.json",
+    "type": "root",
+    "module": "Contacts",
+    "children": []
+  },
+  {
+    "name": "Salutation",
+    "file": "C:\\python\\frappe\\frappe\\contacts\\doctype\\salutation\\salutation.json",
+    "type": "root",
+    "module": "Contacts",
+    "children": []
+  },
+  {
+    "name": "Access Log",
+    "file": "C:\\python\\frappe\\frappe\\core\\doctype\\access_log\\access_log.json",
+    "type": "root",
+    "module": "Core",
+    "children": [
+      {
+        "name": "User",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\user\\user.json",
+        "type": "lookup",
+        "field": "user",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Activity Log",
+    "file": "C:\\python\\frappe\\frappe\\core\\doctype\\activity_log\\activity_log.json",
+    "type": "root",
+    "module": "Core",
+    "children": [
+      {
+        "name": "DocType",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype\\doctype.json",
+        "type": "lookup",
+        "field": "reference_doctype",
+        "children": []
+      },
+      {
+        "name": "User",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\user\\user.json",
+        "type": "lookup",
+        "field": "user",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Audit Trail",
+    "file": "C:\\python\\frappe\\frappe\\core\\doctype\\audit_trail\\audit_trail.json",
+    "type": "root",
+    "module": "Core",
+    "children": [
+      {
+        "name": "DocType",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype\\doctype.json",
+        "type": "lookup",
+        "field": "doctype_name",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Comment",
+    "file": "C:\\python\\frappe\\frappe\\core\\doctype\\comment\\comment.json",
+    "type": "root",
+    "module": "Core",
+    "children": [
+      {
+        "name": "DocType",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype\\doctype.json",
+        "type": "lookup",
+        "field": "reference_doctype",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Communication",
+    "file": "C:\\python\\frappe\\frappe\\core\\doctype\\communication\\communication.json",
+    "type": "root",
+    "module": "Core",
+    "children": [
+      {
+        "name": "Communication Link",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\communication_link\\communication_link.json",
+        "type": "table_child",
+        "field": "timeline_links",
+        "children": [
+          {
+            "name": "DocType",
+            "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype\\doctype.json",
+            "type": "lookup",
+            "field": "link_doctype",
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "DocType",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype\\doctype.json",
+        "type": "lookup",
+        "field": "reference_doctype",
+        "children": []
+      },
+      {
+        "name": "Email Account",
+        "file": "C:\\python\\frappe\\frappe\\email\\doctype\\email_account\\email_account.json",
+        "type": "lookup",
+        "field": "email_account",
+        "children": []
+      },
+      {
+        "name": "Communication",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\communication\\communication.json",
+        "type": "lookup",
+        "field": "in_reply_to",
+        "children": []
+      },
+      {
+        "name": "User",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\user\\user.json",
+        "type": "lookup",
+        "field": "user",
+        "children": []
+      },
+      {
+        "name": "Email Template",
+        "file": "C:\\python\\frappe\\frappe\\email\\doctype\\email_template\\email_template.json",
+        "type": "lookup",
+        "field": "email_template",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Custom DocPerm",
+    "file": "C:\\python\\frappe\\frappe\\core\\doctype\\custom_docperm\\custom_docperm.json",
+    "type": "root",
+    "module": "Core",
+    "children": [
+      {
+        "name": "Role",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\role\\role.json",
+        "type": "lookup",
+        "field": "role",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Custom Role",
+    "file": "C:\\python\\frappe\\frappe\\core\\doctype\\custom_role\\custom_role.json",
+    "type": "root",
+    "module": "Core",
+    "children": [
+      {
+        "name": "Has Role",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\has_role\\has_role.json",
+        "type": "table_child",
+        "field": "roles",
+        "children": [
+          {
+            "name": "Role",
+            "file": "C:\\python\\frappe\\frappe\\core\\doctype\\role\\role.json",
+            "type": "lookup",
+            "field": "role",
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "Page",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\page\\page.json",
+        "type": "lookup",
+        "field": "page",
+        "children": []
+      },
+      {
+        "name": "Report",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\report\\report.json",
+        "type": "lookup",
+        "field": "report",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Data Export",
+    "file": "C:\\python\\frappe\\frappe\\core\\doctype\\data_export\\data_export.json",
+    "type": "root",
+    "module": "Core",
+    "children": [
+      {
+        "name": "DocType",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype\\doctype.json",
+        "type": "lookup",
+        "field": "reference_doctype",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Data Import",
+    "file": "C:\\python\\frappe\\frappe\\core\\doctype\\data_import\\data_import.json",
+    "type": "root",
+    "module": "Core",
+    "children": [
+      {
+        "name": "Data Import Log",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\data_import_log\\data_import_log.json",
+        "type": "named_child",
+        "field": "data_import",
+        "children": [
+          {
+            "name": "Data Import",
+            "file": "C:\\python\\frappe\\frappe\\core\\doctype\\data_import\\data_import.json",
+            "type": "lookup",
+            "field": "data_import",
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "DocType",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype\\doctype.json",
+        "type": "lookup",
+        "field": "reference_doctype",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Deleted Document",
+    "file": "C:\\python\\frappe\\frappe\\core\\doctype\\deleted_document\\deleted_document.json",
+    "type": "root",
+    "module": "Core",
+    "children": []
+  },
+  {
+    "name": "DocShare",
+    "file": "C:\\python\\frappe\\frappe\\core\\doctype\\docshare\\docshare.json",
+    "type": "root",
+    "module": "Core",
+    "children": [
+      {
+        "name": "User",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\user\\user.json",
+        "type": "lookup",
+        "field": "user",
+        "children": []
+      },
+      {
+        "name": "DocType",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype\\doctype.json",
+        "type": "lookup",
+        "field": "share_doctype",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "DocType",
+    "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype\\doctype.json",
+    "type": "root",
+    "module": "Core",
+    "children": [
+      {
+        "name": "DocField",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\docfield\\docfield.json",
+        "type": "table_child",
+        "field": "fields",
+        "children": []
+      },
+      {
+        "name": "DocPerm",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\docperm\\docperm.json",
+        "type": "table_child",
+        "field": "permissions",
+        "children": [
+          {
+            "name": "Role",
+            "file": "C:\\python\\frappe\\frappe\\core\\doctype\\role\\role.json",
+            "type": "lookup",
+            "field": "role",
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "DocType Action",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype_action\\doctype_action.json",
+        "type": "table_child",
+        "field": "actions",
+        "children": []
+      },
+      {
+        "name": "DocType Link",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype_link\\doctype_link.json",
+        "type": "table_child",
+        "field": "links",
+        "children": [
+          {
+            "name": "DocType",
+            "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype\\doctype.json",
+            "type": "lookup",
+            "field": "link_doctype",
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "DocType State",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype_state\\doctype_state.json",
+        "type": "table_child",
+        "field": "states",
+        "children": []
+      },
+      {
+        "name": "DocType Layout",
+        "file": "C:\\python\\frappe\\frappe\\custom\\doctype\\doctype_layout\\doctype_layout.json",
+        "type": "named_child",
+        "field": "document_type",
+        "children": [
+          {
+            "name": "DocType Layout Field",
+            "file": "C:\\python\\frappe\\frappe\\custom\\doctype\\doctype_layout_field\\doctype_layout_field.json",
+            "type": "table_child",
+            "field": "fields",
+            "children": []
+          },
+          {
+            "name": "DocType",
+            "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype\\doctype.json",
+            "type": "lookup",
+            "field": "document_type",
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "Global Search DocType",
+        "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\global_search_doctype\\global_search_doctype.json",
+        "type": "named_child",
+        "field": "document_type",
+        "children": [
+          {
+            "name": "DocType",
+            "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype\\doctype.json",
+            "type": "lookup",
+            "field": "document_type",
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "Module Def",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\module_def\\module_def.json",
+        "type": "lookup",
+        "field": "module",
+        "children": []
+      },
+      {
+        "name": "Domain",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\domain\\domain.json",
+        "type": "lookup",
+        "field": "restrict_to_domain",
+        "children": []
+      },
+      {
+        "name": "Email Template",
+        "file": "C:\\python\\frappe\\frappe\\email\\doctype\\email_template\\email_template.json",
+        "type": "lookup",
+        "field": "default_email_template",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Document Naming Rule",
+    "file": "C:\\python\\frappe\\frappe\\core\\doctype\\document_naming_rule\\document_naming_rule.json",
+    "type": "root",
+    "module": "Core",
+    "children": [
+      {
+        "name": "Document Naming Rule Condition",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\document_naming_rule_condition\\document_naming_rule_condition.json",
+        "type": "table_child",
+        "field": "conditions",
+        "children": []
+      },
+      {
+        "name": "DocType",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype\\doctype.json",
+        "type": "lookup",
+        "field": "document_type",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Document Naming Settings",
+    "file": "C:\\python\\frappe\\frappe\\core\\doctype\\document_naming_settings\\document_naming_settings.json",
+    "type": "root",
+    "module": "Core",
+    "children": [
+      {
+        "name": "Amended Document Naming Settings",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\amended_document_naming_settings\\amended_document_naming_settings.json",
+        "type": "table_child",
+        "field": "amend_naming_override",
+        "children": [
+          {
+            "name": "DocType",
+            "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype\\doctype.json",
+            "type": "lookup",
+            "field": "document_type",
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Document Share Key",
+    "file": "C:\\python\\frappe\\frappe\\core\\doctype\\document_share_key\\document_share_key.json",
+    "type": "root",
+    "module": "Core",
+    "children": [
+      {
+        "name": "DocType",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype\\doctype.json",
+        "type": "lookup",
+        "field": "reference_doctype",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Domain",
+    "file": "C:\\python\\frappe\\frappe\\core\\doctype\\domain\\domain.json",
+    "type": "root",
+    "module": "Core",
+    "children": [
+      {
+        "name": "Has Domain",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\has_domain\\has_domain.json",
+        "type": "named_child",
+        "field": "domain",
+        "children": [
+          {
+            "name": "Domain",
+            "file": "C:\\python\\frappe\\frappe\\core\\doctype\\domain\\domain.json",
+            "type": "lookup",
+            "field": "domain",
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Domain Settings",
+    "file": "C:\\python\\frappe\\frappe\\core\\doctype\\domain_settings\\domain_settings.json",
+    "type": "root",
+    "module": "Core",
+    "children": [
+      {
+        "name": "Has Domain",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\has_domain\\has_domain.json",
+        "type": "table_child",
+        "field": "active_domains",
+        "children": [
+          {
+            "name": "Domain",
+            "file": "C:\\python\\frappe\\frappe\\core\\doctype\\domain\\domain.json",
+            "type": "lookup",
+            "field": "domain",
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Error Log",
+    "file": "C:\\python\\frappe\\frappe\\core\\doctype\\error_log\\error_log.json",
+    "type": "root",
+    "module": "Core",
+    "children": [
+      {
+        "name": "DocType",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype\\doctype.json",
+        "type": "lookup",
+        "field": "reference_doctype",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "File",
+    "file": "C:\\python\\frappe\\frappe\\core\\doctype\\file\\file.json",
+    "type": "root",
+    "module": "Core",
+    "children": [
+      {
+        "name": "File",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\file\\file.json",
+        "type": "lookup",
+        "field": "folder",
+        "children": []
+      },
+      {
+        "name": "DocType",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype\\doctype.json",
+        "type": "lookup",
+        "field": "attached_to_doctype",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Installed Applications",
+    "file": "C:\\python\\frappe\\frappe\\core\\doctype\\installed_applications\\installed_applications.json",
+    "type": "root",
+    "module": "Core",
+    "children": [
+      {
+        "name": "Installed Application",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\installed_application\\installed_application.json",
+        "type": "table_child",
+        "field": "installed_applications",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Language",
+    "file": "C:\\python\\frappe\\frappe\\core\\doctype\\language\\language.json",
+    "type": "root",
+    "module": "Core",
+    "children": [
+      {
+        "name": "Language",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\language\\language.json",
+        "type": "lookup",
+        "field": "based_on",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Log Settings",
+    "file": "C:\\python\\frappe\\frappe\\core\\doctype\\log_settings\\log_settings.json",
+    "type": "root",
+    "module": "Core",
+    "children": []
+  },
+  {
+    "name": "Module Def",
+    "file": "C:\\python\\frappe\\frappe\\core\\doctype\\module_def\\module_def.json",
+    "type": "root",
+    "module": "Core",
+    "children": [
+      {
+        "name": "Domain",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\domain\\domain.json",
+        "type": "lookup",
+        "field": "restrict_to_domain",
+        "children": []
+      },
+      {
+        "name": "Package",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\package\\package.json",
+        "type": "lookup",
+        "field": "package",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Module Profile",
+    "file": "C:\\python\\frappe\\frappe\\core\\doctype\\module_profile\\module_profile.json",
+    "type": "root",
+    "module": "Core",
+    "children": [
+      {
+        "name": "Block Module",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\block_module\\block_module.json",
+        "type": "table_child",
+        "field": "block_modules",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Navbar Settings",
+    "file": "C:\\python\\frappe\\frappe\\core\\doctype\\navbar_settings\\navbar_settings.json",
+    "type": "root",
+    "module": "Core",
+    "children": [
+      {
+        "name": "Navbar Item",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\navbar_item\\navbar_item.json",
+        "type": "table_child",
+        "field": "settings_dropdown",
+        "children": []
+      },
+      {
+        "name": "Navbar Item",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\navbar_item\\navbar_item.json",
+        "type": "table_child",
+        "field": "help_dropdown",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Package",
+    "file": "C:\\python\\frappe\\frappe\\core\\doctype\\package\\package.json",
+    "type": "root",
+    "module": "Core",
+    "children": [
+      {
+        "name": "Package Release",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\package_release\\package_release.json",
+        "type": "named_child",
+        "field": "package",
+        "children": [
+          {
+            "name": "Package",
+            "file": "C:\\python\\frappe\\frappe\\core\\doctype\\package\\package.json",
+            "type": "lookup",
+            "field": "package",
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Package Import",
+    "file": "C:\\python\\frappe\\frappe\\core\\doctype\\package_import\\package_import.json",
+    "type": "root",
+    "module": "Core",
+    "children": []
+  },
+  {
+    "name": "Page",
+    "file": "C:\\python\\frappe\\frappe\\core\\doctype\\page\\page.json",
+    "type": "root",
+    "module": "Core",
+    "children": [
+      {
+        "name": "Has Role",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\has_role\\has_role.json",
+        "type": "table_child",
+        "field": "roles",
+        "children": [
+          {
+            "name": "Role",
+            "file": "C:\\python\\frappe\\frappe\\core\\doctype\\role\\role.json",
+            "type": "lookup",
+            "field": "role",
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "Role Permission for Page and Report",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\role_permission_for_page_and_report\\role_permission_for_page_and_report.json",
+        "type": "named_child",
+        "field": "page",
+        "children": [
+          {
+            "name": "Has Role",
+            "file": "C:\\python\\frappe\\frappe\\core\\doctype\\has_role\\has_role.json",
+            "type": "table_child",
+            "field": "roles",
+            "children": [
+              {
+                "name": "Role",
+                "file": "C:\\python\\frappe\\frappe\\core\\doctype\\role\\role.json",
+                "type": "lookup",
+                "field": "role",
+                "children": []
+              }
+            ]
+          },
+          {
+            "name": "Page",
+            "file": "C:\\python\\frappe\\frappe\\core\\doctype\\page\\page.json",
+            "type": "lookup",
+            "field": "page",
+            "children": []
+          },
+          {
+            "name": "Report",
+            "file": "C:\\python\\frappe\\frappe\\core\\doctype\\report\\report.json",
+            "type": "lookup",
+            "field": "report",
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "Module Def",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\module_def\\module_def.json",
+        "type": "lookup",
+        "field": "module",
+        "children": []
+      },
+      {
+        "name": "Domain",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\domain\\domain.json",
+        "type": "lookup",
+        "field": "restrict_to_domain",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Patch Log",
+    "file": "C:\\python\\frappe\\frappe\\core\\doctype\\patch_log\\patch_log.json",
+    "type": "root",
+    "module": "Core",
+    "children": []
+  },
+  {
+    "name": "Permission Inspector",
+    "file": "C:\\python\\frappe\\frappe\\core\\doctype\\permission_inspector\\permission_inspector.json",
+    "type": "root",
+    "module": "Core",
+    "children": [
+      {
+        "name": "DocType",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype\\doctype.json",
+        "type": "lookup",
+        "field": "ref_doctype",
+        "children": []
+      },
+      {
+        "name": "User",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\user\\user.json",
+        "type": "lookup",
+        "field": "user",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Permission Log",
+    "file": "C:\\python\\frappe\\frappe\\core\\doctype\\permission_log\\permission_log.json",
+    "type": "root",
+    "module": "Core",
+    "children": [
+      {
+        "name": "User",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\user\\user.json",
+        "type": "lookup",
+        "field": "changed_by",
+        "children": []
+      },
+      {
+        "name": "DocType",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype\\doctype.json",
+        "type": "lookup",
+        "field": "for_doctype",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Prepared Report",
+    "file": "C:\\python\\frappe\\frappe\\core\\doctype\\prepared_report\\prepared_report.json",
+    "type": "root",
+    "module": "Core",
+    "children": []
+  },
+  {
+    "name": "Recorder",
+    "file": "C:\\python\\frappe\\frappe\\core\\doctype\\recorder\\recorder.json",
+    "type": "root",
+    "module": "Core",
+    "children": [
+      {
+        "name": "Recorder Query",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\recorder_query\\recorder_query.json",
+        "type": "table_child",
+        "field": "sql_queries",
+        "children": []
+      },
+      {
+        "name": "Recorder Suggested Index",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\recorder_suggested_index\\recorder_suggested_index.json",
+        "type": "table_child",
+        "field": "suggested_indexes",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Report",
+    "file": "C:\\python\\frappe\\frappe\\core\\doctype\\report\\report.json",
+    "type": "root",
+    "module": "Core",
+    "children": [
+      {
+        "name": "Has Role",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\has_role\\has_role.json",
+        "type": "table_child",
+        "field": "roles",
+        "children": [
+          {
+            "name": "Role",
+            "file": "C:\\python\\frappe\\frappe\\core\\doctype\\role\\role.json",
+            "type": "lookup",
+            "field": "role",
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "Report Filter",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\report_filter\\report_filter.json",
+        "type": "table_child",
+        "field": "filters",
+        "children": []
+      },
+      {
+        "name": "Report Column",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\report_column\\report_column.json",
+        "type": "table_child",
+        "field": "columns",
+        "children": []
+      },
+      {
+        "name": "Role Permission for Page and Report",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\role_permission_for_page_and_report\\role_permission_for_page_and_report.json",
+        "type": "named_child",
+        "field": "report",
+        "children": [
+          {
+            "name": "Has Role",
+            "file": "C:\\python\\frappe\\frappe\\core\\doctype\\has_role\\has_role.json",
+            "type": "table_child",
+            "field": "roles",
+            "children": [
+              {
+                "name": "Role",
+                "file": "C:\\python\\frappe\\frappe\\core\\doctype\\role\\role.json",
+                "type": "lookup",
+                "field": "role",
+                "children": []
+              }
+            ]
+          },
+          {
+            "name": "Page",
+            "file": "C:\\python\\frappe\\frappe\\core\\doctype\\page\\page.json",
+            "type": "lookup",
+            "field": "page",
+            "children": []
+          },
+          {
+            "name": "Report",
+            "file": "C:\\python\\frappe\\frappe\\core\\doctype\\report\\report.json",
+            "type": "lookup",
+            "field": "report",
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "Auto Email Report",
+        "file": "C:\\python\\frappe\\frappe\\email\\doctype\\auto_email_report\\auto_email_report.json",
+        "type": "named_child",
+        "field": "report",
+        "children": [
+          {
+            "name": "Report",
+            "file": "C:\\python\\frappe\\frappe\\core\\doctype\\report\\report.json",
+            "type": "lookup",
+            "field": "report",
+            "children": []
+          },
+          {
+            "name": "User",
+            "file": "C:\\python\\frappe\\frappe\\core\\doctype\\user\\user.json",
+            "type": "lookup",
+            "field": "user",
+            "children": []
+          },
+          {
+            "name": "Email Account",
+            "file": "C:\\python\\frappe\\frappe\\email\\doctype\\email_account\\email_account.json",
+            "type": "lookup",
+            "field": "sender",
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "DocType",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype\\doctype.json",
+        "type": "lookup",
+        "field": "ref_doctype",
+        "children": []
+      },
+      {
+        "name": "Module Def",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\module_def\\module_def.json",
+        "type": "lookup",
+        "field": "module",
+        "children": []
+      },
+      {
+        "name": "Letter Head",
+        "file": "C:\\python\\frappe\\frappe\\printing\\doctype\\letter_head\\letter_head.json",
+        "type": "lookup",
+        "field": "letter_head",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Role",
+    "file": "C:\\python\\frappe\\frappe\\core\\doctype\\role\\role.json",
+    "type": "root",
+    "module": "Core",
+    "children": [
+      {
+        "name": "Has Role",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\has_role\\has_role.json",
+        "type": "named_child",
+        "field": "role",
+        "children": [
+          {
+            "name": "Role",
+            "file": "C:\\python\\frappe\\frappe\\core\\doctype\\role\\role.json",
+            "type": "lookup",
+            "field": "role",
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "Role Replication",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\role_replication\\role_replication.json",
+        "type": "named_child",
+        "field": "existing_role",
+        "children": [
+          {
+            "name": "Role",
+            "file": "C:\\python\\frappe\\frappe\\core\\doctype\\role\\role.json",
+            "type": "lookup",
+            "field": "existing_role",
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "OAuth Client Role",
+        "file": "C:\\python\\frappe\\frappe\\integrations\\doctype\\oauth_client_role\\oauth_client_role.json",
+        "type": "named_child",
+        "field": "role",
+        "children": [
+          {
+            "name": "Role",
+            "file": "C:\\python\\frappe\\frappe\\core\\doctype\\role\\role.json",
+            "type": "lookup",
+            "field": "role",
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "Workflow Action Permitted Role",
+        "file": "C:\\python\\frappe\\frappe\\workflow\\doctype\\workflow_action_permitted_role\\workflow_action_permitted_role.json",
+        "type": "named_child",
+        "field": "role",
+        "children": [
+          {
+            "name": "Role",
+            "file": "C:\\python\\frappe\\frappe\\core\\doctype\\role\\role.json",
+            "type": "lookup",
+            "field": "role",
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "Domain",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\domain\\domain.json",
+        "type": "lookup",
+        "field": "restrict_to_domain",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Role Profile",
+    "file": "C:\\python\\frappe\\frappe\\core\\doctype\\role_profile\\role_profile.json",
+    "type": "root",
+    "module": "Core",
+    "children": [
+      {
+        "name": "Has Role",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\has_role\\has_role.json",
+        "type": "table_child",
+        "field": "roles",
+        "children": [
+          {
+            "name": "Role",
+            "file": "C:\\python\\frappe\\frappe\\core\\doctype\\role\\role.json",
+            "type": "lookup",
+            "field": "role",
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "User Role Profile",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\user_role_profile\\user_role_profile.json",
+        "type": "named_child",
+        "field": "role_profile",
+        "children": [
+          {
+            "name": "Role Profile",
+            "file": "C:\\python\\frappe\\frappe\\core\\doctype\\role_profile\\role_profile.json",
+            "type": "lookup",
+            "field": "role_profile",
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "RQ Job",
+    "file": "C:\\python\\frappe\\frappe\\core\\doctype\\rq_job\\rq_job.json",
+    "type": "root",
+    "module": "Core",
+    "children": []
+  },
+  {
+    "name": "RQ Worker",
+    "file": "C:\\python\\frappe\\frappe\\core\\doctype\\rq_worker\\rq_worker.json",
+    "type": "root",
+    "module": "Core",
+    "children": [
+      {
+        "name": "RQ Job",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\rq_job\\rq_job.json",
+        "type": "lookup",
+        "field": "current_job_id",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Scheduled Job Log",
+    "file": "C:\\python\\frappe\\frappe\\core\\doctype\\scheduled_job_log\\scheduled_job_log.json",
+    "type": "root",
+    "module": "Core",
+    "children": [
+      {
+        "name": "Scheduled Job Type",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\scheduled_job_type\\scheduled_job_type.json",
+        "type": "lookup",
+        "field": "scheduled_job_type",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Scheduled Job Type",
+    "file": "C:\\python\\frappe\\frappe\\core\\doctype\\scheduled_job_type\\scheduled_job_type.json",
+    "type": "root",
+    "module": "Core",
+    "children": [
+      {
+        "name": "Server Script",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\server_script\\server_script.json",
+        "type": "lookup",
+        "field": "server_script",
+        "children": []
+      },
+      {
+        "name": "Scheduler Event",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\scheduler_event\\scheduler_event.json",
+        "type": "lookup",
+        "field": "scheduler_event",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Scheduler Event",
+    "file": "C:\\python\\frappe\\frappe\\core\\doctype\\scheduler_event\\scheduler_event.json",
+    "type": "root",
+    "module": "Core",
+    "children": [
+      {
+        "name": "DocType",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype\\doctype.json",
+        "type": "lookup",
+        "field": "scheduled_against",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Server Script",
+    "file": "C:\\python\\frappe\\frappe\\core\\doctype\\server_script\\server_script.json",
+    "type": "root",
+    "module": "Core",
+    "children": [
+      {
+        "name": "DocType",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype\\doctype.json",
+        "type": "lookup",
+        "field": "reference_doctype",
+        "children": []
+      },
+      {
+        "name": "Module Def",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\module_def\\module_def.json",
+        "type": "lookup",
+        "field": "module",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Session Default Settings",
+    "file": "C:\\python\\frappe\\frappe\\core\\doctype\\session_default_settings\\session_default_settings.json",
+    "type": "root",
+    "module": "Core",
+    "children": [
+      {
+        "name": "Session Default",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\session_default\\session_default.json",
+        "type": "table_child",
+        "field": "session_defaults",
+        "children": [
+          {
+            "name": "DocType",
+            "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype\\doctype.json",
+            "type": "lookup",
+            "field": "ref_doctype",
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "SMS Log",
+    "file": "C:\\python\\frappe\\frappe\\core\\doctype\\sms_log\\sms_log.json",
+    "type": "root",
+    "module": "Core",
+    "children": []
+  },
+  {
+    "name": "SMS Settings",
+    "file": "C:\\python\\frappe\\frappe\\core\\doctype\\sms_settings\\sms_settings.json",
+    "type": "root",
+    "module": "Core",
+    "children": [
+      {
+        "name": "SMS Parameter",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\sms_parameter\\sms_parameter.json",
+        "type": "table_child",
+        "field": "parameters",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Submission Queue",
+    "file": "C:\\python\\frappe\\frappe\\core\\doctype\\submission_queue\\submission_queue.json",
+    "type": "root",
+    "module": "Core",
+    "children": [
+      {
+        "name": "RQ Job",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\rq_job\\rq_job.json",
+        "type": "lookup",
+        "field": "job_id",
+        "children": []
+      },
+      {
+        "name": "DocType",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype\\doctype.json",
+        "type": "lookup",
+        "field": "ref_doctype",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Success Action",
+    "file": "C:\\python\\frappe\\frappe\\core\\doctype\\success_action\\success_action.json",
+    "type": "root",
+    "module": "Core",
+    "children": [
+      {
+        "name": "DocType",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype\\doctype.json",
+        "type": "lookup",
+        "field": "ref_doctype",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "System Settings",
+    "file": "C:\\python\\frappe\\frappe\\core\\doctype\\system_settings\\system_settings.json",
+    "type": "root",
+    "module": "Core",
+    "children": [
+      {
+        "name": "Country",
+        "file": "C:\\python\\frappe\\frappe\\geo\\doctype\\country\\country.json",
+        "type": "lookup",
+        "field": "country",
+        "children": []
+      },
+      {
+        "name": "Language",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\language\\language.json",
+        "type": "lookup",
+        "field": "language",
+        "children": []
+      },
+      {
+        "name": "Email Template",
+        "file": "C:\\python\\frappe\\frappe\\email\\doctype\\email_template\\email_template.json",
+        "type": "lookup",
+        "field": "welcome_email_template",
+        "children": []
+      },
+      {
+        "name": "Currency",
+        "file": "C:\\python\\frappe\\frappe\\geo\\doctype\\currency\\currency.json",
+        "type": "lookup",
+        "field": "currency",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Transaction Log",
+    "file": "C:\\python\\frappe\\frappe\\core\\doctype\\transaction_log\\transaction_log.json",
+    "type": "root",
+    "module": "Core",
+    "children": [
+      {
+        "name": "Transaction Log",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\transaction_log\\transaction_log.json",
+        "type": "lookup",
+        "field": "amended_from",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Translation",
+    "file": "C:\\python\\frappe\\frappe\\core\\doctype\\translation\\translation.json",
+    "type": "root",
+    "module": "Core",
+    "children": [
+      {
+        "name": "Language",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\language\\language.json",
+        "type": "lookup",
+        "field": "language",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "User",
+    "file": "C:\\python\\frappe\\frappe\\core\\doctype\\user\\user.json",
+    "type": "root",
+    "module": "Core",
+    "children": [
+      {
+        "name": "Has Role",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\has_role\\has_role.json",
+        "type": "table_child",
+        "field": "roles",
+        "children": [
+          {
+            "name": "Role",
+            "file": "C:\\python\\frappe\\frappe\\core\\doctype\\role\\role.json",
+            "type": "lookup",
+            "field": "role",
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "User Email",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\user_email\\user_email.json",
+        "type": "table_child",
+        "field": "user_emails",
+        "children": [
+          {
+            "name": "Email Account",
+            "file": "C:\\python\\frappe\\frappe\\email\\doctype\\email_account\\email_account.json",
+            "type": "lookup",
+            "field": "email_account",
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "Block Module",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\block_module\\block_module.json",
+        "type": "table_child",
+        "field": "block_modules",
+        "children": []
+      },
+      {
+        "name": "DefaultValue",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\defaultvalue\\defaultvalue.json",
+        "type": "table_child",
+        "field": "defaults",
+        "children": []
+      },
+      {
+        "name": "User Social Login",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\user_social_login\\user_social_login.json",
+        "type": "table_child",
+        "field": "social_logins",
+        "children": []
+      },
+      {
+        "name": "Assignment Rule User",
+        "file": "C:\\python\\frappe\\frappe\\automation\\doctype\\assignment_rule_user\\assignment_rule_user.json",
+        "type": "named_child",
+        "field": "user",
+        "children": [
+          {
+            "name": "User",
+            "file": "C:\\python\\frappe\\frappe\\core\\doctype\\user\\user.json",
+            "type": "lookup",
+            "field": "user",
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "Log Setting User",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\log_setting_user\\log_setting_user.json",
+        "type": "named_child",
+        "field": "user",
+        "children": [
+          {
+            "name": "User",
+            "file": "C:\\python\\frappe\\frappe\\core\\doctype\\user\\user.json",
+            "type": "lookup",
+            "field": "user",
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "User Group Member",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\user_group_member\\user_group_member.json",
+        "type": "named_child",
+        "field": "user",
+        "children": [
+          {
+            "name": "User",
+            "file": "C:\\python\\frappe\\frappe\\core\\doctype\\user\\user.json",
+            "type": "lookup",
+            "field": "user",
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "User Permission",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\user_permission\\user_permission.json",
+        "type": "named_child",
+        "field": "user",
+        "children": [
+          {
+            "name": "User",
+            "file": "C:\\python\\frappe\\frappe\\core\\doctype\\user\\user.json",
+            "type": "lookup",
+            "field": "user",
+            "children": []
+          },
+          {
+            "name": "DocType",
+            "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype\\doctype.json",
+            "type": "lookup",
+            "field": "allow",
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "Language",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\language\\language.json",
+        "type": "lookup",
+        "field": "language",
+        "children": []
+      },
+      {
+        "name": "Role Profile",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\role_profile\\role_profile.json",
+        "type": "lookup",
+        "field": "role_profile_name",
+        "children": []
+      },
+      {
+        "name": "Gender",
+        "file": "C:\\python\\frappe\\frappe\\contacts\\doctype\\gender\\gender.json",
+        "type": "lookup",
+        "field": "gender",
+        "children": []
+      },
+      {
+        "name": "User Type",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\user_type\\user_type.json",
+        "type": "lookup",
+        "field": "user_type",
+        "children": []
+      },
+      {
+        "name": "Module Profile",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\module_profile\\module_profile.json",
+        "type": "lookup",
+        "field": "module_profile",
+        "children": []
+      },
+      {
+        "name": "Workspace",
+        "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\workspace\\workspace.json",
+        "type": "lookup",
+        "field": "default_workspace",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "User Group",
+    "file": "C:\\python\\frappe\\frappe\\core\\doctype\\user_group\\user_group.json",
+    "type": "root",
+    "module": "Core",
+    "children": []
+  },
+  {
+    "name": "User Type",
+    "file": "C:\\python\\frappe\\frappe\\core\\doctype\\user_type\\user_type.json",
+    "type": "root",
+    "module": "Core",
+    "children": [
+      {
+        "name": "User Document Type",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\user_document_type\\user_document_type.json",
+        "type": "table_child",
+        "field": "user_doctypes",
+        "children": [
+          {
+            "name": "DocType",
+            "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype\\doctype.json",
+            "type": "lookup",
+            "field": "document_type",
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "User Select Document Type",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\user_select_document_type\\user_select_document_type.json",
+        "type": "table_child",
+        "field": "select_doctypes",
+        "children": [
+          {
+            "name": "DocType",
+            "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype\\doctype.json",
+            "type": "lookup",
+            "field": "document_type",
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "User Type Module",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\user_type_module\\user_type_module.json",
+        "type": "table_child",
+        "field": "user_type_modules",
+        "children": [
+          {
+            "name": "Module Def",
+            "file": "C:\\python\\frappe\\frappe\\core\\doctype\\module_def\\module_def.json",
+            "type": "lookup",
+            "field": "module",
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "User Select Document Type",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\user_select_document_type\\user_select_document_type.json",
+        "type": "table_child",
+        "field": "custom_select_doctypes",
+        "children": [
+          {
+            "name": "DocType",
+            "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype\\doctype.json",
+            "type": "lookup",
+            "field": "document_type",
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "Role",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\role\\role.json",
+        "type": "lookup",
+        "field": "role",
+        "children": []
+      },
+      {
+        "name": "DocType",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype\\doctype.json",
+        "type": "lookup",
+        "field": "apply_user_permission_on",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Version",
+    "file": "C:\\python\\frappe\\frappe\\core\\doctype\\version\\version.json",
+    "type": "root",
+    "module": "Core",
+    "children": [
+      {
+        "name": "DocType",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype\\doctype.json",
+        "type": "lookup",
+        "field": "ref_doctype",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "View Log",
+    "file": "C:\\python\\frappe\\frappe\\core\\doctype\\view_log\\view_log.json",
+    "type": "root",
+    "module": "Core",
+    "children": [
+      {
+        "name": "DocType",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype\\doctype.json",
+        "type": "lookup",
+        "field": "reference_doctype",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "new-doctype-2",
+    "file": "C:\\python\\frappe\\frappe\\custom\\fixtures\\temp_doctype.json",
+    "type": "root",
+    "module": "Custom",
+    "children": []
+  },
+  {
+    "name": "new-doctype-1",
+    "file": "C:\\python\\frappe\\frappe\\custom\\fixtures\\temp_singles.json",
+    "type": "root",
+    "module": "Custom",
+    "children": []
+  },
+  {
+    "name": "Client Script",
+    "file": "C:\\python\\frappe\\frappe\\custom\\doctype\\client_script\\client_script.json",
+    "type": "root",
+    "module": "Custom",
+    "children": [
+      {
+        "name": "DocType",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype\\doctype.json",
+        "type": "lookup",
+        "field": "dt",
+        "children": []
+      },
+      {
+        "name": "Module Def",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\module_def\\module_def.json",
+        "type": "lookup",
+        "field": "module",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Customize Form",
+    "file": "C:\\python\\frappe\\frappe\\custom\\doctype\\customize_form\\customize_form.json",
+    "type": "root",
+    "module": "Custom",
+    "children": [
+      {
+        "name": "Customize Form Field",
+        "file": "C:\\python\\frappe\\frappe\\custom\\doctype\\customize_form_field\\customize_form_field.json",
+        "type": "table_child",
+        "field": "fields",
+        "children": []
+      },
+      {
+        "name": "DocType Link",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype_link\\doctype_link.json",
+        "type": "table_child",
+        "field": "links",
+        "children": [
+          {
+            "name": "DocType",
+            "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype\\doctype.json",
+            "type": "lookup",
+            "field": "link_doctype",
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "DocType Action",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype_action\\doctype_action.json",
+        "type": "table_child",
+        "field": "actions",
+        "children": []
+      },
+      {
+        "name": "DocType State",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype_state\\doctype_state.json",
+        "type": "table_child",
+        "field": "states",
+        "children": []
+      },
+      {
+        "name": "DocType",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype\\doctype.json",
+        "type": "lookup",
+        "field": "doc_type",
+        "children": []
+      },
+      {
+        "name": "Print Format",
+        "file": "C:\\python\\frappe\\frappe\\printing\\doctype\\print_format\\print_format.json",
+        "type": "lookup",
+        "field": "default_print_format",
+        "children": []
+      },
+      {
+        "name": "Email Template",
+        "file": "C:\\python\\frappe\\frappe\\email\\doctype\\email_template\\email_template.json",
+        "type": "lookup",
+        "field": "default_email_template",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Custom Field",
+    "file": "C:\\python\\frappe\\frappe\\custom\\doctype\\custom_field\\custom_field.json",
+    "type": "root",
+    "module": "Custom",
+    "children": [
+      {
+        "name": "DocType",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype\\doctype.json",
+        "type": "lookup",
+        "field": "dt",
+        "children": []
+      },
+      {
+        "name": "Module Def",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\module_def\\module_def.json",
+        "type": "lookup",
+        "field": "module",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Property Setter",
+    "file": "C:\\python\\frappe\\frappe\\custom\\doctype\\property_setter\\property_setter.json",
+    "type": "root",
+    "module": "Custom",
+    "children": [
+      {
+        "name": "DocType",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype\\doctype.json",
+        "type": "lookup",
+        "field": "doc_type",
+        "children": []
+      },
+      {
+        "name": "Module Def",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\module_def\\module_def.json",
+        "type": "lookup",
+        "field": "module",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Bulk Update",
+    "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\bulk_update\\bulk_update.json",
+    "type": "root",
+    "module": "Desk",
+    "children": [
+      {
+        "name": "DocType",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype\\doctype.json",
+        "type": "lookup",
+        "field": "document_type",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Calendar View",
+    "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\calendar_view\\calendar_view.json",
+    "type": "root",
+    "module": "Desk",
+    "children": [
+      {
+        "name": "DocType",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype\\doctype.json",
+        "type": "lookup",
+        "field": "reference_doctype",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Changelog Feed",
+    "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\changelog_feed\\changelog_feed.json",
+    "type": "root",
+    "module": "Desk",
+    "children": []
+  },
+  {
+    "name": "Console Log",
+    "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\console_log\\console_log.json",
+    "type": "root",
+    "module": "Desk",
+    "children": []
+  },
+  {
+    "name": "Custom HTML Block",
+    "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\custom_html_block\\custom_html_block.json",
+    "type": "root",
+    "module": "Desk",
+    "children": [
+      {
+        "name": "Has Role",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\has_role\\has_role.json",
+        "type": "table_child",
+        "field": "roles",
+        "children": [
+          {
+            "name": "Role",
+            "file": "C:\\python\\frappe\\frappe\\core\\doctype\\role\\role.json",
+            "type": "lookup",
+            "field": "role",
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Dashboard",
+    "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\dashboard\\dashboard.json",
+    "type": "root",
+    "module": "Desk",
+    "children": [
+      {
+        "name": "Dashboard Chart Link",
+        "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\dashboard_chart_link\\dashboard_chart_link.json",
+        "type": "table_child",
+        "field": "charts",
+        "children": [
+          {
+            "name": "Dashboard Chart",
+            "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\dashboard_chart\\dashboard_chart.json",
+            "type": "lookup",
+            "field": "chart",
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "Number Card Link",
+        "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\number_card_link\\number_card_link.json",
+        "type": "table_child",
+        "field": "cards",
+        "children": [
+          {
+            "name": "Number Card",
+            "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\number_card\\number_card.json",
+            "type": "lookup",
+            "field": "card",
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "Module Def",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\module_def\\module_def.json",
+        "type": "lookup",
+        "field": "module",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Dashboard Chart",
+    "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\dashboard_chart\\dashboard_chart.json",
+    "type": "root",
+    "module": "Desk",
+    "children": [
+      {
+        "name": "Dashboard Chart Field",
+        "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\dashboard_chart_field\\dashboard_chart_field.json",
+        "type": "table_child",
+        "field": "y_axis",
+        "children": []
+      },
+      {
+        "name": "Has Role",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\has_role\\has_role.json",
+        "type": "table_child",
+        "field": "roles",
+        "children": [
+          {
+            "name": "Role",
+            "file": "C:\\python\\frappe\\frappe\\core\\doctype\\role\\role.json",
+            "type": "lookup",
+            "field": "role",
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "Dashboard Chart Link",
+        "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\dashboard_chart_link\\dashboard_chart_link.json",
+        "type": "named_child",
+        "field": "chart",
+        "children": [
+          {
+            "name": "Dashboard Chart",
+            "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\dashboard_chart\\dashboard_chart.json",
+            "type": "lookup",
+            "field": "chart",
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "Dashboard Chart Source",
+        "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\dashboard_chart_source\\dashboard_chart_source.json",
+        "type": "lookup",
+        "field": "source",
+        "children": []
+      },
+      {
+        "name": "DocType",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype\\doctype.json",
+        "type": "lookup",
+        "field": "document_type",
+        "children": []
+      },
+      {
+        "name": "Report",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\report\\report.json",
+        "type": "lookup",
+        "field": "report_name",
+        "children": []
+      },
+      {
+        "name": "Module Def",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\module_def\\module_def.json",
+        "type": "lookup",
+        "field": "module",
+        "children": []
+      },
+      {
+        "name": "Currency",
+        "file": "C:\\python\\frappe\\frappe\\geo\\doctype\\currency\\currency.json",
+        "type": "lookup",
+        "field": "currency",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Dashboard Chart Source",
+    "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\dashboard_chart_source\\dashboard_chart_source.json",
+    "type": "root",
+    "module": "Desk",
+    "children": [
+      {
+        "name": "Module Def",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\module_def\\module_def.json",
+        "type": "lookup",
+        "field": "module",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Dashboard Settings",
+    "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\dashboard_settings\\dashboard_settings.json",
+    "type": "root",
+    "module": "Desk",
+    "children": [
+      {
+        "name": "User",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\user\\user.json",
+        "type": "lookup",
+        "field": "user",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Desktop Icon",
+    "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\desktop_icon\\desktop_icon.json",
+    "type": "root",
+    "module": "Desk",
+    "children": [
+      {
+        "name": "DocType",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype\\doctype.json",
+        "type": "lookup",
+        "field": "_doctype",
+        "children": []
+      },
+      {
+        "name": "Report",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\report\\report.json",
+        "type": "lookup",
+        "field": "_report",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Event",
+    "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\event\\event.json",
+    "type": "root",
+    "module": "Desk",
+    "children": [
+      {
+        "name": "Event Participants",
+        "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\event_participants\\event_participants.json",
+        "type": "table_child",
+        "field": "event_participants",
+        "children": [
+          {
+            "name": "DocType",
+            "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype\\doctype.json",
+            "type": "lookup",
+            "field": "reference_doctype",
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "Google Calendar",
+        "file": "C:\\python\\frappe\\frappe\\integrations\\doctype\\google_calendar\\google_calendar.json",
+        "type": "lookup",
+        "field": "google_calendar",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Form Tour",
+    "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\form_tour\\form_tour.json",
+    "type": "root",
+    "module": "Desk",
+    "children": [
+      {
+        "name": "Form Tour Step",
+        "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\form_tour_step\\form_tour_step.json",
+        "type": "table_child",
+        "field": "steps",
+        "children": [
+          {
+            "name": "Form Tour",
+            "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\form_tour\\form_tour.json",
+            "type": "lookup",
+            "field": "next_form_tour",
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "DocType",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype\\doctype.json",
+        "type": "lookup",
+        "field": "reference_doctype",
+        "children": []
+      },
+      {
+        "name": "Module Def",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\module_def\\module_def.json",
+        "type": "lookup",
+        "field": "module",
+        "children": []
+      },
+      {
+        "name": "Dashboard",
+        "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\dashboard\\dashboard.json",
+        "type": "lookup",
+        "field": "dashboard_name",
+        "children": []
+      },
+      {
+        "name": "Workspace",
+        "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\workspace\\workspace.json",
+        "type": "lookup",
+        "field": "workspace_name",
+        "children": []
+      },
+      {
+        "name": "Page",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\page\\page.json",
+        "type": "lookup",
+        "field": "page_name",
+        "children": []
+      },
+      {
+        "name": "Report",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\report\\report.json",
+        "type": "lookup",
+        "field": "report_name",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Global Search Settings",
+    "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\global_search_settings\\global_search_settings.json",
+    "type": "root",
+    "module": "Desk",
+    "children": [
+      {
+        "name": "Global Search DocType",
+        "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\global_search_doctype\\global_search_doctype.json",
+        "type": "table_child",
+        "field": "allowed_in_global_search",
+        "children": [
+          {
+            "name": "DocType",
+            "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype\\doctype.json",
+            "type": "lookup",
+            "field": "document_type",
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Kanban Board",
+    "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\kanban_board\\kanban_board.json",
+    "type": "root",
+    "module": "Desk",
+    "children": [
+      {
+        "name": "Kanban Board Column",
+        "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\kanban_board_column\\kanban_board_column.json",
+        "type": "table_child",
+        "field": "columns",
+        "children": []
+      },
+      {
+        "name": "DocType",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype\\doctype.json",
+        "type": "lookup",
+        "field": "reference_doctype",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "List Filter",
+    "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\list_filter\\list_filter.json",
+    "type": "root",
+    "module": "Desk",
+    "children": [
+      {
+        "name": "DocType",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype\\doctype.json",
+        "type": "lookup",
+        "field": "reference_doctype",
+        "children": []
+      },
+      {
+        "name": "User",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\user\\user.json",
+        "type": "lookup",
+        "field": "for_user",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "List View Settings",
+    "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\list_view_settings\\list_view_settings.json",
+    "type": "root",
+    "module": "Desk",
+    "children": []
+  },
+  {
+    "name": "Module Onboarding",
+    "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\module_onboarding\\module_onboarding.json",
+    "type": "root",
+    "module": "Desk",
+    "children": [
+      {
+        "name": "Onboarding Step Map",
+        "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\onboarding_step_map\\onboarding_step_map.json",
+        "type": "table_child",
+        "field": "steps",
+        "children": [
+          {
+            "name": "Onboarding Step",
+            "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\onboarding_step\\onboarding_step.json",
+            "type": "lookup",
+            "field": "step",
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "Module Def",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\module_def\\module_def.json",
+        "type": "lookup",
+        "field": "module",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Note",
+    "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\note\\note.json",
+    "type": "root",
+    "module": "Desk",
+    "children": [
+      {
+        "name": "Note Seen By",
+        "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\note_seen_by\\note_seen_by.json",
+        "type": "table_child",
+        "field": "seen_by",
+        "children": [
+          {
+            "name": "User",
+            "file": "C:\\python\\frappe\\frappe\\core\\doctype\\user\\user.json",
+            "type": "lookup",
+            "field": "user",
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Notification Log",
+    "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\notification_log\\notification_log.json",
+    "type": "root",
+    "module": "Desk",
+    "children": [
+      {
+        "name": "User",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\user\\user.json",
+        "type": "lookup",
+        "field": "for_user",
+        "children": []
+      },
+      {
+        "name": "DocType",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype\\doctype.json",
+        "type": "lookup",
+        "field": "document_type",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Notification Settings",
+    "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\notification_settings\\notification_settings.json",
+    "type": "root",
+    "module": "Desk",
+    "children": [
+      {
+        "name": "User",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\user\\user.json",
+        "type": "lookup",
+        "field": "user",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Notification Subscribed Document",
+    "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\notification_subscribed_document\\notification_subscribed_document.json",
+    "type": "root",
+    "module": "Desk",
+    "children": [
+      {
+        "name": "DocType",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype\\doctype.json",
+        "type": "lookup",
+        "field": "document",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Number Card",
+    "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\number_card\\number_card.json",
+    "type": "root",
+    "module": "Desk",
+    "children": [
+      {
+        "name": "Number Card Link",
+        "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\number_card_link\\number_card_link.json",
+        "type": "named_child",
+        "field": "card",
+        "children": [
+          {
+            "name": "Number Card",
+            "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\number_card\\number_card.json",
+            "type": "lookup",
+            "field": "card",
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "Workspace Number Card",
+        "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\workspace_number_card\\workspace_number_card.json",
+        "type": "named_child",
+        "field": "number_card_name",
+        "children": [
+          {
+            "name": "Number Card",
+            "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\number_card\\number_card.json",
+            "type": "lookup",
+            "field": "number_card_name",
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "DocType",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype\\doctype.json",
+        "type": "lookup",
+        "field": "document_type",
+        "children": []
+      },
+      {
+        "name": "Module Def",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\module_def\\module_def.json",
+        "type": "lookup",
+        "field": "module",
+        "children": []
+      },
+      {
+        "name": "Report",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\report\\report.json",
+        "type": "lookup",
+        "field": "report_name",
+        "children": []
+      },
+      {
+        "name": "Currency",
+        "file": "C:\\python\\frappe\\frappe\\geo\\doctype\\currency\\currency.json",
+        "type": "lookup",
+        "field": "currency",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Onboarding Permission",
+    "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\onboarding_permission\\onboarding_permission.json",
+    "type": "root",
+    "module": "Desk",
+    "children": [
+      {
+        "name": "Role",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\role\\role.json",
+        "type": "lookup",
+        "field": "role",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Onboarding Step",
+    "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\onboarding_step\\onboarding_step.json",
+    "type": "root",
+    "module": "Desk",
+    "children": [
+      {
+        "name": "Onboarding Step Map",
+        "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\onboarding_step_map\\onboarding_step_map.json",
+        "type": "named_child",
+        "field": "step",
+        "children": [
+          {
+            "name": "Onboarding Step",
+            "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\onboarding_step\\onboarding_step.json",
+            "type": "lookup",
+            "field": "step",
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "DocType",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype\\doctype.json",
+        "type": "lookup",
+        "field": "reference_document",
+        "children": []
+      },
+      {
+        "name": "Report",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\report\\report.json",
+        "type": "lookup",
+        "field": "reference_report",
+        "children": []
+      },
+      {
+        "name": "Form Tour",
+        "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\form_tour\\form_tour.json",
+        "type": "lookup",
+        "field": "form_tour",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Route History",
+    "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\route_history\\route_history.json",
+    "type": "root",
+    "module": "Desk",
+    "children": [
+      {
+        "name": "User",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\user\\user.json",
+        "type": "lookup",
+        "field": "user",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "System Console",
+    "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\system_console\\system_console.json",
+    "type": "root",
+    "module": "Desk",
+    "children": []
+  },
+  {
+    "name": "System Health Report",
+    "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\system_health_report\\system_health_report.json",
+    "type": "root",
+    "module": "Desk",
+    "children": [
+      {
+        "name": "System Health Report Workers",
+        "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\system_health_report_workers\\system_health_report_workers.json",
+        "type": "table_child",
+        "field": "background_workers",
+        "children": []
+      },
+      {
+        "name": "System Health Report Queue",
+        "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\system_health_report_queue\\system_health_report_queue.json",
+        "type": "table_child",
+        "field": "queue_status",
+        "children": []
+      },
+      {
+        "name": "System Health Report Errors",
+        "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\system_health_report_errors\\system_health_report_errors.json",
+        "type": "table_child",
+        "field": "top_errors",
+        "children": []
+      },
+      {
+        "name": "System Health Report Tables",
+        "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\system_health_report_tables\\system_health_report_tables.json",
+        "type": "table_child",
+        "field": "top_db_tables",
+        "children": []
+      },
+      {
+        "name": "System Health Report Failing Jobs",
+        "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\system_health_report_failing_jobs\\system_health_report_failing_jobs.json",
+        "type": "table_child",
+        "field": "failing_scheduled_jobs",
+        "children": [
+          {
+            "name": "Scheduled Job Type",
+            "file": "C:\\python\\frappe\\frappe\\core\\doctype\\scheduled_job_type\\scheduled_job_type.json",
+            "type": "lookup",
+            "field": "scheduled_job_type",
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "Scheduled Job Type",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\scheduled_job_type\\scheduled_job_type.json",
+        "type": "lookup",
+        "field": "oldest_unscheduled_job",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Tag",
+    "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\tag\\tag.json",
+    "type": "root",
+    "module": "Desk",
+    "children": [
+      {
+        "name": "Tag Link",
+        "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\tag_link\\tag_link.json",
+        "type": "named_child",
+        "field": "tag",
+        "children": [
+          {
+            "name": "Tag",
+            "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\tag\\tag.json",
+            "type": "lookup",
+            "field": "tag",
+            "children": []
+          },
+          {
+            "name": "DocType",
+            "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype\\doctype.json",
+            "type": "lookup",
+            "field": "document_type",
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "ToDo",
+    "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\todo\\todo.json",
+    "type": "root",
+    "module": "Desk",
+    "children": [
+      {
+        "name": "DocType",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype\\doctype.json",
+        "type": "lookup",
+        "field": "reMAIN_rence_type",
+        "children": []
+      },
+      {
+        "name": "Role",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\role\\role.json",
+        "type": "lookup",
+        "field": "role",
+        "children": []
+      },
+      {
+        "name": "User",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\user\\user.json",
+        "type": "lookup",
+        "field": "assigned_by",
+        "children": []
+      },
+      {
+        "name": "Assignment Rule",
+        "file": "C:\\python\\frappe\\frappe\\automation\\doctype\\assignment_rule\\assignment_rule.json",
+        "type": "lookup",
+        "field": "assignment_rule",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Workspace",
+    "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\workspace\\workspace.json",
+    "type": "root",
+    "module": "Desk",
+    "children": [
+      {
+        "name": "Workspace Chart",
+        "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\workspace_chart\\workspace_chart.json",
+        "type": "table_child",
+        "field": "charts",
+        "children": [
+          {
+            "name": "Dashboard Chart",
+            "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\dashboard_chart\\dashboard_chart.json",
+            "type": "lookup",
+            "field": "chart_name",
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "Workspace Shortcut",
+        "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\workspace_shortcut\\workspace_shortcut.json",
+        "type": "table_child",
+        "field": "shortcuts",
+        "children": [
+          {
+            "name": "Domain",
+            "file": "C:\\python\\frappe\\frappe\\core\\doctype\\domain\\domain.json",
+            "type": "lookup",
+            "field": "restrict_to_domain",
+            "children": []
+          },
+          {
+            "name": "Kanban Board",
+            "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\kanban_board\\kanban_board.json",
+            "type": "lookup",
+            "field": "kanban_board",
+            "children": []
+          },
+          {
+            "name": "DocType",
+            "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype\\doctype.json",
+            "type": "lookup",
+            "field": "report_ref_doctype",
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "Workspace Link",
+        "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\workspace_link\\workspace_link.json",
+        "type": "table_child",
+        "field": "links",
+        "children": [
+          {
+            "name": "Country",
+            "file": "C:\\python\\frappe\\frappe\\geo\\doctype\\country\\country.json",
+            "type": "lookup",
+            "field": "only_for",
+            "children": []
+          },
+          {
+            "name": "DocType",
+            "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype\\doctype.json",
+            "type": "lookup",
+            "field": "report_ref_doctype",
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "Has Role",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\has_role\\has_role.json",
+        "type": "table_child",
+        "field": "roles",
+        "children": [
+          {
+            "name": "Role",
+            "file": "C:\\python\\frappe\\frappe\\core\\doctype\\role\\role.json",
+            "type": "lookup",
+            "field": "role",
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "Workspace Quick List",
+        "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\workspace_quick_list\\workspace_quick_list.json",
+        "type": "table_child",
+        "field": "quick_lists",
+        "children": [
+          {
+            "name": "DocType",
+            "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype\\doctype.json",
+            "type": "lookup",
+            "field": "document_type",
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "Workspace Number Card",
+        "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\workspace_number_card\\workspace_number_card.json",
+        "type": "table_child",
+        "field": "number_cards",
+        "children": [
+          {
+            "name": "Number Card",
+            "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\number_card\\number_card.json",
+            "type": "lookup",
+            "field": "number_card_name",
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "Workspace Custom Block",
+        "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\workspace_custom_block\\workspace_custom_block.json",
+        "type": "table_child",
+        "field": "custom_blocks",
+        "children": [
+          {
+            "name": "Custom HTML Block",
+            "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\custom_html_block\\custom_html_block.json",
+            "type": "lookup",
+            "field": "custom_block_name",
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "Domain",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\domain\\domain.json",
+        "type": "lookup",
+        "field": "restrict_to_domain",
+        "children": []
+      },
+      {
+        "name": "Module Def",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\module_def\\module_def.json",
+        "type": "lookup",
+        "field": "module",
+        "children": []
+      },
+      {
+        "name": "Workspace",
+        "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\workspace\\workspace.json",
+        "type": "lookup",
+        "field": "parent_page",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Workspace Settings",
+    "file": "C:\\python\\frappe\\frappe\\desk\\doctype\\workspace_settings\\workspace_settings.json",
+    "type": "root",
+    "module": "Desk",
+    "children": []
+  },
+  {
+    "name": "Document Follow",
+    "file": "C:\\python\\frappe\\frappe\\email\\doctype\\document_follow\\document_follow.json",
+    "type": "root",
+    "module": "Email",
+    "children": [
+      {
+        "name": "DocType",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype\\doctype.json",
+        "type": "lookup",
+        "field": "ref_doctype",
+        "children": []
+      },
+      {
+        "name": "User",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\user\\user.json",
+        "type": "lookup",
+        "field": "user",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Email Account",
+    "file": "C:\\python\\frappe\\frappe\\email\\doctype\\email_account\\email_account.json",
+    "type": "root",
+    "module": "Email",
+    "children": [
+      {
+        "name": "IMAP Folder",
+        "file": "C:\\python\\frappe\\frappe\\email\\doctype\\imap_folder\\imap_folder.json",
+        "type": "table_child",
+        "field": "imap_folder",
+        "children": [
+          {
+            "name": "DocType",
+            "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype\\doctype.json",
+            "type": "lookup",
+            "field": "append_to",
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "Email Domain",
+        "file": "C:\\python\\frappe\\frappe\\email\\doctype\\email_domain\\email_domain.json",
+        "type": "lookup",
+        "field": "domain",
+        "children": []
+      },
+      {
+        "name": "DocType",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype\\doctype.json",
+        "type": "lookup",
+        "field": "append_to",
+        "children": []
+      },
+      {
+        "name": "Connected App",
+        "file": "C:\\python\\frappe\\frappe\\integrations\\doctype\\connected_app\\connected_app.json",
+        "type": "lookup",
+        "field": "connected_app",
+        "children": []
+      },
+      {
+        "name": "User",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\user\\user.json",
+        "type": "lookup",
+        "field": "connected_user",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Email Domain",
+    "file": "C:\\python\\frappe\\frappe\\email\\doctype\\email_domain\\email_domain.json",
+    "type": "root",
+    "module": "Email",
+    "children": []
+  },
+  {
+    "name": "Email Flag Queue",
+    "file": "C:\\python\\frappe\\frappe\\email\\doctype\\email_flag_queue\\email_flag_queue.json",
+    "type": "root",
+    "module": "Email",
+    "children": []
+  },
+  {
+    "name": "Email Group",
+    "file": "C:\\python\\frappe\\frappe\\email\\doctype\\email_group\\email_group.json",
+    "type": "root",
+    "module": "Email",
+    "children": [
+      {
+        "name": "Email Group Member",
+        "file": "C:\\python\\frappe\\frappe\\email\\doctype\\email_group_member\\email_group_member.json",
+        "type": "named_child",
+        "field": "email_group",
+        "children": [
+          {
+            "name": "Email Group",
+            "file": "C:\\python\\frappe\\frappe\\email\\doctype\\email_group\\email_group.json",
+            "type": "lookup",
+            "field": "email_group",
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "Newsletter Email Group",
+        "file": "C:\\python\\frappe\\frappe\\email\\doctype\\newsletter_email_group\\newsletter_email_group.json",
+        "type": "named_child",
+        "field": "email_group",
+        "children": [
+          {
+            "name": "Email Group",
+            "file": "C:\\python\\frappe\\frappe\\email\\doctype\\email_group\\email_group.json",
+            "type": "lookup",
+            "field": "email_group",
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "Email Template",
+        "file": "C:\\python\\frappe\\frappe\\email\\doctype\\email_template\\email_template.json",
+        "type": "lookup",
+        "field": "confirmation_email_template",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Email Queue",
+    "file": "C:\\python\\frappe\\frappe\\email\\doctype\\email_queue\\email_queue.json",
+    "type": "root",
+    "module": "Email",
+    "children": [
+      {
+        "name": "Email Queue Recipient",
+        "file": "C:\\python\\frappe\\frappe\\email\\doctype\\email_queue_recipient\\email_queue_recipient.json",
+        "type": "table_child",
+        "field": "recipients",
+        "children": []
+      },
+      {
+        "name": "DocType",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype\\doctype.json",
+        "type": "lookup",
+        "field": "reference_doctype",
+        "children": []
+      },
+      {
+        "name": "Communication",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\communication\\communication.json",
+        "type": "lookup",
+        "field": "communication",
+        "children": []
+      },
+      {
+        "name": "Email Account",
+        "file": "C:\\python\\frappe\\frappe\\email\\doctype\\email_account\\email_account.json",
+        "type": "lookup",
+        "field": "email_account",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Email Rule",
+    "file": "C:\\python\\frappe\\frappe\\email\\doctype\\email_rule\\email_rule.json",
+    "type": "root",
+    "module": "Email",
+    "children": []
+  },
+  {
+    "name": "Email Template",
+    "file": "C:\\python\\frappe\\frappe\\email\\doctype\\email_template\\email_template.json",
+    "type": "root",
+    "module": "Email",
+    "children": []
+  },
+  {
+    "name": "Email Unsubscribe",
+    "file": "C:\\python\\frappe\\frappe\\email\\doctype\\email_unsubscribe\\email_unsubscribe.json",
+    "type": "root",
+    "module": "Email",
+    "children": [
+      {
+        "name": "DocType",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype\\doctype.json",
+        "type": "lookup",
+        "field": "reference_doctype",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Newsletter",
+    "file": "C:\\python\\frappe\\frappe\\email\\doctype\\newsletter\\newsletter.json",
+    "type": "root",
+    "module": "Email",
+    "children": [
+      {
+        "name": "Newsletter Email Group",
+        "file": "C:\\python\\frappe\\frappe\\email\\doctype\\newsletter_email_group\\newsletter_email_group.json",
+        "type": "table_child",
+        "field": "email_group",
+        "children": [
+          {
+            "name": "Email Group",
+            "file": "C:\\python\\frappe\\frappe\\email\\doctype\\email_group\\email_group.json",
+            "type": "lookup",
+            "field": "email_group",
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "Newsletter Attachment",
+        "file": "C:\\python\\frappe\\frappe\\email\\doctype\\newsletter_attachment\\newsletter_attachment.json",
+        "type": "table_child",
+        "field": "attachments",
+        "children": []
+      },
+      {
+        "name": "UTM Campaign",
+        "file": "C:\\python\\frappe\\frappe\\website\\doctype\\utm_campaign\\utm_campaign.json",
+        "type": "lookup",
+        "field": "campaign",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Notification",
+    "file": "C:\\python\\frappe\\frappe\\email\\doctype\\notification\\notification.json",
+    "type": "root",
+    "module": "Email",
+    "children": [
+      {
+        "name": "Notification Recipient",
+        "file": "C:\\python\\frappe\\frappe\\email\\doctype\\notification_recipient\\notification_recipient.json",
+        "type": "table_child",
+        "field": "recipients",
+        "children": [
+          {
+            "name": "Role",
+            "file": "C:\\python\\frappe\\frappe\\core\\doctype\\role\\role.json",
+            "type": "lookup",
+            "field": "receiver_by_role",
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "Slack Webhook URL",
+        "file": "C:\\python\\frappe\\frappe\\integrations\\doctype\\slack_webhook_url\\slack_webhook_url.json",
+        "type": "lookup",
+        "field": "slack_webhook_url",
+        "children": []
+      },
+      {
+        "name": "DocType",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype\\doctype.json",
+        "type": "lookup",
+        "field": "document_type",
+        "children": []
+      },
+      {
+        "name": "Module Def",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\module_def\\module_def.json",
+        "type": "lookup",
+        "field": "module",
+        "children": []
+      },
+      {
+        "name": "Email Account",
+        "file": "C:\\python\\frappe\\frappe\\email\\doctype\\email_account\\email_account.json",
+        "type": "lookup",
+        "field": "sender",
+        "children": []
+      },
+      {
+        "name": "Print Format",
+        "file": "C:\\python\\frappe\\frappe\\printing\\doctype\\print_format\\print_format.json",
+        "type": "lookup",
+        "field": "print_format",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Unhandled Email",
+    "file": "C:\\python\\frappe\\frappe\\email\\doctype\\unhandled_email\\unhandled_email.json",
+    "type": "root",
+    "module": "Email",
+    "children": [
+      {
+        "name": "Email Account",
+        "file": "C:\\python\\frappe\\frappe\\email\\doctype\\email_account\\email_account.json",
+        "type": "lookup",
+        "field": "email_account",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Country",
+    "file": "C:\\python\\frappe\\frappe\\geo\\doctype\\country\\country.json",
+    "type": "root",
+    "module": "Geo",
+    "children": []
+  },
+  {
+    "name": "Currency",
+    "file": "C:\\python\\frappe\\frappe\\geo\\doctype\\currency\\currency.json",
+    "type": "root",
+    "module": "Geo",
+    "children": []
+  },
+  {
+    "name": "Connected App",
+    "file": "C:\\python\\frappe\\frappe\\integrations\\doctype\\connected_app\\connected_app.json",
+    "type": "root",
+    "module": "Integrations",
+    "children": [
+      {
+        "name": "OAuth Scope",
+        "file": "C:\\python\\frappe\\frappe\\integrations\\doctype\\oauth_scope\\oauth_scope.json",
+        "type": "table_child",
+        "field": "scopes",
+        "children": []
+      },
+      {
+        "name": "Query Parameters",
+        "file": "C:\\python\\frappe\\frappe\\integrations\\doctype\\query_parameters\\query_parameters.json",
+        "type": "table_child",
+        "field": "query_parameters",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Dropbox Settings",
+    "file": "C:\\python\\frappe\\frappe\\integrations\\doctype\\dropbox_settings\\dropbox_settings.json",
+    "type": "root",
+    "module": "Integrations",
+    "children": []
+  },
+  {
+    "name": "Geolocation Settings",
+    "file": "C:\\python\\frappe\\frappe\\integrations\\doctype\\geolocation_settings\\geolocation_settings.json",
+    "type": "root",
+    "module": "Integrations",
+    "children": []
+  },
+  {
+    "name": "Google Calendar",
+    "file": "C:\\python\\frappe\\frappe\\integrations\\doctype\\google_calendar\\google_calendar.json",
+    "type": "root",
+    "module": "Integrations",
+    "children": [
+      {
+        "name": "User",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\user\\user.json",
+        "type": "lookup",
+        "field": "user",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Google Contacts",
+    "file": "C:\\python\\frappe\\frappe\\integrations\\doctype\\google_contacts\\google_contacts.json",
+    "type": "root",
+    "module": "Integrations",
+    "children": []
+  },
+  {
+    "name": "Google Drive",
+    "file": "C:\\python\\frappe\\frappe\\integrations\\doctype\\google_drive\\google_drive.json",
+    "type": "root",
+    "module": "Integrations",
+    "children": []
+  },
+  {
+    "name": "Google Settings",
+    "file": "C:\\python\\frappe\\frappe\\integrations\\doctype\\google_settings\\google_settings.json",
+    "type": "root",
+    "module": "Integrations",
+    "children": []
+  },
+  {
+    "name": "Integration Request",
+    "file": "C:\\python\\frappe\\frappe\\integrations\\doctype\\integration_request\\integration_request.json",
+    "type": "root",
+    "module": "Integrations",
+    "children": [
+      {
+        "name": "DocType",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype\\doctype.json",
+        "type": "lookup",
+        "field": "reference_doctype",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "LDAP Settings",
+    "file": "C:\\python\\frappe\\frappe\\integrations\\doctype\\ldap_settings\\ldap_settings.json",
+    "type": "root",
+    "module": "Integrations",
+    "children": [
+      {
+        "name": "LDAP Group Mapping",
+        "file": "C:\\python\\frappe\\frappe\\integrations\\doctype\\ldap_group_mapping\\ldap_group_mapping.json",
+        "type": "table_child",
+        "field": "ldap_groups",
+        "children": [
+          {
+            "name": "Role",
+            "file": "C:\\python\\frappe\\frappe\\core\\doctype\\role\\role.json",
+            "type": "lookup",
+            "field": "erpnext_role",
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "Role",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\role\\role.json",
+        "type": "lookup",
+        "field": "default_role",
+        "children": []
+      },
+      {
+        "name": "User Type",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\user_type\\user_type.json",
+        "type": "lookup",
+        "field": "default_user_type",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "OAuth Authorization Code",
+    "file": "C:\\python\\frappe\\frappe\\integrations\\doctype\\oauth_authorization_code\\oauth_authorization_code.json",
+    "type": "root",
+    "module": "Integrations",
+    "children": [
+      {
+        "name": "OAuth Client",
+        "file": "C:\\python\\frappe\\frappe\\integrations\\doctype\\oauth_client\\oauth_client.json",
+        "type": "lookup",
+        "field": "client",
+        "children": []
+      },
+      {
+        "name": "User",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\user\\user.json",
+        "type": "lookup",
+        "field": "user",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "OAuth Bearer Token",
+    "file": "C:\\python\\frappe\\frappe\\integrations\\doctype\\oauth_bearer_token\\oauth_bearer_token.json",
+    "type": "root",
+    "module": "Integrations",
+    "children": [
+      {
+        "name": "OAuth Client",
+        "file": "C:\\python\\frappe\\frappe\\integrations\\doctype\\oauth_client\\oauth_client.json",
+        "type": "lookup",
+        "field": "client",
+        "children": []
+      },
+      {
+        "name": "User",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\user\\user.json",
+        "type": "lookup",
+        "field": "user",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "OAuth Client",
+    "file": "C:\\python\\frappe\\frappe\\integrations\\doctype\\oauth_client\\oauth_client.json",
+    "type": "root",
+    "module": "Integrations",
+    "children": [
+      {
+        "name": "User",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\user\\user.json",
+        "type": "lookup",
+        "field": "user",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "OAuth Provider Settings",
+    "file": "C:\\python\\frappe\\frappe\\integrations\\doctype\\oauth_provider_settings\\oauth_provider_settings.json",
+    "type": "root",
+    "module": "Integrations",
+    "children": []
+  },
+  {
+    "name": "Push Notification Settings",
+    "file": "C:\\python\\frappe\\frappe\\integrations\\doctype\\push_notification_settings\\push_notification_settings.json",
+    "type": "root",
+    "module": "Integrations",
+    "children": []
+  },
+  {
+    "name": "S3 Backup Settings",
+    "file": "C:\\python\\frappe\\frappe\\integrations\\doctype\\s3_backup_settings\\s3_backup_settings.json",
+    "type": "root",
+    "module": "Integrations",
+    "children": []
+  },
+  {
+    "name": "Slack Webhook URL",
+    "file": "C:\\python\\frappe\\frappe\\integrations\\doctype\\slack_webhook_url\\slack_webhook_url.json",
+    "type": "root",
+    "module": "Integrations",
+    "children": []
+  },
+  {
+    "name": "Social Login Key",
+    "file": "C:\\python\\frappe\\frappe\\integrations\\doctype\\social_login_key\\social_login_key.json",
+    "type": "root",
+    "module": "Integrations",
+    "children": []
+  },
+  {
+    "name": "Token Cache",
+    "file": "C:\\python\\frappe\\frappe\\integrations\\doctype\\token_cache\\token_cache.json",
+    "type": "root",
+    "module": "Integrations",
+    "children": [
+      {
+        "name": "OAuth Scope",
+        "file": "C:\\python\\frappe\\frappe\\integrations\\doctype\\oauth_scope\\oauth_scope.json",
+        "type": "table_child",
+        "field": "scopes",
+        "children": []
+      },
+      {
+        "name": "User",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\user\\user.json",
+        "type": "lookup",
+        "field": "user",
+        "children": []
+      },
+      {
+        "name": "Connected App",
+        "file": "C:\\python\\frappe\\frappe\\integrations\\doctype\\connected_app\\connected_app.json",
+        "type": "lookup",
+        "field": "connected_app",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Webhook",
+    "file": "C:\\python\\frappe\\frappe\\integrations\\doctype\\webhook\\webhook.json",
+    "type": "root",
+    "module": "Integrations",
+    "children": [
+      {
+        "name": "Webhook Header",
+        "file": "C:\\python\\frappe\\frappe\\integrations\\doctype\\webhook_header\\webhook_header.json",
+        "type": "table_child",
+        "field": "webhook_headers",
+        "children": []
+      },
+      {
+        "name": "Webhook Data",
+        "file": "C:\\python\\frappe\\frappe\\integrations\\doctype\\webhook_data\\webhook_data.json",
+        "type": "table_child",
+        "field": "webhook_data",
+        "children": []
+      },
+      {
+        "name": "Webhook Request Log",
+        "file": "C:\\python\\frappe\\frappe\\integrations\\doctype\\webhook_request_log\\webhook_request_log.json",
+        "type": "named_child",
+        "field": "webhook",
+        "children": [
+          {
+            "name": "User",
+            "file": "C:\\python\\frappe\\frappe\\core\\doctype\\user\\user.json",
+            "type": "lookup",
+            "field": "user",
+            "children": []
+          },
+          {
+            "name": "Webhook",
+            "file": "C:\\python\\frappe\\frappe\\integrations\\doctype\\webhook\\webhook.json",
+            "type": "lookup",
+            "field": "webhook",
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "DocType",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype\\doctype.json",
+        "type": "lookup",
+        "field": "webhook_doctype",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Letter Head",
+    "file": "C:\\python\\frappe\\frappe\\printing\\doctype\\letter_head\\letter_head.json",
+    "type": "root",
+    "module": "Printing",
+    "children": []
+  },
+  {
+    "name": "Network Printer Settings",
+    "file": "C:\\python\\frappe\\frappe\\printing\\doctype\\network_printer_settings\\network_printer_settings.json",
+    "type": "root",
+    "module": "Printing",
+    "children": []
+  },
+  {
+    "name": "Print Format",
+    "file": "C:\\python\\frappe\\frappe\\printing\\doctype\\print_format\\print_format.json",
+    "type": "root",
+    "module": "Printing",
+    "children": [
+      {
+        "name": "DocType",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype\\doctype.json",
+        "type": "lookup",
+        "field": "doc_type",
+        "children": []
+      },
+      {
+        "name": "Module Def",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\module_def\\module_def.json",
+        "type": "lookup",
+        "field": "module",
+        "children": []
+      },
+      {
+        "name": "Language",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\language\\language.json",
+        "type": "lookup",
+        "field": "default_print_language",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Print Format Field Template",
+    "file": "C:\\python\\frappe\\frappe\\printing\\doctype\\print_format_field_template\\print_format_field_template.json",
+    "type": "root",
+    "module": "Printing",
+    "children": [
+      {
+        "name": "DocType",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype\\doctype.json",
+        "type": "lookup",
+        "field": "document_type",
+        "children": []
+      },
+      {
+        "name": "Module Def",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\module_def\\module_def.json",
+        "type": "lookup",
+        "field": "module",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Print Heading",
+    "file": "C:\\python\\frappe\\frappe\\printing\\doctype\\print_heading\\print_heading.json",
+    "type": "root",
+    "module": "Printing",
+    "children": []
+  },
+  {
+    "name": "Print Settings",
+    "file": "C:\\python\\frappe\\frappe\\printing\\doctype\\print_settings\\print_settings.json",
+    "type": "root",
+    "module": "Printing",
+    "children": [
+      {
+        "name": "Print Style",
+        "file": "C:\\python\\frappe\\frappe\\printing\\doctype\\print_style\\print_style.json",
+        "type": "lookup",
+        "field": "print_style",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Print Style",
+    "file": "C:\\python\\frappe\\frappe\\printing\\doctype\\print_style\\print_style.json",
+    "type": "root",
+    "module": "Printing",
+    "children": []
+  },
+  {
+    "name": "Energy Point Log",
+    "file": "C:\\python\\frappe\\frappe\\social\\doctype\\energy_point_log\\energy_point_log.json",
+    "type": "root",
+    "module": "Social",
+    "children": [
+      {
+        "name": "User",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\user\\user.json",
+        "type": "lookup",
+        "field": "user",
+        "children": []
+      },
+      {
+        "name": "Energy Point Rule",
+        "file": "C:\\python\\frappe\\frappe\\social\\doctype\\energy_point_rule\\energy_point_rule.json",
+        "type": "lookup",
+        "field": "rule",
+        "children": []
+      },
+      {
+        "name": "DocType",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype\\doctype.json",
+        "type": "lookup",
+        "field": "reference_doctype",
+        "children": []
+      },
+      {
+        "name": "Energy Point Log",
+        "file": "C:\\python\\frappe\\frappe\\social\\doctype\\energy_point_log\\energy_point_log.json",
+        "type": "lookup",
+        "field": "revert_of",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Energy Point Rule",
+    "file": "C:\\python\\frappe\\frappe\\social\\doctype\\energy_point_rule\\energy_point_rule.json",
+    "type": "root",
+    "module": "Social",
+    "children": [
+      {
+        "name": "DocType",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype\\doctype.json",
+        "type": "lookup",
+        "field": "reference_doctype",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Energy Point Settings",
+    "file": "C:\\python\\frappe\\frappe\\social\\doctype\\energy_point_settings\\energy_point_settings.json",
+    "type": "root",
+    "module": "Social",
+    "children": [
+      {
+        "name": "Review Level",
+        "file": "C:\\python\\frappe\\frappe\\social\\doctype\\review_level\\review_level.json",
+        "type": "table_child",
+        "field": "review_levels",
+        "children": [
+          {
+            "name": "Role",
+            "file": "C:\\python\\frappe\\frappe\\core\\doctype\\role\\role.json",
+            "type": "lookup",
+            "field": "role",
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "About Us Settings",
+    "file": "C:\\python\\frappe\\frappe\\website\\doctype\\about_us_settings\\about_us_settings.json",
+    "type": "root",
+    "module": "Website",
+    "children": [
+      {
+        "name": "Company History",
+        "file": "C:\\python\\frappe\\frappe\\website\\doctype\\company_history\\company_history.json",
+        "type": "table_child",
+        "field": "company_history",
+        "children": []
+      },
+      {
+        "name": "About Us Team Member",
+        "file": "C:\\python\\frappe\\frappe\\website\\doctype\\about_us_team_member\\about_us_team_member.json",
+        "type": "table_child",
+        "field": "team_members",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Blogger",
+    "file": "C:\\python\\frappe\\frappe\\website\\doctype\\blogger\\blogger.json",
+    "type": "root",
+    "module": "Website",
+    "children": [
+      {
+        "name": "User",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\user\\user.json",
+        "type": "lookup",
+        "field": "user",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Blog Category",
+    "file": "C:\\python\\frappe\\frappe\\website\\doctype\\blog_category\\blog_category.json",
+    "type": "root",
+    "module": "Website",
+    "children": []
+  },
+  {
+    "name": "Blog Post",
+    "file": "C:\\python\\frappe\\frappe\\website\\doctype\\blog_post\\blog_post.json",
+    "type": "root",
+    "module": "Website",
+    "children": [
+      {
+        "name": "Blog Category",
+        "file": "C:\\python\\frappe\\frappe\\website\\doctype\\blog_category\\blog_category.json",
+        "type": "lookup",
+        "field": "blog_category",
+        "children": []
+      },
+      {
+        "name": "Blogger",
+        "file": "C:\\python\\frappe\\frappe\\website\\doctype\\blogger\\blogger.json",
+        "type": "lookup",
+        "field": "blogger",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Blog Settings",
+    "file": "C:\\python\\frappe\\frappe\\website\\doctype\\blog_settings\\blog_settings.json",
+    "type": "root",
+    "module": "Website",
+    "children": []
+  },
+  {
+    "name": "Color",
+    "file": "C:\\python\\frappe\\frappe\\website\\doctype\\color\\color.json",
+    "type": "root",
+    "module": "Website",
+    "children": []
+  },
+  {
+    "name": "Contact Us Settings",
+    "file": "C:\\python\\frappe\\frappe\\website\\doctype\\contact_us_settings\\contact_us_settings.json",
+    "type": "root",
+    "module": "Website",
+    "children": []
+  },
+  {
+    "name": "Discussion Reply",
+    "file": "C:\\python\\frappe\\frappe\\website\\doctype\\discussion_reply\\discussion_reply.json",
+    "type": "root",
+    "module": "Website",
+    "children": [
+      {
+        "name": "Discussion Topic",
+        "file": "C:\\python\\frappe\\frappe\\website\\doctype\\discussion_topic\\discussion_topic.json",
+        "type": "lookup",
+        "field": "topic",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Discussion Topic",
+    "file": "C:\\python\\frappe\\frappe\\website\\doctype\\discussion_topic\\discussion_topic.json",
+    "type": "root",
+    "module": "Website",
+    "children": [
+      {
+        "name": "DocType",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype\\doctype.json",
+        "type": "lookup",
+        "field": "reference_doctype",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Help Article",
+    "file": "C:\\python\\frappe\\frappe\\website\\doctype\\help_article\\help_article.json",
+    "type": "root",
+    "module": "Website",
+    "children": [
+      {
+        "name": "Help Category",
+        "file": "C:\\python\\frappe\\frappe\\website\\doctype\\help_category\\help_category.json",
+        "type": "lookup",
+        "field": "category",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Help Category",
+    "file": "C:\\python\\frappe\\frappe\\website\\doctype\\help_category\\help_category.json",
+    "type": "root",
+    "module": "Website",
+    "children": []
+  },
+  {
+    "name": "Personal Data Deletion Request",
+    "file": "C:\\python\\frappe\\frappe\\website\\doctype\\personal_data_deletion_request\\personal_data_deletion_request.json",
+    "type": "root",
+    "module": "Website",
+    "children": [
+      {
+        "name": "Personal Data Deletion Step",
+        "file": "C:\\python\\frappe\\frappe\\website\\doctype\\personal_data_deletion_step\\personal_data_deletion_step.json",
+        "type": "table_child",
+        "field": "deletion_steps",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Personal Data Download Request",
+    "file": "C:\\python\\frappe\\frappe\\website\\doctype\\personal_data_download_request\\personal_data_download_request.json",
+    "type": "root",
+    "module": "Website",
+    "children": [
+      {
+        "name": "User",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\user\\user.json",
+        "type": "lookup",
+        "field": "user",
+        "children": []
+      },
+      {
+        "name": "Personal Data Download Request",
+        "file": "C:\\python\\frappe\\frappe\\website\\doctype\\personal_data_download_request\\personal_data_download_request.json",
+        "type": "lookup",
+        "field": "amended_from",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Portal Settings",
+    "file": "C:\\python\\frappe\\frappe\\website\\doctype\\portal_settings\\portal_settings.json",
+    "type": "root",
+    "module": "Website",
+    "children": [
+      {
+        "name": "Portal Menu Item",
+        "file": "C:\\python\\frappe\\frappe\\website\\doctype\\portal_menu_item\\portal_menu_item.json",
+        "type": "table_child",
+        "field": "menu",
+        "children": [
+          {
+            "name": "DocType",
+            "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype\\doctype.json",
+            "type": "lookup",
+            "field": "reference_doctype",
+            "children": []
+          },
+          {
+            "name": "Role",
+            "file": "C:\\python\\frappe\\frappe\\core\\doctype\\role\\role.json",
+            "type": "lookup",
+            "field": "role",
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "Portal Menu Item",
+        "file": "C:\\python\\frappe\\frappe\\website\\doctype\\portal_menu_item\\portal_menu_item.json",
+        "type": "table_child",
+        "field": "custom_menu",
+        "children": [
+          {
+            "name": "DocType",
+            "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype\\doctype.json",
+            "type": "lookup",
+            "field": "reference_doctype",
+            "children": []
+          },
+          {
+            "name": "Role",
+            "file": "C:\\python\\frappe\\frappe\\core\\doctype\\role\\role.json",
+            "type": "lookup",
+            "field": "role",
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "Role",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\role\\role.json",
+        "type": "lookup",
+        "field": "default_role",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Social Link Settings",
+    "file": "C:\\python\\frappe\\frappe\\website\\doctype\\social_link_settings\\social_link_settings.json",
+    "type": "root",
+    "module": "Website",
+    "children": []
+  },
+  {
+    "name": "UTM Campaign",
+    "file": "C:\\python\\frappe\\frappe\\website\\doctype\\utm_campaign\\utm_campaign.json",
+    "type": "root",
+    "module": "Website",
+    "children": []
+  },
+  {
+    "name": "UTM Medium",
+    "file": "C:\\python\\frappe\\frappe\\website\\doctype\\utm_medium\\utm_medium.json",
+    "type": "root",
+    "module": "Website",
+    "children": []
+  },
+  {
+    "name": "UTM Source",
+    "file": "C:\\python\\frappe\\frappe\\website\\doctype\\utm_source\\utm_source.json",
+    "type": "root",
+    "module": "Website",
+    "children": []
+  },
+  {
+    "name": "Website Route Meta",
+    "file": "C:\\python\\frappe\\frappe\\website\\doctype\\website_route_meta\\website_route_meta.json",
+    "type": "root",
+    "module": "Website",
+    "children": [
+      {
+        "name": "Website Meta Tag",
+        "file": "C:\\python\\frappe\\frappe\\website\\doctype\\website_meta_tag\\website_meta_tag.json",
+        "type": "table_child",
+        "field": "meta_tags",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Website Script",
+    "file": "C:\\python\\frappe\\frappe\\website\\doctype\\website_script\\website_script.json",
+    "type": "root",
+    "module": "Website",
+    "children": []
+  },
+  {
+    "name": "Website Settings",
+    "file": "C:\\python\\frappe\\frappe\\website\\doctype\\website_settings\\website_settings.json",
+    "type": "root",
+    "module": "Website",
+    "children": [
+      {
+        "name": "Top Bar Item",
+        "file": "C:\\python\\frappe\\frappe\\website\\doctype\\top_bar_item\\top_bar_item.json",
+        "type": "table_child",
+        "field": "top_bar_items",
+        "children": []
+      },
+      {
+        "name": "Top Bar Item",
+        "file": "C:\\python\\frappe\\frappe\\website\\doctype\\top_bar_item\\top_bar_item.json",
+        "type": "table_child",
+        "field": "footer_items",
+        "children": []
+      },
+      {
+        "name": "Website Route Redirect",
+        "file": "C:\\python\\frappe\\frappe\\website\\doctype\\website_route_redirect\\website_route_redirect.json",
+        "type": "table_child",
+        "field": "route_redirects",
+        "children": []
+      },
+      {
+        "name": "Website Theme",
+        "file": "C:\\python\\frappe\\frappe\\website\\doctype\\website_theme\\website_theme.json",
+        "type": "lookup",
+        "field": "website_theme",
+        "children": []
+      },
+      {
+        "name": "Web Template",
+        "file": "C:\\python\\frappe\\frappe\\website\\doctype\\web_template\\web_template.json",
+        "type": "lookup",
+        "field": "navbar_template",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Website Sidebar",
+    "file": "C:\\python\\frappe\\frappe\\website\\doctype\\website_sidebar\\website_sidebar.json",
+    "type": "root",
+    "module": "Website",
+    "children": [
+      {
+        "name": "Website Sidebar Item",
+        "file": "C:\\python\\frappe\\frappe\\website\\doctype\\website_sidebar_item\\website_sidebar_item.json",
+        "type": "table_child",
+        "field": "sidebar_items",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Website Slideshow",
+    "file": "C:\\python\\frappe\\frappe\\website\\doctype\\website_slideshow\\website_slideshow.json",
+    "type": "root",
+    "module": "Website",
+    "children": [
+      {
+        "name": "Website Slideshow Item",
+        "file": "C:\\python\\frappe\\frappe\\website\\doctype\\website_slideshow_item\\website_slideshow_item.json",
+        "type": "table_child",
+        "field": "slideshow_items",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Website Theme",
+    "file": "C:\\python\\frappe\\frappe\\website\\doctype\\website_theme\\website_theme.json",
+    "type": "root",
+    "module": "Website",
+    "children": [
+      {
+        "name": "Website Theme Ignore App",
+        "file": "C:\\python\\frappe\\frappe\\website\\doctype\\website_theme_ignore_app\\website_theme_ignore_app.json",
+        "type": "table_child",
+        "field": "ignored_apps",
+        "children": []
+      },
+      {
+        "name": "Module Def",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\module_def\\module_def.json",
+        "type": "lookup",
+        "field": "module",
+        "children": []
+      },
+      {
+        "name": "Color",
+        "file": "C:\\python\\frappe\\frappe\\website\\doctype\\color\\color.json",
+        "type": "lookup",
+        "field": "primary_color",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Web Form",
+    "file": "C:\\python\\frappe\\frappe\\website\\doctype\\web_form\\web_form.json",
+    "type": "root",
+    "module": "Website",
+    "children": [
+      {
+        "name": "Web Form Field",
+        "file": "C:\\python\\frappe\\frappe\\website\\doctype\\web_form_field\\web_form_field.json",
+        "type": "table_child",
+        "field": "web_form_fields",
+        "children": []
+      },
+      {
+        "name": "Web Form List Column",
+        "file": "C:\\python\\frappe\\frappe\\website\\doctype\\web_form_list_column\\web_form_list_column.json",
+        "type": "table_child",
+        "field": "list_columns",
+        "children": []
+      },
+      {
+        "name": "DocType",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype\\doctype.json",
+        "type": "lookup",
+        "field": "doc_type",
+        "children": []
+      },
+      {
+        "name": "Module Def",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\module_def\\module_def.json",
+        "type": "lookup",
+        "field": "module",
+        "children": []
+      },
+      {
+        "name": "Print Format",
+        "file": "C:\\python\\frappe\\frappe\\printing\\doctype\\print_format\\print_format.json",
+        "type": "lookup",
+        "field": "print_format",
+        "children": []
+      },
+      {
+        "name": "Website Sidebar",
+        "file": "C:\\python\\frappe\\frappe\\website\\doctype\\website_sidebar\\website_sidebar.json",
+        "type": "lookup",
+        "field": "website_sidebar",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Web Page",
+    "file": "C:\\python\\frappe\\frappe\\website\\doctype\\web_page\\web_page.json",
+    "type": "root",
+    "module": "Website",
+    "children": [
+      {
+        "name": "Web Page Block",
+        "file": "C:\\python\\frappe\\frappe\\website\\doctype\\web_page_block\\web_page_block.json",
+        "type": "table_child",
+        "field": "page_blocks",
+        "children": [
+          {
+            "name": "Web Template",
+            "file": "C:\\python\\frappe\\frappe\\website\\doctype\\web_template\\web_template.json",
+            "type": "lookup",
+            "field": "web_template",
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "Website Slideshow",
+        "file": "C:\\python\\frappe\\frappe\\website\\doctype\\website_slideshow\\website_slideshow.json",
+        "type": "lookup",
+        "field": "slideshow",
+        "children": []
+      },
+      {
+        "name": "Website Sidebar",
+        "file": "C:\\python\\frappe\\frappe\\website\\doctype\\website_sidebar\\website_sidebar.json",
+        "type": "lookup",
+        "field": "website_sidebar",
+        "children": []
+      },
+      {
+        "name": "Module Def",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\module_def\\module_def.json",
+        "type": "lookup",
+        "field": "module",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Web Page View",
+    "file": "C:\\python\\frappe\\frappe\\website\\doctype\\web_page_view\\web_page_view.json",
+    "type": "root",
+    "module": "Website",
+    "children": []
+  },
+  {
+    "name": "Web Template",
+    "file": "C:\\python\\frappe\\frappe\\website\\doctype\\web_template\\web_template.json",
+    "type": "root",
+    "module": "Website",
+    "children": [
+      {
+        "name": "Web Template Field",
+        "file": "C:\\python\\frappe\\frappe\\website\\doctype\\web_template_field\\web_template_field.json",
+        "type": "table_child",
+        "field": "fields",
+        "children": []
+      },
+      {
+        "name": "Module Def",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\module_def\\module_def.json",
+        "type": "lookup",
+        "field": "module",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Workflow",
+    "file": "C:\\python\\frappe\\frappe\\workflow\\doctype\\workflow\\workflow.json",
+    "type": "root",
+    "module": "Workflow",
+    "children": [
+      {
+        "name": "Workflow Document State",
+        "file": "C:\\python\\frappe\\frappe\\workflow\\doctype\\workflow_document_state\\workflow_document_state.json",
+        "type": "table_child",
+        "field": "states",
+        "children": [
+          {
+            "name": "Workflow State",
+            "file": "C:\\python\\frappe\\frappe\\workflow\\doctype\\workflow_state\\workflow_state.json",
+            "type": "lookup",
+            "field": "state",
+            "children": []
+          },
+          {
+            "name": "Role",
+            "file": "C:\\python\\frappe\\frappe\\core\\doctype\\role\\role.json",
+            "type": "lookup",
+            "field": "allow_edit",
+            "children": []
+          },
+          {
+            "name": "Email Template",
+            "file": "C:\\python\\frappe\\frappe\\email\\doctype\\email_template\\email_template.json",
+            "type": "lookup",
+            "field": "next_action_email_template",
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "Workflow Transition",
+        "file": "C:\\python\\frappe\\frappe\\workflow\\doctype\\workflow_transition\\workflow_transition.json",
+        "type": "table_child",
+        "field": "transitions",
+        "children": [
+          {
+            "name": "Workflow State",
+            "file": "C:\\python\\frappe\\frappe\\workflow\\doctype\\workflow_state\\workflow_state.json",
+            "type": "lookup",
+            "field": "state",
+            "children": []
+          },
+          {
+            "name": "Workflow Action Master",
+            "file": "C:\\python\\frappe\\frappe\\workflow\\doctype\\workflow_action_master\\workflow_action_master.json",
+            "type": "lookup",
+            "field": "action",
+            "children": []
+          },
+          {
+            "name": "Role",
+            "file": "C:\\python\\frappe\\frappe\\core\\doctype\\role\\role.json",
+            "type": "lookup",
+            "field": "allowed",
+            "children": []
+          }
+        ]
+      },
+      {
+        "name": "DocType",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype\\doctype.json",
+        "type": "lookup",
+        "field": "document_type",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Workflow Action",
+    "file": "C:\\python\\frappe\\frappe\\workflow\\doctype\\workflow_action\\workflow_action.json",
+    "type": "root",
+    "module": "Workflow",
+    "children": [
+      {
+        "name": "DocType",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\doctype\\doctype.json",
+        "type": "lookup",
+        "field": "reference_doctype",
+        "children": []
+      },
+      {
+        "name": "User",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\user\\user.json",
+        "type": "lookup",
+        "field": "user",
+        "children": []
+      },
+      {
+        "name": "Role",
+        "file": "C:\\python\\frappe\\frappe\\core\\doctype\\role\\role.json",
+        "type": "lookup",
+        "field": "completed_by_role",
+        "children": []
+      }
+    ]
+  },
+  {
+    "name": "Workflow Action Master",
+    "file": "C:\\python\\frappe\\frappe\\workflow\\doctype\\workflow_action_master\\workflow_action_master.json",
+    "type": "root",
+    "module": "Workflow",
+    "children": []
+  },
+  {
+    "name": "Workflow State",
+    "file": "C:\\python\\frappe\\frappe\\workflow\\doctype\\workflow_state\\workflow_state.json",
+    "type": "root",
+    "module": "Workflow",
+    "children": []
+  }
+]

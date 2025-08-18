@@ -1,0 +1,589 @@
+Assignment Rule [root] <PERMISSIONS>
+  Assignment Rule Day [table_child] (field: assignment_days)
+  DocType [lookup] (field: document_type) <PERMISSIONS>
+  User [lookup] (field: last_user) <PERMISSIONS>
+Auto Repeat [root] <PERMISSIONS>
+  Auto Repeat Day [table_child] (field: repeat_on_days)
+  DocType [lookup] (field: reference_doctype) <PERMISSIONS>
+  Email Template [lookup] (field: template) <PERMISSIONS>
+  Print Format [lookup] (field: print_format) <PERMISSIONS>
+Milestone [root] <PERMISSIONS>
+  DocType [lookup] (field: reference_type) <PERMISSIONS>
+  Milestone Tracker [lookup] (field: milestone_tracker) <PERMISSIONS>
+Milestone Tracker [root] <PERMISSIONS>
+  DocType [lookup] (field: document_type) <PERMISSIONS>
+Reminder [root] <PERMISSIONS>
+  User [lookup] (field: user) <PERMISSIONS>
+  DocType [lookup] (field: reminder_doctype) <PERMISSIONS>
+Address [root] <PERMISSIONS>
+  Dynamic Link [table_child] (field: links)
+    DocType [lookup] (field: link_doctype) <PERMISSIONS>
+  Country [lookup] (field: country) <PERMISSIONS>
+Address Template [root] <PERMISSIONS>
+  Country [lookup] (field: country) <PERMISSIONS>
+Contact [root] <PERMISSIONS>
+  Dynamic Link [table_child] (field: links)
+    DocType [lookup] (field: link_doctype) <PERMISSIONS>
+  Contact Email [table_child] (field: email_ids)
+  Contact Phone [table_child] (field: phone_nos)
+  User [lookup] (field: user) <PERMISSIONS>
+  Salutation [lookup] (field: salutation) <PERMISSIONS>
+  Gender [lookup] (field: gender) <PERMISSIONS>
+  Address [lookup] (field: address) <PERMISSIONS>
+  Google Contacts [lookup] (field: google_contacts) <PERMISSIONS>
+Gender [root] <PERMISSIONS>
+Salutation [root] <PERMISSIONS>
+Access Log [root] <PERMISSIONS>
+  User [lookup] (field: user) <PERMISSIONS>
+Activity Log [root] <PERMISSIONS>
+  DocType [lookup] (field: reference_doctype) <PERMISSIONS>
+  User [lookup] (field: user) <PERMISSIONS>
+Audit Trail [root] <PERMISSIONS>
+  DocType [lookup] (field: doctype_name) <PERMISSIONS>
+Comment [root] <PERMISSIONS>
+  DocType [lookup] (field: reference_doctype) <PERMISSIONS>
+Communication [root] <PERMISSIONS>
+  Communication Link [table_child] (field: timeline_links)
+    DocType [lookup] (field: link_doctype) <PERMISSIONS>
+  DocType [lookup] (field: reference_doctype) <PERMISSIONS>
+  Email Account [lookup] (field: email_account) <PERMISSIONS>
+  Communication [lookup] (field: in_reply_to) <PERMISSIONS>
+  User [lookup] (field: user) <PERMISSIONS>
+  Email Template [lookup] (field: email_template) <PERMISSIONS>
+Custom DocPerm [root] <PERMISSIONS>
+  Role [lookup] (field: role) <PERMISSIONS>
+Custom Role [root] <PERMISSIONS>
+  Has Role [table_child] (field: roles)
+    Role [lookup] (field: role) <PERMISSIONS>
+  Page [lookup] (field: page) <PERMISSIONS>
+  Report [lookup] (field: report) <PERMISSIONS>
+Data Export [root] <PERMISSIONS>
+  DocType [lookup] (field: reference_doctype) <PERMISSIONS>
+Data Import [root] <PERMISSIONS>
+  Data Import Log [named_child] (field: data_import) <PERMISSIONS>
+    Data Import [lookup] (field: data_import) <PERMISSIONS>
+  DocType [lookup] (field: reference_doctype) <PERMISSIONS>
+Deleted Document [root] <PERMISSIONS>
+DocShare [root] <PERMISSIONS>
+  User [lookup] (field: user) <PERMISSIONS>
+  DocType [lookup] (field: share_doctype) <PERMISSIONS>
+DocType [root] <PERMISSIONS>
+  DocField [table_child] (field: fields)
+  DocPerm [table_child] (field: permissions)
+    Role [lookup] (field: role) <PERMISSIONS>
+  DocType Action [table_child] (field: actions)
+  DocType Link [table_child] (field: links)
+    DocType [lookup] (field: link_doctype) <PERMISSIONS>
+  DocType State [table_child] (field: states)
+  DocType Layout [named_child] (field: document_type) <PERMISSIONS>
+    DocType Layout Field [table_child] (field: fields)
+    DocType [lookup] (field: document_type) <PERMISSIONS>
+  Global Search DocType [named_child] (field: document_type)
+    DocType [lookup] (field: document_type) <PERMISSIONS>
+  Module Def [lookup] (field: module) <PERMISSIONS>
+  Domain [lookup] (field: restrict_to_domain) <PERMISSIONS>
+  Email Template [lookup] (field: default_email_template) <PERMISSIONS>
+Document Naming Rule [root] <PERMISSIONS>
+  Document Naming Rule Condition [table_child] (field: conditions)
+  DocType [lookup] (field: document_type) <PERMISSIONS>
+Document Naming Settings [root] <PERMISSIONS>
+  Amended Document Naming Settings [table_child] (field: amend_naming_override)
+    DocType [lookup] (field: document_type) <PERMISSIONS>
+Document Share Key [root] <PERMISSIONS>
+  DocType [lookup] (field: reference_doctype) <PERMISSIONS>
+Domain [root] <PERMISSIONS>
+  Has Domain [named_child] (field: domain)
+    Domain [lookup] (field: domain) <PERMISSIONS>
+Domain Settings [root] <PERMISSIONS>
+  Has Domain [table_child] (field: active_domains)
+    Domain [lookup] (field: domain) <PERMISSIONS>
+Error Log [root] <PERMISSIONS>
+  DocType [lookup] (field: reference_doctype) <PERMISSIONS>
+File [root] <PERMISSIONS>
+  File [lookup] (field: folder) <PERMISSIONS>
+  DocType [lookup] (field: attached_to_doctype) <PERMISSIONS>
+Installed Applications [root] <PERMISSIONS>
+  Installed Application [table_child] (field: installed_applications)
+Language [root] <PERMISSIONS>
+  Language [lookup] (field: based_on) <PERMISSIONS>
+Log Settings [root] <PERMISSIONS>
+Module Def [root] <PERMISSIONS>
+  Domain [lookup] (field: restrict_to_domain) <PERMISSIONS>
+  Package [lookup] (field: package) <PERMISSIONS>
+Module Profile [root] <PERMISSIONS>
+  Block Module [table_child] (field: block_modules)
+Navbar Settings [root] <PERMISSIONS>
+  Navbar Item [table_child] (field: settings_dropdown)
+  Navbar Item [table_child] (field: help_dropdown)
+Package [root] <PERMISSIONS>
+  Package Release [named_child] (field: package) <PERMISSIONS>
+    Package [lookup] (field: package) <PERMISSIONS>
+Package Import [root] <PERMISSIONS>
+Page [root] <PERMISSIONS>
+  Has Role [table_child] (field: roles)
+    Role [lookup] (field: role) <PERMISSIONS>
+  Role Permission for Page and Report [named_child] (field: page) <PERMISSIONS>
+    Has Role [table_child] (field: roles)
+      Role [lookup] (field: role) <PERMISSIONS>
+    Page [lookup] (field: page) <PERMISSIONS>
+    Report [lookup] (field: report) <PERMISSIONS>
+  Module Def [lookup] (field: module) <PERMISSIONS>
+  Domain [lookup] (field: restrict_to_domain) <PERMISSIONS>
+Patch Log [root] <PERMISSIONS>
+Permission Inspector [root] <PERMISSIONS>
+  DocType [lookup] (field: ref_doctype) <PERMISSIONS>
+  User [lookup] (field: user) <PERMISSIONS>
+Permission Log [root] <PERMISSIONS>
+  User [lookup] (field: changed_by) <PERMISSIONS>
+  DocType [lookup] (field: for_doctype) <PERMISSIONS>
+Prepared Report [root] <PERMISSIONS>
+Recorder [root] <PERMISSIONS>
+  Recorder Query [table_child] (field: sql_queries)
+  Recorder Suggested Index [table_child] (field: suggested_indexes)
+Report [root] <PERMISSIONS>
+  Has Role [table_child] (field: roles)
+    Role [lookup] (field: role) <PERMISSIONS>
+  Report Filter [table_child] (field: filters)
+  Report Column [table_child] (field: columns)
+  Role Permission for Page and Report [named_child] (field: report) <PERMISSIONS>
+    Has Role [table_child] (field: roles)
+      Role [lookup] (field: role) <PERMISSIONS>
+    Page [lookup] (field: page) <PERMISSIONS>
+    Report [lookup] (field: report) <PERMISSIONS>
+  Auto Email Report [named_child] (field: report) <PERMISSIONS>
+    Report [lookup] (field: report) <PERMISSIONS>
+    User [lookup] (field: user) <PERMISSIONS>
+    Email Account [lookup] (field: sender) <PERMISSIONS>
+  DocType [lookup] (field: ref_doctype) <PERMISSIONS>
+  Module Def [lookup] (field: module) <PERMISSIONS>
+  Letter Head [lookup] (field: letter_head) <PERMISSIONS>
+Role [root] <PERMISSIONS>
+  Has Role [named_child] (field: role)
+    Role [lookup] (field: role) <PERMISSIONS>
+  Role Replication [named_child] (field: existing_role) <PERMISSIONS>
+    Role [lookup] (field: existing_role) <PERMISSIONS>
+  OAuth Client Role [named_child] (field: role)
+    Role [lookup] (field: role) <PERMISSIONS>
+  Workflow Action Permitted Role [named_child] (field: role)
+    Role [lookup] (field: role) <PERMISSIONS>
+  Domain [lookup] (field: restrict_to_domain) <PERMISSIONS>
+Role Profile [root] <PERMISSIONS>
+  Has Role [table_child] (field: roles)
+    Role [lookup] (field: role) <PERMISSIONS>
+  User Role Profile [named_child] (field: role_profile)
+    Role Profile [lookup] (field: role_profile) <PERMISSIONS>
+RQ Job [root] <PERMISSIONS>
+RQ Worker [root] <PERMISSIONS>
+  RQ Job [lookup] (field: current_job_id) <PERMISSIONS>
+Scheduled Job Log [root] <PERMISSIONS>
+  Scheduled Job Type [lookup] (field: scheduled_job_type) <PERMISSIONS>
+Scheduled Job Type [root] <PERMISSIONS>
+  Server Script [lookup] (field: server_script) <PERMISSIONS>
+  Scheduler Event [lookup] (field: scheduler_event) <PERMISSIONS>
+Scheduler Event [root] <PERMISSIONS>
+  DocType [lookup] (field: scheduled_against) <PERMISSIONS>
+Server Script [root] <PERMISSIONS>
+  DocType [lookup] (field: reference_doctype) <PERMISSIONS>
+  Module Def [lookup] (field: module) <PERMISSIONS>
+Session Default Settings [root] <PERMISSIONS>
+  Session Default [table_child] (field: session_defaults)
+    DocType [lookup] (field: ref_doctype) <PERMISSIONS>
+SMS Log [root] <PERMISSIONS>
+SMS Settings [root] <PERMISSIONS>
+  SMS Parameter [table_child] (field: parameters)
+Submission Queue [root] <PERMISSIONS>
+  RQ Job [lookup] (field: job_id) <PERMISSIONS>
+  DocType [lookup] (field: ref_doctype) <PERMISSIONS>
+Success Action [root] <PERMISSIONS>
+  DocType [lookup] (field: ref_doctype) <PERMISSIONS>
+System Settings [root] <PERMISSIONS>
+  Country [lookup] (field: country) <PERMISSIONS>
+  Language [lookup] (field: language) <PERMISSIONS>
+  Email Template [lookup] (field: welcome_email_template) <PERMISSIONS>
+  Currency [lookup] (field: currency) <PERMISSIONS>
+Transaction Log [root] <PERMISSIONS>
+  Transaction Log [lookup] (field: amended_from) <PERMISSIONS>
+Translation [root] <PERMISSIONS>
+  Language [lookup] (field: language) <PERMISSIONS>
+User [root] <PERMISSIONS>
+  Has Role [table_child] (field: roles)
+    Role [lookup] (field: role) <PERMISSIONS>
+  User Email [table_child] (field: user_emails)
+    Email Account [lookup] (field: email_account) <PERMISSIONS>
+  Block Module [table_child] (field: block_modules)
+  DefaultValue [table_child] (field: defaults)
+  User Social Login [table_child] (field: social_logins)
+  Assignment Rule User [named_child] (field: user)
+    User [lookup] (field: user) <PERMISSIONS>
+  Log Setting User [named_child] (field: user)
+    User [lookup] (field: user) <PERMISSIONS>
+  User Group Member [named_child] (field: user)
+    User [lookup] (field: user) <PERMISSIONS>
+  User Permission [named_child] (field: user) <PERMISSIONS>
+    User [lookup] (field: user) <PERMISSIONS>
+    DocType [lookup] (field: allow) <PERMISSIONS>
+  Language [lookup] (field: language) <PERMISSIONS>
+  Role Profile [lookup] (field: role_profile_name) <PERMISSIONS>
+  Gender [lookup] (field: gender) <PERMISSIONS>
+  User Type [lookup] (field: user_type) <PERMISSIONS>
+  Module Profile [lookup] (field: module_profile) <PERMISSIONS>
+  Workspace [lookup] (field: default_workspace) <PERMISSIONS>
+User Group [root] <PERMISSIONS>
+User Type [root] <PERMISSIONS>
+  User Document Type [table_child] (field: user_doctypes)
+    DocType [lookup] (field: document_type) <PERMISSIONS>
+  User Select Document Type [table_child] (field: select_doctypes)
+    DocType [lookup] (field: document_type) <PERMISSIONS>
+  User Type Module [table_child] (field: user_type_modules)
+    Module Def [lookup] (field: module) <PERMISSIONS>
+  User Select Document Type [table_child] (field: custom_select_doctypes)
+    DocType [lookup] (field: document_type) <PERMISSIONS>
+  Role [lookup] (field: role) <PERMISSIONS>
+  DocType [lookup] (field: apply_user_permission_on) <PERMISSIONS>
+Version [root] <PERMISSIONS>
+  DocType [lookup] (field: ref_doctype) <PERMISSIONS>
+View Log [root] <PERMISSIONS>
+  DocType [lookup] (field: reference_doctype) <PERMISSIONS>
+new-doctype-2 [root] <PERMISSIONS>
+new-doctype-1 [root] <PERMISSIONS>
+Client Script [root] <PERMISSIONS>
+  DocType [lookup] (field: dt) <PERMISSIONS>
+  Module Def [lookup] (field: module) <PERMISSIONS>
+Customize Form [root] <PERMISSIONS>
+  Customize Form Field [table_child] (field: fields)
+  DocType Link [table_child] (field: links)
+    DocType [lookup] (field: link_doctype) <PERMISSIONS>
+  DocType Action [table_child] (field: actions)
+  DocType State [table_child] (field: states)
+  DocType [lookup] (field: doc_type) <PERMISSIONS>
+  Print Format [lookup] (field: default_print_format) <PERMISSIONS>
+  Email Template [lookup] (field: default_email_template) <PERMISSIONS>
+Custom Field [root] <PERMISSIONS>
+  DocType [lookup] (field: dt) <PERMISSIONS>
+  Module Def [lookup] (field: module) <PERMISSIONS>
+Property Setter [root] <PERMISSIONS>
+  DocType [lookup] (field: doc_type) <PERMISSIONS>
+  Module Def [lookup] (field: module) <PERMISSIONS>
+Bulk Update [root] <PERMISSIONS>
+  DocType [lookup] (field: document_type) <PERMISSIONS>
+Calendar View [root] <PERMISSIONS>
+  DocType [lookup] (field: reference_doctype) <PERMISSIONS>
+Changelog Feed [root] <PERMISSIONS>
+Console Log [root] <PERMISSIONS>
+Custom HTML Block [root] <PERMISSIONS>
+  Has Role [table_child] (field: roles)
+    Role [lookup] (field: role) <PERMISSIONS>
+Dashboard [root] <PERMISSIONS>
+  Dashboard Chart Link [table_child] (field: charts)
+    Dashboard Chart [lookup] (field: chart) <PERMISSIONS>
+  Number Card Link [table_child] (field: cards)
+    Number Card [lookup] (field: card) <PERMISSIONS>
+  Module Def [lookup] (field: module) <PERMISSIONS>
+Dashboard Chart [root] <PERMISSIONS>
+  Dashboard Chart Field [table_child] (field: y_axis)
+  Has Role [table_child] (field: roles)
+    Role [lookup] (field: role) <PERMISSIONS>
+  Dashboard Chart Link [named_child] (field: chart)
+    Dashboard Chart [lookup] (field: chart) <PERMISSIONS>
+  Dashboard Chart Source [lookup] (field: source) <PERMISSIONS>
+  DocType [lookup] (field: document_type) <PERMISSIONS>
+  Report [lookup] (field: report_name) <PERMISSIONS>
+  Module Def [lookup] (field: module) <PERMISSIONS>
+  Currency [lookup] (field: currency) <PERMISSIONS>
+Dashboard Chart Source [root] <PERMISSIONS>
+  Module Def [lookup] (field: module) <PERMISSIONS>
+Dashboard Settings [root] <PERMISSIONS>
+  User [lookup] (field: user) <PERMISSIONS>
+Desktop Icon [root] <PERMISSIONS>
+  DocType [lookup] (field: _doctype) <PERMISSIONS>
+  Report [lookup] (field: _report) <PERMISSIONS>
+Event [root] <PERMISSIONS>
+  Event Participants [table_child] (field: event_participants)
+    DocType [lookup] (field: reference_doctype) <PERMISSIONS>
+  Google Calendar [lookup] (field: google_calendar) <PERMISSIONS>
+Form Tour [root] <PERMISSIONS>
+  Form Tour Step [table_child] (field: steps)
+    Form Tour [lookup] (field: next_form_tour) <PERMISSIONS>
+  DocType [lookup] (field: reference_doctype) <PERMISSIONS>
+  Module Def [lookup] (field: module) <PERMISSIONS>
+  Dashboard [lookup] (field: dashboard_name) <PERMISSIONS>
+  Workspace [lookup] (field: workspace_name) <PERMISSIONS>
+  Page [lookup] (field: page_name) <PERMISSIONS>
+  Report [lookup] (field: report_name) <PERMISSIONS>
+Global Search Settings [root] <PERMISSIONS>
+  Global Search DocType [table_child] (field: allowed_in_global_search)
+    DocType [lookup] (field: document_type) <PERMISSIONS>
+Kanban Board [root] <PERMISSIONS>
+  Kanban Board Column [table_child] (field: columns)
+  DocType [lookup] (field: reference_doctype) <PERMISSIONS>
+List Filter [root] <PERMISSIONS>
+  DocType [lookup] (field: reference_doctype) <PERMISSIONS>
+  User [lookup] (field: for_user) <PERMISSIONS>
+List View Settings [root] <PERMISSIONS>
+Module Onboarding [root] <PERMISSIONS>
+  Onboarding Step Map [table_child] (field: steps)
+    Onboarding Step [lookup] (field: step) <PERMISSIONS>
+  Module Def [lookup] (field: module) <PERMISSIONS>
+Note [root] <PERMISSIONS>
+  Note Seen By [table_child] (field: seen_by)
+    User [lookup] (field: user) <PERMISSIONS>
+Notification Log [root] <PERMISSIONS>
+  User [lookup] (field: for_user) <PERMISSIONS>
+  DocType [lookup] (field: document_type) <PERMISSIONS>
+Notification Settings [root] <PERMISSIONS>
+  User [lookup] (field: user) <PERMISSIONS>
+Notification Subscribed Document [root]
+  DocType [lookup] (field: document) <PERMISSIONS>
+Number Card [root] <PERMISSIONS>
+  Number Card Link [named_child] (field: card)
+    Number Card [lookup] (field: card) <PERMISSIONS>
+  Workspace Number Card [named_child] (field: number_card_name)
+    Number Card [lookup] (field: number_card_name) <PERMISSIONS>
+  DocType [lookup] (field: document_type) <PERMISSIONS>
+  Module Def [lookup] (field: module) <PERMISSIONS>
+  Report [lookup] (field: report_name) <PERMISSIONS>
+  Currency [lookup] (field: currency) <PERMISSIONS>
+Onboarding Permission [root]
+  Role [lookup] (field: role) <PERMISSIONS>
+Onboarding Step [root] <PERMISSIONS>
+  Onboarding Step Map [named_child] (field: step)
+    Onboarding Step [lookup] (field: step) <PERMISSIONS>
+  DocType [lookup] (field: reference_document) <PERMISSIONS>
+  Report [lookup] (field: reference_report) <PERMISSIONS>
+  Form Tour [lookup] (field: form_tour) <PERMISSIONS>
+Route History [root] <PERMISSIONS>
+  User [lookup] (field: user) <PERMISSIONS>
+System Console [root] <PERMISSIONS>
+System Health Report [root] <PERMISSIONS>
+  System Health Report Workers [table_child] (field: background_workers)
+  System Health Report Queue [table_child] (field: queue_status)
+  System Health Report Errors [table_child] (field: top_errors)
+  System Health Report Tables [table_child] (field: top_db_tables)
+  System Health Report Failing Jobs [table_child] (field: failing_scheduled_jobs)
+    Scheduled Job Type [lookup] (field: scheduled_job_type) <PERMISSIONS>
+  Scheduled Job Type [lookup] (field: oldest_unscheduled_job) <PERMISSIONS>
+Tag [root] <PERMISSIONS>
+  Tag Link [named_child] (field: tag) <PERMISSIONS>
+    Tag [lookup] (field: tag) <PERMISSIONS>
+    DocType [lookup] (field: document_type) <PERMISSIONS>
+ToDo [root] <PERMISSIONS>
+  DocType [lookup] (field: reMAIN_rence_type) <PERMISSIONS>
+  Role [lookup] (field: role) <PERMISSIONS>
+  User [lookup] (field: assigned_by) <PERMISSIONS>
+  Assignment Rule [lookup] (field: assignment_rule) <PERMISSIONS>
+Workspace [root] <PERMISSIONS>
+  Workspace Chart [table_child] (field: charts)
+    Dashboard Chart [lookup] (field: chart_name) <PERMISSIONS>
+  Workspace Shortcut [table_child] (field: shortcuts)
+    Domain [lookup] (field: restrict_to_domain) <PERMISSIONS>
+    Kanban Board [lookup] (field: kanban_board) <PERMISSIONS>
+    DocType [lookup] (field: report_ref_doctype) <PERMISSIONS>
+  Workspace Link [table_child] (field: links)
+    Country [lookup] (field: only_for) <PERMISSIONS>
+    DocType [lookup] (field: report_ref_doctype) <PERMISSIONS>
+  Has Role [table_child] (field: roles)
+    Role [lookup] (field: role) <PERMISSIONS>
+  Workspace Quick List [table_child] (field: quick_lists)
+    DocType [lookup] (field: document_type) <PERMISSIONS>
+  Workspace Number Card [table_child] (field: number_cards)
+    Number Card [lookup] (field: number_card_name) <PERMISSIONS>
+  Workspace Custom Block [table_child] (field: custom_blocks)
+    Custom HTML Block [lookup] (field: custom_block_name) <PERMISSIONS>
+  Domain [lookup] (field: restrict_to_domain) <PERMISSIONS>
+  Module Def [lookup] (field: module) <PERMISSIONS>
+  Workspace [lookup] (field: parent_page) <PERMISSIONS>
+Workspace Settings [root] <PERMISSIONS>
+Document Follow [root] <PERMISSIONS>
+  DocType [lookup] (field: ref_doctype) <PERMISSIONS>
+  User [lookup] (field: user) <PERMISSIONS>
+Email Account [root] <PERMISSIONS>
+  IMAP Folder [table_child] (field: imap_folder)
+    DocType [lookup] (field: append_to) <PERMISSIONS>
+  Email Domain [lookup] (field: domain) <PERMISSIONS>
+  DocType [lookup] (field: append_to) <PERMISSIONS>
+  Connected App [lookup] (field: connected_app) <PERMISSIONS>
+  User [lookup] (field: connected_user) <PERMISSIONS>
+Email Domain [root] <PERMISSIONS>
+Email Flag Queue [root] <PERMISSIONS>
+Email Group [root] <PERMISSIONS>
+  Email Group Member [named_child] (field: email_group) <PERMISSIONS>
+    Email Group [lookup] (field: email_group) <PERMISSIONS>
+  Newsletter Email Group [named_child] (field: email_group)
+    Email Group [lookup] (field: email_group) <PERMISSIONS>
+  Email Template [lookup] (field: confirmation_email_template) <PERMISSIONS>
+Email Queue [root] <PERMISSIONS>
+  Email Queue Recipient [table_child] (field: recipients)
+  DocType [lookup] (field: reference_doctype) <PERMISSIONS>
+  Communication [lookup] (field: communication) <PERMISSIONS>
+  Email Account [lookup] (field: email_account) <PERMISSIONS>
+Email Rule [root] <PERMISSIONS>
+Email Template [root] <PERMISSIONS>
+Email Unsubscribe [root] <PERMISSIONS>
+  DocType [lookup] (field: reference_doctype) <PERMISSIONS>
+Newsletter [root] <PERMISSIONS>
+  Newsletter Email Group [table_child] (field: email_group)
+    Email Group [lookup] (field: email_group) <PERMISSIONS>
+  Newsletter Attachment [table_child] (field: attachments)
+  UTM Campaign [lookup] (field: campaign) <PERMISSIONS>
+Notification [root] <PERMISSIONS>
+  Notification Recipient [table_child] (field: recipients)
+    Role [lookup] (field: receiver_by_role) <PERMISSIONS>
+  Slack Webhook URL [lookup] (field: slack_webhook_url) <PERMISSIONS>
+  DocType [lookup] (field: document_type) <PERMISSIONS>
+  Module Def [lookup] (field: module) <PERMISSIONS>
+  Email Account [lookup] (field: sender) <PERMISSIONS>
+  Print Format [lookup] (field: print_format) <PERMISSIONS>
+Unhandled Email [root] <PERMISSIONS>
+  Email Account [lookup] (field: email_account) <PERMISSIONS>
+Country [root] <PERMISSIONS>
+Currency [root] <PERMISSIONS>
+Connected App [root] <PERMISSIONS>
+  OAuth Scope [table_child] (field: scopes)
+  Query Parameters [table_child] (field: query_parameters)
+Dropbox Settings [root] <PERMISSIONS>
+Geolocation Settings [root] <PERMISSIONS>
+Google Calendar [root] <PERMISSIONS>
+  User [lookup] (field: user) <PERMISSIONS>
+Google Contacts [root] <PERMISSIONS>
+Google Drive [root] <PERMISSIONS>
+Google Settings [root] <PERMISSIONS>
+Integration Request [root] <PERMISSIONS>
+  DocType [lookup] (field: reference_doctype) <PERMISSIONS>
+LDAP Settings [root] <PERMISSIONS>
+  LDAP Group Mapping [table_child] (field: ldap_groups)
+    Role [lookup] (field: erpnext_role) <PERMISSIONS>
+  Role [lookup] (field: default_role) <PERMISSIONS>
+  User Type [lookup] (field: default_user_type) <PERMISSIONS>
+OAuth Authorization Code [root] <PERMISSIONS>
+  OAuth Client [lookup] (field: client) <PERMISSIONS>
+  User [lookup] (field: user) <PERMISSIONS>
+OAuth Bearer Token [root] <PERMISSIONS>
+  OAuth Client [lookup] (field: client) <PERMISSIONS>
+  User [lookup] (field: user) <PERMISSIONS>
+OAuth Client [root] <PERMISSIONS>
+  User [lookup] (field: user) <PERMISSIONS>
+OAuth Provider Settings [root] <PERMISSIONS>
+Push Notification Settings [root] <PERMISSIONS>
+S3 Backup Settings [root] <PERMISSIONS>
+Slack Webhook URL [root] <PERMISSIONS>
+Social Login Key [root] <PERMISSIONS>
+Token Cache [root] <PERMISSIONS>
+  OAuth Scope [table_child] (field: scopes)
+  User [lookup] (field: user) <PERMISSIONS>
+  Connected App [lookup] (field: connected_app) <PERMISSIONS>
+Webhook [root] <PERMISSIONS>
+  Webhook Header [table_child] (field: webhook_headers)
+  Webhook Data [table_child] (field: webhook_data)
+  Webhook Request Log [named_child] (field: webhook) <PERMISSIONS>
+    User [lookup] (field: user) <PERMISSIONS>
+    Webhook [lookup] (field: webhook) <PERMISSIONS>
+  DocType [lookup] (field: webhook_doctype) <PERMISSIONS>
+Letter Head [root] <PERMISSIONS>
+Network Printer Settings [root] <PERMISSIONS>
+Print Format [root] <PERMISSIONS>
+  DocType [lookup] (field: doc_type) <PERMISSIONS>
+  Module Def [lookup] (field: module) <PERMISSIONS>
+  Language [lookup] (field: default_print_language) <PERMISSIONS>
+Print Format Field Template [root] <PERMISSIONS>
+  DocType [lookup] (field: document_type) <PERMISSIONS>
+  Module Def [lookup] (field: module) <PERMISSIONS>
+Print Heading [root] <PERMISSIONS>
+Print Settings [root] <PERMISSIONS>
+  Print Style [lookup] (field: print_style) <PERMISSIONS>
+Print Style [root] <PERMISSIONS>
+Energy Point Log [root] <PERMISSIONS>
+  User [lookup] (field: user) <PERMISSIONS>
+  Energy Point Rule [lookup] (field: rule) <PERMISSIONS>
+  DocType [lookup] (field: reference_doctype) <PERMISSIONS>
+  Energy Point Log [lookup] (field: revert_of) <PERMISSIONS>
+Energy Point Rule [root] <PERMISSIONS>
+  DocType [lookup] (field: reference_doctype) <PERMISSIONS>
+Energy Point Settings [root] <PERMISSIONS>
+  Review Level [table_child] (field: review_levels)
+    Role [lookup] (field: role) <PERMISSIONS>
+About Us Settings [root] <PERMISSIONS>
+  Company History [table_child] (field: company_history)
+  About Us Team Member [table_child] (field: team_members)
+Blogger [root] <PERMISSIONS>
+  User [lookup] (field: user) <PERMISSIONS>
+Blog Category [root] <PERMISSIONS>
+Blog Post [root] <PERMISSIONS>
+  Blog Category [lookup] (field: blog_category) <PERMISSIONS>
+  Blogger [lookup] (field: blogger) <PERMISSIONS>
+Blog Settings [root] <PERMISSIONS>
+Color [root] <PERMISSIONS>
+Contact Us Settings [root] <PERMISSIONS>
+Discussion Reply [root] <PERMISSIONS>
+  Discussion Topic [lookup] (field: topic) <PERMISSIONS>
+Discussion Topic [root] <PERMISSIONS>
+  DocType [lookup] (field: reference_doctype) <PERMISSIONS>
+Help Article [root] <PERMISSIONS>
+  Help Category [lookup] (field: category) <PERMISSIONS>
+Help Category [root] <PERMISSIONS>
+Personal Data Deletion Request [root] <PERMISSIONS>
+  Personal Data Deletion Step [table_child] (field: deletion_steps)
+Personal Data Download Request [root] <PERMISSIONS>
+  User [lookup] (field: user) <PERMISSIONS>
+  Personal Data Download Request [lookup] (field: amended_from) <PERMISSIONS>
+Portal Settings [root] <PERMISSIONS>
+  Portal Menu Item [table_child] (field: menu)
+    DocType [lookup] (field: reference_doctype) <PERMISSIONS>
+    Role [lookup] (field: role) <PERMISSIONS>
+  Portal Menu Item [table_child] (field: custom_menu)
+    DocType [lookup] (field: reference_doctype) <PERMISSIONS>
+    Role [lookup] (field: role) <PERMISSIONS>
+  Role [lookup] (field: default_role) <PERMISSIONS>
+Social Link Settings [root]
+UTM Campaign [root] <PERMISSIONS>
+UTM Medium [root] <PERMISSIONS>
+UTM Source [root] <PERMISSIONS>
+Website Route Meta [root] <PERMISSIONS>
+  Website Meta Tag [table_child] (field: meta_tags)
+Website Script [root] <PERMISSIONS>
+Website Settings [root] <PERMISSIONS>
+  Top Bar Item [table_child] (field: top_bar_items)
+  Top Bar Item [table_child] (field: footer_items)
+  Website Route Redirect [table_child] (field: route_redirects)
+  Website Theme [lookup] (field: website_theme) <PERMISSIONS>
+  Web Template [lookup] (field: navbar_template) <PERMISSIONS>
+Website Sidebar [root] <PERMISSIONS>
+  Website Sidebar Item [table_child] (field: sidebar_items)
+Website Slideshow [root] <PERMISSIONS>
+  Website Slideshow Item [table_child] (field: slideshow_items)
+Website Theme [root] <PERMISSIONS>
+  Website Theme Ignore App [table_child] (field: ignored_apps)
+  Module Def [lookup] (field: module) <PERMISSIONS>
+  Color [lookup] (field: primary_color) <PERMISSIONS>
+Web Form [root] <PERMISSIONS>
+  Web Form Field [table_child] (field: web_form_fields)
+  Web Form List Column [table_child] (field: list_columns)
+  DocType [lookup] (field: doc_type) <PERMISSIONS>
+  Module Def [lookup] (field: module) <PERMISSIONS>
+  Print Format [lookup] (field: print_format) <PERMISSIONS>
+  Website Sidebar [lookup] (field: website_sidebar) <PERMISSIONS>
+Web Page [root] <PERMISSIONS>
+  Web Page Block [table_child] (field: page_blocks)
+    Web Template [lookup] (field: web_template) <PERMISSIONS>
+  Website Slideshow [lookup] (field: slideshow) <PERMISSIONS>
+  Website Sidebar [lookup] (field: website_sidebar) <PERMISSIONS>
+  Module Def [lookup] (field: module) <PERMISSIONS>
+Web Page View [root] <PERMISSIONS>
+Web Template [root] <PERMISSIONS>
+  Web Template Field [table_child] (field: fields)
+  Module Def [lookup] (field: module) <PERMISSIONS>
+Workflow [root] <PERMISSIONS>
+  Workflow Document State [table_child] (field: states)
+    Workflow State [lookup] (field: state) <PERMISSIONS>
+    Role [lookup] (field: allow_edit) <PERMISSIONS>
+    Email Template [lookup] (field: next_action_email_template) <PERMISSIONS>
+  Workflow Transition [table_child] (field: transitions)
+    Workflow State [lookup] (field: state) <PERMISSIONS>
+    Workflow Action Master [lookup] (field: action) <PERMISSIONS>
+    Role [lookup] (field: allowed) <PERMISSIONS>
+  DocType [lookup] (field: document_type) <PERMISSIONS>
+Workflow Action [root] <PERMISSIONS>
+  DocType [lookup] (field: reference_doctype) <PERMISSIONS>
+  User [lookup] (field: user) <PERMISSIONS>
+  Role [lookup] (field: completed_by_role) <PERMISSIONS>
+Workflow Action Master [root] <PERMISSIONS>
+Workflow State [root] <PERMISSIONS>
