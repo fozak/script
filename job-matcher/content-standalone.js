@@ -239,7 +239,18 @@ async function checkJobMatch(config) {
   try {
     showResult('🔍 Analyzing job match...\nPlease wait while I compare your CV with this job description.', null);
     
-    const jobDescription = document.body.innerText;
+    //const jobDescription = document.body.innerText;
+    let jobDescription = "";
+
+// Try ID first
+const idElement = document.getElementById("jobDescriptionText");
+if (idElement) {
+  jobDescription = idElement.innerText;
+} else {
+  // Fallback to class
+  const classElements = document.querySelectorAll(".jobs-description__content");
+  jobDescription = Array.from(classElements).map(el => el.innerText).join("\n");
+}
     
     if (jobDescription.length < 100) {
       showResult('⚠️ Warning: The page content seems too short to be a job description. Make sure you\'re on a job posting page.', false);
@@ -259,6 +270,7 @@ Respond with:
 2. PERCENTAGE: Your estimated match percentage
 3. REASONING: Brief explanation of key matching and missing skills
 
+IMPORTANT: check specifically the must requirements. List those if I am not qualified
 Keep the response concise but informative.`;
 
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
