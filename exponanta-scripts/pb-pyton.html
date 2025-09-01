@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Python in Browser with Pyodide</title>
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        button:hover {
+            transform: translateY(-2px);
+        }
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        #output {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+            min-height: 50px;
+        }
+        .loading {
+            text-align: center;
+            color: #666;
+            font-style: italic;
+        }
+        .success {
+            color: #28a745;
+            font-weight: bold;
+        }
+        .error {
+            color: #dc3545;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🐍 Python Sign Up Function</h1>
+        
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" placeholder="Enter your email" value="user@example.com">
+        </div>
+        
+        <div class="form-group">
+            <label for="fullName">Full Name:</label>
+            <input type="text" id="fullName" placeholder="Enter your full name" value="John Doe">
+        </div>
+        
+        <div class="form-group">
+            <label for="redirectTo">Redirect URL:</label>
+            <input type="text" id="redirectTo" placeholder="Enter redirect URL" value="/dashboard">
+        </div>
+        
+        <button id="signupBtn" onclick="runSignup()">Run Sign Up Function</button>
+        
+        <div id="output" class="loading">Loading Python environment...</div>
+    </div>
+
+    <script>
+        let pyodide;
+        
+        async function initPyodide() {
+            try {
+                pyodide = await loadPyodide();
+                
+                // Define the Python code with your function
+                pyodide.runPython(`
+# Mock database and translation functions
+class MockDB:
+    def __init__(self):
+        self.users = {
+            "existing@example.com": {"enabled": True},
+            "disabled@example.com": {"enabled": False}
+        }
+    
+    def get(self, table, filters):
+        if table == "User":
+            email = filters.get("email")
+            if email in self.users:
+                return type('User', (), self.users[email])()
+        return None
+
+class MockFrappe:
+    def __init__(self):
+        self.db = MockDB()
+    
+    def throw(self, message, title="Error"):
+        raise Exception(f"{title}: {message}")
+
+# Mock objects
+frappe = MockFrappe()
+
+def _(text):
+    return text  # Mock translation function
+
+def is_signup_disabled():
+    return False  # For demo, signup is enabled
+
+# Your original function
+def sign_up(email: str, full_name: str, redirect_to: str) -> tuple:
+    if is_signup_disabled():
+        frappe.throw(_("Sign Up is disabled"), title=_("Not Allowed"))
+
+    user = frappe.db.get("User", {"email": email})
+    if user:
+        if user.enabled:
+            return 0, _("Already Registered")
+        else:
+            return 0, _("Registered but disabled")
+    
+    # If no existing user, simulate successful registration
+    return 1, _("Registration successful! Redirecting...")
+
+# Test function
+def test_signup(email, full_name, redirect_to):
+    try:
+        code, message = sign_up(email, full_name, redirect_to)
+        return f"Status Code: {code}, Message: {message}"
+    except Exception as e:
+        return f"Error: {str(e)}"
+                `);
+                
+                document.getElementById('output').innerHTML = '<span class="success">✅ Python environment ready! Click "Run Sign Up Function" to test.</span>';
+                document.getElementById('signupBtn').disabled = false;
+            } catch (error) {
+                document.getElementById('output').innerHTML = '<span class="error">❌ Failed to load Python environment: ' + error.message + '</span>';
+            }
+        }
+        
+        function runSignup() {
+            const email = document.getElementById('email').value;
+            const fullName = document.getElementById('fullName').value;
+            const redirectTo = document.getElementById('redirectTo').value;
+            
+            if (!email || !fullName || !redirectTo) {
+                document.getElementById('output').innerHTML = '<span class="error">❌ Please fill in all fields</span>';
+                return;
+            }
+            
+            try {
+                // Call the Python function
+                const result = pyodide.runPython(`test_signup("${email}", "${fullName}", "${redirectTo}")`);
+                document.getElementById('output').innerHTML = `<span class="success">🐍 Python Result: ${result}</span>`;
+            } catch (error) {
+                document.getElementById('output').innerHTML = `<span class="error">❌ Python Error: ${error.message}</span>`;
+            }
+        }
+        
+        // Initialize Pyodide when page loads
+        initPyodide();
+    </script>
+</body>
+</html>

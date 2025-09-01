@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Frappe Login Forms with React</title>
+  <!-- Frappe CSS -->
+  <link rel="stylesheet" href="https://apfile.com/assets/frappe/dist/css/desk.bundle.6TKRFZ4V.css">
+
+  <!-- React & ReactDOM -->
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+
+  <!-- Babel for JSX -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <style>
+    body { font-family: sans-serif; background: #f0f2f5; margin: 0; padding: 2rem; }
+    .page-card { padding: 1.5rem; border-radius: 8px; background: white; max-width: 400px; margin: 1rem auto; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+    .form-label { display: block; margin-bottom: 0.25rem; font-weight: bold; }
+    .form-control { width: 100%; padding: 0.5rem; margin-bottom: 0.75rem; border-radius: 4px; border: 1px solid #ccc; }
+    .btn-block { width: 100%; }
+    .field-icon { margin-left: 4px; vertical-align: middle; }
+    .page-card-actions { margin-top: 1rem; }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState } = React;
+
+    // ✅ JSON schema for forms
+    const formsSchema = [
+      {
+        name: "LoginForm",
+        title: "Login",
+        fields: [
+          {
+            fieldname: "email",
+            fieldtype: "Data",
+            label: "Email",
+            wrapper: { container: "div", css_class: "form-group", attributes: { type: "text", autoComplete: "username", autoFocus: true } },
+            placeholder: "Email Address"
+          },
+          {
+            fieldname: "password",
+            fieldtype: "Password",
+            label: "Password",
+            wrapper: { container: "div", css_class: "form-group", attributes: { type: "password", autoComplete: "current-password" } },
+            placeholder: "•••••"
+          }
+        ],
+        actions: [
+          { action_name: "Login", style: { variant: "primary", size: "sm", fullWidth: true } },
+          { action_name: "Reset Password", style: { variant: "secondary", size: "sm", fullWidth: true } }
+        ]
+      },
+      {
+        name: "ForgotPasswordForm",
+        title: "Forgot Password",
+        fields: [
+          {
+            fieldname: "forgot_email",
+            fieldtype: "Data",
+            label: "Email",
+            wrapper: { container: "div", css_class: "form-group", attributes: { type: "email", autoComplete: "username", autoFocus: true } },
+            placeholder: "Email Address"
+          }
+        ],
+        actions: [
+          { action_name: "Send Reset Link", style: { variant: "primary", size: "sm", fullWidth: true } }
+        ]
+      }
+    ];
+
+    // ✅ Generic FormRenderer
+    const FormRenderer = ({ schema }) => {
+      const [values, setValues] = useState({});
+
+      const handleChange = (name, value) => setValues(prev => ({ ...prev, [name]: value }));
+
+      return (
+        <>
+          {schema.map(form => (
+            <div key={form.name} className="page-card">
+              <h3>{form.title}</h3>
+              {form.fields.map(field => {
+                const Wrapper = field.wrapper?.container || "div";
+                const attrs = field.wrapper?.attributes || {};
+                return (
+                  <Wrapper key={field.fieldname} className={field.wrapper?.css_class}>
+                    <label className="form-label">{field.label}</label>
+                    <input
+                      {...attrs}
+                      name={field.fieldname}
+                      value={values[field.fieldname] || ""}
+                      placeholder={field.placeholder}
+                      onChange={e => handleChange(field.fieldname, e.target.value)}
+                      className="form-control"
+                    />
+                  </Wrapper>
+                );
+              })}
+              <div className="page-card-actions">
+                {form.actions?.map(action => (
+                  <button
+                    key={action.action_name}
+                    className={`btn btn-${action.style.variant} btn-${action.style.size} ${action.style.fullWidth ? "btn-block" : ""}`}
+                    type="button"
+                    onClick={() => alert(`${action.action_name} clicked for ${form.name}`)}
+                    style={{ marginTop: "0.5rem" }}
+                  >
+                    {action.action_name}
+                  </button>
+                ))}
+              </div>
+            </div>
+          ))}
+        </>
+      );
+    };
+
+    // ✅ Render after page loaded
+    ReactDOM.createRoot(document.getElementById('root')).render(<FormRenderer schema={formsSchema} />);
+  </script>
+</body>
+</html>
