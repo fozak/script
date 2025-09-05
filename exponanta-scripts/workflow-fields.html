@@ -1,0 +1,293 @@
+(function() {
+  if (!pb) {
+    console.error('PocketBase not found');
+    return;
+  }
+ 
+  const renderContainer = document.getElementById('renderContainer');
+  if (!renderContainer) {
+    console.error('Render container not found');
+    return;
+  }
+ 
+  // Load React + ReactDOM dynamically
+  const prevDefine = window.define;
+  window.define = undefined;
+ 
+  function loadScript(src) {
+    return new Promise((resolve, reject) => {
+      const script = document.createElement('script');
+      script.src = src;
+      script.onload = resolve;
+      script.onerror = reject;
+      document.head.appendChild(script);
+    });
+  }
+ 
+  async function loadReact() {
+    if (window.React && window.ReactDOM) return { React: window.React, ReactDOM: window.ReactDOM };
+    await loadScript('https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js');
+    await loadScript('https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js');
+    if (!window.React || !window.ReactDOM) throw new Error('React failed to load');
+    if (prevDefine) window.define = prevDefine;
+    return { React: window.React, ReactDOM: window.ReactDOM };
+  }
+ 
+  loadReact().then(({ React, ReactDOM }) => {
+    const { useState, useReducer, useEffect, createElement: h } = React;
+    
+    // Field States & Actions
+    const STATES = { 
+      PRISTINE: 'pristine', 
+      EDITING: 'editing', 
+      VALIDATING: 'validating', 
+      VALID: 'valid', 
+      INVALID: 'invalid', 
+      WARNING: 'warning' 
+    };
+    
+    const ACTIONS = { 
+      FOCUS: 'FOCUS', 
+      BLUR: 'BLUR', 
+      VALIDATE_SUCCESS: 'VALIDATE_SUCCESS', 
+      VALIDATE_FAIL: 'VALIDATE_FAIL', 
+      USER_CONFIRM: 'USER_CONFIRM', 
+      USER_CANCEL: 'USER_CANCEL' 
+    };
+    
+    // Field Workflow
+    const WORKFLOW = {
+      initial: STATES.PRISTINE,
+      transitions: {
+        [STATES.PRISTINE]: { [ACTIONS.FOCUS]: STATES.EDITING },
+        [STATES.EDITING]: { [ACTIONS.BLUR]: STATES.VALIDATING },
+        [STATES.VALIDATING]: { 
+          [ACTIONS.VALIDATE_SUCCESS]: STATES.VALID, 
+          [ACTIONS.VALIDATE_FAIL]: STATES.INVALID 
+        },
+        [STATES.VALID]: { [ACTIONS.FOCUS]: STATES.EDITING },
+        [STATES.INVALID]: { [ACTIONS.FOCUS]: STATES.EDITING },
+        [STATES.WARNING]: { 
+          [ACTIONS.USER_CONFIRM]: STATES.VALID, 
+          [ACTIONS.USER_CANCEL]: STATES.EDITING 
+        }
+      }
+    };
+    
+    // State Reducer
+    function reducer(state, action) {
+      const nextState = WORKFLOW.transitions[state.current]?.[action.type];
+      return nextState ? { ...state, current: nextState, last: action.type } : state;
+    }
+    
+    // Mock validation using global targetDocument
+    const validate = async (field, value) => {
+      const errors = [];
+      if (field.reqd === 1 && !value?.trim()) {
+        errors.push(`${field.label} is required`);
+      }
+      if (field.unique === 1 && value && pb) {
+        const existing = await pb.getFieldValues(selectedTarget.doctype || 'Role', field.fieldname);
+if (existing && existing.length > 0 && existing.includes(value)) errors.push(`${field.label} must be unique`);
+      }
+      return errors;
+    };
+    
+    // Smart Field Component
+    const SmartField = ({ field, value, onChange }) => {
+      const [state, dispatch] = useReducer(reducer, { current: WORKFLOW.initial, last: null });
+      const [errors, setErrors] = useState([]);
+      const [isValidating, setIsValidating] = useState(false);
+      const [showModal, setShowModal] = useState(false);
+      const [prevValue, setPrevValue] = useState('');
+      
+      const performValidation = async (val) => {
+        setIsValidating(true);
+        const errs = await validate(field, val);
+        setErrors(errs);
+        dispatch({ type: errs.length > 0 ? ACTIONS.VALIDATE_FAIL : ACTIONS.VALIDATE_SUCCESS });
+        setIsValidating(false);
+        
+        // Check if required field being emptied
+        if (field.reqd === 1 && !val && prevValue) {
+          setShowModal(true);
+        }
+      };
+      
+      const handleFocus = () => dispatch({ type: ACTIONS.FOCUS });
+      const handleBlur = () => {
+        dispatch({ type: ACTIONS.BLUR });
+        performValidation(value);
+      };
+      const handleChange = (e) => onChange(e.target.value);
+      
+      const confirmClear = () => {
+        setShowModal(false);
+        dispatch({ type: ACTIONS.USER_CONFIRM });
+        setPrevValue('');
+      };
+      
+      const cancelClear = () => {
+        setShowModal(false);
+        onChange(prevValue);
+        dispatch({ type: ACTIONS.USER_CANCEL });
+      };
+      
+      useEffect(() => {
+        if (state.current === STATES.VALID && value) setPrevValue(value);
+      }, [state.current, value]);
+      
+      const getClasses = () => {
+        const base = "form-control ";
+        switch (state.current) {
+          case STATES.EDITING: return base + "border-primary shadow-sm";
+          case STATES.VALIDATING: return base + "border-warning bg-light";
+          case STATES.VALID: return base + "border-success bg-light";
+          case STATES.INVALID: return base + "border-danger bg-light";
+          default: return base + "border-secondary";
+        }
+      };
+      
+      return h('div', { className: "mb-3" }, [
+        h('label', { className: "form-label", key: "label" }, [
+          field.label,
+          field.reqd === 1 && h('span', { className: "text-danger", key: "required" }, '*'),
+          field.unique === 1 && h('small', { className: "text-primary", key: "unique" }, ' (Unique)')
+        ]),
+        
+        h('div', { className: "position-relative", key: "input-container" }, [
+          h('input', {
+            key: "input",
+            type: "text",
+            className: getClasses(),
+            value: value || '',
+            onChange: handleChange,
+            onFocus: handleFocus,
+            onBlur: handleBlur,
+            placeholder: `Enter ${field.label}`,
+            disabled: isValidating
+          }),
+          isValidating && h('div', {
+            key: "spinner",
+            className: "position-absolute top-50 end-0 translate-middle-y me-3"
+          }, [
+            h('div', { className: "spinner-border spinner-border-sm text-warning" })
+          ])
+        ]),
+        
+        h('div', {
+          key: "status",
+          className: "d-flex justify-content-between align-items-center mt-1"
+        }, [
+          h('small', { className: "text-muted" }, [
+            'State: ',
+            h('code', {}, state.current),
+            state.last && h('span', { className: "ms-2" }, `Last: ${state.last}`)
+          ])
+        ]),
+        
+        errors.length > 0 && h('div', { key: "errors", className: "mt-2" },
+          errors.map((err, i) => 
+            h('small', { key: i, className: "text-danger d-block" }, `• ${err}`)
+          )
+        ),
+        
+        showModal && h('div', {
+          key: "modal",
+          className: "modal d-block",
+          style: { backgroundColor: 'rgba(0,0,0,0.5)' }
+        }, [
+          h('div', { className: "modal-dialog modal-sm" }, [
+            h('div', { className: "modal-content" }, [
+              h('div', { className: "modal-header" }, [
+                h('h6', { className: "modal-title" }, 'Clear Required Field?')
+              ]),
+              h('div', { className: "modal-body" }, [
+                h('p', { className: "mb-0" }, `${field.label} is required. Clear this field?`)
+              ]),
+              h('div', { className: "modal-footer" }, [
+                h('button', {
+                  className: "btn btn-sm btn-secondary",
+                  onClick: cancelClear
+                }, 'Keep'),
+                h('button', {
+                  className: "btn btn-sm btn-danger",
+                  onClick: confirmClear
+                }, 'Clear')
+              ])
+            ])
+          ])
+        ])
+      ]);
+    };
+    
+    // Main Form Component
+    const RoleForm = ({ record }) => {
+      const [formData, setFormData] = useState({});
+      const [schema, setSchema] = useState(null);
+      
+      useEffect(() => {
+        // Load schema from global targetDocument
+        if (selectedTarget && pb) {
+          pb.getSchema(selectedTarget.doctype).then(setSchema);
+        } else {
+          // Fallback demo schema
+          setSchema({
+            doctype: 'Role',
+            fields: [
+              { fieldname: 'role_name', fieldtype: 'Data', label: 'Role Name', reqd: 1, unique: 1 }
+            ]
+          });
+        }
+      }, []);
+      
+      const handleFieldChange = (fieldname, value) => {
+        setFormData(prev => ({ ...prev, [fieldname]: value }));
+      };
+      
+      if (!schema) {
+        return h('div', { className: "text-center p-4" }, 'Loading schema...');
+      }
+      
+      return h('div', { className: "container-fluid p-4" }, [
+        h('div', { className: "row justify-content-center", key: "row" }, [
+          h('div', { className: "col-md-6", key: "col" }, [
+            h('div', { className: "card", key: "card" }, [
+              h('div', { className: "card-header", key: "header" }, [
+                h('h5', { className: "mb-0" }, `${schema.doctype} - Field Workflow Demo`)
+              ]),
+              h('div', { className: "card-body", key: "body" }, [
+                ...(schema.fields?.map(field => 
+                  h(SmartField, {
+                    key: field.fieldname,
+                    field: field,
+                    value: formData[field.fieldname],
+                    onChange: (value) => handleFieldChange(field.fieldname, value)
+                  })
+                ) || []),
+                
+                h('div', { className: "mt-4 p-3 bg-light rounded", key: "form-data" }, [
+                  h('h6', {}, 'Form Data:'),
+                  h('pre', { className: "mb-0" }, JSON.stringify(formData, null, 2))
+                ])
+              ])
+            ]),
+            
+            h('div', { className: "mt-3 alert alert-info", key: "instructions" }, [
+              h('strong', {}, 'Try:'),
+              h('ul', { className: "mb-0 mt-2" }, [
+                h('li', { key: "1" }, 'Enter "Administrator" (unique validation)'),
+                h('li', { key: "2" }, 'Clear field after typing (required warning)'),
+                h('li', { key: "3" }, 'Watch state transitions below field')
+              ])
+            ])
+          ])
+        ])
+      ]);
+    };
+    
+    // --- MOUNT WIDGET ---
+    ReactDOM.render(React.createElement(RoleForm, { record: selectedTarget }), renderContainer);
+    
+  }).catch(err => console.error('Error loading React:', err));
+})();
