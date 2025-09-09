@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <style>
+        body {
+            width: 300px;
+            padding: 16px;
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+        
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .icon {
+            width: 24px;
+            height: 24px;
+            background: #ffeb3b;
+            border-radius: 4px;
+            margin-right: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        h1 {
+            margin: 0;
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .stats {
+            background: #f5f5f5;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 16px;
+        }
+        
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 4px;
+        }
+        
+        .stat-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .stat-label {
+            color: #666;
+        }
+        
+        .stat-value {
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .instructions {
+            background: #e3f2fd;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 16px;
+            font-size: 13px;
+        }
+        
+        .instructions h3 {
+            margin: 0 0 8px 0;
+            font-size: 14px;
+            color: #1976d2;
+        }
+        
+        .instructions ul {
+            margin: 0;
+            padding-left: 16px;
+        }
+        
+        .instructions li {
+            margin-bottom: 4px;
+        }
+        
+        .actions {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .btn {
+            flex: 1;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background: white;
+            cursor: pointer;
+            font-size: 12px;
+            text-align: center;
+            transition: all 0.2s ease;
+        }
+        
+        .btn:hover {
+            background: #f0f0f0;
+        }
+        
+        .btn-primary {
+            background: #1976d2;
+            color: white;
+            border-color: #1976d2;
+        }
+        
+        .btn-primary:hover {
+            background: #1565c0;
+        }
+        
+        .btn-danger {
+            background: #d32f2f;
+            color: white;
+            border-color: #d32f2f;
+        }
+        
+        .btn-danger:hover {
+            background: #c62828;
+        }
+        
+        .loading {
+            text-align: center;
+            color: #666;
+            padding: 20px;
+        }
+        
+        .error {
+            color: #d32f2f;
+            background: #ffebee;
+            padding: 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-bottom: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="icon">A</div>
+        <h1>Text Annotator</h1>
+    </div>
+    
+    <div id="loading" class="loading">
+        Loading annotations...
+    </div>
+    
+    <div id="content" style="display: none;">
+        <div class="stats">
+            <div class="stat-item">
+                <span class="stat-label">Current Page:</span>
+                <span class="stat-value" id="currentPageCount">0</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Total Annotations:</span>
+                <span class="stat-value" id="totalCount">0</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Total Pages:</span>
+                <span class="stat-value" id="pageCount">0</span>
+            </div>
+        </div>
+        
+        <div class="instructions">
+            <h3>How to use:</h3>
+            <ul>
+                <li>Select text on any webpage</li>
+                <li>Right-click → "Add Annotation"</li>
+                <li>Or use <strong>Ctrl+Shift+A</strong></li>
+                <li>Hover highlights to see notes</li>
+                <li>Click highlights to edit/delete</li>
+            </ul>
+        </div>
+        
+        <div class="actions">
+            <button class="btn" id="exportBtn">Export</button>
+            <button class="btn btn-danger" id="clearBtn">Clear All</button>
+        </div>
+    </div>
+    
+    <div id="error" class="error" style="display: none;"></div>
+
+    <script>
+        // Popup functionality
+        document.addEventListener('DOMContentLoaded', async function() {
+            try {
+                // Get current tab
+                const [tab] = await chrome.tabs.query({active: true, currentWindow: true});
+                const currentUrl = new URL(tab.url);
+                const pageKey = `${currentUrl.hostname}${currentUrl.pathname}`;
+                
+                // Load annotations
+                const result = await chrome.storage.local.get(['textAnnotations']);
+                const annotations = result.textAnnotations || {};
+                
+                // Calculate stats
+                const currentPageAnnotations = annotations[pageKey] || [];
+                const totalAnnotations = Object.values(annotations).flat().length;
+                const totalPages = Object.keys(annotations).length;
+                
+                // Update UI
+                document.getElementById('currentPageCount').textContent = currentPageAnnotations.length;
+                document.getElementById('totalCount').textContent = totalAnnotations;
+                document.getElementById('pageCount').textContent = totalPages;
+                
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('content').style.display = 'block';
+                
+                // Export functionality
+                document.getElementById('exportBtn').addEventListener('click', function() {
+                    const dataStr = JSON.stringify(annotations, null, 2);
+                    const dataBlob = new Blob([dataStr], {type: 'application/json'});
+                    const url = URL.createObjectURL(dataBlob);
+                    
+                    const timestamp = new Date().toISOString().slice(0,19).replace(/:/g, '-');
+                    chrome.downloads.download({
+                        url: url,
+                        filename: `text-annotations-${timestamp}.json`,
+                        saveAs: true
+                    });
+                });
+                
+                // Clear all functionality
+                document.getElementById('clearBtn').addEventListener('click', function() {
+                    if (confirm('Are you sure you want to delete all annotations? This cannot be undone.')) {
+                        chrome.storage.local.remove(['textAnnotations'], function() {
+                            // Refresh all tabs to remove highlights
+                            chrome.tabs.query({}, function(tabs) {
+                                tabs.forEach(tab => {
+                                    try {
+                                        chrome.tabs.reload(tab.id);
+                                    } catch (e) {
+                                        // Ignore tabs that can't be reloaded
+                                    }
+                                });
+                            });
+                            
+                            // Update stats
+                            document.getElementById('currentPageCount').textContent = '0';
+                            document.getElementById('totalCount').textContent = '0';
+                            document.getElementById('pageCount').textContent = '0';
+                        });
+                    }
+                });
+                
+            } catch (error) {
+                console.error('Popup error:', error);
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('error').style.display = 'block';
+                document.getElementById('error').textContent = 'Failed to load extension data';
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<div id="cy" style="width: 600px; height: 400px;"></div>
+<script src="https://unpkg.com/cytoscape/dist/cytoscape.min.js"></script>
+<script src="https://unpkg.com/tippy.js@6"></script>
+<script src="https://unpkg.com/cytoscape-popper/cytoscape-popper.js"></script>
+
+<script>
+const doc = { total: 100, customer: "CUST-0001" }; // Example document
+
+// Transitions
+const transitions = [
+  { state: "Draft", action: "Submit", next_state: "Submitted", condition: "doc.total > 0 and doc.customer" },
+  { state: "Submitted", action: "Approve", next_state: "Approved", condition: "" },
+  { state: "Submitted", action: "Reject", next_state: "Rejected", condition: "not doc.customer" }
+];
+
+// Convert Python-like condition to JS
+function conditionToJS(expr) {
+  return expr.replace(/\band\b/g, "&&").replace(/\bor\b/g, "||").replace(/\bnot\b/g, "!");
+}
+
+// Evaluate safely
+function evalCondition(expr, doc) {
+  if (!expr) return true;
+  try {
+    return Function("doc", "return " + conditionToJS(expr))(doc);
+  } catch (e) {
+    console.warn("Bad condition:", expr, e);
+    return false;
+  }
+}
+
+const elements = [];
+const states = new Set();
+
+transitions.forEach(t => {
+  states.add(t.state);
+  states.add(t.next_state);
+  elements.push({
+    data: {
+      id: `${t.state}->${t.next_state}`,
+      source: t.state,
+      target: t.next_state,
+      label: t.action,
+      condition: t.condition,
+      valid: evalCondition(t.condition, doc)
+    }
+  });
+});
+
+states.forEach(s => elements.push({ data: { id: s, label: s } }));
+
+var cy = cytoscape({
+  container: document.getElementById('cy'),
+  elements: elements,
+  style: [
+    { selector: 'node', style: { 'label': 'data(label)', 'background-color': '#66b3ff', 'text-valign': 'center', 'shape': 'round-rectangle' } },
+    { selector: 'edge', style: {
+        'label': 'data(label)',
+        'curve-style': 'bezier',
+        'target-arrow-shape': 'triangle',
+        'line-color': 'mapData(valid, 0, 1, #ff4444, #44cc44)',
+        'target-arrow-color': 'mapData(valid, 0, 1, #ff4444, #44cc44)'
+    }}
+  ],
+  layout: { name: 'circle' }
+});
+
+// Add condition tooltips
+cy.edges().forEach(edge => {
+  edge.popperRefObj = edge.popperRef();
+  const tip = tippy(edge.popperRefObj, {
+    content: edge.data("condition") || "No condition",
+    trigger: 'mouseenter',
+    hideOnClick: false,
+    placement: 'top'
+  });
+});
+</script>
