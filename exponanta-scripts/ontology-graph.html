@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Database Graph Viewer</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #1a1a1a;
+      color: white;
+      overflow: hidden;
+    }
+    
+    #controls {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      z-index: 100;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+    
+    #fileInput {
+      padding: 8px 12px;
+      border: none;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.2);
+      color: white;
+      backdrop-filter: blur(10px);
+    }
+    
+    #fileInput::file-selector-button {
+      background: rgba(255,255,255,0.3);
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 6px;
+      margin-right: 10px;
+      cursor: pointer;
+    }
+    
+    .btn {
+      padding: 8px 16px;
+      background: rgba(255,255,255,0.2);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 12px;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+      font-weight: 500;
+    }
+    
+    .btn:hover {
+      background: rgba(255,255,255,0.3);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+    
+    .btn.active {
+      background: #ff6b6b;
+      box-shadow: 0 4px 15px rgba(255,107,107,0.4);
+    }
+    
+    #stats {
+      margin-left: auto;
+      font-size: 13px;
+      background: rgba(0,0,0,0.3);
+      padding: 8px 16px;
+      border-radius: 20px;
+      backdrop-filter: blur(10px);
+      font-weight: 500;
+    }
+    
+    #cy {
+      width: 100%;
+      height: 100vh;
+      padding-top: 70px;
+      background: radial-gradient(ellipse at center, #2c3e50 0%, #1a1a1a 100%);
+    }
+    
+    #legend {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      background: rgba(0,0,0,0.8);
+      padding: 15px;
+      border-radius: 12px;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.1);
+      font-size: 12px;
+      max-width: 250px;
+    }
+    
+    .legend-item {
+      display: flex;
+      align-items: center;
+      margin: 5px 0;
+    }
+    
+    .legend-color {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      margin-right: 10px;
+      border: 2px solid rgba(255,255,255,0.3);
+    }
+    
+    #nodeInfo {
+      position: fixed;
+      top: 80px;
+      right: 20px;
+      background: rgba(0,0,0,0.9);
+      padding: 15px;
+      border-radius: 12px;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.1);
+      max-width: 300px;
+      font-size: 12px;
+      display: none;
+    }
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.21.1/cytoscape.min.js"></script>
+</head>
+<body>
+  <div id="controls">
+    <input type="file" id="fileInput" accept=".json">
+    <span style="font-weight: 500;">Load Ontology JSON</span>
+    <button class="btn active" onclick="changeLayout('cose')">Force Directed</button>
+    <button class="btn" onclick="changeLayout('breadthfirst')">Hierarchical</button>
+    <button class="btn" onclick="changeLayout('circle')">Circle</button>
+    <button class="btn" onclick="changeLayout('grid')">Grid</button>
+    <button class="btn" onclick="resetView()">Reset View</button>
+    <div id="stats">No data loaded</div>
+  </div>
+  
+  <div id="cy"></div>
+  
+  <div id="legend">
+    <h4 style="margin-top: 0; color: #fff;">Node Types</h4>
+  </div>
+  
+  <div id="nodeInfo">
+    <h4 style="margin-top: 0; color: #fff;">Node Details</h4>
+    <div id="nodeContent"></div>
+  </div>
+
+  <script>
+    const fileInput = document.getElementById('fileInput');
+    const statsDiv = document.getElementById('stats');
+    const legendDiv = document.getElementById('legend');
+    const nodeInfoDiv = document.getElementById('nodeInfo');
+    const nodeContentDiv = document.getElementById('nodeContent');
+    let currentLayout = 'cose';
+
+    // Enhanced color scheme for different node types
+    const nodeTypeColors = {
+      'PrintTemplate': '#e74c3c',     // Red
+      'DocumentType': '#3498db',      // Blue  
+      'User': '#2ecc71',              // Green
+      'PageSize': '#f39c12',          // Orange
+      'Company': '#9b59b6',           // Purple
+      'Department': '#1abc9c',        // Teal
+      'Category': '#34495e',          // Dark gray
+      'Status': '#95a5a6'             // Light gray
+    };
+
+    // Enhanced edge type styles
+    const edgeTypeStyles = {
+      'foreign_key': { color: '#e67e22', width: 3, style: 'solid' },
+      'has_type': { color: '#3498db', width: 2, style: 'dashed' },
+      'created': { color: '#2ecc71', width: 2, style: 'dotted' },
+      'has_size': { color: '#f39c12', width: 2, style: 'dashed' },
+      'parent_child': { color: '#9b59b6', width: 3, style: 'solid' },
+      'implicit_fk': { color: '#95a5a6', width: 1, style: 'dashed' }
+    };
+
+    function getNodeColor(type) {
+      return nodeTypeColors[type] || '#7f8c8d';
+    }
+
+    function getEdgeStyle(type) {
+      return edgeTypeStyles[type] || { color: '#bdc3c7', width: 1, style: 'solid' };
+    }
+
+    function updateLegend(ontology) {
+      const nodeTypes = new Set();
+      ontology.nodes.forEach(node => nodeTypes.add(node.type));
+      
+      let legendHTML = '<h4 style="margin-top: 0; color: #fff;">Node Types</h4>';
+      nodeTypes.forEach(type => {
+        const color = getNodeColor(type);
+        legendHTML += `
+          <div class="legend-item">
+            <div class="legend-color" style="background-color: ${color};"></div>
+            <span>${type}</span>
+          </div>`;
+      });
+      
+      const edgeTypes = new Set();
+      ontology.edges.forEach(edge => edgeTypes.add(edge.type));
+      
+      if (edgeTypes.size > 0) {
+        legendHTML += '<h4 style="color: #fff; margin-top: 15px; margin-bottom: 5px;">Relationships</h4>';
+        edgeTypes.forEach(type => {
+          const style = getEdgeStyle(type);
+          legendHTML += `
+            <div class="legend-item">
+              <div style="width: 20px; height: 2px; background-color: ${style.color}; margin-right: 8px; border-radius: 1px;"></div>
+              <span>${type.replace('_', ' ')}</span>
+            </div>`;
+        });
+      }
+      
+      legendDiv.innerHTML = legendHTML;
+    }
+
+    function updateStats(ontology) {
+      const nodeCount = ontology.nodes.length;
+      const edgeCount = ontology.edges.length;
+      const nodeTypes = new Set(ontology.nodes.map(n => n.type)).size;
+      const edgeTypes = new Set(ontology.edges.map(e => e.type)).size;
+      
+      statsDiv.innerHTML = `Nodes: ${nodeCount} | Edges: ${edgeCount} | Node Types: ${nodeTypes} | Edge Types: ${edgeTypes}`;
+    }
+
+    function showNodeInfo(node) {
+      const data = node.data('fullData');
+      let html = `
+        <strong>ID:</strong> ${data.id}<br>
+        <strong>Type:</strong> ${data.type}<br>
+      `;
+      
+      if (data.attributes) {
+        html += '<br><strong>Attributes:</strong><br>';
+        Object.entries(data.attributes).forEach(([key, value]) => {
+          if (key !== 'template' && value !== null && value !== undefined) {
+            let displayValue = value;
+            if (typeof value === 'string' && value.length > 50) {
+              displayValue = value.substring(0, 50) + '...';
+            }
+            html += `<span style="color: #bdc3c7;">${key}:</span> ${displayValue}<br>`;
+          }
+        });
+      }
+      
+      nodeContentDiv.innerHTML = html;
+      nodeInfoDiv.style.display = 'block';
+    }
+
+    function hideNodeInfo() {
+      nodeInfoDiv.style.display = 'none';
+    }
+
+    function renderGraph(ontology) {
+      if (window.cy && typeof window.cy.destroy === "function") {
+        window.cy.destroy();
+      }
+
+      const elements = [];
+
+      // Add nodes with enhanced styling
+      ontology.nodes.forEach(node => {
+        const displayName = node.attributes?.name || 
+                           node.id.split(':')[1] || 
+                           node.id;
+        
+        elements.push({
+          data: { 
+            id: node.id, 
+            label: displayName,
+            type: node.type,
+            fullData: node
+          }
+        });
+      });
+
+      // Add edges with labels and styling
+      ontology.edges.forEach(edge => {
+        elements.push({
+          data: { 
+            source: edge.from, 
+            target: edge.to, 
+            label: edge.label || edge.type,
+            edgeType: edge.type,
+            fullData: edge
+          }
+        });
+      });
+
+      // Create Cytoscape instance with enhanced styling
+      window.cy = cytoscape({
+        container: document.getElementById('cy'),
+        elements: elements,
+        style: [
+          {
+            selector: 'node',
+            style: {
+              'background-color': function(ele) {
+                return getNodeColor(ele.data('type'));
+              },
+              'label': 'data(label)',
+              'text-valign': 'center',
+              'text-halign': 'center',
+              'color': 'white',
+              'text-outline-width': 2,
+              'text-outline-color': function(ele) {
+                return getNodeColor(ele.data('type'));
+              },
+              'width': function(ele) {
+                // Different sizes for different types
+                const type = ele.data('type');
+                if (type === 'PrintTemplate') return 60;
+                if (type === 'DocumentType') return 50;
+                if (type === 'User') return 45;
+                return 40;
+              },
+              'height': function(ele) {
+                const type = ele.data('type');
+                if (type === 'PrintTemplate') return 60;
+                if (type === 'DocumentType') return 50;
+                if (type === 'User') return 45;
+                return 40;
+              },
+              'font-size': '10px',
+              'text-wrap': 'wrap',
+              'text-max-width': '55px',
+              'border-width': 2,
+              'border-color': 'rgba(255,255,255,0.3)',
+              'transition-property': 'background-color, border-color, width, height',
+              'transition-duration': '0.3s'
+            }
+          },
+          {
+            selector: 'node:hover',
+            style: {
+              'border-color': '#fff',
+              'border-width': 3,
+              'z-index': 10
+            }
+          },
+          {
+            selector: 'node:selected',
+            style: {
+              'border-width': 4,
+              'border-color': '#ffeb3b',
+              'z-index': 20
+            }
+          },
+          {
+            selector: 'edge',
+            style: {
+              'width': function(ele) {
+                return getEdgeStyle(ele.data('edgeType')).width;
+              },
+              'line-color': function(ele) {
+                return getEdgeStyle(ele.data('edgeType')).color;
+              },
+              'target-arrow-color': function(ele) {
+                return getEdgeStyle(ele.data('edgeType')).color;
+              },
+              'target-arrow-shape': 'triangle',
+              'curve-style': 'bezier',
+              'label': 'data(label)',
+              'font-size': '9px',
+              'text-rotation': 'autorotate',
+              'text-margin-y': -8,
+              'opacity': 0.8,
+              'line-style': function(ele) {
+                const style = getEdgeStyle(ele.data('edgeType')).style;
+                return style === 'dashed' ? 'dashed' : 
+                       style === 'dotted' ? 'dotted' : 'solid';
+              }
+            }
+          },
+          {
+            selector: 'edge:hover',
+            style: {
+              'opacity': 1,
+              'width': function(ele) {
+                return getEdgeStyle(ele.data('edgeType')).width + 1;
+              },
+              'z-index': 5
+            }
+          }
+        ],
+        layout: {
+          name: currentLayout,
+          padding: 50,
+          spacingFactor: 1.75,
+          avoidOverlap: true,
+          animate: true,
+          animationDuration: 1000,
+          // Cose-specific options
+          nodeRepulsion: 8000,
+          idealEdgeLength: 100,
+          edgeElasticity: 0.45,
+          nestingFactor: 0.1,
+          gravity: 0.25,
+          numIter: 2500,
+          initialTemp: 200,
+          coolingFactor: 0.95,
+          minTemp: 1.0
+        },
+        wheelSensitivity: 0.2,
+        minZoom: 0.1,
+        maxZoom: 3
+      });
+
+      // Enhanced event handlers
+      window.cy.on('tap', 'node', function(evt) {
+        const node = evt.target;
+        showNodeInfo(node);
+      });
+
+      window.cy.on('tap', function(evt) {
+        if (evt.target === window.cy) {
+          hideNodeInfo();
+        }
+      });
+
+      // Highlight connected nodes on hover
+      window.cy.on('mouseover', 'node', function(evt) {
+        const node = evt.target;
+        const connectedEdges = node.connectedEdges();
+        const connectedNodes = connectedEdges.connectedNodes();
+        
+        // Dim all elements
+        window.cy.elements().addClass('dimmed');
+        
+        // Highlight selected node and connections
+        node.removeClass('dimmed');
+        connectedEdges.removeClass('dimmed');
+        connectedNodes.removeClass('dimmed');
+      });
+
+      window.cy.on('mouseout', 'node', function(evt) {
+        window.cy.elements().removeClass('dimmed');
+      });
+
+      // Add dimmed style
+      window.cy.style().selector('.dimmed').style({
+        'opacity': 0.3
+      }).update();
+
+      updateStats(ontology);
+      updateLegend(ontology);
+    }
+
+    function changeLayout(layoutName) {
+      if (!window.cy) return;
+      
+      currentLayout = layoutName;
+      
+      // Update button styles
+      document.querySelectorAll('.btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      event.target.classList.add('active');
+
+      const layoutOptions = {
+        name: layoutName,
+        padding: 50,
+        animate: true,
+        animationDuration: 800,
+        fit: true
+      };
+
+      // Layout-specific options
+      if (layoutName === 'cose') {
+        Object.assign(layoutOptions, {
+          nodeRepulsion: 8000,
+          idealEdgeLength: 100,
+          edgeElasticity: 0.45,
+          nestingFactor: 0.1,
+          gravity: 0.25,
+          numIter: 2500,
+          initialTemp: 200,
+          coolingFactor: 0.95,
+          minTemp: 1.0
+        });
+      } else if (layoutName === 'breadthfirst') {
+        Object.assign(layoutOptions, {
+          directed: true,
+          spacingFactor: 2,
+          avoidOverlap: true
+        });
+      } else if (layoutName === 'circle') {
+        layoutOptions.radius = Math.min(300, window.cy.nodes().length * 20);
+      } else if (layoutName === 'grid') {
+        layoutOptions.rows = Math.ceil(Math.sqrt(window.cy.nodes().length));
+        layoutOptions.spacingFactor = 1.5;
+      }
+
+      window.cy.layout(layoutOptions).run();
+    }
+
+    function resetView() {
+      if (window.cy) {
+        window.cy.fit();
+        window.cy.center();
+      }
+    }
+
+    // File loading
+    fileInput.addEventListener('change', event => {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = e => {
+        try {
+          const ontology = JSON.parse(e.target.result);
+          renderGraph(ontology);
+        } catch (err) {
+          alert("Failed to parse JSON file. Check console for details.");
+          console.error(err);
+        }
+      };
+      reader.readAsText(file);
+    });
+  </script>
+</body>
+</html>
