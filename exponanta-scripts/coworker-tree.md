@@ -11,7 +11,7 @@
    "print_hide": 0,
    "read_only": 0
   },
-  - cloned from 
+  - cloned from sales_invoice.json to sales_invoice_item-coworker-tree.json
 
 # Example 
 
