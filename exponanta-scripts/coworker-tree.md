@@ -1,4 +1,10 @@
-# AI Ecosystem Map
+# What was done.
+- Cloned company.json schema from Frappe renamad company-coworker-tree.json 
+- Added 
+
+# Example 
+
+## AI Ecosystem Map
 
 ## [Microsoft](./companies/microsoft.md)  // this to be company.json schema in frappe
 *P/E: 28.88, Rev: $211B, AI Rev: ~$2.9B*  // this to be summary-facts.json fields in doc
@@ -10,3 +16,4 @@
 ## Cross-References
 - [[OpenAI]] ← funding from [[Microsoft]]
 - [[CoreWeave]] ← major contracts from [[Microsoft]], [[OpenAI]]
+
