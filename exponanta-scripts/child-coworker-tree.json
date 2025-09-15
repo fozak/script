@@ -2,24 +2,24 @@
  "actions": [],
  "allow_import": 1,
  "allow_rename": 1,
- "autoname": "field:item_code",
+ "autoname": "field:child_code",
  "creation": "2013-05-03 10:45:46",
  "description": "A Product or a Service that is bought, sold or kept in stock.",
- "doctype": "DocType",
+ "doctype": "Child",
  "document_type": "Setup",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
   "details",
   "naming_series",
-  "item_code",
-  "item_name",
-  "item_group",
+  "child_code",
+  "child_name",
+  "child_group",
   "stock_uom",
   "column_break0",
   "disabled",
-  "allow_alternative_item",
-  "is_stock_item",
+  "allow_alternative_child",
+  "is_stock_child",
   "has_variants",
   "opening_stock",
   "valuation_rate",
@@ -75,21 +75,21 @@
   "enable_deferred_revenue",
   "no_of_months",
   "section_break_avcp",
-  "item_defaults",
+  "child_defaults",
   "purchasing_tab",
   "purchase_uom",
   "min_order_qty",
   "safety_stock",
-  "is_purchase_item",
+  "is_purchase_child",
   "purchase_details_cb",
   "lead_time_days",
   "last_purchase_rate",
-  "is_customer_provided_item",
+  "is_customer_provided_child",
   "customer",
   "supplier_details",
   "delivered_by_supplier",
   "column_break2",
-  "supplier_items",
+  "supplier_childs",
   "foreign_trade_details",
   "country_of_origin",
   "column_break_59",
@@ -97,24 +97,24 @@
   "sales_details",
   "sales_uom",
   "grant_commission",
-  "is_sales_item",
+  "is_sales_child",
   "column_break3",
   "max_discount",
   "customer_details",
-  "customer_items",
-  "item_tax_section_break",
+  "customer_childs",
+  "child_tax_section_break",
   "taxes",
   "quality_tab",
   "inspection_required_before_purchase",
   "quality_inspection_template",
   "inspection_required_before_delivery",
   "manufacturing",
-  "include_item_in_manufacturing",
-  "is_sub_contracted_item",
+  "include_child_in_manufacturing",
+  "is_sub_contracted_child",
   "default_bom",
   "column_break_74",
   "customer_code",
-  "default_item_manufacturer",
+  "default_child_manufacturer",
   "default_manufacturer_part_no",
   "total_projected_qty"
  ],
@@ -128,18 +128,18 @@
   },
   {
    "bold": 1,
-   "fieldname": "item_code",
+   "fieldname": "child_code",
    "fieldtype": "Data",
    "in_global_search": 1,
-   "label": "Item Code",
-   "oldfieldname": "item_code",
+   "label": "Child Code",
+   "oldfieldname": "child_code",
    "oldfieldtype": "Data",
    "reqd": 1,
    "unique": 1
   },
   {
    "depends_on": "variant_of",
-   "description": "If item is a variant of another item then description, image, pricing, taxes etc will be set from the template unless explicitly specified",
+   "description": "If Child is a variant of another Child then description, image, pricing, taxes etc will be set from the template unless explicitly specified",
    "fieldname": "variant_of",
    "fieldtype": "Link",
    "ignore_user_permissions": 1,
@@ -152,24 +152,24 @@
   },
   {
    "bold": 1,
-   "fieldname": "item_name",
+   "fieldname": "child_name",
    "fieldtype": "Data",
    "in_global_search": 1,
-   "label": "Item Name",
-   "oldfieldname": "item_name",
+   "label": "Child Name",
+   "oldfieldname": "child_name",
    "oldfieldtype": "Data",
    "search_index": 1
   },
   {
-   "fieldname": "item_group",
+   "fieldname": "child_group",
    "fieldtype": "Link",
    "in_list_view": 1,
    "in_preview": 1,
    "in_standard_filter": 1,
-   "label": "Item Group",
-   "oldfieldname": "item_group",
+   "label": "Child Group",
+   "oldfieldname": "child_group",
    "oldfieldtype": "Link",
-   "options": "Item Group",
+   "options": "Child Group",
    "reqd": 1,
    "search_index": 1
   },
@@ -196,7 +196,7 @@
   },
   {
    "default": "0",
-   "fieldname": "allow_alternative_item",
+   "fieldname": "allow_alternative_child",
    "fieldtype": "Check",
    "label": "Allow Alternative Item"
   },
@@ -205,28 +205,28 @@
    "bold": 1,
    "default": "1",
    "depends_on": "eval:!doc.is_fixed_asset",
-   "fieldname": "is_stock_item",
+   "fieldname": "is_stock_child",
    "fieldtype": "Check",
    "label": "Maintain Stock",
-   "oldfieldname": "is_stock_item",
+   "oldfieldname": "is_stock_child",
    "oldfieldtype": "Select"
   },
   {
    "default": "1",
    "depends_on": "eval:!doc.is_fixed_asset",
-   "fieldname": "include_item_in_manufacturing",
+   "fieldname": "include_child_in_manufacturing",
    "fieldtype": "Check",
-   "label": "Include Item In Manufacturing"
+   "label": "Include Child In Manufacturing"
   },
   {
    "bold": 1,
-   "depends_on": "eval:(doc.__islocal&&doc.is_stock_item && !doc.has_serial_no && !doc.has_batch_no)",
+   "depends_on": "eval:(doc.__islocal&&doc.is_stock_child && !doc.has_serial_no && !doc.has_batch_no)",
    "fieldname": "opening_stock",
    "fieldtype": "Float",
    "label": "Opening Stock"
   },
   {
-   "depends_on": "is_stock_item",
+   "depends_on": "is_stock_child",
    "fieldname": "valuation_rate",
    "fieldtype": "Currency",
    "label": "Valuation Rate"
@@ -302,12 +302,12 @@
    "fieldname": "barcodes",
    "fieldtype": "Table",
    "label": "Barcodes",
-   "options": "Item Barcode"
+   "options": "Child Barcode"
   },
   {
    "collapsible": 1,
-   "collapsible_depends_on": "is_stock_item",
-   "depends_on": "is_stock_item",
+   "collapsible_depends_on": "is_stock_child",
+   "depends_on": "is_stock_child",
    "fieldname": "inventory_section",
    "fieldtype": "Tab Break",
    "label": "Inventory",
@@ -322,7 +322,7 @@
   },
   {
    "default": "2099-12-31",
-   "depends_on": "is_stock_item",
+   "depends_on": "is_stock_child",
    "fieldname": "end_of_life",
    "fieldtype": "Date",
    "label": "End of Life",
@@ -337,21 +337,21 @@
    "options": "Purchase\nMaterial Transfer\nMaterial Issue\nManufacture\nCustomer Provided"
   },
   {
-   "depends_on": "is_stock_item",
+   "depends_on": "is_stock_child",
    "fieldname": "valuation_method",
    "fieldtype": "Select",
    "label": "Valuation Method",
    "options": "\nFIFO\nMoving Average\nLIFO"
   },
   {
-   "depends_on": "is_stock_item",
+   "depends_on": "is_stock_child",
    "fieldname": "column_break1",
    "fieldtype": "Column Break",
    "oldfieldtype": "Column Break",
    "width": "50%"
   },
   {
-   "depends_on": "eval:doc.is_stock_item",
+   "depends_on": "eval:doc.is_stock_child",
    "fieldname": "warranty_period",
    "fieldtype": "Data",
    "label": "Warranty Period (in days)",
@@ -359,13 +359,13 @@
    "oldfieldtype": "Data"
   },
   {
-   "depends_on": "is_stock_item",
+   "depends_on": "is_stock_child",
    "fieldname": "weight_per_unit",
    "fieldtype": "Float",
    "label": "Weight Per Unit"
   },
   {
-   "depends_on": "eval:doc.is_stock_item",
+   "depends_on": "eval:doc.is_stock_child",
    "fieldname": "weight_uom",
    "fieldtype": "Link",
    "ignore_user_permissions": 1,
@@ -374,7 +374,7 @@
   },
   {
    "collapsible": 1,
-   "depends_on": "is_stock_item",
+   "depends_on": "is_stock_child",
    "fieldname": "reorder_section",
    "fieldtype": "Section Break",
    "label": "Auto re-order",
@@ -385,7 +385,7 @@
    "fieldname": "reorder_levels",
    "fieldtype": "Table",
    "label": "Reorder level based on Warehouse",
-   "options": "Item Reorder"
+   "options": "Child Reorder"
   },
   {
    "collapsible": 1,
@@ -405,14 +405,14 @@
   {
    "collapsible": 1,
    "collapsible_depends_on": "eval:doc.has_batch_no || doc.has_serial_no",
-   "depends_on": "eval:doc.is_stock_item",
+   "depends_on": "eval:doc.is_stock_child",
    "fieldname": "serial_nos_and_batches",
    "fieldtype": "Section Break",
    "label": "Serial Nos and Batches"
   },
   {
    "default": "0",
-   "depends_on": "eval:doc.is_stock_item",
+   "depends_on": "eval:doc.is_stock_child",
    "fieldname": "has_batch_no",
    "fieldtype": "Check",
    "label": "Has Batch No",
@@ -461,7 +461,7 @@
   },
   {
    "default": "0",
-   "depends_on": "eval:doc.is_stock_item",
+   "depends_on": "eval:doc.is_stock_child",
    "fieldname": "has_serial_no",
    "fieldtype": "Check",
    "label": "Has Serial No",
@@ -486,38 +486,38 @@
   {
    "default": "0",
    "depends_on": "eval:!doc.variant_of",
-   "description": "If this item has variants, then it cannot be selected in sales orders etc.",
+   "description": "If this Child has variants, then it cannot be selected in sales orders etc.",
    "fieldname": "has_variants",
    "fieldtype": "Check",
    "in_standard_filter": 1,
    "label": "Has Variants"
   },
   {
-   "default": "Item Attribute",
+   "default": "Child Attribute",
    "depends_on": "has_variants",
    "fieldname": "variant_based_on",
    "fieldtype": "Select",
    "label": "Variant Based On",
-   "options": "Item Attribute\nManufacturer"
+   "options": "Child Attribute\nManufacturer"
   },
   {
-   "depends_on": "eval:(doc.has_variants || doc.variant_of) && doc.variant_based_on==='Item Attribute'",
+   "depends_on": "eval:(doc.has_variants || doc.variant_of) && doc.variant_based_on==='Child Attribute'",
    "fieldname": "attributes",
    "fieldtype": "Table",
    "hidden": 1,
    "label": "Variant Attributes",
-   "mandatory_depends_on": "eval:(doc.has_variants || doc.variant_of) && doc.variant_based_on==='Item Attribute'",
-   "options": "Item Variant Attribute"
+   "mandatory_depends_on": "eval:(doc.has_variants || doc.variant_of) && doc.variant_based_on==='Child Attribute'",
+   "options": "Child Variant Attribute"
   },
   {
-   "fieldname": "item_defaults",
+   "fieldname": "child_defaults",
    "fieldtype": "Table",
-   "label": "Item Defaults",
-   "options": "Item Default"
+   "label": "Child Defaults",
+   "options": "Child Default"
   },
   {
    "default": "1",
-   "fieldname": "is_purchase_item",
+   "fieldname": "is_purchase_child",
    "fieldtype": "Check",
    "label": "Allow Purchase"
   },
@@ -529,7 +529,7 @@
   },
   {
    "default": "0.00",
-   "depends_on": "is_stock_item",
+   "depends_on": "is_stock_child",
    "description": "Minimum quantity should be as per Stock UOM",
    "fieldname": "min_order_qty",
    "fieldtype": "Float",
@@ -565,12 +565,12 @@
   },
   {
    "default": "0",
-   "fieldname": "is_customer_provided_item",
+   "fieldname": "is_customer_provided_child",
    "fieldtype": "Check",
    "label": "Is Customer Provided Item"
   },
   {
-   "depends_on": "eval:doc.is_customer_provided_item==1",
+   "depends_on": "eval:doc.is_customer_provided_child==1",
    "fieldname": "customer",
    "fieldtype": "Link",
    "label": "Customer",
@@ -597,10 +597,10 @@
    "width": "50%"
   },
   {
-   "fieldname": "supplier_items",
+   "fieldname": "supplier_childs",
    "fieldtype": "Table",
    "label": "Supplier Items",
-   "options": "Item Supplier"
+   "options": "Child Supplier"
   },
   {
    "collapsible": 1,
@@ -640,7 +640,7 @@
   },
   {
    "default": "1",
-   "fieldname": "is_sales_item",
+   "fieldname": "is_sales_child",
    "fieldtype": "Check",
    "label": "Allow Sales"
   },
@@ -689,15 +689,15 @@
    "label": "Customer Details"
   },
   {
-   "fieldname": "customer_items",
+   "fieldname": "customer_childs",
    "fieldtype": "Table",
    "label": "Customer Items",
-   "options": "Item Customer Detail"
+   "options": "Child Customer Detail"
   },
   {
    "collapsible": 1,
    "collapsible_depends_on": "taxes",
-   "fieldname": "item_tax_section_break",
+   "fieldname": "child_tax_section_break",
    "fieldtype": "Tab Break",
    "label": "Tax",
    "oldfieldtype": "Section Break",
@@ -708,9 +708,9 @@
    "fieldname": "taxes",
    "fieldtype": "Table",
    "label": "Taxes",
-   "oldfieldname": "item_tax",
+   "oldfieldname": "child_tax",
    "oldfieldtype": "Table",
-   "options": "Item Tax"
+   "options": "Child Tax"
   },
   {
    "default": "0",
@@ -735,7 +735,7 @@
   },
   {
    "collapsible": 1,
-   "depends_on": "is_stock_item",
+   "depends_on": "is_stock_child",
    "fieldname": "manufacturing",
    "fieldtype": "Tab Break",
    "label": "Manufacturing",
@@ -756,10 +756,10 @@
   {
    "default": "0",
    "description": "If subcontracted to a vendor",
-   "fieldname": "is_sub_contracted_item",
+   "fieldname": "is_sub_contracted_child",
    "fieldtype": "Check",
    "label": "Supply Raw Materials for Purchase",
-   "oldfieldname": "is_sub_contracted_item",
+   "oldfieldname": "is_sub_contracted_child",
    "oldfieldtype": "Select"
   },
   {
@@ -804,9 +804,9 @@
    "label": "Auto Create Assets on Purchase"
   },
   {
-   "fieldname": "default_item_manufacturer",
+   "fieldname": "default_child_manufacturer",
    "fieldtype": "Link",
-   "label": "Default Item Manufacturer",
+   "label": "Default Child Manufacturer",
    "options": "Manufacturer",
    "read_only": 1
   },
@@ -905,7 +905,7 @@
    "print": 1,
    "read": 1,
    "report": 1,
-   "role": "Item Manager",
+   "role": "Child Manager",
    "share": 1,
    "write": 1
   },
@@ -954,12 +954,12 @@
   }
  ],
  "quick_entry": 1,
- "search_fields": "item_name,description,item_group,customer_code",
+ "search_fields": "child_name,description,child_group,customer_code",
  "show_name_in_global_search": 1,
  "show_preview_popup": 1,
  "sort_field": "creation",
  "sort_order": "DESC",
  "states": [],
- "title_field": "item_name",
+ "title_field": "child_name",
  "track_changes": 1
 }
