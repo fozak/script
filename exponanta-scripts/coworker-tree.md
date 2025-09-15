@@ -1,6 +1,17 @@
 # What was done.
 - Cloned company.json schema from Frappe renamad company-coworker-tree.json 
 - Added 
+{
+   "fieldname": "has_children",
+   "fieldtype": "Table",
+   "hidden": 0,
+   "label": "Has Children",
+   "options": "Has Children",
+   "permlevel": 0,
+   "print_hide": 0,
+   "read_only": 0
+  },
+  - cloned from 
 
 # Example 
 

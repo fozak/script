@@ -12,6 +12,7 @@
   "details",
   "company_name",
   "abbr",
+  "has_children",
   "default_currency",
   "country",
   "is_group",
@@ -142,6 +143,16 @@
    "oldfieldtype": "Data",
    "reqd": 1,
    "set_only_once": 1
+  },
+  {
+   "fieldname": "has_children",
+   "fieldtype": "Table",
+   "hidden": 0,
+   "label": "Has Children",
+   "options": "Has Children",
+   "permlevel": 0,
+   "print_hide": 0,
+   "read_only": 0
   },
   {
    "bold": 1,
