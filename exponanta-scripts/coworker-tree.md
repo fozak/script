@@ -1,3 +1,9 @@
+ continue here
+https://claude.ai/chat/792220ae-9dc4-4160-a892-0e9d469dfa23 
+# Universal 
+
+- https://chatgpt.com/c/68c85dcd-ae3c-832c-bf1d-0aa03f6be41d 
+
 # What was done.
 - Cloned company.json schema from Frappe renamad company-coworker-tree.json 
 - Added 
