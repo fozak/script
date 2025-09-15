@@ -8,14 +8,14 @@
  "engine": "InnoDB",
  "field_order": [
   "barcode",
-  "has_item_scanned",
-  "item_code",
+  "has_child_scanned",
+  "child_code",
   "col_break1",
-  "item_name",
-  "customer_item_code",
+  "child_name",
+  "customer_child_code",
   "description_section",
   "description",
-  "item_group",
+  "child_group",
   "brand",
   "image_section",
   "image",
@@ -42,13 +42,13 @@
   "section_break1",
   "rate",
   "amount",
-  "item_tax_template",
+  "child_tax_template",
   "col_break3",
   "base_rate",
   "base_amount",
   "pricing_rules",
   "stock_uom_rate",
-  "is_free_item",
+  "is_free_child",
   "grant_commission",
   "section_break_21",
   "net_rate",
@@ -88,7 +88,7 @@
   "col_break5",
   "allow_zero_valuation_rate",
   "incoming_rate",
-  "item_tax_rate",
+  "child_tax_rate",
   "actual_batch_qty",
   "section_break_eoec",
   "serial_no",
@@ -101,18 +101,18 @@
   "edit_references",
   "sales_order",
   "so_detail",
-  "sales_invoice_item",
+  "sales_invoice_child",
   "column_break_74",
   "delivery_note",
   "dn_detail",
   "delivered_qty",
   "column_break_vwhb",
   "pos_invoice",
-  "pos_invoice_item",
+  "pos_invoice_child",
   "internal_transfer_section",
   "purchase_order",
   "column_break_92",
-  "purchase_order_item",
+  "purchase_order_child",
   "accounting_dimensions_section",
   "cost_center",
   "dimension_col_break",
@@ -130,13 +130,13 @@
   {
    "bold": 1,
    "columns": 4,
-   "fieldname": "item_code",
+   "fieldname": "child_code",
    "fieldtype": "Link",
    "in_list_view": 1,
-   "label": "Item",
-   "oldfieldname": "item_code",
+   "label": "Child",
+   "oldfieldname": "child_code",
    "oldfieldtype": "Link",
-   "options": "Item",
+   "options": "Children",
    "search_index": 1
   },
   {
@@ -144,20 +144,20 @@
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "item_name",
+   "fieldname": "child_name",
    "fieldtype": "Data",
    "in_global_search": 1,
-   "label": "Item Name",
-   "oldfieldname": "item_name",
+   "label": "Child Name",
+   "oldfieldname": "child_name",
    "oldfieldtype": "Data",
    "print_hide": 1,
    "reqd": 1
   },
   {
-   "fieldname": "customer_item_code",
+   "fieldname": "customer_child_code",
    "fieldtype": "Data",
    "hidden": 1,
-   "label": "Customer's Item Code",
+   "label": "Customer's Child Code",
    "print_hide": 1,
    "read_only": 1
   },
@@ -178,7 +178,7 @@
    "print_hide": 1
   },
   {
-   "fetch_from": "item_code.image",
+   "fetch_from": "child_code.image",
    "fieldname": "image",
    "fieldtype": "Attach",
    "hidden": 1,
@@ -382,9 +382,9 @@
   },
   {
    "default": "0",
-   "fieldname": "is_free_item",
+   "fieldname": "is_free_child",
    "fieldtype": "Check",
-   "label": "Is Free Item",
+   "label": "Is Free Child",
    "print_hide": 1,
    "read_only": 1
   },
@@ -476,10 +476,10 @@
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "item_tax_template",
+   "fieldname": "child_tax_template",
    "fieldtype": "Link",
-   "label": "Item Tax Template",
-   "options": "Item Tax Template",
+   "label": "Child Tax Template",
+   "options": "Child Tax Template",
    "print_hide": 1
   },
   {
@@ -546,7 +546,7 @@
    "collapsible": 1,
    "fieldname": "section_break_18",
    "fieldtype": "Section Break",
-   "label": "Item Weight Details"
+   "label": "Child Weight Details"
   },
   {
    "fieldname": "weight_per_unit",
@@ -639,13 +639,13 @@
    "oldfieldtype": "Small Text"
   },
   {
-   "fieldname": "item_group",
+   "fieldname": "child_group",
    "fieldtype": "Link",
    "hidden": 1,
-   "label": "Item Group",
-   "oldfieldname": "item_group",
+   "label": "Child Group",
+   "oldfieldname": "child_group",
    "oldfieldtype": "Link",
-   "options": "Item Group",
+   "options": "Child Group",
    "print_hide": 1,
    "read_only": 1
   },
@@ -659,11 +659,11 @@
    "print_hide": 1
   },
   {
-   "fieldname": "item_tax_rate",
+   "fieldname": "child_tax_rate",
    "fieldtype": "Small Text",
    "hidden": 1,
-   "label": "Item Tax Rate",
-   "oldfieldname": "item_tax_rate",
+   "label": "Child Tax Rate",
+   "oldfieldname": "child_tax_rate",
    "oldfieldtype": "Small Text",
    "print_hide": 1,
    "read_only": 1
@@ -712,7 +712,7 @@
    "fieldname": "so_detail",
    "fieldtype": "Data",
    "hidden": 1,
-   "label": "Sales Order Item",
+   "label": "Sales Order Child",
    "no_copy": 1,
    "oldfieldname": "so_detail",
    "oldfieldtype": "Data",
@@ -740,7 +740,7 @@
    "fieldname": "dn_detail",
    "fieldtype": "Data",
    "hidden": 1,
-   "label": "Delivery Note Item",
+   "label": "Delivery Note Child",
    "no_copy": 1,
    "oldfieldname": "dn_detail",
    "oldfieldtype": "Data",
@@ -826,10 +826,10 @@
   },
   {
    "depends_on": "eval:parent.update_stock == 1",
-   "fieldname": "sales_invoice_item",
+   "fieldname": "sales_invoice_child",
    "fieldtype": "Data",
    "ignore_user_permissions": 1,
-   "label": "Sales Invoice Item",
+   "label": "Sales Invoice Child",
    "no_copy": 1,
    "print_hide": 1,
    "read_only": 1
@@ -861,7 +861,7 @@
   },
   {
    "default": "0",
-   "fetch_from": "item_code.grant_commission",
+   "fetch_from": "child_code.grant_commission",
    "fieldname": "grant_commission",
    "fieldtype": "Check",
    "label": "Grant Commission",
@@ -888,18 +888,18 @@
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "purchase_order_item",
+   "fieldname": "purchase_order_child",
    "fieldtype": "Data",
-   "label": "Purchase Order Item",
+   "label": "Purchase Order Child",
    "print_hide": 1,
    "read_only": 1
   },
   {
    "default": "0",
    "depends_on": "barcode",
-   "fieldname": "has_item_scanned",
+   "fieldname": "has_child_scanned",
    "fieldtype": "Check",
-   "label": "Has Item Scanned",
+   "label": "Has Child Scanned",
    "read_only": 1
   },
   {
@@ -958,10 +958,10 @@
    "read_only": 1
   },
   {
-   "fieldname": "pos_invoice_item",
+   "fieldname": "pos_invoice_child",
    "fieldtype": "Data",
    "ignore_user_permissions": 1,
-   "label": "POS Invoice Item",
+   "label": "POS Invoice Child",
    "no_copy": 1,
    "print_hide": 1,
    "read_only": 1
@@ -987,7 +987,7 @@
  "modified": "2025-03-07 10:25:30.275246",
  "modified_by": "Administrator",
  "module": "Accounts",
- "name": "Sales Invoice Item",
+ "name": "Sales Invoice Child",
  "naming_rule": "Random",
  "owner": "Administrator",
  "permissions": [],

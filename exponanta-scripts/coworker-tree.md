@@ -12,6 +12,9 @@
    "read_only": 0
   },
   - cloned from sales_invoice.json to sales_invoice_item-coworker-tree.json
+  - replaced item->child in sales_invoice_item-coworker-tree.json
+
+  cloned [text](../../erpnext/erpnext/setup/demo_data/item.json) into item-coworker-tree.json
 
 # Example 
 
