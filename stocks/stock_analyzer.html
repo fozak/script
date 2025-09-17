@@ -227,13 +227,29 @@
             </div>
             
             <div class="form-group">
+                <label for="modelSelect">OpenAI Model:</label>
+                <select id="modelSelect" style="width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 14px;">
+                    <option value="gpt-5-mini">GPT-5 Mini (Fast & Cost-effective)</option>
+                    <option value="gpt-4">GPT-4 (Higher Quality)</option>
+                    <option value="gpt-4-turbo">GPT-4 Turbo (Latest)</option>
+                    <option value="gpt-4o">GPT-4o (Multimodal)</option>
+                    <option value="gpt-4o-mini">GPT-4o Mini (Efficient)</option>
+
+                </select>
+            </div>
+            
+            <div class="form-group">
                 <label for="prompt">Analysis Prompt:</label>
                 <textarea id="prompt" placeholder="Enter your prompt for analyzing each stock ticker...">Analyze the stock with ticker "{TICKER}" and provide a comprehensive financial analysis. Return the response as a JSON object with the following structure:
+
+Analyze the stock with ticker "{TICKER}" and provide a comprehensive, up-to-date financial analysis. Return the response strictly as a JSON object with the following structure:
 
 {
   "company_name": "Company Name",
   "ticker": "{TICKER}",
   "PE_TTM": null,
+  "last_quarter_to_prev_quarter_revenue_growth": 0,
+  "last_quarter_to_prev_quarter_FCF_growth": 0,
   "current_price_usd": 0,
   "52_week_high_usd": 0,
   "price_to_52_week_high": 0,
@@ -251,12 +267,29 @@
     "net_income_margin": 0,
     "gross_margin": 0
   },
-  "current_decision": "buy/hold/sell/disqualify",
+  "current_decision": "monitor/disqualify",
   "disqualify_reason": "reason if disqualified",
   "next_action": "recommended next action"
 }
 
-Use real financial data and provide your investment recommendation.</textarea>
+Requirements:
+
+1. Use **real, up-to-date financial data** from reliable sources.
+2. 2. Calculate "last_quarter_to_prev_quarter_revenue_growth" and "last_quarter_to_prev_quarter_FCF_growth" **only using the two most recent fully reported quarters**.  
+   - Let Qn = most recent fully reported quarter (e.g., Q2 2025)  
+   - Let Qn-1 = quarter immediately before that (e.g., Q1 2025)  
+
+   Formulas:  
+   last_quarter_to_prev_quarter_revenue_growth = (Revenue_Qn – Revenue_Qn-1) / Revenue_Qn-1  
+   last_quarter_to_prev_quarter_FCF_growth = (FCF_Qn – FCF_Qn-1) / FCF_Qn-1
+   These are critical for the decision-making logic.
+3. Set `"current_decision"` as follows:
+   - `"disqualify"` if **both** last quarter revenue growth and FCF growth are negative.
+   - Otherwise, set `"monitor"`.
+4. Provide a **clear reason** in `"disqualify_reason"` if disqualified, otherwise leave it null.
+5. Suggest the `"next_action"` based on the financial trends and recovery potential.
+6. Ensure all numeric fields are actual numbers, not strings or placeholders.
+7. Do **not** add any text outside the JSON object; return only the JSON.</textarea>
             </div>
             
             <button class="button" id="startAnalysis">Start Analysis</button>
