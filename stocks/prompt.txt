@@ -1,0 +1,36 @@
+I have the list in csv with tickers (every line is new ticker) 
+
+CRWV
+MSFT
+	
+
+
+can I have iteractive html that selects with file API such cvs file, add prompt (saving in input) for 
+ OPENAI API calls to iteratively (1 API call per compan) generate
+{
+  "company_name": "Nebius Group N.V.",
+  "ticker": "NBIS",
+  "PE_TTM": null,
+  "current_price_usd": 89.43,
+  "52_week_high_usd": 99.70,
+  "price_to_52_week_high": 0.897,
+  "analyst_price_targets": {
+    "consensus": 130.00,
+    "low": 85.00,
+    "high": 176.40,
+    "median": 130.00
+  },
+  "revenue_growth": {
+    "ttm": 36.32,
+    "quarterly": 624.83
+  },
+  "profitability": {
+    "net_income_margin": -545.87,
+    "gross_margin": 56.13
+  },
+  "current_decision": "disqualify",
+  "disqualify_reason": "Not profitable (negative net income margin)",
+  "next_action": "Monitor for profitability before reconsidering"
+}
+
+

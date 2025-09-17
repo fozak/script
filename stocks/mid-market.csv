@@ -1,0 +1,319 @@
+No.,Symbol,Company Name,Market Cap,Stock Price,Revenue,Rev. Growth,Net Income,Sector,Industry,Net Cash,FCF,Volume
+1,BLSH,Bullish,7.51B,51.36,250.11B,18824.97%,-369.04M,Financials,Capital Markets,-363.99M,38.37M,"3,858,152"
+2,IBRX,"ImmunityBio, Inc.",2.66B,2.81,56.60M,4227.22%,-367.09M,Healthcare,Biotechnology,-689.01M,-356.66M,"10,709,862"
+3,MDGL,"Madrigal Pharmaceuticals, Inc.",9.52B,427.05,515.55M,3421.98%,-281.90M,Healthcare,Biotechnology,673.08M,-308.39M,242779
+4,ARWR,"Arrowhead Pharmaceuticals, Inc.",4.07B,29.42,572.98M,2816.21%,-148.42M,Healthcare,Biotechnology,184.89M,-17.62M,"1,991,730"
+5,CYTK,"Cytokinetics, Incorporated",5.95B,49.76,85.74M,2635.74%,-606.31M,Healthcare,Biotechnology,-133.62M,-438.72M,"1,978,084"
+6,NAMS,NewAmsterdam Pharma Company N.V.,2.76B,24.52,64.01M,762.15%,-165.72M,Healthcare,Biotechnology,783.01M,-124.30M,512920
+7,MDU,"MDU Resources Group, Inc.",3.24B,15.87,1.85B,761.55%,215.52M,Industrials,Conglomerates,-2.12B,65.77M,"1,621,751"
+8,TARS,"Tarsus Pharmaceuticals, Inc.",2.14B,50.6,295.52M,254.45%,-91.99M,Healthcare,Biotechnology,308.70M,-82.82M,665573
+9,IREN,IREN Limited,9.91B,36.45,501.02M,167.65%,86.94M,Financials,Capital Markets,-399.71M,-1.13B,"35,496,281"
+10,BANC,"Banc of California, Inc.",2.59B,16.41,949.66M,150.32%,107.93M,Financials,Banks - Regional,-660.13M,201.98M,"1,898,889"
+11,SOUN,"SoundHound AI, Inc.",5.99B,14.69,131.45M,136.97%,-225.44M,Technology,Software - Application,225.95M,-112.78M,"66,405,881"
+12,EOSE,"Eos Energy Enterprises, Inc.",2.31B,8.29,33.80M,128.49%,-1.02B,Industrials,Electrical Equipment & Parts,-328.12M,-217.00M,"11,202,355"
+13,QBTS,D-Wave Quantum Inc.,6.49B,18.98,22.28M,120.20%,-281.54M,Technology,Computer Hardware,779.33M,-53.06M,"39,600,001"
+14,CNTA,Centessa Pharmaceuticals plc,2.86B,21.33,15.00M,118.88%,-230.37M,Healthcare,Biotechnology,132.58M,-144.05M,"1,158,946"
+15,ORLA,Orla Mining Ltd.,4.15B,11.51,596.49M,116.84%,25.61M,Materials,Gold,-181.84M,547.54M,"3,924,573"
+16,KRYS,"Krystal Biotech, Inc.",4.47B,154.38,359.21M,116.08%,146.73M,Healthcare,Biotechnology,811.11M,185.44M,385570
+17,ARX,Accelerant Holdings,3.73B,16.95,690.00M,112.83%,44.40M,Technology,Software - Application,1.33B,-,"1,032,572"
+18,INOD,Innodata Inc.,2.10B,65.89,228.14M,112.54%,42.69M,Technology,Information Technology Services,55.57M,36.07M,"3,526,718"
+19,ETOR,eToro Group Ltd.,3.64B,43.43,13.13B,109.55%,187.82M,Financials,Capital Markets,936.61M,294.50M,499373
+20,CAI,"Caris Life Sciences, Inc.",9.47B,33.66,533.85M,106.53%,-798.58M,Healthcare,Biotechnology,302.20M,-140.59M,324611
+21,ARQT,"Arcutis Biotherapeutics, Inc.",2.03B,16.97,263.47M,99.50%,-93.27M,Healthcare,Biotechnology,80.66M,-66.32M,"2,079,473"
+22,PTCT,"PTC Therapeutics, Inc.",4.74B,59.69,1.76B,96.00%,629.17M,Healthcare,Biotechnology,-484.34M,697.44M,"1,066,733"
+23,LB,LandBridge Company LLC,3.99B,52.13,156.47M,95.04%,65.33M,Energy,Oil & Gas Equipment & Services,-350.70M,-,214068
+24,RIOT,"Riot Platforms, Inc.",6.48B,17.52,541.72M,93.46%,-94.84M,Financials,Capital Markets,-551.65M,-980.69M,"53,848,902"
+25,SEZL,Sezzle Inc.,3.02B,88.83,371.79M,92.95%,104.58M,Financials,Credit Services,-42.44M,28.73M,519637
+26,CHYM,"Chime Financial, Inc.",8.55B,22.99,1.94B,92.70%,-935.78M,Technology,Software - Application,1.12B,-12.26M,"3,795,793"
+27,PFS,"Provident Financial Services, Inc.",2.56B,19.62,823.47M,92.62%,230.94M,Financials,Banks - Regional,-2.58B,578.61M,681179
+28,BMNR,"Bitmine Immersion Technologies, Inc.",9.70B,55.93,5.45M,89.77%,-6.53M,Financials,Capital Markets,-401.50K,1.57M,"52,337,061"
+29,TVTX,"Travere Therapeutics, Inc.",2.03B,22.77,333.87M,87.94%,-169.06M,Healthcare,Biotechnology,-80.04M,-115.59M,"1,936,140"
+30,STEP,StepStone Group Inc.,7.27B,61.1,1.35B,87.87%,-231.32M,Financials,Asset Management,-137.95M,55.42M,410481
+31,VFS,VinFast Auto Ltd.,7.46B,3.19,2.36B,86.03%,-3.13B,Consumer Discretionary,Auto Manufacturers,-5.67B,-2.09B,759022
+32,CLSK,"CleanSpark, Inc.",3.15B,11.2,631.94M,84.66%,292.47M,Financials,Capital Markets,-781.47M,-571.11M,"29,521,424"
+33,BHF,"Brighthouse Financial, Inc.",2.68B,46.82,8.06B,83.37%,562.00M,Financials,Insurance - Life,-3.64B,-,740955
+34,CALM,"Cal-Maine Foods, Inc.",5.00B,103.01,4.26B,83.19%,1.22B,Consumer Staples,Farm Products,1.39B,1.06B,"1,229,584"
+35,ALVO,Alvotech,2.49B,7.96,562.48M,82.19%,63.36M,Healthcare,Drug Manufacturers - Specialty & Generic,-1.12B,-122.75M,203005
+36,LBTYA,Liberty Global Ltd.,4.01B,11.78,4.63B,81.79%,-3.32B,Communication Services,Telecom Services,-7.62B,439.50M,"1,634,050"
+37,LBTYB,Liberty Global Ltd.,4.06B,12,4.63B,81.79%,-3.32B,Communication Services,Telecom Services,-7.62B,439.50M,45
+38,LBTYK,Liberty Global Ltd.,4.06B,11.92,4.63B,81.79%,-3.32B,Communication Services,Telecom Services,-7.62B,439.50M,"1,150,352"
+39,FIGR,"Figure Technology Solutions, Inc.",8.44B,40.48,327.24M,81.34%,61.94M,Financials,Credit Services,-126.53M,-,"8,109,231"
+40,HHH,Howard Hughes Holdings Inc.,4.86B,81.85,1.77B,80.45%,227.48M,Real Estate,Real Estate - Diversified,-3.78B,519.37M,306535
+41,LGN,Legence Corp.,3.16B,31.08,2.21B,77.61%,-46.27M,Industrials,Engineering & Construction,-1.61B,85.02M,"1,283,830"
+42,LEGN,Legend Biotech Corporation,6.34B,34.34,796.84M,74.75%,-325.33M,Healthcare,Biotechnology,579.64M,-290.37M,"1,121,255"
+43,EQX,Equinox Gold Corp.,8.22B,10.56,1.91B,74.31%,-23.06M,Materials,Gold,-1.66B,166.04M,"19,541,398"
+44,UEC,Uranium Energy Corp.,5.48B,12.34,66.84M,70.62%,-75.72M,Energy,Uranium,68.96M,-59.16M,"17,559,056"
+45,AXSM,"Axsome Therapeutics, Inc.",5.69B,114.1,495.03M,69.83%,-246.90M,Healthcare,Biotechnology,85.71M,-121.10M,733133
+46,FUN,Six Flags Entertainment Corporation,2.44B,24.07,3.17B,67.95%,-483.64M,Consumer Discretionary,Leisure,-5.41B,-197.20M,"3,332,242"
+47,PFSI,"PennyMac Financial Services, Inc.",6.41B,124.02,3.57B,65.90%,386.60M,Financials,Mortgage Finance,-18.25B,-1.61B,332167
+48,FA,First Advantage Corporation,2.71B,15.6,1.25B,65.34%,-150.11M,Industrials,Specialty Business Services,-1.96B,12.17M,557800
+49,SITM,SiTime Corporation,7.50B,288.61,255.62M,65.12%,-82.18M,Technology,Semiconductors,791.42M,-13.27M,497005
+50,JBTM,JBT Marel Corporation,7.07B,136.06,2.71B,64.98%,-137.70M,Industrials,Specialty Industrial Machinery,-1.81B,282.90M,395454
+51,AMSC,American Superconductor Corporation,2.55B,56.51,254.89M,63.73%,15.28M,Industrials,Specialty Industrial Machinery,204.13M,26.04M,644084
+52,SEI,"Solaris Energy Infrastructure, Inc.",2.17B,32.17,446.98M,62.66%,21.37M,Energy,Oil & Gas Equipment & Services,-448.61M,-440.33M,"2,988,800"
+53,MIRM,"Mirum Pharmaceuticals, Inc.",3.71B,73.79,429.16M,62.33%,-58.56M,Healthcare,Biotechnology,-14.35M,8.63M,413712
+54,AG,First Majestic Silver Corp.,5.26B,10.37,826.60M,61.34%,14.74M,Materials,Silver,232.04M,104.77M,"20,692,062"
+55,CRC,California Resources Corporation,4.69B,56.07,3.62B,60.00%,665.00M,Energy,Oil & Gas Exploration & Production,-1.02B,499.00M,"1,503,661"
+56,MRUS,Merus N.V.,5.06B,66.9,56.23M,59.77%,-385.52M,Healthcare,Biotechnology,880.95M,-313.16M,634796
+57,TRMK,Trustmark Corporation,2.38B,39.43,758.38M,58.50%,217.12M,Financials,Banks - Regional,-604.59M,261.69M,284125
+58,AMBA,"Ambarella, Inc.",3.38B,79.14,348.05M,57.91%,-88.63M,Technology,Semiconductor Equipment & Materials,257.74M,36.98M,717706
+59,IAG,IAMGOLD Corporation,6.54B,11.01,1.97B,57.81%,798.70M,Materials,Gold,-953.90M,-9.30M,"11,632,176"
+60,PRM,"Perimeter Solutions, Inc.",3.16B,21.56,609.32M,56.87%,79.53M,Materials,Specialty Chemicals,-681.28M,169.95M,"1,067,227"
+61,KNSA,"Kiniksa Pharmaceuticals International, plc",2.65B,35.77,529.33M,56.18%,4.79M,Healthcare,Drug Manufacturers - Specialty & Generic,298.02M,66.49M,274225
+62,PRCT,PROCEPT BioRobotics Corporation,2.20B,39.57,274.95M,55.71%,-84.15M,Healthcare,Medical Devices,223.35M,-89.27M,"1,441,562"
+63,RLX,RLX Technology Inc.,3.12B,2.56,407.35M,55.36%,101.45M,Consumer Staples,Tobacco,1.01B,151.74M,"4,141,510"
+64,TLX,Telix Pharmaceuticals Limited,3.18B,9.42,664.23M,55.35%,10.84M,Healthcare,Biotechnology,-211.10M,9.64M,95983
+65,UPST,"Upstart Holdings, Inc.",6.46B,67.17,884.81M,53.62%,-6.35M,Financials,Credit Services,-1.14B,-65.46M,"6,390,618"
+66,SNEX,StoneX Group Inc.,4.88B,93.55,129.41B,53.56%,287.00M,Financials,Capital Markets,7.14B,989.90M,469520
+67,RYTM,"Rhythm Pharmaceuticals, Inc.",6.34B,95.52,156.29M,53.55%,-188.44M,Healthcare,Biotechnology,177.05M,-107.72M,379688
+68,PLMR,"Palomar Holdings, Inc.",3.07B,114.54,682.21M,52.98%,154.91M,Financials,Insurance - Property & Casualty,81.30M,380.66M,325351
+69,AMTM,"Amentum Holdings, Inc.",5.51B,22.65,12.68B,52.54%,52.00M,Industrials,Specialty Business Services,-3.75B,138.00M,"2,114,842"
+70,VSEC,VSE Corporation,3.56B,172.39,1.25B,52.47%,18.94M,Industrials,Aerospace & Defense,-400.51M,13.32M,265255
+71,CTRE,"CareTrust REIT, Inc.",7.62B,34.13,373.42M,50.83%,219.30M,Real Estate,REIT - Healthcare Facilities,-849.33M,-,"2,089,023"
+72,CHA,Chagee Holdings Limited,3.21B,17.27,1.90B,50.77%,137.99M,Consumer Discretionary,Restaurants,1.13B,291.35M,"1,178,678"
+73,VIST,"Vista Energy, S.A.B. de C.V.",3.69B,36.65,1.98B,49.52%,577.31M,Energy,Oil & Gas Exploration & Production,-2.52B,-733.38M,810110
+74,ALHC,"Alignment Healthcare, Inc.",3.28B,16.54,3.34B,49.46%,-50.95M,Healthcare,Healthcare Plans,140.61M,28.41M,"4,035,986"
+75,PAY,"Paymentus Holdings, Inc.",4.14B,33.07,1.04B,49.35%,56.10M,Technology,Software - Infrastructure,258.38M,116.24M,720895
+76,WGS,GeneDx Holdings Corp.,3.49B,121.37,362.32M,48.70%,1.41M,Healthcare,Diagnostics & Research,20.17M,830.00K,720425
+77,OSCR,"Oscar Health, Inc.",4.63B,17.93,10.73B,48.29%,-161.23M,Healthcare,Healthcare Plans,2.24B,1.20B,"28,719,296"
+78,TMDX,"TransMedics Group, Inc.",4.06B,119.15,531.29M,48.09%,71.66M,Healthcare,Medical Devices,-118.25M,17.35M,700857
+79,TAL,TAL Education Group,6.75B,11.1,2.41B,47.99%,104.47M,Consumer Staples,Education & Training Services,3.10B,387.19M,"3,579,209"
+80,DAVE,Dave Inc.,2.89B,214.24,433.07M,47.97%,55.12M,Technology,Software - Application,27.47M,191.95M,437417
+81,CNR,"Core Natural Resources, Inc.",3.98B,77.42,3.28B,47.13%,20.62M,Energy,Thermal Coal,21.86M,158.93M,498803
+82,FSM,Fortuna Mining Corp.,2.52B,7.93,1.19B,46.81%,157.67M,Materials,Gold,177.98M,215.74M,"16,881,710"
+83,CBZ,"CBIZ, Inc.",2.94B,55.4,2.42B,46.50%,109.08M,Industrials,Specialty Business Services,-1.93B,105.07M,772665
+84,RXO,"RXO, Inc.",2.87B,17.48,5.56B,46.41%,-308.00M,Industrials,Trucking,-661.00M,-45.00M,"1,738,629"
+85,TFPM,Triple Flag Precious Metals Corp.,5.90B,28.13,324.21M,45.86%,172.19M,Materials,Other Precious Metals & Mining,84.67M,145.90M,435134
+86,GEMI,"Gemini Space Station, Inc.",3.29B,28.13,136.45M,44.86%,-399.65M,Financials,Capital Markets,-1.50B,-33.34M,"9,139,021"
+87,NIQ,NIQ Global Intelligence plc,5.43B,18.42,4.03B,44.69%,-447.40M,Industrials,Consulting Services,-4.53B,-15.30M,938734
+88,HTFL,"HeartFlow, Inc.",2.61B,31.22,136.17M,44.32%,-107.84M,Healthcare,Diagnostics & Research,-93.50M,-63.74M,259391
+89,CACC,Credit Acceptance Corporation,5.63B,501,1.17B,43.92%,424.40M,Financials,Credit Services,-6.40B,1.11B,67804
+90,NVMI,Nova Ltd.,8.88B,302.18,807.09M,43.69%,234.87M,Technology,Semiconductor Equipment & Materials,635.08M,206.08M,372268
+91,ADMA,"ADMA Biologics, Inc.",3.74B,15.69,474.17M,43.58%,208.93M,Healthcare,Biotechnology,6.46M,65.77M,"3,547,317"
+92,VIRT,"Virtu Financial, Inc.",5.41B,35.4,2.62B,42.88%,379.20M,Financials,Capital Markets,8.02B,564.68M,"1,307,778"
+93,MC,Moelis & Company,5.99B,74.23,1.38B,42.86%,198.10M,Financials,Capital Markets,2.89M,478.96M,626839
+94,CADE,Cadence Bank,6.80B,36.48,1.74B,42.82%,525.16M,Financials,Banks - Regional,-1.49B,581.13M,"1,514,366"
+95,NN,NextNav Inc.,2.27B,17.08,6.26M,42.80%,-167.65M,Technology,Software - Infrastructure,-86.55M,-44.66M,"1,778,592"
+96,UUUU,Energy Fuels Inc.,3.17B,13.41,65.08M,42.73%,-93.10M,Energy,Uranium,205.90M,-114.13M,"13,414,480"
+97,EGO,Eldorado Gold Corporation,5.73B,27.25,1.57B,42.25%,410.45M,Materials,Gold,-51.57M,-13.96M,"2,329,043"
+98,MARA,"MARA Holdings, Inc.",6.49B,17.53,798.41M,41.32%,678.78M,Financials,Capital Markets,-2.54B,-1.70B,"112,357,867"
+99,ZETA,Zeta Global Holdings Corp.,4.85B,20.39,1.16B,40.60%,-36.55M,Technology,Software - Infrastructure,156.62M,136.69M,"4,888,267"
+100,RYN,Rayonier Inc.,4.05B,25.94,1.24B,40.53%,761.17M,Real Estate,REIT - Specialty,-164.08M,-,"1,344,950"
+101,PSIX,"Power Solutions International, Inc.",2.27B,98.42,597.49M,40.10%,110.92M,Industrials,Specialty Industrial Machinery,-98.90M,62.23M,579870
+102,KRMN,Karman Holdings Inc.,8.58B,64.86,392.43M,39.80%,7.98M,Industrials,Aerospace & Defense,-458.35M,-30.74M,"1,265,876"
+103,ENLT,Enlight Renewable Energy Ltd,3.83B,29.27,428.72M,39.54%,115.22M,Utilities,Utilities - Renewable,-3.53B,-902.33M,"14,147"
+104,ROAD,"Construction Partners, Inc.",7.01B,124.91,2.45B,39.18%,74.52M,Industrials,Engineering & Construction,-1.39B,152.81M,285673
+105,LCID,"Lucid Group, Inc.",6.06B,19.72,928.99M,39.01%,-3.06B,Consumer Discretionary,Auto Manufacturers,84.93M,-3.05B,"6,908,895"
+106,INTR,"Inter & Co, Inc.",3.94B,8.95,974.79M,38.56%,205.47M,Financials,Banks - Regional,-3.38B,-506.50M,"2,993,655"
+107,MRX,Marex Group plc,2.34B,32.59,2.61B,38.46%,251.00M,Financials,Capital Markets,817.60M,1.62B,"1,271,114"
+108,SON,Sonoco Products Company,4.65B,47.17,6.34B,37.96%,555.81M,Consumer Discretionary,Packaging & Containers,-5.42B,142.68M,904283
+109,RNW,ReNew Energy Global Plc,2.79B,7.69,1.32B,37.94%,101.39M,Utilities,Utilities - Renewable,-7.59B,80.45M,587502
+110,ATAT,Atour Lifestyle Holdings Limited,5.44B,39.5,1.17B,37.80%,192.84M,Consumer Discretionary,Lodging,489.53M,239.19M,683794
+111,SGHC,Super Group (SGHC) Limited,6.59B,13.09,2.23B,37.19%,143.82M,Consumer Discretionary,Gambling,333.00M,339.75M,"4,475,325"
+112,CURB,Curbline Properties Corp.,2.33B,22.1,144.78M,36.72%,16.46M,Real Estate,REIT - Retail,330.78M,-,425021
+113,CWAN,"Clearwater Analytics Holdings, Inc.",5.77B,19.19,551.09M,36.68%,406.36M,Technology,Software - Application,-852.95M,85.17M,"3,590,185"
+114,HSAI,Hesai Group,4.54B,29.8,347.70M,36.51%,14.40M,Consumer Discretionary,Auto Parts,279.86M,-9.43M,"5,044,555"
+115,HL,Hecla Mining Company,7.60B,11.35,1.06B,36.30%,99.71M,Materials,Other Precious Metals & Mining,-234.03M,91.39M,"28,814,361"
+116,VIA,"Via Transportation, Inc.",4.15B,52.21,380.77M,35.67%,-77.65M,Technology,Software - Application,-10.23M,-59.46M,661515
+117,CNX,CNX Resources Corporation,4.33B,30.61,1.81B,35.63%,155.72M,Energy,Oil & Gas Exploration & Production,-2.73B,471.83M,"2,142,916"
+118,AUGO,Aura Minerals Inc.,2.67B,31.91,679.91M,35.59%,-60.38M,Materials,Gold,-313.79M,34.52M,163130
+119,RELY,"Remitly Global, Inc.",3.55B,17.2,1.46B,35.12%,14.08M,Technology,Software - Infrastructure,483.53M,346.01M,"4,147,108"
+120,HALO,"Halozyme Therapeutics, Inc.",8.87B,75.85,1.18B,34.97%,557.28M,Healthcare,Biotechnology,-989.89M,540.69M,"1,147,784"
+121,IFS,Intercorp Financial Services Inc.,4.65B,41.46,1.51B,34.92%,535.67M,Financials,Banks - Regional,-168.54M,-671.79M,268819
+122,MPW,"Medical Properties Trust, Inc.",2.92B,4.85,984.71M,34.52%,-1.43B,Real Estate,REIT - Healthcare Facilities,-9.14B,-,"8,558,426"
+123,BTSG,"BrightSpring Health Services, Inc.",5.51B,27.1,12.57B,34.35%,65.52M,Healthcare,Health Information Services,-2.64B,191.12M,"3,713,551"
+124,TBBB,BBB Foods Inc.,3.04B,26.12,3.56B,34.17%,-7.37M,Consumer Staples,Discount Stores,-352.06M,86.68M,253317
+125,MTSI,"MACOM Technology Solutions Holdings, Inc.",9.77B,131.18,906.80M,33.50%,-69.92M,Technology,Semiconductors,166.52M,171.79M,648823
+126,HNGE,"Hinge Health, Inc.",4.62B,58.87,480.79M,33.37%,-426.88M,Healthcare,Health Information Services,403.29M,91.17M,"1,002,909"
+127,GLBE,Global-E Online Ltd.,6.09B,35.91,843.64M,33.30%,-28.42M,Consumer Discretionary,Internet Retail,490.84M,149.58M,"1,569,933"
+128,KVYO,"Klaviyo, Inc.",9.88B,32.92,1.08B,33.17%,-66.69M,Technology,Software - Infrastructure,836.33M,160.32M,"4,498,130"
+129,SNV,Synovus Financial Corp.,7.02B,50.57,2.24B,32.95%,738.49M,Financials,Banks - Regional,-1.24B,710.57M,"1,775,678"
+130,CRGY,Crescent Energy Company,2.23B,8.76,3.47B,32.84%,23.09M,Energy,Oil & Gas Integrated,-3.38B,-708.15M,"4,333,903"
+131,PLBL,Polibeli Group Ltd,3.64B,9.8,30.23M,32.62%,-10.98M,Consumer Discretionary,Department Stores,2.12M,-5.67M,"10,203"
+132,ZLAB,Zai Lab Limited,3.59B,32.3,427.80M,32.56%,-212.52M,Healthcare,Biotechnology,540.76M,-183.67M,506971
+133,RUM,Rumble Inc.,2.52B,7.45,104.08M,32.45%,-301.17M,Communication Services,Internet Content & Information,281.40M,-63.04M,"2,214,811"
+134,BVN,Compañía de Minas Buenaventura S.A.A.,5.11B,20.11,1.31B,32.25%,501.93M,Materials,Other Precious Metals & Mining,-271.69M,132.42M,"1,114,468"
+135,MAC,The Macerich Company,4.75B,18,1.05B,32.06%,-411.28M,Real Estate,REIT - Retail,-5.26B,-,"1,923,580"
+136,GBDC,"Golub Capital BDC, Inc.",3.75B,14.08,877.34M,31.97%,375.56M,Financials,Asset Management,-5.03B,-,"1,455,322"
+137,LNC,Lincoln National Corporation,7.48B,39.44,18.04B,31.97%,1.05B,Financials,Insurance - Life,-1.98B,-,"3,031,801"
+138,UMBF,UMB Financial Corporation,9.03B,118.89,1.95B,31.18%,524.34M,Financials,Banks - Regional,-1.46B,663.08M,404785
+139,KGS,"Kodiak Gas Services, Inc.",2.87B,33.07,1.29B,31.01%,83.23M,Energy,Oil & Gas Equipment & Services,-2.60B,126.92M,"1,166,487"
+140,TGTX,"TG Therapeutics, Inc.",4.67B,31.99,454.07M,30.96%,60.46M,Healthcare,Biotechnology,-2.66M,-59.24M,"1,885,504"
+141,AGIO,"Agios Pharmaceuticals, Inc.",2.13B,36.72,40.88M,30.57%,650.08M,Healthcare,Biotechnology,1.29B,-409.03M,577700
+142,LQDA,Liquidia Corporation,2.24B,26.03,19.32M,30.20%,-151.59M,Healthcare,Biotechnology,-26.96M,-120.48M,"1,722,640"
+143,RXRX,"Recursion Pharmaceuticals, Inc.",2.12B,4.84,64.60M,30.14%,-649.13M,Healthcare,Biotechnology,437.04M,-393.87M,"21,314,930"
+144,LIF,"Life360, Inc.",7.95B,100.17,427.40M,30.04%,27.57M,Technology,Software - Application,122.87M,42.15M,652258
+145,JXN,Jackson Financial Inc.,6.54B,93.84,5.70B,29.87%,-13.00M,Financials,Insurance - Life,-2.14B,-,693054
+146,AUB,Atlantic Union Bankshares Corporation,4.95B,34.72,908.47M,29.68%,191.94M,Financials,Banks - Regional,498.41M,2.13B,693520
+147,SLAB,Silicon Laboratories Inc.,4.41B,134.48,703.20M,29.66%,-104.61M,Technology,Semiconductors,415.54M,75.07M,179407
+148,ALKT,"Alkami Technology, Inc.",2.68B,25.76,385.46M,29.63%,-38.49M,Technology,Software - Application,-316.19M,11.25M,"1,068,949"
+149,AGX,"Argan, Inc.",3.29B,238.22,920.89M,29.16%,117.20M,Industrials,Engineering & Construction,569.81M,140.30M,207219
+150,GTLB,GitLab Inc.,8.39B,50.31,857.95M,28.97%,-9.09M,Technology,Software - Infrastructure,1.16B,35.49M,"4,966,312"
+151,NE,Noble Corporation plc,5.02B,31.6,3.29B,28.85%,309.04M,Energy,Oil & Gas Drilling,-1.64B,410.32M,"2,822,644"
+152,GH,"Guardant Health, Inc.",6.91B,55.4,828.85M,28.74%,-413.82M,Healthcare,Diagnostics & Research,-811.35M,-271.73M,"2,086,257"
+153,CPRX,"Catalyst Pharmaceuticals, Inc.",2.46B,20.07,558.50M,28.55%,208.67M,Healthcare,Biotechnology,649.81M,274.72M,"1,465,065"
+154,GRND,Grindr Inc.,3.02B,15.73,385.10M,28.35%,-55.51M,Technology,Software - Application,-166.81M,119.08M,"2,338,510"
+155,AROC,"Archrock, Inc.",4.23B,24.04,1.35B,28.23%,228.55M,Energy,Oil & Gas Equipment & Services,-2.62B,16.73M,"1,331,493"
+156,CAVA,"CAVA Group, Inc.",7.31B,63.08,1.08B,28.21%,140.66M,Consumer Discretionary,Restaurants,-48.05M,47.38M,"4,162,028"
+157,CAMT,Camtek Ltd.,3.92B,85.84,471.59M,27.88%,133.76M,Technology,Semiconductor Equipment & Materials,323.18M,-,546734
+158,ALK,"Alaska Air Group, Inc.",6.64B,57.6,13.45B,27.81%,313.00M,Industrials,Airlines,-4.25B,-8.00M,"3,663,409"
+159,LMND,"Lemonade, Inc.",4.23B,57.3,600.70M,27.51%,-204.00M,Financials,Insurance - Property & Casualty,233.80M,-21.40M,"2,196,284"
+160,NGD,New Gold Inc.,5.31B,6.43,1.03B,27.25%,144.90M,Materials,Gold,-425.80M,-77.00M,"16,916,870"
+161,SM,SM Energy Company,3.15B,27.41,3.00B,27.02%,812.74M,Energy,Oil & Gas Exploration & Production,-2.63B,-1.51B,"2,348,241"
+162,RSI,"Rush Street Interactive, Inc.",4.86B,21.28,1.02B,26.99%,25.22M,Consumer Discretionary,Gambling,240.18M,109.17M,"1,068,830"
+163,CAAP,Corporación América Airports S.A.,3.12B,19.11,1.87B,26.88%,151.36M,Industrials,Airports & Air Services,-554.54M,328.15M,112508
+164,RARE,Ultragenyx Pharmaceutical Inc.,2.84B,29.48,610.16M,26.77%,-532.93M,Healthcare,Biotechnology,-343.87M,-427.30M,"2,063,623"
+165,GKOS,Glaukos Corporation,4.72B,82.35,432.95M,26.70%,-92.79M,Healthcare,Medical Devices,167.44M,-26.92M,903207
+166,GPOR,Gulfport Energy Corporation,3.09B,176.06,1.14B,26.64%,-123.82M,Energy,Oil & Gas Exploration & Production,-692.32M,284.98M,346012
+167,PAX,Patria Investments Limited,2.35B,14.76,397.50M,26.52%,84.18M,Financials,Asset Management,-127.20M,-,436102
+168,BULL,Webull Corporation,6.32B,13.05,457.10M,26.52%,77.55M,Technology,Software - Application,1.55B,392.80M,"7,403,026"
+169,ATEC,"Alphatec Holdings, Inc.",2.22B,15.03,682.24M,26.27%,-166.00M,Healthcare,Medical Devices,-429.57M,-22.38M,"1,324,194"
+170,DRD,DRDGOLD Limited,2.02B,23.37,443.67M,26.26%,126.30M,Materials,Gold,72.58M,72.51M,"1,018,863"
+171,PRMB,Primo Brands Corporation,8.45B,22.61,6.05B,26.26%,-48.10M,Consumer Staples,Beverages - Non-Alcoholic,-5.31B,353.30M,"6,461,637"
+172,LOAR,Loar Holdings Inc.,7.35B,78.49,451.74M,26.15%,44.37M,Industrials,Aerospace & Defense,-183.76M,80.10M,499359
+173,ODD,Oddity Tech Ltd.,3.47B,62.12,751.85M,26.12%,110.13M,Technology,Software - Infrastructure,791.91M,129.99M,422540
+174,HP,"Helmerich & Payne, Inc.",2.16B,21.77,3.43B,25.92%,-32.99M,Energy,Oil & Gas Drilling,-2.15B,36.55M,"1,343,429"
+175,MASI,Masimo Corporation,7.77B,143,2.15B,25.86%,-459.20M,Healthcare,Medical Devices,-492.60M,159.90M,770494
+176,GENI,Genius Sports Limited,2.93B,12.27,558.44M,25.76%,-77.85M,Communication Services,Internet Content & Information,190.99M,38.09M,"3,633,033"
+177,CORT,Corcept Therapeutics Incorporated,7.52B,71.32,716.08M,25.71%,132.01M,Healthcare,Biotechnology,508.40M,180.27M,936942
+178,S,"SentinelOne, Inc.",5.96B,17.87,907.38M,25.39%,-429.36M,Technology,Software - Infrastructure,799.28M,39.83M,"7,164,119"
+179,FOLD,"Amicus Therapeutics, Inc.",2.47B,8.01,571.16M,25.35%,-38.10M,Healthcare,Biotechnology,-212.32M,-48.91M,"7,490,366"
+180,EPRT,"Essential Properties Realty Trust, Inc.",5.84B,29.41,503.26M,25.14%,223.14M,Real Estate,REIT - Retail,-2.34B,-,"1,932,809"
+181,PSNY,Polestar Automotive Holding UK PLC,2.25B,0.974,2.55B,24.82%,-2.70B,Consumer Discretionary,Auto Manufacturers,-4.93B,-1.37B,"2,728,943"
+182,OS,"OneStream, Inc.",4.57B,18.82,545.51M,24.72%,-231.20M,Technology,Software - Infrastructure,633.33M,91.17M,"1,381,904"
+183,PGY,Pagaya Technologies Ltd.,3.19B,41.59,1.15B,24.59%,-282.36M,Technology,Software - Infrastructure,-559.21M,115.51M,"2,444,318"
+184,AVPT,"AvePoint, Inc.",3.27B,15.45,373.07M,24.41%,-8.43M,Technology,Software - Infrastructure,411.35M,81.12M,"1,470,351"
+185,FOUR,"Shift4 Payments, Inc.",7.63B,86.32,3.61B,23.86%,207.70M,Technology,Software - Infrastructure,-739.30M,397.60M,"1,036,104"
+186,GSHD,"Goosehead Insurance, Inc",3.01B,80.64,340.76M,23.70%,29.91M,Financials,Insurance Brokers,-258.67M,82.15M,616020
+187,RIG,Transocean Ltd.,3.27B,3.47,3.79B,23.26%,-1.50B,Energy,Oil & Gas Drilling,-6.17B,383.00M,"27,081,707"
+188,CFLT,"Confluent, Inc.",6.73B,19.53,1.06B,23.02%,-311.72M,Technology,Software - Infrastructure,832.87M,38.56M,"5,870,458"
+189,WING,Wingstop Inc.,7.29B,261.14,669.74M,22.74%,171.51M,Consumer Discretionary,Restaurants,-1.04B,55.80M,759285
+190,WSBC,"WesBanco, Inc.",2.97B,30.91,690.81M,22.65%,125.20M,Financials,Banks - Regional,-1.06B,187.27M,397924
+191,ESE,ESCO Technologies Inc.,5.43B,210.37,1.12B,22.39%,114.83M,Technology,Scientific & Technical Instruments,-512.46M,163.27M,169450
+192,GXO,"GXO Logistics, Inc.",5.82B,50.84,12.68B,22.39%,63.00M,Industrials,Integrated Freight & Logistics,-5.42B,93.00M,748628
+193,IRTC,"iRhythm Technologies, Inc.",5.60B,174.4,657.23M,22.37%,-92.43M,Healthcare,Medical Devices,-189.20M,27.88M,272285
+194,SMTC,Semtech Corporation,5.43B,62.55,996.48M,22.22%,23.84M,Technology,Semiconductors,-377.39M,127.64M,"1,571,535"
+195,TRNO,Terreno Realty Corporation,6.05B,58.6,426.00M,22.17%,253.06M,Real Estate,REIT - Industrial,-617.82M,-,733252
+196,BRZE,"Braze, Inc.",3.46B,31.14,654.62M,22.16%,-108.79M,Technology,Software - Application,279.18M,30.93M,"2,629,490"
+197,INSP,"Inspire Medical Systems, Inc.",2.39B,80.8,861.31M,22.05%,53.12M,Healthcare,Medical Devices,267.84M,85.01M,708369
+198,DLO,DLocal Limited,4.31B,14.64,863.48M,22.02%,145.90M,Technology,Software - Infrastructure,509.81M,116.37M,"4,095,334"
+199,USLM,"United States Lime & Minerals, Inc.",3.69B,129.04,352.26M,21.97%,125.29M,Materials,Building Materials,315.43M,106.80M,"94,004"
+200,FROG,JFrog Ltd.,5.59B,47.86,474.76M,21.97%,-86.32M,Technology,Software - Application,597.86M,138.79M,"2,052,235"
+201,ENVA,"Enova International, Inc.",3.03B,121.13,1.36B,21.96%,256.20M,Financials,Credit Services,-3.93B,1.62B,684310
+202,EAT,"Brinker International, Inc.",6.42B,144.19,5.38B,21.95%,383.10M,Consumer Discretionary,Restaurants,-1.67B,413.70M,"1,761,223"
+203,ECG,"Everus Construction Group, Inc.",4.03B,78.97,3.27B,21.87%,165.75M,Industrials,Engineering & Construction,-278.30M,128.71M,250469
+204,IDCC,"InterDigital, Inc.",8.35B,323.54,892.58M,21.83%,463.47M,Technology,Software - Application,449.38M,334.87M,208750
+205,AKO.A,Embotelladora Andina S.A.,3.55B,19.3,3.60B,21.71%,271.28M,Consumer Staples,Beverages - Non-Alcoholic,-973.93M,117.51M,313
+206,AKO.B,Embotelladora Andina S.A.,3.55B,24.6,3.60B,21.71%,271.28M,Consumer Staples,Beverages - Non-Alcoholic,-973.93M,117.46M,"18,663"
+207,CVLT,"Commvault Systems, Inc.",8.43B,189.67,1.05B,21.62%,81.08M,Technology,Software - Application,332.32M,189.60M,638423
+208,PNFP,"Pinnacle Financial Partners, Inc.",7.28B,94.65,1.81B,21.56%,581.71M,Financials,Banks - Regional,621.99M,772.58M,"1,231,067"
+209,VITL,"Vital Farms, Inc.",2.10B,47.05,657.95M,21.49%,51.57M,Consumer Staples,Farm Products,137.41M,-2.47M,817263
+210,NNI,"Nelnet, Inc.",4.50B,124.31,1.56B,21.39%,329.57M,Financials,Credit Services,-7.68B,496.37M,"62,722"
+211,HG,"Hamilton Insurance Group, Ltd.",2.35B,23.47,2.60B,21.31%,380.46M,Financials,Insurance - Reinsurance,835.96M,697.98M,272424
+212,AVAL,Grupo Aval Acciones y Valores S.A.,3.95B,3.25,3.20B,21.28%,380.42M,Financials,Banks - Regional,-6.65B,-3.02B,"70,193"
+213,COMP,"Compass, Inc.",4.87B,9.26,6.29B,21.23%,-53.50M,Real Estate,Real Estate Services,-369.40M,147.00M,"4,001,933"
+214,KNSL,"Kinsale Capital Group, Inc.",9.98B,428.3,1.72B,21.12%,446.67M,Financials,Insurance - Property & Casualty,-46.16M,940.11M,171762
+215,MNSO,MINISO Group Holding Limited,7.58B,24.81,2.60B,21.03%,328.53M,Consumer Discretionary,Specialty Retail,-404.36M,139.76M,476954
+216,NJR,New Jersey Resources Corporation,4.63B,46.05,2.10B,21.02%,411.68M,Utilities,Utilities - Regulated Gas,-3.56B,-117.61M,709994
+217,BGC,"BGC Group, Inc.",4.63B,9.76,2.47B,20.94%,146.62M,Financials,Capital Markets,-1.11B,384.89M,"1,747,806"
+218,VCTR,"Victory Capital Holdings, Inc.",4.56B,68.35,1.03B,20.90%,264.62M,Financials,Asset Management,-905.81M,263.06M,577794
+219,COMM,"CommScope Holding Company, Inc.",3.62B,16.36,4.75B,20.87%,722.60M,Technology,Communication Equipment,-6.82B,248.10M,"3,341,177"
+220,CRK,"Comstock Resources, Inc.",5.00B,17.07,1.65B,20.80%,-72.56M,Energy,Oil & Gas Exploration & Production,-3.08B,-264.06M,"2,670,025"
+221,SPSC,"SPS Commerce, Inc.",4.09B,107.93,703.54M,20.51%,82.95M,Technology,Software - Application,96.81M,141.93M,340290
+222,CLBT,Cellebrite DI Ltd.,4.22B,17.27,436.73M,20.48%,-150.95M,Technology,Software - Infrastructure,535.51M,150.13M,"1,392,669"
+223,SKYW,"SkyWest, Inc.",4.20B,104.13,3.84B,20.45%,407.91M,Industrials,Airlines,-1.85B,253.42M,385246
+224,OTF,Blue Owl Technology Finance Corp.,7.19B,15.4,839.89M,20.40%,499.86M,Financials,Asset Management,-4.58B,-,"1,314,084"
+225,HMY,Harmony Gold Mining Company Limited,9.36B,14.99,4.16B,20.39%,810.06M,Materials,Gold,612.28M,623.07M,"6,998,669"
+226,CWST,"Casella Waste Systems, Inc.",5.64B,88.8,1.72B,20.35%,11.05M,Industrials,Waste Management,-1.02B,91.02M,515213
+227,KC,Kingsoft Cloud Holdings Limited,4.46B,16.06,1.18B,20.27%,-282.74M,Technology,Software - Application,-834.86M,-257.30M,"1,979,715"
+228,DFH,"Dream Finders Homes, Inc.",2.64B,28.47,4.71B,20.19%,297.89M,Consumer Discretionary,Residential Construction,-1.37B,-46.64M,310033
+229,XMTR,"Xometry, Inc.",2.60B,51.16,603.76M,20.19%,-61.60M,Industrials,Specialty Industrial Machinery,-109.13M,-20.48M,719450
+230,APLS,"Apellis Pharmaceuticals, Inc.",3.01B,23.82,754.65M,20.02%,-228.17M,Healthcare,Biotechnology,-94.99M,4.41M,"3,465,287"
+231,REZI,"Resideo Technologies, Inc.",5.89B,39.6,7.40B,20.00%,-816.00M,Industrials,Industrial Distribution,-1.52B,390.00M,"3,569,849"
+232,LYFT,"Lyft, Inc.",8.21B,20.19,6.11B,19.94%,92.19M,Technology,Software - Application,982.94M,992.97M,"25,675,041"
+233,RRC,Range Resources Corporation,8.55B,35.89,2.80B,19.93%,478.65M,Energy,Oil & Gas Exploration & Production,-1.38B,506.19M,"4,124,511"
+234,VCYT,"Veracyte, Inc.",2.54B,32.28,479.13M,19.91%,26.34M,Healthcare,Diagnostics & Research,270.07M,83.97M,523440
+235,AIR,AAR Corp.,2.68B,75.75,2.78B,19.91%,12.50M,Industrials,Aerospace & Defense,-963.40M,1.40M,424467
+236,YOU,"Clear Secure, Inc.",5.02B,37.8,835.53M,19.85%,176.88M,Technology,Software - Application,490.72M,305.14M,"1,881,208"
+237,CCU,Compañía Cervecerías Unidas S.A.,2.25B,12.22,3.25B,19.82%,161.33M,Consumer Staples,Beverages - Brewers,-751.74M,174.05M,"70,377"
+238,WULF,TeraWulf Inc.,4.46B,10.94,144.09M,19.82%,-131.72M,Financials,Capital Markets,-410.89M,-449.96M,"37,000,891"
+239,FRSH,Freshworks Inc.,3.66B,12.56,782.10M,19.78%,-54.90M,Technology,Software - Application,890.17M,192.46M,"2,490,707"
+240,STNE,StoneCo Ltd.,5.04B,18.83,2.53B,19.78%,-232.60M,Technology,Software - Infrastructure,-1.57B,-77.26M,"6,291,644"
+241,GPI,"Group 1 Automotive, Inc.",5.81B,458.23,21.98B,19.75%,473.20M,Consumer Discretionary,Auto & Truck Dealerships,-5.41B,750.00M,175468
+242,KNTK,Kinetik Holdings Inc.,6.93B,42.79,1.65B,19.71%,44.52M,Energy,Oil & Gas Midstream,-4.00B,296.00M,652403
+243,CHRD,Chord Energy Corporation,6.05B,106.42,4.97B,19.70%,265.66M,Energy,Oil & Gas Exploration & Production,-916.00M,961.63M,"1,674,439"
+244,MIAX,"Miami International Holdings, Inc.",3.28B,38.02,1.26B,19.63%,1.79M,Financials,Financial Data & Stock Exchanges,43.41M,19.23M,358417
+245,APPF,"AppFolio, Inc.",9.90B,276.26,862.67M,19.47%,203.11M,Technology,Software - Application,87.92M,184.38M,164596
+246,AA,Alcoa Corporation,8.67B,33.48,12.78B,19.39%,989.00M,Materials,Aluminum,-1.14B,582.00M,"5,919,942"
+247,SRAD,Sportradar Group AG,9.04B,30.24,1.40B,19.37%,128.74M,Technology,Software - Application,304.50M,468.32M,"1,481,717"
+248,FRPT,"Freshpet, Inc.",2.64B,54.03,1.04B,19.30%,33.68M,Consumer Staples,Packaged Foods,-251.47M,-7.07M,"1,849,077"
+249,GEF,"Greif, Inc.",2.87B,60.38,5.43B,19.22%,190.00M,Consumer Discretionary,Packaging & Containers,-2.65B,334.90M,214818
+250,GEF.B,"Greif, Inc.",2.95B,62.31,5.43B,19.22%,190.00M,Consumer Discretionary,Packaging & Containers,-2.65B,334.90M,"11,756"
+251,WK,Workiva Inc.,4.43B,79.16,806.98M,19.02%,-66.58M,Technology,Software - Application,20.00M,103.02M,816104
+252,CPK,Chesapeake Utilities Corporation,2.89B,122.73,866.70M,18.91%,129.00M,Utilities,Utilities - Regulated Gas,-1.53B,-200.00M,193663
+253,VAL,Valaris Limited,3.77B,52.99,2.46B,18.78%,275.50M,Energy,Oil & Gas Equipment & Services,-666.40M,232.50M,975479
+254,ELF,"e.l.f. Beauty, Inc.",8.50B,143.28,1.34B,18.61%,97.85M,Consumer Staples,Household & Personal Products,-144.76M,134.96M,"1,783,027"
+255,PJT,PJT Partners Inc.,7.43B,180.5,1.54B,18.48%,160.37M,Financials,Capital Markets,-200.04M,474.82M,"95,428"
+256,SFBS,"ServisFirst Bancshares, Inc.",4.55B,83.36,488.39M,18.16%,249.67M,Financials,Banks - Regional,-1.20B,261.14M,245665
+257,MMYT,MakeMyTrip Limited,9.17B,96.39,992.66M,18.13%,100.00M,Consumer Discretionary,Travel Services,-559.75M,150.33M,"1,493,604"
+258,AGYS,"Agilysys, Inc.",3.00B,107.6,288.79M,17.91%,14.01M,Technology,Software - Application,21.66M,47.14M,206137
+259,LRN,"Stride, Inc.",6.00B,139.31,2.41B,17.90%,287.94M,Consumer Staples,Education & Training Services,461.61M,431.04M,"1,585,826"
+260,HGTY,"Hagerty, Inc.",4.24B,12.41,1.30B,17.90%,18.45M,Financials,Insurance - Property & Casualty,58.56M,131.53M,181655
+261,VNET,"VNET Group, Inc.",2.58B,9.59,1.26B,17.85%,5.86M,Technology,Information Technology Services,-2.87B,-228.34M,"6,463,535"
+262,IESC,"IES Holdings, Inc.",7.28B,366.88,3.25B,17.84%,264.63M,Industrials,Engineering & Construction,95.59M,185.34M,102478
+263,BIRK,Birkenstock Holding plc,8.40B,45.66,2.38B,17.60%,360.45M,Consumer Discretionary,Footwear & Accessories,-1.30B,359.47M,"3,276,955"
+264,MQ,"Marqeta, Inc.",2.60B,5.79,553.22M,17.47%,-64.67M,Technology,Software - Infrastructure,814.85M,52.74M,"2,195,802"
+265,GMED,"Globus Medical, Inc.",7.81B,57.84,2.63B,17.44%,356.65M,Healthcare,Medical Devices,108.04M,527.43M,869085
+266,ESTC,Elastic N.V.,9.20B,86.54,1.55B,17.43%,-83.49M,Technology,Software - Application,900.17M,314.00M,"1,550,750"
+267,NMRK,"Newmark Group, Inc.",4.55B,18.87,2.98B,17.28%,75.26M,Real Estate,Real Estate Services,-2.56B,-268.96M,"1,090,905"
+268,LTH,"Life Time Group Holdings, Inc.",6.17B,28.03,2.82B,17.25%,226.76M,Consumer Discretionary,Leisure,-3.91B,105.93M,"3,280,363"
+269,RNST,Renasant Corporation,3.56B,37.5,735.58M,17.23%,159.74M,Financials,Banks - Regional,420.71M,120.44M,372843
+270,WAY,Waystar Holding Corp.,6.66B,38.25,1.01B,17.15%,85.95M,Healthcare,Health Information Services,-914.93M,278.56M,"3,861,583"
+271,INTA,"Intapp, Inc.",3.66B,44.59,504.12M,17.10%,-18.22M,Technology,Software - Application,290.52M,121.86M,660351
+272,OPCH,"Option Care Health, Inc.",4.47B,27.56,5.37B,17.07%,211.25M,Healthcare,Medical Care Facilities,-1.02B,241.17M,"1,976,947"
+273,TGLS,Tecnoglass Inc.,3.29B,70.04,955.73M,16.89%,182.82M,Materials,Building Materials,13.14M,55.03M,573580
+274,SKY,"Champion Homes, Inc.",4.41B,77.97,2.56B,16.87%,217.31M,Consumer Discretionary,Residential Construction,477.54M,182.82M,"1,156,650"
+275,BUSE,First Busey Corporation,2.17B,24.33,498.53M,16.77%,77.37M,Financials,Banks - Regional,274.38M,162.25M,483288
+276,BOOT,"Boot Barn Holdings, Inc.",5.49B,179.55,1.99B,16.70%,195.44M,Consumer Discretionary,Apparel Retail,-501.83M,27.39M,394860
+277,FSV,FirstService Corporation,9.31B,202.67,5.43B,16.68%,141.91M,Real Estate,Real Estate Services,-1.35B,246.40M,"94,167"
+278,CIGI,Colliers International Group Inc.,8.46B,165.65,5.17B,16.63%,112.09M,Real Estate,Real Estate Services,-2.08B,215.71M,"77,198"
+279,CVCO,"Cavco Industries, Inc.",4.43B,559.91,2.09B,16.60%,188.25M,Consumer Discretionary,Residential Construction,324.63M,161.04M,339108
+280,RITM,Rithm Capital Corp.,6.40B,12.07,3.67B,16.60%,680.67M,Real Estate,REIT - Mortgage,-30.16B,-,"11,847,203"
+281,DV,"DoubleVerify Holdings, Inc.",2.12B,12.93,714.26M,16.54%,52.72M,Technology,Software - Application,113.16M,149.88M,"3,782,335"
+282,ZK,ZEEKR Intelligent Technology Holding Limited,7.65B,29.88,10.60B,16.47%,-1.42B,Consumer Discretionary,Auto Manufacturers,-1.43B,-,530165
+283,FFIN,"First Financial Bankshares, Inc.",4.98B,35.03,578.40M,16.40%,245.63M,Financials,Banks - Regional,227.80M,290.77M,472861
+284,ENSG,"The Ensign Group, Inc.",9.41B,164.34,4.61B,16.31%,322.80M,Healthcare,Medical Care Facilities,-1.62B,137.54M,300915
+285,BRBR,"BellRing Brands, Inc.",4.63B,36.75,2.22B,16.27%,228.30M,Consumer Staples,Packaged Foods,-969.10M,126.70M,"2,613,509"
+286,MTDR,Matador Resources Company,5.97B,47.98,3.50B,16.16%,853.13M,Energy,Oil & Gas Exploration & Production,-3.37B,441.06M,"2,027,026"
+287,SARO,"StandardAero, Inc.",9.13B,27.31,5.62B,16.09%,133.04M,Industrials,Aerospace & Defense,-2.47B,-31.72M,"1,310,366"
+288,JHG,Janus Henderson Group plc,6.93B,44.4,2.59B,16.06%,409.70M,Financials,Asset Management,1.96B,603.50M,989894
+289,IONS,"Ionis Pharmaceuticals, Inc.",9.77B,61.32,944.05M,16.05%,-268.22M,Healthcare,Biotechnology,308.97M,-290.00M,"1,787,600"
+290,OGE,OGE Energy Corp.,8.79B,43.64,3.22B,16.01%,490.80M,Utilities,Utilities - Regulated Electric,-5.90B,-232.70M,999759
+291,PRDO,Perdoceo Education Corporation,2.28B,35.13,768.84M,15.99%,154.44M,Consumer Staples,Education & Training Services,513.45M,205.39M,496301
+292,AWI,"Armstrong World Industries, Inc.",8.44B,195.05,1.56B,15.59%,296.00M,Industrials,Building Products & Equipment,-484.60M,218.50M,272277
+293,MOH,"Molina Healthcare, Inc.",9.56B,176.45,41.70B,15.57%,1.13B,Healthcare,Healthcare Plans,936.00M,427.00M,861621
+294,GCMG,GCM Grosvenor Inc.,2.52B,12.95,533.10M,15.56%,27.67M,Financials,Asset Management,-358.92M,172.08M,487182
+295,ONTO,Onto Innovation Inc.,5.91B,120.58,1.04B,15.51%,199.87M,Technology,Semiconductor Equipment & Materials,881.53M,238.49M,"2,451,121"
+296,HQY,"HealthEquity, Inc.",7.89B,91.54,1.27B,15.45%,145.84M,Healthcare,Health Information Services,-750.56M,365.42M,798179
+297,CENX,Century Aluminum Company,2.43B,26.05,2.43B,15.38%,111.40M,Materials,Aluminum,-448.10M,-21.80M,"1,161,625"
+298,EXLS,"ExlService Holdings, Inc.",6.84B,42.33,1.97B,15.15%,236.32M,Technology,Information Technology Services,10.31M,277.81M,"1,550,578"
+299,PRIM,Primoris Services Corporation,6.51B,120.44,6.93B,15.08%,240.96M,Industrials,Engineering & Construction,-681.23M,499.71M,918357
+300,WD,"Walker & Dunlop, Inc.",2.89B,84.89,1.11B,15.06%,107.84M,Financials,Mortgage Finance,-1.75B,-202.85M,187426
+301,VERX,"Vertex, Inc.",4.07B,25.52,710.51M,15.00%,-50.41M,Technology,Software - Application,-67.51M,64.41M,"2,118,860"
+302,MCY,Mercury General Corporation,4.30B,77.64,5.77B,14.93%,390.07M,Financials,Insurance - Property & Casualty,532.08M,817.53M,213680
+303,GSAT,"Globalstar, Inc.",4.06B,32.09,260.66M,14.85%,-49.01M,Communication Services,Telecom Services,-234.69M,134.10M,"1,091,209"
+304,BXSL,Blackstone Secured Lending Fund,6.34B,27.54,1.40B,14.70%,619.01M,Financials,Asset Management,-6.82B,-,"2,542,440"
+305,CWEN,"Clearway Energy, Inc.",3.32B,28.07,1.43B,14.65%,76.00M,Utilities,Utilities - Renewable,-9.10B,562.00M,910206
+306,PAGS,PagSeguro Digital Ltd.,3.13B,10.74,3.54B,14.53%,402.30M,Technology,Software - Infrastructure,-370.48M,207.24M,"10,988,471"
+307,NBTB,NBT Bancorp Inc.,2.21B,42.27,591.28M,14.42%,133.36M,Financials,Banks - Regional,130.38M,175.82M,152358
+308,ACAD,ACADIA Pharmaceuticals Inc.,4.04B,23.96,1.02B,14.41%,222.16M,Healthcare,Biotechnology,705.70M,187.09M,"1,994,208"
+309,AI,"C3.ai, Inc.",2.41B,17.5,372.10M,14.34%,-342.64M,Technology,Software - Infrastructure,649.33M,-85.86M,"9,293,360"
+310,POWL,"Powell Industries, Inc.",3.60B,298.23,1.08B,14.32%,175.38M,Industrials,Electrical Equipment & Parts,431.82M,81.04M,315977
+311,VRNS,"Varonis Systems, Inc.",6.40B,57.16,595.17M,14.29%,-102.93M,Technology,Software - Infrastructure,417.99M,124.81M,"2,346,229"
+312,TTMI,"TTM Technologies, Inc.",5.19B,50.27,2.65B,14.24%,93.19M,Technology,Electronic Components,-578.54M,17.64M,"1,947,316"
+313,SMPL,The Simply Good Foods Company,2.71B,27,1.46B,14.23%,145.26M,Consumer Staples,Packaged Foods,-206.73M,175.62M,"1,905,544"
+314,ORI,Old Republic International Corporation,9.54B,39.2,8.67B,14.20%,893.60M,Financials,Insurance - Property & Casualty,-1.41B,-,"1,270,797"
+315,EVCM,EverCommerce Inc.,2.12B,11.72,710.68M,14.16%,-20.95M,Technology,Software - Infrastructure,-394.53M,132.19M,184343
+316,LMAT,"LeMaitre Vascular, Inc.",2.09B,92.45,234.64M,14.11%,47.12M,Healthcare,Medical Instruments & Supplies,133.60M,52.32M,148665
+317,WRBY,Warby Parker Inc.,3.31B,27.14,821.35M,14.09%,-9.23M,Healthcare,Medical Instruments & Supplies,58.01M,52.37M,"1,645,023"
+318,TBC,"The Bancorp, Inc.",4.34B,82.43,584.58M,14.08%,209.70M,Financials,Banks - Regional,-661.16M,231.25M,272990
