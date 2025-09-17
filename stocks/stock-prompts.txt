@@ -1,0 +1,32 @@
+Analyze the stock with ticker "{TICKER}" and provide a comprehensive financial analysis. Return the response as a JSON object with the following structure:
+
+{
+  "company_name": "Company Name",
+  "ticker": "{TICKER}",
+  "PE_TTM": null,
+   "last_quarter_to_prev_quarter_revenue_growth": 0,
+  "last_quarter_to_prev_quarter_FCF_growth": 0,
+  "current_price_usd": 0,
+  "52_week_high_usd": 0,
+  "price_to_52_week_high": 0,
+  "analyst_price_targets": {
+    "consensus": 0,
+    "low": 0,
+    "high": 0,
+    "median": 0
+  },
+  "revenue_growth": {
+    "ttm": 0,
+    "quarterly": 0
+  },
+  "profitability": {
+    "net_income_margin": 0,
+    "gross_margin": 0
+  },
+  "current_decision": "monitor/disqualify",
+  "disqualify_reason": "reason if disqualified",
+  "next_action": "recommended next action"
+}
+
+Use real financial data and 
+provide your investment recommendation. Accurately double-check the "last_quarter_to_prev_quarter_revenue_growth": and "last_quarter_to_prev_quarter_FCF_growth" and data its critical 
