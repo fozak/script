@@ -9,7 +9,8 @@
  "engine": "",
  "field_order": [
   "name",
-  "docsubtype",
+  "from_node_doctype",
+  "from_node_name",
   "share_name",
   "node_data",
   "node_links",
@@ -29,11 +30,20 @@
    "search_index": 1
   },
   {
-   "fieldname": "docsubtype",
+   "fieldname": "from_node_doctype",
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Document SubType",
    "options": "DocType",
+   "reqd": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "from_node_name",
+   "fieldtype": "Dynamic Link",
+   "in_list_view": 1,
+   "label": "Document Name",
+   "options": "from_node_doctype",
    "reqd": 1,
    "search_index": 1
   },
