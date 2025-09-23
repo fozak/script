@@ -1,0 +1,11 @@
+<script type="module">
+  import init from "https://cdn.jsdelivr.net/npm/sqlite-vec-wasm-demo@latest/sqlite3.mjs";
+
+  async function main() {
+    const sqlite3 = await init();
+    window.db = new sqlite3.oo1.DB(":memory:");  // global db
+    console.log('DB ready');
+  }
+
+  main();
+</script>

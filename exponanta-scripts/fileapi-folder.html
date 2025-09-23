@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Persistent Folder Access</title>
+</head>
+<body>
+<h1>Persistent Folder Access Demo</h1>
+<button id="pick-folder">Pick Folder</button>
+<ul id="file-list"></ul>
+
+<script>
+const dbName = "folderHandlesDB";
+const storeName = "handles";
+
+// ----- IndexedDB helpers -----
+function openDB() {
+    return new Promise((resolve, reject) => {
+        const request = indexedDB.open(dbName, 1);
+        request.onupgradeneeded = (event) => {
+            event.target.result.createObjectStore(storeName);
+        };
+        request.onsuccess = () => resolve(request.result);
+        request.onerror = () => reject(request.error);
+    });
+}
+
+async function saveHandle(handle) {
+    const db = await openDB();
+    const tx = db.transaction(storeName, 'readwrite');
+    tx.objectStore(storeName).put(handle, 'folderHandle');
+    await tx.complete;
+}
+
+async function getHandle() {
+    const db = await openDB();
+    return new Promise((resolve, reject) => {
+        const tx = db.transaction(storeName, 'readonly');
+        const request = tx.objectStore(storeName).get('folderHandle');
+        request.onsuccess = () => resolve(request.result);
+        request.onerror = () => reject(request.error);
+    });
+}
+
+// ----- Folder access logic -----
+async function listFiles(handle) {
+    const fileList = document.getElementById('file-list');
+    fileList.innerHTML = "";
+    for await (const [name, entry] of handle.entries()) {
+        const li = document.createElement('li');
+        li.textContent = name + (entry.kind === 'directory' ? " (folder)" : "");
+        fileList.appendChild(li);
+    }
+}
+
+async function requestFolderAccess() {
+    // Check if we have a stored handle
+    let handle = await getHandle();
+    if (handle) {
+        const permission = await handle.queryPermission({ mode: 'readwrite' });
+        if (permission === 'granted' || 
+            await handle.requestPermission({ mode: 'readwrite' }) === 'granted') {
+            await listFiles(handle);
+            return;
+        }
+    }
+
+    // If no handle or permission denied, prompt user
+    handle = await window.showDirectoryPicker();
+    await saveHandle(handle);
+    await listFiles(handle);
+}
+
+// ----- Event listener -----
+document.getElementById('pick-folder').addEventListener('click', requestFolderAccess);
+
+// ----- Auto-load on page load -----
+window.addEventListener('DOMContentLoaded', requestFolderAccess);
+</script>
+</body>
+</html>

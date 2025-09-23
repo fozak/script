@@ -9,11 +9,10 @@
  "engine": "",
  "field_order": [
   "name",
-  "node_doctype",
-  "node_name",
-  "share_name",
+  "node_ref_doctype",
+  "node_ref_docname",
   "node_data",
-  "node_links",
+  "node_parent",
   "read",
   "write",
   "share",
@@ -30,7 +29,7 @@
    "search_index": 1
   },
   {
-   "fieldname": "node_doctype",
+   "fieldname": "node_ref_doctype",
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Document SubType",
@@ -39,11 +38,11 @@
    "search_index": 1
   },
   {
-   "fieldname": "node_name",
+   "fieldname": "node_ref_docname",
    "fieldtype": "Dynamic Link",
    "in_list_view": 1,
    "label": "Document Name",
-   "options": "node_doctype",
+   "options": "node_ref_doctype",
    "reqd": 1,
    "search_index": 1
   },
@@ -56,10 +55,10 @@
    "search_index": 1
   },
   {
-   "fieldname": "node_links",
+   "fieldname": "node_parent",
    "fieldtype": "Table",
    "in_list_view": 0,
-   "label": "Node Links",
+   "label": "Node Children",
    "options": "Node",
    "reqd": 1,
    "search_index": 1
