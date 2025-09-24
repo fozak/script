@@ -2,13 +2,14 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Office ZIP Indexer</title>
+<title>Office File Indexer</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 </head>
 <body>
 <h1>Office File Indexer</h1>
 <input type="file" id="folderInput" webkitdirectory multiple />
 <div id="status"></div>
+<div id="log"></div>
 
 <script>
 const dbName = "OfficeIndexDB";
@@ -40,32 +41,42 @@ function saveDoc(db, filename, content) {
     });
 }
 
-// Extract main text from DOCX/XLSX/PPTX
+// Extract main text from Office file
 async function extractOfficeText(file, arrayBuffer) {
-    const zip = await JSZip.loadAsync(arrayBuffer);
-    let content = "";
+    try {
+        const zip = await JSZip.loadAsync(arrayBuffer);
+        let content = "";
 
-    if (file.name.endsWith(".docx")) {
-        const docXml = zip.file("word/document.xml");
-        if (docXml) {
-            const xmlText = await docXml.async("text");
-            // Remove XML tags to get plain text
-            content = xmlText.replace(/<[^>]+>/g, " ");
+        if (file.name.endsWith(".docx")) {
+            const docXml = zip.file("word/document.xml");
+            if (docXml) {
+                const xmlText = await docXml.async("text");
+                content = xmlText.replace(/<[^>]+>/g, " ");
+            }
+        } else if (file.name.endsWith(".xlsx")) {
+            const sheets = Object.keys(zip.files).filter(f => f.startsWith("xl/worksheets/sheet"));
+            for (let sheet of sheets) {
+                const sheetFile = zip.file(sheet);
+                if (sheetFile) {
+                    const sheetText = await sheetFile.async("text");
+                    content += sheetText.replace(/<[^>]+>/g, " ") + " ";
+                }
+            }
+        } else if (file.name.endsWith(".pptx")) {
+            const slides = Object.keys(zip.files).filter(f => f.startsWith("ppt/slides/slide"));
+            for (let slide of slides) {
+                const slideFile = zip.file(slide);
+                if (slideFile) {
+                    const slideText = await slideFile.async("text");
+                    content += slideText.replace(/<[^>]+>/g, " ") + " ";
+                }
+            }
         }
-    } else if (file.name.endsWith(".xlsx")) {
-        const sheets = Object.keys(zip.files).filter(f => f.startsWith("xl/worksheets/sheet"));
-        for (let sheet of sheets) {
-            const sheetText = await zip.file(sheet)?.async("text");
-            if (sheetText) content += sheetText.replace(/<[^>]+>/g, " ") + " ";
-        }
-    } else if (file.name.endsWith(".pptx")) {
-        const slides = Object.keys(zip.files).filter(f => f.startsWith("ppt/slides/slide"));
-        for (let slide of slides) {
-            const slideText = await zip.file(slide)?.async("text");
-            if (slideText) content += slideText.replace(/<[^>]+>/g, " ") + " ";
-        }
+
+        return content.trim();
+    } catch (err) {
+        throw new Error(`Failed to parse ZIP: ${err.message}`);
     }
-    return content.trim();
 }
 
 // Process files
@@ -73,19 +84,36 @@ document.getElementById("folderInput").addEventListener("change", async (event) 
     const files = event.target.files;
     const db = await openDB();
     const status = document.getElementById("status");
+    const log = document.getElementById("log");
+    log.innerHTML = "";
+
+    let indexedCount = 0;
 
     for (let i = 0; i < files.length; i++) {
         const file = files[i];
-        if (!/\.(docx|xlsx|pptx)$/i.test(file.name)) continue;
 
-        const arrayBuffer = await file.arrayBuffer();
-        const content = await extractOfficeText(file, arrayBuffer);
-        await saveDoc(db, file.webkitRelativePath || file.name, content);
-        status.innerText = `Indexed ${i + 1}/${files.length}: ${file.name}`;
+        // Skip non-Office files
+        if (!/\.(docx|xlsx|pptx)$/i.test(file.name)) continue;
+        if (file.size === 0) {
+            log.innerHTML += `<p>Skipping empty file: ${file.webkitRelativePath || file.name}</p>`;
+            continue;
+        }
+
+        try {
+            const arrayBuffer = await file.arrayBuffer();
+            const content = await extractOfficeText(file, arrayBuffer);
+            await saveDoc(db, file.webkitRelativePath || file.name, content);
+            indexedCount++;
+            status.innerText = `Indexed ${indexedCount}/${files.length}: ${file.name}`;
+        } catch (err) {
+            log.innerHTML += `<p>Error processing ${file.webkitRelativePath || file.name}: ${err.message}</p>`;
+            console.warn("File skipped due to error:", file.name, err);
+        }
     }
 
-    status.innerText = `Indexing complete. Total files indexed: ${files.length}`;
+    status.innerText = `Indexing complete. Total files indexed: ${indexedCount}`;
 });
 </script>
 </body>
 </html>
+
