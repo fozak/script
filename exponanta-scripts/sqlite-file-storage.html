@@ -1,270 +1,134 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
-<title>Local DB File Storage Demo</title>
+<title>SQLite File Storage</title>
 <style>
-  body { 
-    font-family: Arial, sans-serif; 
-    padding: 20px; 
-    max-width: 800px; 
-    margin: 0 auto;
-  }
-  .controls {
-    margin-bottom: 20px;
-    padding: 20px;
-    border: 2px dashed #ccc;
-    border-radius: 8px;
-  }
-  button {
-    padding: 10px 20px;
-    margin: 5px;
-    background: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  button:hover { background: #0056b3; }
-  button:disabled { 
-    background: #ccc; 
-    cursor: not-allowed; 
-  }
-  #fileInput {
-    margin: 10px 0;
-  }
-  #status {
-    padding: 10px;
-    margin: 10px 0;
-    border-radius: 4px;
-    font-weight: bold;
-  }
-  .success { background: #d4edda; color: #155724; }
-  .error { background: #f8d7da; color: #721c24; }
-  .info { background: #d1ecf1; color: #0c5460; }
-  #fileList { 
-    margin-top: 20px; 
-  }
-  .fileItem { 
-    padding: 10px;
-    margin: 5px 0;
-    background: #f8f9fa;
-    border: 1px solid #dee2e6;
-    border-radius: 4px;
-    cursor: pointer; 
-    transition: background 0.2s;
-  }
-  .fileItem:hover {
-    background: #e9ecef;
-  }
-  iframe { 
-    width: 100%; 
-    height: 400px; 
-    margin-top: 20px; 
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
+body { font-family: Arial, sans-serif; padding: 20px; }
+button { padding: 8px 16px; margin: 5px; }
+.file-item { padding: 5px; cursor: pointer; color: blue; border: 1px solid #ddd; margin: 2px; }
+iframe { width: 100%; height: 300px; border: 1px solid #ccc; margin-top: 10px; }
+#status { padding: 10px; background: #f0f0f0; margin: 10px 0; }
 </style>
 </head>
 <body>
-<h1>Local File Storage with SQLite</h1>
 
-<div class="controls">
-  <button id="pickDb">📁 Pick Database File</button>
-  <input type="file" id="fileInput" multiple accept=".html,.txt,.json,.css,.js" disabled />
-  <div id="status" class="info">Click "Pick Database File" to get started</div>
-</div>
+<h2>SQLite File Storage</h2>
+<input type="file" id="dbInput" accept=".sqlite,.db" title="Select SQLite DB file">
+<input type="file" id="fileInput" multiple disabled title="Add files to DB">
+<button id="saveDb" disabled>Save DB</button>
 
+<div id="status">Select a SQLite DB file first</div>
 <div id="fileList"></div>
-<iframe id="preview" style="display:none;"></iframe>
+<iframe id="preview"></iframe>
 
-<script type="module">
-// Simple in-memory storage (works without external dependencies)
-let files = new Map(); // id -> {filename, content, type}
-let nextId = 1;
-let dbName = '';
+<script src="https://cdn.jsdelivr.net/npm/sql.js@1.8.0/dist/sql-wasm.js"></script>
+<script>
+let db;
+let dbFileName = '';
 
-function showStatus(message, type = 'info') {
-  const status = document.getElementById('status');
-  status.textContent = message;
-  status.className = type;
-}
-
-// Pick or create DB file (simulated)
-document.getElementById('pickDb').addEventListener('click', async () => {
+// Load or create SQLite DB
+document.getElementById('dbInput').onchange = async (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+  
+  dbFileName = file.name;
+  const arrayBuffer = await file.arrayBuffer();
+  
+  const SQL = await initSqlJs({
+    locateFile: file => `https://cdn.jsdelivr.net/npm/sql.js@1.8.0/dist/${file}`
+  });
+  
   try {
-    // For demo purposes, we'll use the File System Access API if available
-    if ('showSaveFilePicker' in window) {
-      const fileHandle = await window.showSaveFilePicker({
-        suggestedName: 'myfiles.db',
-        types: [{
-          description: 'Database files',
-          accept: { 'application/octet-stream': ['.db'] }
-        }]
-      });
-      dbName = fileHandle.name;
-    } else {
-      // Fallback for browsers without File System Access API
-      dbName = 'local_storage.db';
+    // Try to load existing DB
+    db = new SQL.Database(new Uint8Array(arrayBuffer));
+    
+    // Check if files table exists, create if not
+    const tables = db.exec("SELECT name FROM sqlite_master WHERE type='table' AND name='files'");
+    if (tables.length === 0) {
+      db.run("CREATE TABLE files (id INTEGER PRIMARY KEY, name TEXT, content BLOB)");
     }
-    
-    document.getElementById('fileInput').disabled = false;
-    showStatus(`Database "${dbName}" ready for file uploads`, 'success');
-    
-    // Try to load existing data from localStorage
-    loadFromLocalStorage();
-    updateFileList();
-    
   } catch (error) {
-    if (error.name !== 'AbortError') {
-      showStatus('Error setting up database: ' + error.message, 'error');
-    }
+    // If loading fails, create new DB
+    db = new SQL.Database();
+    db.run("CREATE TABLE files (id INTEGER PRIMARY KEY, name TEXT, content BLOB)");
   }
-});
+  
+  document.getElementById('fileInput').disabled = false;
+  document.getElementById('saveDb').disabled = false;
+  document.getElementById('status').textContent = `DB loaded: ${dbFileName}`;
+  
+  updateFileList();
+};
 
-// Handle file uploads
-document.getElementById('fileInput').addEventListener('change', async (e) => {
-  if (!dbName) {
-    showStatus('Please pick a database file first', 'error');
-    return;
-  }
-
-  let successCount = 0;
+// Add files to DB
+document.getElementById('fileInput').onchange = async (e) => {
+  if (!db) return alert('Select DB file first');
   
   for (const file of e.target.files) {
-    try {
-      const content = await file.arrayBuffer();
-      const id = nextId++;
-      
-      files.set(id, {
-        filename: file.name,
-        content: new Uint8Array(content),
-        type: file.type || 'application/octet-stream',
-        size: file.size
-      });
-      
-      successCount++;
-      console.log(`Added: ${file.name} (${file.size} bytes)`);
-      
-    } catch (error) {
-      console.error(`Error adding ${file.name}:`, error);
-    }
-  }
-
-  if (successCount > 0) {
-    saveToLocalStorage();
-    updateFileList();
-    showStatus(`Successfully added ${successCount} file(s)`, 'success');
+    const arrayBuffer = await file.arrayBuffer();
+    const content = new Uint8Array(arrayBuffer);
+    
+    db.run("INSERT INTO files (name, content) VALUES (?, ?)", [file.name, content]);
+    console.log(`Added: ${file.name}`);
   }
   
-  // Clear the input
-  e.target.value = '';
-});
+  updateFileList();
+  document.getElementById('status').textContent = `Added ${e.target.files.length} files. Click Save DB to persist.`;
+};
 
-// Save to localStorage (simulating database persistence)
-function saveToLocalStorage() {
-  try {
-    const data = {
-      files: Array.from(files.entries()).map(([id, file]) => [
-        id, 
-        {
-          ...file,
-          content: Array.from(file.content) // Convert Uint8Array to regular array for JSON
-        }
-      ]),
-      nextId
-    };
-    localStorage.setItem('fileStorage', JSON.stringify(data));
-    console.log('Data saved to localStorage');
-  } catch (error) {
-    showStatus('Error saving data: ' + error.message, 'error');
-  }
-}
-
-// Load from localStorage
-function loadFromLocalStorage() {
-  try {
-    const saved = localStorage.getItem('fileStorage');
-    if (saved) {
-      const data = JSON.parse(saved);
-      files = new Map(data.files.map(([id, file]) => [
-        id,
-        {
-          ...file,
-          content: new Uint8Array(file.content) // Convert back to Uint8Array
-        }
-      ]));
-      nextId = data.nextId || 1;
-      console.log(`Loaded ${files.size} files from localStorage`);
-    }
-  } catch (error) {
-    console.error('Error loading data:', error);
-    files = new Map();
-    nextId = 1;
-  }
-}
-
-// Update file list display
+// Update file list
 function updateFileList() {
-  const fileList = document.getElementById('fileList');
+  const list = document.getElementById('fileList');
+  list.innerHTML = '';
   
-  if (files.size === 0) {
-    fileList.innerHTML = '<p style="color: #666; font-style: italic;">No files stored yet. Upload some files to get started!</p>';
-    return;
+  try {
+    const stmt = db.prepare("SELECT id, name FROM files");
+    while (stmt.step()) {
+      const row = stmt.getAsObject();
+      const div = document.createElement('div');
+      div.className = 'file-item';
+      div.textContent = row.name;
+      div.onclick = () => previewFile(row.id);
+      list.appendChild(div);
+    }
+    stmt.free();
+  } catch (e) {
+    list.innerHTML = 'No files in database';
   }
-  
-  fileList.innerHTML = '<h3>Stored Files:</h3>';
-  
-  files.forEach((file, id) => {
-    const div = document.createElement('div');
-    div.className = 'fileItem';
-    
-    const sizeKB = (file.size / 1024).toFixed(1);
-    div.innerHTML = `
-      <strong>${file.filename}</strong><br>
-      <small>Size: ${sizeKB} KB | Type: ${file.type}</small>
-    `;
-    
-    div.addEventListener('click', () => previewFile(id));
-    fileList.appendChild(div);
-  });
 }
 
 // Preview file
 function previewFile(id) {
-  const file = files.get(id);
-  if (!file) {
-    showStatus('File not found', 'error');
-    return;
-  }
-
-  try {
-    const iframe = document.getElementById('preview');
-    
-    // Create blob with appropriate MIME type
-    let mimeType = file.type;
-    if (file.filename.endsWith('.html')) mimeType = 'text/html';
-    else if (file.filename.endsWith('.txt')) mimeType = 'text/plain';
-    else if (file.filename.endsWith('.css')) mimeType = 'text/css';
-    else if (file.filename.endsWith('.js')) mimeType = 'text/javascript';
-    else if (file.filename.endsWith('.json')) mimeType = 'application/json';
-    
-    const blob = new Blob([file.content], { type: mimeType });
+  const stmt = db.prepare("SELECT name, content FROM files WHERE id = ?");
+  stmt.bind([id]);
+  
+  if (stmt.step()) {
+    const row = stmt.getAsObject();
+    const content = new Uint8Array(row.content);
+    const blob = new Blob([content], { type: 'text/html' });
     const url = URL.createObjectURL(blob);
-    
-    iframe.src = url;
-    iframe.style.display = 'block';
-    iframe.onload = () => URL.revokeObjectURL(url); // Clean up
-    
-    showStatus(`Previewing: ${file.filename}`, 'info');
-    
-  } catch (error) {
-    showStatus('Error previewing file: ' + error.message, 'error');
+    document.getElementById('preview').src = url;
   }
+  stmt.free();
 }
 
-// Initialize
-console.log('File storage demo initialized');
+// Save DB to file
+document.getElementById('saveDb').onclick = () => {
+  if (!db) return;
+  
+  const data = db.export();
+  const blob = new Blob([data], { type: 'application/octet-stream' });
+  const url = URL.createObjectURL(blob);
+  
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = dbFileName || 'files.sqlite';
+  a.click();
+  URL.revokeObjectURL(url);
+  
+  document.getElementById('status').textContent = `Database saved as ${dbFileName || 'files.sqlite'}`;
+};
 </script>
 
 </body>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Direct SQLite File Storage</title>
+<style>
+body { font-family: Arial, sans-serif; padding: 20px; }
+button { padding: 8px 16px; margin: 5px; background: #007bff; color: white; border: none; border-radius: 4px; }
+.file-item { padding: 8px; cursor: pointer; color: blue; border: 1px solid #ddd; margin: 2px; border-radius: 4px; }
+.file-item:hover { background: #f0f0f0; }
+iframe { width: 100%; height: 300px; border: 1px solid #ccc; margin-top: 10px; }
+#status { padding: 10px; background: #e9ecef; margin: 10px 0; border-radius: 4px; }
+.error { background: #f8d7da; color: #721c24; }
+.success { background: #d4edda; color: #155724; }
+</style>
+</head>
+<body>
+
+<h2>Direct SQLite File Storage (OPFS)</h2>
+<button id="initDb">Initialize Database</button>
+<input type="file" id="fileInput" multiple disabled title="Add files to database">
+<button id="exportDb" disabled>Export Database</button>
+
+<div id="status">Click Initialize Database to start</div>
+<div id="fileList"></div>
+<iframe id="preview"></iframe>
+
+<script type="module">
+import sqlite3InitModule from 'https://cdn.jsdelivr.net/npm/@sqlite.org/sqlite-wasm@3.44.2/sqlite-wasm.mjs';
+
+let db;
+let sqlite3;
+
+// Initialize SQLite with OPFS support
+document.getElementById('initDb').onclick = async () => {
+  try {
+    document.getElementById('status').textContent = 'Initializing SQLite...';
+    
+    sqlite3 = await sqlite3InitModule({
+      print: console.log,
+      printErr: console.error,
+    });
+
+    // Check for OPFS support
+    if (!sqlite3.opfs) {
+      throw new Error('OPFS not supported in this browser');
+    }
+
+    // Create or open database in OPFS
+    db = new sqlite3.oo1.OpfsDb('/files.sqlite');
+    
+    // Create files table if it doesn't exist
+    db.exec(`
+      CREATE TABLE IF NOT EXISTS files (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL,
+        content BLOB NOT NULL,
+        size INTEGER,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+      )
+    `);
+
+    document.getElementById('fileInput').disabled = false;
+    document.getElementById('exportDb').disabled = false;
+    setStatus('Database ready! Files will be stored directly to OPFS.', 'success');
+    
+    updateFileList();
+    
+  } catch (error) {
+    setStatus(`Error: ${error.message}. Try a Chromium-based browser.`, 'error');
+    console.error('Init error:', error);
+  }
+};
+
+// Add files directly to database
+document.getElementById('fileInput').onchange = async (e) => {
+  if (!db) return;
+  
+  try {
+    let count = 0;
+    for (const file of e.target.files) {
+      const arrayBuffer = await file.arrayBuffer();
+      const content = new Uint8Array(arrayBuffer);
+      
+      // Direct INSERT - writes immediately to OPFS file
+      db.exec({
+        sql: "INSERT INTO files (name, content, size) VALUES (?, ?, ?)",
+        bind: [file.name, content, file.size]
+      });
+      
+      count++;
+    }
+    
+    setStatus(`Added ${count} files directly to database.`, 'success');
+    updateFileList();
+    
+  } catch (error) {
+    setStatus(`Error adding files: ${error.message}`, 'error');
+  }
+};
+
+// Update file list from database
+function updateFileList() {
+  if (!db) return;
+  
+  const list = document.getElementById('fileList');
+  list.innerHTML = '';
+  
+  try {
+    const result = db.exec("SELECT id, name, size, created_at FROM files ORDER BY created_at DESC");
+    
+    if (result[0]?.values?.length > 0) {
+      result[0].values.forEach(([id, name, size, created]) => {
+        const div = document.createElement('div');
+        div.className = 'file-item';
+        div.innerHTML = `<strong>${name}</strong><br><small>${(size/1024).toFixed(1)} KB - ${new Date(created).toLocaleString()}</small>`;
+        div.onclick = () => previewFile(id);
+        list.appendChild(div);
+      });
+    } else {
+      list.innerHTML = '<div style="color: #666;">No files stored yet</div>';
+    }
+    
+  } catch (error) {
+    list.innerHTML = '<div style="color: red;">Error loading files</div>';
+  }
+}
+
+// Preview file
+function previewFile(id) {
+  if (!db) return;
+  
+  try {
+    const result = db.exec({
+      sql: "SELECT name, content FROM files WHERE id = ?",
+      bind: [id]
+    });
+    
+    if (result[0]?.values?.length > 0) {
+      const [name, content] = result[0].values[0];
+      const blob = new Blob([content], { 
+        type: name.endsWith('.html') ? 'text/html' : 'text/plain' 
+      });
+      const url = URL.createObjectURL(blob);
+      document.getElementById('preview').src = url;
+      
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    }
+    
+  } catch (error) {
+    setStatus(`Error previewing file: ${error.message}`, 'error');
+  }
+}
+
+// Export database file
+document.getElementById('exportDb').onclick = () => {
+  if (!db) return;
+  
+  try {
+    // Get raw database file content
+    const data = db.export();
+    const blob = new Blob([data], { type: 'application/x-sqlite3' });
+    const url = URL.createObjectURL(blob);
+    
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'files.sqlite';
+    a.click();
+    
+    URL.revokeObjectURL(url);
+    setStatus('Database exported successfully!', 'success');
+    
+  } catch (error) {
+    setStatus(`Export error: ${error.message}`, 'error');
+  }
+};
+
+function setStatus(message, type = '') {
+  const status = document.getElementById('status');
+  status.textContent = message;
+  status.className = type;
+}
+
+console.log('Direct SQLite OPFS storage ready');
+</script>
+
+</body>
+</html>
