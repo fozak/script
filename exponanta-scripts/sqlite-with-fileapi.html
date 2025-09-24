@@ -89,9 +89,12 @@ document.getElementById('dbInput').onchange = async (e) => {
   if (!file) return;
   
   try {
+    setStatus('Loading database file...');
     dbFileName = file.name;
     const arrayBuffer = await file.arrayBuffer();
     const data = new Uint8Array(arrayBuffer);
+    
+    console.log(`File size: ${data.length} bytes`);
     
     // Try to get persistent file handle if supported
     if ('showOpenFilePicker' in window) {
@@ -107,7 +110,15 @@ document.getElementById('dbInput').onchange = async (e) => {
     }
     
     const sqlite3 = await sqlite3InitModule();
-    db = new sqlite3.oo1.DB(data);
+    
+    // Create database from file data
+    try {
+      db = new sqlite3.oo1.DB(data);
+      console.log('Database loaded from file');
+    } catch (e) {
+      console.log('Invalid SQLite file, creating new database');
+      db = new sqlite3.oo1.DB();
+    }
     
     // Ensure files table exists
     try {
@@ -118,8 +129,9 @@ document.getElementById('dbInput').onchange = async (e) => {
         size INTEGER,
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP
       )`);
+      console.log('Files table ready');
     } catch (e) {
-      console.log('Table already exists or created');
+      console.log('Table creation failed:', e.message);
     }
     
     document.getElementById('fileInput').disabled = false;
@@ -128,6 +140,7 @@ document.getElementById('dbInput').onchange = async (e) => {
     updateFileList();
     
   } catch (error) {
+    console.error('Full error:', error);
     setStatus(`Error loading DB: ${error.message}`, 'error');
   }
 };
