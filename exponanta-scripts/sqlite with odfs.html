@@ -2,77 +2,161 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Direct SQLite File Storage</title>
+<title>Local SQLite File Storage</title>
 <style>
-body { font-family: Arial, sans-serif; padding: 20px; }
-button { padding: 8px 16px; margin: 5px; background: #007bff; color: white; border: none; border-radius: 4px; }
-.file-item { padding: 8px; cursor: pointer; color: blue; border: 1px solid #ddd; margin: 2px; border-radius: 4px; }
+body { 
+  font-family: monospace; 
+  padding: 20px; 
+  display: flex; 
+  flex-direction: column;
+}
+button { 
+  padding: 8px 16px; 
+  margin: 5px; 
+  font-family: monospace;
+}
+.file-item { 
+  padding: 5px; 
+  cursor: pointer; 
+  color: blue; 
+  border: 1px solid #ddd; 
+  margin: 2px;
+}
 .file-item:hover { background: #f0f0f0; }
-iframe { width: 100%; height: 300px; border: 1px solid #ccc; margin-top: 10px; }
-#status { padding: 10px; background: #e9ecef; margin: 10px 0; border-radius: 4px; }
-.error { background: #f8d7da; color: #721c24; }
+iframe { 
+  width: 100%; 
+  height: 300px; 
+  border: 1px solid #ccc; 
+  margin-top: 10px; 
+}
+#status { 
+  padding: 10px; 
+  background: #f0f0f0; 
+  margin: 10px 0; 
+  white-space: break-spaces;
+}
+.error { background: yellow; color: red; }
 .success { background: #d4edda; color: #155724; }
 </style>
 </head>
 <body>
 
-<h2>Direct SQLite File Storage (OPFS)</h2>
-<button id="initDb">Initialize Database</button>
-<input type="file" id="fileInput" multiple disabled title="Add files to database">
-<button id="exportDb" disabled>Export Database</button>
+<h1>Local SQLite File Storage</h1>
 
-<div id="status">Click Initialize Database to start</div>
+<div>
+  <input type="file" id="dbInput" accept=".sqlite,.db" title="Pick SQLite DB file">
+  <button id="newDb">New DB</button>
+</div>
+
+<div>
+  <input type="file" id="fileInput" multiple disabled title="Add files to DB">
+  <button id="saveDb" disabled>Save DB</button>
+</div>
+
+<div id="status">Select or create a database first</div>
 <div id="fileList"></div>
 <iframe id="preview"></iframe>
 
-<script type="module">
-import sqlite3InitModule from 'https://cdn.jsdelivr.net/npm/@sqlite.org/sqlite-wasm@3.44.2/sqlite-wasm.mjs';
-
+<script src="jswasm/sqlite3.js"></script>
+<script>
 let db;
-let sqlite3;
+let dbFileName = 'files.sqlite';
+let fileHandle;
 
-// Initialize SQLite with OPFS support
-document.getElementById('initDb').onclick = async () => {
+// Initialize SQLite
+sqlite3InitModule().then(sqlite3 => {
+  console.log('SQLite3 initialized:', sqlite3.version.libVersion);
+  
+  // Try to use OPFS if available
+  if (sqlite3.opfs) {
+    console.log('OPFS available');
+  }
+  
+  // Check for File System Access API
+  if ('showOpenFilePicker' in window) {
+    console.log('File System Access API available');
+  }
+  
+  setStatus('SQLite ready. Pick existing DB or create new one.');
+  
+}).catch(err => {
+  setStatus('Failed to initialize SQLite: ' + err.message, 'error');
+});
+
+// Pick existing SQLite file
+document.getElementById('dbInput').onchange = async (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+  
   try {
-    document.getElementById('status').textContent = 'Initializing SQLite...';
+    dbFileName = file.name;
+    const arrayBuffer = await file.arrayBuffer();
+    const data = new Uint8Array(arrayBuffer);
     
-    sqlite3 = await sqlite3InitModule({
-      print: console.log,
-      printErr: console.error,
-    });
-
-    // Check for OPFS support
-    if (!sqlite3.opfs) {
-      throw new Error('OPFS not supported in this browser');
+    // Try to get persistent file handle if supported
+    if ('showOpenFilePicker' in window) {
+      try {
+        const [fileHandle_] = await window.showOpenFilePicker({
+          types: [{ accept: { 'application/x-sqlite3': ['.sqlite', '.db'] } }]
+        });
+        fileHandle = fileHandle_;
+        console.log('Got persistent file handle');
+      } catch (e) {
+        console.log('File handle not available, using traditional method');
+      }
     }
-
-    // Create or open database in OPFS
-    db = new sqlite3.oo1.OpfsDb('/files.sqlite');
     
-    // Create files table if it doesn't exist
-    db.exec(`
-      CREATE TABLE IF NOT EXISTS files (
+    const sqlite3 = await sqlite3InitModule();
+    db = new sqlite3.oo1.DB(data);
+    
+    // Ensure files table exists
+    try {
+      db.exec(`CREATE TABLE IF NOT EXISTS files (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT NOT NULL,
         content BLOB NOT NULL,
         size INTEGER,
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-      )
-    `);
-
-    document.getElementById('fileInput').disabled = false;
-    document.getElementById('exportDb').disabled = false;
-    setStatus('Database ready! Files will be stored directly to OPFS.', 'success');
+      )`);
+    } catch (e) {
+      console.log('Table already exists or created');
+    }
     
+    document.getElementById('fileInput').disabled = false;
+    document.getElementById('saveDb').disabled = false;
+    setStatus(`Loaded: ${dbFileName}`, 'success');
     updateFileList();
     
   } catch (error) {
-    setStatus(`Error: ${error.message}. Try a Chromium-based browser.`, 'error');
-    console.error('Init error:', error);
+    setStatus(`Error loading DB: ${error.message}`, 'error');
   }
 };
 
-// Add files directly to database
+// Create new database
+document.getElementById('newDb').onclick = async () => {
+  try {
+    const sqlite3 = await sqlite3InitModule();
+    db = new sqlite3.oo1.DB();
+    
+    db.exec(`CREATE TABLE files (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      name TEXT NOT NULL,
+      content BLOB NOT NULL,
+      size INTEGER,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    )`);
+    
+    document.getElementById('fileInput').disabled = false;
+    document.getElementById('saveDb').disabled = false;
+    setStatus('New database created', 'success');
+    updateFileList();
+    
+  } catch (error) {
+    setStatus(`Error creating DB: ${error.message}`, 'error');
+  }
+};
+
+// Add files to database
 document.getElementById('fileInput').onchange = async (e) => {
   if (!db) return;
   
@@ -82,7 +166,6 @@ document.getElementById('fileInput').onchange = async (e) => {
       const arrayBuffer = await file.arrayBuffer();
       const content = new Uint8Array(arrayBuffer);
       
-      // Direct INSERT - writes immediately to OPFS file
       db.exec({
         sql: "INSERT INTO files (name, content, size) VALUES (?, ?, ?)",
         bind: [file.name, content, file.size]
@@ -91,15 +174,20 @@ document.getElementById('fileInput').onchange = async (e) => {
       count++;
     }
     
-    setStatus(`Added ${count} files directly to database.`, 'success');
+    setStatus(`Added ${count} files to database`, 'success');
     updateFileList();
+    
+    // Auto-save if we have a file handle
+    if (fileHandle) {
+      await saveToFileHandle();
+    }
     
   } catch (error) {
     setStatus(`Error adding files: ${error.message}`, 'error');
   }
 };
 
-// Update file list from database
+// Update file list
 function updateFileList() {
   if (!db) return;
   
@@ -107,22 +195,23 @@ function updateFileList() {
   list.innerHTML = '';
   
   try {
-    const result = db.exec("SELECT id, name, size, created_at FROM files ORDER BY created_at DESC");
+    const result = db.exec("SELECT id, name, size, created_at FROM files ORDER BY id DESC");
     
-    if (result[0]?.values?.length > 0) {
+    if (result.length > 0 && result[0].values.length > 0) {
       result[0].values.forEach(([id, name, size, created]) => {
         const div = document.createElement('div');
         div.className = 'file-item';
-        div.innerHTML = `<strong>${name}</strong><br><small>${(size/1024).toFixed(1)} KB - ${new Date(created).toLocaleString()}</small>`;
+        div.innerHTML = `${name} (${(size/1024).toFixed(1)} KB)`;
         div.onclick = () => previewFile(id);
         list.appendChild(div);
       });
     } else {
-      list.innerHTML = '<div style="color: #666;">No files stored yet</div>';
+      list.innerHTML = 'No files in database';
     }
     
   } catch (error) {
-    list.innerHTML = '<div style="color: red;">Error loading files</div>';
+    list.innerHTML = 'Error loading file list';
+    console.error(error);
   }
 }
 
@@ -136,7 +225,7 @@ function previewFile(id) {
       bind: [id]
     });
     
-    if (result[0]?.values?.length > 0) {
+    if (result.length > 0 && result[0].values.length > 0) {
       const [name, content] = result[0].values[0];
       const blob = new Blob([content], { 
         type: name.endsWith('.html') ? 'text/html' : 'text/plain' 
@@ -145,43 +234,60 @@ function previewFile(id) {
       document.getElementById('preview').src = url;
       
       setTimeout(() => URL.revokeObjectURL(url), 1000);
+      setStatus(`Previewing: ${name}`);
     }
     
   } catch (error) {
-    setStatus(`Error previewing file: ${error.message}`, 'error');
+    setStatus(`Preview error: ${error.message}`, 'error');
   }
 }
 
-// Export database file
-document.getElementById('exportDb').onclick = () => {
+// Save database
+document.getElementById('saveDb').onclick = async () => {
   if (!db) return;
   
-  try {
-    // Get raw database file content
-    const data = db.export();
-    const blob = new Blob([data], { type: 'application/x-sqlite3' });
-    const url = URL.createObjectURL(blob);
-    
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'files.sqlite';
-    a.click();
-    
-    URL.revokeObjectURL(url);
-    setStatus('Database exported successfully!', 'success');
-    
-  } catch (error) {
-    setStatus(`Export error: ${error.message}`, 'error');
+  if (fileHandle) {
+    await saveToFileHandle();
+  } else {
+    saveAsDownload();
   }
 };
+
+// Save using File Handle (direct write)
+async function saveToFileHandle() {
+  try {
+    const data = db.export();
+    const writable = await fileHandle.createWritable();
+    await writable.write(data);
+    await writable.close();
+    setStatus(`Saved directly to ${dbFileName}`, 'success');
+  } catch (error) {
+    setStatus(`Direct save failed: ${error.message}`, 'error');
+    saveAsDownload();
+  }
+}
+
+// Save as download
+function saveAsDownload() {
+  const data = db.export();
+  const blob = new Blob([data], { type: 'application/x-sqlite3' });
+  const url = URL.createObjectURL(blob);
+  
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = dbFileName;
+  a.click();
+  
+  URL.revokeObjectURL(url);
+  setStatus(`Database downloaded as ${dbFileName}`, 'success');
+}
 
 function setStatus(message, type = '') {
   const status = document.getElementById('status');
   status.textContent = message;
   status.className = type;
+  console.log(message);
 }
-
-console.log('Direct SQLite OPFS storage ready');
 </script>
 
 </body>
