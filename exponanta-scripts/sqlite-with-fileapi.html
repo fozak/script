@@ -62,15 +62,12 @@ iframe {
 let db;
 let dbFileName = 'files.sqlite';
 let fileHandle;
+let sqlite3;
 
 // Initialize SQLite
-sqlite3InitModule().then(sqlite3 => {
+sqlite3InitModule().then(sqlite3_ => {
+  sqlite3 = sqlite3_;
   console.log('SQLite3 initialized:', sqlite3.version.libVersion);
-  
-  // Try to use OPFS if available
-  if (sqlite3.opfs) {
-    console.log('OPFS available');
-  }
   
   // Check for File System Access API
   if ('showOpenFilePicker' in window) {
@@ -86,7 +83,7 @@ sqlite3InitModule().then(sqlite3 => {
 // Pick existing SQLite file
 document.getElementById('dbInput').onchange = async (e) => {
   const file = e.target.files[0];
-  if (!file) return;
+  if (!file || !sqlite3) return;
   
   try {
     setStatus('Loading database file...');
@@ -94,61 +91,49 @@ document.getElementById('dbInput').onchange = async (e) => {
     const arrayBuffer = await file.arrayBuffer();
     const data = new Uint8Array(arrayBuffer);
     
-    console.log(`File size: ${data.length} bytes`);
-    
-    // Try to get persistent file handle if supported
-    if ('showOpenFilePicker' in window) {
-      try {
-        const [fileHandle_] = await window.showOpenFilePicker({
-          types: [{ accept: { 'application/x-sqlite3': ['.sqlite', '.db'] } }]
-        });
-        fileHandle = fileHandle_;
-        console.log('Got persistent file handle');
-      } catch (e) {
-        console.log('File handle not available, using traditional method');
-      }
-    }
-    
-    const sqlite3 = await sqlite3InitModule();
+    console.log(`File: ${file.name}, size: ${data.length} bytes`);
     
     // Create database from file data
-    try {
-      db = new sqlite3.oo1.DB(data);
-      console.log('Database loaded from file');
-    } catch (e) {
-      console.log('Invalid SQLite file, creating new database');
+    if (data.length > 0) {
+      try {
+        db = new sqlite3.oo1.DB(data);
+        console.log('Database loaded from existing file');
+      } catch (e) {
+        console.log('File not valid SQLite, creating new:', e.message);
+        db = new sqlite3.oo1.DB();
+      }
+    } else {
+      console.log('Empty file, creating new database');
       db = new sqlite3.oo1.DB();
     }
     
-    // Ensure files table exists
-    try {
-      db.exec(`CREATE TABLE IF NOT EXISTS files (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT NOT NULL,
-        content BLOB NOT NULL,
-        size INTEGER,
-        created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-      )`);
-      console.log('Files table ready');
-    } catch (e) {
-      console.log('Table creation failed:', e.message);
-    }
+    // Create table
+    db.exec(`CREATE TABLE IF NOT EXISTS files (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      name TEXT NOT NULL,
+      content BLOB NOT NULL,
+      size INTEGER,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    )`);
+    
+    console.log('Files table ready');
     
     document.getElementById('fileInput').disabled = false;
     document.getElementById('saveDb').disabled = false;
-    setStatus(`Loaded: ${dbFileName}`, 'success');
+    setStatus(`Database ready: ${dbFileName}`, 'success');
     updateFileList();
     
   } catch (error) {
-    console.error('Full error:', error);
-    setStatus(`Error loading DB: ${error.message}`, 'error');
+    console.error('Database load error:', error);
+    setStatus(`Error: ${error.message}`, 'error');
   }
 };
 
 // Create new database
 document.getElementById('newDb').onclick = async () => {
+  if (!sqlite3) return;
+  
   try {
-    const sqlite3 = await sqlite3InitModule();
     db = new sqlite3.oo1.DB();
     
     db.exec(`CREATE TABLE files (
@@ -165,6 +150,7 @@ document.getElementById('newDb').onclick = async () => {
     updateFileList();
     
   } catch (error) {
+    console.error('New DB error:', error);
     setStatus(`Error creating DB: ${error.message}`, 'error');
   }
 };
@@ -179,23 +165,21 @@ document.getElementById('fileInput').onchange = async (e) => {
       const arrayBuffer = await file.arrayBuffer();
       const content = new Uint8Array(arrayBuffer);
       
-      db.exec({
-        sql: "INSERT INTO files (name, content, size) VALUES (?, ?, ?)",
-        bind: [file.name, content, file.size]
-      });
+      // Use prepare/bind/step for BLOB data
+      const stmt = db.prepare("INSERT INTO files (name, content, size) VALUES (?, ?, ?)");
+      stmt.bind([file.name, content, file.size]);
+      stmt.step();
+      stmt.finalize();
       
+      console.log(`Added: ${file.name} (${file.size} bytes)`);
       count++;
     }
     
     setStatus(`Added ${count} files to database`, 'success');
     updateFileList();
     
-    // Auto-save if we have a file handle
-    if (fileHandle) {
-      await saveToFileHandle();
-    }
-    
   } catch (error) {
+    console.error('Add files error:', error);
     setStatus(`Error adding files: ${error.message}`, 'error');
   }
 };
