@@ -17,6 +17,8 @@ v4,
       "search_index": 1
     },
 
+  Tested with Task schema - it works
+
 v3 top-bottom
 Typed vs non-typed 
 
