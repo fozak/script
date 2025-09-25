@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>File Combiner</title>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+
+    button {
+      padding: 10px 15px;
+      margin: 10px 5px 10px 0;
+      font-size: 16px;
+    }
+
+    #message {
+      margin-top: 20px;
+      font-weight: bold;
+      color: green;
+    }
+
+    .error {
+      color: red;
+    }
+
+    table {
+      width: 100%;
+      margin-top: 20px;
+      border-collapse: collapse;
+    }
+
+    th,
+    td {
+      padding: 8px;
+      border: 1px solid #ddd;
+      text-align: left;
+    }
+
+    .settings-section {
+      margin-top: 40px;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Combine Files from a Directory</h1>
+  <button id="combineBtn">Select Directory and Combine Files</button>
+  <button id="saveTxtBtn">Save Table as TXT</button> <!-- NEW -->
+  <label>
+    <input type="checkbox" id="showHidden"> Show hidden files & directories
+  </label>
+
+  <div id="message"></div>
+
+  <table id="fileTable">
+    <thead>
+      <tr>
+        <th>Full Path</th>
+        <th>Comments</th>
+        <th>Mime Type</th>
+        <th>Size (bytes)</th>
+        <th>Text Content</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <div class="settings-section">
+    <h2>Settings</h2>
+
+    <div>
+      <h3>Non-Informative Extensions</h3>
+      <input type="text" id="nonInformativeInput" placeholder="Add extension e.g., txt">
+      <button id="addNonInformative">Add</button>
+      <ul id="nonInformativeList"></ul>
+    </div>
+
+    <div>
+      <h3>Exclude Files</h3>
+      <input type="text" id="excludeFilesInput" placeholder="Add file e.g., example.txt">
+      <button id="addExcludeFile">Add</button>
+      <ul id="excludeFilesList"></ul>
+    </div>
+
+    <div>
+      <h3>Exclude Directories</h3>
+      <input type="text" id="excludeDirectoriesInput" placeholder="Add directory e.g., temp">
+      <button id="addExcludeDirectory">Add</button>
+      <ul id="excludeDirectoriesList"></ul>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+  <script>
+    let dataTable;
+    const nonInformativeExtensions = new Set([
+      'jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp',
+      'tiff', 'svg', 'ico', 'heic', 'avif',
+      'exe', 'bin', 'dll',
+      'zip', 'tar', 'gz', 'rar',
+      'mp3', 'wav', 'aac',
+      'mp4', 'avi', 'mov', 'mkv',
+      'log', 'md', 'lock',
+      'tmp', 'bak',
+      'ttf', 'otf', 'woff', 'woff2', 'eot',
+      'doc', 'docx', 'odt', 'xlsx',
+      'css', 'scss', 'less'
+    ]);
+
+    const excludeFiles = new Set(['dataTables.js', 'jquery-3.6.0.min.js']);
+    const excludeDirectories = new Set(['_locales', '_metadata', 'sample_csv', '.git', '.github']);
+
+    function updateList(set, listElement) {
+      listElement.innerHTML = '';
+      set.forEach(item => {
+        const li = document.createElement('li');
+        li.textContent = item;
+        const removeButton = document.createElement('button');
+        removeButton.textContent = 'Remove';
+        removeButton.onclick = () => {
+          set.delete(item);
+          updateList(set, listElement);
+        };
+        li.appendChild(removeButton);
+        listElement.appendChild(li);
+      });
+    }
+
+    document.getElementById('addNonInformative').onclick = () => {
+      const input = document.getElementById('nonInformativeInput');
+      const value = input.value.trim();
+      if (value) {
+        nonInformativeExtensions.add(value);
+        updateList(nonInformativeExtensions, document.getElementById('nonInformativeList'));
+        input.value = '';
+      }
+    };
+
+    document.getElementById('addExcludeFile').onclick = () => {
+      const input = document.getElementById('excludeFilesInput');
+      const value = input.value.trim();
+      if (value) {
+        excludeFiles.add(value);
+        updateList(excludeFiles, document.getElementById('excludeFilesList'));
+        input.value = '';
+      }
+    };
+
+    document.getElementById('addExcludeDirectory').onclick = () => {
+      const input = document.getElementById('excludeDirectoriesInput');
+      const value = input.value.trim();
+      if (value) {
+        excludeDirectories.add(value);
+        updateList(excludeDirectories, document.getElementById('excludeDirectoriesList'));
+        input.value = '';
+      }
+    };
+
+    function getFirstBytes(text, maxBytes) {
+      return text.slice(0, maxBytes);
+    }
+
+    function isNonInformativeFile(filename) {
+      const extension = filename.split('.').pop().toLowerCase();
+      return nonInformativeExtensions.has(extension);
+    }
+
+    function isExcludedPath(path) {
+      const segments = path.split('/');
+      const fileName = segments[segments.length - 1];
+      if (excludeFiles.has(fileName)) return true;
+      for (let segment of segments) {
+        if (excludeDirectories.has(segment)) return true;
+      }
+      return false;
+    }
+
+    document.getElementById('combineBtn').addEventListener('click', selectDirectory);
+    document.getElementById('saveTxtBtn').addEventListener('click', saveAsTxt);
+
+    async function selectDirectory() {
+      try {
+        const dirHandle = await window.showDirectoryPicker();
+        const processedFiles = new Set();
+        const fileData = [];
+        const showHidden = document.getElementById('showHidden').checked;
+
+        async function processDirectory(directoryHandle, path = '') {
+          for await (const [name, handle] of directoryHandle.entries()) {
+            const fullPath = `${path}${name}`;
+
+            // Skip hidden unless checkbox is checked
+            if (!showHidden && name.startsWith('.')) continue;
+
+            if (handle.kind === 'file' && !processedFiles.has(fullPath)) {
+              if (isExcludedPath(fullPath)) continue;
+              if (isNonInformativeFile(name)) {
+                fileData.push([fullPath, 'Excluded by file type', '', 0, '']);
+                continue;
+              }
+              const file = await handle.getFile();
+              const text = await file.text();
+              const mimeType = file.type || 'application/octet-stream';
+              const size = file.size;
+
+              let processedText = text;
+              const maxBytes = 6000;
+              if (size > maxBytes) {
+                processedText = getFirstBytes(text, maxBytes);
+                fileData.push([fullPath, `Truncated to ${maxBytes} bytes`, mimeType, size, processedText]);
+              } else {
+                fileData.push([fullPath, 'Included', mimeType, size, processedText]);
+              }
+              processedFiles.add(fullPath);
+            } else if (handle.kind === 'directory') {
+              await processDirectory(handle, `${fullPath}/`);
+            }
+          }
+        }
+
+        await processDirectory(dirHandle);
+
+        // Clear table before populating
+        const tbody = document.querySelector('#fileTable tbody');
+        tbody.innerHTML = '';
+
+        fileData.forEach(row => {
+          const tr = document.createElement('tr');
+          row.forEach(cell => {
+            const td = document.createElement('td');
+            td.textContent = cell;
+            tr.appendChild(td);
+          });
+          tbody.appendChild(tr);
+        });
+
+        if (dataTable) dataTable.destroy();
+        dataTable = $('#fileTable').DataTable();
+
+        document.getElementById('message').innerText = 'Files processed successfully.';
+      } catch (error) {
+        console.error('Error:', error);
+        document.getElementById('message').innerText = 'Error: ' + error.message;
+        document.getElementById('message').classList.add('error');
+      }
+    }
+
+    function saveAsTxt() {
+      let textOutput = '';
+      $('#fileTable').DataTable().rows().every(function () {
+        textOutput += this.data().join('\t') + '\n';
+      });
+      const blob = new Blob([textOutput], { type: 'text/plain' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'file_table.txt';
+      link.click();
+    }
+  </script>
+</body>
+</html>
