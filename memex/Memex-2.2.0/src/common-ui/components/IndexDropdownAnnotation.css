@@ -1,0 +1,184 @@
+@value colors: '../../common-ui/colors.css';
+@value color11, color14 from colors;
+
+.menuItem {
+    composes: hoverColor from '../../common-ui/colors.css';
+    align-items: center;
+    display: flex;
+    padding: 8px 20px 8px 20px;
+    cursor: pointer;
+    border-bottom: 1px solid #eaecef;
+    word-wrap: break-word;
+    font-size: 14px;
+    justify-content: space-between;
+    box-sizing: border-box;
+
+    &:hover,
+    &:focus,
+    &:active {
+        background-color: color14;
+        outline: none;
+    }
+
+    &.isNew {
+        justify-content: flex-start;
+        align-items: center;
+    }
+}
+
+.tagPill {
+    composes: tagPillSuggestions from '../../common-ui/elements.css';
+}
+
+.menuItemFocused {
+    composes: selectedColor from '../../common-ui/colors.css';
+    align-items: center;
+    display: flex;
+}
+
+.remove {
+    display: none;
+}
+
+.menuItem i {
+    font-size: 18px;
+    float: right;
+}
+
+.tagContainer {
+    width: 100%;
+    max-height: 250px;
+    overflow-y: scroll;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+
+    &:focus {
+        outline: none;
+    }
+}
+
+.numberTags {
+    align-items: flex-start;
+    margin-top: 6px;
+    color: #777;
+}
+
+.summaryTagContainer {
+    composes: subTitleColor from '../../common-ui/colors.css';
+    font-size: 12px;
+    display: flex;
+    justify-content: space-around;
+    background: white;
+    margin-bottom: 10px;
+}
+
+.searchContainer {
+    /* background: color11; */
+    display: initial;
+    height: 190px;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2px 10px 2px 10px;
+    border-radius: 3px;
+    margin: 5px 5px 5px 5px;
+    background: #fff;
+}
+
+.searchIcon {
+    display: flex;
+    composes: searchIcon from '../../common-ui/icons.css';
+    background-image: url('../../../img/searchGrey.svg');
+    width: 25px;
+    height: 25px;
+    background-size: 20px;
+}
+
+.search {
+    composes: searchField from '../../common-ui/elements.css';
+    width: 90%;
+    font-size: 14px;
+    padding: 10px 0;
+    border: none;
+
+    /* background-color: color11; */
+    margin-left: 10px;
+    box-sizing: border-box;
+
+    &:placeholder-shown {
+        font-style: italic;
+        font-weight: 500;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    &::placeholder {
+        color: #888;
+    }
+
+    background: #fff;
+
+    &:focus {
+        outline: none;
+    }
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.tagDiv {
+    box-shadow: none;
+}
+
+.TagBox {
+    max-height: 50vh;
+    overflow-x: hidden;
+}
+
+.tagDivFromOverview {
+    position: absolute;
+    width: 300px;
+    z-index: 1;
+    background-color: #fff;
+    margin-left: 500px;
+
+    @media (max-width: 835px) {
+        right: 10px;
+    }
+}
+
+.tagDivForFilter {
+    z-index: 1000;
+}
+
+.check {
+    composes: checkMark from '../../common-ui/icons.css';
+    width: 20px;
+    height: 20px;
+}
+
+.value {
+    composes: tagPill tagPillSuggestions from '../../common-ui/elements.css';
+    margin-left: 5px;
+}
+
+.isNewNoteInvisible {
+    display: none;
+}
+
+.isNewNote {
+    composes: darkBlue from '../../common-ui/colors.css';
+    font-weight: bold;
+    font-size: 14px;
+    margin-right: 10px;
+    display: flex;
+}
+
+.isList {
+    font-size: 13px;
+    font-weight: 400;
+    color: black;
+    padding: 0;
+    background-color: transparent;
+}

@@ -1,0 +1,10 @@
+@value colors: 'src/common-ui/colors.css';
+@value color4, color6 from colors;
+
+.noResult {
+    font-weight: bold;
+    font-size: 18px;
+    text-align: center;
+    padding: 8px;
+    border-bottom: 1px solid rgb(202, 202, 202);
+}

@@ -1,0 +1,257 @@
+@import url('/fonts/Poppins/poppins.css');
+
+:root {
+    --memex-green: #4abf9d;
+}
+
+.MEMEX_CONTAINER * {
+    font-family: 'Poppins', sans-serif;
+}
+
+.MEMEX_CONTAINER {
+    /* Base size of the children elements */
+    position: relative;
+    animation: fadeIn 1s ease-in;
+    margin-top: 5px;
+    display: flex;
+    flex-direction: column;
+    border-bottom: #dedede solid 1px;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    margin-right: 20px;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 6px;
+}
+
+.resultLength {
+    font-weight: 800;
+    composes: darkMintGreen from '../../common-ui/colors.css';
+    font-size: 16px;
+    vertical-align: inherit;
+}
+
+.linksContainer {
+    display: inline-block;
+    margin-left: 10px;
+}
+
+.links {
+    color: #3a2f45;
+    text-decoration: none !important; /* stylelint-disable-line declaration-no-important */
+    font-size: 16px;
+    display: inline-block;
+    font-weight: 600;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.logo {
+    width: 75px;
+    height: 20px;
+    vertical-align: middle;
+    margin-left: 6px;
+}
+
+.settingsButton {
+    composes: hoverColor from '../../common-ui/colors.css';
+    position: absolute;
+    border: none;
+    cursor: pointer;
+    background-image: url('/img/settings.svg');
+    background-repeat: no-repeat;
+    background-size: 20px;
+    background-color: #fff;
+    height: 25px;
+    width: 25px;
+    background-position: center;
+    vertical-align: middle;
+    border-radius: 3px;
+    margin-right: 5px;
+
+    &:focus {
+        outline: none;
+    }
+}
+
+.resultsText {
+    composes: darkBlue from '../../common-ui/colors.css';
+    display: inline-block;
+    font-size: 16px;
+    font-weight: 600;
+    width: 71%;
+    margin-right: 10px;
+}
+
+.resultsText > a {
+    margin-left: 10px;
+}
+
+.noDisplay {
+    display: none;
+}
+
+.notification {
+    composes: boxShadowOverlays from '../../common-ui/colors.css';
+    position: absolute;
+    background: white;
+    z-index: 2000;
+    width: 95%;
+    min-width: 05%;
+    display: flex;
+    top: 70px;
+    margin: auto;
+    justify-self: center;
+    align-self: center;
+    border-radius: 3px;
+    max-width: 95%;
+}
+
+.isBlurred {
+    filter: blur(2px);
+    background: white;
+    z-index: 1000;
+}
+
+.google_above {
+    & .settingsButton {
+        right: -10px;
+    }
+
+    & .resultsText {
+        width: 76%;
+    }
+
+    & .mainContainer {
+        width: 93.8%;
+
+        & .messageTitle {
+            width: 64%;
+        }
+    }
+
+    .resultLength {
+        vertical-align: middle;
+    }
+}
+
+.google_side {
+    width: 454px;
+
+    & .settingsButton {
+        right: -7px;
+    }
+
+    & .mainContainer {
+        width: 90.8%;
+
+        & .messageTitle {
+            width: 64%;
+        }
+    }
+}
+
+.duckduckgo_above {
+    margin-top: 7px;
+    margin-bottom: 15px;
+
+    & .linksContainer {
+        margin-top: 4px;
+        margin-bottom: 8px;
+    }
+
+    & .resultsText {
+        width: 76%;
+    }
+
+    & .settingsButton {
+        top: 6px;
+    }
+
+    & .dropdown {
+        right: 5px;
+    }
+}
+
+.duckduckgo_side {
+    margin-top: 7px;
+    margin-bottom: 15px;
+
+    & .resultsText {
+        font-size: 1.05em;
+    }
+
+    & .links {
+        font-size: 0.85em;
+    }
+
+    & .settingsButton {
+        right: -4px;
+        top: 9px;
+    }
+
+    & .dropdown {
+        top: 30px;
+        right: 5px;
+    }
+}
+
+.proTip {
+    margin-left: 1px;
+    color: #3eb995;
+    font-size: 12px;
+    display: flex;
+    justify-content: center;
+    margin-top: 14px;
+}
+
+.shortcut {
+    margin-left: 2px;
+    margin-right: 2px;
+    vertical-align: middle;
+    width: 35%;
+    height: 35%;
+    margin-top: -2px;
+}
+
+.emoji {
+    font-size: 20px;
+    vertical-align: middle;
+    margin-top: -7px;
+}
+
+.upgradeButton {
+    padding: 5px 25px;
+    color: white !important; /* stylelint-disable-line declaration-no-important */
+    text-decoration: none !important; /* stylelint-disable-line declaration-no-important */
+    background-color: #3eb995;
+    margin-bottom: 10px;
+    border-radius: 2px;
+    margin-top: 13px;
+    display: flex;
+    width: 40%;
+    padding-bottom: 5px;
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: center;
+}
+
+.voteIcon {
+    width: 15px;
+    height: 15px;
+    margin-right: 12px;
+    vertical-align: bottom;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}

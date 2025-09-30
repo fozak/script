@@ -1,0 +1,41 @@
+@value colors: 'src/common-ui/colors.css';
+@value color4, color6 from colors;
+
+.title {
+    color: #3a2f45;
+    font-size: 18px;
+    font-weight: 700;
+    padding-top: 30px;
+    margin-bottom: 20px;
+}
+
+.subtitle {
+    color: #3a2f45;
+    font-size: 18px;
+    font-weight: 300;
+}
+
+.subsubtitle {
+    color: #3a2f45;
+    font-size: 15px;
+    margin-right: 10px;
+    font-weight: 300;
+}
+
+.link {
+    text-decoration: underline !important; /* stylelint-disable-line declaration-no-important */
+}
+
+.button {
+    composes: CTA from 'src/common-ui/elements.css';
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.btnBox {
+    display: flex;
+    flex-direction: row;
+    margin-top: 50px;
+    justify-content: center;
+    align-items: center;
+}

@@ -1,0 +1,215 @@
+@value colors: 'src/common-ui/colors.css';
+@value color1, color2, color3, color4, color5, color6, color7, color8, color11, color12, color16, radius3 from colors;
+
+/* Animations */
+
+.fadeIn {
+    animation: fadeIn 500ms ease;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+/* FONTs */
+
+.fontFamily {
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Tag Pill */
+
+.tagPill {
+    composes: lightBlueBackground from './colors.css';
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 400;
+    height: auto;
+    color: #284150;
+    margin: 2px 4px 2px 0;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    font-family: 'Poppins', sans-serif;
+}
+
+.tagPillSuggestions {
+    composes: tagPill;
+}
+
+.tagPillRemove {
+    composes: tagPill;
+    padding: 2px 4px 3px 9px;
+}
+
+/* Tooltips */
+
+.toolTips {
+    border-radius: 3px;
+    box-shadow: rgba(15, 15, 15, 0.05) 0px 0px 0px 1px,
+        rgba(15, 15, 15, 0.1) 0px 3px 6px, rgba(15, 15, 15, 0.2) 0px 9px 24px;
+    background: white;
+    overflow: hidden;
+    overflow-y: scroll;
+}
+
+.miniTooltip {
+    border-radius: 3px;
+    background-color: rgb(55, 53, 47);
+    color: white;
+    font-size: 12px;
+    font-weight: 400;
+    width: 100%;
+}
+
+/* Buttons */
+
+.nakedSquareButton {
+    composes: hoverColor from './colors.css';
+    border-radius: radius3;
+    padding: 2px;
+}
+
+.nakedButton {
+    composes: nakedButton hoverColor from './colors.css';
+    padding: 3px 8px 3px 8px;
+    border-radius: radius3;
+}
+
+.cancelNaked {
+    composes: nakedButton hoverColor warningColor from './colors.css';
+}
+
+.greenActionButton {
+    composes: nakedButton hoverColor warningColor from './colors.css';
+}
+
+.grayActionButton {
+    background-color: color7;
+    border-radius: 22px;
+    color: color16;
+    cursor: pointer;
+    font-size: 0.9rem;
+    line-height: 1.2rem;
+    padding: 0.3rem 0.8rem;
+    transition: background-color 200ms ease-in-out;
+
+    &:hover {
+        background-color: color8;
+    }
+}
+
+.CTA {
+    background: color1;
+    color: color4;
+    padding: 0.5em 1em;
+    border-radius: 3px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    border: none;
+    transition: all 200ms ease-in-out;
+
+    &:hover {
+        background: color2;
+        color: color5;
+    }
+
+    &:active,
+    &:focus {
+        outline: none;
+    }
+}
+
+.CTAwarning {
+    background-color: color12;
+    border-radius: 3px;
+    color: color4;
+    cursor: pointer;
+
+    &:hover {
+        color: black;
+        opacity: 1;
+    }
+}
+
+/* TextAreas for Edits */
+
+.TextArea {
+    composes: editFields from './colors.css';
+    background-color: #f7f7f7;
+    box-sizing: border-box;
+    resize: vertical;
+    font-weight: 400;
+    font-size: 14px;
+    color: #222;
+    font-family: 'Poppins', sans-serif;
+    border-radius: 3px;
+    border: none;
+    padding: 10px 7px;
+    margin: 5px 5px 5px 5px;
+
+    &::placeholder {
+        color: #3a2f45;
+    }
+
+    &:focus {
+        outline: none;
+        box-shadow: none;
+        border: none;
+    }
+}
+
+/* ANNOTATION CARDS */
+
+.annotationCard {
+    border-radius: 3px;
+    box-shadow: rgba(15, 15, 15, 0.1) 0px 0px 0px 1px,
+        rgba(15, 15, 15, 0.1) 0px 2px 4px;
+    transition: background 120ms ease-in 0s;
+
+    &:hover {
+        transition: background 120ms ease-in 0s;
+        background-color: rgba(55, 53, 47, 0.03);
+    }
+}
+
+/* SEARCH BOXES */
+
+.filterText {
+    font-weight: 600;
+    composes: darkBlue from './colors.css';
+    composes: nakedButton;
+    display: inline-flex;
+}
+
+.searchField {
+    background-color: color11;
+    color: #3a2f45;
+    border-radius: 3px;
+    font-size: 14px;
+    font-weight: 400;
+    text-align: left;
+    height: fit-content;
+    width: stretch;
+
+    &::placeholder {
+        color: #3a2f45;
+        font-weight: 500;
+        opacity: 0.7;
+    }
+
+    &:focus {
+        outline: none;
+        border: none;
+        box-shadow: none;
+    }
+}

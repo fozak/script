@@ -1,0 +1,51 @@
+{
+   "action": {
+      "default_icon": {
+         "128": "./img/browserIcons/logo-128.png",
+         "16": "./img/browserIcons/logo-16.png",
+         "48": "./img/browserIcons/logo-48.png"
+      },
+      "default_popup": "./popup.html",
+      "default_title": "Memex"
+   },
+   "background": {
+      "service_worker": "background.js"
+   },
+   "content_scripts": [ {
+      "css": [  ],
+      "js": [ "lib/browser-polyfill.js", "content_script.js" ],
+      "matches": [ "\u003Call_urls>" ],
+      "run_at": "document_end"
+   } ],
+   "content_security_policy": {
+      "extension_pages": "script-src 'self'; object-src 'self'; connect-src http: https: data: blob: wss: file:"
+   },
+   "description": "Search, annotate and organize what you've read online.",
+   "differential_fingerprint": "1.c3558f1914fa6aecfaf48bc461bef67dc75c3f2d757defb0c8db302c36ff1164",
+   "externally_connectable": {
+      "matches": [ "http://localhost:3000/*", "https://staging.memex.social/*", "https://memex.social/*" ]
+   },
+   "host_permissions": [ "\u003Call_urls>" ],
+   "icons": {
+      "128": "./img/browserIcons/logo-128.png",
+      "16": "./img/browserIcons/logo-16.png",
+      "48": "./img/browserIcons/logo-48.png"
+   },
+   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAl3pK5Pe/oLU446RviEcUbltfgYGS9B9vOU/vzoruJseVy+H0qMSTmN76RHXN0zNyOKTfRnDL2E6eRerKpChNXuoIUKwKZdvk8VOtVa1R2+XC2dm1GUnXLmmO0zoQcof5C7UUbZJpo+M2C93j6zFmy4kjhxUMHYUXs9uqu3DP7nVGFFmLp4NGs5mQeWu1zZOltURvkZuv170hASDtuykkEjCBSKgVLvFOAaJ1B17pOCfqOB3uUMnZ2GVtFBosA1FXaTM6tmGWJyRSs8kFosb7Of9x4IaX7lt+vFf3sxMeJXKkh4bCe0hP4iMktKh+9eQPvVgoB2GE13tUHGOTR8rqZwIDAQAB",
+   "manifest_version": 3,
+   "name": "Memex",
+   "omnibox": {
+      "keyword": "m"
+   },
+   "options_ui": {
+      "page": "./options.html#/settings"
+   },
+   "permissions": [ "alarms", "bookmarks", "contextMenus", "tabs", "scripting", "webNavigation", "notifications", "unlimitedStorage", "storage", "clipboardWrite" ],
+   "short_name": "Memex",
+   "update_url": "https://clients2.google.com/service/update2/crx",
+   "version": "3.20.14",
+   "web_accessible_resources": [ {
+      "matches": [ "\u003Call_urls>" ],
+      "resources": [ "/lib/pdf.worker.min.js", "/img/*", "/content_script*.css", "/fonts/*", "content_script_*.js", "file:/*", "chrome-extension:/*", "blob:*", "data:*", "filesystem:/*" ]
+   } ]
+}
