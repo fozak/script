@@ -46,101 +46,96 @@
         </div>
     `;
 
-    // Use React directly
-    const { useState, useEffect, createElement, Fragment } = React;
+const App = () => {
+  const [excalidrawAPI, setExcalidrawAPI] = React.useState(null);
 
-    const App = () => {
-        const [excalidrawAPI, setExcalidrawAPI] = useState(null);
+  React.useEffect(() => {
+    if (excalidrawAPI) {
+      window.excalidrawAPI = excalidrawAPI;
+      console.log("✅ Excalidraw API available:", excalidrawAPI);
+    }
+  }, [excalidrawAPI]);
 
-        useEffect(() => {
-            if (excalidrawAPI) {
-                window.excalidrawAPI = excalidrawAPI;
-                console.log("✅ Excalidraw API now available globally!", excalidrawAPI);
-                console.log("Available API methods:", Object.keys(excalidrawAPI));
+  const initialData = {
+    elements: [
+      {
+        id: "welcome-text",
+        type: "text",
+        x: 100,
+        y: 100,
+        width: 300,
+        height: 25,
+        text: "Welcome to Excalidraw!",
+        fontSize: 20,
+        fontFamily: 1,
+        textAlign: "left",
+        verticalAlign: "top",
+        strokeColor: "#1e1e1e",
+        backgroundColor: "transparent",
+        fillStyle: "hachure",
+        strokeWidth: 1,
+        strokeStyle: "solid",
+        roughness: 1,
+        opacity: 100,
+        angle: 0,
+        groupIds: [],
+        roundness: null,
+        boundElements: null,
+        updated: 1,
+        link: null,
+        locked: false
+      }
+    ],
+    appState: {
+      gridSize: null,
+      viewBackgroundColor: "transparent"
+    }
+  };
 
-                setTimeout(() => {
-                    console.log("Testing API...");
-                    try {
-                        const elements = excalidrawAPI.getSceneElements();
-                        console.log("Current elements count:", elements.length);
-                    } catch (error) {
-                        console.error("API test failed:", error);
-                    }
-                }, 500);
-            }
-        }, [excalidrawAPI]);
+  const handlePointerDown = (event) => {
+    // If user clicks on an Excalidraw element → let Excalidraw handle it
+    if (event.nativeEvent.target.closest(".excalidraw")) {
+      return; // normal canvas behavior
+    }
+    // Otherwise → let underlying HTML receive the event
+    event.nativeEvent.stopImmediatePropagation();
+  };
 
-        const initialData = {
-            elements: [
-                {
-                    id: "welcome-text",
-                    type: "text",
-                    x: 100,
-                    y: 100,
-                    width: 300,
-                    height: 25,
-                    text: "Welcome to Excalidraw!",
-                    fontSize: 20,
-                    fontFamily: 1,
-                    textAlign: "left",
-                    verticalAlign: "top",
-                    strokeColor: "#1e1e1e",
-                    backgroundColor: "transparent",
-                    fillStyle: "hachure",
-                    strokeWidth: 1,
-                    strokeStyle: "solid",
-                    roughness: 1,
-                    opacity: 100,
-                    angle: 0,
-                    groupIds: [],
-                    roundness: null,
-                    boundElements: null,
-                    updated: 1,
-                    link: null,
-                    locked: false
-                }
-            ],
-            appState: {
-                gridSize: null,
-                viewBackgroundColor: "#ffffff"
-            }
-        };
+  return React.createElement(
+    React.Fragment,
+    null,
+    React.createElement(
+      "div",
+      { style: { height: "100%", width: "100%" } },
+      React.createElement(ExcalidrawLib.Excalidraw, {
+        initialData: initialData,
+        onPointerDown: handlePointerDown,
+        onChange: (elements, appState, files) => {
+          console.log("Canvas updated - elements count:", elements.length);
+        },
+        excalidrawAPI: (api) => {
+          console.log("🎯 excalidrawAPI callback triggered!", api);
+          setExcalidrawAPI(api);
+        }
+      })
+    )
+  );
+};
 
-        return createElement(
-            Fragment,
-            null,
-            createElement(
-                "div",
-                { style: { height: "100%", width: "100%" } },
-                createElement(ExcalidrawLib.Excalidraw, {
-                    initialData: initialData,
-                    onChange: (elements, appState, files) => {
-                        console.log("Canvas updated - elements count:", elements.length);
-                    },
-                    excalidrawAPI: (api) => {
-                        console.log("🎯 excalidrawAPI callback triggered!", api);
-                        setExcalidrawAPI(api);
-                    }
-                })
-            )
-        );
-    };
 
-    /* Make Excalidraw canvas pass through clicks but keep UI interactive
-const excalidrawStyle = document.createElement('style');
+    /* Make Excalidraw canvas pass through clicks but keep UI interactive*/
+/*const excalidrawStyle = document.createElement('style');
 excalidrawStyle.textContent = `
-    #root .excalidraw, 
-    #root .drawing-container,
-    #excalidraw-container {
+    #root, 
+    #root > *:not(.excalidraw) {
         pointer-events: none !important;
     }
-    #root .header,
-    #root .excalidraw__canvas,
-    #root button,
-    #root input,
-    #root .Island,
-    #root .excalidraw-container > * {
+    .excalidraw,
+    .excalidraw * {
         pointer-events: auto !important;
+    }
+    .excalidraw .excalidraw-canvas {
+        background: transparent !important;
     }
 `;
 document.head.appendChild(excalidrawStyle);*/

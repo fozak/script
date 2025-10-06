@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Excalidraw Browser-Only</title>
+
+    <!-- Environment: browser with a script tag and no bundler -->
+    <!-- excalidraw styles -->
+    <link rel="stylesheet" href="https://esm.sh/@excalidraw/excalidraw@0.18.0/dist/dev/index.css" />
+
+    <script>
+        window.EXCALIDRAW_ASSET_PATH = "https://esm.sh/@excalidraw/excalidraw@0.18.0/dist/prod/";
+    </script>
+
+    <!-- import maps used for deduplicating react & react-dom versions -->
+    <script type="importmap">
+      {
+        "imports": {
+          "react": "https://esm.sh/react@18.3.1",
+          "react/jsx-runtime": "https://esm.sh/react@18.3.1/jsx-runtime",
+          "react-dom": "https://esm.sh/react-dom@18.3.1",
+          "react-dom/client": "https://esm.sh/react-dom@18.3.1/client"
+        }
+      }
+    </script>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        #root {
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .excalidraw {
+            width: 100%;
+            height: 100%;
+        }
+
+        .header {
+            background: #f8f9fa;
+            padding: 10px 20px;
+            border-bottom: 1px solid #e9ecef;
+            text-align: center;
+            font-size: 18px;
+            font-weight: 600;
+            color: #495057;
+        }
+
+        .drawing-container {
+            height: calc(100vh - 60px);
+            position: relative;
+        }
+
+        #excalidraw-container {
+            height: 100%;
+            width: 100%;
+        }
+
+        .behind {
+            position: absolute;
+            /* position relative to nearest positioned ancestor */
+            top: 60px;
+            /* below your header (60px height) */
+            left: 0;
+            width: 100%;
+            height: calc(100vh - 60px);
+            /* full height under header */
+            background: #f0f0f0;
+            /* optional background to see it */
+            z-index: 1;
+            /* behind Excalidraw canvas */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: #333;
+        }
+
+        .drawing-container {
+            position: relative;
+            /* make canvas a higher stacking context */
+            z-index: 2;
+            /* above .behind */
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root">
+        <div class="header">
+            Excalidraw - Browser-Only Implementation
+        </div>
+        <div class="behind">
+            This is behind the drawing container
+        </div>
+        <div class="drawing-container">
+            <div id="excalidraw-container"></div>
+        </div>
+    </div>
+
+    <script type="module">
+        import * as ExcalidrawLib from 'https://esm.sh/@excalidraw/excalidraw@0.18.0/dist/dev/index.js?external=react,react-dom';
+        import React from "https://esm.sh/react@18.3.1";
+        import ReactDOM from "https://esm.sh/react-dom@18.3.1";
+        import { createRoot } from "https://esm.sh/react-dom@18.3.1/client";
+
+        window.React = React;
+        window.createRoot = createRoot;
+
+        window.ExcalidrawLib = ExcalidrawLib;
+        console.log("Excalidraw library", ExcalidrawLib);
+        console.log("ReactDOM available methods:", Object.keys(ReactDOM));
+        console.log("createRoot available:", typeof createRoot);
+
+        const App = () => {
+            const [excalidrawAPI, setExcalidrawAPI] = React.useState(null);
+
+            // Store API globally when it becomes available
+            React.useEffect(() => {
+                if (excalidrawAPI) {
+                    window.excalidrawAPI = excalidrawAPI;
+                    console.log("✅ Excalidraw API now available globally!", excalidrawAPI);
+                    console.log("Available API methods:", Object.keys(excalidrawAPI));
+
+                    // Test the API
+                    setTimeout(() => {
+                        console.log("Testing API...");
+                        try {
+                            const elements = excalidrawAPI.getSceneElements();
+                            console.log("Current elements count:", elements.length);
+                        } catch (error) {
+                            console.error("API test failed:", error);
+                        }
+                    }, 500);
+                }
+            }, [excalidrawAPI]);
+
+            // Initial data for the canvas
+            const initialData = {
+                elements: [
+                    {
+                        id: "welcome-text",
+                        type: "text",
+                        x: 100,
+                        y: 100,
+                        width: 300,
+                        height: 25,
+                        text: "Welcome to Excalidraw!",
+                        fontSize: 20,
+                        fontFamily: 1,
+                        textAlign: "left",
+                        verticalAlign: "top",
+                        strokeColor: "#1e1e1e",
+                        backgroundColor: "transparent",
+                        fillStyle: "hachure",
+                        strokeWidth: 1,
+                        strokeStyle: "solid",
+                        roughness: 1,
+                        opacity: 100,
+                        angle: 0,
+                        groupIds: [],
+                        roundness: null,
+                        boundElements: null,
+                        updated: 1,
+                        link: null,
+                        locked: false
+                    }
+                ],
+                disableScroll: true,       // <-- ADD THIS
+                detectScroll: false,       // optional: stops Excalidraw from listening 
+                appState: {
+                    gridSize: null,
+                    viewBackgroundColor: "transparent",
+                    zoom: 1, // default zoom
+                    scrollX: 0,
+                    scrollY: 0,
+                }
+            };
+
+            return React.createElement(
+                React.Fragment,
+                null,
+                React.createElement(
+                    "div",
+                    { style: { height: "100%", width: "100%" } },
+                    React.createElement(ExcalidrawLib.Excalidraw, {
+                        initialData: initialData,
+                        //viewModeEnabled: true,  // <-- kills menu
+                        onChange: (elements, appState, files) => {
+                            console.log("Canvas updated - elements count:", elements.length);
+                        },
+                        excalidrawAPI: (api) => {
+                            console.log("🎯 excalidrawAPI callback triggered!", api);
+                            setExcalidrawAPI(api);
+                        }
+                    })
+                )
+            );
+        };
+
+        // Global helper functions
+        window.addElementToCanvas = function (element) {
+            if (!window.excalidrawAPI) {
+                console.error("❌ Excalidraw API not available yet. Wait for initialization.");
+                return false;
+            }
+
+            try {
+                const currentElements = window.excalidrawAPI.getSceneElements();
+                window.excalidrawAPI.updateScene({
+                    elements: [...currentElements, element]
+                });
+                console.log("✅ Element added successfully:", element.type);
+                return true;
+            } catch (error) {
+                console.error("❌ Failed to add element:", error);
+                return false;
+            }
+        };
+
+        window.clearCanvas = function () {
+            if (!window.excalidrawAPI) {
+                console.error("❌ Excalidraw API not available yet.");
+                return;
+            }
+
+            window.excalidrawAPI.updateScene({
+                elements: []
+            });
+            console.log("✅ Canvas cleared!");
+        };
+
+        window.addTestShapes = function () {
+            if (!window.excalidrawAPI) {
+                console.error("❌ API not ready yet, try again in a moment...");
+                return;
+            }
+
+            const rect = {
+                id: "test-rect-" + Date.now(),
+                type: "rectangle",
+                x: 200,
+                y: 150,
+                width: 200,
+                height: 120,
+                strokeColor: "#e03131",
+                backgroundColor: "#ffc9c9",
+                fillStyle: "solid",
+                strokeWidth: 3,
+                strokeStyle: "solid",
+                roughness: 1,
+                opacity: 100,
+                angle: 0,
+                groupIds: [],
+                roundness: { type: 3 },
+                boundElements: null,
+                updated: 1,
+                link: null,
+                locked: false
+            };
+
+            const circle = {
+                id: "test-circle-" + Date.now(),
+                type: "ellipse",
+                x: 450,
+                y: 200,
+                width: 150,
+                height: 150,
+                strokeColor: "#2f9e44",
+                backgroundColor: "#c3fae8",
+                fillStyle: "solid",
+                strokeWidth: 2,
+                strokeStyle: "solid",
+                roughness: 1,
+                opacity: 100,
+                angle: 0,
+                groupIds: [],
+                roundness: null,
+                boundElements: null,
+                updated: 1,
+                link: null,
+                locked: false
+            };
+
+            const current = window.excalidrawAPI.getSceneElements();
+            window.excalidrawAPI.updateScene({
+                elements: [...current, rect, circle]
+            });
+
+            console.log("✅ Test shapes added to canvas!");
+        };
+
+        const excalidrawWrapper = document.getElementById("excalidraw-container");
+
+        // Try createRoot first (React 18+), fallback to render (React 17-)
+        if (typeof createRoot !== 'undefined') {
+            console.log("Using createRoot");
+            const root = createRoot(excalidrawWrapper);
+            root.render(React.createElement(App));
+        } else if (ReactDOM.render) {
+            console.log("Using ReactDOM.render");
+            ReactDOM.render(React.createElement(App), excalidrawWrapper);
+        } else {
+            console.error("No React rendering method available");
+        }
+
+        console.log('Excalidraw initialized successfully!');
+
+        // Display usage instructions
+        setTimeout(() => {
+            console.log(`
+🎨 Excalidraw is ready! Try these console commands:
+
+1. addTestShapes() - Adds a red rectangle and green circle
+2. clearCanvas() - Removes all elements
+3. addElementToCanvas(element) - Adds any element you create
+
+Example:
+addTestShapes();
+            `);
+        }, 2000);
+    </script>
+</body>
+
+</html>
