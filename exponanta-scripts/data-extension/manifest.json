@@ -1,0 +1,15 @@
+{
+  "manifest_version": 3,
+  "name": "Test Content Script",
+  "version": "1.0",
+  "description": "Interactive console testing for content.js",
+  "permissions": [
+    "storage"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"]
+    }
+  ]
+}

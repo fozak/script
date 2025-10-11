@@ -1,0 +1,414 @@
+
+<!---https://claude.ai/chat/7fb9fe43-c5d0-4d01-a347-880cb489b0a9-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formula System Demo</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 20px;
+      background: #f5f7fa;
+    }
+    h1 {
+      color: #2c3e50;
+      border-bottom: 3px solid #3498db;
+      padding-bottom: 10px;
+    }
+    .section {
+      background: white;
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .status {
+      padding: 10px;
+      border-radius: 4px;
+      margin: 10px 0;
+    }
+    .status.loading {
+      background: #fff3cd;
+      color: #856404;
+    }
+    .status.success {
+      background: #d4edda;
+      color: #155724;
+    }
+    .status.error {
+      background: #f8d7da;
+      color: #721c24;
+    }
+    button {
+      background: #3498db;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      margin: 5px;
+    }
+    button:hover {
+      background: #2980b9;
+    }
+    .formula-field {
+      background: #f8f9fa;
+      padding: 15px;
+      margin: 10px 0;
+      border-left: 4px solid #3498db;
+      border-radius: 4px;
+    }
+    .formula-field code {
+      background: #e9ecef;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-family: 'Courier New', monospace;
+    }
+    .result {
+      margin: 10px 0;
+      padding: 10px;
+      background: #e8f4f8;
+      border-radius: 4px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 10px 0;
+    }
+    th, td {
+      padding: 10px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+    th {
+      background: #f8f9fa;
+      font-weight: 600;
+    }
+    .calculated {
+      color: #3498db;
+      font-weight: 500;
+    }
+    pre {
+      background: #2c3e50;
+      color: #ecf0f1;
+      padding: 15px;
+      border-radius: 4px;
+      overflow-x: auto;
+    }
+  </style>
+</head>
+<body>
+  <h1>🧮 Salesforce-Style Formula System</h1>
+  
+  <div class="section">
+    <h2>Status</h2>
+    <div id="status" class="status loading">⏳ Loading formula-parser library...</div>
+  </div>
+
+  <div class="section">
+    <h2>Demo Actions</h2>
+    <button onclick="testBasicFormulas()">Test Basic Formulas</button>
+    <button onclick="testInvoiceCalculation()">Calculate Invoice</button>
+    <button onclick="testOpportunityRisk()">Opportunity Risk Score</button>
+    <button onclick="testCrossDocs()">Cross-Document References</button>
+  </div>
+
+  <div class="section">
+    <h2>Schema Definition</h2>
+    <div class="formula-field">
+      <strong>Invoice Schema (Salesforce-style)</strong>
+      <ul>
+        <li><strong>subtotal</strong>: <code>unit_price * quantity</code></li>
+        <li><strong>discount</strong>: <code>IF(subtotal > 1000, subtotal * 0.1, 0)</code></li>
+        <li><strong>tax</strong>: <code>(subtotal - discount) * 0.1</code></li>
+        <li><strong>total</strong>: <code>subtotal - discount + tax</code></li>
+        <li><strong>customer_credit_limit</strong>: <code>customer.credit_limit</code> (cross-doc)</li>
+        <li><strong>within_credit</strong>: <code>total <= customer.credit_limit</code></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Results</h2>
+    <div id="results"></div>
+  </div>
+
+  <script>
+    // Load hot-formula-parser from CDN
+    const script = document.createElement('script');
+    script.src = 'https://cdn.jsdelivr.net/npm/hot-formula-parser@4.0.0/dist/formula-parser.min.js';
+    script.onload = () => {
+      document.getElementById('status').className = 'status success';
+      document.getElementById('status').textContent = '✅ Formula parser loaded successfully!';
+      
+      // Initialize the formula system
+      window.formulaSystem = new SalesforceStyleFormulas();
+      console.log('Formula system ready!');
+    };
+    script.onerror = () => {
+      document.getElementById('status').className = 'status error';
+      document.getElementById('status').textContent = '❌ Failed to load formula parser';
+    };
+    document.head.appendChild(script);
+
+    // Salesforce-Style Formula System
+    class SalesforceStyleFormulas {
+      constructor() {
+        this.parser = new formulaParser.Parser();
+        this.cache = new Map();
+        this.registerCustomFunctions();
+      }
+
+      registerCustomFunctions() {
+        // TODAY function
+        this.parser.setFunction('TODAY', () => {
+          return new Date().toISOString().split('T')[0];
+        });
+
+        // DATEDIFF function
+        this.parser.setFunction('DATEDIFF', (params) => {
+          const [date1, date2, unit = 'days'] = params;
+          const d1 = new Date(date1);
+          const d2 = new Date(date2);
+          const diff = Math.abs(d2 - d1);
+          
+          switch(unit.toLowerCase()) {
+            case 'days': return Math.floor(diff / (1000 * 60 * 60 * 24));
+            case 'hours': return Math.floor(diff / (1000 * 60 * 60));
+            default: return diff;
+          }
+        });
+
+        // ISBLANK function
+        this.parser.setFunction('ISBLANK', (params) => {
+          const [value] = params;
+          return value === null || value === undefined || value === '';
+        });
+      }
+
+      calculateFormulas(doc, formulaFields, linkedDocs = {}) {
+        const result = { ...doc };
+        
+        // Build dependency graph
+        const deps = this.buildDependencyGraph(formulaFields);
+        const order = this.topologicalSort(deps);
+        
+        // Set base field values
+        Object.keys(doc).forEach(key => {
+          this.parser.setVariable(key, doc[key]);
+        });
+
+        // Set linked document values
+        Object.keys(linkedDocs).forEach(linkName => {
+          const linkedDoc = linkedDocs[linkName];
+          Object.keys(linkedDoc).forEach(field => {
+            this.parser.setVariable(`${linkName}.${field}`, linkedDoc[field]);
+          });
+        });
+        
+        // Calculate formulas in dependency order
+        for (const fieldName of order) {
+          const field = formulaFields.find(f => f.fieldname === fieldName);
+          if (!field) continue;
+          
+          try {
+            const calcResult = this.parser.parse(field.formula);
+            
+            if (calcResult.error) {
+              result[fieldName] = null;
+              result._errors = result._errors || {};
+              result._errors[fieldName] = calcResult.error;
+            } else {
+              result[fieldName] = calcResult.result;
+              this.parser.setVariable(fieldName, calcResult.result);
+            }
+          } catch (error) {
+            console.error(`Formula error in ${fieldName}:`, error);
+            result[fieldName] = null;
+          }
+        }
+        
+        return result;
+      }
+
+      extractReferences(formula) {
+        const refs = new Set();
+        const fieldPattern = /\b([a-zA-Z_][a-zA-Z0-9_]*(?:\.[a-zA-Z_][a-zA-Z0-9_]*)?)\b/g;
+        let match;
+        
+        const functions = ['IF', 'SUM', 'AVERAGE', 'MAX', 'MIN', 'TODAY', 'DATEDIFF', 'ISBLANK', 'AND', 'OR', 'NOT'];
+        
+        while ((match = fieldPattern.exec(formula)) !== null) {
+          if (!functions.includes(match[1].toUpperCase())) {
+            refs.add(match[1]);
+          }
+        }
+        
+        return Array.from(refs);
+      }
+
+      buildDependencyGraph(formulaFields) {
+        const graph = {};
+        formulaFields.forEach(field => {
+          graph[field.fieldname] = this.extractReferences(field.formula)
+            .filter(ref => !ref.includes('.'));
+        });
+        return graph;
+      }
+
+      topologicalSort(graph) {
+        const visited = new Set();
+        const order = [];
+        
+        const visit = (node) => {
+          if (visited.has(node)) return;
+          visited.add(node);
+          (graph[node] || []).forEach(dep => {
+            if (graph[dep]) visit(dep);
+          });
+          order.push(node);
+        };
+        
+        Object.keys(graph).forEach(visit);
+        return order;
+      }
+    }
+
+    // Test Functions
+    function testBasicFormulas() {
+      const parser = new formulaParser.Parser();
+      
+      const tests = [
+        { formula: 'SUM(10, 20, 30)', expected: 60 },
+        { formula: 'AVERAGE(10, 20, 30)', expected: 20 },
+        { formula: 'IF(5 > 3, "yes", "no")', expected: 'yes' },
+        { formula: 'MAX(15, 42, 8, 23)', expected: 42 },
+        { formula: 'ROUND(3.14159, 2)', expected: 3.14 }
+      ];
+
+      let html = '<h3>Basic Formula Tests</h3><table><tr><th>Formula</th><th>Result</th><th>Status</th></tr>';
+      
+      tests.forEach(test => {
+        const result = parser.parse(test.formula);
+        const pass = result.result === test.expected;
+        html += `<tr>
+          <td><code>${test.formula}</code></td>
+          <td>${result.result}</td>
+          <td>${pass ? '✅' : '❌'}</td>
+        </tr>`;
+      });
+      
+      html += '</table>';
+      document.getElementById('results').innerHTML = html;
+    }
+
+    function testInvoiceCalculation() {
+      const formulaFields = [
+        { fieldname: 'subtotal', formula: 'unit_price * quantity' },
+        { fieldname: 'discount', formula: 'IF(subtotal > 1000, subtotal * 0.1, 0)' },
+        { fieldname: 'tax', formula: '(subtotal - discount) * 0.1' },
+        { fieldname: 'total', formula: 'subtotal - discount + tax' }
+      ];
+
+      const invoice = {
+        unit_price: 250,
+        quantity: 5
+      };
+
+      const linkedDocs = {
+        customer: {
+          credit_limit: 10000,
+          name: 'Acme Corp'
+        }
+      };
+
+      const result = window.formulaSystem.calculateFormulas(invoice, formulaFields, linkedDocs);
+
+      let html = '<h3>Invoice Calculation</h3>';
+      html += '<table><tr><th>Field</th><th>Value</th><th>Type</th></tr>';
+      html += `<tr><td>Unit Price</td><td>$${result.unit_price}</td><td>Base</td></tr>`;
+      html += `<tr><td>Quantity</td><td>${result.quantity}</td><td>Base</td></tr>`;
+      html += `<tr><td>Subtotal</td><td class="calculated">$${result.subtotal}</td><td>Calculated</td></tr>`;
+      html += `<tr><td>Discount (10% over $1000)</td><td class="calculated">$${result.discount}</td><td>Calculated</td></tr>`;
+      html += `<tr><td>Tax (10%)</td><td class="calculated">$${result.tax.toFixed(2)}</td><td>Calculated</td></tr>`;
+      html += `<tr><td><strong>Total</strong></td><td class="calculated"><strong>$${result.total.toFixed(2)}</strong></td><td>Calculated</td></tr>`;
+      html += '</table>';
+
+      document.getElementById('results').innerHTML = html;
+    }
+
+    function testOpportunityRisk() {
+      const formulaFields = [
+        { fieldname: 'days_to_close', formula: 'DATEDIFF(TODAY(), close_date, "days")' },
+        { fieldname: 'commission', formula: 'IF(amount > 100000, amount * 0.05, amount * 0.03)' },
+        { fieldname: 'risk_score', formula: 'IF(days_to_close < 0, 100, IF(days_to_close > 90, 75, 25))' }
+      ];
+
+      const opportunity = {
+        amount: 150000,
+        close_date: '2025-12-31',
+        account_name: 'TechCorp'
+      };
+
+      const result = window.formulaSystem.calculateFormulas(opportunity, formulaFields);
+
+      let html = '<h3>Opportunity Risk Analysis</h3>';
+      html += '<table><tr><th>Field</th><th>Value</th></tr>';
+      html += `<tr><td>Amount</td><td>$${result.amount.toLocaleString()}</td></tr>`;
+      html += `<tr><td>Close Date</td><td>${result.close_date}</td></tr>`;
+      html += `<tr><td>Days to Close</td><td class="calculated">${result.days_to_close} days</td></tr>`;
+      html += `<tr><td>Commission (5% over $100k)</td><td class="calculated">$${result.commission.toLocaleString()}</td></tr>`;
+      html += `<tr><td>Risk Score</td><td class="calculated">${result.risk_score}</td></tr>`;
+      html += '</table>';
+
+      document.getElementById('results').innerHTML = html;
+    }
+
+    function testCrossDocs() {
+      const formulaFields = [
+        { fieldname: 'subtotal', formula: 'unit_price * quantity' },
+        { fieldname: 'customer_credit_limit', formula: 'customer.credit_limit' },
+        { fieldname: 'customer_discount_rate', formula: 'customer.discount_rate' },
+        { fieldname: 'discount', formula: 'subtotal * customer.discount_rate' },
+        { fieldname: 'total', formula: 'subtotal - discount' },
+        { fieldname: 'within_credit', formula: 'IF(total <= customer.credit_limit, "Yes ✅", "No ❌")' }
+      ];
+
+      const invoice = {
+        unit_price: 500,
+        quantity: 10
+      };
+
+      const linkedDocs = {
+        customer: {
+          name: 'Acme Corp',
+          credit_limit: 6000,
+          discount_rate: 0.15
+        }
+      };
+
+      const result = window.formulaSystem.calculateFormulas(invoice, formulaFields, linkedDocs);
+
+      let html = '<h3>Cross-Document Reference Example</h3>';
+      html += '<div class="result"><strong>Customer:</strong> ' + linkedDocs.customer.name + '</div>';
+      html += '<table><tr><th>Field</th><th>Value</th><th>Source</th></tr>';
+      html += `<tr><td>Unit Price</td><td>$${result.unit_price}</td><td>Invoice</td></tr>`;
+      html += `<tr><td>Quantity</td><td>${result.quantity}</td><td>Invoice</td></tr>`;
+      html += `<tr><td>Subtotal</td><td class="calculated">$${result.subtotal}</td><td>Calculated</td></tr>`;
+      html += `<tr><td>Customer Credit Limit</td><td class="calculated">$${result.customer_credit_limit}</td><td>customer.credit_limit</td></tr>`;
+      html += `<tr><td>Customer Discount Rate</td><td class="calculated">${(result.customer_discount_rate * 100)}%</td><td>customer.discount_rate</td></tr>`;
+      html += `<tr><td>Discount</td><td class="calculated">$${result.discount}</td><td>Calculated</td></tr>`;
+      html += `<tr><td><strong>Total</strong></td><td class="calculated"><strong>$${result.total}</strong></td><td>Calculated</td></tr>`;
+      html += `<tr><td>Within Credit Limit?</td><td class="calculated">${result.within_credit}</td><td>Calculated</td></tr>`;
+      html += '</table>';
+
+      document.getElementById('results').innerHTML = html;
+    }
+  </script>
+</body>
+</html>
