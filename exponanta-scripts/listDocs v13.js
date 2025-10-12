@@ -1,5 +1,5 @@
 
-//v13 - added navipage
+//v13 - added navipage stopeed here https://claude.ai/chat/0107c770-024f-4fe9-9ed8-9e0bcaffcbac
 /**
  * Field Renderer Registry  * Each fieldtype has display and edit renderers
  */
