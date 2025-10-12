@@ -1,0 +1,389 @@
+Frappe-like Navigation Architecture - Broader View
+Your Current URL Pattern
+/                           → Dashboard/Home
+/{doctype}                  → List View (MainGrid)
+/{doctype}/{name}           → Form View (Document Detail)
+This is exactly Frappe's pattern. Good foundation!
+
+Key Views in Frappe Architecture
+1. Workspace/Module View (You might be missing this)
+What it is: Landing page for a module (like "Sales", "Buying", "HR")
+Frappe pattern:
+/app/sales                  → Sales workspace
+  - Quick access cards
+  - Shortcuts to common doctypes
+  - Reports dashboard
+  - Key metrics
+Your equivalent:
+/                           → Main workspace
+  - Cards for each doctype
+  - Recent documents
+  - Quick create buttons
+React Component Stack:
+<App>
+  <Workspace>
+    <WorkspaceCard doctype="Sales Invoice" />
+    <WorkspaceCard doctype="Customer" />
+    <WorkspaceCard doctype="Item" />
+    <QuickStats />
+    <RecentDocuments />
+  </Workspace>
+</App>
+
+2. List View (You have: MainGrid)
+URL: /{doctype}
+What it shows:
+
+Table of all documents of that type
+Filters
+Search
+Sorting
+Bulk actions
+Create new button
+
+React Component Stack:
+<App>
+  <NavBar doctype="Sales Invoice" />
+  <ListView doctype="Sales Invoice">
+    <ListHeader>
+      <SearchBar />
+      <FilterPanel />
+      <CreateButton />
+    </ListHeader>
+    <MainGrid 
+      doctype="Sales Invoice"
+      filters={...}
+      onRowClick={(name) => navigate(`/Sales Invoice/${name}`)}
+    />
+    <ListFooter>
+      <Pagination />
+      <BulkActions />
+    </ListFooter>
+  </ListView>
+</App>
+Your MainGrid is nested inside a ListView wrapper.
+
+3. Form View (You have: UniversalForm)
+URL: /{doctype}/{name}
+What it shows:
+
+Document details
+Edit fields
+Related documents
+Timeline
+Actions
+
+React Component Stack:
+<App>
+  <NavBar 
+    breadcrumbs={['Sales Invoice', 'ACC-SINV-2025-00004']}
+    actions={[Save, Submit, Print]}
+  />
+  <FormLayout>
+    <FormSidebar>
+      <RelatedDocs />
+      <Attachments />
+      <Timeline />
+    </FormSidebar>
+    <FormMain>
+      <UniversalForm doctype="Sales Invoice" name="ACC-SINV-2025-00004">
+        <FormHeader />
+        <FormTabs>
+          <FormTab label="Details">
+            <FormSections />
+          </FormTab>
+          <FormTab label="Items">
+            <ChildTable />
+          </FormTab>
+        </FormTabs>
+      </UniversalForm>
+    </FormMain>
+  </FormLayout>
+</App>
+Your UniversalForm should be wrapped in FormLayout.
+
+4. Report View (You likely need this)
+URL: /{doctype}/report/{report-name}
+What it shows:
+
+Filtered/aggregated data
+Charts
+Pivot tables
+Export options
+
+React Component Stack:
+<App>
+  <NavBar />
+  <ReportView doctype="Sales Invoice" reportName="Sales Analytics">
+    <ReportFilters />
+    <ReportChart type="bar" />
+    <ReportGrid 
+      columns={...}
+      data={aggregated}
+    />
+    <ExportButton />
+  </ReportView>
+</App>
+
+5. Kanban/Card View (Alternative to List)
+URL: /{doctype}/kanban
+What it shows:
+
+Cards organized by status
+Drag & drop workflow
+Visual pipeline
+
+React Component Stack:
+<App>
+  <NavBar />
+  <KanbanView doctype="Sales Invoice">
+    <KanbanColumn status="Draft">
+      <KanbanCard name="SI-001" />
+      <KanbanCard name="SI-002" />
+    </KanbanColumn>
+    <KanbanColumn status="Submitted">
+      <KanbanCard name="SI-003" />
+    </KanbanColumn>
+  </KanbanView>
+</App>
+
+6. Calendar View (For date-based doctypes)
+URL: /{doctype}/calendar
+What it shows:
+
+Documents on timeline
+Scheduling
+Date-based navigation
+
+React Component Stack:
+<App>
+  <NavBar />
+  <CalendarView doctype="Sales Invoice">
+    <CalendarGrid />
+    <CalendarEvents />
+  </CalendarView>
+</App>
+
+7. Dashboard View (Analytics)
+URL: /{module}/dashboard
+What it shows:
+
+KPI cards
+Charts
+Trending data
+Quick insights
+
+React Component Stack:
+<App>
+  <NavBar />
+  <Dashboard module="Sales">
+    <MetricCard title="Total Revenue" value="$1.2M" />
+    <Chart type="line" data={...} />
+    <TopCustomers limit={10} />
+  </Dashboard>
+</App>
+
+Complete React Component Hierarchy
+<App>
+  │
+  ├── <Router>
+  │   │
+  │   ├── / → <Workspace>
+  │   │        ├── <WorkspaceHeader />
+  │   │        ├── <ModuleCards />
+  │   │        └── <QuickLinks />
+  │   │
+  │   ├── /{doctype} → <ListView>
+  │   │                 ├── <NavBar />
+  │   │                 ├── <ListControls>
+  │   │                 │    ├── <SearchBar />
+  │   │                 │    ├── <FilterPanel />
+  │   │                 │    └── <ViewSwitcher>
+  │   │                 │         (List/Card/Kanban)
+  │   │                 ├── <MainGrid /> or <CardView /> or <KanbanView />
+  │   │                 └── <ListFooter />
+  │   │
+  │   ├── /{doctype}/{name} → <FormLayout>
+  │   │                        ├── <NavBar>
+  │   │                        │    └── <Breadcrumbs />
+  │   │                        ├── <FormSidebar>
+  │   │                        │    ├── <RelatedDocs />
+  │   │                        │    ├── <Attachments />
+  │   │                        │    └── <Timeline />
+  │   │                        └── <FormMain>
+  │   │                             └── <UniversalForm>
+  │   │                                  ├── <FormHeader>
+  │   │                                  │    └── <FormActions />
+  │   │                                  ├── <FormTabs />
+  │   │                                  │    └── <FormTab>
+  │   │                                  │         └── <FormSections>
+  │   │                                  │              └── <FormSection>
+  │   │                                  │                   └── <FormFields>
+  │   │                                  │                        └── <FormField>
+  │   │                                  │                             └── pb.renderField()
+  │   │                                  └── <ChildTables>
+  │   │                                       └── <ChildTable>
+  │   │
+  │   ├── /{doctype}/report/{name} → <ReportView>
+  │   │                               ├── <ReportFilters />
+  │   │                               ├── <ReportChart />
+  │   │                               └── <ReportGrid />
+  │   │
+  │   └── /{doctype}/dashboard → <DashboardView>
+  │                               ├── <MetricCards />
+  │                               └── <Charts />
+  │
+  └── <GlobalComponents>
+       ├── <NavBar /> (persistent across all views)
+       ├── <SearchModal /> (global search)
+       ├── <NotificationCenter />
+       └── <QuickCreate /> (+ button modal)
+
+Navigation Flow
+User Journey 1: Browse → View
+Workspace
+  ↓ Click "Sales Invoice" card
+ListView (/Sales Invoice)
+  ↓ Click row "ACC-SINV-2025-00004"
+FormView (/Sales Invoice/ACC-SINV-2025-00004)
+User Journey 2: Create New
+ListView (/Sales Invoice)
+  ↓ Click "+ New"
+FormView (/Sales Invoice/new)
+  ↓ After save, redirect to
+FormView (/Sales Invoice/ACC-SINV-2025-00005)
+User Journey 3: Search → Open
+Any View
+  ↓ Global search (Ctrl+K)
+SearchModal
+  ↓ Select "ACC-SINV-2025-00004"
+FormView (/Sales Invoice/ACC-SINV-2025-00004)
+
+State Management per View
+ListView State:
+javascript{
+  doctype: 'Sales Invoice',
+  view: 'list', // or 'card' or 'kanban'
+  filters: { status: 'Draft', customer: 'CUST-001' },
+  searchTerm: '',
+  selectedRows: ['SI-001', 'SI-002'],
+  sort: { field: 'posting_date', order: 'desc' },
+  pagination: { page: 1, pageSize: 20 }
+}
+FormView State:
+javascript{
+  doctype: 'Sales Invoice',
+  name: 'ACC-SINV-2025-00004',
+  status: 'dirty', // or 'saving', 'saved', 'submitted'
+  schema: {...},
+  formData: {...},
+  originalData: {...}, // for detecting changes
+  validation: { customer: 'Required field' },
+  activeTab: 'items',
+  expandedSections: ['customer_details', 'items']
+}
+
+Routing Strategy
+Option 1: React Router (Recommended)
+javascript<BrowserRouter>
+  <Routes>
+    <Route path="/" element={<Workspace />} />
+    <Route path="/:doctype" element={<ListView />} />
+    <Route path="/:doctype/:name" element={<FormView />} />
+    <Route path="/:doctype/report/:reportName" element={<ReportView />} />
+    <Route path="/:doctype/dashboard" element={<DashboardView />} />
+  </Routes>
+</BrowserRouter>
+Option 2: Hash Routing (Simpler)
+javascript// Current view from window.location.hash
+#/Sales Invoice                → ListView
+#/Sales Invoice/ACC-SINV-001   → FormView
+#/Sales Invoice/report/sales   → ReportView
+
+What You're Missing (Priority Order)
+High Priority:
+
+ListView Wrapper - MainGrid needs filters, search, pagination controls
+NavBar Component - Breadcrumbs, actions, user menu
+FormLayout Wrapper - Sidebar, main area, proper spacing
+Router Integration - URL-based navigation
+Global Search - Cmd+K to search all documents
+
+Medium Priority:
+
+Workspace Home - Landing page with cards
+FormSidebar - Related docs, attachments, timeline
+View Switcher - Toggle between List/Card/Kanban
+Report View - Analytics and filtered reports
+Form Actions - Save/Submit/Print buttons
+
+Lower Priority:
+
+Dashboard View - Charts and KPIs
+Calendar View - For date-based doctypes
+Kanban View - Workflow visualization
+Quick Create Modal - Global + button
+Notification Center - Real-time updates
+
+
+Component Reusability
+Shared Components:
+
+<NavBar /> - Used everywhere
+<SearchBar /> - Used in ListView and globally
+<FilterPanel /> - Used in ListView and Reports
+<Pagination /> - Used in ListView and Reports
+pb.renderField() - Used in Forms, Reports, everywhere
+
+View-Specific:
+
+<MainGrid /> - Only ListView
+<UniversalForm /> - Only FormView
+<ReportChart /> - Only ReportView
+<KanbanBoard /> - Only KanbanView
+
+
+Data Flow Architecture
+URL Change
+  ↓
+Router matches route
+  ↓
+View Component mounts
+  ↓
+Fetches data from pb.*
+  ↓
+Renders with renderers
+  ↓
+User interacts
+  ↓
+State updates
+  ↓
+Auto-save / Navigation
+  ↓
+URL changes
+  ↓
+Cycle repeats
+
+Key Architectural Decisions
+1. Where does MainGrid live?
+Answer: Inside <ListView> wrapper, not standalone.
+2. Where does UniversalForm live?
+Answer: Inside <FormLayout> with sidebar, not standalone.
+3. Who manages navigation?
+Answer: Top-level <App> with Router, passes navigate functions down.
+4. Who fetches data?
+Answer: Each View component fetches its own data via pb.* functions.
+5. Who owns form state?
+Answer: <UniversalForm> owns it, but FormLayout can show status.
+6. How do views communicate?
+Answer: Via URL changes and global events (like document saved → refresh list).
+
+Recommended Next Steps
+
+Create ListView component that wraps MainGrid
+Create FormLayout component that wraps UniversalForm
+Add React Router for proper URL-based navigation
+Create NavBar component with breadcrumbs
+Add Workspace home page with doctype cards
+
+Your MainGrid and UniversalForm are solid building blocks. Now wrap them in proper view layouts and connect with routing!
