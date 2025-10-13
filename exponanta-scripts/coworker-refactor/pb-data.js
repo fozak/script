@@ -1,4 +1,4 @@
-// pb-data.js
+// v 14 b-data.js - TESTED
 
 // ==============================================
 // 📝 Schema Database Operations
@@ -58,7 +58,7 @@ pb.listDocs = async function (doctype = "", query = {}, options = {}) {
         .map((f) => f.fieldname);
 
       // Always include essential fields
-      fields = ["name", ...viewFields];
+      fields = ["name", "doctype", ...viewFields];
     }
   }
 
@@ -358,40 +358,29 @@ pb._buildPrismaOrderBy = function (orderBy) {
     .join(",");
 };
 
+
+
 /**
  * Build PocketBase field list from array of field names
  */
-pb._buildFieldList = function (fields) {
+pb._buildFieldList = function(fields) {
   if (!fields || fields.length === 0) return undefined;
-
-  const baseFields = ["name", "doctype"];
+  
   const selectedFields = [];
-
-  fields.forEach((field) => {
-    if (baseFields.includes(field)) {
-      selectedFields.push(field);
-    } else {
-      selectedFields.push(`data.${field}`);
-    }
+  
+  // Add all requested fields under data.* namespace
+  fields.forEach(field => {
+    selectedFields.push(`data.${field}`);
   });
-
-  // Always include essential fields
-  const essentialFields = ["name", "doctype"];
-  essentialFields.forEach((f) => {
-    if (!selectedFields.includes(f)) {
-      selectedFields.unshift(f);
-    }
-  });
-
-  return selectedFields.join(",");
+  
+  return selectedFields.join(',');
 };
 
 /**
  * Get proper field path for PocketBase queries
  */
-pb._getFieldPath = function (field) {
-  const baseFields = ["name", "doctype"];
-  return baseFields.includes(field) ? field : `data.${field}`;
+pb._getFieldPath = function(field) {
+  return `data.${field}`;
 };
 
 //*END OF listDocs.js *//
