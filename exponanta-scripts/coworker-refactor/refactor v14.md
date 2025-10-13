@@ -1,3 +1,19 @@
+
+issue 
+
+my data is DUBLICATING {
+  name: "TASK-2025-00003",
+  doctype: "Task",
+  id: "4o6f1m2blcb2osx", 
+  data: {
+    name: "TASK-2025-00003",
+    doctype: "Task",
+    project: "PROJ-0009",
+    status: "Open",
+    priority: "Low"
+  }
+}
+
 V14 refactor Combine Into Bigger, Manageable Pieces
 
 // https://claude.ai/chat/0107c770-024f-4fe9-9ed8-9e0bcaffcbac
@@ -395,8 +411,8 @@ html<!DOCTYPE html>
   <script src="https://unpkg.com/@tanstack/react-table@8.20.5/build/umd/index.production.js"></script>
   
   <!-- Your framework (in order) -->
-  <script src="pb-core.js"></script>        <!-- 1. Core, no dependencies -->
-  <script src="pb-data.js"></script>        <!-- 2. Data layer, needs core -->
+  <script src="pb-core.js"></script>        <!-- 1. Core, no dependencies pocket base init, pb available, -->
+  <script src="pb-data.js"></script>        <!-- 2. getSchema(), getList. navigate() Data layer, needs core -->
   <script src="pb-renderers.js"></script>   <!-- 3. Renderers, needs core -->
   <script src="pb-components.js"></script>  <!-- 4. Components, needs all above -->
   <script src="app.js"></script>            <!-- 5. Your app, needs framework -->

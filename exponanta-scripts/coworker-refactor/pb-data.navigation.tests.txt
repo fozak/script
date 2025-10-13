@@ -1,0 +1,49 @@
+Promise {<pending>}
+VM1597:498 ✅ Navigation complete: 
+{params: {…}, data: Array(14), schema: {…}, meta: null}
+VM1601:10 ✅ Test 1 passed
+VM1601:13 Test 2: Filtered list
+VM1597:469 🚀 Navigating to: 
+{doctype: 'User', query: {…}, options: {…}}
+11
+Fetch finished loading: GET "<URL>".
+VM1597:498 ✅ Navigation complete: 
+{params: {…}, data: Array(8), schema: {…}, meta: null}
+VM1601:16 ✅ Test 2 passed
+VM1601:19 Test 3: Single item
+VM1597:469 🚀 Navigating to: 
+{doctype: '', query: {…}, options: {…}}
+VM1597:498 ✅ Navigation complete: 
+{params: {…}, data: Array(1), schema: {…}, meta: null}
+VM1601:22 ✅ Test 3 passed
+VM1601:25 Test 4: Edit mode
+VM1597:469 🚀 Navigating to: 
+{doctype: '', query: {…}, options: {…}}
+Client.ts:346 Fetch finished loading: GET "http://127.0.0.1:8090/api/collections/item/records?page=1&perPage=1&filter=(name%20%3D%20%22Guest%22)".
+Client.ts:346 Fetch finished loading: GET "http://127.0.0.1:8090/api/collections/item/records?page=1&perPage=1&filter=(name%20%3D%20%22Guest%22)".
+VM1597:498 ✅ Navigation complete: 
+{params: {…}, data: Array(1), schema: {…}, meta: null}
+VM1601:28 ✅ Test 4 passed
+VM1601:31 Test 5: Browser back
+VM1597:535 ⬅️ Going back
+VM1597:574 🔙 Browser back/forward detected
+VM1597:577 📍 Restoring state: 
+{doctype: '', query: {…}, options: {…}}
+Client.ts:346 Fetch finished loading: GET "http://127.0.0.1:8090/api/collections/item/records?page=1&perPage=1&filter=(name%20%3D%20%22Guest%22)".
+VM1597:596 ✅ State restored: 
+{params: {…}, data: Array(1), schema: {…}, meta: null}
+VM1601:35 ✅ Test 5 passed
+VM1601:38 Test 6: URL encoding
+VM1597:469 🚀 Navigating to: 
+{doctype: 'User', query: {…}, options: {…}}
+VM1597:498 ✅ Navigation complete: 
+{params: {…}, data: Array(14), schema: {…}, meta: null}
+VM1601:41 ✅ Test 6 passed
+VM1601:44 Test 7: Refresh
+VM1597:549 🔄 Refreshing current view
+VM1597:469 🚀 Navigating to: 
+{doctype: 'User', query: {…}, options: {…}}
+VM1597:498 ✅ Navigation complete: 
+{params: {…}, data: Array(14), schema: {…}, meta: null}
+VM1601:47 ✅ Test 7 passed
+VM1601:49 🎉 All tests passed!

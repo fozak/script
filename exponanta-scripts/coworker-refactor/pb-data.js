@@ -1,3 +1,5 @@
+// pb-data.js
+
 // ==============================================
 // 📝 Schema Database Operations
 // ==============================================
@@ -8,17 +10,19 @@
  */
 pb.getSchema = async function (doctype) {
   try {
-    const schemaResult = await this.collection(window.MAIN_COLLECTION).getList(1, 1, {
-      filter: `doctype = "Schema" && data._schema_doctype = "${doctype}"`
-    });
+    const schemaResult = await this.collection(window.MAIN_COLLECTION).getList(
+      1,
+      1,
+      {
+        filter: `doctype = "Schema" && data._schema_doctype = "${doctype}"`,
+      }
+    );
     return schemaResult.items.length > 0 ? schemaResult.items[0].data : null;
   } catch (error) {
     console.error(`Error fetching schema for doctype "${doctype}":`, error);
     return null;
   }
 };
-
-
 
 //---
 
@@ -54,7 +58,7 @@ pb.listDocs = async function (doctype = "", query = {}, options = {}) {
         .map((f) => f.fieldname);
 
       // Always include essential fields
-      fields = ["name", "doctype", "id", "created", "updated", ...viewFields];
+      fields = ["name", ...viewFields];
     }
   }
 
@@ -122,7 +126,7 @@ pb.listDocs = async function (doctype = "", query = {}, options = {}) {
 
   // Auto-infer schema if not fetched yet and schema is needed
   if (includeSchema && !schema && items.length > 0) {
-    const inferredDoctype = items[0].doctype; // Use original item for doctype
+    const inferredDoctype = items[0].data?.doctype;
     if (inferredDoctype) {
       schema = await this.getSchema(inferredDoctype);
     }
@@ -154,19 +158,17 @@ pb.listDocs = async function (doctype = "", query = {}, options = {}) {
   return response;
 };
 
-
-
 /**
  * Build PocketBase filter from Prisma where clause
  */
-pb._buildPrismaWhere = function(doctype, where) {
+pb._buildPrismaWhere = function (doctype, where) {
   const parts = [];
-  
+
   // Add doctype filter
   if (doctype) {
     parts.push(`doctype = "${doctype}"`);
   }
-  
+
   // Build where clause
   if (where) {
     const whereParts = this._buildWhereClause(where);
@@ -174,140 +176,144 @@ pb._buildPrismaWhere = function(doctype, where) {
       parts.push(`(${whereParts})`);
     }
   }
-  
-  return parts.length > 0 ? parts.join(' && ') : undefined;
+
+  return parts.length > 0 ? parts.join(" && ") : undefined;
 };
 
 /**
  * Recursively build where clause from Prisma syntax
  */
-pb._buildWhereClause = function(where) {
-  if (!where || typeof where !== 'object') return '';
-  
+pb._buildWhereClause = function (where) {
+  if (!where || typeof where !== "object") return "";
+
   const parts = [];
-  
+
   for (const [key, value] of Object.entries(where)) {
     // Handle OR operator
-    if (key === 'OR') {
+    if (key === "OR") {
       if (!Array.isArray(value) || value.length === 0) continue;
       const orParts = value
-        .map(condition => this._buildWhereClause(condition))
+        .map((condition) => this._buildWhereClause(condition))
         .filter(Boolean);
       if (orParts.length > 0) {
-        parts.push(`(${orParts.join(' || ')})`);
+        parts.push(`(${orParts.join(" || ")})`);
       }
       continue;
     }
-    
+
     // Handle AND operator
-    if (key === 'AND') {
+    if (key === "AND") {
       if (!Array.isArray(value) || value.length === 0) continue;
       const andParts = value
-        .map(condition => this._buildWhereClause(condition))
+        .map((condition) => this._buildWhereClause(condition))
         .filter(Boolean);
       if (andParts.length > 0) {
-        parts.push(`(${andParts.join(' && ')})`);
+        parts.push(`(${andParts.join(" && ")})`);
       }
       continue;
     }
-    
+
     // Handle NOT operator
-    if (key === 'NOT') {
+    if (key === "NOT") {
       const notClause = this._buildWhereClause(value);
       if (notClause) {
         parts.push(`!(${notClause})`);
       }
       continue;
     }
-    
+
     // Regular field
     const fieldPath = this._getFieldPath(key);
-    
+
     // Simple equality (string, number, boolean, null)
     if (value === null || value === undefined) {
       parts.push(`${fieldPath} = null`);
       continue;
     }
-    
-    if (typeof value === 'string') {
+
+    if (typeof value === "string") {
       parts.push(`${fieldPath} = "${value}"`);
       continue;
     }
-    
-    if (typeof value === 'number') {
+
+    if (typeof value === "number") {
       parts.push(`${fieldPath} = ${value}`);
       continue;
     }
-    
-    if (typeof value === 'boolean') {
+
+    if (typeof value === "boolean") {
       parts.push(`${fieldPath} = ${value}`);
       continue;
     }
-    
+
     // Object with operators
-    if (typeof value === 'object' && !Array.isArray(value)) {
+    if (typeof value === "object" && !Array.isArray(value)) {
       for (const [op, opValue] of Object.entries(value)) {
         switch (op) {
-          case 'equals':
-            if (typeof opValue === 'string') {
+          case "equals":
+            if (typeof opValue === "string") {
               parts.push(`${fieldPath} = "${opValue}"`);
             } else {
               parts.push(`${fieldPath} = ${opValue}`);
             }
             break;
-          
-          case 'in':
+
+          case "in":
             if (Array.isArray(opValue) && opValue.length > 0) {
-              const inValues = opValue.map(v => 
-                typeof v === 'string' ? `${fieldPath} = "${v}"` : `${fieldPath} = ${v}`
+              const inValues = opValue.map((v) =>
+                typeof v === "string"
+                  ? `${fieldPath} = "${v}"`
+                  : `${fieldPath} = ${v}`
               );
-              parts.push(`(${inValues.join(' || ')})`);
+              parts.push(`(${inValues.join(" || ")})`);
             }
             break;
-          
-          case 'notIn':
+
+          case "notIn":
             if (Array.isArray(opValue) && opValue.length > 0) {
-              const notInValues = opValue.map(v => 
-                typeof v === 'string' ? `${fieldPath} != "${v}"` : `${fieldPath} != ${v}`
+              const notInValues = opValue.map((v) =>
+                typeof v === "string"
+                  ? `${fieldPath} != "${v}"`
+                  : `${fieldPath} != ${v}`
               );
-              parts.push(`(${notInValues.join(' && ')})`);
+              parts.push(`(${notInValues.join(" && ")})`);
             }
             break;
-          
-          case 'contains':
+
+          case "contains":
             parts.push(`${fieldPath} ~ "${opValue}"`);
             break;
-          
-          case 'startsWith':
+
+          case "startsWith":
             parts.push(`${fieldPath} ~ "^${opValue}"`);
             break;
-          
-          case 'endsWith':
+
+          case "endsWith":
             parts.push(`${fieldPath} ~ "${opValue}$"`);
             break;
-          
-          case 'gt':
+
+          case "gt":
             parts.push(`${fieldPath} > ${opValue}`);
             break;
-          
-          case 'gte':
+
+          case "gte":
             parts.push(`${fieldPath} >= ${opValue}`);
             break;
-          
-          case 'lt':
+
+          case "lt":
             parts.push(`${fieldPath} < ${opValue}`);
             break;
-          
-          case 'lte':
+
+          case "lte":
             parts.push(`${fieldPath} <= ${opValue}`);
             break;
-          
-          case 'not':
+
+          case "not":
             if (opValue === null) {
               parts.push(`${fieldPath} != null`);
-            } else if (typeof opValue === 'string') {
+            } else if (typeof opValue === "string") {
               parts.push(`${fieldPath} != "${opValue}"`);
-            } else if (typeof opValue === 'object') {
+            } else if (typeof opValue === "object") {
               // Nested NOT with operators
               const notClause = this._buildWhereClause({ [key]: opValue });
               if (notClause) {
@@ -321,69 +327,378 @@ pb._buildWhereClause = function(where) {
       }
     }
   }
-  
-  return parts.join(' && ');
+
+  return parts.join(" && ");
 };
 
 /**
  * Build PocketBase sort from Prisma orderBy
  * @param {Object|Array} orderBy - { field: 'asc'|'desc' } or [{ field: 'asc' }]
  */
-pb._buildPrismaOrderBy = function(orderBy) {
+pb._buildPrismaOrderBy = function (orderBy) {
   if (!orderBy) return undefined;
-  
+
   // Handle array format: [{ name: 'asc' }, { created: 'desc' }]
   if (Array.isArray(orderBy)) {
-    return orderBy.map(obj => {
-      const [field, order] = Object.entries(obj)[0];
-      const fieldPath = this._getFieldPath(field);
-      return order === 'desc' ? `-${fieldPath}` : fieldPath;
-    }).join(',');
+    return orderBy
+      .map((obj) => {
+        const [field, order] = Object.entries(obj)[0];
+        const fieldPath = this._getFieldPath(field);
+        return order === "desc" ? `-${fieldPath}` : fieldPath;
+      })
+      .join(",");
   }
-  
+
   // Handle object format: { name: 'asc', created: 'desc' }
   return Object.entries(orderBy)
     .map(([field, order]) => {
       const fieldPath = this._getFieldPath(field);
-      return order === 'desc' ? `-${fieldPath}` : fieldPath;
+      return order === "desc" ? `-${fieldPath}` : fieldPath;
     })
-    .join(',');
+    .join(",");
 };
 
 /**
  * Build PocketBase field list from array of field names
  */
-pb._buildFieldList = function(fields) {
+pb._buildFieldList = function (fields) {
   if (!fields || fields.length === 0) return undefined;
-  
-  const baseFields = ['id', 'name', 'doctype', 'created', 'updated', 'collectionId', 'collectionName'];
+
+  const baseFields = ["name", "doctype"];
   const selectedFields = [];
-  
-  fields.forEach(field => {
+
+  fields.forEach((field) => {
     if (baseFields.includes(field)) {
       selectedFields.push(field);
     } else {
       selectedFields.push(`data.${field}`);
     }
   });
-  
+
   // Always include essential fields
-  const essentialFields = ['id', 'name', 'doctype'];
-  essentialFields.forEach(f => {
+  const essentialFields = ["name", "doctype"];
+  essentialFields.forEach((f) => {
     if (!selectedFields.includes(f)) {
       selectedFields.unshift(f);
     }
   });
-  
-  return selectedFields.join(',');
+
+  return selectedFields.join(",");
 };
 
 /**
  * Get proper field path for PocketBase queries
  */
-pb._getFieldPath = function(field) {
-  const baseFields = ['id', 'name', 'doctype', 'created', 'updated'];
+pb._getFieldPath = function (field) {
+  const baseFields = ["name", "doctype"];
   return baseFields.includes(field) ? field : `data.${field}`;
 };
 
 //*END OF listDocs.js *//
+
+// ==========================================
+// pb.navigation - Self-contained navigation system
+// Requires: pb (from pb-core.js) and pb.listDocs (defined earlier in this file)
+// ==========================================
+
+pb.navigation = (function () {
+  "use strict";
+
+  const VERSION = "2.0.0";
+
+  // ==========================================
+  // Private State
+  // ==========================================
+
+  let currentList = null;
+  let isLoading = false;
+  const listeners = new Set();
+
+  // ==========================================
+  // Private Helper Functions
+  // ==========================================
+
+  function paramsToURL(params) {
+    try {
+      const compressed = btoa(JSON.stringify(params));
+      return `p=${compressed}`;
+    } catch (error) {
+      console.error("Failed to encode params:", error);
+      return "";
+    }
+  }
+
+  function urlToParams() {
+    try {
+      const searchParams = new URLSearchParams(window.location.search);
+      const compressed = searchParams.get("p");
+      if (!compressed) {
+        return { doctype: "", query: {}, options: {} };
+      }
+      return JSON.parse(atob(compressed));
+    } catch (error) {
+      console.error("Failed to decode URL params:", error);
+      return { doctype: "", query: {}, options: {} };
+    }
+  }
+
+  function validateParams(params) {
+    if (!params || typeof params !== "object") {
+      throw new Error("Invalid params. Expected: { doctype, query, options }");
+    }
+    return {
+      doctype: params.doctype || "",
+      query: params.query || {},
+      options: params.options || {},
+    };
+  }
+
+  function notify() {
+    listeners.forEach((callback) => {
+      try {
+        callback(currentList, isLoading);
+      } catch (error) {
+        console.error("Subscriber error:", error);
+      }
+    });
+  }
+
+  // ==========================================
+  // Public Functions
+  // ==========================================
+
+  async function navigate(params, replaceState = false) {
+    const fullParams = validateParams(params);
+
+    console.log("🚀 Navigating to:", fullParams);
+
+    isLoading = true;
+    notify();
+
+    try {
+      // Call pb.listDocs (defined earlier in pb-data.js)
+      const result = await pb.listDocs(
+        fullParams.doctype,
+        fullParams.query,
+        fullParams.options
+      );
+
+      // Update URL
+      const url = `?${paramsToURL(fullParams)}`;
+      if (replaceState) {
+        window.history.replaceState(fullParams, "", url);
+      } else {
+        window.history.pushState(fullParams, "", url);
+      }
+
+      // Update current list (source of truth)
+      currentList = {
+        params: fullParams,
+        data: result.data || [],
+        schema: result.schema || null,
+        meta: result.meta || null,
+      };
+
+      console.log("✅ Navigation complete:", currentList);
+
+      isLoading = false;
+      notify();
+
+      return currentList;
+    } catch (error) {
+      console.error("❌ Navigation error:", error);
+      isLoading = false;
+      notify();
+      throw error;
+    }
+  }
+
+  function subscribe(callback) {
+    if (typeof callback !== "function") {
+      throw new Error("Subscriber must be a function");
+    }
+
+    // Add subscriber
+    listeners.add(callback);
+
+    // Call immediately with current state
+    try {
+      callback(currentList, isLoading);
+    } catch (error) {
+      console.error("Initial subscriber call error:", error);
+    }
+
+    // Return unsubscribe function
+    return function unsubscribe() {
+      listeners.delete(callback);
+    };
+  }
+
+  function goBack() {
+    console.log("⬅️ Going back");
+    window.history.back();
+  }
+
+  function goForward() {
+    console.log("➡️ Going forward");
+    window.history.forward();
+  }
+
+  async function refresh() {
+    if (!currentList) {
+      console.warn("Nothing to refresh");
+      return null;
+    }
+    console.log("🔄 Refreshing current view");
+    return navigate(currentList.params, true);
+  }
+
+  function getCurrent() {
+    return currentList;
+  }
+
+  function getParams() {
+    return currentList?.params || null;
+  }
+
+  function canGoBack() {
+    return window.history.length > 1;
+  }
+
+  function getSubscriberCount() {
+    return listeners.size;
+  }
+
+  // ==========================================
+  // Browser Back/Forward Handler
+  // ==========================================
+
+  async function handlePopState(event) {
+    console.log("🔙 Browser back/forward detected");
+
+    const params = event.state || urlToParams();
+    console.log("📍 Restoring state:", params);
+
+    isLoading = true;
+    notify();
+
+    try {
+      const result = await pb.listDocs(
+        params.doctype || "",
+        params.query || {},
+        params.options || {}
+      );
+
+      currentList = {
+        params,
+        data: result.data || [],
+        schema: result.schema || null,
+        meta: result.meta || null,
+      };
+
+      console.log("✅ State restored:", currentList);
+    } catch (error) {
+      console.error("❌ Error restoring state:", error);
+    } finally {
+      isLoading = false;
+      notify();
+    }
+  }
+
+  // Install popstate listener
+  window.addEventListener("popstate", handlePopState);
+
+  // ==========================================
+  // Auto-Initialize from URL
+  // ==========================================
+
+  (async function init() {
+    const params = urlToParams();
+
+    // Only navigate if URL has params
+    if (params.doctype || Object.keys(params.query).length > 0) {
+      console.log("🎬 Initializing navigation from URL:", params);
+      await navigate(params, true);
+    } else {
+      console.log("💡 Navigation ready. No URL params to restore.");
+    }
+  })();
+
+  // ==========================================
+  // Public API
+  // ==========================================
+
+  return {
+    VERSION,
+    navigate,
+    subscribe,
+    goBack,
+    goForward,
+    refresh,
+    getCurrent,
+    getParams,
+    canGoBack,
+    getSubscriberCount,
+  };
+})();
+
+// ==========================================
+// pb.nav - Convenience Shortcuts
+// ==========================================
+
+pb.nav = {
+  // Quick navigate to list
+  list: (doctype, options = {}) => {
+    return pb.navigation.navigate({
+      doctype,
+      query: {},
+      options,
+    });
+  },
+
+  // Quick navigate to filtered list
+  filter: (doctype, where, options = {}) => {
+    return pb.navigation.navigate({
+      doctype,
+      query: { where },
+      options,
+    });
+  },
+
+  // Quick navigate to single item by name
+  item: (name, doctype = "", options = {}) => {
+    return pb.navigation.navigate({
+      doctype,
+      query: { where: { name }, take: 1 },
+      options,
+    });
+  },
+
+  // Navigate to item in edit mode
+  edit: (name, doctype = "") => {
+    return pb.navigation.navigate({
+      doctype,
+      query: { where: { name }, take: 1 },
+      options: { mode: "edit" },
+    });
+  },
+
+  // Navigate to item in view mode
+  view: (name, doctype = "") => {
+    return pb.navigation.navigate({
+      doctype,
+      query: { where: { name }, take: 1 },
+      options: { mode: "view" },
+    });
+  },
+
+  // Get current state
+  current: () => pb.navigation.getCurrent(),
+
+  // Navigation controls
+  back: () => pb.navigation.goBack(),
+  forward: () => pb.navigation.goForward(),
+  refresh: () => pb.navigation.refresh(),
+};
+
+console.log(`✅ pb.navigation v${pb.navigation.VERSION} loaded`);

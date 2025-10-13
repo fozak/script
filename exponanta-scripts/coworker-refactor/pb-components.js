@@ -1,0 +1,155 @@
+// pb-components.js - React Components
+
+// ============================================================================
+// INITIALIZE COMPONENTS NAMESPACE
+// ============================================================================
+
+pb.components = pb.components || {};
+
+// ============================================================================
+// DOCLINK COMPONENT - Uses pb.nav for navigation
+// ============================================================================
+
+pb.components.DocLink = function({ doctype, name, children, className = '' }) {
+  const { createElement: e } = React;
+  
+  return e('a', {
+    href: '#',
+    className: `${pb.BS.text.primary} hover:underline ${className}`,
+    onClick: (ev) => {
+      ev.preventDefault();
+      pb.nav.item(name, doctype);
+    },
+    onAuxClick: (ev) => {
+      if (ev.button === 1) {
+        ev.preventDefault();
+        pb.nav.item(name, doctype);
+      }
+    }
+  }, children);
+};
+
+// ============================================================================
+// BASE TABLE COMPONENT
+// ============================================================================
+
+pb.components.BaseTable = function({ data, columns }) {
+  const { createElement: e } = React;
+  
+  // Use window.ReactTable (the actual UMD export)
+  const table = window.ReactTable.useReactTable({
+    data,
+    columns,
+    getCoreRowModel: window.ReactTable.getCoreRowModel(),
+  });
+
+  return e('table', { className: pb.BS.table.base },
+    e('thead', null,
+      table.getHeaderGroups().map(headerGroup =>
+        e('tr', { key: headerGroup.id },
+          headerGroup.headers.map(header =>
+            e('th', { 
+              key: header.id,
+              className: pb.BS.table.th 
+            },
+              window.ReactTable.flexRender(
+                header.column.columnDef.header,
+                header.getContext()
+              )
+            )
+          )
+        )
+      )
+    ),
+    e('tbody', null,
+      table.getRowModel().rows.map(row =>
+        e('tr', { key: row.id },
+          row.getVisibleCells().map(cell =>
+            e('td', { 
+              key: cell.id,
+              className: pb.BS.table.td 
+            },
+              window.ReactTable.flexRender(
+                cell.column.columnDef.cell,
+                cell.getContext()
+              )
+            )
+          )
+        )
+      )
+    )
+  );
+};
+
+// ============================================================================
+// MAIN GRID - Subscribes to pb.navigation state
+// ============================================================================
+
+pb.components.MainGrid = function({ doctype }) {
+  const { createElement: e, useState, useEffect } = React;
+  const [currentList, setCurrentList] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    const unsubscribe = pb.navigation.subscribe((list, loading) => {
+      setCurrentList(list);
+      setIsLoading(loading);
+    });
+    
+    return unsubscribe;
+  }, []);
+
+  useEffect(() => {
+    const current = pb.navigation.getCurrent();
+    if (!current || current.params.doctype !== doctype) {
+      pb.nav.list(doctype);
+    }
+  }, [doctype]);
+
+  if (isLoading) {
+    return e('div', { className: 'p-4' }, 'Loading...');
+  }
+
+  if (!currentList || !currentList.data.length) {
+    return e('div', { className: 'p-4 text-gray-500' }, 
+      `No ${doctype} records found`
+    );
+  }
+
+  const { data, schema } = currentList;
+
+  if (!schema) {
+    return e('div', { className: 'p-4 text-red-500' }, 
+      'Schema not found'
+    );
+  }
+
+  const columns = schema.fields
+    .filter(f => f.in_list_view)
+    .map(field => ({
+      accessorKey: `data.${field.fieldname}`, // ❌ Remove 'data.???? '
+      header: field.label,
+      cell: ({ getValue, row }) => {
+        const value = getValue();
+        
+        if (field.fieldname === 'name' || field.in_list_view === 1) {
+          return e(pb.components.DocLink, {
+            doctype: row.original.doctype,
+            name: row.original.name
+          }, row.original.name);
+        }
+        
+        const rendered = pb.renderField(field, value, row.original);
+        return e('span', { 
+          dangerouslySetInnerHTML: { __html: rendered }
+        });
+      }
+    }));
+
+  return e('div', { className: 'p-4' },
+    e('h2', { className: 'text-2xl font-bold mb-4' }, doctype),
+    e(pb.components.BaseTable, { data, columns })
+  );
+};
+
+console.log('✅ pb-components.js loaded');
