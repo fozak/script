@@ -24,23 +24,26 @@ pb.getSchema = async function (doctype) {
   }
 };
 
-//---
+//--- Schema All is added
 
 pb.listDocs = async function (doctype = "", query = {}, options = {}) {
   const { where, orderBy, take, skip, select } = query;
 
   const {
     includeMeta = false,
-    includeSchema = true, // Default to true
+    includeSchema = true,
     view = "list",
   } = options;
 
-  // Auto-derive fields from schema if not explicitly provided
   let fields = select;
   let schema = null;
 
-  if (!fields && doctype) {
-    schema = await this.getSchema(doctype);
+  // ✅ Special case: "All" means empty doctype for query, but fetch "All" schema
+  const isAllView = doctype === "All";
+  const queryDoctype = isAllView ? "" : doctype;
+
+  if (!fields && (doctype || isAllView)) {
+    schema = await this.getSchema(doctype || "All");
     if (schema && schema.fields) {
       const viewFieldMap = {
         list: "in_list_view",
@@ -51,49 +54,38 @@ pb.listDocs = async function (doctype = "", query = {}, options = {}) {
 
       const viewField = viewFieldMap[view] || "in_list_view";
 
-      // Get fields marked for this view
       const viewFields = schema.fields
         .filter((f) => f[viewField])
         .map((f) => f.fieldname);
 
-      // Always include name and doctype, plus view fields
       fields = ["name", "doctype", ...viewFields];
     }
   }
 
-  // Handle special case: fetch all fields
   if (fields === "*") {
     fields = undefined;
   }
 
-  // Build PocketBase filter from Prisma where clause
-  const pbFilter = this._buildPrismaWhere(doctype, where);
-
-  // Build PocketBase sort from Prisma orderBy
+  // ✅ Use empty doctype for query if "All" view
+  const pbFilter = this._buildPrismaWhere(queryDoctype, where);
   const pbSort = orderBy ? this._buildPrismaOrderBy(orderBy) : undefined;
-
-  // Build field selection
   const pbFields = fields ? this._buildFieldList(fields) : undefined;
 
-  // Build query parameters
   const params = {
     filter: pbFilter,
     sort: pbSort,
     fields: pbFields,
   };
 
-  // Remove undefined params
   Object.keys(params).forEach((key) => {
     if (params[key] === undefined) delete params[key];
   });
 
-  // Execute query
   let result;
   let items;
   let metaData;
 
   if (take !== undefined) {
-    // Paginated query (Prisma uses take/skip, PocketBase uses page/perPage)
     const page = skip ? Math.floor(skip / take) + 1 : 1;
     result = await this.collection(window.MAIN_COLLECTION).getList(
       page,
@@ -109,7 +101,6 @@ pb.listDocs = async function (doctype = "", query = {}, options = {}) {
       hasMore: result.page < result.totalPages,
     };
   } else {
-    // Full list query
     items = await this.collection(window.MAIN_COLLECTION).getFullList(params);
     metaData = {
       total: items.length,
@@ -120,10 +111,8 @@ pb.listDocs = async function (doctype = "", query = {}, options = {}) {
     };
   }
 
-  // Extract nested data only (flatten items)
-  const flattenedItems = items.map((item) => item.data);
+  const flattenedItems = items.map((item) => item.data).filter(Boolean);
 
-  // Auto-infer schema if not fetched yet and schema is needed
   if (includeSchema && !schema && items.length > 0) {
     const inferredDoctype = items[0].data?.doctype;
     if (inferredDoctype) {
@@ -131,25 +120,14 @@ pb.listDocs = async function (doctype = "", query = {}, options = {}) {
     }
   }
 
-  // ALWAYS return consistent structure
   const response = {
     data: flattenedItems,
   };
 
-  // Add schema if available AND requested
   if (includeSchema && schema) {
-    if (fields) {
-      // Filter schema fields if specific fields were requested
-      response.schema = {
-        ...schema,
-        fields: schema.fields?.filter((f) => fields.includes(f.fieldname)),
-      };
-    } else {
-      response.schema = schema;
-    }
+    response.schema = schema;
   }
 
-  // Add meta if requested
   if (includeMeta) {
     response.meta = metaData;
   }

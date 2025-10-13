@@ -489,3 +489,138 @@ pb-renderers-complex.js (Link, DynamicLink, Attach, RichText)
 
 But not before!
 Don't pre-optimize. Start with 5 files. Split only when actually needed.
+
+summary pb.components.UniversalSearchInput = function() {
+  const { createElement: e, useState, useEffect, useRef } = React;
+  const [searchText, setSearchText] = useState('');
+  const [results, setResults] = useState([]);
+  const [doctypes, setDoctypes] = useState([]);  // ✅ Dynamic
+  const [isSearching, setIsSearching] = useState(false);
+  const [showDropdown, setShowDropdown] = useState(false);
+  const searchRef = useRef(null);
+  
+  // ✅ Get unique doctypes from "All" view
+  useEffect(() => {
+    pb.listDocs("All", {}, { includeSchema: false })
+      .then(result => {
+        // Extract unique doctypes from the data
+        const uniqueDoctypes = [...new Set(
+          result.data.map(item => item.doctype).filter(Boolean)
+        )].sort();
+        
+        console.log('✅ Discovered doctypes:', uniqueDoctypes);
+        setDoctypes(uniqueDoctypes);
+      })
+      .catch(err => {
+        console.error('Failed to load doctypes:', err);
+      });
+  }, []);
+  
+  // Close dropdown on outside click
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (searchRef.current && !searchRef.current.contains(event.target)) {
+        setShowDropdown(false);
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+  
+  // Search function
+  const performSearch = async (text) => {
+    if (text.length < 2 || doctypes.length === 0) {
+      setResults([]);
+      setShowDropdown(false);
+      return;
+    }
+    
+    setIsSearching(true);
+    setShowDropdown(true);
+    
+    try {
+      const searchPromises = doctypes.map(async (doctype) => {
+        try {
+          const result = await pb.listDocs(doctype, {
+            where: { name: { contains: text } },
+            take: 5
+          });
+          return result.data || [];
+        } catch (error) {
+          return [];
+        }
+      });
+      
+      const allResults = await Promise.all(searchPromises);
+      setResults(allResults.flat());
+    } catch (error) {
+      console.error('Search error:', error);
+      setResults([]);
+    } finally {
+      setIsSearching(false);
+    }
+  };
+  
+  // Debounced search
+  useEffect(() => {
+    const timer = setTimeout(() => performSearch(searchText), 300);
+    return () => clearTimeout(timer);
+  }, [searchText, doctypes]);
+  
+  const handleResultClick = (result) => {
+    pb.nav.item(result.name, result.doctype);
+    setShowDropdown(false);
+    setSearchText('');
+  };
+  
+  return e('div', { 
+    ref: searchRef,
+    className: 'position-relative',
+    style: { minWidth: '300px', maxWidth: '400px' }
+  }, [
+    e('input', {
+      key: 'input',
+      type: 'text',
+      className: 'form-control form-control-sm',
+      placeholder: `🔍 Search ${doctypes.length} types...`,
+      value: searchText,
+      onChange: (ev) => setSearchText(ev.target.value),
+      onFocus: () => searchText.length >= 2 && setShowDropdown(true),
+      disabled: doctypes.length === 0
+    }),
+    
+    showDropdown && e('div', {
+      key: 'dropdown',
+      className: 'position-absolute w-100 mt-1 bg-white border rounded shadow-lg',
+      style: { maxHeight: '300px', overflowY: 'auto', zIndex: 1050 }
+    }, [
+      isSearching && e('div', {
+        key: 'loading',
+        className: 'p-2 text-center text-muted small'
+      }, 'Searching...'),
+      
+      !isSearching && results.length === 0 && searchText.length >= 2 && e('div', {
+        key: 'empty',
+        className: 'p-2 text-center text-muted small'
+      }, 'No results found'),
+      
+      !isSearching && results.length > 0 && e('div', { key: 'results' },
+        results.map((result, idx) => 
+          e('div', {
+            key: `${result.doctype}-${result.name}-${idx}`,
+            className: 'px-3 py-2 border-bottom',
+            style: { cursor: 'pointer' },
+            onClick: () => handleResultClick(result),
+            onMouseEnter: (ev) => ev.currentTarget.style.backgroundColor = '#f8f9fa',
+            onMouseLeave: (ev) => ev.currentTarget.style.backgroundColor = 'white'
+          }, [
+            e('div', { key: 'name', className: 'fw-bold small' }, result.name),
+            e('small', { key: 'meta', className: 'text-muted' }, 
+              `${result.doctype}${result.status ? ` • ${result.status}` : ''}`
+            )
+          ])
+        )
+      )
+    ])
+  ]);
+};
