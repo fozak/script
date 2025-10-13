@@ -1,4 +1,4 @@
-// pb-components.js - React Components
+// pb-components.js - React Components v 15 works 
 
 // ============================================================================
 // INITIALIZE COMPONENTS NAMESPACE
@@ -142,40 +142,45 @@ pb.components.MainGrid = function ({ doctype }) {
     return e("div", { className: "p-4 text-red-500" }, "Schema not found");
   }
 
-  const columns = schema.fields
-    .filter((f) => f.in_list_view)
-    .map((field) => ({
-      accessorKey: field.fieldname, // was `data.${field.fieldname}`
-      header: field.label,
-      cell: ({ getValue, row }) => {
-        const value = getValue();
-
-        // Only the name field gets DocLink treatment
-        if (field.fieldname === "name") {
-          return e(
-            pb.components.DocLink,
-            {
-              doctype: row.original.doctype,
-              name: row.original.name,
-            },
-            value
-          );
-        }
-
-        // All other fields use the renderer system
-        const rendered = pb.renderField(field, value, row.original);
+ const columns = Object.keys(data[0])
+  .map((key) => ({
+    accessorKey: key,
+    header: key.charAt(0).toUpperCase() + key.slice(1).replace(/_/g, ' '),
+    cell: ({ getValue, row }) => {
+      const value = getValue();
+      
+      // Name field gets DocLink
+      if (key === "name") {
+        return e(
+          pb.components.DocLink,
+          {
+            doctype: row.original.doctype,
+            name: value
+          },
+          value
+        );
+      }
+      
+      // Find schema field for rendering
+      const schemaField = schema.fields.find(f => f.fieldname === key);
+      if (schemaField) {
+        const rendered = pb.renderField(schemaField, value, row.original);
         return e("span", {
-          dangerouslySetInnerHTML: { __html: rendered },
+          dangerouslySetInnerHTML: { __html: rendered }
         });
-      },
-    }));
+      }
+      
+      // No schema? Just show the value
+      return value;
+    }
+  }));
 
-  return e(
-    "div",
-    { className: "p-4" },
-    e("h2", { className: "text-2xl font-bold mb-4" }, doctype),
-    e(pb.components.BaseTable, { data, columns })
-  );
+return e(
+  "div",
+  { className: "p-4" },
+  e("h2", { className: "text-2xl font-bold mb-4" }, doctype),
+  e(pb.components.BaseTable, { data, columns })
+);
 };
 
 console.log("✅ pb-components.js loaded");

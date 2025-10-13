@@ -42,7 +42,6 @@ pb.listDocs = async function (doctype = "", query = {}, options = {}) {
   if (!fields && doctype) {
     schema = await this.getSchema(doctype);
     if (schema && schema.fields) {
-      // Map view to schema field
       const viewFieldMap = {
         list: "in_list_view",
         card: "in_card_view",
@@ -57,7 +56,7 @@ pb.listDocs = async function (doctype = "", query = {}, options = {}) {
         .filter((f) => f[viewField])
         .map((f) => f.fieldname);
 
-      // Always include essential fields
+      // Always include name and doctype, plus view fields
       fields = ["name", "doctype", ...viewFields];
     }
   }
@@ -358,28 +357,26 @@ pb._buildPrismaOrderBy = function (orderBy) {
     .join(",");
 };
 
-
-
 /**
  * Build PocketBase field list from array of field names
  */
-pb._buildFieldList = function(fields) {
+pb._buildFieldList = function (fields) {
   if (!fields || fields.length === 0) return undefined;
-  
+
   const selectedFields = [];
-  
+
   // Add all requested fields under data.* namespace
-  fields.forEach(field => {
+  fields.forEach((field) => {
     selectedFields.push(`data.${field}`);
   });
-  
-  return selectedFields.join(',');
+
+  return selectedFields.join(",");
 };
 
 /**
  * Get proper field path for PocketBase queries
  */
-pb._getFieldPath = function(field) {
+pb._getFieldPath = function (field) {
   return `data.${field}`;
 };
 
