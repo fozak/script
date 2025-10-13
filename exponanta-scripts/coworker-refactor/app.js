@@ -1,233 +1,150 @@
-// app.js
+// app.js - search and braedcrumb v5
+
+// app.js - Complete Application with Universal Search
+// app.js - Optimized with Persistent Universal Search
 
 (function() {
   'use strict';
-
+  
+  console.log('🚀 Initializing application...');
+  
   // ============================================================================
-  // BREADCRUMB COMPONENT
+  // UNIVERSAL SEARCH INPUT (Compact, always visible)
   // ============================================================================
   
-  pb.components.Breadcrumb = function() {
-    const { createElement: e, useState, useEffect } = React;
-    const [current, setCurrent] = useState(null);
+  pb.components.UniversalSearchInput = function({ onResultClick }) {
+    const { createElement: e, useState, useEffect, useRef } = React;
+    const [searchText, setSearchText] = useState('');
+    const [results, setResults] = useState([]);
+    const [isSearching, setIsSearching] = useState(false);
+    const [showDropdown, setShowDropdown] = useState(false);
+    const searchRef = useRef(null);
     
+    const doctypes = ['Task', 'User', 'Customer', 'Project'];
+    
+    // Close dropdown on outside click
     useEffect(() => {
-      const unsubscribe = pb.navigation.subscribe((list, loading, state) => {
-        setCurrent(state);
-      });
-      return unsubscribe;
+      function handleClickOutside(event) {
+        if (searchRef.current && !searchRef.current.contains(event.target)) {
+          setShowDropdown(false);
+        }
+      }
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => document.removeEventListener('mousedown', handleClickOutside);
     }, []);
     
-    if (!current) return null;
-    
-    const crumbs = [];
-    
-    // Home
-    crumbs.push(
-      e('li', { key: 'home', className: 'breadcrumb-item' },
-        e('a', { 
-          href: '#',
-          onClick: (ev) => { ev.preventDefault(); pb.nav.home(); }
-        }, 'Home')
-      )
-    );
-    
-    // List view
-    if (current.view === 'list') {
-      crumbs.push(
-        e('li', { key: 'list', className: 'breadcrumb-item active' },
-          current.params.doctype
-        )
-      );
-    }
-    
-    // Item view
-    if (current.view === 'item') {
-      crumbs.push(
-        e('li', { key: 'doctype', className: 'breadcrumb-item' },
-          e('a', {
-            href: '#',
-            onClick: (ev) => { 
-              ev.preventDefault(); 
-              pb.nav.list(current.params.doctype); 
-            }
-          }, current.params.doctype)
-        )
-      );
-      crumbs.push(
-        e('li', { key: 'item', className: 'breadcrumb-item active' },
-          current.params.name
-        )
-      );
-    }
-    
-    return e('nav', { 'aria-label': 'breadcrumb', className: 'mb-3' },
-      e('ol', { className: 'breadcrumb' }, crumbs)
-    );
-  };
-
-  // ============================================================================
-  // ADVANCED SEARCH COMPONENT
-  // ============================================================================
-  
-  pb.components.AdvancedSearch = function({ doctype, schema, onSearch }) {
-    const { createElement: e, useState } = React;
-    const [filters, setFilters] = useState([]);
-    const [searchText, setSearchText] = useState('');
-    
-    const addFilter = () => {
-      setFilters([...filters, { field: '', operator: 'equals', value: '' }]);
-    };
-    
-    const removeFilter = (index) => {
-      setFilters(filters.filter((_, i) => i !== index));
-    };
-    
-    const updateFilter = (index, key, value) => {
-      const newFilters = [...filters];
-      newFilters[index][key] = value;
-      setFilters(newFilters);
-    };
-    
-    const handleSearch = () => {
-      const where = {};
-      
-      // Text search across all fields
-      if (searchText) {
-        where.OR = schema.fields
-          .filter(f => f.fieldtype === 'Data' || f.fieldtype === 'Text')
-          .map(f => ({ [f.fieldname]: { contains: searchText } }));
+    // Search function
+    const performSearch = async (text) => {
+      if (text.length < 2) {
+        setResults([]);
+        setShowDropdown(false);
+        return;
       }
       
-      // Advanced filters
-      filters.forEach(filter => {
-        if (filter.field && filter.value) {
-          switch (filter.operator) {
-            case 'equals':
-              where[filter.field] = filter.value;
-              break;
-            case 'contains':
-              where[filter.field] = { contains: filter.value };
-              break;
-            case 'gt':
-              where[filter.field] = { gt: filter.value };
-              break;
-            case 'lt':
-              where[filter.field] = { lt: filter.value };
-              break;
-            case 'in':
-              where[filter.field] = { in: filter.value.split(',').map(v => v.trim()) };
-              break;
-          }
-        }
-      });
+      setIsSearching(true);
+      setShowDropdown(true);
       
-      onSearch(where);
-    };
-    
-    const clearSearch = () => {
-      setSearchText('');
-      setFilters([]);
-      onSearch({});
-    };
-    
-    return e('div', { className: `${pb.BS.card.base} mb-3` },
-      e('div', { className: pb.BS.card.body }, [
-        // Quick search
-        e('div', { key: 'quick', className: 'input-group mb-2' }, [
-          e('input', {
-            key: 'input',
-            type: 'text',
-            className: pb.BS.input.base,
-            placeholder: 'Quick search across all fields...',
-            value: searchText,
-            onChange: (ev) => setSearchText(ev.target.value),
-            onKeyPress: (ev) => ev.key === 'Enter' && handleSearch()
-          }),
-          e('button', {
-            key: 'btn',
-            className: pb.BS.button.primary,
-            onClick: handleSearch
-          }, '🔍 Search')
-        ]),
+      try {
+        const searchPromises = doctypes.map(async (doctype) => {
+          try {
+            const result = await pb.listDocs(doctype, {
+              where: { name: { contains: text } },
+              take: 5
+            });
+            return result.data || [];
+          } catch (error) {
+            return [];
+          }
+        });
         
-        // Advanced filters
-        filters.length > 0 && e('div', { key: 'filters', className: 'border-top pt-2' }, [
-          e('small', { key: 'label', className: 'text-muted d-block mb-2' }, 
-            'Advanced Filters'
-          ),
-          ...filters.map((filter, i) =>
-            e('div', { key: i, className: 'row mb-2' }, [
-              e('div', { key: 'field', className: 'col-3' },
-                e('select', {
-                  className: pb.BS.input.base,
-                  value: filter.field,
-                  onChange: (ev) => updateFilter(i, 'field', ev.target.value)
-                }, [
-                  e('option', { key: 'empty', value: '' }, 'Select field...'),
-                  ...schema.fields.map(f =>
-                    e('option', { key: f.fieldname, value: f.fieldname }, f.label)
-                  )
-                ])
-              ),
-              e('div', { key: 'operator', className: 'col-3' },
-                e('select', {
-                  className: pb.BS.input.base,
-                  value: filter.operator,
-                  onChange: (ev) => updateFilter(i, 'operator', ev.target.value)
-                }, [
-                  e('option', { value: 'equals' }, 'Equals'),
-                  e('option', { value: 'contains' }, 'Contains'),
-                  e('option', { value: 'gt' }, 'Greater than'),
-                  e('option', { value: 'lt' }, 'Less than'),
-                  e('option', { value: 'in' }, 'In (comma-separated)')
-                ])
-              ),
-              e('div', { key: 'value', className: 'col-5' },
-                e('input', {
-                  type: 'text',
-                  className: pb.BS.input.base,
-                  placeholder: 'Value...',
-                  value: filter.value,
-                  onChange: (ev) => updateFilter(i, 'value', ev.target.value)
-                })
-              ),
-              e('div', { key: 'remove', className: 'col-1' },
-                e('button', {
-                  className: pb.BS.button.danger,
-                  onClick: () => removeFilter(i)
-                }, '×')
+        const allResults = await Promise.all(searchPromises);
+        setResults(allResults.flat());
+      } catch (error) {
+        console.error('Search error:', error);
+        setResults([]);
+      } finally {
+        setIsSearching(false);
+      }
+    };
+    
+    // Debounced search
+    useEffect(() => {
+      const timer = setTimeout(() => performSearch(searchText), 300);
+      return () => clearTimeout(timer);
+    }, [searchText]);
+    
+    const handleResultClick = (result) => {
+      pb.nav.item(result.name, result.doctype);
+      setShowDropdown(false);
+      setSearchText('');
+      if (onResultClick) onResultClick();
+    };
+    
+    return e('div', { 
+      ref: searchRef,
+      className: 'position-relative',
+      style: { minWidth: '300px', maxWidth: '400px' }
+    }, [
+      // Search input
+      e('input', {
+        key: 'input',
+        type: 'text',
+        className: 'form-control form-control-sm',
+        placeholder: '🔍 Search everywhere (2+ chars)...',
+        value: searchText,
+        onChange: (ev) => setSearchText(ev.target.value),
+        onFocus: () => searchText.length >= 2 && setShowDropdown(true)
+      }),
+      
+      // Dropdown results
+      showDropdown && e('div', {
+        key: 'dropdown',
+        className: 'position-absolute w-100 mt-1 bg-white border rounded shadow-lg',
+        style: { 
+          maxHeight: '300px', 
+          overflowY: 'auto',
+          zIndex: 1050
+        }
+      }, [
+        isSearching && e('div', {
+          key: 'loading',
+          className: 'p-2 text-center text-muted small'
+        }, 'Searching...'),
+        
+        !isSearching && results.length === 0 && searchText.length >= 2 && e('div', {
+          key: 'empty',
+          className: 'p-2 text-center text-muted small'
+        }, 'No results found'),
+        
+        !isSearching && results.length > 0 && e('div', { key: 'results' },
+          results.map((result, idx) => 
+            e('div', {
+              key: `${result.doctype}-${result.name}-${idx}`,
+              className: 'px-3 py-2 border-bottom',
+              style: { cursor: 'pointer' },
+              onClick: () => handleResultClick(result),
+              onMouseEnter: (ev) => ev.currentTarget.style.backgroundColor = '#f8f9fa',
+              onMouseLeave: (ev) => ev.currentTarget.style.backgroundColor = 'white'
+            }, [
+              e('div', { key: 'name', className: 'fw-bold small' }, result.name),
+              e('small', { key: 'meta', className: 'text-muted' }, 
+                `${result.doctype}${result.status ? ` • ${result.status}` : ''}`
               )
             ])
           )
-        ]),
-        
-        // Action buttons
-        e('div', { key: 'actions', className: 'btn-group btn-group-sm' }, [
-          e('button', {
-            key: 'add',
-            className: pb.BS.button.secondary,
-            onClick: addFilter
-          }, '+ Add Filter'),
-          (searchText || filters.length > 0) && e('button', {
-            key: 'clear',
-            className: pb.BS.button.outline,
-            onClick: clearSearch
-          }, 'Clear')
-        ])
+        )
       ])
-    );
+    ]);
   };
-
+  
   // ============================================================================
-  // ENHANCED MAIN GRID WITH SEARCH
+  // MAIN GRID (No search input - uses universal search in header)
   // ============================================================================
   
   pb.components.MainGrid = function({ doctype }) {
     const { createElement: e, useState, useEffect } = React;
     const [currentList, setCurrentList] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
-    const [searchWhere, setSearchWhere] = useState({});
 
     useEffect(() => {
       const unsubscribe = pb.navigation.subscribe((list, loading) => {
@@ -239,44 +156,29 @@
 
     useEffect(() => {
       const current = pb.navigation.getCurrent();
-      if (!current || current.params.doctype !== doctype) {
+      if (!current || current.params?.doctype !== doctype) {
         pb.nav.list(doctype);
       }
     }, [doctype]);
 
-    const handleSearch = (where) => {
-      setSearchWhere(where);
-      pb.navigation.setLoading(true);
-      pb.listDocs(doctype, { where }, { view: 'list' })
-        .then(result => {
-          pb.navigation.updateList(result);
-        })
-        .finally(() => {
-          pb.navigation.setLoading(false);
-        });
-    };
-
     if (isLoading) {
-      return e('div', { className: 'p-4' }, 'Loading...');
+      return e('div', { className: 'p-4 text-center' }, 'Loading...');
     }
 
-    if (!currentList || !currentList.data.length) {
-      return e('div', {},
-        currentList?.schema && e(pb.components.AdvancedSearch, {
-          doctype,
-          schema: currentList.schema,
-          onSearch: handleSearch
-        }),
-        e('div', { className: 'p-4 text-gray-500' },
-          `No ${doctype} records found`
-        )
-      );
+    if (!currentList) {
+      return e('div', { className: 'p-4' }, 'No data');
     }
 
     const { data, schema } = currentList;
 
     if (!schema) {
-      return e('div', { className: 'p-4 text-red-500' }, 'Schema not found');
+      return e('div', { className: 'p-4 text-danger' }, 'Schema not found');
+    }
+
+    if (!data || data.length === 0) {
+      return e('div', { className: 'alert alert-info m-3' },
+        `No ${doctype} records found. Use search above to find items.`
+      );
     }
 
     const columns = Object.keys(data[0])
@@ -297,7 +199,7 @@
             );
           }
           
-          const schemaField = schema.fields.find(f => f.fieldname === key);
+          const schemaField = schema.fields?.find(f => f.fieldname === key);
           if (schemaField) {
             const rendered = pb.renderField(schemaField, value, row.original);
             return e("span", {
@@ -309,70 +211,188 @@
         }
       }));
 
-    return e('div', { className: 'p-4' }, [
-      e('h2', { key: 'title', className: 'text-2xl font-bold mb-4' }, doctype),
-      e(pb.components.AdvancedSearch, {
-        key: 'search',
-        doctype,
-        schema,
-        onSearch: handleSearch
-      }),
-      e(pb.components.BaseTable, { key: 'table', data, columns })
+    return e(pb.components.BaseTable, { data, columns });
+  };
+  
+  // ============================================================================
+  // APP COMPONENT
+  // ============================================================================
+  
+  const App = function() {
+    const { createElement: e, useState, useEffect } = React;
+    const [currentList, setCurrentList] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
+    const [view, setView] = useState('list');
+    
+    useEffect(() => {
+      const unsubscribe = pb.navigation.subscribe((list, loading) => {
+        setCurrentList(list);
+        setIsLoading(loading);
+        
+        if (list && list.data) {
+          const isSingleItem = list.data.length === 1 && list.params?.query?.take === 1;
+          setView(isSingleItem ? 'form' : 'list');
+        }
+      });
+      
+      return unsubscribe;
+    }, []);
+    
+    // Loading state
+    if (isLoading) {
+      return e('div', { className: 'container mt-5 text-center' },
+        e('div', { className: 'spinner-border text-primary' }),
+        e('p', { className: 'mt-3' }, 'Loading...')
+      );
+    }
+    
+    // Home state
+    if (!currentList) {
+      return e('div', { className: 'container-fluid' }, [
+        // Header with search
+        e('nav', { 
+          key: 'header',
+          className: 'navbar navbar-light bg-light mb-4'
+        },
+          e('div', { className: 'container-fluid d-flex justify-content-between align-items-center' }, [
+            e('span', { key: 'brand', className: 'navbar-brand' }, '🚀 PocketBase'),
+            e(pb.components.UniversalSearchInput, { key: 'search' })
+          ])
+        ),
+        
+        // Home content
+        e('div', { key: 'content', className: 'container mt-5' },
+          e('div', { className: 'card' },
+            e('div', { className: 'card-body text-center' },
+              e('h1', { className: 'mb-4' }, 'Choose a DocType'),
+              e('div', { className: 'btn-group' }, [
+                e('button', {
+                  key: 'task',
+                  className: 'btn btn-primary',
+                  onClick: () => pb.nav.list('Task')
+                }, '📋 Tasks'),
+                e('button', {
+                  key: 'user',
+                  className: 'btn btn-success',
+                  onClick: () => pb.nav.list('User')
+                }, '👤 Users'),
+                e('button', {
+                  key: 'customer',
+                  className: 'btn btn-info',
+                  onClick: () => pb.nav.list('Customer')
+                }, '🏢 Customers')
+              ])
+            )
+          )
+        )
+      ]);
+    }
+    
+    // Main view with persistent search in header
+    return e('div', { className: 'container-fluid' }, [
+      // Header with breadcrumbs and search
+      e('nav', { 
+        key: 'header',
+        className: 'navbar navbar-light bg-light mb-4'
+      },
+        e('div', { className: 'container-fluid' }, [
+          // Breadcrumbs
+          e('ol', { key: 'breadcrumb', className: 'breadcrumb mb-0 me-3' }, [
+            e('li', { key: 'home', className: 'breadcrumb-item' },
+              e('a', { 
+                href: '#',
+                onClick: (ev) => {
+                  ev.preventDefault();
+                  window.location.href = window.location.pathname;
+                }
+              }, 'Home')
+            ),
+            currentList.params?.doctype && e('li', { 
+              key: 'doctype',
+              className: 'breadcrumb-item' + (view === 'list' ? ' active' : '')
+            },
+              view === 'list' 
+                ? currentList.params.doctype
+                : e('a', {
+                    href: '#',
+                    onClick: (ev) => {
+                      ev.preventDefault();
+                      pb.nav.list(currentList.params.doctype);
+                    }
+                  }, currentList.params.doctype)
+            ),
+            view === 'form' && currentList.data && currentList.data[0] && e('li', { 
+              key: 'item',
+              className: 'breadcrumb-item active'
+            }, currentList.data[0].name)
+          ]),
+          
+          // Universal search (always visible)
+          e('div', { key: 'search', className: 'flex-grow-1 mx-3' },
+            e(pb.components.UniversalSearchInput, {})
+          ),
+          
+          // Navigation buttons
+          e('div', { key: 'nav', className: 'btn-group btn-group-sm' }, [
+            e('button', {
+              key: 'back',
+              className: 'btn btn-outline-secondary',
+              onClick: () => pb.nav.back(),
+              disabled: !pb.navigation.canGoBack()
+            }, '⬅️'),
+            e('button', {
+              key: 'refresh',
+              className: 'btn btn-outline-primary',
+              onClick: () => pb.nav.refresh()
+            }, '🔄')
+          ])
+        ])
+      ),
+      
+      // Content
+      e('div', { key: 'content', className: 'row' },
+        e('div', { className: 'col' },
+          view === 'list' 
+            ? e(pb.components.MainGrid, { doctype: currentList.params.doctype })
+            : e('div', { className: 'card m-3' },
+                e('div', { className: 'card-header' },
+                  e('h3', null, currentList.data[0]?.name || 'Item View')
+                ),
+                e('div', { className: 'card-body' },
+                  e('pre', { className: 'bg-light p-3' },
+                    JSON.stringify(currentList.data[0], null, 2)
+                  ),
+                  e('button', {
+                    className: 'btn btn-secondary mt-3',
+                    onClick: () => pb.nav.list(currentList.params.doctype)
+                  }, '⬅️ Back to List')
+                )
+              )
+        )
+      )
     ]);
   };
-
+  
   // ============================================================================
-  // MAIN APP COMPONENT
+  // INIT
   // ============================================================================
-
-  function App() {
-    const { createElement: e } = React;
-    
-    return e('div', { className: 'container-fluid' }, [
-      e(pb.components.Breadcrumb, { key: 'breadcrumb' }),
-      e(pb.components.Router, { key: 'router' })
-    ]);
-  }
-
-  // ============================================================================
-  // INITIALIZE APP
-  // ============================================================================
-
+  
   function initApp() {
     const container = document.getElementById('app');
-    
-    if (!container) {
-      console.error('❌ #app container not found');
+    if (!container || !window.pb?.navigation) {
+      console.error('❌ Missing container or framework');
       return;
     }
     
-    if (!window.pb || !window.pb.navigation || !window.pb.components) {
-      console.error('❌ Framework not fully loaded');
-      return;
-    }
-    
-    console.log('✅ Framework loaded:', {
-      version: pb.navigation.VERSION,
-      components: Object.keys(pb.components)
-    });
-    
-    console.log('🎨 Mounting React app...');
+    console.log('✅ Mounting app');
     const root = ReactDOM.createRoot(container);
     root.render(React.createElement(App));
     
-    console.log('✅ App mounted with advanced search and breadcrumbs!');
-    
-    // Console shortcuts
     window.testNav = {
       tasks: () => pb.nav.list('Task'),
       users: () => pb.nav.list('User'),
-      task: (name) => pb.nav.item(name, 'Task'),
-      current: () => console.log(pb.nav.current()),
-      back: () => pb.nav.back(),
-      refresh: () => pb.nav.refresh()
+      back: () => pb.nav.back()
     };
-    
-    console.log('💡 Test shortcuts: window.testNav');
   }
   
   if (document.readyState === 'loading') {
@@ -381,4 +401,5 @@
     initApp();
   }
   
+
 })();

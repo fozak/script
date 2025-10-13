@@ -633,6 +633,15 @@ pb.navigation = (function () {
 // ==========================================
 
 pb.nav = {
+
+home: () => {
+    return pb.navigation.navigate({
+      doctype: "All",  // ✅ Use "All" as a real doctype
+      query: {},
+      options: {}
+    });
+  },
+
   // Quick navigate to list
   list: (doctype, options = {}) => {
     return pb.navigation.navigate({
