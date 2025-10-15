@@ -20,12 +20,16 @@ pb.getSchema = async function (doctype) {
 
   try {
     // ✅ Use pb.query() to fetch schema (self-referential!)
-    const result = await this.query('Schema', {
-      where: { _schema_doctype: doctype },
-      take: 1
-    }, {
-      includeSchema: false  // ← CRITICAL: Don't fetch schema for Schema!
-    });
+    const result = await this.query(
+      "Schema",
+      {
+        where: { _schema_doctype: doctype },
+        take: 1,
+      },
+      {
+        includeSchema: false, // ← CRITICAL: Don't fetch schema for Schema!
+      }
+    );
 
     if (!result.data || result.data.length === 0) {
       console.warn(`Schema not found for: ${doctype}`);
@@ -33,10 +37,10 @@ pb.getSchema = async function (doctype) {
     }
 
     const schema = result.data[0];
-    
+
     // Cache it
     this._schemaCache[doctype] = schema;
-    
+
     return schema;
   } catch (error) {
     console.error(`Error fetching schema for ${doctype}:`, error);
@@ -50,7 +54,7 @@ pb.getSchema = async function (doctype) {
  */
 pb.clearSchemaCache = function () {
   this._schemaCache = {};
-  console.log('🗑️ Schema cache cleared');
+  console.log("🗑️ Schema cache cleared");
 };
 
 // ============================================================================
@@ -66,45 +70,45 @@ pb.clearSchemaCache = function () {
  * @returns {Promise<Object>} Result
  */
 pb.query = async function (doctype = "", query = {}, options = {}) {
-  const { operation = 'select', data, where } = query;
+  const { operation = "select", data, where } = query;
   const { includeSchema = true } = options;
 
   // Validate doctype
   if (!doctype) {
-    throw new Error('doctype is required');
+    throw new Error("doctype is required");
   }
 
   // Fetch schema once at the top (unless we're querying Schema itself!)
   let schema = null;
-  if (includeSchema && doctype !== 'All' && doctype !== 'Schema') {
+  if (includeSchema && doctype !== "All" && doctype !== "Schema") {
     schema = await this.getSchema(doctype);
     // ↑ This calls pb.query('Schema', ...) internally!
   }
 
   // Route to operation handler
-  switch(operation.toLowerCase()) {
-    case 'create':
-    case 'insert':
-      if (!data) throw new Error('CREATE requires data');
+  switch (operation.toLowerCase()) {
+    case "create":
+    case "insert":
+      if (!data) throw new Error("CREATE requires data");
       return this._handleCreate(doctype, data, schema, options);
-    
-    case 'update':
-      if (!data) throw new Error('UPDATE requires data');
-      if (!where) throw new Error('UPDATE requires where');
+
+    case "update":
+      if (!data) throw new Error("UPDATE requires data");
+      if (!where) throw new Error("UPDATE requires where");
       return this._handleUpdate(doctype, where, data, schema, options);
-    
-    case 'delete':
-      if (!where) throw new Error('DELETE requires where');
+
+    case "delete":
+      if (!where) throw new Error("DELETE requires where");
       return this._handleDelete(doctype, where, schema, options);
-    
-    case 'select':
-    case 'read':
+
+    case "select":
+    case "read":
     default:
       return this._handleRead(doctype, query, schema, options);
   }
 };
 
-// ... rest of handlers 
+// ... rest of handlers
 
 // ============================================================================
 // OPERATION HANDLERS
@@ -120,7 +124,7 @@ pb.query = async function (doctype = "", query = {}, options = {}) {
  * @returns {Promise<Object>} { data, schema?, meta?, viewConfig? }
  */
 pb._handleRead = async function (doctype, query, schema, options) {
-  const { where, orderBy, take, skip, select, view = 'list' } = query;
+  const { where, orderBy, take, skip, select, view = "list" } = query;
   const { includeMeta = false, includeSchema = true } = options;
 
   // Special case: "All" doctype (query across all types)
@@ -128,7 +132,7 @@ pb._handleRead = async function (doctype, query, schema, options) {
 
   // Resolve fields: explicit select > view fields > all fields
   let fields;
-  if (select === '*') {
+  if (select === "*") {
     fields = undefined; // All fields
   } else if (select) {
     fields = Array.isArray(select) ? select : [select];
@@ -136,9 +140,9 @@ pb._handleRead = async function (doctype, query, schema, options) {
     // Use schema view property: view='list' → 'in_list_view'
     const viewProp = `in_${view}_view`;
     const viewFields = schema.fields
-      .filter(f => f[viewProp])
-      .map(f => f.fieldname);
-    fields = ['name', 'doctype', ...viewFields];
+      .filter((f) => f[viewProp])
+      .map((f) => f.fieldname);
+    fields = ["name", "doctype", ...viewFields];
   }
 
   // Build query parameters
@@ -151,27 +155,24 @@ pb._handleRead = async function (doctype, query, schema, options) {
   if (pbSort) params.sort = pbSort;
   if (pbFields) params.fields = pbFields;
 
-  // Execute via adapter
-  const { items, meta } = await this._dbQuery(params, take, skip);
-
-  // Extract data
-  const data = items.map(item => item.data).filter(Boolean);
+  const { data, meta } = await this._dbQuery(params, take, skip);
+  // ↑ Changed 'items' to 'data' - adapter already extracted it!
 
   // Build response
   const response = { data };
-  
+
   if (includeSchema && schema) {
     response.schema = schema;
   }
-  
+
   if (includeMeta) {
     response.meta = meta;
   }
-  
+
   // Add view configuration for UI
-  response.viewConfig = { 
-    layout: view === 'card' ? 'grid' : 'table', 
-    view 
+  response.viewConfig = {
+    layout: view === "card" ? "grid" : "table",
+    view,
   };
 
   return response;
@@ -193,7 +194,7 @@ pb._handleCreate = async function (doctype, data, schema, options) {
   const recordData = {
     ...data,
     doctype,
-    name: data.name || this._generateName(doctype)
+    name: data.name || this._generateName(doctype),
   };
 
   // Execute via adapter
@@ -201,16 +202,16 @@ pb._handleCreate = async function (doctype, data, schema, options) {
 
   // Build response
   const response = { data: [result.data] };
-  
+
   if (includeSchema && schema) {
     response.schema = schema;
   }
-  
+
   if (includeMeta) {
-    response.meta = { 
-      operation: 'create', 
+    response.meta = {
+      operation: "create",
       created: 1,
-      recordId: result.data.name
+      recordId: result.data.name,
     };
   }
 
@@ -238,29 +239,29 @@ pb._handleUpdate = async function (doctype, where, data, schema, options) {
   const { items } = await this._dbQuery({ filter: pbFilter });
 
   if (items.length === 0) {
-    return { 
-      data: [], 
-      meta: includeMeta ? { operation: 'update', updated: 0 } : undefined 
+    return {
+      data: [],
+      meta: includeMeta ? { operation: "update", updated: 0 } : undefined,
     };
   }
 
   // Update each record via adapter
   const updates = await Promise.all(
-    items.map(item => this._dbUpdate(item.data.name, data))
+    items.map((item) => this._dbUpdate(item.data.name, data))
   );
 
   // Build response
-  const response = { data: updates.map(u => u.data) };
-  
+  const response = { data: updates.map((u) => u.data) };
+
   if (includeSchema && schema) {
     response.schema = schema;
   }
-  
+
   if (includeMeta) {
-    response.meta = { 
-      operation: 'update', 
+    response.meta = {
+      operation: "update",
       updated: updates.length,
-      recordIds: updates.map(u => u.data.name)
+      recordIds: updates.map((u) => u.data.name),
     };
   }
 
@@ -281,7 +282,9 @@ pb._handleDelete = async function (doctype, where, schema, options) {
 
   // Require where clause for safety
   if (!where || Object.keys(where).length === 0) {
-    throw new Error('DELETE requires WHERE clause to prevent accidental mass deletion');
+    throw new Error(
+      "DELETE requires WHERE clause to prevent accidental mass deletion"
+    );
   }
 
   // Build filter
@@ -292,25 +295,23 @@ pb._handleDelete = async function (doctype, where, schema, options) {
   const { items } = await this._dbQuery({ filter: pbFilter });
 
   if (items.length === 0) {
-    return { 
-      data: [], 
-      meta: includeMeta ? { operation: 'delete', deleted: 0 } : undefined 
+    return {
+      data: [],
+      meta: includeMeta ? { operation: "delete", deleted: 0 } : undefined,
     };
   }
 
   // Delete each record via adapter
-  await Promise.all(
-    items.map(item => this._dbDelete(item.data.name))
-  );
+  await Promise.all(items.map((item) => this._dbDelete(item.data.name)));
 
   // Build response
   const response = { data: [] };
-  
+
   if (includeMeta) {
-    response.meta = { 
-      operation: 'delete', 
+    response.meta = {
+      operation: "delete",
       deleted: items.length,
-      recordIds: items.map(i => i.data.name)
+      recordIds: items.map((i) => i.data.name),
     };
   }
 
@@ -329,7 +330,7 @@ pb._handleDelete = async function (doctype, where, schema, options) {
  */
 pb._generateName = function (doctype) {
   const timestamp = Date.now();
-  const random = Math.random().toString(36).substring(2, 8);    //TODO: fix this
+  const random = Math.random().toString(36).substring(2, 8); //TODO: fix this
   return `${doctype.toLowerCase()}-${timestamp}-${random}`;
 };
 
@@ -565,10 +566,10 @@ pb._buildFieldList = function (fields) {
  */
 pb._getFieldPath = function (fieldName) {
   // Special fields that are not nested in data
-  if (fieldName === 'doctype' || fieldName === 'name' || fieldName === 'id') {
+  if (fieldName === "doctype" || fieldName === "name" || fieldName === "id") {
     return fieldName;
   }
-  
+
   // Regular fields are nested in data object
   return `data.${fieldName}`;
 };
