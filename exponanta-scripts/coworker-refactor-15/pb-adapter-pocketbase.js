@@ -17,7 +17,7 @@ pb._adapters.pocketbase = {
     const cleanParams = {};
     if (params.filter) cleanParams.filter = params.filter;
     if (params.sort) cleanParams.sort = params.sort;
-    if (params.fields) cleanParams.fields = params.fields;
+    //if (params.fields) cleanParams.fields = params.fields;
 
     let result;
     let items;

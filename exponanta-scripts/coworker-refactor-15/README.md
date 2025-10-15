@@ -7,8 +7,20 @@ pb.navigation ← State manager with subscribe/notify
 pb.nav.* ← High-level navigation shortcuts
     ↓
 React Components ← Subscribe and render
-Updated Navigation with pb.query()
-javascript// pb-navigation.js - State manager using pb.query()
+
+
+
+
+
+//Updated Navigation with pb.query()
+
+  // ============================================================================
+  // OLDER VERSION : navigate() - Universal data operation with state management
+  // ============================================================================
+  
+
+
+
 
 pb.navigation = (function() {
   let currentList = null;
@@ -25,10 +37,6 @@ pb.navigation = (function() {
     });
   }
 
-  // ============================================================================
-  // CORE: navigate() - Universal data operation with state management
-  // ============================================================================
-  
   async function navigate(params, replaceState = false) {
     const fullParams = validateParams(params);
 

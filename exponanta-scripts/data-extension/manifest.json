@@ -1,11 +1,14 @@
 {
   "manifest_version": 3,
-  "name": "Test Content Script",
+  "name": "Test Background and Content Script",
   "version": "1.0",
-  "description": "Interactive console testing for content.js",
+  "description": "Interactive console testing for pocketbase",
   "permissions": [
     "storage"
   ],
+   "background": {
+    "service_worker": "background.js"
+  },
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
