@@ -1,5 +1,5 @@
 // ============================================================================
-// SCHEMA MANAGEMENT - Uses pb.query() to fetch schemas
+// - Uses pb.query() to fetch schemas
 // ============================================================================
 
 /**
@@ -144,22 +144,34 @@ pb._handleRead = async function (doctype, query, schema, options) {
       .map((f) => f.fieldname);
     fields = ["name", "doctype", ...viewFields];
   }
-
+  
   // Build query parameters
   const pbFilter = this._buildPrismaWhere(queryDoctype, where);
   const pbSort = orderBy ? this._buildPrismaOrderBy(orderBy) : undefined;
-  const pbFields = fields ? this._buildFieldList(fields) : undefined;
 
   const params = {};
   if (pbFilter) params.filter = pbFilter;
   if (pbSort) params.sort = pbSort;
-  if (pbFields) params.fields = pbFields;
+  // Note: We're NOT passing fields to PocketBase because it breaks .data structure
 
   const { data, meta } = await this._dbQuery(params, take, skip);
-  // ↑ Changed 'items' to 'data' - adapter already extracted it!
+
+  // ✅ Filter fields in JavaScript AFTER getting data
+  let filteredData = data;
+  if (fields) {
+    filteredData = data.map(item => {
+      const filtered = {};
+      fields.forEach(field => {
+        if (item.hasOwnProperty(field)) {
+          filtered[field] = item[field];
+        }
+      });
+      return filtered;
+    });
+  }
 
   // Build response
-  const response = { data };
+  const response = { data: filteredData };
 
   if (includeSchema && schema) {
     response.schema = schema;
