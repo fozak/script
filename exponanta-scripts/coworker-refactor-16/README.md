@@ -1,5 +1,8 @@
 refactoring 
 
+
+https://chatgpt.com/c/68f05d4e-67b8-8328-97c2-37b8e97121eb
+
 Current (Overcomplicated)
 javascript// Adapter returns
 { items: [{ data: {...} }, { data: {...} }], meta: {...} }

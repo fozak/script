@@ -1,4 +1,4 @@
-so the have doctype Schema with specific fields, and _BaseSchema with contains all meta field (we can more name and doctype field there as well as _last_updated etc).  we just combine in final documents these fields during create and update.Ah, excellent! So you have a two-schema system:
+so the have doctype Schema with specific fields, and _BaseSchema with contains all meta field (we can more name and doctype field there as well as _last_updated etc).  we just combine in final documents these fields during create and update.Ah, excellent! I have a two-schema system:
 Schema Structure
 1. _BaseSchema (meta fields for ALL documents):
 javascript{
@@ -41,22 +41,20 @@ javascript{
   project: "PROJECT-001"
 }
 Questions for Implementation:
-1. Where is _BaseSchema stored?
+1. Where is _BaseSchema stored? in the same place wher 
 
-Is it a special Schema document with _schema_doctype: "_Base"?
-Or hardcoded in your system?
 
-2. During CREATE, who sets base fields?
+2. During CREATE, who sets base fields? it
 
 Should _handleCreate automatically add: creation, modified, owner, modified_by?
 Or does the user/UI need to provide them?
 
 3. During UPDATE, which base fields auto-update?
 
-Should _handleUpdate automatically update: modified, modified_by, _last_updated?
-Should it prevent updating: name, doctype, creation, owner?
+Should _handleUpdate automatically update: _last_modified, _modified_by, _last_updated?
+Should it prevent updating: name, doctype, creation, owner? Yes
 
-4. Should _handleUpdate validate against BOTH schemas?
+4. Should _handleUpdate validate against BOTH schemas? partly
 
 Check that user isn't trying to update protected base fields?
 Check that business fields exist in doctype schema?
@@ -66,21 +64,19 @@ Check that business fields exist in doctype schema?
 Should name and doctype always be included?
 Should other base fields like modified, owner be filterable by view config?
 
-Give me your answers and I'll implement _handleCreate and _handleUpdate correctly! 🎯RetryDDgive me most popual approach to these 2 groups (business and meta fields).Here's the most popular approach used by modern frameworks (Frappe, Strapi, Directus, etc.):
-Industry Standard Approach
+Use Industry Standard Approach like
 1. Base Schema Storage
-Hardcoded in system - not in database
+ in database
 javascript// pb-base-schema.js
-pb.BASE_SCHEMA = {
+_BaseSchema = {
   // System fields (never user-editable)
   name: { type: "string", system: true, required: true },
   doctype: { type: "string", system: true, required: true },
   
   // Audit fields (auto-managed)
-  creation: { type: "datetime", auto: true, onCreate: true },
-  modified: { type: "datetime", auto: true, onUpdate: true },
-  owner: { type: "string", auto: true, onCreate: true },
-  modified_by: { type: "string", auto: true, onUpdate: true },
+  _last_modified: { type: "datetime", auto: true, onCreate: true },
+   owner: { type: "string", auto: true, onCreate: true },
+  _modified_by: { type: "string", auto: true, onUpdate: true },
   
   // Optional meta fields (user can modify)
   _assign: { type: "json", optional: true },
@@ -114,10 +110,9 @@ javascriptpb._handleCreate = async function (doctype, data, schema, options) {
   // {
   //   name: "TASK-001",
   //   doctype: "Task",
-  //   creation: "2025-10-15T10:00:00Z",
-  //   modified: "2025-10-15T10:00:00Z",
-  //   owner: "user@example.com",
-  //   modified_by: "user@example.com",
+  //   _last_updated: "2025-10-15T10:00:00Z",
+  //    owner: "user@example.com",
+  //   _modified_by: "user@example.com",
   //   subject: "Fix bug",
   //   status: "Open"
   // }
@@ -163,16 +158,7 @@ javascriptpb._validateFields = function(data, schema, operation) {
   
   return errors;
 };
-5. Field Filtering - Base + Business fields
-javascriptpb._handleRead = async function (doctype, query, schema, options) {
-  // Always include essential base fields
-  const baseFields = ['name', 'doctype', 'modified', 'owner'];
-  
-  // Add business fields from view config
-  const viewProp = `in_${view}_view`;
-  const businessFields = schema.fields
-    .filter(f => f[viewProp])
-    .map(f => f.fieldname);
+
   
   // Combine: base + business
   const fields = [...baseFields, ...businessFields];
@@ -181,5 +167,4 @@ javascriptpb._handleRead = async function (doctype, query, schema, options) {
   // ['name', 'doctype', 'modified', 'owner', 'subject', 'status', 'priority']
 };
 Summary - Best Practices
-AspectApproachBase SchemaHardcoded in code, not in DBSystem FieldsAuto-managed, never user-editable (name, doctype, creation, owner)Audit FieldsAuto-updated on create/update (modified, modified_by)Meta FieldsUser-editable (_assign, _comments, etc)CREATESystem injects base fields + user provides business fieldsUPDATESystem protects system fields, auto-updates audit fieldsValidationCheck business fields against doctype schema onlyFilteringAlways include essential base fields + configured business fields
-Want me to implement this full pattern in your code? 🚀
+_BaseSchema Fields Auto-managed, never user-editable (name, doctype, creation, owner)Audit FieldsAuto-updated on create/update (modified, modified_by)Meta FieldsUser-editable (_assign, _comments, etc)CREATESystem injects base fields + user provides business fieldsUPDATESystem protects system fields, auto-updates audit fieldsValidationCheck business fields against doctype schema onlyFilteringAlways include essential base fields + configured business fields
