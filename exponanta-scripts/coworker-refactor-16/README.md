@@ -1,5 +1,6 @@
 refactoring 
-
+BEFORE UPDATE WE NEED TO MANAGE LIFECICLE (0,1,2) AND SCHEMA VERSIONING () 
+WE ALSO NEED TO RESOLVE currentUser (as we audit changes)
 
 https://chatgpt.com/c/68f05d4e-67b8-8328-97c2-37b8e97121eb
 
