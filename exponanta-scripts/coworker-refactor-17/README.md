@@ -1,5 +1,36 @@
 refactoring ONLY UPDATE
+IMPLEMENTED 
 
+Now For Your "Current User" Use Case:
+Since you want to get the currently logged-in user, here's the best pattern:
+javascript// Add this helper function
+pb.getCurrentUser = async function() {
+  const result = await this.query("Current User", {
+    take: 1,
+    select: "*"  // Get all fields
+  });
+  
+  return result.data[0] || null;
+};
+
+// Usage:
+const currentUser = await pb.getCurrentUser();
+console.log(currentUser.email);
+console.log(currentUser.verified);
+Or if you need to filter by the authenticated user:
+javascriptpb.getCurrentUser = async function() {
+  const authEmail = this.authStore.model?.email;
+  if (!authEmail) return null;
+  
+  const result = await this.query("Current User", {
+    where: { email: authEmail },
+    take: 1,
+    select: "*"
+  });
+  
+  return result.data[0] || null;
+};
+Does this solve your issue? Should we add pb.getCurrentUser() as a standard helper?
 
 https://chatgpt.com/c/68f05d4e-67b8-8328-97c2-37b8e97121eb
 
