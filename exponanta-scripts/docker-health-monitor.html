@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Docker Monitor</title>
+    <style>
+        body { font-family: Arial; max-width: 900px; margin: 50px auto; padding: 20px; background: #f5f5f5; }
+        .container { border: 1px solid #ddd; padding: 15px; margin: 10px 0; border-radius: 5px; background: white; }
+        .healthy { border-left: 4px solid #28a745; }
+        .unhealthy { border-left: 4px solid #dc3545; }
+        button { padding: 10px 20px; background: #007bff; color: white; border: none; cursor: pointer; border-radius: 4px; }
+        h1 { color: #333; }
+        .stats { color: #666; font-size: 14px; margin-top: 8px; }
+        .name { font-size: 18px; font-weight: bold; color: #333; }
+    </style>
+</head>
+<body>
+    <h1>🐳 Docker Container Monitor</h1>
+    <button onclick="loadContainers()">Refresh</button>
+    <div id="containers"></div>
+
+    <script>
+        const API = 'http://143.198.29.88:3000/health';
+        
+        async function loadContainers() {
+            const res = await fetch(API);
+            const data = await res.json();
+            
+            document.getElementById('containers').innerHTML = data.length ? 
+                data.map(c => `
+                    <div class="container ${c.healthy ? 'healthy' : 'unhealthy'}">
+                        <div class="name">${c.name}</div>
+                        <div class="stats">
+                            <strong>Status:</strong> ${c.status}<br>
+                            <strong>CPU:</strong> ${c.cpu} | <strong>Memory:</strong> ${c.mem} (${c.memPerc})<br>
+                            <strong>ID:</strong> ${c.id.slice(0,12)}
+                        </div>
+                    </div>
+                `).join('') : '<p>No containers running</p>';
+        }
+        
+        loadContainers();
+        setInterval(loadContainers, 5000);
+    </script>
+</body>
+</html>

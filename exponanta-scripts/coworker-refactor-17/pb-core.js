@@ -4,7 +4,7 @@
 // POCKETBASE CLIENT INITIALIZATION
 // ============================================================================
 
-window.pb = window.pb || new PocketBase("http://127.0.0.1:8090/");
+window.pb = window.pb || new PocketBase("http://143.198.29.88:8090/");
 // DISABLE auto-cancellation properly in UMD build
 window.pb.autoCancellation(false);
 

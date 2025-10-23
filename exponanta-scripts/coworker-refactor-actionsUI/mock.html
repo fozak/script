@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PB Navigation Console Demo</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body { padding: 20px; background: #f8f9fa; }
+    .console-output { 
+      background: #1e1e1e; 
+      color: #d4d4d4; 
+      padding: 15px; 
+      border-radius: 5px; 
+      font-family: 'Courier New', monospace; 
+      font-size: 14px;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+    .console-line { margin: 5px 0; }
+    .state-viewer { background: white; padding: 15px; border-radius: 5px; margin-top: 20px; }
+    pre { background: #f8f9fa; padding: 10px; border-radius: 3px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="mb-4">🚀 PB Navigation Console Demo</h1>
+    
+    <!-- Quick Actions -->
+    <div class="card mb-4">
+      <div class="card-header"><strong>Quick Actions</strong></div>
+      <div class="card-body">
+        <div class="row g-2">
+          <div class="col-md-4">
+            <button class="btn btn-primary w-100" onclick="demo.listTasks()">📋 List Tasks</button>
+          </div>
+          <div class="col-md-4">
+            <button class="btn btn-success w-100" onclick="demo.viewItem()">👁️ View Task #1</button>
+          </div>
+          <div class="col-md-4">
+            <button class="btn btn-info w-100" onclick="demo.fetchEmails()">📧 Fetch Emails (Stream)</button>
+          </div>
+        </div>
+        <div class="row g-2 mt-2">
+          <div class="col-md-4">
+            <button class="btn btn-warning w-100" onclick="demo.createTask()">➕ Create Task (Stream)</button>
+          </div>
+          <div class="col-md-4">
+            <button class="btn btn-secondary w-100" onclick="demo.clearConsole()">🗑️ Clear Console</button>
+          </div>
+          <div class="col-md-4">
+            <button class="btn btn-outline-primary w-100" onclick="demo.refresh()">🔄 Refresh View</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Console Output -->
+    <div class="card mb-4">
+      <div class="card-header"><strong>Console Output</strong></div>
+      <div class="card-body p-0">
+        <div id="console" class="console-output"></div>
+      </div>
+    </div>
+
+    <!-- Current State -->
+    <div class="card">
+      <div class="card-header"><strong>Current Navigation State</strong></div>
+      <div class="card-body">
+        <div id="state" class="state-viewer">
+          <em class="text-muted">No state yet. Click an action above.</em>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ============================================================================
+    // Mock pb object
+    // ============================================================================
+    const pb = {
+      query: async function(doctype, query = {}, options = {}) {
+        const { operation = "select" } = query;
+        await new Promise(resolve => setTimeout(resolve, 300));
+        
+        if (operation === "select") {
+          if (query.where?.name) {
+            return {
+              data: [{name: query.where.name, title: "Fix critical bug", status: "Open", priority: "High"}],
+              doctype,
+              meta: {count: 1},
+              schema: {fields: ["name", "title", "status", "priority"]}
+            };
+          }
+          return {
+            data: [
+              {name: "task-1", title: "Fix critical bug", status: "Open", priority: "High"},
+              {name: "task-2", title: "Add new feature", status: "In Progress", priority: "Medium"},
+              {name: "task-3", title: "Update docs", status: "Open", priority: "Low"}
+            ],
+            doctype,
+            meta: {count: 3, total: 10, page: 1},
+            schema: {fields: ["name", "title", "status", "priority"]}
+          };
+        }
+        
+        if (operation === "fetch") {
+          return {
+            data: [
+              {id: "email-1", subject: "Meeting reminder", from: "boss@company.com"},
+              {id: "email-2", subject: "Project update", from: "team@company.com"}
+            ],
+            doctype,
+            meta: {fetched: 2}
+          };
+        }
+        
+        if (operation === "create") {
+          return {
+            data: [{name: "task-4", ...query.data}],
+            doctype,
+            meta: {created: 1}
+          };
+        }
+      }
+    };
+
+    // ============================================================================
+    // Navigation (your code - unchanged)
+    // ============================================================================
+    pb.navigation = (function () {
+      let currentList = null;
+      let isLoading = false;
+      const listeners = new Set();
+
+      function notify() {
+        listeners.forEach((callback) => {
+          try {
+            callback(currentList, isLoading);
+          } catch (error) {
+            console.error("Subscriber error:", error);
+          }
+        });
+      }
+
+      async function navigate(params) {
+        log("🚀", `Navigating to: ${params.doctype}`);
+        isLoading = true;
+        notify();
+
+        try {
+          const result = await pb.query(params.doctype, params.query, params.options);
+
+          currentList = {
+            params,
+            data: result.data || [],
+            doctype: result.doctype,
+            schema: result.schema || null,
+            meta: result.meta || null
+          };
+
+          log("✅", `Navigation complete: ${currentList.data.length} records`);
+          isLoading = false;
+          notify();
+          return currentList;
+        } catch (error) {
+          log("❌", `Navigation error: ${error.message}`);
+          isLoading = false;
+          notify();
+          throw error;
+        }
+      }
+
+      function subscribe(callback) {
+        listeners.add(callback);
+        callback(currentList, isLoading);
+        return () => listeners.delete(callback);
+      }
+
+      async function refresh() {
+        if (!currentList) {
+          log("⚠️", "Nothing to refresh");
+          return null;
+        }
+        log("🔄", "Refreshing current view");
+        return navigate(currentList.params);
+      }
+
+      return { navigate, subscribe, getCurrent: () => currentList, refresh };
+    })();
+
+    pb.nav = {
+      list: (doctype, query = {}) => pb.navigation.navigate({ doctype, query }),
+      item: (name, doctype) => pb.navigation.navigate({ 
+        doctype, 
+        query: { where: { name }, take: 1 } 
+      }),
+      refresh: () => pb.navigation.refresh()
+    };
+
+    // ============================================================================
+    // Streaming Console
+    // ============================================================================
+    pb.console = (function() {
+      async function* stream(params) {
+        const { doctype, query, options } = params;
+        const operation = query?.operation || "select";
+        
+        yield `⏳ Starting ${operation} on ${doctype}...`;
+        await new Promise(r => setTimeout(r, 400));
+        
+        yield `🔍 Validating schema...`;
+        await new Promise(r => setTimeout(r, 400));
+        
+        yield `📡 Executing query...`;
+        await new Promise(r => setTimeout(r, 400));
+        
+        const result = await pb.query(doctype, query, options);
+        
+        yield `✅ ${operation} complete: ${result.data.length} records`;
+        yield result;
+      }
+      
+      async function execute(params) {
+        log("🎯", `Console Execute: ${params.doctype} (${params.query?.operation || 'select'})`);
+        
+        for await (const event of stream(params)) {
+          if (typeof event === 'string') {
+            log("📝", event);
+          } else {
+            log("📦", `Result: ${JSON.stringify(event.data)}`);
+          }
+        }
+      }
+      
+      return { stream, execute };
+    })();
+
+    // ============================================================================
+    // UI Helpers
+    // ============================================================================
+    function log(icon, message) {
+      const consoleEl = document.getElementById('console');
+      const line = document.createElement('div');
+      line.className = 'console-line';
+      line.textContent = `${icon} ${message}`;
+      consoleEl.appendChild(line);
+      consoleEl.scrollTop = consoleEl.scrollHeight;
+    }
+
+    function updateStateView(state, loading) {
+      const stateEl = document.getElementById('state');
+      if (!state) {
+        stateEl.innerHTML = '<em class="text-muted">No state yet. Click an action above.</em>';
+        return;
+      }
+
+      const loadingBadge = loading ? '<span class="badge bg-warning">Loading...</span>' : '';
+      
+      stateEl.innerHTML = `
+        <div class="mb-3">
+          <strong>DocType:</strong> <span class="badge bg-primary">${state.doctype}</span>
+          ${loadingBadge}
+        </div>
+        <div class="mb-3">
+          <strong>Records:</strong> ${state.data.length}
+          ${state.meta ? ` (Total: ${state.meta.total || state.data.length})` : ''}
+        </div>
+        <div>
+          <strong>Data:</strong>
+          <pre class="mb-0">${JSON.stringify(state.data, null, 2)}</pre>
+        </div>
+      `;
+    }
+
+    // Subscribe to state changes
+    pb.navigation.subscribe(updateStateView);
+
+    // ============================================================================
+    // Demo Actions
+    // ============================================================================
+    const demo = {
+      async listTasks() {
+        await pb.nav.list('Task');
+      },
+      
+      async viewItem() {
+        await pb.nav.item('task-1', 'Task');
+      },
+      
+      async fetchEmails() {
+        await pb.console.execute({
+          doctype: 'Email',
+          query: { operation: 'fetch' }
+        });
+      },
+      
+      async createTask() {
+        await pb.console.execute({
+          doctype: 'Task',
+          query: { 
+            operation: 'create', 
+            data: { title: 'New urgent task', status: 'Open', priority: 'High' }
+          }
+        });
+      },
+      
+      clearConsole() {
+        document.getElementById('console').innerHTML = '';
+        log("🗑️", "Console cleared");
+      },
+      
+      async refresh() {
+        await pb.nav.refresh();
+      }
+    };
+
+    // Initial log
+    log("🎬", "PB Navigation Console loaded. Click actions above to start!");
+  </script>
+</body>
+</html>
