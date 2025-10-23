@@ -1,6 +1,8 @@
 //this is version 0.1 - json based storage - potentailly migrate to pocketbase (See Mothership) for STORAGE ONLY
 // LOOK INTO MOTHERSHIP first https://chatgpt.com/c/68fa4aba-6208-8328-ae9f-b8f91584d5b3
 
+// very primitive UI file:///C:/python/script/exponanta-scripts/docker-health-monitor.html 
+
 Complete Production Setup
 Project Structure
 pocketbase-manager/
