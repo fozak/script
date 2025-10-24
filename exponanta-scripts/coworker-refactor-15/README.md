@@ -1,3 +1,19 @@
+#OPEN refactioning. 
+- TODO p.query() - all of it 
+- TODO pb.query() - this is async outcome - (pending, finished, success->outcome doc.expected doctype, error -> error message)
+- TODO Renaming operaitons -> action (massive)
+{
+  "when": { "priority": "High" },
+  "then": {
+    "action": "create",      // ← Change this
+    "doctype": "Notification",
+    "data": { "recipient": "manager" }
+  }
+}
+
+
+
+
 https://claude.ai/chat/ea5d6df6-3c04-41cf-9d12-3787f3817fe2
 
 pb.query() ← Universal data operations (read/create/update/delete)
