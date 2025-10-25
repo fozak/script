@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Prebuilt Blockly IF Formula</title>
+  <script src="https://unpkg.com/blockly/blockly.min.js"></script>
+  <style>
+    html, body { height: 100%; margin: 0; padding: 0; }
+    #blocklyDiv { height: 480px; width: 100%; }
+  </style>
+</head>
+<body>
+  <h2>Prebuilt Blockly IF Formula</h2>
+  <div id="blocklyDiv"></div>
+  <button onclick="generateCode()">Generate JavaScript</button>
+  <pre id="codeArea"></pre>
+
+  <xml id="toolbox" style="display: none">
+    <category name="Logic" colour="#5C81A6">
+      <block type="controls_if"></block>
+      <block type="logic_compare"></block>
+      <block type="logic_operation"></block>
+      <block type="logic_boolean"></block>
+    </category>
+
+    <category name="Task" colour="#A65C81">
+      <block type="task_field"></block>
+    </category>
+
+    <category name="Template" colour="#5CA65C">
+      <block type="template_field"></block>
+    </category>
+
+    <category name="Action" colour="#A6745C">
+      <block type="action_send_email"></block>
+    </category>
+  </xml>
+
+  <xml id="startBlocks" style="display: none">
+    <!-- Prebuilt IF formula -->
+    <block type="controls_if" x="20" y="20">
+      <value name="IF0">
+        <block type="logic_operation">
+          <field name="OP">AND</field>
+          <value name="A">
+            <block type="logic_compare">
+              <field name="OP">EQ</field>
+              <value name="A">
+                <block type="task_field">
+                  <field name="FIELD">priority</field>
+                </block>
+              </value>
+              <value name="B">
+                <block type="logic_boolean">
+                  <field name="BOOL">TRUE</field>
+                </block>
+              </value>
+            </block>
+          </value>
+          <value name="B">
+            <block type="logic_compare">
+              <field name="OP">EQ</field>
+              <value name="A">
+                <block type="task_field">
+                  <field name="FIELD">status</field>
+                </block>
+              </value>
+              <value name="B">
+                <block type="logic_boolean">
+                  <field name="BOOL">TRUE</field>
+                </block>
+              </value>
+            </block>
+          </value>
+        </block>
+      </value>
+      <statement name="DO0">
+        <block type="action_send_email">
+          <value name="EMAIL">
+            <block type="template_field">
+              <field name="FIELD">EmailNewOrder</field>
+            </block>
+          </value>
+        </block>
+      </statement>
+    </block>
+  </xml>
+
+  <script>
+    // Define custom blocks
+    Blockly.defineBlocksWithJsonArray([
+      {
+        "type": "task_field",
+        "message0": "Task.%1",
+        "args0": [
+          {
+            "type": "field_dropdown",
+            "name": "FIELD",
+            "options": [
+              ["priority", "priority"],
+              ["status", "status"]
+            ]
+          }
+        ],
+        "output": "String",
+        "colour": 160,
+        "tooltip": "Task field",
+        "helpUrl": ""
+      },
+      {
+        "type": "template_field",
+        "message0": "Template.%1",
+        "args0": [
+          {
+            "type": "field_dropdown",
+            "name": "FIELD",
+            "options": [
+              ["EmailNewOrder", "EmailNewOrder"]
+            ]
+          }
+        ],
+        "output": "String",
+        "colour": 65,
+        "tooltip": "Template field",
+        "helpUrl": ""
+      },
+      {
+        "type": "action_send_email",
+        "message0": "Action.sendEmail(%1)",
+        "args0": [
+          {
+            "type": "input_value",
+            "name": "EMAIL"
+          }
+        ],
+        "previousStatement": null,
+        "nextStatement": null,
+        "colour": 200,
+        "tooltip": "Send an email",
+        "helpUrl": ""
+      }
+    ]);
+
+    Blockly.JavaScript['task_field'] = function(block) {
+      var dropdown_field = block.getFieldValue('FIELD');
+      return ["Task." + dropdown_field, Blockly.JavaScript.ORDER_ATOMIC];
+    };
+
+    Blockly.JavaScript['template_field'] = function(block) {
+      var dropdown_field = block.getFieldValue('FIELD');
+      return ["Template." + dropdown_field, Blockly.JavaScript.ORDER_ATOMIC];
+    };
+
+    Blockly.JavaScript['action_send_email'] = function(block) {
+      var email = Blockly.JavaScript.valueToCode(block, 'EMAIL', Blockly.JavaScript.ORDER_NONE);
+      return "Action.sendEmail(" + email + ");\n";
+    };
+
+    // Initialize Blockly
+    var workspace = Blockly.inject('blocklyDiv', {
+      toolbox: document.getElementById('toolbox')
+    });
+
+    // Load prebuilt blocks
+    var xmlText = document.getElementById('startBlocks').outerHTML;
+    var xmlDom = Blockly.Xml.textToDom(xmlText);
+    Blockly.Xml.domToWorkspace(xmlDom, workspace);
+
+    // Generate JS
+    function generateCode() {
+      var code = Blockly.JavaScript.workspaceToCode(workspace);
+      document.getElementById('codeArea').textContent = code;
+    }
+  </script>
+</body>
+</html>
