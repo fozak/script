@@ -19,24 +19,92 @@
     </script>
     <script type="module">
       import * as React from 'react';
+      import { useState, useMemo } from 'react';
       import { createRoot } from 'react-dom/client';
       import { QueryBuilder } from 'react-querybuilder';
-
-      const fields = [
-        { name: 'firstName', label: 'First Name' },
-        { name: 'lastName', label: 'Last Name' },
-      ];
-
-      const defaultQuery = {
-        combinator: 'and',
-        rules: [
-          { field: 'firstName', operator: 'beginsWith', value: 'Stev' },
-          { field: 'lastName', operator: 'in', value: 'Vai,Vaughan' },
+      
+      // This would come from your API/backend
+      const docTypes = {
+        Task: [
+          { name: 'status', label: 'Status' },
+          { name: 'priority', label: 'Priority' },
+          { name: 'assignee', label: 'Assignee' }
         ],
+        Order: [
+          { name: 'total', label: 'Total' },
+          { name: 'customer', label: 'Customer' },
+          { name: 'date', label: 'Order Date' }
+        ],
+        Invoice: [
+          { name: 'amount', label: 'Amount' },
+          { name: 'paid', label: 'Paid Status' }
+        ]
       };
-
+      
+      function App() {
+        const [selectedDoc, setSelectedDoc] = useState(Object.keys(docTypes)[0]);
+        const [query, setQuery] = useState({
+          combinator: 'and',
+          rules: []
+        });
+        
+        // Dynamically build all fields with doctype prefix
+        const allFields = useMemo(() => {
+          return Object.entries(docTypes).flatMap(([docType, fields]) =>
+            fields.map((field) => ({
+              name: `${docType}.${field.name}`,
+              label: `${docType}: ${field.label}`
+            }))
+          );
+        }, []);
+        
+        // Get default field for selected doctype
+        const getDefaultField = (docType) => {
+          const fields = docTypes[docType];
+          return fields && fields.length > 0 ? `${docType}.${fields[0].name}` : '';
+        };
+        
+        const addRule = () => {
+          const newRule = {
+            field: getDefaultField(selectedDoc),
+            operator: '=',
+            value: ''
+          };
+          setQuery({
+            ...query,
+            rules: [...query.rules, newRule]
+          });
+        };
+        
+        return React.createElement('div', { style: { padding: '1rem' } },
+          React.createElement('div', { style: { marginBottom: '1rem', display: 'flex', gap: '0.5rem', alignItems: 'center' } },
+            React.createElement('label', null,
+              'Quick Select Doctype: ',
+              React.createElement('select', {
+                value: selectedDoc,
+                onChange: (e) => setSelectedDoc(e.target.value),
+                style: { marginLeft: '0.5rem', padding: '0.25rem' }
+              },
+                Object.keys(docTypes).map((dt) =>
+                  React.createElement('option', { key: dt, value: dt }, dt)
+                )
+              )
+            ),
+            React.createElement('button', {
+              onClick: addRule,
+              style: { padding: '0.25rem 0.75rem' }
+            }, `Add ${selectedDoc} Rule`)
+          ),
+          React.createElement(QueryBuilder, {
+            fields: allFields,
+            query: query,
+            onQueryChange: (q) => setQuery(q)
+          })
+        );
+      }
+      
       createRoot(document.getElementById('root')).render(
-        React.createElement(QueryBuilder, { fields, defaultQuery })
+        React.createElement(App)
       );
     </script>
   </body>
