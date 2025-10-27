@@ -3,7 +3,7 @@
 //first time visit
 
 (async function() {
-  const CONFIG = { MAX: 2000, MIN: 100, EXCLUDE: ['script', 'style', 'nav', 'header', 'footer'] };
+  const CONFIG = { MAX: 2000, MIN: 100, EXCLUDE: ['script','noscript' ,'style', 'nav', 'header', 'footer'] };
   
   const container = document.querySelector('main') || document.body;
   console.log(`📦 First Visit - Container: <${container.tagName}>, ${container.innerText.length} chars\n`);
@@ -86,7 +86,7 @@
 
 // Repeatable visit
 (async function() {
-  const CONFIG = { MAX: 2000, MIN: 100, EXCLUDE: ['script', 'style', 'nav', 'header', 'footer'] };
+  const CONFIG = { MAX: 2000, MIN: 100, EXCLUDE: ['script','noscript' ,'style', 'nav', 'header', 'footer'] };
   
   const container = document.querySelector('main') || document.body;
   const storageKey = 'pageChunks_' + btoa(location.href).slice(0, 50);
