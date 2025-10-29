@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Item</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .message {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        .info {
+            background-color: #d1ecf1;
+            color: #0c5460;
+            margin-bottom: 20px;
+        }
+        #editMode {
+            display: none;
+        }
+        .url-box {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 15px;
+            word-break: break-all;
+        }
+        .url-box a {
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <div id="createMode">
+        <h2>Create Your Item</h2>
+        
+        <form id="itemForm">
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="description">Description:</label>
+                <textarea id="description" name="description"></textarea>
+            </div>
+            
+            <button type="submit">Create Item</button>
+        </form>
+    </div>
+
+    <div id="editMode">
+        <div class="message info">
+            <strong>Your unique item URL:</strong>
+            <div class="url-box">
+                <a href="#" id="itemUrl"></a>
+            </div>
+            <small>Bookmark this URL to access your item from any device!</small>
+        </div>
+
+        <h2>Edit Your Item</h2>
+        
+        <form id="editForm">
+            <div class="form-group">
+                <label for="editName">Name:</label>
+                <input type="text" id="editName" name="name" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="editDescription">Description:</label>
+                <textarea id="editDescription" name="description"></textarea>
+            </div>
+            
+            <button type="submit">Update Item</button>
+        </form>
+    </div>
+    
+    <div id="message"></div>
+
+    <script>
+        const POCKETBASE_URL = 'http://143.198.29.88:8090';
+        const STORAGE_KEY = 'myItemId';
+
+        // Check if we have an ID in URL or localStorage
+        function getItemId() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const urlId = urlParams.get('id');
+            
+            if (urlId) {
+                // Save to localStorage if coming from URL
+                localStorage.setItem(STORAGE_KEY, urlId);
+                return urlId;
+            }
+            
+            return localStorage.getItem(STORAGE_KEY);
+        }
+
+        // Load existing item if we have an ID
+        async function loadItem(itemId) {
+            try {
+                const response = await fetch(`${POCKETBASE_URL}/api/collections/item/records/${itemId}`);
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    document.getElementById('editName').value = data.name || '';
+                    document.getElementById('editDescription').value = data.description || '';
+                    
+                    // Show edit mode
+                    document.getElementById('createMode').style.display = 'none';
+                    document.getElementById('editMode').style.display = 'block';
+                    
+                    // Set the URL
+                    const itemUrl = `${window.location.origin}${window.location.pathname}?id=${itemId}`;
+                    document.getElementById('itemUrl').href = itemUrl;
+                    document.getElementById('itemUrl').textContent = itemUrl;
+                } else {
+                    // Item not found, clear localStorage
+                    localStorage.removeItem(STORAGE_KEY);
+                }
+            } catch (error) {
+                console.error('Error loading item:', error);
+            }
+        }
+
+        // Create new item
+        document.getElementById('itemForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const description = document.getElementById('description').value;
+            const messageDiv = document.getElementById('message');
+            
+            messageDiv.textContent = '';
+            messageDiv.className = 'message';
+            
+            try {
+                const response = await fetch(`${POCKETBASE_URL}/api/collections/item/records`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        name: name,
+                        description: description
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    // Save ID to localStorage
+                    localStorage.setItem(STORAGE_KEY, data.id);
+                    
+                    // Redirect to URL with ID
+                    const itemUrl = `${window.location.origin}${window.location.pathname}?id=${data.id}`;
+                    window.location.href = itemUrl;
+                } else {
+                    messageDiv.textContent = `Error: ${data.message || 'Creation failed'}`;
+                    messageDiv.classList.add('error');
+                }
+            } catch (error) {
+                messageDiv.textContent = `Error: ${error.message}`;
+                messageDiv.classList.add('error');
+            }
+        });
+
+        // Update existing item
+        document.getElementById('editForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const itemId = getItemId();
+            const name = document.getElementById('editName').value;
+            const description = document.getElementById('editDescription').value;
+            const messageDiv = document.getElementById('message');
+            
+            messageDiv.textContent = '';
+            messageDiv.className = 'message';
+            
+            try {
+                const response = await fetch(`${POCKETBASE_URL}/api/collections/item/records/${itemId}`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        name: name,
+                        description: description
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    messageDiv.textContent = 'Item updated successfully!';
+                    messageDiv.classList.add('success');
+                } else {
+                    messageDiv.textContent = `Error: ${data.message || 'Update failed'}`;
+                    messageDiv.classList.add('error');
+                }
+            } catch (error) {
+                messageDiv.textContent = `Error: ${error.message}`;
+                messageDiv.classList.add('error');
+            }
+        });
+
+        // On page load, check if we have an existing item
+        const existingItemId = getItemId();
+        if (existingItemId) {
+            loadItem(existingItemId);
+        }
+    </script>
+</body>
+</html>

@@ -229,12 +229,18 @@ class Fingerprinter {
     // For identity/deduplication (hash FULL text)
     hash: await Fingerprinter.hash(c.text),
     
+    // Store element reference
+    el: c.el,
+    
     // Full text (optional, for storage)
     text: c.text,
     
     length: c.len,
     depth: c.depth
   })));
+  
+  // ← EXPOSE GLOBALLY HERE (right after processed is created)
+  window.chunks = processed;
   
   console.table(processed.map((c, i) => ({
     num: i + 1,
@@ -274,8 +280,8 @@ class Fingerprinter {
     originalLength: originalLength,
     chunks: processed.map(c => ({
       selector: c.selector,
-      textFragment: c.textFragment,  // ← For navigation
-      hash: c.hash,                   // ← For identity
+      textFragment: c.textFragment,
+      hash: c.hash,
       length: c.length
     }))
   };
@@ -286,48 +292,106 @@ class Fingerprinter {
   console.log(`   Key: ${storageKey}`);
   console.log(`   Data: ${JSON.stringify(data).length} bytes`);
   
-  // Demo: Navigation helper
-  window.scrollToChunk = function(chunkIndex) {
-    const chunk = processed[chunkIndex];
+  // ========== NAVIGATION & SELECTION HELPERS ==========
+  
+  window.scrollToChunk = function(index) {
+    const chunk = chunks[index < 0 ? chunks.length + index : index];
     if (!chunk) {
-      console.error(`Chunk ${chunkIndex} not found`);
+      console.error(`❌ Chunk ${index} not found (valid range: 0-${chunks.length - 1})`);
       return;
     }
     
-    const encoded = encodeURIComponent(chunk.textFragment);
-    const url = `${location.origin}${location.pathname}#:~:text=${encoded}`;
-    
-    console.log(`🔗 Navigate to chunk ${chunkIndex}:`);
-    console.log(`   ${url}`);
-    
-    window.location.hash = `#:~:text=${encoded}`;
+    chunk.el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    console.log(`📍 Scrolled to chunk ${index}: "${chunk.preview}"`);
   };
   
-  console.log(`\n🧭 Navigation:`);
-  console.log(`   Use scrollToChunk(n) to navigate, e.g.:`);
-  console.log(`   scrollToChunk(0) - jumps to first chunk`);
-  console.log(`   scrollToChunk(3) - jumps to fourth chunk\n`);
-
-  //added 
-  window.chunks = processed;
+  window.selectChunk = function(index) {
+    const chunk = chunks[index < 0 ? chunks.length + index : index];
+    if (!chunk) {
+      console.error(`❌ Chunk ${index} not found (valid range: 0-${chunks.length - 1})`);
+      return;
+    }
+    
+    const sel = window.getSelection();
+    sel.removeAllRanges();
+    const range = document.createRange();
+    range.selectNodeContents(chunk.el);
+    sel.addRange(range);
+    
+    chunk.el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    console.log(`✅ Selected chunk ${index}: "${chunk.preview}"`);
+  };
+  
+  window.nextChunk = function() {
+    if (!window._currentChunk) window._currentChunk = 0;
+    else window._currentChunk = Math.min(window._currentChunk + 1, chunks.length - 1);
+    scrollToChunk(window._currentChunk);
+  };
+  
+  window.prevChunk = function() {
+    if (!window._currentChunk) window._currentChunk = 0;
+    else window._currentChunk = Math.max(window._currentChunk - 1, 0);
+    scrollToChunk(window._currentChunk);
+  };
+  
+  console.log(`\n🧭 Navigation & Selection helpers:`);
+  console.log(`   chunks           - array of all chunks`);
+  console.log(`   scrollToChunk(n) - scroll to chunk n`);
+  console.log(`   selectChunk(n)   - select & scroll to chunk n`);
+  console.log(`   selectChunk(-1)  - select last chunk`);
+  console.log(`   nextChunk()      - go to next chunk`);
+  console.log(`   prevChunk()      - go to previous chunk`);
+  console.log(`\n   Example: selectChunk(0) or selectChunk(-1)\n`);
 })();
-/*
 
-## 🔄 **Key Changes**
 
-1. **Removed local `hash()` function** - no longer needed
-2. **Added Fingerprinter check** - validates it's loaded
-3. **Changed hash call** - `await Fingerprinter.hash(c.text)` uses Base32 (15 chars)
-4. **Updated console output** - shows hash format info
+//pull ----------------------------------------
 
-## ✅ **Benefits**
-
-- **15 chars** instead of 16 (hex) - more compact
-- **Base32** - faster (14% improvement from your benchmark)
-- **75 bits** - stronger collision resistance than 64-bit hex
-- **Lowercase** - consistent with Frappe conventions
-- **Unified system** - same fingerprinting for chunks and contacts
-
-**Output example:**
-```
-hash: "k9fj3h8d1lq2b0a"  ← Base32 (was: "672d38e06b6951c4" hex)*/
+// === CHUNK EXTRACTION HELPERS ===
+  
+  window.pullByHash = function(hashes) {
+    const selected = chunks.filter(c => hashes.includes(c.hash));
+    
+    if (selected.length === 0) {
+      console.error('❌ No chunks found');
+      return null;
+    }
+    
+    const context = selected.map(c => c.text).join('\n\n---\n\n');
+    
+    // Try clipboard
+    const copyToClipboard = async () => {
+      try {
+        await navigator.clipboard.writeText(context);
+        console.log(`✅ Copied ${selected.length} chunks to clipboard!`);
+      } catch (e) {
+        // Fallback method
+        const textarea = document.createElement('textarea');
+        textarea.value = context;
+        textarea.style.position = 'fixed';
+        textarea.style.opacity = '0';
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+        console.log(`✅ Copied ${selected.length} chunks (fallback)!`);
+      }
+    };
+    
+    copyToClipboard();
+    
+    // Always return text for manual copy if needed
+    console.log(`\n📋 Text also available below (select & copy if clipboard failed):`);
+    console.log(context);
+    
+    return context;
+  };
+  
+  // Shortcut for profile filling
+  window.pullProfile = function() {
+    return pullByHash(['v6p3v2jqh0kq5gm', 'yzte18qapg11f4m']);
+  };
+  
+  console.log(`\n📤 Extraction helpers:`);
+  console.log(`   pullByHash(['hash1', 'hash2']) - extract by hash`);
+  console.log(`   pullProfile()                  - quick profile extraction\n`);
