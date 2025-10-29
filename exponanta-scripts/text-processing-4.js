@@ -7,6 +7,8 @@
   
   console.log(`📦 Container: <${container.tagName}>, ${originalLength} chars\n`);
   
+  const chunkedElements = new Set(); // ← Track what we've already chunked
+  
   function cleanFingerprint(text) {
     return text.slice(0, 40).replace(/\d+[\.,]?\d*/g, '').replace(/\(\s*\)/g, '').replace(/\s+/g, ' ').trim();
   }
@@ -53,7 +55,6 @@
         sel: getSelector(el) + ' [artificial]' 
       });
     } else if (chunks.length === 0 && text.length >= CONFIG.MIN) {
-      // Fallback: keep it even if less than MIN
       chunks.push({ el, text, len: text.length, depth: -1, sel: getSelector(el) + ' [fallback]' });
     }
     
@@ -61,6 +62,9 @@
   }
   
   function split(el, depth = 0) {
+    // Skip if already chunked
+    if (chunkedElements.has(el)) return [];
+    
     if (CONFIG.EXCLUDE.includes(el.tagName.toLowerCase())) return [];
     
     const text = el.innerText?.trim() || '';
@@ -68,6 +72,7 @@
     
     // Perfect size - take it!
     if (text.length >= CONFIG.MIN && text.length <= CONFIG.MAX) {
+      chunkedElements.add(el); // ← Mark as chunked
       return [{ el, text, len: text.length, depth, sel: getSelector(el) }];
     }
     
@@ -86,15 +91,47 @@
       }
       
       // Poor coverage - split artificially
-      return splitLargeText(el, text);
+      const artificialChunks = splitLargeText(el, text);
+      artificialChunks.forEach(c => chunkedElements.add(c.el));
+      return artificialChunks;
     }
     
     // Too big but no children - split artificially
-    return splitLargeText(el, text);
+    const artificialChunks = splitLargeText(el, text);
+    artificialChunks.forEach(c => chunkedElements.add(c.el));
+    return artificialChunks;
   }
   
   const chunks = split(container);
   console.log(`✂️  Found ${chunks.length} chunks\n`);
+  
+  // ============ DEBUGGING: Check for overlaps ============
+  console.log('🔍 Checking for overlaps...\n');
+  
+  const chunkTexts = chunks.map(c => c.text);
+  let overlapFound = false;
+  
+  for (let i = 0; i < chunkTexts.length; i++) {
+    for (let j = i + 1; j < chunkTexts.length; j++) {
+      const text1 = chunkTexts[i];
+      const text2 = chunkTexts[j];
+      
+      // Check if one contains the other
+      if (text1.includes(text2) || text2.includes(text1)) {
+        console.warn(`⚠️  OVERLAP DETECTED:`);
+        console.warn(`   Chunk ${i + 1} (${text1.length} chars): "${text1.slice(0, 50)}..."`);
+        console.warn(`   Chunk ${j + 1} (${text2.length} chars): "${text2.slice(0, 50)}..."`);
+        console.warn('');
+        overlapFound = true;
+      }
+    }
+  }
+  
+  if (!overlapFound) {
+    console.log('✅ No overlaps detected\n');
+  }
+  
+  // ============ Continue with rest of processing ============
   
   async function hash(txt) {
     const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(txt));
@@ -129,16 +166,17 @@
   console.log(`\n🧮 Validation:`);
   console.log(`   Original container: ${originalLength.toLocaleString()} chars`);
   console.log(`   Sum of chunks:      ${totalChunkChars.toLocaleString()} chars`);
-  console.log(`   Difference:         ${(originalLength - totalChunkChars).toLocaleString()} chars`);
+  console.log(`   Difference:         ${(totalChunkChars - originalLength).toLocaleString()} chars`);
   console.log(`   Coverage:           ${((totalChunkChars / originalLength) * 100).toFixed(2)}%`);
   
-  if (Math.abs(originalLength - totalChunkChars) / originalLength > 0.1) {
-    console.warn(`⚠️  Coverage is less than 90% - some text may be lost!`);
+  if (totalChunkChars > originalLength) {
+    console.warn(`⚠️  Coverage > 100% - duplicate content detected!`);
+  } else if (Math.abs(originalLength - totalChunkChars) / originalLength > 0.1) {
+    console.warn(`⚠️  Coverage < 90% - some text may be lost!`);
   } else {
     console.log(`✅ Good coverage!`);
   }
   
-  // Save to localStorage
   const storageKey = 'pageChunks_' + btoa(location.href).slice(0, 50);
   const data = {
     url: location.href,
@@ -158,28 +196,3 @@
   console.log(`   Key: ${storageKey}`);
   console.log(`   Data: ${JSON.stringify(data).length} bytes\n`);
 })();
-```
-
-**What's validated:**
-
-1. **Original container length** - total chars after excluding nav/footer/etc
-2. **Sum of all chunks** - should match original
-3. **Coverage %** - warns if < 90%
-4. **Difference** - shows how many chars are lost/duplicated
-
-**Example output:**
-```
-📦 Container: <MAIN>, 45,234 chars
-
-✂️  Found 28 chunks
-
-📊 Stats:
-   Chunks: 28
-   Avg size: 1,615 chars
-
-🧮 Validation:
-   Original container: 45,234 chars
-   Sum of chunks:      44,987 chars
-   Difference:         247 chars
-   Coverage:           99.45%
-✅ Good coverage!
