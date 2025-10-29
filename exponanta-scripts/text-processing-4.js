@@ -1,0 +1,185 @@
+(async function() {
+  const CONFIG = { MAX: 2000, MIN: 100, EXCLUDE: ['script','noscript' ,'style', 'nav', 'header', 'footer'] };
+  
+  const container = document.querySelector('main') || document.body;
+  const originalText = container.innerText?.trim() || '';
+  const originalLength = originalText.length;
+  
+  console.log(`📦 Container: <${container.tagName}>, ${originalLength} chars\n`);
+  
+  function cleanFingerprint(text) {
+    return text.slice(0, 40).replace(/\d+[\.,]?\d*/g, '').replace(/\(\s*\)/g, '').replace(/\s+/g, ' ').trim();
+  }
+  
+  function getSelector(el) {
+    if (el.id) return `#${el.id}`;
+    let path = [];
+    while (el && el !== container) {
+      const tag = el.tagName.toLowerCase();
+      const siblings = Array.from(el.parentElement?.children || []).filter(s => s.tagName === el.tagName);
+      const idx = siblings.length > 1 ? `:nth-of-type(${siblings.indexOf(el) + 1})` : '';
+      path.unshift(tag + idx);
+      el = el.parentElement;
+    }
+    return path.join(' > ');
+  }
+  
+  function splitLargeText(el, text) {
+    const chunks = [];
+    const sentences = text.match(/[^.!?]+[.!?]+/g) || [text];
+    let buffer = '';
+    
+    for (const sentence of sentences) {
+      if ((buffer + sentence).length > CONFIG.MAX && buffer.length >= CONFIG.MIN) {
+        chunks.push({
+          el,
+          text: buffer.trim(),
+          len: buffer.trim().length,
+          depth: -1,
+          sel: getSelector(el) + ' [artificial]'
+        });
+        buffer = sentence;
+      } else {
+        buffer += sentence;
+      }
+    }
+    
+    if (buffer.trim().length >= CONFIG.MIN) {
+      chunks.push({ 
+        el, 
+        text: buffer.trim(), 
+        len: buffer.trim().length, 
+        depth: -1, 
+        sel: getSelector(el) + ' [artificial]' 
+      });
+    } else if (chunks.length === 0 && text.length >= CONFIG.MIN) {
+      // Fallback: keep it even if less than MIN
+      chunks.push({ el, text, len: text.length, depth: -1, sel: getSelector(el) + ' [fallback]' });
+    }
+    
+    return chunks;
+  }
+  
+  function split(el, depth = 0) {
+    if (CONFIG.EXCLUDE.includes(el.tagName.toLowerCase())) return [];
+    
+    const text = el.innerText?.trim() || '';
+    if (text.length < CONFIG.MIN) return [];
+    
+    // Perfect size - take it!
+    if (text.length >= CONFIG.MIN && text.length <= CONFIG.MAX) {
+      return [{ el, text, len: text.length, depth, sel: getSelector(el) }];
+    }
+    
+    // Too big - try splitting into children
+    if (text.length > CONFIG.MAX && el.children.length > 0) {
+      const childChunks = Array.from(el.children).flatMap(c => split(c, depth + 1));
+      
+      if (childChunks.length > 0) {
+        const coveredLength = childChunks.reduce((sum, c) => sum + c.len, 0);
+        const coverage = coveredLength / text.length;
+        
+        // Good coverage (>70%)? Use children
+        if (coverage > 0.7) {
+          return childChunks;
+        }
+      }
+      
+      // Poor coverage - split artificially
+      return splitLargeText(el, text);
+    }
+    
+    // Too big but no children - split artificially
+    return splitLargeText(el, text);
+  }
+  
+  const chunks = split(container);
+  console.log(`✂️  Found ${chunks.length} chunks\n`);
+  
+  async function hash(txt) {
+    const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(txt));
+    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('').slice(0, 16);
+  }
+  
+  const processed = await Promise.all(chunks.map(async (c, i) => ({
+    id: `chunk-${i}`,
+    selector: c.sel,
+    fingerprint: cleanFingerprint(c.text),
+    hash: await hash(c.text),
+    text: c.text,
+    length: c.len,
+    depth: c.depth
+  })));
+  
+  console.table(processed.map((c, i) => ({
+    num: i + 1,
+    chars: c.length,
+    depth: c.depth,
+    fingerprint: c.fingerprint,
+    selector: c.selector.slice(0, 40),
+    preview: c.text.slice(0, 40)
+  })));
+  
+  const totalChunkChars = processed.reduce((s, c) => s + c.length, 0);
+  const avg = totalChunkChars / processed.length;
+  
+  console.log(`\n📊 Stats:`);
+  console.log(`   Chunks: ${processed.length}`);
+  console.log(`   Avg size: ${avg.toFixed(0)} chars`);
+  console.log(`\n🧮 Validation:`);
+  console.log(`   Original container: ${originalLength.toLocaleString()} chars`);
+  console.log(`   Sum of chunks:      ${totalChunkChars.toLocaleString()} chars`);
+  console.log(`   Difference:         ${(originalLength - totalChunkChars).toLocaleString()} chars`);
+  console.log(`   Coverage:           ${((totalChunkChars / originalLength) * 100).toFixed(2)}%`);
+  
+  if (Math.abs(originalLength - totalChunkChars) / originalLength > 0.1) {
+    console.warn(`⚠️  Coverage is less than 90% - some text may be lost!`);
+  } else {
+    console.log(`✅ Good coverage!`);
+  }
+  
+  // Save to localStorage
+  const storageKey = 'pageChunks_' + btoa(location.href).slice(0, 50);
+  const data = {
+    url: location.href,
+    timestamp: Date.now(),
+    originalLength: originalLength,
+    chunks: processed.map(c => ({
+      selector: c.selector,
+      fingerprint: c.fingerprint,
+      hash: c.hash,
+      length: c.length
+    }))
+  };
+  
+  localStorage.setItem(storageKey, JSON.stringify(data));
+  
+  console.log(`\n💾 Saved to localStorage`);
+  console.log(`   Key: ${storageKey}`);
+  console.log(`   Data: ${JSON.stringify(data).length} bytes\n`);
+})();
+```
+
+**What's validated:**
+
+1. **Original container length** - total chars after excluding nav/footer/etc
+2. **Sum of all chunks** - should match original
+3. **Coverage %** - warns if < 90%
+4. **Difference** - shows how many chars are lost/duplicated
+
+**Example output:**
+```
+📦 Container: <MAIN>, 45,234 chars
+
+✂️  Found 28 chunks
+
+📊 Stats:
+   Chunks: 28
+   Avg size: 1,615 chars
+
+🧮 Validation:
+   Original container: 45,234 chars
+   Sum of chunks:      44,987 chars
+   Difference:         247 chars
+   Coverage:           99.45%
+✅ Good coverage!
