@@ -7,10 +7,13 @@
   
   console.log(`📦 Container: <${container.tagName}>, ${originalLength} chars\n`);
   
-  const chunkedElements = new Set(); // ← Track what we've already chunked
+  const chunkedElements = new Set();
   
   function cleanFingerprint(text) {
-    return text.slice(0, 40).replace(/\d+[\.,]?\d*/g, '').replace(/\(\s*\)/g, '').replace(/\s+/g, ' ').trim();
+    return text
+      .slice(0, 50)
+      .replace(/\s+/g, ' ')
+      .trim();
   }
   
   function getSelector(el) {
@@ -62,7 +65,6 @@
   }
   
   function split(el, depth = 0) {
-    // Skip if already chunked
     if (chunkedElements.has(el)) return [];
     
     if (CONFIG.EXCLUDE.includes(el.tagName.toLowerCase())) return [];
@@ -70,13 +72,11 @@
     const text = el.innerText?.trim() || '';
     if (text.length < CONFIG.MIN) return [];
     
-    // Perfect size - take it!
     if (text.length >= CONFIG.MIN && text.length <= CONFIG.MAX) {
-      chunkedElements.add(el); // ← Mark as chunked
+      chunkedElements.add(el);
       return [{ el, text, len: text.length, depth, sel: getSelector(el) }];
     }
     
-    // Too big - try splitting into children
     if (text.length > CONFIG.MAX && el.children.length > 0) {
       const childChunks = Array.from(el.children).flatMap(c => split(c, depth + 1));
       
@@ -84,19 +84,16 @@
         const coveredLength = childChunks.reduce((sum, c) => sum + c.len, 0);
         const coverage = coveredLength / text.length;
         
-        // Good coverage (>70%)? Use children
         if (coverage > 0.7) {
           return childChunks;
         }
       }
       
-      // Poor coverage - split artificially
       const artificialChunks = splitLargeText(el, text);
       artificialChunks.forEach(c => chunkedElements.add(c.el));
       return artificialChunks;
     }
     
-    // Too big but no children - split artificially
     const artificialChunks = splitLargeText(el, text);
     artificialChunks.forEach(c => chunkedElements.add(c.el));
     return artificialChunks;
@@ -116,7 +113,6 @@
       const text1 = chunkTexts[i];
       const text2 = chunkTexts[j];
       
-      // Check if one contains the other
       if (text1.includes(text2) || text2.includes(text1)) {
         console.warn(`⚠️  OVERLAP DETECTED:`);
         console.warn(`   Chunk ${i + 1} (${text1.length} chars): "${text1.slice(0, 50)}..."`);
@@ -131,18 +127,19 @@
     console.log('✅ No overlaps detected\n');
   }
   
-  // ============ Continue with rest of processing ============
+  // ============ Use Fingerprinter.hash instead of local hash ============
   
-  async function hash(txt) {
-    const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(txt));
-    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('').slice(0, 16);
+  // Verify Fingerprinter is available
+  if (typeof Fingerprinter === 'undefined') {
+    console.error('❌ Fingerprinter class not found! Please load it first.');
+    return;
   }
   
   const processed = await Promise.all(chunks.map(async (c, i) => ({
     id: `chunk-${i}`,
     selector: c.sel,
     fingerprint: cleanFingerprint(c.text),
-    hash: await hash(c.text),
+    hash: await Fingerprinter.hash(c.text),  // ← Using Base32 fingerprint (15 chars)
     text: c.text,
     length: c.len,
     depth: c.depth
@@ -152,6 +149,7 @@
     num: i + 1,
     chars: c.length,
     depth: c.depth,
+    hash: c.hash,  // ← Show hash in table
     fingerprint: c.fingerprint,
     selector: c.selector.slice(0, 40),
     preview: c.text.slice(0, 40)
@@ -185,7 +183,7 @@
     chunks: processed.map(c => ({
       selector: c.selector,
       fingerprint: c.fingerprint,
-      hash: c.hash,
+      hash: c.hash,  // ← Now 15-char Base32
       length: c.length
     }))
   };
@@ -194,5 +192,6 @@
   
   console.log(`\n💾 Saved to localStorage`);
   console.log(`   Key: ${storageKey}`);
-  console.log(`   Data: ${JSON.stringify(data).length} bytes\n`);
+  console.log(`   Data: ${JSON.stringify(data).length} bytes`);
+  console.log(`   Hash format: Base32 lowercase (15 chars, 75 bits)\n`);
 })();
