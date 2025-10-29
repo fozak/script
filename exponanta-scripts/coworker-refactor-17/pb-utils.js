@@ -94,144 +94,7 @@ class Fingerprinter {
   }
 }
 
-// Test the system
-(async () => {
-  console.log('🧪 Testing Universal Fingerprinting System\n');
-  
-  // Test 1: Simple hash
-  console.log('📝 Test 1: Simple Hash');
-  const hash1 = await Fingerprinter.hash('alice@example.com');
-  const hash2 = await Fingerprinter.hash('alice@example.com');
-  const hash3 = await Fingerprinter.hash('bob@example.com');
-  console.log(`Same input:      ${hash1} === ${hash2} → ${hash1 === hash2 ? '✅' : '❌'}`);
-  console.log(`Different input: ${hash1} !== ${hash3} → ${hash1 !== hash3 ? '✅' : '❌'}`);
-  
-  // Test 2: Email normalization
-  console.log('\n📧 Test 2: Email Normalization');
-  const emails = [
-    'Alice.Smith@Gmail.com',
-    'alice.smith@gmail.com',
-    'alicesmith@gmail.com',      // Gmail ignores dots
-    'alice.smith+spam@gmail.com'  // Gmail ignores +aliases
-  ];
-  const emailHashes = await Promise.all(emails.map(async e => ({
-    email: e,
-    normalized: Fingerprinter.normalize(e, 'email'),
-    hash: await Fingerprinter.hash(Fingerprinter.normalize(e, 'email'))
-  })));
-  emailHashes.forEach(e => console.log(`${e.email.padEnd(35)} → ${e.normalized.padEnd(25)} → ${e.hash}`));
-  console.log(`All Gmail variants match: ${emailHashes.every(e => e.hash === emailHashes[0].hash) ? '✅' : '❌'}`);
-  
-  // Test 3: Phone normalization
-  console.log('\n📞 Test 3: Phone Normalization');
-  const phones = [
-    '+1 (555) 123-4567',
-    '555-123-4567',
-    '5551234567',
-    '1-555-123-4567'
-  ];
-  const phoneHashes = await Promise.all(phones.map(async p => ({
-    phone: p,
-    normalized: Fingerprinter.normalize(p, 'phone'),
-    hash: await Fingerprinter.hash(Fingerprinter.normalize(p, 'phone'))
-  })));
-  phoneHashes.forEach(p => console.log(`${p.phone.padEnd(20)} → ${p.normalized.padEnd(10)} → ${p.hash}`));
-  console.log(`All phone variants match: ${phoneHashes.every(p => p.hash === phoneHashes[0].hash) ? '✅' : '❌'}`);
-  
-  // Test 4: Contact fingerprint with schema
-  console.log('\n👤 Test 4: Contact Fingerprint (Schema-based)');
-  const contactSchema = {
-    email: { type: 'email', weight: 3 },    // Email is most important
-    phone: { type: 'phone', weight: 2 },    // Phone is secondary
-    first_name: { type: 'string', weight: 1 },
-    last_name: { type: 'string', weight: 1 },
-    dob: { type: 'date', weight: 2 }
-  };
-  
-  const contact1 = {
-    first_name: 'Alice',
-    last_name: 'Smith',
-    email: 'alice.smith@gmail.com',
-    phone: '+1-555-123-4567',
-    dob: '1985-03-12'
-  };
-  
-  const contact2 = {
-    first_name: 'ALICE',  // Different case
-    last_name: 'Smith',
-    email: 'Alice.Smith+work@Gmail.com',  // Different formatting, +alias
-    phone: '(555) 123-4567',              // Different formatting
-    dob: new Date('1985-03-12')           // Different date format
-  };
-  
-  const fp1 = await Fingerprinter.fingerprint(contact1, contactSchema);
-  const fp2 = await Fingerprinter.fingerprint(contact2, contactSchema);
-  
-  console.log('Contact 1:', JSON.stringify(contact1, null, 2));
-  console.log(`Fingerprint: ${fp1}`);
-  console.log('\nContact 2:', JSON.stringify(contact2, null, 2));
-  console.log(`Fingerprint: ${fp2}`);
-  console.log(`\nDuplicate detection: ${fp1 === fp2 ? '✅ SAME PERSON' : '❌ DIFFERENT'}`);
-  
-  // Test 5: Collision resistance demo
-  console.log('\n💥 Test 5: Collision Resistance');
-  const testSize = 100000;
-  const hashes = new Set();
-  console.log(`Generating ${testSize.toLocaleString()} unique hashes...`);
-  const start = performance.now();
-  for (let i = 0; i < testSize; i++) {
-    hashes.add(await Fingerprinter.hash(`test${i}@example.com`));
-  }
-  const elapsed = performance.now() - start;
-  console.log(`Generated: ${hashes.size.toLocaleString()} unique hashes`);
-  console.log(`Collisions: ${testSize - hashes.size} (expected: 0)`);
-  console.log(`Time: ${elapsed.toFixed(2)}ms (${(testSize / elapsed * 1000).toFixed(0)} hashes/sec)`);
-  console.log(`Collision rate: ${hashes.size === testSize ? '✅ 0%' : '❌ ' + ((1 - hashes.size/testSize) * 100).toFixed(6) + '%'}`);
-})();
-/*
-
----
-
-## 📊 **Expected Output**
-```
-🧪 Testing Universal Fingerprinting System
-
-📝 Test 1: Simple Hash
-Same input:      zy6sg6fw1r9by39 === zy6sg6fw1r9by39 → ✅
-Different input: zy6sg6fw1r9by39 !== 3x7m2n9p4r8vwyz → ✅
-
-📧 Test 2: Email Normalization
-Alice.Smith@Gmail.com                → alicesmith@gmail.com      → k9fj3h8d1lq2b0a
-alice.smith@gmail.com                → alicesmith@gmail.com      → k9fj3h8d1lq2b0a
-alicesmith@gmail.com                 → alicesmith@gmail.com      → k9fj3h8d1lq2b0a
-alice.smith+spam@gmail.com           → alicesmith@gmail.com      → k9fj3h8d1lq2b0a
-All Gmail variants match: ✅
-
-📞 Test 3: Phone Normalization
-+1 (555) 123-4567    → 5551234567 → 7x2m9n4p8r1vwyz
-555-123-4567         → 5551234567 → 7x2m9n4p8r1vwyz
-5551234567           → 5551234567 → 7x2m9n4p8r1vwyz
-1-555-123-4567       → 5551234567 → 7x2m9n4p8r1vwyz
-All phone variants match: ✅
-
-👤 Test 4: Contact Fingerprint (Schema-based)
-Fingerprint 1: m5k8p3r9t2w7xyz
-Fingerprint 2: m5k8p3r9t2w7xyz
-Duplicate detection: ✅ SAME PERSON
-
-💥 Test 5: Collision Resistance
-Generating 100,000 unique hashes...
-Generated: 100,000 unique hashes
-Collisions: 0 (expected: 0)
-Time: 14052.30ms (7117 hashes/sec)
-Collision rate: ✅ 0%
-
-*/
-
-
-
-//chunking -------------------------------------------------
-
+// Test the system version 2 NO trimming of the fingerprint to use browser hash 
 (async function() {
   const CONFIG = { MAX: 2000, MIN: 100, EXCLUDE: ['script','noscript' ,'style', 'nav', 'header', 'footer'] };
   
@@ -242,13 +105,6 @@ Collision rate: ✅ 0%
   console.log(`📦 Container: <${container.tagName}>, ${originalLength} chars\n`);
   
   const chunkedElements = new Set();
-  
-  function cleanFingerprint(text) {
-    return text
-      .slice(0, 50)
-      .replace(/\s+/g, ' ')
-      .trim();
-  }
   
   function getSelector(el) {
     if (el.id) return `#${el.id}`;
@@ -300,7 +156,6 @@ Collision rate: ✅ 0%
   
   function split(el, depth = 0) {
     if (chunkedElements.has(el)) return [];
-    
     if (CONFIG.EXCLUDE.includes(el.tagName.toLowerCase())) return [];
     
     const text = el.innerText?.trim() || '';
@@ -317,10 +172,7 @@ Collision rate: ✅ 0%
       if (childChunks.length > 0) {
         const coveredLength = childChunks.reduce((sum, c) => sum + c.len, 0);
         const coverage = coveredLength / text.length;
-        
-        if (coverage > 0.7) {
-          return childChunks;
-        }
+        if (coverage > 0.7) return childChunks;
       }
       
       const artificialChunks = splitLargeText(el, text);
@@ -336,9 +188,8 @@ Collision rate: ✅ 0%
   const chunks = split(container);
   console.log(`✂️  Found ${chunks.length} chunks\n`);
   
-  // ============ DEBUGGING: Check for overlaps ============
+  // Check for overlaps
   console.log('🔍 Checking for overlaps...\n');
-  
   const chunkTexts = chunks.map(c => c.text);
   let overlapFound = false;
   
@@ -349,19 +200,14 @@ Collision rate: ✅ 0%
       
       if (text1.includes(text2) || text2.includes(text1)) {
         console.warn(`⚠️  OVERLAP DETECTED:`);
-        console.warn(`   Chunk ${i + 1} (${text1.length} chars): "${text1.slice(0, 50)}..."`);
-        console.warn(`   Chunk ${j + 1} (${text2.length} chars): "${text2.slice(0, 50)}..."`);
-        console.warn('');
+        console.warn(`   Chunk ${i + 1}: "${text1.slice(0, 50)}..."`);
+        console.warn(`   Chunk ${j + 1}: "${text2.slice(0, 50)}..."`);
         overlapFound = true;
       }
     }
   }
   
-  if (!overlapFound) {
-    console.log('✅ No overlaps detected\n');
-  }
-  
-  // ============ Use Fingerprinter.hash instead of local hash ============
+  if (!overlapFound) console.log('✅ No overlaps detected\n');
   
   // Verify Fingerprinter is available
   if (typeof Fingerprinter === 'undefined') {
@@ -369,12 +215,23 @@ Collision rate: ✅ 0%
     return;
   }
   
+  // Process chunks with proper separation
   const processed = await Promise.all(chunks.map(async (c, i) => ({
     id: `chunk-${i}`,
     selector: c.sel,
-    fingerprint: cleanFingerprint(c.text),
-    hash: await Fingerprinter.hash(c.text),  // ← Using Base32 fingerprint (15 chars)
+    
+    // For scroll-to-text navigation (first ~20 words)
+    textFragment: c.text.split(/\s+/).slice(0, 20).join(' '),
+    
+    // For human-readable preview
+    preview: c.text.slice(0, 50).replace(/\s+/g, ' ').trim(),
+    
+    // For identity/deduplication (hash FULL text)
+    hash: await Fingerprinter.hash(c.text),
+    
+    // Full text (optional, for storage)
     text: c.text,
+    
     length: c.len,
     depth: c.depth
   })));
@@ -383,10 +240,10 @@ Collision rate: ✅ 0%
     num: i + 1,
     chars: c.length,
     depth: c.depth,
-    hash: c.hash,  // ← Show hash in table
-    fingerprint: c.fingerprint,
-    selector: c.selector.slice(0, 40),
-    preview: c.text.slice(0, 40)
+    hash: c.hash,
+    textFragment: c.textFragment.slice(0, 40) + '...',
+    preview: c.preview,
+    selector: c.selector.slice(0, 35)
   })));
   
   const totalChunkChars = processed.reduce((s, c) => s + c.length, 0);
@@ -409,6 +266,7 @@ Collision rate: ✅ 0%
     console.log(`✅ Good coverage!`);
   }
   
+  // Save to localStorage
   const storageKey = 'pageChunks_' + btoa(location.href).slice(0, 50);
   const data = {
     url: location.href,
@@ -416,8 +274,8 @@ Collision rate: ✅ 0%
     originalLength: originalLength,
     chunks: processed.map(c => ({
       selector: c.selector,
-      fingerprint: c.fingerprint,
-      hash: c.hash,  // ← Now 15-char Base32
+      textFragment: c.textFragment,  // ← For navigation
+      hash: c.hash,                   // ← For identity
       length: c.length
     }))
   };
@@ -427,7 +285,31 @@ Collision rate: ✅ 0%
   console.log(`\n💾 Saved to localStorage`);
   console.log(`   Key: ${storageKey}`);
   console.log(`   Data: ${JSON.stringify(data).length} bytes`);
-  console.log(`   Hash format: Base32 lowercase (15 chars, 75 bits)\n`);
+  
+  // Demo: Navigation helper
+  window.scrollToChunk = function(chunkIndex) {
+    const chunk = processed[chunkIndex];
+    if (!chunk) {
+      console.error(`Chunk ${chunkIndex} not found`);
+      return;
+    }
+    
+    const encoded = encodeURIComponent(chunk.textFragment);
+    const url = `${location.origin}${location.pathname}#:~:text=${encoded}`;
+    
+    console.log(`🔗 Navigate to chunk ${chunkIndex}:`);
+    console.log(`   ${url}`);
+    
+    window.location.hash = `#:~:text=${encoded}`;
+  };
+  
+  console.log(`\n🧭 Navigation:`);
+  console.log(`   Use scrollToChunk(n) to navigate, e.g.:`);
+  console.log(`   scrollToChunk(0) - jumps to first chunk`);
+  console.log(`   scrollToChunk(3) - jumps to fourth chunk\n`);
+
+  //added 
+  window.chunks = processed;
 })();
 /*
 
