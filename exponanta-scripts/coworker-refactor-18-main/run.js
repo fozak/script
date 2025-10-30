@@ -48,8 +48,10 @@
           doctype: config.doctype || null,
           flow: config.flow || null,
           input: config.input || null,
+          options: config.options || {},      // ← ADDED
           owner: config.owner || this.getConfig('defaultUser', 'system'),
           agent: config.agent || null,
+          status: 'pending',                  // ← ADDED
           // Result placeholders (operation plugins fill these)
           output: null,
           error: null,
@@ -64,6 +66,8 @@
           if (!context.operation) {
             throw new Error('operation is required');
           }
+
+          context.status = 'running';         // ← ADDED
 
           // 🔥 Emit: before:run
           await this.emit('coworker:before:run', context);
@@ -84,10 +88,13 @@
             throw new Error(`No plugin handled operation: ${context.operation}`);
           }
 
+          context.status = 'completed';       // ← ADDED
+
           // 🔥 Emit: after:run
           await this.emit('coworker:after:run', context);
 
         } catch (error) {
+          context.status = 'failed';          // ← ADDED
           context.success = false;
           context.error = {
             message: error.message,
@@ -176,8 +183,10 @@
           doctype: config.doctype || null,
           flow: config.flow || null,
           input: config.input || null,
+          options: config.options || {},      // ← ADDED
           owner: config.owner || this.getConfig('defaultUser', 'system'),
           agent: config.agent || null,
+          status: 'validating',               // ← ADDED
           dryRun: true,
           output: null,
           error: null,
@@ -200,6 +209,7 @@
             throw new Error(`No plugin handles operation: ${context.operation}`);
           }
 
+          context.status = 'valid';           // ← ADDED
           context.success = true;
           context.output = {
             valid: true,
@@ -208,6 +218,7 @@
           };
 
         } catch (error) {
+          context.status = 'invalid';         // ← ADDED
           context.success = false;
           context.error = {
             message: error.message,
