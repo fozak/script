@@ -1,15 +1,30 @@
 // ============================================================================
-// coworker-state.js - Universal State Manager with Navigation
+// COWORKER-STATE.JS - State Manager + Navigation
+// Replaces pb-navigator.js
+// Version: 1.0.0
 // ============================================================================
 
-const CoworkerState = (function () {
-  "use strict";
+(function(root, factory) {
+  if (typeof exports === 'object' && typeof module !== 'undefined') {
+    module.exports = factory();
+  } else if (typeof define === 'function' && define.amd) {
+    define([], factory);
+  } else {
+    const globalScope = typeof self !== 'undefined' ? self :
+                       typeof window !== 'undefined' ? window :
+                       typeof global !== 'undefined' ? global :
+                       globalThis;
+    globalScope.CoworkerState = factory();
+  }
+}(typeof self !== 'undefined' ? self : this, function() {
+  'use strict';
 
-  const VERSION = "4.0.0";
+  const VERSION = '1.0.0';
 
-  // ==========================================
-  // Single Source of Truth (In-Memory State)
-  // ==========================================
+  // ==========================================================================
+  // PRIVATE STATE
+  // ==========================================================================
+
   const state = {
     currentRun: null,      // Current main UI run
     pendingRuns: [],       // Background/dialog runs
@@ -17,63 +32,67 @@ const CoworkerState = (function () {
     listeners: new Set()
   };
 
-  // ==========================================
-  // Private Helper Functions
-  // ==========================================
+  // ==========================================================================
+  // PRIVATE HELPERS
+  // ==========================================================================
 
   function paramsToURL(params) {
     try {
       const compressed = btoa(JSON.stringify(params));
       return `p=${compressed}`;
     } catch (error) {
-      console.error("Failed to encode params:", error);
-      return "";
+      console.error('Failed to encode params:', error);
+      return '';
     }
   }
 
   function urlToParams() {
     try {
       const searchParams = new URLSearchParams(window.location.search);
-      const compressed = searchParams.get("p");
-      if (!compressed) {
-        return null;
-      }
+      const compressed = searchParams.get('p');
+      if (!compressed) return null;
       return JSON.parse(atob(compressed));
     } catch (error) {
-      console.error("Failed to decode URL params:", error);
+      console.error('Failed to decode URL params:', error);
       return null;
     }
   }
 
   function validateParams(params) {
-    if (!params || typeof params !== "object") {
-      throw new Error("Invalid params. Expected: { doctype, query, options }");
+    if (!params || typeof params !== 'object') {
+      throw new Error('Invalid params. Expected: { doctype, query, options }');
     }
     return {
-      doctype: params.doctype || "",
+      doctype: params.doctype || '',
       query: params.query || {},
-      options: params.options || {},
+      options: params.options || {}
     };
   }
 
   function notify() {
+    const snapshot = {
+      currentRun: state.currentRun,
+      pendingRuns: [...state.pendingRuns],
+      isLoading: state.isLoading
+    };
+
     state.listeners.forEach((callback) => {
       try {
-        callback(state.currentRun, state.isLoading);
+        callback(snapshot);
       } catch (error) {
-        console.error("Subscriber error:", error);
+        console.error('Subscriber error:', error);
       }
     });
   }
 
-  // ==========================================
-  // Core: Navigate (via coworker.run)
-  // ==========================================
+  // ==========================================================================
+  // PUBLIC API: NAVIGATION
+  // ==========================================================================
 
   async function navigate(params, replaceState = false) {
     const fullParams = validateParams(params);
 
-    console.log("🚀 Navigating to:", fullParams);
+    console.log('🚀 Navigating to:', fullParams);
 
     state.isLoading = true;
     notify();
@@ -81,7 +100,7 @@ const CoworkerState = (function () {
     try {
       // Execute via coworker.run()
       const result = await coworker.run({
-        operation: "select",
+        operation: 'select',
         doctype: fullParams.doctype,
         input: fullParams.query,
         options: fullParams.options
@@ -90,103 +109,51 @@ const CoworkerState = (function () {
       // Update URL
       const url = `?${paramsToURL(fullParams)}`;
       if (replaceState) {
-        window.history.replaceState(fullParams, "", url);
+        window.history.replaceState(fullParams, '', url);
       } else {
-        window.history.pushState(fullParams, "", url);
+        window.history.pushState(fullParams, '', url);
       }
 
-      // Update state (currentRun = the navigation result)
+      // Update state
       state.currentRun = {
         params: fullParams,
         data: result.output?.data || [],
         schema: result.output?.schema || null,
         meta: result.output?.meta || null,
         viewConfig: result.output?.viewConfig || null,
-        runContext: result // Full run context for reference
+        runContext: result // Full run context
       };
 
-      console.log("✅ Navigation complete:", state.currentRun);
+      console.log('✅ Navigation complete:', state.currentRun);
 
       state.isLoading = false;
       notify();
 
       return state.currentRun;
     } catch (error) {
-      console.error("❌ Navigation error:", error);
+      console.error('❌ Navigation error:', error);
       state.isLoading = false;
       notify();
       throw error;
     }
   }
 
-  // ==========================================
-  // Update State (called by coworker events for non-navigation runs)
-  // ==========================================
-
-  function updateFromRun(runContext) {
-    // Is this a dialog/background operation?
-    const isDialog = runContext.operation === "dialog";
-
-    if (isDialog) {
-      // Add to pending runs
-      state.pendingRuns.push(runContext);
-    }
-
-    // Clean completed from pending
-    state.pendingRuns = state.pendingRuns.filter(
-      (r) => r.status !== "completed" && r.status !== "failed"
-    );
-
-    // Update loading state
-    state.isLoading = state.pendingRuns.some((r) => r.status === "running");
-
-    notify();
-  }
-
-  // ==========================================
-  // Subscribe to State Changes
-  // ==========================================
-
-  function subscribe(callback) {
-    if (typeof callback !== "function") {
-      throw new Error("Subscriber must be a function");
-    }
-
-    state.listeners.add(callback);
-
-    // Call immediately with current state
-    try {
-      callback(state.currentRun, state.isLoading);
-    } catch (error) {
-      console.error("Initial subscriber call error:", error);
-    }
-
-    // Return unsubscribe function
-    return function unsubscribe() {
-      state.listeners.delete(callback);
-    };
-  }
-
-  // ==========================================
-  // Navigation Controls
-  // ==========================================
-
   function goBack() {
-    console.log("⬅️ Going back");
+    console.log('⬅️ Going back');
     window.history.back();
   }
 
   function goForward() {
-    console.log("➡️ Going forward");
+    console.log('➡️ Going forward');
     window.history.forward();
   }
 
   async function refresh() {
     if (!state.currentRun) {
-      console.warn("Nothing to refresh");
+      console.warn('Nothing to refresh');
       return null;
     }
-    console.log("🔄 Refreshing current view");
+    console.log('🔄 Refreshing current view');
     return navigate(state.currentRun.params, true);
   }
 
@@ -202,33 +169,109 @@ const CoworkerState = (function () {
     return window.history.length > 1;
   }
 
+  // ==========================================================================
+  // PUBLIC API: STATE OBSERVATION
+  // ==========================================================================
+
+  function subscribe(callback) {
+    if (typeof callback !== 'function') {
+      throw new Error('Subscriber must be a function');
+    }
+
+    state.listeners.add(callback);
+
+    // Call immediately with current state
+    try {
+      const snapshot = {
+        currentRun: state.currentRun,
+        pendingRuns: [...state.pendingRuns],
+        isLoading: state.isLoading
+      };
+      callback(snapshot);
+    } catch (error) {
+      console.error('Initial subscriber call error:', error);
+    }
+
+    // Return unsubscribe function
+    return function unsubscribe() {
+      state.listeners.delete(callback);
+    };
+  }
+
   function getSubscriberCount() {
     return state.listeners.size;
   }
 
-  // ==========================================
-  // Browser Back/Forward Handler
-  // ==========================================
+  function getState() {
+    return {
+      currentRun: state.currentRun,
+      pendingRuns: [...state.pendingRuns],
+      isLoading: state.isLoading
+    };
+  }
+
+  // ==========================================================================
+  // INTERNAL: UPDATE FROM RUN EVENTS
+  // ==========================================================================
+
+// ==========================================================================
+// INTERNAL: UPDATE FROM RUN EVENTS
+// ==========================================================================
+
+// ==========================================================================
+// INTERNAL: UPDATE FROM RUN EVENTS
+// ==========================================================================
+
+function updateFromRun(context) {
+  // Check if this run already exists in pending
+  const existingIndex = state.pendingRuns.findIndex(r => r.id === context.id);
+
+  if (existingIndex !== -1) {
+    // Update existing run
+    state.pendingRuns[existingIndex] = context;
+  } else {
+    // Add new run only if it's a dialog/background operation and not completed
+    const isDialog = context.operation === 'dialog';
+    const isRunning = context.status === 'running' || context.status === 'pending';
+    
+    if (isDialog && isRunning) {
+      state.pendingRuns.push(context);
+    }
+  }
+
+  // Clean completed/failed runs
+  state.pendingRuns = state.pendingRuns.filter(
+    r => r.status !== 'completed' && r.status !== 'failed'
+  );
+
+  // Update loading state
+  state.isLoading = state.pendingRuns.some(r => r.status === 'running');
+
+  notify();
+}
+
+  // ==========================================================================
+  // BROWSER BACK/FORWARD HANDLER
+  // ==========================================================================
 
   async function handlePopState(event) {
-    console.log("🔙 Browser back/forward detected");
+    console.log('🔙 Browser back/forward detected');
 
     const params = event.state || urlToParams();
     
     if (!params || !params.doctype) {
-      console.log("No params to restore");
+      console.log('No params to restore');
       return;
     }
 
-    console.log("📍 Restoring state:", params);
+    console.log('📍 Restoring state:', params);
 
     state.isLoading = true;
     notify();
 
     try {
-      // Execute via coworker.run()
       const result = await coworker.run({
-        operation: "select",
+        operation: 'select',
         doctype: params.doctype,
         input: params.query || {},
         options: params.options || {}
@@ -243,9 +286,9 @@ const CoworkerState = (function () {
         runContext: result
       };
 
-      console.log("✅ State restored:", state.currentRun);
+      console.log('✅ State restored:', state.currentRun);
     } catch (error) {
-      console.error("❌ Error restoring state:", error);
+      console.error('❌ Error restoring state:', error);
     } finally {
       state.isLoading = false;
       notify();
@@ -253,125 +296,122 @@ const CoworkerState = (function () {
   }
 
   // Install popstate listener
-  window.addEventListener("popstate", handlePopState);
+  window.addEventListener('popstate', handlePopState);
 
-  // ==========================================
-  // Auto-Initialize from URL
-  // ==========================================
+  // ==========================================================================
+  // AUTO-INITIALIZE FROM URL
+  // ==========================================================================
 
   (async function init() {
     const params = urlToParams();
 
-    // Only navigate if URL has params
     if (params && (params.doctype || Object.keys(params.query || {}).length > 0)) {
-      console.log("🎬 Initializing from URL:", params);
+      console.log('🎬 Initializing from URL:', params);
       await navigate(params, true);
     } else {
-      console.log("💡 CoworkerState ready. No URL params to restore.");
+      console.log('💡 CoworkerState ready. No URL params to restore.');
     }
   })();
 
-  // ==========================================
-  // Public API
-  // ==========================================
+  // ==========================================================================
+  // AUTO-UPDATE ON COWORKER EVENTS
+  // ==========================================================================
 
-  return {
+  if (typeof coworker !== 'undefined') {
+    coworker.on('coworker:after:run', (context) => {
+      // Only update for non-select operations (select is handled by navigate())
+      if (context.operation !== 'select') {
+        updateFromRun(context);
+      }
+    });
+  }
+
+  // ==========================================================================
+  // PUBLIC API
+  // ==========================================================================
+
+  const CoworkerState = {
     VERSION,
-
+    
     // Navigation
     navigate,
     goBack,
     goForward,
     refresh,
     canGoBack,
-
+    
     // State access
     getCurrent,
     getParams,
-    get: () => ({
-      currentRun: state.currentRun,
-      pendingRuns: [...state.pendingRuns],
-      isLoading: state.isLoading
-    }),
-
+    getState,
+    
     // Observation
     subscribe,
     getSubscriberCount,
-
-    // Internal update (called by coworker events)
+    
+    // Internal (for plugins)
     _updateFromRun: updateFromRun,
-
-    // Debug
     _state: state
   };
-})();
 
-// ==========================================
-// Auto-update on coworker.run() completion (for non-navigation runs)
-// ==========================================
+  return CoworkerState;
 
-coworker.on("after:run", (context) => {
-  // Only update for non-select operations (select is handled by navigate())
-  if (context.operation !== "select") {
-    CoworkerState._updateFromRun(context);
-  }
-});
+}));
 
-// ==========================================
-// Convenience Shortcuts (pb.nav equivalent)
-// ==========================================
+// ============================================================================
+// CONVENIENCE SHORTCUTS (nav.*)
+// ============================================================================
 
 const nav = {
-  home: () =>
-    CoworkerState.navigate({
-      doctype: "All",
-      query: {},
-      options: { includeSchema: true, includeMeta: true },
-    }),
+  home: () => CoworkerState.navigate({
+    doctype: 'All',
+    query: {},
+    options: { includeSchema: true, includeMeta: true }
+  }),
 
-  list: (doctype, query = {}, options = {}) =>
-    CoworkerState.navigate({
-      doctype,
-      query,
-      options: { includeSchema: true, includeMeta: true, ...options },
-    }),
+  list: (doctype, query = {}, options = {}) => CoworkerState.navigate({
+    doctype,
+    query,
+    options: { includeSchema: true, includeMeta: true, ...options }
+  }),
 
-  filter: (doctype, where, options = {}) =>
-    CoworkerState.navigate({
-      doctype,
-      query: { where },
-      options: { includeSchema: true, includeMeta: true, ...options },
-    }),
+  filter: (doctype, where, options = {}) => CoworkerState.navigate({
+    doctype,
+    query: { where },
+    options: { includeSchema: true, includeMeta: true, ...options }
+  }),
 
-  item: (name, doctype, options = {}) =>
-    CoworkerState.navigate({
-      doctype,
-      query: { where: { name }, take: 1 },
-      options: { includeSchema: true, ...options },
-    }),
+  item: (name, doctype, options = {}) => CoworkerState.navigate({
+    doctype,
+    query: { where: { name }, take: 1 },
+    options: { includeSchema: true, ...options }
+  }),
 
-  edit: (name, doctype) =>
-    CoworkerState.navigate({
-      doctype,
-      query: { where: { name }, take: 1 },
-      options: { includeSchema: true, mode: "edit" },
-    }),
+  edit: (name, doctype) => CoworkerState.navigate({
+    doctype,
+    query: { where: { name }, take: 1 },
+    options: { includeSchema: true, mode: 'edit' }
+  }),
 
-  view: (name, doctype) =>
-    CoworkerState.navigate({
-      doctype,
-      query: { where: { name }, take: 1 },
-      options: { includeSchema: true, mode: "view" },
-    }),
+  view: (name, doctype) => CoworkerState.navigate({
+    doctype,
+    query: { where: { name }, take: 1 },
+    options: { includeSchema: true, mode: 'view' }
+  }),
 
   current: () => CoworkerState.getCurrent(),
   back: () => CoworkerState.goBack(),
   forward: () => CoworkerState.goForward(),
-  refresh: () => CoworkerState.refresh(),
+  refresh: () => CoworkerState.refresh()
 };
 
 // Expose globally
-window.CoworkerState = CoworkerState;
-window.nav = nav;
+if (typeof window !== 'undefined') {
+  window.CoworkerState = CoworkerState;
+  window.nav = nav;
+}
 
 console.log(`✅ CoworkerState v${VERSION} loaded`);
+console.log('   • CoworkerState.navigate(params)');
+console.log('   • CoworkerState.subscribe(callback)');
+console.log('   • nav.list(), nav.item(), nav.back(), nav.refresh()');
