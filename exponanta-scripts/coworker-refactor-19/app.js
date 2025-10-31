@@ -309,17 +309,18 @@ useEffect(() => {
     const [currentRun, setCurrentRun] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [view, setView] = useState("list");
+    const [showChatSidebar, setShowChatSidebar] = useState(false);
 
-    // ✅ Subscribe to CoworkerState
+    // ✅ Subscribe to CoworkerState v2.0
     useEffect(() => {
-      const unsubscribe = CoworkerState.subscribe((state) => {
-        setCurrentRun(state.currentRun);
-        setIsLoading(state.isLoading);
+      const unsubscribe = CoworkerState.subscribe((snapshot) => {
+        setCurrentRun(snapshot.currentRun);
+        setIsLoading(snapshot.isLoading);
 
-        if (state.currentRun && state.currentRun.data) {
+        if (snapshot.currentRun && snapshot.currentRun.data) {
           const isSingleItem =
-            state.currentRun.data.length === 1 && 
-            state.currentRun.params?.query?.take === 1;
+            snapshot.currentRun.data.length === 1 && 
+            snapshot.currentRun.params?.query?.take === 1;
           setView(isSingleItem ? "form" : "list");
         }
       });
@@ -327,220 +328,33 @@ useEffect(() => {
       return unsubscribe;
     }, []);
 
-    // Loading state
-    if (isLoading) {
-      return e(
-        "div",
-        { className: "container mt-5 text-center" },
-        e("div", { className: "spinner-border text-primary" }),
-        e("p", { className: "mt-3" }, "Loading...")
-      );
-    }
+    // ... rest of your App component code
 
-    // Home state
-    if (!currentRun) {
-      return e("div", { className: "container-fluid" }, [
-        // Header with search
-        e(
-          "nav",
-          {
-            key: "header",
-            className: "navbar navbar-light bg-light mb-4",
-          },
-          e(
-            "div",
-            {
-              className:
-                "container-fluid d-flex justify-content-between align-items-center",
-            },
-            [
-              e(
-                "span",
-                { key: "brand", className: "navbar-brand" },
-                "🚀 Coworker App"
-              ),
-              e(pb.components.UniversalSearchInput, { key: "search" }),
-            ]
-          )
-        ),
+    // Add chat toggle button to header
+    const chatToggleButton = e(
+      "button",
+      {
+        key: "chat",
+        className: "btn btn-outline-info btn-sm",
+        onClick: () => setShowChatSidebar(!showChatSidebar)
+      },
+      `💬 AI ${showChatSidebar ? '→' : '←'}`
+    );
 
-        // Home content
-        e(
-          "div",
-          { key: "content", className: "container mt-5" },
-          e(
-            "div",
-            { className: "card" },
-            e(
-              "div",
-              { className: "card-body text-center" },
-              e("h1", { className: "mb-4" }, "Choose a DocType"),
-              e("div", { className: "btn-group" }, [
-                e(
-                  "button",
-                  {
-                    key: "task",
-                    className: "btn btn-primary",
-                    onClick: () => nav.list("Task"),
-                  },
-                  "📋 Tasks"
-                ),
-                e(
-                  "button",
-                  {
-                    key: "user",
-                    className: "btn btn-success",
-                    onClick: () => nav.list("User"),
-                  },
-                  "👤 Users"
-                ),
-                e(
-                  "button",
-                  {
-                    key: "customer",
-                    className: "btn btn-info",
-                    onClick: () => nav.list("Customer"),
-                  },
-                  "🏢 Customers"
-                ),
-              ])
-            )
-          )
-        ),
-      ]);
-    }
-
-    // Main view with persistent search in header
     return e("div", { className: "container-fluid" }, [
-      // Header with breadcrumbs and search
-      e(
-        "nav",
-        {
-          key: "header",
-          className: "navbar navbar-light bg-light mb-4",
-        },
-        e("div", { className: "container-fluid" }, [
-          // Breadcrumbs
-          e("ol", { key: "breadcrumb", className: "breadcrumb mb-0 me-3" }, [
-            e(
-              "li",
-              { key: "home", className: "breadcrumb-item" },
-              e(
-                "a",
-                {
-                  href: "#",
-                  onClick: (ev) => {
-                    ev.preventDefault();
-                    window.location.href = window.location.pathname;
-                  },
-                },
-                "Home"
-              )
-            ),
-            currentRun.params?.doctype &&
-              e(
-                "li",
-                {
-                  key: "doctype",
-                  className:
-                    "breadcrumb-item" + (view === "list" ? " active" : ""),
-                },
-                view === "list"
-                  ? currentRun.params.doctype
-                  : e(
-                      "a",
-                      {
-                        href: "#",
-                        onClick: (ev) => {
-                          ev.preventDefault();
-                          nav.list(currentRun.params.doctype);
-                        },
-                      },
-                      currentRun.params.doctype
-                    )
-              ),
-            view === "form" &&
-              currentRun.data &&
-              currentRun.data[0] &&
-              e(
-                "li",
-                {
-                  key: "item",
-                  className: "breadcrumb-item active",
-                },
-                currentRun.data[0].name
-              ),
-          ]),
-
-          // Universal search (always visible)
-          e(
-            "div",
-            { key: "search", className: "flex-grow-1 mx-3" },
-            e(pb.components.UniversalSearchInput, {})
-          ),
-
-          // Navigation buttons
-          e("div", { key: "nav", className: "btn-group btn-group-sm" }, [
-            e(
-              "button",
-              {
-                key: "back",
-                className: "btn btn-outline-secondary",
-                onClick: () => nav.back(),
-                disabled: !CoworkerState.canGoBack(),
-              },
-              "⬅️"
-            ),
-            e(
-              "button",
-              {
-                key: "refresh",
-                className: "btn btn-outline-primary",
-                onClick: () => nav.refresh(),
-              },
-              "🔄"
-            ),
-          ]),
-        ])
-      ),
-
-      // Content
-      e(
-        "div",
-        { key: "content", className: "row" },
-        e(
-          "div",
-          { className: "col" },
-          view === "list"
-            ? e(pb.components.MainGrid, { doctype: currentRun.params.doctype })
-            : e(
-                "div",
-                { className: "card m-3" },
-                e(
-                  "div",
-                  { className: "card-header" },
-                  e("h3", null, currentRun.data[0]?.name || "Item View")
-                ),
-                e(
-                  "div",
-                  { className: "card-body" },
-                  e(
-                    "pre",
-                    { className: "bg-light p-3" },
-                    JSON.stringify(currentRun.data[0], null, 2)
-                  ),
-                  e(
-                    "button",
-                    {
-                      className: "btn btn-secondary mt-3",
-                      onClick: () => nav.list(currentRun.params.doctype),
-                    },
-                    "⬅️ Back to List"
-                  )
-                )
-              )
-        )
-      ),
+      // ... your existing header/nav code
+      
+      // ... your existing content code
+      
+      // ✅ Add dialog overlay (from pb.components)
+      e(pb.components.DialogOverlay, { key: "dialogs" }),
+      
+      // ✅ Add chat sidebar (from pb.components)
+      e(pb.components.ChatSidebar, { 
+        key: "chat",
+        isOpen: showChatSidebar,
+        onToggle: () => setShowChatSidebar(!showChatSidebar)
+      })
     ]);
   };
 
@@ -560,7 +374,7 @@ useEffect(() => {
       return;
     }
 
-    console.log("✅ Mounting app");
+    console.log("✅ Mounting app v2.0");
     const root = ReactDOM.createRoot(container);
     root.render(React.createElement(App));
 
@@ -571,9 +385,123 @@ useEffect(() => {
       customers: () => nav.list("Customer"),
       back: () => nav.back(),
       refresh: () => nav.refresh(),
+      
+      // ✅ Test dialog types
+      testConfirm: () => {
+        CoworkerState._updateFromRun({
+          id: 'dialog-confirm-' + Date.now(),
+          operation: 'dialog',
+          status: 'running',
+          input: {
+            type: 'confirm',
+            title: 'Confirm Action',
+            message: 'Are you sure you want to proceed?'
+          }
+        });
+      },
+      
+      testPrompt: () => {
+        CoworkerState._updateFromRun({
+          id: 'dialog-prompt-' + Date.now(),
+          operation: 'dialog',
+          status: 'running',
+          input: {
+            type: 'prompt',
+            title: 'Enter Name',
+            message: 'What is your name?',
+            placeholder: 'John Doe'
+          }
+        });
+      },
+      
+      testDestructive: () => {
+        CoworkerState._updateFromRun({
+          id: 'dialog-delete-' + Date.now(),
+          operation: 'dialog',
+          status: 'running',
+          input: {
+            type: 'confirm',
+            title: 'Delete Item',
+            message: 'This action cannot be undone!',
+            buttons: ['Cancel', 'Delete'],
+            destructive: true
+          }
+        });
+      },
+      
+      // ✅ Test AI pipeline
+      testAIPipeline: () => {
+        const rootId = 'pipeline-' + Date.now();
+        
+        // Step 1: Dialog
+        CoworkerState._updateFromRun({
+          id: rootId,
+          operation: 'dialog',
+          status: 'running',
+          input: {
+            type: 'prompt',
+            title: 'Create Task',
+            message: 'What task do you want to create?'
+          }
+        });
+        
+        // Step 2: AI interpret (simulated)
+        setTimeout(() => {
+          CoworkerState._updateFromRun({
+            id: rootId + '-interpret',
+            operation: 'interpret',
+            status: 'running',
+            parentRun: rootId,
+            output: { tokens: [] }
+          });
+          
+          // Simulate token streaming
+          let tokenCount = 0;
+          const tokenInterval = setInterval(() => {
+            tokenCount++;
+            const run = CoworkerState.getActiveRun(rootId + '-interpret');
+            if (run && tokenCount < 20) {
+              CoworkerState.updateRunField(
+                rootId + '-interpret',
+                'output.tokens',
+                [...(run.output?.tokens || []), `token-${tokenCount}`]
+              );
+            } else {
+              clearInterval(tokenInterval);
+              // Complete interpret
+              CoworkerState._updateFromRun({
+                id: rootId + '-interpret',
+                operation: 'interpret',
+                status: 'completed',
+                parentRun: rootId,
+                output: { 
+                  tokens: run?.output?.tokens || [],
+                  taskData: { subject: 'AI Generated Task', priority: 'High' }
+                }
+              });
+              
+              // Step 3: Create task
+              setTimeout(() => {
+                CoworkerState._updateFromRun({
+                  id: rootId + '-create',
+                  operation: 'create',
+                  doctype: 'Task',
+                  status: 'completed',
+                  parentRun: rootId + '-interpret',
+                  output: { name: 'TASK-001', subject: 'AI Generated Task' }
+                });
+              }, 500);
+            }
+          }, 100);
+        }, 2000);
+      }
     };
 
-    console.log("✅ App mounted. Try: testNav.tasks()");
+    console.log("✅ App mounted v2.0");
+    console.log("   Try: testNav.testConfirm()");
+    console.log("   Try: testNav.testPrompt()");
+    console.log("   Try: testNav.testDestructive()");
+    console.log("   Try: testNav.testAIPipeline()");
   }
 
   if (document.readyState === "loading") {

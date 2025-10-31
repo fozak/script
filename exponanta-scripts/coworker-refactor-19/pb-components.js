@@ -303,4 +303,314 @@ return e(
 );
 };
 
+// ============================================================================
+// DIALOG OVERLAY COMPONENT - Subscribes to CoworkerState activeDialogs
+// ============================================================================
+
+pb.components.DialogOverlay = function () {
+  const { createElement: e, useState, useEffect } = React;
+  const [activeDialogs, setActiveDialogs] = useState([]);
+
+  // ✅ Subscribe to pre-computed activeDialogs from CoworkerState v2.0
+  useEffect(() => {
+    const unsubscribe = CoworkerState.subscribe((snapshot) => {
+      setActiveDialogs(snapshot.activeDialogs || []);
+    });
+    return unsubscribe;
+  }, []);
+
+  if (activeDialogs.length === 0) return null;
+
+  // Render all active dialogs (can stack multiple)
+  return e(
+    "div",
+    { className: "dialog-overlay-container" },
+    activeDialogs.map((run, index) =>
+      e(pb.components.DialogModal, {
+        key: run.id,
+        run: run,
+        zIndex: 1050 + index // Stack multiple dialogs
+      })
+    )
+  );
+};
+
+// ============================================================================
+// DIALOG MODAL COMPONENT - Single dialog instance
+// ============================================================================
+
+pb.components.DialogModal = function ({ run, zIndex = 1050 }) {
+  const { createElement: e, useState } = React;
+  const [inputValue, setInputValue] = useState(run.output?.value || '');
+
+  const handleClose = (confirmed, value = null) => {
+    CoworkerState._updateFromRun({
+      ...run,
+      status: 'completed',
+      output: {
+        confirmed: confirmed,
+        value: value !== null ? value : inputValue
+      }
+    });
+  };
+
+  // Determine dialog type
+  const type = run.input?.type || 'confirm'; // confirm, alert, prompt
+  const title = run.input?.title || 'Dialog';
+  const message = run.input?.message || 'Confirm action?';
+  const buttons = run.input?.buttons || ['Cancel', 'Confirm'];
+  const destructive = run.input?.destructive || false;
+
+  return e(
+    "div",
+    {
+      className: "modal d-block",
+      style: { 
+        backgroundColor: "rgba(0,0,0,0.5)",
+        zIndex: zIndex
+      },
+      onClick: (ev) => {
+        // Close on backdrop click (optional)
+        if (ev.target.classList.contains('modal')) {
+          handleClose(false);
+        }
+      }
+    },
+    e(
+      "div",
+      { 
+        className: "modal-dialog modal-dialog-centered",
+        onClick: (ev) => ev.stopPropagation() // Prevent close on modal click
+      },
+      e("div", { className: "modal-content" }, [
+        // Header
+        e(
+          "div",
+          { key: "header", className: "modal-header" },
+          [
+            e("h5", { key: "title", className: "modal-title" }, title),
+            e(
+              "button",
+              {
+                key: "close",
+                type: "button",
+                className: "btn-close",
+                "aria-label": "Close",
+                onClick: () => handleClose(false)
+              }
+            )
+          ]
+        ),
+
+        // Body
+        e(
+          "div",
+          { key: "body", className: "modal-body" },
+          [
+            e("p", { key: "message" }, message),
+            
+            // Input field for 'prompt' type
+            type === 'prompt' && e("input", {
+              key: "input",
+              type: "text",
+              className: "form-control mt-3",
+              value: inputValue,
+              onChange: (ev) => setInputValue(ev.target.value),
+              placeholder: run.input?.placeholder || "Enter value...",
+              autoFocus: true,
+              onKeyPress: (ev) => {
+                if (ev.key === 'Enter') {
+                  handleClose(true, inputValue);
+                }
+              }
+            })
+          ]
+        ),
+
+        // Footer
+        e(
+          "div",
+          { key: "footer", className: "modal-footer" },
+          buttons.map((btnText, idx) => {
+            const isConfirm = idx === buttons.length - 1;
+            const isPrimary = isConfirm && !destructive;
+            const isDanger = isConfirm && destructive;
+            
+            return e(
+              "button",
+              {
+                key: idx,
+                className: `btn ${
+                  isDanger ? 'btn-danger' :
+                  isPrimary ? 'btn-primary' :
+                  'btn-secondary'
+                }`,
+                onClick: () => handleClose(isConfirm, inputValue)
+              },
+              btnText
+            );
+          })
+        )
+      ])
+    )
+  );
+};
+
+// ============================================================================
+// AI CHAT SIDEBAR COMPONENT - Shows active AI pipelines
+// ============================================================================
+
+pb.components.ChatSidebar = function ({ isOpen = false, onToggle = null }) {
+  const { createElement: e, useState, useEffect } = React;
+  const [activePipelines, setActivePipelines] = useState({});
+  const [activeAI, setActiveAI] = useState([]);
+
+  // ✅ Subscribe to pre-computed views
+  useEffect(() => {
+    const unsubscribe = CoworkerState.subscribe((snapshot) => {
+      setActivePipelines(snapshot.activePipelines || {});
+      setActiveAI(snapshot.activeAI || []);
+    });
+    return unsubscribe;
+  }, []);
+
+  if (!isOpen) return null;
+
+  const pipelineCount = Object.keys(activePipelines).length;
+  const aiCount = activeAI.length;
+
+  return e(
+    "div",
+    {
+      className: "position-fixed end-0 top-0 h-100 bg-white border-start shadow-lg",
+      style: { 
+        width: "350px", 
+        zIndex: 1040,
+        overflowY: "auto"
+      }
+    },
+    [
+      // Header
+      e(
+        "div",
+        {
+          key: "header",
+          className: "d-flex justify-content-between align-items-center p-3 border-bottom bg-light"
+        },
+        [
+          e("h5", { key: "title", className: "mb-0" }, "AI Pipelines"),
+          e(
+            "button",
+            {
+              key: "close",
+              className: "btn-close",
+              onClick: onToggle
+            }
+          )
+        ]
+      ),
+
+      // Stats
+      e(
+        "div",
+        { key: "stats", className: "p-3 border-bottom bg-light" },
+        [
+          e("small", { key: "pipelines", className: "d-block text-muted" }, 
+            `${pipelineCount} active pipeline${pipelineCount !== 1 ? 's' : ''}`
+          ),
+          e("small", { key: "ai", className: "d-block text-muted" }, 
+            `${aiCount} AI operation${aiCount !== 1 ? 's' : ''} running`
+          )
+        ]
+      ),
+
+      // Pipelines
+      e(
+        "div",
+        { key: "content", className: "p-3" },
+        pipelineCount === 0
+          ? e("div", { className: "text-muted text-center py-5" }, "No active pipelines")
+          : Object.entries(activePipelines).map(([rootId, runs]) =>
+              e(pb.components.PipelineCard, {
+                key: rootId,
+                rootId: rootId,
+                runs: runs
+              })
+            )
+      )
+    ]
+  );
+};
+
+// ============================================================================
+// PIPELINE CARD COMPONENT - Shows individual pipeline progress
+// ============================================================================
+
+pb.components.PipelineCard = function ({ rootId, runs }) {
+  const { createElement: e } = React;
+
+  const rootRun = runs[0]; // First run is the root
+  const sortedRuns = runs.sort((a, b) => 
+    new Date(a.created || 0) - new Date(b.created || 0)
+  );
+
+  return e(
+    "div",
+    { className: "card mb-3" },
+    [
+      e(
+        "div",
+        { key: "header", className: "card-header" },
+        e("small", { className: "text-muted" }, 
+          `Pipeline ${rootId.slice(0, 8)}...`
+        )
+      ),
+      e(
+        "div",
+        { key: "body", className: "card-body p-2" },
+        sortedRuns.map((run, idx) =>
+          e(
+            "div",
+            {
+              key: run.id,
+              className: `d-flex align-items-center mb-2 ${idx > 0 ? 'ms-3' : ''}`
+            },
+            [
+              // Status icon
+              e(
+                "span",
+                { key: "icon", className: "me-2" },
+                run.status === 'completed' ? '✅' :
+                run.status === 'running' ? '⏳' :
+                run.status === 'failed' ? '❌' : '⏸️'
+              ),
+              // Operation name
+              e(
+                "div",
+                { key: "content", className: "flex-grow-1" },
+                [
+                  e("small", { key: "op", className: "d-block fw-bold" }, 
+                    run.operation
+                  ),
+                  run.output?.tokens && e("small", { key: "tokens", className: "d-block text-muted" }, 
+                    `${run.output.tokens.length} tokens`
+                  ),
+                  run.status === 'running' && e(
+                    "div",
+                    { key: "progress", className: "progress mt-1", style: { height: "3px" } },
+                    e("div", {
+                      className: "progress-bar progress-bar-striped progress-bar-animated",
+                      style: { width: "100%" }
+                    })
+                  )
+                ]
+              )
+            ]
+          )
+        )
+      )
+    ]
+  );
+};
+
 console.log("✅ pb-components.js loaded");

@@ -1,7 +1,6 @@
 // ============================================================================
 // COWORKER-STATE.JS - State Manager + Navigation
-// Replaces pb-navigator.js
-// Version: 1.0.0
+// Version: 2.0.0 - Optimized for streaming
 // ============================================================================
 
 (function(root, factory) {
@@ -19,15 +18,15 @@
 }(typeof self !== 'undefined' ? self : this, function() {
   'use strict';
 
-  const VERSION = '1.0.0';
+  const VERSION = '2.0.0';
 
   // ==========================================================================
   // PRIVATE STATE
   // ==========================================================================
 
   const state = {
-    currentRun: null,      // Current main UI run
-    pendingRuns: [],       // Background/dialog runs
+    currentRun: null,      // Current main UI run (completed data operations)
+    activeRuns: {},        // Active runs indexed by ID (pending/running only)
     isLoading: false,
     listeners: new Set()
   };
@@ -69,11 +68,61 @@
     };
   }
 
+  // ==========================================================================
+  // HELPER - Group runs by pipeline
+  // ==========================================================================
+
+  function groupByPipeline(runs) {
+    const pipelines = {};
+    
+    runs.forEach(run => {
+      // Find root run (walk up parentRun chain)
+      let root = run;
+      const visited = new Set([run.id]); // Prevent infinite loops
+      
+      while (root.parentRun && state.activeRuns[root.parentRun]) {
+        if (visited.has(root.parentRun)) break; // Circular reference protection
+        visited.add(root.parentRun);
+        root = state.activeRuns[root.parentRun];
+      }
+      
+      // Group by root ID
+      if (!pipelines[root.id]) {
+        pipelines[root.id] = [];
+      }
+      pipelines[root.id].push(run);
+    });
+    
+    return pipelines;
+  }
+
+  // ==========================================================================
+  // NOTIFY - Pre-compute views
+  // ==========================================================================
+
   function notify() {
+    const activeRunsArray = Object.values(state.activeRuns);
+    
+    // Pre-compute common views (computed ONCE per notify)
     const snapshot = {
+      // Raw data
       currentRun: state.currentRun,
-      pendingRuns: [...state.pendingRuns],
-      isLoading: state.isLoading
+      activeRuns: state.activeRuns,
+      isLoading: state.isLoading,
+      
+      // Pre-computed views (saves components from filtering)
+      activeDialogs: activeRunsArray.filter(r => 
+        r.operation === 'dialog' && r.status === 'running'
+      ),
+      
+      activeAI: activeRunsArray.filter(r =>
+        r.operation === 'interpret' && r.status === 'running'
+      ),
+      
+      activePipelines: groupByPipeline(activeRunsArray),
+      
+      // Backward compatibility
+      pendingRuns: activeRunsArray
     };
 
     state.listeners.forEach((callback) => {
@@ -181,16 +230,7 @@
     state.listeners.add(callback);
 
     // Call immediately with current state
-    try {
-      const snapshot = {
-        currentRun: state.currentRun,
-        pendingRuns: [...state.pendingRuns],
-        isLoading: state.isLoading
-      };
-      callback(snapshot);
-    } catch (error) {
-      console.error('Initial subscriber call error:', error);
-    }
+    notify();
 
     // Return unsubscribe function
     return function unsubscribe() {
@@ -205,7 +245,8 @@
   function getState() {
     return {
       currentRun: state.currentRun,
-      pendingRuns: [...state.pendingRuns],
+      activeRuns: state.activeRuns,
+      pendingRuns: Object.values(state.activeRuns), // Backward compat
       isLoading: state.isLoading
     };
   }
@@ -214,41 +255,131 @@
   // INTERNAL: UPDATE FROM RUN EVENTS
   // ==========================================================================
 
-// ==========================================================================
-// INTERNAL: UPDATE FROM RUN EVENTS
-// ==========================================================================
-
-// ==========================================================================
-// INTERNAL: UPDATE FROM RUN EVENTS
-// ==========================================================================
-
-function updateFromRun(context) {
-  // Check if this run already exists in pending
-  const existingIndex = state.pendingRuns.findIndex(r => r.id === context.id);
-
-  if (existingIndex !== -1) {
-    // Update existing run
-    state.pendingRuns[existingIndex] = context;
-  } else {
-    // Add new run only if it's a dialog/background operation and not completed
-    const isDialog = context.operation === 'dialog';
-    const isRunning = context.status === 'running' || context.status === 'pending';
+  function updateFromRun(context) {
+    const { id, status, operation } = context;
     
-    if (isDialog && isRunning) {
-      state.pendingRuns.push(context);
+    // Add/update in activeRuns if pending or running
+    if (status === 'pending' || status === 'running') {
+      state.activeRuns[id] = context;
     }
+    
+    // Move to currentRun when completed (data operations only)
+    if (status === 'completed') {
+      if (['select', 'create', 'update', 'delete'].includes(operation)) {
+        state.currentRun = {
+          params: context.params || state.currentRun?.params,
+          data: context.output?.data || [],
+          schema: context.output?.schema || null,
+          meta: context.output?.meta || null,
+          viewConfig: context.output?.viewConfig || null,
+          runContext: context
+        };
+      }
+      
+      // Remove from activeRuns (auto-cleanup)
+      delete state.activeRuns[id];
+    }
+    
+    // Failed runs also get cleaned up
+    if (status === 'failed') {
+      delete state.activeRuns[id];
+    }
+    
+    // Update loading state
+    state.isLoading = Object.values(state.activeRuns).some(r => r.status === 'running');
+    
+    notify();
   }
 
-  // Clean completed/failed runs
-  state.pendingRuns = state.pendingRuns.filter(
-    r => r.status !== 'completed' && r.status !== 'failed'
-  );
+  // ==========================================================================
+  // UPDATE METHODS - For streaming updates
+  // ==========================================================================
 
-  // Update loading state
-  state.isLoading = state.pendingRuns.some(r => r.status === 'running');
+  /**
+   * Update a specific field in an active run (O(1) operation)
+   * Used for streaming: tokens, user input, progress, etc.
+   * 
+   * @param {string} runId - The run ID
+   * @param {string} fieldPath - Dot notation path: 'output.value', 'steps.0.status'
+   * @param {any} value - New value
+   */
+  function updateRunField(runId, fieldPath, value) {
+    const run = state.activeRuns[runId];
+    if (!run) {
+      console.warn('Run not found:', runId);
+      return;
+    }
+    
+    // Handle nested paths
+    const keys = fieldPath.split('.');
+    let target = run;
+    
+    // Navigate to parent of target field
+    for (let i = 0; i < keys.length - 1; i++) {
+      const key = keys[i];
+      
+      // Handle array indices: 'steps.0' -> steps[0]
+      if (!isNaN(key)) {
+        target = target[parseInt(key)];
+      } else {
+        // Create nested object if doesn't exist
+        if (!target[key]) {
+          target[key] = {};
+        }
+        target = target[key];
+      }
+      
+      if (!target) {
+        console.warn('Invalid path:', fieldPath);
+        return;
+      }
+    }
+    
+    // Set the final value
+    const finalKey = keys[keys.length - 1];
+    target[finalKey] = value;
+    
+    notify();
+  }
 
-  notify();
-}
+  /**
+   * Update a step within a multi-step run
+   * 
+   * @param {string} runId - The run ID
+   * @param {number} stepIndex - Step array index
+   * @param {object} updates - Fields to update in the step
+   */
+  function updateRunStep(runId, stepIndex, updates) {
+    const run = state.activeRuns[runId];
+    if (!run || !run.steps || !run.steps[stepIndex]) {
+      console.warn('Run or step not found:', runId, stepIndex);
+      return;
+    }
+    
+    // Merge updates into step
+    Object.assign(run.steps[stepIndex], updates);
+    
+    notify();
+  }
+
+  /**
+   * Get an active run by ID (O(1) lookup)
+   * 
+   * @param {string} runId - The run ID
+   * @returns {object|null} The run or null if not found
+   */
+  function getActiveRun(runId) {
+    return state.activeRuns[runId] || null;
+  }
+
+  /**
+   * Get all active runs as array
+   * 
+   * @returns {array} Array of active runs
+   */
+  function getActiveRuns() {
+    return Object.values(state.activeRuns);
+  }
 
   // ==========================================================================
   // BROWSER BACK/FORWARD HANDLER
@@ -296,13 +427,17 @@ function updateFromRun(context) {
   }
 
   // Install popstate listener
-  window.addEventListener('popstate', handlePopState);
+  if (typeof window !== 'undefined') {
+    window.addEventListener('popstate', handlePopState);
+  }
 
   // ==========================================================================
   // AUTO-INITIALIZE FROM URL
   // ==========================================================================
 
   (async function init() {
+    if (typeof window === 'undefined') return;
+    
     const params = urlToParams();
 
     if (params && (params.doctype || Object.keys(params.query || {}).length > 0)) {
@@ -344,10 +479,16 @@ function updateFromRun(context) {
     getCurrent,
     getParams,
     getState,
+    getActiveRun,        // NEW: Get specific active run by ID
+    getActiveRuns,       // NEW: Get all active runs as array
     
     // Observation
     subscribe,
     getSubscriberCount,
+    
+    // Write (for streaming updates)
+    updateRunField,      // NEW: Update single field (O(1))
+    updateRunStep,       // NEW: Update step in multi-step run
     
     // Internal (for plugins)
     _updateFromRun: updateFromRun,
@@ -414,4 +555,6 @@ if (typeof window !== 'undefined') {
 console.log(`✅ CoworkerState v${VERSION} loaded`);
 console.log('   • CoworkerState.navigate(params)');
 console.log('   • CoworkerState.subscribe(callback)');
+console.log('   • CoworkerState.updateRunField(id, path, value) [NEW]');
+console.log('   • CoworkerState.updateRunStep(id, index, updates) [NEW]');
 console.log('   • nav.list(), nav.item(), nav.back(), nav.refresh()');
