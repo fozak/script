@@ -32,11 +32,27 @@
 <script src="coworker-run.js"></script>                 <!-- 4. Universal coworker-run  + Query translation (Prisma→PocketBase)   -->
 <script src="coworker-state.js"></script>
 <!-- I AM HERE FOR TESTING-->
-
-<!-- Later <script src="pb-navigator.js"></script>             5. Navigation TO BE REFACTORED -->
-  <!--OLD NOT YET REFACTORED UI -->
-  <!-- <script src="pb-renderers.js"></script>    3. Renderers TO BE REFACTORED -->
-  <!-- <script src="pb-components.js"></script>   4. Components  TO BE REFACTORED -->
+<script>
+    (async function initCoworker() {
+      console.log('🔌 Initializing coworker...');
+      
+      await coworker.init({
+        plugins: [
+          { 
+            name: 'coworker-run', 
+            type: 'inline', 
+            plugin: coworkerRun 
+          }
+        ]
+      });
+      
+      console.log('✅ Coworker ready: coworker.run() installed');
+    })();
+  </script>
+<!-- Later <script src="pb-navigator.js"></script>             5. Navigation WAS REFACTORED -->
+  <!--OLD NOT TOUCHED  -->
+  <script src="pb-renderers.js"></script> 
+  <script src="pb-components.js"></script>
   <script src="app.js"></script>            <!-- 5. Application -->
   
   <!-- Bootstrap CSS -->
