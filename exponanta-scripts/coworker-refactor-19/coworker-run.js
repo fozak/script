@@ -1,6 +1,6 @@
 // ============================================================================
 // COWORKER-RUN.JS - Runtime + Query + Schema + CRUD (All-in-One)
-// Self-contained like pb-query.js
+// Self-contained 
 // Version: 1.0.0
 // ============================================================================
 
