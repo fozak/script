@@ -1,19 +1,19 @@
 // ============================================================================
-// app.js - Refactored to use coworker.run() and CoworkerState
+// app.js - Main Application (Refactored v2.0)
 // Version: 2.0.0
 // ============================================================================
 
 (function () {
   "use strict";
 
-  console.log("🚀 Initializing application...");
+  console.log("🚀 Initializing application v2.0...");
 
   // Create namespace for components (keep compatibility)
   if (!window.pb) window.pb = {};
   if (!window.pb.components) pb.components = {};
 
   // ============================================================================
-  // UNIVERSAL SEARCH INPUT (Refactored with coworker.run)
+  // UNIVERSAL SEARCH INPUT
   // ============================================================================
 
   pb.components.UniversalSearchInput = function () {
@@ -25,45 +25,38 @@
     const [showDropdown, setShowDropdown] = useState(false);
     const searchRef = useRef(null);
 
-    // ✅ Get unique doctypes using coworker.run (cached globally)
-  // ✅ Get unique doctypes using coworker.run (cached globally)
-useEffect(() => {
-  // If cached, reuse
-  if (window.__DISCOVERED_DOCTYPES) {
-    setDoctypes(window.__DISCOVERED_DOCTYPES);
-    return;
-  }
-
-  // First-time fetch using coworker.run
-  coworker.run({
-    operation: 'select',
-    doctype: 'All',
-    input: {},
-    options: { includeSchema: false }
-  })
-    .then((result) => {
-      if (result.success && result.output?.data) {
-        // ✅ FIX: Filter out null/undefined items AND null doctypes
-        const uniqueDoctypes = [
-          ...new Set(
-            result.output.data
-              .filter(item => item && item.doctype)  // ← Filter nulls
-              .map(item => item.doctype)
-          )
-        ].sort();
-
-        console.log("✅ Discovered doctypes:", uniqueDoctypes);
-        console.log(`   Found ${uniqueDoctypes.length} types from ${result.output.data.length} records`);
-
-        // Cache globally
-        window.__DISCOVERED_DOCTYPES = uniqueDoctypes;
-        setDoctypes(uniqueDoctypes);
+    // Get unique doctypes using coworker.run (cached globally)
+    useEffect(() => {
+      if (window.__DISCOVERED_DOCTYPES) {
+        setDoctypes(window.__DISCOVERED_DOCTYPES);
+        return;
       }
-    })
-    .catch((err) => {
-      console.error("Failed to load doctypes:", err);
-    });
-}, []);
+
+      coworker.run({
+        operation: 'select',
+        doctype: 'All',
+        input: {},
+        options: { includeSchema: false }
+      })
+        .then((result) => {
+          if (result.success && result.output?.data) {
+            const uniqueDoctypes = [
+              ...new Set(
+                result.output.data
+                  .filter(item => item && item.doctype)
+                  .map(item => item.doctype)
+              )
+            ].sort();
+
+            console.log("✅ Discovered doctypes:", uniqueDoctypes);
+            window.__DISCOVERED_DOCTYPES = uniqueDoctypes;
+            setDoctypes(uniqueDoctypes);
+          }
+        })
+        .catch((err) => {
+          console.error("Failed to load doctypes:", err);
+        });
+    }, []);
 
     // Close dropdown on outside click
     useEffect(() => {
@@ -73,11 +66,10 @@ useEffect(() => {
         }
       }
       document.addEventListener("mousedown", handleClickOutside);
-      return () =>
-        document.removeEventListener("mousedown", handleClickOutside);
+      return () => document.removeEventListener("mousedown", handleClickOutside);
     }, []);
 
-    // ✅ Search function using coworker.run
+    // Search function using coworker.run
     const performSearch = async (text) => {
       if (text.length < 2 || doctypes.length === 0) {
         setResults([]);
@@ -152,35 +144,17 @@ useEffect(() => {
             "div",
             {
               key: "dropdown",
-              className:
-                "position-absolute w-100 mt-1 bg-white border rounded shadow-lg",
+              className: "position-absolute w-100 mt-1 bg-white border rounded shadow-lg",
               style: { maxHeight: "300px", overflowY: "auto", zIndex: 1050 },
             },
             [
               isSearching &&
-                e(
-                  "div",
-                  {
-                    key: "loading",
-                    className: "p-2 text-center text-muted small",
-                  },
-                  "Searching..."
-                ),
+                e("div", { key: "loading", className: "p-2 text-center text-muted small" }, "Searching..."),
 
-              !isSearching &&
-                results.length === 0 &&
-                searchText.length >= 2 &&
-                e(
-                  "div",
-                  {
-                    key: "empty",
-                    className: "p-2 text-center text-muted small",
-                  },
-                  "No results found"
-                ),
+              !isSearching && results.length === 0 && searchText.length >= 2 &&
+                e("div", { key: "empty", className: "p-2 text-center text-muted small" }, "No results found"),
 
-              !isSearching &&
-                results.length > 0 &&
+              !isSearching && results.length > 0 &&
                 e(
                   "div",
                   { key: "results" },
@@ -192,23 +166,13 @@ useEffect(() => {
                         className: "px-3 py-2 border-bottom",
                         style: { cursor: "pointer" },
                         onClick: () => handleResultClick(result),
-                        onMouseEnter: (ev) =>
-                          (ev.currentTarget.style.backgroundColor = "#f8f9fa"),
-                        onMouseLeave: (ev) =>
-                          (ev.currentTarget.style.backgroundColor = "white"),
+                        onMouseEnter: (ev) => (ev.currentTarget.style.backgroundColor = "#f8f9fa"),
+                        onMouseLeave: (ev) => (ev.currentTarget.style.backgroundColor = "white"),
                       },
                       [
-                        e(
-                          "div",
-                          { key: "name", className: "fw-bold small" },
-                          result.name
-                        ),
-                        e(
-                          "small",
-                          { key: "meta", className: "text-muted" },
-                          `${result.doctype}${
-                            result.status ? ` • ${result.status}` : ""
-                          }`
+                        e("div", { key: "name", className: "fw-bold small" }, result.name),
+                        e("small", { key: "meta", className: "text-muted" },
+                          `${result.doctype}${result.status ? ` • ${result.status}` : ""}`
                         ),
                       ]
                     )
@@ -221,87 +185,7 @@ useEffect(() => {
   };
 
   // ============================================================================
-  // MAIN GRID (Refactored with CoworkerState)
-  // ============================================================================
-
-  pb.components.MainGrid = function ({ doctype }) {
-    const { createElement: e, useState, useEffect } = React;
-    const [currentRun, setCurrentRun] = useState(null);
-    const [isLoading, setIsLoading] = useState(false);
-
-    // ✅ Subscribe to CoworkerState
-    useEffect(() => {
-      const unsubscribe = CoworkerState.subscribe((state) => {
-        setCurrentRun(state.currentRun);
-        setIsLoading(state.isLoading);
-      });
-      return unsubscribe;
-    }, []);
-
-    // Navigate to doctype if not current
-    useEffect(() => {
-      const current = CoworkerState.getCurrent();
-      if (!current || current.params?.doctype !== doctype) {
-        nav.list(doctype);
-      }
-    }, [doctype]);
-
-    if (isLoading) {
-      return e("div", { className: "p-4 text-center" }, "Loading...");
-    }
-
-    if (!currentRun) {
-      return e("div", { className: "p-4" }, "No data");
-    }
-
-    const { data, schema } = currentRun;
-
-    if (!schema) {
-      return e("div", { className: "p-4 text-danger" }, "Schema not found");
-    }
-
-    if (!data || data.length === 0) {
-      return e(
-        "div",
-        { className: "alert alert-info m-3" },
-        `No ${doctype} records found. Use search above to find items.`
-      );
-    }
-
-    const columns = Object.keys(data[0]).map((key) => ({
-      accessorKey: key,
-      header: key.charAt(0).toUpperCase() + key.slice(1).replace(/_/g, " "),
-      cell: ({ getValue, row }) => {
-        const value = getValue();
-
-        if (key === "name") {
-          return e(
-            pb.components.DocLink,
-            {
-              doctype: row.original.doctype,
-              name: value,
-            },
-            value
-          );
-        }
-
-        const schemaField = schema.fields?.find((f) => f.fieldname === key);
-        if (schemaField) {
-          const rendered = pb.renderField(schemaField, value, row.original);
-          return e("span", {
-            dangerouslySetInnerHTML: { __html: rendered },
-          });
-        }
-
-        return value;
-      },
-    }));
-
-    return e(pb.components.BaseTable, { data, columns });
-  };
-
-  // ============================================================================
-  // APP COMPONENT (Refactored with CoworkerState)
+  // APP COMPONENT (Main Application)
   // ============================================================================
 
   const App = function () {
@@ -311,7 +195,7 @@ useEffect(() => {
     const [view, setView] = useState("list");
     const [showChatSidebar, setShowChatSidebar] = useState(false);
 
-    // ✅ Subscribe to CoworkerState v2.0
+    // ✅ Subscribe to CoworkerState v2.0 with pre-computed views
     useEffect(() => {
       const unsubscribe = CoworkerState.subscribe((snapshot) => {
         setCurrentRun(snapshot.currentRun);
@@ -328,33 +212,192 @@ useEffect(() => {
       return unsubscribe;
     }, []);
 
-    // ... rest of your App component code
+    // Loading state
+    if (isLoading) {
+      return e(
+        "div",
+        { className: "container mt-5 text-center" },
+        e("div", { className: "spinner-border text-primary" }),
+        e("p", { className: "mt-3" }, "Loading...")
+      );
+    }
 
-    // Add chat toggle button to header
-    const chatToggleButton = e(
-      "button",
-      {
-        key: "chat",
-        className: "btn btn-outline-info btn-sm",
-        onClick: () => setShowChatSidebar(!showChatSidebar)
-      },
-      `💬 AI ${showChatSidebar ? '→' : '←'}`
-    );
+    // Home state
+    if (!currentRun) {
+      return e("div", { className: "container-fluid" }, [
+        // Header with search
+        e(
+          "nav",
+          { key: "header", className: "navbar navbar-light bg-light mb-4" },
+          e(
+            "div",
+            { className: "container-fluid d-flex justify-content-between align-items-center" },
+            [
+              e("span", { key: "brand", className: "navbar-brand" }, "🚀 Coworker App v2.0"),
+              e(pb.components.UniversalSearchInput, { key: "search" }),
+            ]
+          )
+        ),
 
+        // Home content
+        e(
+          "div",
+          { key: "content", className: "container mt-5" },
+          e(
+            "div",
+            { className: "card" },
+            e(
+              "div",
+              { className: "card-body text-center" },
+              [
+                e("h1", { key: "title", className: "mb-4" }, "Choose a DocType"),
+                e("div", { key: "buttons", className: "btn-group" }, [
+                  e("button", { key: "task", className: "btn btn-primary", onClick: () => nav.list("Task") }, "📋 Tasks"),
+                  e("button", { key: "user", className: "btn btn-success", onClick: () => nav.list("User") }, "👤 Users"),
+                  e("button", { key: "customer", className: "btn btn-info", onClick: () => nav.list("Customer") }, "🏢 Customers"),
+                ]),
+              ]
+            )
+          )
+        ),
+
+        // Dialog overlay (always rendered, shows only if activeDialogs exist)
+        e(pb.components.DialogOverlay, { key: "dialogs" }),
+      ]);
+    }
+
+    // Main view with persistent search in header
     return e("div", { className: "container-fluid" }, [
-      // ... your existing header/nav code
-      
-      // ... your existing content code
-      
-      // ✅ Add dialog overlay (from pb.components)
+      // Header with breadcrumbs and search
+      e(
+        "nav",
+        { key: "header", className: "navbar navbar-light bg-light mb-4" },
+        e("div", { className: "container-fluid" }, [
+          // Breadcrumbs
+          e("ol", { key: "breadcrumb", className: "breadcrumb mb-0 me-3" }, [
+            e(
+              "li",
+              { key: "home", className: "breadcrumb-item" },
+              e(
+                "a",
+                {
+                  href: "#",
+                  onClick: (ev) => {
+                    ev.preventDefault();
+                    nav.home(); // ← NEW: Use nav.home()
+                  },
+                },
+                "Home"
+              )
+            ),
+            currentRun.params?.doctype &&
+              e(
+                "li",
+                {
+                  key: "doctype",
+                  className: "breadcrumb-item" + (view === "list" ? " active" : ""),
+                },
+                view === "list"
+                  ? currentRun.params.doctype
+                  : e(
+                      "a",
+                      {
+                        href: "#",
+                        onClick: (ev) => {
+                          ev.preventDefault();
+                          nav.list(currentRun.params.doctype);
+                        },
+                      },
+                      currentRun.params.doctype
+                    )
+              ),
+            view === "form" &&
+              currentRun.data &&
+              currentRun.data[0] &&
+              e("li", { key: "item", className: "breadcrumb-item active" }, currentRun.data[0].name),
+          ]),
+
+          // Universal search (always visible)
+          e("div", { key: "search", className: "flex-grow-1 mx-3" }, e(pb.components.UniversalSearchInput, {})),
+
+          // Navigation buttons
+          e("div", { key: "nav", className: "btn-group btn-group-sm" }, [
+            e(
+              "button",
+              {
+                key: "back",
+                className: "btn btn-outline-secondary",
+                onClick: () => nav.back(),
+                disabled: !CoworkerState.canGoBack(),
+              },
+              "⬅️"
+            ),
+            e(
+              "button",
+              {
+                key: "refresh",
+                className: "btn btn-outline-primary",
+                onClick: () => nav.refresh(),
+              },
+              "🔄"
+            ),
+            e(
+              "button",
+              {
+                key: "chat",
+                className: `btn ${showChatSidebar ? 'btn-info' : 'btn-outline-info'}`,
+                onClick: () => setShowChatSidebar(!showChatSidebar),
+              },
+              `💬 ${showChatSidebar ? '→' : '←'}`
+            ),
+          ]),
+        ])
+      ),
+
+      // Content
+      e(
+        "div",
+        { key: "content", className: "row" },
+        e(
+          "div",
+          { className: "col" },
+          view === "list"
+            ? e(pb.components.MainGrid, { doctype: currentRun.params.doctype })
+            : e(
+                "div",
+                { className: "card m-3" },
+                [
+                  e("div", { key: "header", className: "card-header" },
+                    e("h3", {}, currentRun.data[0]?.name || "Item View")
+                  ),
+                  e("div", { key: "body", className: "card-body" }, [
+                    e("pre", { key: "data", className: "bg-light p-3" },
+                      JSON.stringify(currentRun.data[0], null, 2)
+                    ),
+                    e(
+                      "button",
+                      {
+                        key: "back",
+                        className: "btn btn-secondary mt-3",
+                        onClick: () => nav.list(currentRun.params.doctype),
+                      },
+                      "⬅️ Back to List"
+                    ),
+                  ]),
+                ]
+              )
+        )
+      ),
+
+      // Dialog overlay (always rendered, shows only if activeDialogs exist)
       e(pb.components.DialogOverlay, { key: "dialogs" }),
       
-      // ✅ Add chat sidebar (from pb.components)
+      // Chat sidebar
       e(pb.components.ChatSidebar, { 
         key: "chat",
         isOpen: showChatSidebar,
         onToggle: () => setShowChatSidebar(!showChatSidebar)
-      })
+      }),
     ]);
   };
 
@@ -383,6 +426,7 @@ useEffect(() => {
       tasks: () => nav.list("Task"),
       users: () => nav.list("User"),
       customers: () => nav.list("Customer"),
+      home: () => nav.home(),
       back: () => nav.back(),
       refresh: () => nav.refresh(),
       
@@ -498,6 +542,8 @@ useEffect(() => {
     };
 
     console.log("✅ App mounted v2.0");
+    console.log("   Try: testNav.tasks()");
+    console.log("   Try: testNav.home()");
     console.log("   Try: testNav.testConfirm()");
     console.log("   Try: testNav.testPrompt()");
     console.log("   Try: testNav.testDestructive()");
@@ -512,5 +558,5 @@ useEffect(() => {
 })();
 
 // ============================================================================
-// END OF APP.JS
+// END OF APP.JS v2.0
 // ============================================================================

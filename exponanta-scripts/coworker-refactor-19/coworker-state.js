@@ -187,6 +187,21 @@
     }
   }
 
+  function navigateHome() {
+    console.log('🏠 Navigating to home');
+    
+    // Clear current run
+    state.currentRun = null;
+    
+    // Clear URL
+    if (typeof window !== 'undefined') {
+      window.history.pushState(null, '', window.location.pathname);
+    }
+    
+    // Notify subscribers
+    notify();
+  }
+
   function goBack() {
     console.log('⬅️ Going back');
     window.history.back();
@@ -295,14 +310,6 @@
   // UPDATE METHODS - For streaming updates
   // ==========================================================================
 
-  /**
-   * Update a specific field in an active run (O(1) operation)
-   * Used for streaming: tokens, user input, progress, etc.
-   * 
-   * @param {string} runId - The run ID
-   * @param {string} fieldPath - Dot notation path: 'output.value', 'steps.0.status'
-   * @param {any} value - New value
-   */
   function updateRunField(runId, fieldPath, value) {
     const run = state.activeRuns[runId];
     if (!run) {
@@ -342,13 +349,6 @@
     notify();
   }
 
-  /**
-   * Update a step within a multi-step run
-   * 
-   * @param {string} runId - The run ID
-   * @param {number} stepIndex - Step array index
-   * @param {object} updates - Fields to update in the step
-   */
   function updateRunStep(runId, stepIndex, updates) {
     const run = state.activeRuns[runId];
     if (!run || !run.steps || !run.steps[stepIndex]) {
@@ -362,21 +362,10 @@
     notify();
   }
 
-  /**
-   * Get an active run by ID (O(1) lookup)
-   * 
-   * @param {string} runId - The run ID
-   * @returns {object|null} The run or null if not found
-   */
   function getActiveRun(runId) {
     return state.activeRuns[runId] || null;
   }
 
-  /**
-   * Get all active runs as array
-   * 
-   * @returns {array} Array of active runs
-   */
   function getActiveRuns() {
     return Object.values(state.activeRuns);
   }
@@ -470,6 +459,7 @@
     
     // Navigation
     navigate,
+    navigateHome,        // NEW: Clear state and return to home
     goBack,
     goForward,
     refresh,
@@ -479,16 +469,16 @@
     getCurrent,
     getParams,
     getState,
-    getActiveRun,        // NEW: Get specific active run by ID
-    getActiveRuns,       // NEW: Get all active runs as array
+    getActiveRun,
+    getActiveRuns,
     
     // Observation
     subscribe,
     getSubscriberCount,
     
     // Write (for streaming updates)
-    updateRunField,      // NEW: Update single field (O(1))
-    updateRunStep,       // NEW: Update step in multi-step run
+    updateRunField,
+    updateRunStep,
     
     // Internal (for plugins)
     _updateFromRun: updateFromRun,
@@ -504,11 +494,7 @@
 // ============================================================================
 
 const nav = {
-  home: () => CoworkerState.navigate({
-    doctype: 'All',
-    query: {},
-    options: { includeSchema: true, includeMeta: true }
-  }),
+  home: () => CoworkerState.navigateHome(),
 
   list: (doctype, query = {}, options = {}) => CoworkerState.navigate({
     doctype,
@@ -554,7 +540,8 @@ if (typeof window !== 'undefined') {
 
 console.log(`✅ CoworkerState v${VERSION} loaded`);
 console.log('   • CoworkerState.navigate(params)');
+console.log('   • CoworkerState.navigateHome() [NEW]');
 console.log('   • CoworkerState.subscribe(callback)');
-console.log('   • CoworkerState.updateRunField(id, path, value) [NEW]');
-console.log('   • CoworkerState.updateRunStep(id, index, updates) [NEW]');
-console.log('   • nav.list(), nav.item(), nav.back(), nav.refresh()');
+console.log('   • CoworkerState.updateRunField(id, path, value)');
+console.log('   • CoworkerState.updateRunStep(id, index, updates)');
+console.log('   • nav.home(), nav.list(), nav.item(), nav.back(), nav.refresh()');

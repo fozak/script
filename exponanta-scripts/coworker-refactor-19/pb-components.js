@@ -1,4 +1,4 @@
-// pb-components.js - React Components v 15 works 
+// pb-components.js - React Components v2.0 with CoworkerState Safety Checks
 
 // ============================================================================
 // INITIALIZE COMPONENTS NAMESPACE
@@ -7,7 +7,7 @@
 pb.components = pb.components || {};
 
 // ============================================================================
-// DOCLINK COMPONENT - Uses pb.nav for navigation
+// DOCLINK COMPONENT - Uses nav for navigation
 // ============================================================================
 
 pb.components.DocLink = function ({ doctype, name, children, className = "" }) {
@@ -20,12 +20,18 @@ pb.components.DocLink = function ({ doctype, name, children, className = "" }) {
       className: `${pb.BS.text.primary} hover:underline ${className}`,
       onClick: (ev) => {
         ev.preventDefault();
-        pb.nav.item(name, doctype);
+        if (typeof nav !== 'undefined' && nav.item) {
+          nav.item(name, doctype);
+        } else {
+          console.error('nav not available');
+        }
       },
       onAuxClick: (ev) => {
         if (ev.button === 1) {
           ev.preventDefault();
-          pb.nav.item(name, doctype);
+          if (typeof nav !== 'undefined' && nav.item) {
+            nav.item(name, doctype);
+          }
         }
       },
     },
@@ -218,52 +224,63 @@ pb.components.BaseTable = function({
   ]);
 };
 
-
 // ============================================================================
-// MAIN GRID - Subscribes to pb.navigation state
+// MAIN GRID - Subscribes to CoworkerState (v2.0 with safety checks)
 // ============================================================================
 
 pb.components.MainGrid = function ({ doctype }) {
   const { createElement: e, useState, useEffect } = React;
-  const [currentList, setCurrentList] = useState(null);
+  const [currentRun, setCurrentRun] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
+  // ✅ Subscribe to CoworkerState v2.0 with safety check
   useEffect(() => {
-    const unsubscribe = pb.navigation.subscribe((list, loading) => {
-      setCurrentList(list);
-      setIsLoading(loading);
+    if (typeof CoworkerState === 'undefined') {
+      console.error('❌ CoworkerState not loaded');
+      return;
+    }
+
+    const unsubscribe = CoworkerState.subscribe((snapshot) => {
+      setCurrentRun(snapshot.currentRun);
+      setIsLoading(snapshot.isLoading);
     });
 
     return unsubscribe;
   }, []);
 
+  // Navigate to doctype if not current
   useEffect(() => {
-    const current = pb.navigation.getCurrent();
-    if (!current || current.params.doctype !== doctype) {
-      pb.nav.list(doctype);
+    if (typeof CoworkerState === 'undefined' || typeof nav === 'undefined') return;
+    
+    const current = CoworkerState.getCurrent();
+    if (!current || current.params?.doctype !== doctype) {
+      nav.list(doctype);
     }
   }, [doctype]);
 
   if (isLoading) {
-    return e("div", { className: "p-4" }, "Loading...");
+    return e("div", { className: "p-4 text-center" }, "Loading...");
   }
 
-  if (!currentList || !currentList.data.length) {
+  if (!currentRun) {
+    return e("div", { className: "p-4" }, "No data");
+  }
+
+  const { data, schema } = currentRun;
+
+  if (!schema) {
+    return e("div", { className: "p-4 text-danger" }, "Schema not found");
+  }
+
+  if (!data || data.length === 0) {
     return e(
       "div",
-      { className: "p-4 text-gray-500" },
-      `No ${doctype} records found`
+      { className: "alert alert-info m-3" },
+      `No ${doctype} records found. Use search above to find items.`
     );
   }
 
-  const { data, schema } = currentList;
-
-  if (!schema) {
-    return e("div", { className: "p-4 text-red-500" }, "Schema not found");
-  }
-
- const columns = Object.keys(data[0])
-  .map((key) => ({
+  const columns = Object.keys(data[0]).map((key) => ({
     accessorKey: key,
     header: key.charAt(0).toUpperCase() + key.slice(1).replace(/_/g, ' '),
     cell: ({ getValue, row }) => {
@@ -282,7 +299,7 @@ pb.components.MainGrid = function ({ doctype }) {
       }
       
       // Find schema field for rendering
-      const schemaField = schema.fields.find(f => f.fieldname === key);
+      const schemaField = schema.fields?.find(f => f.fieldname === key);
       if (schemaField) {
         const rendered = pb.renderField(schemaField, value, row.original);
         return e("span", {
@@ -295,12 +312,14 @@ pb.components.MainGrid = function ({ doctype }) {
     }
   }));
 
-return e(
-  "div",
-  { className: "p-4" },
-  e("h2", { className: "text-2xl font-bold mb-4" }, doctype),
-  e(pb.components.BaseTable, { data, columns })
-);
+  return e(
+    "div",
+    { className: "p-4" },
+    [
+      e("h2", { key: "title", className: "text-2xl font-bold mb-4" }, doctype),
+      e(pb.components.BaseTable, { key: "table", data, columns })
+    ]
+  );
 };
 
 // ============================================================================
@@ -311,8 +330,13 @@ pb.components.DialogOverlay = function () {
   const { createElement: e, useState, useEffect } = React;
   const [activeDialogs, setActiveDialogs] = useState([]);
 
-  // ✅ Subscribe to pre-computed activeDialogs from CoworkerState v2.0
+  // ✅ Subscribe to pre-computed activeDialogs with safety check
   useEffect(() => {
+    if (typeof CoworkerState === 'undefined') {
+      console.error('❌ CoworkerState not loaded for DialogOverlay');
+      return;
+    }
+
     const unsubscribe = CoworkerState.subscribe((snapshot) => {
       setActiveDialogs(snapshot.activeDialogs || []);
     });
@@ -329,7 +353,7 @@ pb.components.DialogOverlay = function () {
       e(pb.components.DialogModal, {
         key: run.id,
         run: run,
-        zIndex: 1050 + index // Stack multiple dialogs
+        zIndex: 1050 + index
       })
     )
   );
@@ -344,6 +368,11 @@ pb.components.DialogModal = function ({ run, zIndex = 1050 }) {
   const [inputValue, setInputValue] = useState(run.output?.value || '');
 
   const handleClose = (confirmed, value = null) => {
+    if (typeof CoworkerState === 'undefined') {
+      console.error('❌ CoworkerState not loaded for DialogModal');
+      return;
+    }
+
     CoworkerState._updateFromRun({
       ...run,
       status: 'completed',
@@ -355,7 +384,7 @@ pb.components.DialogModal = function ({ run, zIndex = 1050 }) {
   };
 
   // Determine dialog type
-  const type = run.input?.type || 'confirm'; // confirm, alert, prompt
+  const type = run.input?.type || 'confirm';
   const title = run.input?.title || 'Dialog';
   const message = run.input?.message || 'Confirm action?';
   const buttons = run.input?.buttons || ['Cancel', 'Confirm'];
@@ -370,7 +399,6 @@ pb.components.DialogModal = function ({ run, zIndex = 1050 }) {
         zIndex: zIndex
       },
       onClick: (ev) => {
-        // Close on backdrop click (optional)
         if (ev.target.classList.contains('modal')) {
           handleClose(false);
         }
@@ -380,7 +408,7 @@ pb.components.DialogModal = function ({ run, zIndex = 1050 }) {
       "div",
       { 
         className: "modal-dialog modal-dialog-centered",
-        onClick: (ev) => ev.stopPropagation() // Prevent close on modal click
+        onClick: (ev) => ev.stopPropagation()
       },
       e("div", { className: "modal-content" }, [
         // Header
@@ -465,8 +493,13 @@ pb.components.ChatSidebar = function ({ isOpen = false, onToggle = null }) {
   const [activePipelines, setActivePipelines] = useState({});
   const [activeAI, setActiveAI] = useState([]);
 
-  // ✅ Subscribe to pre-computed views
+  // ✅ Subscribe to pre-computed views with safety check
   useEffect(() => {
+    if (typeof CoworkerState === 'undefined') {
+      console.error('❌ CoworkerState not loaded for ChatSidebar');
+      return;
+    }
+
     const unsubscribe = CoworkerState.subscribe((snapshot) => {
       setActivePipelines(snapshot.activePipelines || {});
       setActiveAI(snapshot.activeAI || []);
@@ -549,7 +582,6 @@ pb.components.ChatSidebar = function ({ isOpen = false, onToggle = null }) {
 pb.components.PipelineCard = function ({ rootId, runs }) {
   const { createElement: e } = React;
 
-  const rootRun = runs[0]; // First run is the root
   const sortedRuns = runs.sort((a, b) => 
     new Date(a.created || 0) - new Date(b.created || 0)
   );
@@ -613,4 +645,4 @@ pb.components.PipelineCard = function ({ rootId, runs }) {
   );
 };
 
-console.log("✅ pb-components.js loaded");
+console.log("✅ pb-components.js v2.0 loaded with safety checks");
