@@ -301,7 +301,12 @@
     }
     
     // Update loading state
-    state.isLoading = Object.values(state.activeRuns).some(r => r.status === 'running');
+    // Update loading state (only for blocking operations)
+const blockingOps = ['select', 'create', 'update', 'delete'];
+state.isLoading = Object.values(state.activeRuns).some(
+  r => r.status === 'running' && blockingOps.includes(r.operation)
+);
+
     
     notify();
   }
