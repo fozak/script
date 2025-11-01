@@ -235,6 +235,16 @@
             [
               e("span", { key: "brand", className: "navbar-brand" }, "🚀 Coworker App v2.0"),
               e(pb.components.UniversalSearchInput, { key: "search" }),
+              // Chat button on home page
+              e(
+                "button",
+                {
+                  key: "chat",
+                  className: `btn btn-sm ${showChatSidebar ? 'btn-info' : 'btn-outline-info'}`,
+                  onClick: () => setShowChatSidebar(!showChatSidebar),
+                },
+                `💬 Chat ${showChatSidebar ? '→' : '←'}`
+              ),
             ]
           )
         ),
@@ -261,8 +271,15 @@
           )
         ),
 
-        // Dialog overlay (always rendered, shows only if activeDialogs exist)
+        // Dialog overlay (always rendered)
         e(pb.components.DialogOverlay, { key: "dialogs" }),
+        
+        // Chat sidebar (always rendered)
+        e(pb.components.ChatSidebar, { 
+          key: "chat",
+          isOpen: showChatSidebar,
+          onToggle: () => setShowChatSidebar(!showChatSidebar)
+        }),
       ]);
     }
 
@@ -284,7 +301,7 @@
                   href: "#",
                   onClick: (ev) => {
                     ev.preventDefault();
-                    nav.home(); // ← NEW: Use nav.home()
+                    nav.home();
                   },
                 },
                 "Home"
@@ -389,10 +406,10 @@
         )
       ),
 
-      // Dialog overlay (always rendered, shows only if activeDialogs exist)
+      // Dialog overlay (always rendered)
       e(pb.components.DialogOverlay, { key: "dialogs" }),
       
-      // Chat sidebar
+      // Chat sidebar (always rendered)
       e(pb.components.ChatSidebar, { 
         key: "chat",
         isOpen: showChatSidebar,
@@ -556,7 +573,3 @@
     initApp();
   }
 })();
-
-// ============================================================================
-// END OF APP.JS v2.0
-// ============================================================================

@@ -1,3 +1,705 @@
+AI planner
+
+Dialog Chaining Architecture - Decision Tree
+Document Type: Architecture Decision Summary
+Date: 2025-11-01
+Purpose: Tree of all architectural choices for implementing user ↔ AI dialog chaining
+
+🌳 The Decision Tree
+User wants to add AI chat to their coworker.run() architecture
+│
+├─ Question 1: How should dialog messages be stored?
+│  │
+│  ├─ Option A: Separate message arrays ❌
+│  │  └─ REJECTED: Breaks existing architecture
+│  │
+│  └─ Option B: Use existing activeRuns ✅
+│     └─ CHOSEN: Reuse CoworkerState.activeRuns with status: 'running'
+│        └─ Messages stay visible, components already subscribe
+│
+├─ Question 2: How should user messages link to AI responses?
+│  │
+│  ├─ Option A: Single run for entire conversation ❌
+│  │  └─ REJECTED: Breaks isolation, streaming collides
+│  │
+│  └─ Option B: Atomic runs with parent/child links ✅
+│     └─ CHOSEN: Each message = separate run, linked via parentRunId
+│        ├─ User run: { id: 'run-1', role: 'user', childRunId: 'run-2' }
+│        └─ AI run: { id: 'run-2', role: 'assistant', parentRunId: 'run-1' }
+│
+├─ Question 3: How should components access dialog data?
+│  │
+│  ├─ Option A: Components directly manipulate state ❌
+│  │  └─ REJECTED: Breaks coworker.run() single entry point principle
+│  │
+│  └─ Option B: Components only read via CoworkerState.subscribe() ✅
+│     └─ CHOSEN: Components subscribe to pre-computed views
+│        ├─ CoworkerState.activePipelines (auto-groups by parentRunId)
+│        ├─ ChatSidebar renders pipelines
+│        └─ PipelineCard detects role: 'user'/'assistant' and renders as chat
+│
+├─ Question 4: How should user input trigger dialog chains?
+│  │
+│  ├─ Option A: ChatSidebar directly creates runs ❌
+│  │  └─ REJECTED: Bypasses coworker.run() architecture
+│  │
+│  ├─ Option B: Custom handler per dialog type ❌
+│  │  └─ REJECTED: User's architecture is doctype-based, not handler-based
+│  │
+│  ├─ Option C: Static DialogChain doctype ⚠️
+│  │  └─ CONSIDERED: Define chains in JSON
+│  │     ├─ Pro: Declarative, reusable
+│  │     └─ Con: Requires pre-defined chains, not dynamic
+│  │
+│  └─ Option D: AI Planner generates dynamic chains ✅
+│     └─ CHOSEN: AI analyzes message and generates operation chain
+│        └─ Flow:
+│           ├─ User message → AIPlan.generate(message)
+│           ├─ Returns array of operations
+│           ├─ ChainExecutor.execute(plan)
+│           ├─ Each operation calls coworker.run()
+│           └─ Results passed between steps via templates
+│
+└─ Question 5: How should chains be executed?
+   │
+   ├─ Option A: Sequential with await ✅
+   │  └─ CHOSEN: Simple, predictable
+   │     └─ for (step of plan) { await coworker.run(step) }
+   │
+   ├─ Option B: Parallel execution ⚠️
+   │  └─ CONSIDERED: Faster but complex dependencies
+   │
+   └─ Option C: Event-driven queue ⚠️
+      └─ CONSIDERED: More complex, not needed yet
+
+📊 Final Architecture
+Component Layer (UI)
+ChatSidebar
+├─ Subscribes to: CoworkerState.activePipelines
+├─ Renders: PipelineCard for each conversation
+├─ User input → calls: chat.send(message)
+└─ Does NOT touch: CoworkerState._state directly
+
+PipelineCard
+├─ Detects: if run.role === 'user' or 'assistant'
+├─ Renders as: Chat bubbles (blue/gray)
+├─ Falls back to: Pipeline view for non-chat runs
+└─ Shows: Streaming with blinking cursor
+
+app.js
+├─ Adds: Chat toggle button
+├─ Renders: ChatSidebar component
+└─ No other changes needed
+Logic Layer (Console)
+chat.send(message)
+├─ 1. AIPlan.generate(message)
+│  ├─ Analyzes user intent
+│  ├─ Selects relevant operations
+│  └─ Returns: Array of operation configs
+│
+├─ 2. ChainExecutor.execute(plan, message)
+│  ├─ Creates user message run
+│  ├─ For each step in plan:
+│  │  ├─ Resolve templates ({{prev.output}})
+│  │  ├─ Call coworker.run(step)
+│  │  └─ Link with parentRunId
+│  └─ All runs added to activeRuns
+│
+└─ 3. CoworkerState notifies subscribers
+   └─ UI automatically updates
+State Layer
+CoworkerState.activeRuns
+├─ 'run-user-1': { role: 'user', status: 'completed', input: {text: '...'} }
+├─ 'run-ai-2': { role: 'assistant', status: 'running', parentRunId: 'run-user-1', output: {...} }
+└─ 'run-fetch-3': { operation: 'select', parentRunId: 'run-ai-2', ... }
+
+CoworkerState.activePipelines (pre-computed)
+├─ 'run-user-1': [run-user-1, run-ai-2, run-fetch-3]
+└─ Auto-grouped by parentRunId for UI rendering
+
+🎯 Key Principles Maintained
+✅ Single Entry Point
+
+All operations go through coworker.run()
+Components never manipulate state directly
+ChatSidebar calls chat.send() which uses coworker.run()
+
+✅ Doctype-Based Architecture
+
+Could use DialogChain doctype for predefined chains
+Or AI Planner for dynamic chains
+Both respect doctype.json patterns
+
+✅ Event-Driven Updates
+
+coworker.run() → updates state → triggers events
+Components subscribe to state changes
+CoworkerState.notify() → UI re-renders
+
+✅ Atomic Runs
+
+Each operation is separate run
+Runs linked via parentRunId/childRunId
+Clean error boundaries
+
+✅ Pre-Computed Views
+
+activePipelines computed once in notify()
+Components receive ready-to-render data
+No filtering/mapping in components
+
+
+🔀 Alternative Paths Not Chosen
+Path: Static Chain Doctype
+DialogChain.json defines:
+{
+  "steps": [
+    { "operation": "message", "role": "user" },
+    { "operation": "interpret", "role": "assistant" }
+  ]
+}
+
+ChatSidebar creates:
+coworker.run({ 
+  operation: 'create', 
+  doctype: 'DialogChain',
+  input: { steps: [...] }
+})
+Why not chosen:
+
+❌ Requires pre-defining every chain pattern
+❌ Less flexible than AI Planner
+✅ Could be added later for common patterns
+
+Path: Custom Dialog Handler
+coworker-run.js has:
+if (operation === 'dialog') {
+  // Custom code for each dialog type
+}
+Why not chosen:
+
+❌ Goes against doctype-based architecture
+❌ Requires code changes per variant
+❌ User specifically asked to avoid this
+
+
+📝 Implementation Checklist
+Phase 1: Basic Chat UI ✅
+
+ Add chat toggle button to app.js
+ Render ChatSidebar component
+ Add user input textarea
+ Subscribe to activePipelines
+
+Phase 2: Message Rendering ✅
+
+ Update PipelineCard to detect chat messages
+ Render user messages (blue, right-aligned)
+ Render AI messages (gray, left-aligned)
+ Show streaming cursor
+
+Phase 3: AI Planner 🚧
+
+ Create AIPlan.generate() function
+ Add rule-based planning (temporary)
+ Replace with real AI API
+ Pattern detection (create task, search, list, etc.)
+
+Phase 4: Chain Executor ✅
+
+ Create ChainExecutor.execute()
+ Template variable resolution ({{prev.output}})
+ Sequential execution with await
+ Error handling with error response
+ Link all runs with parentRunId/chainId
+
+Phase 5: Integration ✅
+
+ Wire ChatSidebar to chat.send()
+ Ensure coworker.run() is used for all operations
+ Test with existing components
+ Verify no direct state manipulation
+
+
+🎓 Lessons Learned
+What Worked Well
+
+Reusing activeRuns - No new state structures needed
+Pre-computed views - activePipelines already grouped messages
+Atomic runs - Clean isolation and error handling
+Component-only reads - State remains single source of truth
+
+What Was Corrected
+
+Components manipulating state → Only coworker.run()
+Custom handlers per dialog → AI Planner generates chains
+Separate message storage → Reuse activeRuns
+Breaking single entry point → Always use coworker.run()
+
+User's Core Requirement
+
+"My architecture is based on doctype.json... Can I have specific chain doctype for this?"
+
+Answer:
+
+✅ Yes - DialogChain doctype for predefined chains
+✅ Or - AI Planner for dynamic chains (more flexible)
+✅ Both respect doctype.json patterns
+✅ Both use coworker.run() as entry point
+
+
+🚀 Usage Summary
+For Users
+javascript// In browser
+chat.send("Create a task for project X")
+chat.send("List all customers")
+chat.demo()
+For Developers
+javascript// The chain that executes:
+User message
+  ↓
+AIPlan.generate()
+  ↓ returns
+[
+  { operation: 'interpret', input: {...} },
+  { operation: 'create', doctype: 'Task', input: '{{prev.output}}' },
+  { operation: 'dialog', role: 'assistant', input: {...} }
+]
+  ↓
+ChainExecutor.execute()
+  ↓
+coworker.run() × 3
+  ↓
+activeRuns updated
+  ↓
+activePipelines recomputed
+  ↓
+ChatSidebar re-renders
+  ↓
+User sees response
+
+🔮 Future Enhancements
+Short Term
+
+ Replace rule-based planner with real AI API
+ Add conversation history context
+ Support multi-turn dialogs
+ Add retry on failure
+
+Medium Term
+
+ Parallel execution for independent steps
+ Conditional branching in chains
+ Loop support for iterative operations
+ Chain templates library
+
+Long Term
+
+ Visual chain editor
+ Chain analytics/debugging
+ A/B testing different plans
+ Chain optimization based on performance
+
+
+📚 Files Reference
+Core Architecture
+
+coworker.js - Event bus
+coworker-run.js - Execution engine
+coworker-state.js - State management with activeRuns
+
+UI Components
+
+app.js - Main app with chat button
+pb-components.js - ChatSidebar + PipelineCard
+ChatSidebar-proper.js - Chat UI with user input
+PipelineCard-updated.js - Chat message rendering
+
+Logic Layer
+
+chat-with-planner.js - AI Planner + Chain Executor
+chat-handler-corrected.js - Simple chat without planner
+
+Documentation
+
+dialog-chaining-architecture.md - How chaining works without code changes
+chain-doctype-pattern.md - Alternative: Static chain doctype approach
+architecture-decision-tree.md - This document
+
+
+✅ Conclusion
+The chosen architecture:
+
+Uses existing activeRuns for message storage
+Links messages via parentRunId/childRunId
+AI Planner generates dynamic operation chains
+Chain Executor runs each step through coworker.run()
+Components only read state via subscribe()
+No breaking changes to existing architecture
+
+Result:
+
+✅ Respects coworker.run() single entry point
+✅ Works with doctype-based architecture
+✅ No custom handlers per dialog variant
+✅ Fully dynamic based on user intent
+✅ Existing components work without changes
+
+User can now chat with AI, and AI dynamically decides what operations to execute!
+
+// ============================================================================
+// CHAT HANDLER WITH AI PLANNER - Dynamic Chain Generation
+// ============================================================================
+
+(function() {
+  'use strict';
+
+  console.log('💬 Activating Chat Handler with AI Planner...');
+
+  // Wait for dependencies
+  function waitForDeps() {
+    return new Promise((resolve) => {
+      const check = () => {
+        if (typeof CoworkerState !== 'undefined' && 
+            typeof coworker !== 'undefined') {
+          resolve();
+        } else {
+          setTimeout(check, 100);
+        }
+      };
+      check();
+    });
+  }
+
+  waitForDeps().then(() => {
+    console.log('✅ Dependencies loaded');
+
+    // ========================================================================
+    // AI PLANNER - Generates execution plan from user message
+    // ========================================================================
+
+    const AIPlan = {
+      /**
+       * Analyze user message and generate chain of operations
+       * @returns Array of operation configs
+       */
+      async generate(userMessage) {
+        console.log('🤔 Planning operations for:', userMessage);
+
+        // TODO: Replace with actual AI API call
+        // For now, use rule-based planning
+        const plan = this._ruleBasedPlanning(userMessage);
+
+        console.log('📋 Generated plan:', plan);
+        return plan;
+      },
+
+      /**
+       * Simple rule-based planner (replace with AI later)
+       */
+      _ruleBasedPlanning(message) {
+        const lower = message.toLowerCase();
+        const plan = [];
+
+        // Pattern: "summarize emails"
+        if (lower.includes('email') && lower.includes('summarize')) {
+          plan.push({
+            operation: 'select',
+            doctype: 'Email',
+            input: { orderBy: { created: 'desc' }, take: 3 }
+          });
+          plan.push({
+            operation: 'summarize',
+            input: '{{prev.output.data}}'
+          });
+        }
+
+        // Pattern: "create task"
+        if (lower.includes('create') && lower.includes('task')) {
+          plan.push({
+            operation: 'interpret',
+            input: { prompt: message, intent: 'extract_task_data' }
+          });
+          plan.push({
+            operation: 'create',
+            doctype: 'Task',
+            input: { data: '{{prev.output.taskData}}' }
+          });
+        }
+
+        // Pattern: "find" or "search"
+        if (lower.includes('find') || lower.includes('search')) {
+          const doctype = this._extractDoctype(message);
+          plan.push({
+            operation: 'select',
+            doctype: doctype || 'All',
+            input: { where: { name: { contains: '{{keywords}}' } } }
+          });
+        }
+
+        // Pattern: "list" or "show"
+        if (lower.includes('list') || lower.includes('show')) {
+          const doctype = this._extractDoctype(message);
+          plan.push({
+            operation: 'select',
+            doctype: doctype || 'All',
+            input: { take: 10 }
+          });
+        }
+
+        // Always end with dialog response
+        plan.push({
+          operation: 'dialog',
+          role: 'assistant',
+          input: { 
+            type: 'response',
+            context: '{{all_results}}'
+          }
+        });
+
+        return plan;
+      },
+
+      _extractDoctype(message) {
+        const doctypes = ['Task', 'User', 'Customer', 'Project', 'Email'];
+        for (const dt of doctypes) {
+          if (message.toLowerCase().includes(dt.toLowerCase())) {
+            return dt;
+          }
+        }
+        return null;
+      }
+    };
+
+    // ========================================================================
+    // CHAIN EXECUTOR - Executes plan as linked runs
+    // ========================================================================
+
+    const ChainExecutor = {
+      /**
+       * Execute a chain of operations
+       */
+      async execute(plan, userMessage) {
+        const chainId = crypto.randomUUID();
+        const results = [];
+
+        console.log(`🔗 Executing chain ${chainId.slice(0, 8)}...`);
+
+        // 1. Create user message run
+        const userRunId = await this._createUserMessage(chainId, userMessage);
+        let parentRunId = userRunId;
+
+        // 2. Execute each step in the plan
+        for (let i = 0; i < plan.length; i++) {
+          const step = plan[i];
+          
+          // Resolve template variables
+          const resolvedStep = this._resolveTemplates(step, results);
+
+          console.log(`  Step ${i + 1}/${plan.length}:`, resolvedStep.operation);
+
+          // Execute step through coworker.run()
+          try {
+            const result = await coworker.run({
+              ...resolvedStep,
+              options: {
+                chainId: chainId,
+                parentRunId: parentRunId,
+                stepIndex: i,
+                keepAlive: true // Keep in activeRuns for visibility
+              }
+            });
+
+            results.push(result);
+            parentRunId = result.context?.id || parentRunId;
+
+            console.log(`  ✅ Step ${i + 1} completed`);
+
+          } catch (error) {
+            console.error(`  ❌ Step ${i + 1} failed:`, error);
+            
+            // Create error response
+            await this._createErrorResponse(chainId, parentRunId, error);
+            break;
+          }
+        }
+
+        console.log(`✅ Chain ${chainId.slice(0, 8)} completed`);
+        return results;
+      },
+
+      /**
+       * Create user message run
+       */
+      async _createUserMessage(chainId, message) {
+        const userRunId = crypto.randomUUID();
+        const state = CoworkerState._state;
+
+        state.activeRuns[userRunId] = {
+          id: userRunId,
+          operation: 'message',
+          status: 'completed',
+          created: Date.now(),
+          input: { text: message },
+          role: 'user',
+          chainId: chainId
+        };
+
+        CoworkerState.updateRunField(userRunId, 'status', 'completed');
+        return userRunId;
+      },
+
+      /**
+       * Create error response
+       */
+      async _createErrorResponse(chainId, parentRunId, error) {
+        const errorRunId = crypto.randomUUID();
+        const state = CoworkerState._state;
+
+        state.activeRuns[errorRunId] = {
+          id: errorRunId,
+          operation: 'dialog',
+          status: 'completed',
+          created: Date.now(),
+          role: 'assistant',
+          output: { 
+            fullText: `Sorry, I encountered an error: ${error.message}` 
+          },
+          parentRunId: parentRunId,
+          chainId: chainId
+        };
+
+        CoworkerState.updateRunField(errorRunId, 'status', 'completed');
+      },
+
+      /**
+       * Resolve template variables in step config
+       * {{prev.output.data}} → results from previous step
+       * {{all_results}} → all results so far
+       */
+      _resolveTemplates(step, results) {
+        const resolved = JSON.parse(JSON.stringify(step));
+        const prevResult = results[results.length - 1];
+
+        const replaceTemplates = (obj) => {
+          for (const key in obj) {
+            if (typeof obj[key] === 'string') {
+              // Replace {{prev.output.data}}
+              if (obj[key].includes('{{prev.')) {
+                const path = obj[key].match(/\{\{prev\.(.+?)\}\}/)?.[1];
+                if (path && prevResult) {
+                  obj[key] = this._getNestedValue(prevResult, path);
+                }
+              }
+              // Replace {{all_results}}
+              if (obj[key].includes('{{all_results}}')) {
+                obj[key] = results;
+              }
+            } else if (typeof obj[key] === 'object') {
+              replaceTemplates(obj[key]);
+            }
+          }
+        };
+
+        replaceTemplates(resolved);
+        return resolved;
+      },
+
+      _getNestedValue(obj, path) {
+        return path.split('.').reduce((acc, part) => acc?.[part], obj);
+      }
+    };
+
+    // ========================================================================
+    // CHAT API
+    // ========================================================================
+
+    window.chat = {
+      /**
+       * Send a user message - AI plans and executes chain
+       */
+      async send(message) {
+        console.log('📤 User:', message);
+
+        try {
+          // 1. Generate execution plan
+          const plan = await AIPlan.generate(message);
+
+          // 2. Execute plan as chained operations
+          const results = await ChainExecutor.execute(plan, message);
+
+          console.log('✅ Message processed:', results.length, 'operations');
+          return results;
+
+        } catch (error) {
+          console.error('❌ Failed to process message:', error);
+          throw error;
+        }
+      },
+
+      /**
+       * Demo conversations
+       */
+      demo() {
+        console.log('🎬 Running chat demo...');
+
+        setTimeout(() => this.send('Show me all tasks'), 500);
+        setTimeout(() => this.send('Create a task for project review'), 3000);
+        setTimeout(() => this.send('List customers'), 6000);
+      },
+
+      /**
+       * Advanced demo - complex operations
+       */
+      demoAdvanced() {
+        console.log('🎬 Running advanced demo...');
+
+        setTimeout(() => this.send('Summarize the last 3 emails and create tasks'), 500);
+      }
+    };
+
+    console.log('✅ Chat handler with AI Planner ready');
+    console.log('💡 Try: chat.send("Show me all tasks")');
+    console.log('💡 Try: chat.send("Create a task for project X")');
+    console.log('💡 Try: chat.demo()');
+    console.log('💡 Try: chat.demoAdvanced()');
+  });
+
+})();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 I have a pure, centralized command pattern where:

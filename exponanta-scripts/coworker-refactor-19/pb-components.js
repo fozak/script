@@ -1096,7 +1096,7 @@ pb.components.ChatSidebar = function ({ isOpen = false, onToggle = null }) {
 };
 
 // ============================================================================
-// PIPELINE CARD COMPONENT - Shows individual pipeline progress
+// PIPELINE CARD COMPONENT - Shows chat messages or pipeline progress
 // ============================================================================
 
 pb.components.PipelineCard = function ({ rootId, runs }) {
@@ -1106,74 +1106,169 @@ pb.components.PipelineCard = function ({ rootId, runs }) {
     (a, b) => new Date(a.created || 0) - new Date(b.created || 0)
   );
 
-  return e("div", { className: "card mb-3" }, [
-    e(
+  // Check if this is a chat pipeline (has user/assistant roles)
+  const isChat = sortedRuns.some(run => run.role === 'user' || run.role === 'assistant');
+
+  if (isChat) {
+    // ========================================================================
+    // CHAT MESSAGE RENDERING
+    // ========================================================================
+    return e(
       "div",
-      { key: "header", className: "card-header" },
-      e(
-        "small",
-        { className: "text-muted" },
-        `Pipeline ${rootId.slice(0, 8)}...`
-      )
-    ),
-    e(
-      "div",
-      { key: "body", className: "card-body p-2" },
-      sortedRuns.map((run, idx) =>
-        e(
+      { className: "mb-3" },
+      sortedRuns.map((run) => {
+        const isUser = run.role === 'user';
+        const isAI = run.role === 'assistant';
+        
+        // Get message text
+        const text = isUser 
+          ? run.input?.text || run.input || ''
+          : run.output?.fullText || run.output?.tokens?.join('') || '';
+
+        return e(
           "div",
           {
             key: run.id,
-            className: `d-flex align-items-center mb-2 ${
-              idx > 0 ? "ms-3" : ""
-            }`,
+            className: `d-flex mb-3 ${isUser ? 'justify-content-end' : 'justify-content-start'}`
           },
-          [
-            // Status icon
-            e(
-              "span",
-              { key: "icon", className: "me-2" },
-              run.status === "completed"
-                ? "✅"
-                : run.status === "running"
-                ? "⏳"
-                : run.status === "failed"
-                ? "❌"
-                : "⏸️"
-            ),
-            // Operation name
-            e("div", { key: "content", className: "flex-grow-1" }, [
+          e(
+            "div",
+            {
+              className: `p-3 rounded ${
+                isUser 
+                  ? 'bg-primary text-white' 
+                  : 'bg-light border'
+              }`,
+              style: { 
+                maxWidth: '80%',
+                wordWrap: 'break-word'
+              }
+            },
+            [
+              // Message text
+              e(
+                "div",
+                { key: "text", style: { whiteSpace: 'pre-wrap' } },
+                text || (isAI ? 'Thinking...' : 'Message')
+              ),
+              
+              // Streaming indicator for AI
+              run.status === 'running' && isAI &&
+                e(
+                  "span",
+                  { 
+                    key: "typing",
+                    className: "d-inline-block ms-2",
+                    style: { animation: 'blink 1s infinite' }
+                  },
+                  '▊'
+                ),
+              
+              // Timestamp
               e(
                 "small",
-                { key: "op", className: "d-block fw-bold" },
-                run.operation
-              ),
-              run.output?.tokens &&
-                e(
-                  "small",
-                  { key: "tokens", className: "d-block text-muted" },
-                  `${run.output.tokens.length} tokens`
-                ),
-              run.status === "running" &&
-                e(
-                  "div",
-                  {
-                    key: "progress",
-                    className: "progress mt-1",
-                    style: { height: "3px" },
-                  },
-                  e("div", {
-                    className:
-                      "progress-bar progress-bar-striped progress-bar-animated",
-                    style: { width: "100%" },
-                  })
-                ),
-            ]),
-          ]
+                {
+                  key: "time",
+                  className: `d-block mt-1 ${isUser ? 'text-white-50' : 'text-muted'}`,
+                  style: { fontSize: '0.7rem' }
+                },
+                new Date(run.created).toLocaleTimeString()
+              )
+            ]
+          )
+        );
+      })
+    );
+  } else {
+    // ========================================================================
+    // PIPELINE PROGRESS RENDERING (Original)
+    // ========================================================================
+    return e("div", { className: "card mb-3" }, [
+      e(
+        "div",
+        { key: "header", className: "card-header" },
+        e(
+          "small",
+          { className: "text-muted" },
+          `Pipeline ${rootId.slice(0, 8)}...`
         )
-      )
-    ),
-  ]);
+      ),
+      e(
+        "div",
+        { key: "body", className: "card-body p-2" },
+        sortedRuns.map((run, idx) =>
+          e(
+            "div",
+            {
+              key: run.id,
+              className: `d-flex align-items-center mb-2 ${
+                idx > 0 ? "ms-3" : ""
+              }`,
+            },
+            [
+              // Status icon
+              e(
+                "span",
+                { key: "icon", className: "me-2" },
+                run.status === "completed"
+                  ? "✅"
+                  : run.status === "running"
+                  ? "⏳"
+                  : run.status === "failed"
+                  ? "❌"
+                  : "⏸️"
+              ),
+              // Operation name
+              e(
+                "div",
+                { key: "content", className: "flex-grow-1" },
+                [
+                  e(
+                    "small",
+                    { key: "op", className: "d-block fw-bold" },
+                    run.operation
+                  ),
+                  run.output?.tokens &&
+                    e(
+                      "small",
+                      { key: "tokens", className: "d-block text-muted" },
+                      `${run.output.tokens.length} tokens`
+                    ),
+                  run.status === "running" &&
+                    e(
+                      "div",
+                      {
+                        key: "progress",
+                        className: "progress mt-1",
+                        style: { height: "3px" },
+                      },
+                      e("div", {
+                        className:
+                          "progress-bar progress-bar-striped progress-bar-animated",
+                        style: { width: "100%" },
+                      })
+                    ),
+                ]
+              ),
+            ]
+          )
+        )
+      ),
+    ]);
+  }
 };
 
-console.log("✅ pb-components.js v2.0 loaded with safety checks");
+// Add CSS for blinking cursor animation
+if (!document.getElementById('chat-styles')) {
+  const style = document.createElement('style');
+  style.id = 'chat-styles';
+  style.textContent = `
+    @keyframes blink {
+      0%, 50% { opacity: 1; }
+      51%, 100% { opacity: 0; }
+    }
+  `;
+  document.head.appendChild(style);
+}
+
+console.log("✅ PipelineCard updated for chat messages");
