@@ -1,6 +1,6 @@
 // ============================================================================
 // COWORKER-RUN.JS - Runtime + Query + Schema + CRUD (All-in-One)
-// Self-contained 
+// Self-contained
 // Version: 1.0.0
 // ============================================================================
 
@@ -56,7 +56,16 @@
           id: this._generateUUID(),
           timestamp: Date.now(),
           operation: config.operation,
-          doctype: config.doctype || null,
+          // NEW: Support from/into/template with doctype fallback
+          doctype:
+            config.doctype ||
+            config.from ||
+            config.into ||
+            config.template ||
+            null,
+          from: config.from || config.doctype || null, // Add
+          into: config.into || config.doctype || null, // Add
+          template: config.template || null, // Add
           flow: config.flow || null,
           input: config.input || null,
           options: config.options || {},
@@ -97,12 +106,19 @@
               result = await this._handleDelete(context);
               break;
             default:
-              // Emit for plugins to handle
-              const results = await this.emit(
-                `coworker:run:${context.operation}`,
-                context
-              );
-              result = results.find((r) => r !== null && r !== undefined);
+              // Added dynamic
+              if (this[`_handle${capitalize(context.operation)}`]) {
+                result = await this[`_handle${capitalize(context.operation)}`](
+                  context
+                );
+              } else {
+                // Emit for plugins
+                const results = await this.emit(
+                  `coworker:run:${context.operation}`,
+                  context
+                );
+                result = results.find((r) => r !== null && r !== undefined);
+              }
               break;
           }
 
@@ -232,7 +248,7 @@
       // PUBLIC API: SCHEMA MANAGEMENT
       // ========================================================================
 
-// ========================================================================
+      // ========================================================================
       // PUBLIC API: SCHEMA MANAGEMENT
       // ========================================================================
 
@@ -724,49 +740,57 @@
       // PRIVATE: ADAPTER WRAPPERS
       // ========================================================================
 
-     // ========================================================================
-// PRIVATE: ADAPTER WRAPPERS (Delegate to pb)
-// ========================================================================
+      // ========================================================================
+      // PRIVATE: ADAPTER WRAPPERS (Delegate to pb)
+      // ========================================================================
 
-/**
- * Adapter query wrapper - delegates to pb._dbQuery()
- */
-coworker._dbQuery = async function(params, take, skip) {
-  if (!pb || typeof pb._dbQuery !== 'function') {
-    throw new Error('pb._dbQuery not found. Load pb-adapter files first.');
-  }
-  return await pb._dbQuery(params, take, skip);
-};
+      /**
+       * Adapter query wrapper - delegates to pb._dbQuery()
+       */
+      coworker._dbQuery = async function (params, take, skip) {
+        if (!pb || typeof pb._dbQuery !== "function") {
+          throw new Error(
+            "pb._dbQuery not found. Load pb-adapter files first."
+          );
+        }
+        return await pb._dbQuery(params, take, skip);
+      };
 
-/**
- * Adapter create wrapper - delegates to pb._dbCreate()
- */
-coworker._dbCreate = async function(data) {
-  if (!pb || typeof pb._dbCreate !== 'function') {
-    throw new Error('pb._dbCreate not found. Load pb-adapter files first.');
-  }
-  return await pb._dbCreate(data);
-};
+      /**
+       * Adapter create wrapper - delegates to pb._dbCreate()
+       */
+      coworker._dbCreate = async function (data) {
+        if (!pb || typeof pb._dbCreate !== "function") {
+          throw new Error(
+            "pb._dbCreate not found. Load pb-adapter files first."
+          );
+        }
+        return await pb._dbCreate(data);
+      };
 
-/**
- * Adapter update wrapper - delegates to pb._dbUpdate()
- */
-coworker._dbUpdate = async function(id, data) {
-  if (!pb || typeof pb._dbUpdate !== 'function') {
-    throw new Error('pb._dbUpdate not found. Load pb-adapter files first.');
-  }
-  return await pb._dbUpdate(id, data);
-};
+      /**
+       * Adapter update wrapper - delegates to pb._dbUpdate()
+       */
+      coworker._dbUpdate = async function (id, data) {
+        if (!pb || typeof pb._dbUpdate !== "function") {
+          throw new Error(
+            "pb._dbUpdate not found. Load pb-adapter files first."
+          );
+        }
+        return await pb._dbUpdate(id, data);
+      };
 
-/**
- * Adapter delete wrapper - delegates to pb._dbDelete()
- */
-coworker._dbDelete = async function(id) {
-  if (!pb || typeof pb._dbDelete !== 'function') {
-    throw new Error('pb._dbDelete not found. Load pb-adapter files first.');
-  }
-  return await pb._dbDelete(id);
-};
+      /**
+       * Adapter delete wrapper - delegates to pb._dbDelete()
+       */
+      coworker._dbDelete = async function (id) {
+        if (!pb || typeof pb._dbDelete !== "function") {
+          throw new Error(
+            "pb._dbDelete not found. Load pb-adapter files first."
+          );
+        }
+        return await pb._dbDelete(id);
+      };
       // ========================================================================
       // INSTALLATION COMPLETE
       // ========================================================================
@@ -785,6 +809,11 @@ coworker._dbDelete = async function(id) {
   return coworkerRun;
 });
 
+if (typeof coworker !== "undefined" && coworker.use) {
+  // Call install directly and synchronously
+  coworkerRun.install(coworker);
+  console.log("✅ coworker-run installed synchronously");
+}
 // ============================================================================
 // END OF COWORKER-RUN.JS
 // ============================================================================

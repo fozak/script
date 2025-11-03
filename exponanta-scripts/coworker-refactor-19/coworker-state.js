@@ -543,7 +543,7 @@ if (typeof window !== 'undefined') {
   window.nav = nav;
 }
 
-console.log(`✅ CoworkerState v${VERSION} loaded`);
+console.log(`✅ CoworkerState v${CoworkerState.VERSION} loaded`);
 console.log('   • CoworkerState.navigate(params)');
 console.log('   • CoworkerState.navigateHome() [NEW]');
 console.log('   • CoworkerState.subscribe(callback)');

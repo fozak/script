@@ -20,35 +20,22 @@
 
   <!-- Your framework (in order) -->
 <script src="pb-core.js"></script>                  <!-- 1. Core PocketBase client -->
+<script src="pb-utils.js"></script>                  <!-- 1. some utilities -->
 
-
-<!-- Adapters (order doesn't matter among these) -->
+<!-- js (order doesn't matter among these) -->
 <script src="pb-adapter-pocketbase.js"></script>    <!-- 2a. PocketBase adapter -->
 <script src="pb-adapter-memory.js"></script>        <!-- 2b. Memory adapter -->
 
 
 <script src="pb-adapter-switch.js"></script>        <!-- 3. Adapter switching logic ←  -->
+
+
 <script src="coworker.js"></script> 
-<script src="coworker-run.js"></script>                 <!-- 4. Universal coworker-run  + Query translation (Prisma→PocketBase)   -->
+<script src="coworker-run.js"></script>  <!-- Auto-installs now -->
 <script src="coworker-state.js"></script>
-<!-- I AM HERE FOR TESTING-->
-<script>
-    (async function initCoworker() {
-      console.log('🔌 Initializing coworker...');
-      
-      await coworker.init({
-        plugins: [
-          { 
-            name: 'coworker-run', 
-            type: 'inline', 
-            plugin: coworkerRun 
-          }
-        ]
-      });
-      
-      console.log('✅ Coworker ready: coworker.run() installed');
-    })();
-  </script>
+<script src="coworker-workflow-handler.js"></script>            <!-- 5. specific coworker-work handler -->
+
+
 <!-- Later <script src="pb-navigator.js"></script>             5. Navigation WAS REFACTORED -->
   <!--OLD NOT TOUCHED  -->
   <script src="pb-renderers.js"></script> 
