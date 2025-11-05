@@ -1,4 +1,693 @@
-latest 
+
+TODO Operations are data 
+
+Your Answer
+YES, operations as data is the right choice for:
+
+✅ Platform for others
+✅ Need to add operations without code changes
+✅ Extensibility is core requirement
+
+Trade the debugging complexity for flexibility. Users need it. 🎯RetryDDthe only challenge that i need to have _handler in             default:
+              // Added dynamic
+              if (this[`_handle${capitalize(context.operation)}`]) {
+                result = await this[`_handle${capitalize(context.operation)}`](
+                  context
+                );Exactly! The missing piece: How do users add handlers without editing code?
+Solution: Plugin System for Handlers
+javascript// Registry for dynamic handlers
+const HandlerRegistry = {
+  handlers: new Map(),
+  
+  register(operationName, handlerFn) {
+    this.handlers.set(operationName, handlerFn);
+    console.log(`✅ Registered handler: ${operationName}`);
+  },
+  
+  get(operationName) {
+    return this.handlers.get(operationName);
+  },
+  
+  has(operationName) {
+    return this.handlers.has(operationName);
+  }
+};
+
+// Modified switch in run()
+switch (context.operation.toLowerCase()) {
+  case "select":
+  case "read":
+    result = await this._handleSelect(context);
+    break;
+  case "create":
+  case "insert":
+    result = await this._handleCreate(context);
+    break;
+  case "update":
+    result = await this._handleUpdate(context);
+    break;
+  case "delete":
+    result = await this._handleDelete(context);
+    break;
+  default:
+    // 1. Try built-in dynamic handler
+    if (this[`_handle${capitalize(context.operation)}`]) {
+      result = await this[`_handle${capitalize(context.operation)}`](context);
+    }
+    // 2. Try registered plugin handler
+    else if (HandlerRegistry.has(context.operation)) {
+      const handler = HandlerRegistry.get(context.operation);
+      result = await handler.call(this, context);
+    }
+    // 3. Fall back to emit
+    else {
+      const results = await this.emit(`coworker:run:${context.operation}`, context);
+      result = results.find((r) => r !== null && r !== undefined);
+    }
+    break;
+}
+
+User Adds Handler
+Option 1: JavaScript Plugin
+javascript// user-operations.js
+HandlerRegistry.register('export_to_excel', async function(context) {
+  const data = await this.run({
+    operation: 'select',
+    from: context.from
+  });
+  
+  // Convert to Excel
+  const excel = convertToExcel(data.output.data);
+  
+  return {
+    success: true,
+    output: { file: excel, format: 'xlsx' }
+  };
+});
+
+// Load plugin
+<script src="user-operations.js"></script>
+Option 2: Store Handler as Code (Advanced)
+json{
+  "name": "export_to_excel",
+  "doctype": "Operation",
+  "handlerCode": "async function(context) { /* code here */ }"
+}
+javascript// Load and execute from database
+const opConfig = SchemaCache.getOperation(context.operation);
+if (opConfig.handlerCode) {
+  const handler = new Function('context', opConfig.handlerCode);
+  result = await handler.call(this, context);
+}
+Option 3: Generic Handler with Config
+javascript// Generic transform handler
+HandlerRegistry.register('transform', async function(context) {
+  const opConfig = SchemaCache.getOperation(context.operation);
+  
+  // Execute steps defined in operation config
+  for (const step of opConfig.behavior.steps) {
+    await this.run(step);
+  }
+});
+
+// Operation config drives behavior
+{
+  "name": "archive",
+  "doctype": "Operation",
+  "handler": "transform",  // ← Use generic handler
+  "behavior": {
+    "steps": [
+      { "operation": "update", "data": { "archived": true } }
+    ]
+  }
+}
+
+Recommended: Hybrid
+javascript// 1. Core CRUD: Built-in (_handleSelect, _handleCreate, etc.)
+// 2. Framework operations: Built-in (_handleWorkflow)
+// 3. User operations: Plugin registry (HandlerRegistry)
+// 4. Fallback: Event system (emit)
+Users add handlers via plugins, not by editing your code. 🎯RetryDDi need this {
+  "name": "export_to_excel",
+  "doctype": "Operation",
+  "handlerCode": "async function(context) { /* code here */ }"
+}Got it! Execute handler code from database:
+javascript// Modified default case in run()
+default:
+  // 1. Try built-in handler
+  if (this[`_handle${capitalize(context.operation)}`]) {
+    result = await this[`_handle${capitalize(context.operation)}`](context);
+  }
+  // 2. Try operation with handler code from DB
+  else {
+    const opConfig = SchemaCache.getOperation(context.operation);
+    
+    if (opConfig?.handlerCode) {
+      try {
+        // Create function from stored code
+        const AsyncFunction = Object.getPrototypeOf(async function(){}).constructor;
+        const handler = new AsyncFunction('context', opConfig.handlerCode);
+        
+        // Execute with coworker context
+        result = await handler.call(this, context);
+      } catch (error) {
+        throw new Error(`Handler execution failed for ${context.operation}: ${error.message}`);
+      }
+    }
+    // 3. Fall back to emit
+    else {
+      const results = await this.emit(`coworker:run:${context.operation}`, context);
+      result = results.find((r) => r !== null && r !== undefined);
+    }
+  }
+  break;
+
+Example: User Creates Operation
+javascript// Create operation with handler
+await coworker.run({
+  operation: 'create',
+  into: 'Operation',
+  input: {
+    data: {
+      name: 'export_to_excel',
+      requiresTarget: 'from',
+      description: 'Export data to Excel',
+      handlerCode: `
+        // Get data
+        const data = await this.run({
+          operation: 'select',
+          from: context.from,
+          input: context.input
+        });
+        
+        // Simple CSV export (would use real Excel library)
+        const csv = data.output.data.map(row => 
+          Object.values(row).join(',')
+        ).join('\\n');
+        
+        return {
+          success: true,
+          output: {
+            file: csv,
+            format: 'csv',
+            filename: context.from + '.csv'
+          }
+        };
+      `
+    }
+  }
+});
+
+// Use immediately
+const result = await coworker.run({
+  operation: 'export_to_excel',
+  from: 'Customer'
+});
+console.log(result.output.file);
+
+Security Considerations
+javascript// Add sandboxing/validation
+if (opConfig?.handlerCode) {
+  // 1. Validate code (basic check)
+  if (opConfig.handlerCode.includes('eval(') || 
+      opConfig.handlerCode.includes('Function(')) {
+    throw new Error('Unsafe code detected in handler');
+  }
+  
+  // 2. Whitelist what handlers can access
+  const safeContext = {
+    ...context,
+    // Only expose safe methods
+    run: this.run.bind(this),
+    getSchema: this.getSchema.bind(this)
+  };
+  
+  // 3. Execute with limited scope
+  const handler = new AsyncFunction('context', opConfig.handlerCode);
+  result = await handler.call(null, safeContext);  // null context = no 'this'
+}
+Now users can add complete operations (config + code) as data! 🎯RetryDDis this good enough to chain operations input-output etc // Create operation with handler await coworker.run({ operation: 'create', into: 'Operation', input: { data: { name: 'export_to_excel', requiresTarget: 'from', description: 'Export data to Excel', handlerCode:  // Get data const data = await this.run({ operation: 'select', from: context.from, input: context.input }); // Simple CSV export (would use real Excel library) const csv = data.output.data.map(row => Object.values(row).join(',') ).join('\\n'); return { success: true, output: { file: csv, format: 'csv', filename: context.from + '.csv' } };  } } }); // Use immediately const result = await coworker.run({ operation: 'export_to_excel', from: 'Customer' }); console.log(result.output.file);Yes! It's good enough for chaining. Here's why:
+✅ Chaining Works
+javascripthandlerCode: `
+  // Step 1: Select data
+  const selectResult = await this.run({
+    operation: 'select',
+    from: context.from,
+    input: context.input
+  });
+  
+  // Step 2: Transform (chain from step 1)
+  const transformResult = await this.run({
+    operation: 'transform',
+    input: selectResult.output.data  // ← Use output from step 1
+  });
+  
+  // Step 3: Create (chain from step 2)
+  const createResult = await this.run({
+    operation: 'create',
+    into: 'ExportLog',
+    input: {
+      data: {
+        records: transformResult.output.count,  // ← Use output from step 2
+        format: 'excel'
+      }
+    }
+  });
+  
+  // Return final result
+  return {
+    success: true,
+    output: {
+      file: transformResult.output.file,
+      logId: createResult.output.data[0].name
+    }
+  };
+`
+
+✅ Can Reference Context
+javascripthandlerCode: `
+  // Access anything from context
+  const { from, input, options } = context;
+  
+  // Chain operations
+  const data = await this.run({ operation: 'select', from });
+  const summary = await this.run({ 
+    operation: 'summarize', 
+    input: data.output 
+  });
+  
+  return { success: true, output: summary.output };
+`
+
+✅ Can Use Workflow Pattern
+javascripthandlerCode: `
+  // Execute workflow
+  const workflow = await this.run({
+    operation: 'workflow',
+    template: 'Export-Pipeline',
+    input: {
+      children: [
+        { operation: 'select', from: context.from },
+        { operation: 'transform', input: '{{prev.output}}' },
+        { operation: 'export', input: '{{prev.output}}' }
+      ]
+    }
+  });
+  
+  return workflow.output.steps[2];  // Return last step result
+`
+
+⚠️ Only Limitation
+Can't use template syntax {{prev.output}} directly in handlerCode:
+javascript// ❌ Won't work - no template resolution in JS code
+const result = await this.run({
+  operation: 'create',
+  input: '{{selectResult.output}}'  // ← Just a string, not resolved
+});
+
+// ✅ Works - manual JavaScript reference
+const result = await this.run({
+  operation: 'create',
+  input: selectResult.output  // ← JavaScript variable
+});
+But that's fine! JavaScript variables > template syntax for code.
+
+Summary
+Yes, good enough:
+
+✅ Can chain operations via await this.run()
+✅ Can pass output → input between steps
+✅ Full access to context
+✅ Can call workflows
+✅ Can do complex transformations
+
+The only thing you lose vs workflows: Declarative {{template}} syntax. But you gain full
+
+
+
+
+
+
+
+
+🧭 High-Level Strategy: Implementing coworker._handleCreate()
+
+The goal:
+
+Make every document creation go through a safe, schema-aware, rule-driven pipeline that integrates validation, defaults, hooks, and storage.
+
+Think of it as a mini ORM + workflow layer.
+
+🔶 Core Principles
+
+Schema-based creation — must resolve an active schema before proceeding.
+
+Validation before save — type checks, required fields, constraints.
+
+Hookable pipeline — allow pre/post hooks (beforeCreate, afterCreate).
+
+Safe persistence — abstracted storage (can be Prisma, JSON, API, etc.).
+
+Unified return contract — always { success, output, errors, meta }.
+
+✅ TOP TODOs for create Implementation
+1️⃣ Resolve Schema
+
+ Call const schema = await coworker.getSchema(doctype);
+
+ If schema is dummy or inactive → throw error or return warning result.
+
+ Ensure fields list and type info are normalized.
+
+if (!schema.active) {
+  return { success: false, error: "Inactive or missing schema" };
+}
+
+2️⃣ Prepare and Normalize Input
+
+ Flatten or expand input according to schema.
+
+ Assign defaults (from schema definitions).
+
+ Auto-generate name or ID if schema requires autoname pattern.
+
+Example:
+
+input.name ??= await coworker.generateName(doctype, schema);
+
+3️⃣ Run Validation
+
+ Required fields check (field.required).
+
+ Data type validation (string, number, JSON, etc.).
+
+ Custom schema constraints (regex, min/max, allowedValues).
+
+ Return all errors before touching the database.
+
+Optional future:
+
+if (schema.validators) await runValidators(schema.validators, input);
+
+4️⃣ Run Before-Create Hooks
+
+ Hook pattern:
+
+await coworker.runHook("beforeCreate", { schema, input });
+
+
+ Hooks can modify input or cancel the operation.
+
+ Useful for auto-filling related fields or business rules.
+
+5️⃣ Persist to Storage
+
+ Abstract to coworker.adapter.create(doctype, input, schema)
+
+ This layer hides whether you use Prisma, REST API, JSON file, etc.
+
+ Should throw if failed (unique key, etc.)
+
+6️⃣ Run After-Create Hooks
+
+ Allow post-processing or event triggers.
+
+await coworker.runHook("afterCreate", { schema, result });
+
+
+ Could trigger notifications, indexing, AI summarization, etc.
+
+7️⃣ Return Unified Result
+
+Always return structured outcome:
+
+return {
+  success: true,
+  output: { data: savedDoc },
+  meta: { doctype, schemaVersion: schema.version },
+};
+
+🧩 Optional Enhancements for Later
+Feature	Description
+Transaction / rollback	If multiple creates fail, rollback partial saves.
+Auto-relations	Handle child tables or linked docs (like Frappe’s children).
+AI-assist hooks	Allow coworker.run({ operation: 'create', ai: true }) to fill missing data via model.
+Audit logs	Automatically log create ops with timestamps & user IDs.
+Schema evolution	Allow migrating documents when schema versions change.
+💡 Architecture summary
+coworker.run({ operation: 'create', doctype, input })
+    ↓
+getSchema() → validate → hooks → persist → hooks → return
+
+
+If you want, I can next show you a template skeleton for _handleCreate() (just enough scaffolding with TODO placeholders) that you can fill in gradually as you build out schema validation, persistence, and hooks.
+
+
+
+
+
+
+TODO so now if i have the generated doctype I can trace the workflow and run by id?
+
+Yes! Exactly! Here's how to trace:
+
+1. From Created Doctype → Find Which Run Created It
+javascript
+// If Task has createdByRun field
+const task = await coworker.run({
+  operation: 'select',
+  from: 'Task',
+  input: { where: { name: 'Task-001' } }
+});
+
+const createdByRun = task.output.data[0].createdByRun;  // 'run-xyz'
+2. From Run ID → Get Full Run Context
+javascript
+// Get the run from state
+const run = state.runs[createdByRun];
+
+console.log('This run:', run);
+console.log('Parent workflow:', run.parentRunId);
+console.log('Part of chain:', run.chainId);
+3. Trace Up to Workflow
+javascript
+// Walk up the parent chain
+function getWorkflowRoot(runId) {
+  let current = state.runs[runId];
+  
+  while (current?.parentRunId) {
+    current = state.runs[current.parentRunId];
+  }
+  
+  return current;  // Root workflow
+}
+
+const workflow = getWorkflowRoot(createdByRun);
+console.log('Template used:', workflow.template);
+console.log('All child runs:', workflow.childRunIds);
+4. Get Full Execution Tree
+javascript
+function getRunTree(runId) {
+  const run = state.runs[runId];
+  return {
+    ...run,
+    children: run.childRunIds.map(id => getRunTree(id))
+  };
+}
+
+const tree = getRunTree(workflow.id);
+console.log('Full execution tree:', tree);
+Yes, full traceability: Doctype → Run → Parent Run → Workflow Template! 🎯
+
+// If Task has createdByRun field
+const task = await coworker.run({
+  operation: 'select',
+  from: 'Task',
+  input: { where: { name: 'Task-001' } }
+});
+const createdByRun = task.output.data[0].createdByRun;  // 'run-xyz'
+Client.ts:417 Fetch finished loading: GET "http://143.198.29.88:8090/api/collections/item/records?page=1&perPage=500&skipTotal=1&filter=doctype%20%3D%20%22Task%22%20%26%26%20(name%20%3D%20%22Task-001%22)".
+send @ Client.ts:417
+getList @ CrudService.ts:80
+getList @ RecordService.ts:225
+request @ CrudService.ts:254
+_getFullList @ CrudService.ts:268
+getFullList @ CrudService.ts:50
+getFullList @ RecordService.ts:214
+query @ pb-adapter-pocketbase.js:31
+pb._dbQuery @ pb-adapter-switch.js:46
+coworker._dbQuery @ coworker-run.js:756
+coworker._handleSelect @ coworker-run.js:340
+await in coworker._handleSelect
+coworker.run @ coworker-run.js:96
+await in coworker.run
+(anonymous) @ VM151:2
+VM151:9 Uncaught TypeError: Cannot read properties of undefined (reading 'createdByRun')
+    at <anonymous>:8:42
+
+Show more
+The Task doesn't have createdByRun field yet! You need to add it when creating records.
+
+Fix: Add to _handleCreate
+javascript
+// In coworker-run.js, update _handleCreate:
+coworker._handleCreate = async function (context) {
+  const { doctype, input, options } = context;
+  const { data } = input || {};
+  
+  if (!data) {
+    throw new Error("CREATE requires input.data");
+  }
+
+  // Prepare record
+  const recordData = {
+    ...data,
+    doctype,
+    name: data.name || this._generateName(doctype),
+    createdByRun: context.id,  // ← ADD THIS: Track which run created it
+    createdByTemplate: context.template || null  // ← Optional: Track template too
+  };
+
+  // Execute via adapter
+  const result = await this._dbCreate(recordData);
+
+  return {
+    success: true,
+    output: {
+      data: [result.data],
+      schema: includeSchema ? schema : undefined,
+      meta: includeMeta ? { operation: "create", created: 1 } : undefined,
+    },
+  };
+};
+Same for _handleUpdate
+javascript
+const recordData = {
+  ...data,
+  modifiedByRun: context.id  // ← Track last modifier
+};
+Now every created/updated record will have traceability! 🎯
+
+
+
+
+commit workflow 
+9f9791ffe51c66187073c99357c4b25a0b7e7366
+Summary: Workflow Chaining Architecture
+TODO conditions and chaining - with like customer.name
+Synthetic operation: 'workflow' that executes multi-step operations declared in JSON templates stored as doctypes.
+
+Core Components
+1. File Structure
+html<script src="coworker.js"></script>           <!-- Event bus -->
+<script src="coworker-run.js"></script>       <!-- CRUD + dynamic handlers -->
+<script src="coworker-state.js"></script>     <!-- State management -->
+<script src="coworker-workflow-handler.js"></script>  <!-- Workflow orchestrator -->
+2. Workflow Template Format (JSON)
+json{
+  "doctype": "Workflow Template",
+  "name": "Workflow-Template-xyz",
+  "title": "Email to Tasks",
+  "children": [
+    { "id": "fetch-emails", "operation": "select", "from": "Email" },
+    { "id": "summary", "operation": "summarize", "input": "{{fetch-emails.output}}" },
+    { "id": "create-tasks", "operation": "create", "into": "Task", "input": "{{summary.output}}" }
+  ]
+}
+3. Execution
+javascript// Execute template by name
+await coworker.run({ 
+  operation: 'workflow', 
+  template: 'Workflow-Template-xyz' 
+});
+
+Key Features
+✅ Template Resolution
+
+{{step-id.field}} - Reference previous step outputs
+{{customer.name}} - Frappe-like intuitive references
+Automatic nested path resolution
+
+✅ Sequential Execution
+
+Steps execute in order
+Each step can reference previous results
+Stops on first error
+
+✅ Recursive Operation
+
+Workflow handler calls coworker.run() for each child
+Supports nested workflows (chains within chains)
+Parent/child relationship via parentRunId
+
+✅ Unified State
+
+All runs stored in state.runs
+Parent workflow tracks childRunIds
+Full audit trail maintained
+
+✅ Semantic Naming (Recommended)
+
+from - Source doctype (select, delete)
+into - Target doctype (create, update)
+template - Workflow template reference
+Backward compatible with doctype
+
+
+Advanced Features (Discussed)
+🔄 Conditional Execution
+json{ "operation": "create", "if": "{{emails.count}} > 5" }
+⚡ Parallel Execution
+json{ 
+  "parallel": ["task1", "task2"],
+  "operations": [...]
+}
+🛡️ Error Handling
+json{ 
+  "operation": "send", 
+  "onError": { "operation": "log" } 
+}
+📦 External Libraries
+json{ "operation": "import", "input": { "url": "https://cdn.../lodash.js" } }
+
+Architecture Benefits
+
+Declarative - JSON reads like a recipe, not code
+Stored as Data - Templates are database records
+Reusable - Call by name/ID
+Non-coder Friendly - No programming syntax
+Composable - Workflows can reference other workflows
+Auditable - Full execution trace in state.runs
+Extensible - Easy to add new operation types
+
+
+Pattern Comparison
+❌ Imperative (Code)
+javascriptconst emails = await coworker.run({...});
+if (emails.count > 5) {
+  await coworker.run({...});
+}
+✅ Declarative (Template)
+json{
+  "children": [
+    { "operation": "select", "from": "Email" },
+    { "operation": "create", "if": "{{emails.count}} > 5" }
+  ]
+}
+
+Result
+Low-code workflow engine where non-technical users can:
+
+Create workflows in UI forms
+Chain operations declaratively
+Reference data Frappe-style
+Store and share templates
+Execute complex business logic without coding
+
+Like Jupyter notebooks, but for business operations instead of data science. 🎯
+
+----
+
 
 Synthetic 'run' Operation - Architecture Analysis
 Concept: coworker.run({ operation: 'run', children: [...] })

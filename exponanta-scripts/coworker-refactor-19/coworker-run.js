@@ -53,29 +53,44 @@
         }
 
         const context = {
+          // Identity & Lifecycle
           id: this._generateUUID(),
           timestamp: Date.now(),
           operation: config.operation,
-          // NEW: Support from/into/template with doctype fallback
+          status: "pending",
+          duration: 0,
+
+          // Operation Targets (semantic naming with fallback)
           doctype:
             config.doctype ||
             config.from ||
             config.into ||
             config.template ||
             null,
-          from: config.from || config.doctype || null, // Add
-          into: config.into || config.doctype || null, // Add
-          template: config.template || null, // Add
+          from: config.from || config.doctype || null,
+          into: config.into || config.doctype || null,
+          template: config.template || null,
+
+          // Data Flow
           flow: config.flow || null,
           input: config.input || null,
-          options: config.options || {},
+          output: null,
+
+          // Relationships (explicit for chaining)
+          parentRunId: config.options?.parentRunId || null,
+          childRunIds: [],
+          chainId: config.options?.chainId || null,
+
+          // Authorization
           owner: config.owner || this.getConfig("defaultUser", "system"),
           agent: config.agent || null,
-          status: "pending",
-          output: null,
-          error: null,
+
+          // Execution Control
+          options: config.options || {},
+
+          // Result State
           success: false,
-          duration: 0,
+          error: null,
         };
 
         const startTime = Date.now();
@@ -139,7 +154,7 @@
             message: error.message,
             code: error.code || "RUN_FAILED",
             details: error.details || null,
-            stack: error.stack,
+            ...(this.getConfig("debug") && { stack: error.stack }),
           };
           await this.emit("coworker:error:run", { context, error });
         } finally {
