@@ -20,7 +20,7 @@
 
   <!-- Your framework (in order) -->
 <script src="pb-core.js"></script>                  <!-- 1. Core PocketBase client -->
-<script src="pb-utils.js"></script>                  <!-- 1. some utilities -->
+<script src="pb-utils.js"></script>                  <!-- 1. some utilities generateId is here-->
 
 <!-- js (order doesn't matter among these) -->
 <script src="pb-adapter-pocketbase.js"></script>    <!-- 2a. PocketBase adapter -->
@@ -34,6 +34,13 @@
 <script src="coworker-run.js"></script>  <!-- Auto-installs now -->
 <script src="coworker-state.js"></script>
 <script src="coworker-workflow-handler.js"></script>            <!-- 5. specific coworker-work handler -->
+<script src="coworker-flow-handler.js"></script>  
+<script src="coworker-code-handler.js"></script>  
+
+
+<!-- Load observer plugin -->
+<script src="coworker-observer.js"></script>
+
 
 
 <!-- Later <script src="pb-navigator.js"></script>             5. Navigation WAS REFACTORED -->

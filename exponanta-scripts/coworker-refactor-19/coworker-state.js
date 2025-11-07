@@ -101,6 +101,23 @@
   // ==========================================================================
 
   function notify() {
+
+    // =========================================================================
+  // === ADD THIS LINE FOR THE FINAL TEST ===
+  console.log(`[notify] Firing. Number of listeners: ${state.listeners.size}`);
+  // =========================================================================
+
+
+    // ====================================================================
+    // =====> THIS IS THE ONLY LINE YOU NEED TO ADD FOR DEBUGGING <=====
+    // We log a *copy* of the state to see its value at this exact moment.
+    console.log('%cCoworkerState CHANGED', 'color: blue; font-weight: bold;', { 
+      activeRuns: { ...state.activeRuns }, 
+      currentRun: state.currentRun,
+      isLoading: state.isLoading
+    });
+    // ====================================================================
+
     const activeRunsArray = Object.values(state.activeRuns);
     
     // Pre-compute common views (computed ONCE per notify)
@@ -443,9 +460,9 @@ state.isLoading = Object.values(state.activeRuns).some(
   })();
 
   // ==========================================================================
-  // AUTO-UPDATE ON COWORKER EVENTS
+  // AUTO-UPDATE ON COWORKER EVENTS THIS MOVE TO COWORKER-RUN
   // ==========================================================================
-
+  /*
   if (typeof coworker !== 'undefined') {
     coworker.on('coworker:after:run', (context) => {
       // Only update for non-select operations (select is handled by navigate())
@@ -453,7 +470,7 @@ state.isLoading = Object.values(state.activeRuns).some(
         updateFromRun(context);
       }
     });
-  }
+  }*/
 
   // ==========================================================================
   // PUBLIC API

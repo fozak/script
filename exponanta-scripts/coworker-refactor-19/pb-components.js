@@ -677,8 +677,8 @@ pb.components.BaseTable = function ({
 };
 
 // ============================================================================
-// FIELD RENDERER COMPONENT - Replaces pb.renderField HTML strings
-// Add this BEFORE MainGrid
+// FIELD RENDERER COMPONENT - 
+//  this BEFORE MainGrid
 // ============================================================================
 
 pb.components.FieldRenderer = function({ field, value, row }) {
@@ -1005,10 +1005,15 @@ pb.components.DialogModal = function ({ run, zIndex = 1050 }) {
 // AI CHAT SIDEBAR COMPONENT - Shows active AI pipelines
 // ============================================================================
 
+// ============================================================================
+// AI CHAT SIDEBAR COMPONENT - Shows active AI pipelines with input
+// ============================================================================
+
 pb.components.ChatSidebar = function ({ isOpen = false, onToggle = null }) {
   const { createElement: e, useState, useEffect } = React;
   const [activePipelines, setActivePipelines] = useState({});
   const [activeAI, setActiveAI] = useState([]);
+  const [inputText, setInputText] = useState('');
 
   // ✅ Subscribe to pre-computed views with safety check
   useEffect(() => {
@@ -1024,20 +1029,48 @@ pb.components.ChatSidebar = function ({ isOpen = false, onToggle = null }) {
     return unsubscribe;
   }, []);
 
+  // Handle sending message
+  const handleSendMessage = () => {
+    const text = inputText.trim();
+    if (!text) return;
+    
+    // Find waiting resolver
+    const waitingRunId = Object.keys(window.coworker._chatInputResolvers || {})[0];
+    
+    if (waitingRunId) {
+      // Resolve waiting input
+      console.log('💬 Resolving waiting input for:', waitingRunId);
+      window.coworker._chatInputResolvers[waitingRunId](text);
+      delete window.coworker._chatInputResolvers[waitingRunId];
+    } else {
+      // No flow waiting - could start new conversation here
+      console.log('💬 No waiting flow - starting new conversation');
+      // TODO: Start new flow with user input
+      window.coworker.run({
+        operation: 'flow',
+        template: 'flow_template_7xd9ml0i3xzfps6' // Your template name
+      });
+    }
+    
+    setInputText('');
+  };
+
   if (!isOpen) return null;
 
   const pipelineCount = Object.keys(activePipelines).length;
   const aiCount = activeAI.length;
+  
+  // Check if any flow is waiting for input
+  const hasWaitingInput = activeAI.some(run => run.status === 'awaiting_input');
 
   return e(
     "div",
     {
       className:
-        "position-fixed end-0 top-0 h-100 bg-white border-start shadow-lg",
+        "position-fixed end-0 top-0 h-100 bg-white border-start shadow-lg d-flex flex-column",
       style: {
         width: "350px",
         zIndex: 1040,
-        overflowY: "auto",
       },
     },
     [
@@ -1073,10 +1106,25 @@ pb.components.ChatSidebar = function ({ isOpen = false, onToggle = null }) {
         ),
       ]),
 
-      // Pipelines
+      // Waiting indicator
+      hasWaitingInput &&
+        e(
+          "div",
+          { key: "waiting", className: "alert alert-info m-3 mb-0" },
+          [
+            e("strong", { key: "title" }, "⏳ Waiting for input"),
+            e("small", { key: "text", className: "d-block" }, "Type your message below...")
+          ]
+        ),
+
+      // Pipelines (scrollable)
       e(
         "div",
-        { key: "content", className: "p-3" },
+        { 
+          key: "content", 
+          className: "p-3 flex-grow-1",
+          style: { overflowY: 'auto' }
+        },
         pipelineCount === 0
           ? e(
               "div",
@@ -1091,6 +1139,37 @@ pb.components.ChatSidebar = function ({ isOpen = false, onToggle = null }) {
               })
             )
       ),
+
+      // Input area (fixed at bottom)
+      e(
+        "div",
+        { 
+          key: "input-area", 
+          className: "p-3 border-top bg-light"
+        },
+        [
+          e("input", {
+            key: "input",
+            type: "text",
+            className: "form-control",
+            placeholder: hasWaitingInput ? "Enter your response..." : "Type your message...",
+            value: inputText,
+            onChange: (ev) => setInputText(ev.target.value),
+            onKeyPress: (ev) => {
+              if (ev.key === 'Enter' && inputText.trim()) {
+                handleSendMessage();
+              }
+            },
+            autoFocus: hasWaitingInput
+          }),
+          e("button", {
+            key: "send",
+            className: `btn ${hasWaitingInput ? 'btn-success' : 'btn-primary'} mt-2 w-100`,
+            onClick: handleSendMessage,
+            disabled: !inputText.trim()
+          }, hasWaitingInput ? 'Submit' : 'Send')
+        ]
+      )
     ]
   );
 };

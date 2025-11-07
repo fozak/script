@@ -1,4 +1,4 @@
-// to Upper case letters and digits without vowels for better readability
+// pb-utils.js
 
 // Helper
 function capitalize(str) {
@@ -100,3 +100,28 @@ class Fingerprinter {
     return await this.hash(combined);
   }
 }
+//universal id generator
+//pb-utils.js
+
+(function(root) {
+  // root = window in browser, global in Node
+
+  function generateId(doctype) {
+    const chars = '0123456789abcdefghjkmnpqrstvwxyz'; // lowercase, no vowels
+    let hash = '';
+    for (let i = 0; i < 15; i++) {
+      hash += chars[Math.floor(Math.random() * chars.length)];
+    }
+    return `${doctype.toLowerCase()}_${hash}`;
+  }
+
+  // Export in universal way
+  if (typeof module !== 'undefined' && module.exports) {
+    // Node.js / CommonJS
+    module.exports.generateId = generateId;
+  } else {
+    // Browser or other environments
+    root.generateId = generateId;
+  }
+})(typeof window !== 'undefined' ? window : globalThis);
+

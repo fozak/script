@@ -1,3 +1,17 @@
+TODO test this
+
+You said:
+lets mock such document for seach, where each step has react component
+You said:
+you keep giving me React runner instead of REACT LISTENTING to coworkerState
+You said:
+what might be problems with it
+You said:
+now lets carefully create app.js that starts by loading coworker.run(select, thisflow). 
+
+
+
+
 move to flow from workfow 
 
 why not to have flow type (be CAREFULL I had flow agrument in coworker.run) with types: workflow, AIconversation, etc) the same logic of steps with id although in AIconversation is it dynamically assigned. flowid always assiged on every user start. The only question is when it BREAKS and we need another flowidBrilliant! Flow as Universal Abstraction
