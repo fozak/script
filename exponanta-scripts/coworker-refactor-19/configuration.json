@@ -1,7 +1,18 @@
 {
   "doctype": "configuration",
   "description": "Base schema metadata and model constants, derived from Frappe model and extended for schema-driven JS rendering.",
-
+  "views":{
+  "VIEW_TO_COMPONENT": {
+    "list": "MainGrid",
+    "form": "MainForm",
+    "chat": "MainChat"
+  },
+  "COMPONENT_TO_CONTAINER": {
+    "MainGrid": "main_container",
+    "MainForm": "main_container",
+    "MainChat": "right_pane"
+  }
+},
   "field_metadata": {
     "all_fieldtypes": {
       "Attach": { "category": "media", "jstype": "string" },

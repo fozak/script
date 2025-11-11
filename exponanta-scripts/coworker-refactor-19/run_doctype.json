@@ -1,8 +1,43 @@
+
+
+
+
+v3 
+
+{
+  "doctype": "Run",
+  "id": "run_a7k3m9p2x5w8q1z",
+  "parent_run_id": "run_b4n6r8t1y3u5v7c",
+  "child_run_ids": [],
+  "chain_id": "chain_x1y2z3a4b5c6d7e",
+  "flow_run_id": "run_d2f5h7j9k0m3p6s",
+  "flow_template_id": "flow_template_7xd9ml0i3xzfps6",
+  "step_id": "step_e8g1i4k7m0n2q5t",
+  "step_title": "select_open_tasks",
+  "operation": "select",
+  "doctype_target": "Task",
+  "from": "Task",
+  "into": null,
+  "template": null,
+  "view": "list",
+  "args": {},
+  "input": {},
+  "output": {},
+  "status": "completed",
+  "success": true,
+  "error": null,
+  "timestamp": 1699620000000,
+  "duration": 145,
+  "owner": "user_1234",
+  "agent": "coworker_browser",
+  "options": {}
+}
+
 {
     "id": "run_abcdef123456e4", // Unique run ID (used as root/child reference)
     "operation": "select", // Operation type: select, create, update, code, flow, etc.
     "doctype_target": "Task", // Target DocType for the operation
-    "flow": "flow_template_7xd9ml0i3xzfps6", // Associated flow (if part of a flow template)
+    "flow_id": "flow_template_7xd9ml0i3xzfps6", // Associated flow (if part of a flow template)
     "input": {}, // JSON input payload
     "output": {}, // JSON output payload
     "status": "Pending", // Pending | Running | Completed | Failed | Cancelled
@@ -13,11 +48,8 @@
     "duration": 0, // Execution duration in milliseconds
     "timestamp": "2025-11-10T10:00:00Z", // Start timestamp
     "parent_run_id": null, // Parent run for provenance
-    "chain_id": "chain_abc123", // Sequential chain identifier (optional)
-    "child_runs": [], // Array of child run objects or IDs
-                                                   // Optional metadata for UI, streaming, debugging
-    "awaitingInput": false,   //TODO fo
-    //     "streaming": false,
+    "child_run_id":  // Not sure we need this?
+
     "step_title": "ask-for-api-key",
     "step_operation": "operation_a7k3m9p2x5w8q1z"
 }
