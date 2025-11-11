@@ -1,0 +1,71 @@
+{
+  "name": "flow_template_7xd9ml0i3xzfps7",
+  "description": "flow template example",
+  "steps": [
+    {
+      "name": "step_a7k3m9p2x5w8q1z",
+      "title": "select_order_where_status_submitted",
+      "operation": "select",
+      "doctype": "Order",
+      "args": {
+        "where": { "status": "Submitted" }
+      },
+      "continueOnError": false
+    },
+    {
+      "name": "step_b4n6r8t1y3u5v7c",
+      "title": "select_payment_for_order",
+      "operation": "select",
+      "doctype": "Payment",
+      "args": {
+        "where": { "source_step": "select_order_where_status_submitted" }
+      },
+      "continueOnError": false
+    },
+    {
+      "name": "step_d2f5h7j9k0m3p6s",
+      "title": "check_payment_verified",
+      "operation": "evaluate",
+      "args": {
+        "condition": "Order.status === 'Submitted' && Payment.verified === true"
+      },
+      "onTrue": "create_invoice_for_order",
+      "onFalse": "update_payment_to_waiting",
+      "continueOnError": false
+    },
+    {
+      "name": "step_e8g1i4k7m0n2q5t",
+      "title": "create_invoice_for_order",
+      "operation": "create",
+      "doctype": "Invoice",
+      "args": {
+        "data": {
+          "order_name": "{{Order.name}}",
+          "amount": "{{Order.total}}"
+        }
+      },
+      "continueOnError": false
+    },
+    {
+      "name": "step_f9h2j5l8n1p4r7u",
+      "title": "update_payment_to_waiting",
+      "operation": "update",
+      "doctype": "Payment",
+      "args": {
+        "where": { "source_step": "select_order_where_status_submitted" },
+        "data": { "status": "Waiting" }
+      },
+      "continueOnError": false
+    },
+    {
+      "name": "step_h1j3k5m7p9r2t4v",
+      "title": "log_audit_parallel",
+      "operation": "log",
+      "args": {
+        "message": "Parallel audit logging for all actions completed."
+      },
+      "parallel": true,
+      "continueOnError": false
+    }
+  ]
+}

@@ -1,0 +1,186 @@
+{
+    "id": "run_abcdef123456e4", // Unique run ID (used as root/child reference)
+    "operation": "select", // Operation type: select, create, update, code, flow, etc.
+    "doctype_target": "Task", // Target DocType for the operation
+    "flow": "flow_template_7xd9ml0i3xzfps6", // Associated flow (if part of a flow template)
+    "input": {}, // JSON input payload
+    "output": {}, // JSON output payload
+    "status": "Pending", // Pending | Running | Completed | Failed | Cancelled
+    "success": false, // Boolean flag for success
+    "error": null, // JSON error details if failed
+    "owner": "user_1234", // Logical/system owner
+    "agent": "agent_5678", // Coworker agent executing this run
+    "duration": 0, // Execution duration in milliseconds
+    "timestamp": "2025-11-10T10:00:00Z", // Start timestamp
+    "parent_run_id": null, // Parent run for provenance
+    "chain_id": "chain_abc123", // Sequential chain identifier (optional)
+    "child_runs": [], // Array of child run objects or IDs
+                                                   // Optional metadata for UI, streaming, debugging
+    "awaitingInput": false,   //TODO fo
+    //     "streaming": false,
+    "step_title": "ask-for-api-key",
+    "step_operation": "operation_a7k3m9p2x5w8q1z"
+}
+
+
+
+
+
+
+
+
+{
+    "doctype": "DocType",
+    "name": "Coworker Run",
+    "module": "Coworker",
+    "custom": 0,
+    "istable": 0,
+    "editable_grid": 1,
+    "track_changes": 1,
+    "track_seen": 1,
+    "track_views": 1,
+    "engine": "InnoDB",
+    "fields": [
+        {
+            "fieldname": "operation",
+            "label": "Operation",
+            "fieldtype": "Data",
+            "reqd": 1,
+            "in_list_view": 1,
+            "in_standard_filter": 1,
+            "options": "",
+            "description": "Type of operation executed (e.g. select, create, update)"
+        },
+        {
+            "fieldname": "doctype_target",
+            "label": "Target DocType",
+            "fieldtype": "Link",
+            "options": "DocType",
+            "in_list_view": 1,
+            "description": "Primary DocType that this run operates on"
+        },
+        {
+            "fieldname": "flow",
+            "label": "Flow Context",
+            "fieldtype": "Link",
+            "options": "Coworker Flow",
+            "in_standard_filter": 1,
+            "description": "Associated flow if this run was part of a flow execution"
+        },
+        {
+            "fieldname": "input",
+            "label": "Input Payload",
+            "fieldtype": "Code",
+            "options": "JSON",
+            "description": "Input data passed to the run"
+        },
+        {
+            "fieldname": "output",
+            "label": "Output Payload",
+            "fieldtype": "Code",
+            "options": "JSON",
+            "description": "Output data returned by the run"
+        },
+        {
+            "fieldname": "status",
+            "label": "Status",
+            "fieldtype": "Select",
+            "options": "\nPending\nRunning\nCompleted\nFailed\nCancelled",
+            "default": "Pending",
+            "reqd": 1,
+            "in_list_view": 1,
+            "in_standard_filter": 1,
+            "description": "Execution state of this run"
+        },
+        {
+            "fieldname": "success",
+            "label": "Success",
+            "fieldtype": "Check",
+            "default": 0,
+            "in_list_view": 1,
+            "description": "Whether the run completed successfully"
+        },
+        {
+            "fieldname": "error",
+            "label": "Error Details",
+            "fieldtype": "Code",
+            "options": "JSON",
+            "description": "Error object if the run failed"
+        },
+        {
+            "fieldname": "owner",
+            "label": "Owner",
+            "fieldtype": "Data",
+            "in_list_view": 1,
+            "in_standard_filter": 1,
+            "description": "The logical or system owner of this run"
+        },
+        {
+            "fieldname": "agent",
+            "label": "Agent",
+            "fieldtype": "Link",
+            "options": "Coworker Agent",
+            "description": "The coworker agent that executed this run"
+        },
+        {
+            "fieldname": "duration",
+            "label": "Duration (ms)",
+            "fieldtype": "Int",
+            "in_list_view": 1,
+            "description": "Execution time in milliseconds"
+        },
+        {
+            "fieldname": "timestamp",
+            "label": "Started At",
+            "fieldtype": "Datetime",
+            "in_list_view": 1,
+            "description": "Timestamp of when this run started"
+        },
+        {
+            "fieldname": "parent_run_id",
+            "label": "Parent Run ID",
+            "fieldtype": "Link",
+            "options": "Coworker Run",
+            "description": "Parent run if this run was triggered as a child"
+        },
+        {
+            "fieldname": "chain_id",     \\TODO refactor to flow-id
+            "label": "Chain ID",
+            "fieldtype": "Data",
+            "description": "Identifier linking sequentially chained runs"
+        },
+        {
+            "fieldname": "child_runs",
+            "label": "Child Runs",
+            "fieldtype": "Table",
+            "options": "Coworker Run Child",
+            "description": "Runs triggered by this run"
+        }
+    ],
+    "permissions": [
+        {
+            "role": "System Manager",
+            "read": 1,
+            "write": 1,
+            "create": 1,
+            "delete": 1
+        },
+        {
+            "role": "Coworker Operator",
+            "read": 1,
+            "create": 1
+        }
+    ],
+    "index": [
+        [
+            "status"
+        ],
+        [
+            "operation",
+            "doctype_target"
+        ],
+        [
+            "timestamp"
+        ]
+    ]
+}
