@@ -60,32 +60,34 @@ coworker.run = async function(operation, doctype, args = {}, options = {}) {
   const parentId = options.parentId || null;
   
   // Prepare run data
-  const run = {
+  const run_doc = {
     id: runId,
+    name: runId,
     parent_run_id: parentId,
     operation,
     doctype_target: doctype,
     input: args,
     output: null,
-    status: "running",
+    status: "running", //pending | running | completed | failed | cancelled
     success: false,
     timestamp: Date.now(),
     duration: 0,
-    view: options.view || null,
+    view: options.view || null,   //poteniall move to top of run() function as arg
+    component: options.component || null, // ADDED potentially move to top . Source doctype.configuration.VIEW_TO_COMPONENT.list.MainGrid
     owner: options.owner || "system",
     agent: options.agent || null,
     child_run_ids: [],
-    chain_id: options.chainId || generateId('chain'),
-    step_id: options.stepId || null,
-    step_title: options.stepTitle || null,
+    step_id: options.stepId || null, //Used in flow_templates
+    step_title: options.stepTitle || null, //Used in flow_templates
     error: null
   };
   
   // === CHECKPOINT 1: START (running state) ===
-  await coworker.run("create", "Run", { data: run });
-  CoworkerState._updateFromRun(run);
+  await coworker.run("create", "Run", { data: run_doc });     
+  // AFTER ABOVE  run.has.runId,operation,doctype,args,options.view->component_is_defined.like.MainGrid. Run and operation is NOT completed, data is NOT fetched
+  CoworkerState._updateFromRun(run); //this kept as state set of runs 
   
-  // Child factory for spawning sub-runs
+  // Child factory for spawning sub-runs - this is called and NOT blocking parent run
   const child = (op, dt, arg = {}, opt = {}) => {
     return coworker.run(op, dt, arg, { 
       ...opt, 
@@ -98,7 +100,7 @@ coworker.run = async function(operation, doctype, args = {}, options = {}) {
     const result = await handlers[operation]?.(doctype, args, options, child);
     run.output = result || null;
     run.success = true;
-    run.status = "completed";
+    run.status = "completed";   // Here we have full run completed including data needed for component rendering
     
     // === CHECKPOINT 2: SUCCESS ===
     run.duration = Date.now() - run.timestamp;
@@ -120,16 +122,7 @@ coworker.run = async function(operation, doctype, args = {}, options = {}) {
     CoworkerState._updateFromRun(run);
   }
   
-  // Render only if top-level run (not a child/step)
-  if (!run.parent_run_id) {
-    CoworkerState._renderFromRun(run);
-  }
-  
-  return { 
-    result: run.output, 
-    runId: run.id, 
-    parentId: run.parent_run_id 
-  };
+return run;
 };
 
 // ============================================================================
