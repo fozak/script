@@ -1,14 +1,20 @@
 //https://claude.ai/chat/872b4d9c-13a4-49a0-9e0f-47261f9ca500
-
-I am staying with // ============================================================================
-// COWORKER.RUN - Universal execution engine with checkpoints
 // ============================================================================
-coworker.run = async function(operation, doctype, args = {}, options = {}) {
-  const runId = generateId('run');
-  const parentId = options.parentId || null;
+// ORCHESTRATION LAYER
+// ============================================================================
+coworker.run = async function (op) {
+  const start = Date.now();
+  if (!op?.operation) return this._failEarly("operation is required", start);
 
-  // Prepare run data
-  const run = {
+  // ------------------------------------------------------------
+  // 1. Resolve configuration (aliases, doctypes, etc.)
+  // ------------------------------------------------------------
+  const resolved = this._resolveAll ? this._resolveAll(op) : op;
+
+  // ------------------------------------------------------------
+  // 2. Construct run_doc (Frappe-compatible shape)
+  // ------------------------------------------------------------
+  const run_doc = {
     id: runId,
     parent_run_id: parentId,
     operation,
@@ -29,55 +35,95 @@ coworker.run = async function(operation, doctype, args = {}, options = {}) {
     error: null
   };
 
-  // === CHECKPOINT 1: START (running state) ===
-  await coworker.run("create", "Run", { data: run });
-  CoworkerState._updateFromRun(run);
+  // ------------------------------------------------------------
+  // 3. Define persistence helper
+  // ------------------------------------------------------------
+  const persist = async (action) => {
+    try {
+      await this[`_handle${capitalize(action)}`]({
+        doctype: "Run",
+        input: { data: run_doc },
+        options: {},
+      });
+      CoworkerState._updateFromRun(run_doc);
+    } catch (err) {
+      console.warn(`[coworker.run] persist(${action}) failed:`, err.message);
+    }
+  };
 
-  // Child factory for spawning sub-runs
-  const child = (op, dt, arg = {}, opt = {}) => {
-    return coworker.run(op, dt, arg, { 
-      ...opt, 
-      parentId: opt.parentId || runId 
+  // ------------------------------------------------------------
+  // 4. Define child spawner
+  // ------------------------------------------------------------
+  const child = async (cfg) => {
+    const sub = await this.run({
+      ...cfg,
+      options: { ...cfg.options, parentRunId: run_doc.name },
     });
+    run_doc.child_run_ids.push(sub.name);
+    CoworkerState._updateFromRun(run_doc);
+    return sub;
   };
 
-  // Execute handler
+  // ------------------------------------------------------------
+  // 5. Create record (initial persist)
+  // ------------------------------------------------------------
+  await persist("Create");
+
+  // ------------------------------------------------------------
+  // 6. Execute operation
+  // ------------------------------------------------------------
   try {
-    const result = await handlers[operation]?.(doctype, args, options, child);
-    run.output = result || null;
-    run.success = true;
-    run.status = "completed";
-
-    // === CHECKPOINT 2: SUCCESS ===
-    run.duration = Date.now() - run.timestamp;
-    await coworker.run("update", "Run", { data: run });
-    CoworkerState._updateFromRun(run);
-
-  } catch (error) {
-    run.output = null;
-    run.success = false;
-    run.status = "failed";
-    run.error = { 
-      message: error.message, 
-      stack: error.stack 
-    };
-
-    // === CHECKPOINT 3: ERROR ===
-    run.duration = Date.now() - run.timestamp;
-    await coworker.run("update", "Run", { data: run });
-    CoworkerState._updateFromRun(run);
+    const res = await this._handleOperation({ ...resolved, child });
+    Object.assign(run_doc, {
+      status: "completed",
+      success: true,
+      output: res?.output || res,
+    });
+  } catch (err) {
+    Object.assign(run_doc, {
+      status: "failed",
+      success: false,
+      error: {
+        message: err.message,
+        code:
+          err.code ||
+          `${(resolved.operation || "OPERATION").toUpperCase()}_FAILED`,
+        stack: this.getConfig("debug") ? err.stack : undefined,
+      },
+    });
   }
 
-  // Render only if top-level run (not a child/step)
-  if (!run.parent_run_id) {
-    CoworkerState._renderFromRun(run);
-  }
+  // ------------------------------------------------------------
+  // 7. Finalize (duration, update persist)
+  // ------------------------------------------------------------
+  run_doc.duration = Date.now() - start;
+  run_doc.modified = Date.now();
+  await persist("Update");
 
-  return { 
-    result: run.output, 
-    runId: run.id, 
-    parentId: run.parent_run_id 
-  };
+  // ------------------------------------------------------------
+  // 8. Render 
+  // ------------------------------------------------------------
+  CoworkerState._renderFromRun(run_doc);
+
+  return run_doc;
+};
+
+// ============================================================================
+// EXECUTION LAYER
+// ============================================================================
+coworker._handleOperation = async function (op) {
+  const map = { read: "select", insert: "create" };
+  const resolved = map[op.operation?.toLowerCase()] || op.operation;
+  const name = `_handle${capitalize(resolved)}`;
+  const handler = this[name] || ((ctx) => this._emitOperation(resolved, ctx));
+
+  return await handler({
+    operation: resolved,
+    doctype: op.doctype,
+    input: op.input,
+    options: op.options,
+    child: op.child,
+  });
 };
 // ============================================================================
 // COWORKER STATE - Run history and state management

@@ -1,5 +1,123 @@
 
-v5 latest
+latest 
+const run_doc = {
+  // === FRAPPE STANDARD FIELDS ===
+  doctype: "Run",
+  name: "run_123",                  // Primary key
+  creation: 1234567890,
+  modified: 1234567890,
+  modified_by: "user_1",
+  docstatus: 0,                     // 0=draft, 1=submitted, 2=cancelled
+  owner: "system",
+  
+  // === OPERATION DEFINITION ===
+  operation: "select",
+  operation_original: "read",
+  source_doctype: "Task",
+  target_doctype: null,
+  
+  // === DATA FLOW ===
+  input: {...},
+  output: {...},
+  
+  // === EXECUTION STATE ===
+  status: "running",
+  success: false,
+  error: {...},
+  duration: 0,
+  
+  // === HIERARCHY ===
+  parent_run_id: null,
+  child_run_ids: [],
+  
+  // === FLOW CONTEXT ===
+  flow_id: null,
+  flow_template: null,
+  step_id: null,
+  step_title: null,
+  
+  // === AUTHORIZATION ===
+  agent: null,
+  
+  // === OPTIONS ===
+  options: {...},
+  
+  // === RUNTIME HELPERS (JSON-safe placeholder) ===
+  child: null                       // Replaced with function at runtime
+};
+
+
+
+resolver 
+
+// === FULLY DECLARATIVE CONFIG ===
+coworker._config = {
+  _resolveOperation: {
+    mapping: { read: "select", insert: "create", delete: "remove" },
+    inputField: "operation",
+    outputField: "operation"
+  },
+  _resolveComponent: {
+    mapping: { list: "MainGrid", form: "MainForm", chat: "MainChat" },
+    inputField: "view",
+    outputField: "component"
+  },
+  _resolveDoctype: {
+    mapping: { user: "UserDoc", order: "OrderDoc" },
+    inputField: "doctype",
+    outputField: "doctype"
+  }
+};
+
+// === GENERIC RESOLVER ===
+coworker._resolveAll = function(op) {
+  const resolved = {};
+
+  for (const resolverName in this._config) {
+    if (resolverName.startsWith("_resolve")) {
+      const resolver = this._config[resolverName];
+      const inputValue = op[resolver.inputField];
+      
+      if (inputValue !== undefined) {
+        const mapping = resolver.mapping || {};
+        resolved[resolver.outputField] = mapping[inputValue?.toLowerCase()] || inputValue;
+      }
+    }
+  }
+
+  // Pass through non-resolved fields
+  resolved.input = op.input || null;
+  resolved.options = op.options || {};
+  resolved.owner = op.owner || "system";
+  
+  return resolved;
+};
+
+// === MINIMAL RUN ===
+coworker.run = async function(op) {
+  if (!op?.operation) return this._failEarly("operation is required");
+  
+  const resolved = this._resolveAll(op);
+  
+  const run_doc = {
+    id: generateId("run"),
+    timestamp: Date.now(),
+    ...resolved,  // All resolved fields
+    output: null,
+    success: false,
+    error: null,
+    status: "running",
+    parent_run_id: op.options?.parentRunId || null,
+    duration: 0
+  };
+  
+  // Checkpoints & execution
+  // ...
+  
+  return run_doc;
+}; 
+
+
 
 Summary of Top Changes Made
 1. Pure Component Pattern - Components Receive run Object
