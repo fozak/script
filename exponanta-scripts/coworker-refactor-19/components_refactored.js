@@ -14,30 +14,42 @@ coworker.run = async function (op) {
   // ------------------------------------------------------------
   // 2. Construct run_doc (Frappe-compatible shape)
   // ------------------------------------------------------------
+  // 2. Build run_doc (Frappe-compatible)
   const run_doc = {
-    id: runId,
-    parent_run_id: parentId,
-    operation,
-    doctype_target: doctype,
-    input: args,
+    doctype: "Run",
+    name: generateId("run"),
+    creation: start,
+    modified: start,
+    modified_by: op.owner || "system",
+    docstatus: 0,
+    owner: op.owner || "system",
+
+    operation: resolved.operation,
+    operation_original: op.operation,
+    source_doctype: resolved.source_doctype || op.doctype,
+    target_doctype: resolved.target_doctype || null,
+
+    input: op.input || {},
     output: null,
+
     status: "running",
     success: false,
-    timestamp: Date.now(),
+    error: null,
     duration: 0,
-    view: options.view || null,
-    owner: options.owner || "system",
-    agent: options.agent || null,
+
+    parent_run_id: op.options?.parentRunId || null,
     child_run_ids: [],
-    chain_id: options.chainId || generateId('chain'),
-    step_id: options.stepId || null,
-    step_title: options.stepTitle || null,
-    error: null
+    flow_id: op.flow_id || null,
+    flow_template: op.flow_template || null,
+    step_id: op.step_id || null,
+    step_title: op.step_title || null,
+
+    agent: op.agent || null,
+    options: op.options || {},
+    child: null, // will be set later
   };
 
-  // ------------------------------------------------------------
-  // 3. Define persistence helper
-  // ------------------------------------------------------------
+  // 3. Persistence helper
   const persist = async (action) => {
     try {
       await this[`_handle${capitalize(action)}`]({
@@ -51,9 +63,7 @@ coworker.run = async function (op) {
     }
   };
 
-  // ------------------------------------------------------------
-  // 4. Define child spawner
-  // ------------------------------------------------------------
+  // 4. Child factory (hierarchical async)
   const child = async (cfg) => {
     const sub = await this.run({
       ...cfg,
@@ -64,16 +74,12 @@ coworker.run = async function (op) {
     return sub;
   };
 
-  // ------------------------------------------------------------
-  // 5. Create record (initial persist)
-  // ------------------------------------------------------------
+  // 5. Initial persist
   await persist("Create");
 
-  // ------------------------------------------------------------
-  // 6. Execute operation
-  // ------------------------------------------------------------
+  // 6. Execute via _exec router
   try {
-    const res = await this._handleOperation({ ...resolved, child });
+    const res = await this._exec({ ...run_doc, child });
     Object.assign(run_doc, {
       status: "completed",
       success: true,
@@ -93,38 +99,50 @@ coworker.run = async function (op) {
     });
   }
 
-  // ------------------------------------------------------------
-  // 7. Finalize (duration, update persist)
-  // ------------------------------------------------------------
+  // 7. Finalize + persist
   run_doc.duration = Date.now() - start;
   run_doc.modified = Date.now();
   await persist("Update");
 
-  // ------------------------------------------------------------
   // 8. Render 
-  // ------------------------------------------------------------
   CoworkerState._renderFromRun(run_doc);
 
   return run_doc;
 };
 
 // ============================================================================
-// EXECUTION LAYER
+// EXECUTION LAYER (PURE ROUTER)
 // ============================================================================
-coworker._handleOperation = async function (op) {
-  const map = { read: "select", insert: "create" };
-  const resolved = map[op.operation?.toLowerCase()] || op.operation;
-  const name = `_handle${capitalize(resolved)}`;
-  const handler = this[name] || ((ctx) => this._emitOperation(resolved, ctx));
-
-  return await handler({
-    operation: resolved,
-    doctype: op.doctype,
-    input: op.input,
-    options: op.options,
-    child: op.child,
-  });
+coworker._exec = async function (run_doc) {
+  const handler = this._handlers?.[run_doc.operation];
+  if (!handler) throw new Error(`Unknown operation: ${run_doc.operation}`);
+  return await handler.call(this, run_doc);
 };
+
+// ============================================================================
+// EXAMPLE HANDLERS
+// ============================================================================
+coworker._handlers = {};
+
+// SELECT handler example
+coworker._handlers.select = async function (run_doc) {
+  const schema = await this.getSchema(run_doc.source_doctype);
+  const data = await this._dbQuery({
+    doctype: run_doc.source_doctype,
+    where: run_doc.input?.where,
+  });
+  return { success: true, output: data };
+};
+
+// CREATE handler example
+coworker._handlers.create = async function (run_doc) {
+  const result = await this._dbInsert({
+    doctype: run_doc.target_doctype || run_doc.source_doctype,
+    data: run_doc.input?.data,
+  });
+  return { success: true, output: result };
+};
+
 // ============================================================================
 // COWORKER STATE - Run history and state management
 // ============================================================================
