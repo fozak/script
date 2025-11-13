@@ -1,5 +1,199 @@
 
-latest 
+coworker._config = {
+  _resolveOperation: {
+    mapping: { read: "select", insert: "create", delete: "remove" },
+    inputField: "operation",
+    outputField: "operation"
+  },
+  _resolveComponent: {
+    mapping: { list: "MainGrid", form: "MainForm", chat: "MainChat" },
+    inputField: "view",
+    outputField: "component"
+  },
+  _resolveDoctype: {
+    mapping: { user: "UserDoc", order: "OrderDoc" },
+    inputField: "doctype",
+    outputField: "doctype"
+  }
+};
+
+
+coworker._resolveAll = function(op) {
+  const resolved = {};
+  
+  // === RESOLVE OPERATION + SOURCE/TARGET DOCTYPES ===
+  // Get config mappings
+  const opAliases = this._config?._resolveOperation?.mapping || {};
+  const dtAliases = this._config?._resolveDoctype?.mapping || {};
+  
+  // Resolve operation
+  resolved.operation = opAliases[op.operation?.toLowerCase()] || op.operation;
+  
+  // Resolve source/target doctypes using one-liner logic
+  const [source_raw, target_raw] = op.from 
+    ? [op.from, op.doctype] 
+    : ["create","update"].includes(resolved.operation) 
+      ? [null, op.doctype] 
+      : [op.doctype, null];
+  
+  resolved.source_doctype = source_raw ? (dtAliases[source_raw?.toLowerCase()] || source_raw) : null;
+  resolved.target_doctype = target_raw ? (dtAliases[target_raw?.toLowerCase()] || target_raw) : null;
+  
+  // === RESOLVE OTHER FIELDS VIA CONFIG ===
+  for (const resolverName in this._config) {
+    if (resolverName.startsWith("_resolve") && resolverName !== "_resolveOperation" && resolverName !== "_resolveDoctype") {
+      const resolver = this._config[resolverName];
+      const inputValue = op[resolver.inputField];
+      
+      if (inputValue !== undefined) {
+        const mapping = resolver.mapping || {};
+        resolved[resolver.outputField] = mapping[inputValue?.toLowerCase()] || inputValue;
+      }
+    }
+  }
+  
+  // === PASS THROUGH NON-RESOLVED FIELDS ===
+  resolved.owner = op.owner || "system";
+  
+  return resolved;
+};
+
+
+// no persistence 
+coworker.run = async function(op) {
+  const start = Date.now();
+  
+  // === VALIDATION ===
+  if (!op?.operation) {
+    return this._failEarly("operation is required", start);
+  }
+  
+  // === RESOLVE ALL FIELDS VIA CONFIG ===
+  const resolved = this._resolveAll(op);
+  
+  // === BUILD RUN_DOC (unified context) ===
+  const run_doc = {
+    // Frappe standard fields
+    doctype: "Run",
+    name: generateId("run"),
+    creation: start,
+    modified: start,
+    modified_by: resolved.owner || "system",
+    docstatus: 0,
+    owner: resolved.owner || "system",
+    
+    // Operation definition
+    operation: resolved.operation,
+    operation_original: op.operation,
+    source_doctype: resolved.source_doctype,
+    target_doctype: resolved.target_doctype,
+    
+    // Data flow
+    input: op.input || {},
+    output: null,
+    
+    // Execution state
+    status: "pending",
+    success: false,
+    error: null,
+    duration: 0,
+    
+    // Hierarchy
+    parent_run_id: op.options?.parentRunId || null,
+    child_run_ids: [],
+    
+    // Flow context
+    flow_id: op.flow_id || null,
+    flow_template: op.flow_template || null,
+    step_id: op.step_id || null,
+    step_title: op.step_title || null,
+    
+    // Authorization
+    agent: op.agent || null,
+    
+    // Options
+    options: op.options || {},
+    
+    // Runtime helpers (placeholder for JSON)
+    child: null
+  };
+  
+  // === STEP 1: RUNNING ===
+  run_doc.status = "running";
+  CoworkerState._updateFromRun(run_doc);
+  
+  // === INJECT CHILD FACTORY ===
+  run_doc.child = (cfg) => this.run({ 
+    ...cfg, 
+    options: { ...cfg.options, parentRunId: run_doc.name } 
+  });
+  
+  // === EXECUTE ===
+  try {
+    const result = await this._exec(run_doc);
+    
+    run_doc.output = result.output || result;
+    run_doc.success = result.success === true;
+    run_doc.error = result.error || null;
+    
+    // === STEP 2: COMPLETED ===
+    run_doc.status = "completed";
+    run_doc.duration = Date.now() - start;
+    run_doc.modified = Date.now();
+    CoworkerState._updateFromRun(run_doc);
+    
+  } catch (err) {
+    run_doc.success = false;
+    run_doc.status = "failed";
+    run_doc.error = {
+      message: err.message,
+      code: err.code || `${run_doc.operation?.toUpperCase() || 'OPERATION'}_FAILED`,
+      stack: this.getConfig("debug") ? err.stack : undefined
+    };
+    
+    // === STEP 3: FAILED ===
+    run_doc.duration = Date.now() - start;
+    run_doc.modified = Date.now();
+    CoworkerState._updateFromRun(run_doc);
+  }
+  
+  // === RENDER (top-level runs only) ===
+  if (!run_doc.parent_run_id) {
+    CoworkerState._renderFromRun(run_doc);
+  }
+  
+  return run_doc;
+};
+
+// === UNTRACKED EXECUTION ROUTER ===
+coworker._exec = async function(run_doc) {
+  const handler = this._handlers[run_doc.operation];
+  
+  if (!handler) {
+    throw new Error(`Unknown operation: ${run_doc.operation}`);
+  }
+  
+  return await handler.call(this, run_doc);
+};
+
+// === HELPER: EARLY FAILURE ===
+coworker._failEarly = function(message, start) {
+  return {
+    doctype: "Run",
+    name: generateId("run"),
+    creation: start,
+    status: "failed",
+    success: false,
+    error: { 
+      message, 
+      code: "VALIDATION_FAILED" 
+    },
+    duration: Date.now() - start
+  };
+};
+
+//-------------------------------------
+// === EXAMPLE RUN DOC STRUCTURE === 
 const run_doc = {
   // === FRAPPE STANDARD FIELDS ===
   doctype: "Run",
