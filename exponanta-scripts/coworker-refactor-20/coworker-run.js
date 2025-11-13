@@ -118,7 +118,7 @@ coworker.run = async function (op) {
         output: null,
 
         // Execution state
-        status: "pending",
+        status: "running",
         success: false,
         error: null,
         duration: 0,
@@ -144,7 +144,7 @@ coworker.run = async function (op) {
     };
 
     // STEP 1: RUNNING
-    run_doc.status = "running";
+ 
     CoworkerState._updateFromRun(run_doc);
 
     // Inject child factory
@@ -182,17 +182,49 @@ coworker.run = async function (op) {
         CoworkerState._updateFromRun(run_doc);
     }
 
-    // === RENDER (top-level runs only) ===
-    if (!run_doc.parent_run_id && run_doc.component) {
-        const renderer = this._renderers[run_doc.component];
-        if (renderer) {
-            renderer.call(this, run_doc);
-        }
-    }
+     // === RENDER (top-level runs only) ===
+    this._render(run_doc);
 
     return run_doc;
-
 };
+
+// === RENDER ===
+// Decide if this run_doc should render
+coworker._preprocessRender = function(run_doc) {
+  // Default: only render if explicitly requested
+  return run_doc.options?.render === true;
+};
+
+// Core render function
+coworker._render = function(run_doc) {
+  if (!this._preprocessRender(run_doc)) return; // Skip rendering entirely
+
+  const renderer = this._renderers[run_doc.component];
+  if (renderer) renderer.call(this, run_doc); // Call the actual renderer
+};
+
+// Individual renderers handle only rendering
+coworker._renderers = {
+  MainGrid: function(run_doc) {
+    const target = document.getElementById(run_doc.container);
+    if (target) ReactDOM.render(<MainGrid run={run_doc} />, target);
+  },
+  MainForm: function(run_doc) {
+    const target = document.getElementById(run_doc.container);
+    if (target) ReactDOM.render(<MainForm run={run_doc} />, target);
+  },
+  MainChat: function(run_doc) {
+    const target = document.getElementById(run_doc.container);
+    if (target) ReactDOM.render(<MainChat run={run_doc} />, target);
+  },
+  ErrorConsole: function(run_doc) {
+    const target = document.getElementById(run_doc.container);
+    if (target) ReactDOM.render(<ErrorConsole run={run_doc} />, target);
+  }
+};
+
+//==End of RENDER==
+
 
 // === EXECUTION ROUTER ===
 coworker._exec = async function (run_doc) {
@@ -431,51 +463,6 @@ coworker._handlers = {
                     : undefined,
             },
         };
-    }
-
-};
-// === Preprocess == 
-
-coworker._preprocessRender = function(run_doc) {
-  // Explicit render flag - always render
-  if (run_doc.options?.render === true) {
-    return true;
-  }
-  
-  // Everything else - don't render
-  return false;
-};
-
-// === REACT RENDERERS (Browser) ===
-coworker._renderers = {
-//TODO - preprocessing of run_doc for rendering is needed
-//TODO - implement donot render option and force render option
-    MainGrid: function (run_doc) {
-        const target = document.getElementById(run_doc.container);
-        if (target) {
-            ReactDOM.render(<MainGrid run={run_doc} />, target);
-        }
-    },
-
-    MainForm: function (run_doc) {
-        const target = document.getElementById(run_doc.container);
-        if (target) {
-            ReactDOM.render(<MainForm run={run_doc} />, target);
-        }
-    },
-
-    MainChat: function (run_doc) {
-        const target = document.getElementById(run_doc.container);
-        if (target) {
-            ReactDOM.render(<MainChat run={run_doc} />, target);
-        }
-    },
-
-    ErrorConsole: function (run_doc) {
-        const target = document.getElementById(run_doc.container);
-        if (target) {
-            ReactDOM.render(<ErrorConsole run={run_doc} />, target);
-        }
     }
 
 };
