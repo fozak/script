@@ -1,0 +1,327 @@
+{
+  "doctype": "configuration",
+  "description": "Base schema metadata and model constants, derived from Frappe model and extended for schema-driven JS rendering.",
+  "_resolveOperation": {
+    "aliases": {
+      "read": "select",
+      "insert": "create",
+      "query": "select",
+      "fetch": "select",
+      "add": "create",
+      "remove": "delete",
+      "modify": "update",
+      "patch": "update"
+    }
+  },
+
+"_resolveComponent": {
+    "aliases": {
+      "list": "MainGrid",
+      "form": "MainForm",
+      "chat": "MainChat"
+    }},
+    "component_to_container": {
+      "MainGrid": "main_container",
+      "MainForm": "main_container",
+      "MainChat": "right_pane"
+    },
+
+  "field_metadata": {
+    "all_fieldtypes": {
+      "Attach": {
+        "category": "media",
+        "jstype": "string"
+      },
+      "AttachImage": {
+        "category": "media",
+        "jstype": "string"
+      },
+      "Autocomplete": {
+        "category": "input",
+        "jstype": "string"
+      },
+      "Barcode": {
+        "category": "input",
+        "jstype": "string"
+      },
+      "Button": {
+        "category": "control",
+        "jstype": "null"
+      },
+      "Check": {
+        "category": "boolean",
+        "jstype": "boolean"
+      },
+      "Code": {
+        "category": "text",
+        "jstype": "string"
+      },
+      "Color": {
+        "category": "input",
+        "jstype": "string"
+      },
+      "Column Break": {
+        "category": "layout",
+        "jstype": "null"
+      },
+      "Currency": {
+        "category": "numeric",
+        "jstype": "number"
+      },
+      "Data": {
+        "category": "text",
+        "jstype": "string"
+      },
+      "Date": {
+        "category": "date",
+        "jstype": "string"
+      },
+      "Datetime": {
+        "category": "date",
+        "jstype": "string"
+      },
+      "Duration": {
+        "category": "numeric",
+        "jstype": "number"
+      },
+      "Dynamic Link": {
+        "category": "reference",
+        "jstype": "string"
+      },
+      "Float": {
+        "category": "numeric",
+        "jstype": "number"
+      },
+      "Fold": {
+        "category": "layout",
+        "jstype": "null"
+      },
+      "Geolocation": {
+        "category": "data",
+        "jstype": "object"
+      },
+      "Heading": {
+        "category": "layout",
+        "jstype": "null"
+      },
+      "HTML": {
+        "category": "layout",
+        "jstype": "string"
+      },
+      "HTML Editor": {
+        "category": "text",
+        "jstype": "string"
+      },
+      "Image": {
+        "category": "media",
+        "jstype": "string"
+      },
+      "Int": {
+        "category": "numeric",
+        "jstype": "number"
+      },
+      "JSON": {
+        "category": "data",
+        "jstype": "object"
+      },
+      "Link": {
+        "category": "reference",
+        "jstype": "string"
+      },
+      "Long Text": {
+        "category": "text",
+        "jstype": "string"
+      },
+      "Markdown Editor": {
+        "category": "text",
+        "jstype": "string"
+      },
+      "MultiCheck": {
+        "category": "multi",
+        "jstype": "array"
+      },
+      "MultiSelect": {
+        "category": "multi",
+        "jstype": "array"
+      },
+      "Percent": {
+        "category": "numeric",
+        "jstype": "number"
+      },
+      "Phone": {
+        "category": "input",
+        "jstype": "string"
+      },
+      "Read Only": {
+        "category": "input",
+        "jstype": "string"
+      },
+      "Rating": {
+        "category": "numeric",
+        "jstype": "number"
+      },
+      "Section Break": {
+        "category": "layout",
+        "jstype": "null"
+      },
+      "Select": {
+        "category": "choice",
+        "jstype": "string"
+      },
+      "Signature": {
+        "category": "media",
+        "jstype": "string"
+      },
+      "Small Text": {
+        "category": "text",
+        "jstype": "string"
+      },
+      "Table": {
+        "category": "child",
+        "jstype": "array"
+      },
+      "Table MultiSelect": {
+        "category": "child",
+        "jstype": "array"
+      },
+      "Text": {
+        "category": "text",
+        "jstype": "string"
+      },
+      "Time": {
+        "category": "date",
+        "jstype": "string"
+      }
+    },
+    "boolean_fieldtypes": [
+      "Check"
+    ],
+    "child_fieldtypes": [
+      "Table",
+      "Table MultiSelect"
+    ],
+    "date_fieldtypes": [
+      "Date",
+      "Datetime",
+      "Duration",
+      "Time"
+    ],
+    "html_fieldtypes": [
+      "HTML",
+      "HTML Editor",
+      "Markdown Editor"
+    ],
+    "layout_fieldtypes": [
+      "Column Break",
+      "Fold",
+      "Heading",
+      "Section Break"
+    ],
+    "link_behavior": {
+      "default": "lazy",
+      "overrides": {
+        "Company": "cached",
+        "Role": "lazy",
+        "User": "eager"
+      }
+    },
+    "multi_value_fieldtypes": [
+      "MultiCheck",
+      "MultiSelect",
+      "Table MultiSelect"
+    ],
+    "numeric_fieldtypes": [
+      "Currency",
+      "Duration",
+      "Float",
+      "Int",
+      "Percent",
+      "Rating"
+    ],
+    "text_fieldtypes": [
+      "Autocomplete",
+      "Barcode",
+      "Code",
+      "Color",
+      "Data",
+      "Long Text",
+      "Phone",
+      "Read Only",
+      "Select",
+      "Small Text",
+      "Text"
+    ],
+    "std_fields_override": {
+      "creation": {
+        "jstype": "string",
+        "description": "ISO datetime string when created"
+      },
+      "docstatus": {
+        "jstype": "number",
+        "enum": [
+          0,
+          1,
+          2
+        ]
+      },
+      "idx": {
+        "jstype": "number"
+      },
+      "modified": {
+        "jstype": "string"
+      },
+      "modified_by": {
+        "jstype": "string",
+        "link": "User"
+      },
+      "name": {
+        "jstype": "string",
+        "description": "Primary key"
+      },
+      "owner": {
+        "jstype": "string",
+        "link": "User"
+      },
+      "parent": {
+        "jstype": "string",
+        "link": "Any"
+      },
+      "parentfield": {
+        "jstype": "string"
+      },
+      "parenttype": {
+        "jstype": "string"
+      }
+    }
+  },
+  "render_behavior": {
+    "value_processors": {
+      "boolean": "Boolean(value)",
+      "date": "new Date(value).toISOString()",
+      "numeric": "Number(value)",
+      "text": "String(value)",
+      "multi": "Array.isArray(value) ? value : []"
+    },
+    "render_map": {
+      "Attach": "FileUploader",
+      "AttachImage": "ImageUploader",
+      "Autocomplete": "AutoCompleteInput",
+      "Check": "Checkbox",
+      "Code": "CodeEditor",
+      "Currency": "NumberInput",
+      "Date": "DatePicker",
+      "Datetime": "DateTimePicker",
+      "Float": "NumberInput",
+      "Int": "NumberInput",
+      "Link": "LinkSelect",
+      "Long Text": "Textarea",
+      "MultiCheck": "MultiCheckbox",
+      "MultiSelect": "MultiSelectInput",
+      "Percent": "NumberInput",
+      "Select": "SelectInput",
+      "Small Text": "Textarea",
+      "Text": "TextInput"
+    }
+  },
+  "new_names": {}
+}
