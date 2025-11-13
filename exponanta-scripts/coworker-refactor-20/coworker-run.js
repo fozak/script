@@ -82,52 +82,56 @@ coworker.run = async function(op) {
   // Resolve all fields via config
   const resolved = this._resolveAll(op);
   
-  // Build run_doc (unified context)
+  // Construct run document
   const run_doc = {
-    // Frappe standard fields
-    doctype: "Run",
-    name: generateId("run"),
-    creation: start,
-    modified: start,
-    modified_by: resolved.owner || "system",
-    docstatus: 0,
-    owner: resolved.owner || "system",
-    
-    // Operation definition
-    operation: resolved.operation,
-    operation_original: op.operation,
-    source_doctype: resolved.source_doctype,
-    target_doctype: resolved.target_doctype,
-    
-    // Data flow
-    input: op.input || {},
-    output: null,
-    
-    // Execution state
-    status: "pending",
-    success: false,
-    error: null,
-    duration: 0,
-    
-    // Hierarchy
-    parent_run_id: op.options?.parentRunId || null,
-    child_run_ids: [],
-    
-    // Flow context
-    flow_id: op.flow_id || null,
-    flow_template: op.flow_template || null,
-    step_id: op.step_id || null,
-    step_title: op.step_title || null,
-    
-    // Authorization
-    agent: op.agent || null,
-    
-    // Options
-    options: op.options || {},
-    
-    // Runtime helpers (placeholder for JSON)
-    child: null
-  };
+  // Frappe standard fields
+  doctype: "Run",
+  name: generateId("run"),
+  creation: start,
+  modified: start,
+  modified_by: resolved.owner || "system",
+  docstatus: 0,
+  owner: resolved.owner || "system",
+  
+  // Operation definition
+  operation: resolved.operation,
+  operation_original: op.operation,
+  source_doctype: resolved.source_doctype,
+  target_doctype: resolved.target_doctype,
+  
+  // UI/Rendering (PROMOTED)
+  view: resolved.view || op.view || null,
+  component: resolved.component || op.component || null,
+  
+  // Data flow
+  input: op.input || {},
+  output: null,
+  
+  // Execution state
+  status: "pending",
+  success: false,
+  error: null,
+  duration: 0,
+  
+  // Hierarchy
+  parent_run_id: op.options?.parentRunId || null,
+  child_run_ids: [],
+  
+  // Flow context
+  flow_id: op.flow_id || null,
+  flow_template: op.flow_template || null,
+  step_id: op.step_id || null,
+  step_title: op.step_title || null,
+  
+  // Authorization
+  agent: op.agent || null,
+  
+  // Options
+  options: op.options || {},
+  
+  // Runtime helpers (placeholder for JSON)
+  child: null
+};
   
   // STEP 1: RUNNING
   run_doc.status = "running";
