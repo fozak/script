@@ -203,25 +203,96 @@ coworker._render = function(run_doc) {
   if (renderer) renderer.call(this, run_doc); // Call the actual renderer
 };
 
-// Individual renderers handle only rendering
+// === Individual renderers handle only rendering
 coworker._renderers = {
   MainGrid: function(run_doc) {
     const target = document.getElementById(run_doc.container);
     if (target) ReactDOM.render(<MainGrid run={run_doc} />, target);
   },
+  
   MainForm: function(run_doc) {
     const target = document.getElementById(run_doc.container);
     if (target) ReactDOM.render(<MainForm run={run_doc} />, target);
   },
+  
   MainChat: function(run_doc) {
     const target = document.getElementById(run_doc.container);
     if (target) ReactDOM.render(<MainChat run={run_doc} />, target);
   },
+  
   ErrorConsole: function(run_doc) {
     const target = document.getElementById(run_doc.container);
     if (target) ReactDOM.render(<ErrorConsole run={run_doc} />, target);
+  },
+  
+  FieldLink: function(run_doc) {
+    const target = document.getElementById(run_doc.container);
+    if (target) ReactDOM.render(<FieldLink run={run_doc} />, target);
   }
 };
+
+//==RESOLVERS 
+
+coworker._resolverLink = async function(field, searchTerm) {
+  return await this.run({
+    operation: "select",
+    doctype: field.options,
+    input: {
+      where: { name: { contains: searchTerm } },
+      take: 20
+    },
+    component: "FieldLink",  // ← PascalCase
+    container: `field_${field.fieldname}`,
+    options: { render: true }
+  });
+};
+
+coworker._resolverSelect = async function(field) {
+  const options = field.options.split('\n').map(opt => ({ name: opt }));
+  return { success: true, output: { data: options } };
+};
+
+//=== COMPONENTS (will be moved to separate file) ===
+const FieldLink = ({ field, value, docname, doctype }) => {
+  const handleSearch = async (term) => {
+    const config = coworker._config.field_handlers.Link;
+    const resolver = coworker[config._optionsResolver];
+    
+    if (resolver) {
+      await resolver.call(coworker, field, term);
+    }
+  };
+  
+  const handleChange = (selectedValue) => {
+    const config = coworker._config.field_handlers.Link;
+    const processValue = coworker._processValue(config.value_processor, selectedValue);
+    
+    coworker.run({
+      operation: config.operation,
+      doctype: doctype,
+      input: { where: { name: docname }, data: { [field.fieldname]: processValue } }
+    });
+  };
+  
+  const lastRun = CoworkerState.getLastRunByDoctype(field.options);
+  const options = lastRun?.output?.data || [];
+  
+  return (
+    <div id={`field_${field.fieldname}`}>
+      <Autocomplete
+        value={value}
+        options={options}
+        onSearch={handleSearch}
+        onChange={handleChange}
+      />
+    </div>
+  );
+};
+
+
+
+
+
 
 //==End of RENDER==
 

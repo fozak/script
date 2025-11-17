@@ -13,19 +13,90 @@
       "patch": "update"
     }
   },
-
-"_resolveComponent": {
-    "aliases": {
-      "list": "MainGrid",
-      "form": "MainForm",
-      "chat": "MainChat"
-    }},
-    "component_to_container": {
-      "MainGrid": "main_container",
-      "MainForm": "main_container",
-      "MainChat": "right_pane"
+  "field_handlers": {
+    "Data": {
+      "component": "FieldData",
+      "event": "onBlur",
+      "operation": "update",
+      "value_processor": "text"
     },
-
+    "Link": {
+      "component": "FieldLink",
+      "event": "onChange",
+      "operation": "update",
+      "value_processor": "text",
+      "_optionsResolver": "_resolverLink"
+    },
+    "Check": {
+      "component": "FieldCheck",
+      "event": "onChange",
+      "operation": "update",
+      "value_processor": "boolean"
+    },
+    "Select": {
+      "component": "FieldSelect",
+      "event": "onChange",
+      "operation": "update",
+      "value_processor": "text",
+      "_optionsResolver": "_resolverSelect"
+    },
+    "Date": {
+      "component": "FieldDate",
+      "event": "onChange",
+      "operation": "update",
+      "value_processor": "date"
+    },
+    "Currency": {
+      "component": "FieldCurrency",
+      "event": "onBlur",
+      "operation": "update",
+      "value_processor": "numeric"
+    },
+    "Int": {
+      "component": "FieldInt",
+      "event": "onBlur",
+      "operation": "update",
+      "value_processor": "numeric"
+    },
+    "Float": {
+      "component": "FieldFloat",
+      "event": "onBlur",
+      "operation": "update",
+      "value_processor": "numeric"
+    },
+    "MultiSelect": {
+      "component": "FieldMultiSelect",
+      "event": "onChange",
+      "operation": "update",
+      "value_processor": "multi",
+      "_handler": "_handlerMultiSelect"
+    },
+    "Table": {
+      "component": "FieldTable",
+      "_handler": "_handlerTable"
+    },
+    "Attach": {
+      "component": "FieldAttach",
+      "_handler": "_handlerAttach"
+    },
+    "Text Editor": {
+      "component": "FieldTextEditor",
+      "event": "onBlur",
+      "operation": "update",
+      "value_processor": "text"
+    },
+    "Section Break": {
+      "component": "FieldSectionBreak"
+    },
+    "Column Break": {
+      "component": "FieldColumnBreak"
+    }
+  },
+  "component_to_container": {
+    "MainGrid": "main_container",
+    "MainForm": "main_container",
+    "MainChat": "right_pane"
+  },
   "field_metadata": {
     "all_fieldtypes": {
       "Attach": {

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coworker System Demo</title>
+  
+  <!-- Coworker Styles -->
+  <link rel="stylesheet" href="coworker-styles.css">
+  
+  <!-- React & ReactDOM -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+</head>
+<body>
+  <div style="padding: 2rem;">
+    <h1>Coworker System Demo</h1>
+    
+    <div style="margin-bottom: 1rem;">
+      <button class="cw-btn cw-btn-primary" onclick="testGetDoc()">Test Get Doc</button>
+      <button class="cw-btn cw-btn-secondary" onclick="testGetList()">Test Get List</button>
+      <button class="cw-btn cw-btn-info" onclick="testAIChat()">Test AI Chat</button>
+      <button class="cw-btn cw-btn-dark" onclick="CWStyles.switchTheme(CWStyles.theme === 'light' ? 'dark' : 'light')">
+        Toggle Theme
+      </button>
+    </div>
+    
+    <div id="main-container"></div>
+  </div>
+
+  <!-- Coworker Core Files -->
+  <script src="coworker-state.js"></script>
+  <script src="coworker-styles.js"></script>
+  <script src="coworker-utils.js"></script>
+  <script src="coworker-core.js"></script>
+  <script src="coworker-config.js"></script>
+  <script src="coworker-renderer.js"></script>
+  <script src="coworker-components.js"></script>
+
+  <!-- Demo Scripts -->
+  <script>
+    async function testGetDoc() {
+      const run = await coworker.run({
+        operation: 'get_doc',
+        source_doctype: 'Customer',
+        input: { doctype: 'Customer', name: 'CUST-001' },
+        component: 'MainForm',
+        container: 'main-container',
+        options: { render: true }
+      });
+      
+      console.log('Get Doc Run:', run);
+    }
+    
+    async function testGetList() {
+      const run = await coworker.run({
+        operation: 'get_list',
+        source_doctype: 'Customer',
+        input: { doctype: 'Customer', limit: 10 },
+        component: 'MainGrid',
+        container: 'main-container',
+        options: { render: true }
+      });
+      
+      console.log('Get List Run:', run);
+    }
+    
+    async function testAIChat() {
+      const run = await coworker.run({
+        operation: 'ai_chat',
+        input: { message: 'Hello!' },
+        component: 'MainChat',
+        container: 'main-container',
+        options: { render: true }
+      });
+      
+      console.log('AI Chat Run:', run);
+    }
+    
+    // Mock API responses for demo
+    window.fetch = async function(url, options) {
+      console.log('Mock fetch:', url, options);
+      
+      if (url.includes('/api/resource/Customer/CUST-001')) {
+        return {
+          json: async () => ({
+            data: {
+              name: 'CUST-001',
+              customer_name: 'John Doe',
+              email: 'john@example.com',
+              phone: '+1234567890',
+              status: 'Active'
+            },
+            schema: {
+              field_order: [
+                { fieldtype: 'Section Break', label: 'Basic Information' },
+                { fieldname: 'customer_name', fieldtype: 'Data', label: 'Customer Name' },
+                { fieldname: 'email', fieldtype: 'Data', label: 'Email' },
+                { fieldtype: 'Column Break' },
+                { fieldname: 'phone', fieldtype: 'Data', label: 'Phone' },
+                { fieldname: 'status', fieldtype: 'Select', label: 'Status' }
+              ],
+              fields: {
+                customer_name: { fieldtype: 'Data', label: 'Customer Name', reqd: 1 },
+                email: { fieldtype: 'Data', label: 'Email', reqd: 1 },
+                phone: { fieldtype: 'Data', label: 'Phone' },
+                status: { fieldtype: 'Select', label: 'Status', options: 'Active\nInactive\nSuspended' }
+              }
+            }
+          })
+        };
+      }
+      
+      if (url.includes('/api/resource/Customer') && options?.method === 'POST') {
+        return {
+          json: async () => ({
+            data: [
+              { name: 'CUST-001', customer_name: 'John Doe', email: 'john@example.com', status: 'Active' },
+              { name: 'CUST-002', customer_name: 'Jane Smith', email: 'jane@example.com', status: 'Active' },
+              { name: 'CUST-003', customer_name: 'Bob Johnson', email: 'bob@example.com', status: 'Inactive' }
+            ]
+          })
+        };
+      }
+      
+      return { json: async () => ({}) };
+    };
+  </script>
+</body>
+</html>
