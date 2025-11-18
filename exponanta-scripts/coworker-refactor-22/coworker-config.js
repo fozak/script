@@ -8,72 +8,55 @@ coworker._config = {
   // ============================================================
   debug: true,
   
-  // ============================================================
-  // OPERATION RESOLUTION (Aliases Only)
-  // ============================================================
-  _resolveOperation: {
-    mapping: {
-      // User aliases → Internal operation
-      read: "select",
-      insert: "create",
-      query: "select",
-      fetch: "select",
-      add: "create",
-      remove: "delete",
-      modify: "update",
-      patch: "update"
-    },
-    inputField: "operation",
-    outputField: "operation"
+// User aliases → Internal operations
+  operationAliases: {
+    read: "select",
+    insert: "create",
+    query: "select",
+    fetch: "select",
+    add: "create",
+    remove: "delete",
+    modify: "update",
+    patch: "update"
   },
-
-  // ============================================================
-  // COMPONENT RESOLUTION
-  // ============================================================
-  _resolveComponent: {
-    mapping: {
-      list: "MainGrid",
-      form: "MainForm",
-      chat: "MainChat",
-      grid: "MainGrid",
-      detail: "MainForm",
-      conversation: "MainChat"
-    },
-    inputField: "view",
-    outputField: "component"
+  
+  // User aliases → Canonical doctypes
+  doctypeAliases: {
+    user: "User",
+    order: "Sales Order",
+    customer: "Customer",
+    item: "Item",
+    invoice: "Sales Invoice"
   },
-
-  // ============================================================
-  // CONTAINER RESOLUTION
-  // ============================================================
-  _resolveContainer: {
-    mapping: {
-      list: "main_container",
-      form: "main_container",
-      chat: "right_pane",
-      grid: "main_container",
-      detail: "main_container",
-      MainGrid: "main_container",
-      MainForm: "main_container",
-      MainChat: "right_pane"
-    },
-    inputField: "view",
-    outputField: "container"
+  
+  // Operation → View mapping
+  operationToView: {
+    select: "list",
+    create: "form",
+    update: "form",
+    delete: null
   },
-
-  // ============================================================
-  // DOCTYPE RESOLUTION
-  // ============================================================
-  _resolveDoctype: {
-    mapping: {
-      user: "User",
-      order: "Sales Order",
-      customer: "Customer",
-      item: "Item",
-      invoice: "Sales Invoice"
-    },
-    inputField: "doctype",
-    outputField: "doctype"
+  
+  // View → Component mapping
+  viewToComponent: {
+    list: "MainGrid",
+    form: "MainForm",
+    chat: "MainChat",
+    grid: "MainGrid",
+    detail: "MainForm",
+    conversation: "MainChat"
+  },
+  
+  // View → Container mapping
+  viewToContainer: {
+    list: "main_container",
+    form: "main_container",
+    chat: "right_pane",
+    grid: "main_container",
+    detail: "main_container",
+    MainGrid: "main_container",
+    MainForm: "main_container",
+    MainChat: "right_pane"
   },
 
   // ============================================================

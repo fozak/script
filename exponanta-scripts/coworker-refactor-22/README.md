@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coworker Integration Test</title>
+  
+  <!-- CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="coworker-styles.css">
+  
+  <!-- External Dependencies -->
+  <script src="https://cdn.jsdelivr.net/npm/pocketbase@latest/dist/pocketbase.umd.js"></script>
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@tanstack/react-table@8.20.5/build/umd/index.production.js"></script>
+  <script>
+    window.TanStackTable = window.ReactTable;
+    console.log('✅ TanStack Table loaded:', !!window.TanStackTable);
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+  
+  <div id="main_container"></div>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- LAYER 1: Foundation (Coworker Core System) -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <script src="coworker-state.js"></script>
+  <script src="coworker-styles.js"></script>   <!-- YOUR existing file -->
+  <script src="coworker-utils.js"></script>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- LAYER 2: PocketBase Layer (Database Client) -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <script src="pb-core.js"></script>         <!-- Combined from pb-client.js + pb-adapter.js + pb-utils.js --->
+  
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- LAYER 3: Coworker Execution Engine -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <script src="coworker-run.js"></script>      <!-- Execution layer -->
+  <script src="coworker-config.js"></script>   <!-- Configuration -->
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- LAYER 4: Rendering System -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <script src="coworker-core.js"></script>
+  <script src="coworker-renderer.js"></script>
+  <script src="coworker-components.js"></script>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- LAYER 5: Application (Optional) -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <script src="app.js"></script>               <!-- Your app code -->
+
+  <script>
+    // Test integration
+    async function testIntegration() {
+      // Test PocketBase connection
+      const result = await connectToPocketBase();
+      console.log('Connection result:', result);
+
+      // Test coworker.run
+      const data = await coworker.run({
+        operation: 'select',
+        from: 'Customer',
+        input: { take: 10 },
+        options: { render: true }
+      });
+      console.log('Coworker result:', data);
+    }
+
+    // Auto-run on load
+    window.addEventListener('load', testIntegration);
+  </script>
+
+</body>
+</html>

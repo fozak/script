@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <title>Coworker Integration Test</title>
+  <link rel="stylesheet" href="coworker-styles.css">
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+</head>
+<body>
+  <div id="main_container"></div>
+
+  <!-- 1. Foundation -->
+  <script src="coworker-state.js"></script>
+  <script src="coworker-styles.js"></script>
+  <script src="coworker-utils.js"></script>
+  
+  <!-- 2. Execution (installs itself) -->
+  <script src="coworker-run.js"></script>
+  
+  <!-- 3. Configuration -->
+  <script src="coworker-config.js"></script>
+  
+  <!-- 4. Rendering -->
+  <script src="coworker-core.js"></script>
+  <script src="coworker-renderer.js"></script>
+  <script src="coworker-components.js"></script>
+  
+  <!-- 5. Database -->
+  <script src="pb-adapter.js"></script>
+
+  <script>
+    // Test call
+    testIntegration();
+  </script>
+</body>
+</html>
