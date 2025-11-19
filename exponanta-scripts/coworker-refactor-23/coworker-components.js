@@ -5,10 +5,11 @@
 // ============================================================
 // UNIVERSAL RECORD LINK
 // ============================================================
-const RecordLink = ({ record, children, context = {} }) => {
-  return React.createElement('div', {
+const RecordLink = ({ record, children, context = {}, as = 'div', ...props }) => {
+  return React.createElement(as, {
+    ...props,
     onClick: () => coworker.onRecordClick(record, context),
-    style: { cursor: 'pointer' }
+    style: { cursor: 'pointer', ...props.style }
   }, children);
 };
 
@@ -74,12 +75,15 @@ const MainGrid = ({ run }) => {
         ),
         React.createElement('tbody', {},
           data.map((row, i) =>
-            React.createElement(RecordLink, { key: i, record: row },
-              React.createElement('tr', { className: CWStyles.grid.row },
-                Object.values(row).map((val, j) =>
-                  React.createElement('td', { key: j, className: CWStyles.grid.cell },
-                    String(val || '')
-                  )
+            React.createElement(RecordLink, {
+              key: i,
+              record: row,
+              as: 'tr',
+              className: CWStyles.grid.row
+            },
+              Object.values(row).map((val, j) =>
+                React.createElement('td', { key: j, className: CWStyles.grid.cell },
+                  String(val || '')
                 )
               )
             )
