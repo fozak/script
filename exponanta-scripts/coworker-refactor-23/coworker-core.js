@@ -63,6 +63,20 @@ coworker._renderers = {
 };
 
 // ============================================================
+// UNIVERSAL RECORD HANDLER
+// ============================================================
+
+coworker.onRecordClick = function(record, context = {}) {
+  return this.run({
+    operation: 'takeone',
+    doctype: record.doctype,
+    input: { where: { name: record.name } },
+    options: { render: true },
+    ...context
+  });
+};
+
+// ============================================================
 // UTILITIES
 // ============================================================
 
