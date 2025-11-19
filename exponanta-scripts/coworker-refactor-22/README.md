@@ -125,14 +125,14 @@ coworker.run({
 })
 // ❌ Empty form (no components)
 After
-javascriptcoworker.run({ 
+javascript await coworker.run({ 
   operation: 'select', 
   doctype: 'Customer',
   options: { render: true }
 })
 // ✅ Shows MainGrid (list)
 
-coworker.run({ 
+await coworker.run({ 
   operation: 'takeone', 
   doctype: 'Task',
   input: { where: { name: 'TASK-2025-00003' }},
