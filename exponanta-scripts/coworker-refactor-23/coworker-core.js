@@ -7,6 +7,19 @@
 // RENDERING
 // ============================================================
 
+// React 18 roots cache
+coworker._reactRoots = new Map();
+
+coworker._getOrCreateRoot = function(containerId) {
+  if (!this._reactRoots.has(containerId)) {
+    const container = document.getElementById(containerId);
+    if (container && typeof ReactDOM.createRoot !== 'undefined') {
+      this._reactRoots.set(containerId, ReactDOM.createRoot(container));
+    }
+  }
+  return this._reactRoots.get(containerId);
+};
+
 coworker._preprocessRender = function(run_doc) {
   // Default: only render if explicitly requested
   return run_doc.options?.render === true;
@@ -27,37 +40,37 @@ coworker._render = function(run_doc) {
 
 coworker._renderers = {
   MainGrid: function(run_doc) {
-    const target = document.getElementById(run_doc.container);
-    if (target && typeof MainGrid !== 'undefined') {
-      ReactDOM.render(React.createElement(MainGrid, { run: run_doc }), target);
+    const root = this._getOrCreateRoot(run_doc.container);
+    if (root && typeof MainGrid !== 'undefined') {
+      root.render(React.createElement(MainGrid, { run: run_doc }));
     }
   },
-  
+
   MainForm: function(run_doc) {
-    const target = document.getElementById(run_doc.container);
-    if (target && typeof MainForm !== 'undefined') {
-      ReactDOM.render(React.createElement(MainForm, { run: run_doc }), target);
+    const root = this._getOrCreateRoot(run_doc.container);
+    if (root && typeof MainForm !== 'undefined') {
+      root.render(React.createElement(MainForm, { run: run_doc }));
     }
   },
-  
+
   MainChat: function(run_doc) {
-    const target = document.getElementById(run_doc.container);
-    if (target && typeof MainChat !== 'undefined') {
-      ReactDOM.render(React.createElement(MainChat, { run: run_doc }), target);
+    const root = this._getOrCreateRoot(run_doc.container);
+    if (root && typeof MainChat !== 'undefined') {
+      root.render(React.createElement(MainChat, { run: run_doc }));
     }
   },
-  
+
   ErrorConsole: function(run_doc) {
-    const target = document.getElementById(run_doc.container);
-    if (target && typeof ErrorConsole !== 'undefined') {
-      ReactDOM.render(React.createElement(ErrorConsole, { run: run_doc }), target);
+    const root = this._getOrCreateRoot(run_doc.container);
+    if (root && typeof ErrorConsole !== 'undefined') {
+      root.render(React.createElement(ErrorConsole, { run: run_doc }));
     }
   },
-  
+
   FieldLink: function(run_doc) {
-    const target = document.getElementById(run_doc.container);
-    if (target && typeof FieldLink !== 'undefined') {
-      ReactDOM.render(React.createElement(FieldLink, { run: run_doc }), target);
+    const root = this._getOrCreateRoot(run_doc.container);
+    if (root && typeof FieldLink !== 'undefined') {
+      root.render(React.createElement(FieldLink, { run: run_doc }));
     }
   }
 };
