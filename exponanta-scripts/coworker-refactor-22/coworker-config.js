@@ -34,7 +34,8 @@ coworker._config = {
     select: "list",
     create: "form",
     update: "form",
-    delete: null
+    delete: null,
+    takeone: "form"   // Internal operation for rendering
   },
   
   // View → Component mapping

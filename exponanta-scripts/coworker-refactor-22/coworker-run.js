@@ -227,11 +227,14 @@ coworker._resolveAll = function (op) {
       // EXECUTION ROUTER
       // ============================================================
       coworker._exec = async function (run_doc) {
-        const handler = this._handlers[run_doc.operation];
+        const handler = this._handlers[run_doc.operation] || this._handlers.select; //falling back select
 
-        if (!handler) {
+        /*if (!handler) {
           throw new Error(`Unknown operation: ${run_doc.operation}`);
-        }
+        }*/ // Modified to allow custom operations
+
+    
+
 
         return await handler.call(this, run_doc);
       };

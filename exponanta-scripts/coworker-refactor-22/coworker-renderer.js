@@ -43,11 +43,11 @@ coworker._renderFromConfig = function(config, parentStyles = window.CWStyles) {
   // Handle arrays
   if (Array.isArray(config)) {
     return config.map((item, i) => 
-      this._renderFromConfig({ ...item, key: i }, parentStyles)
+      this._renderFromConfig({ ...item, key: item.key || `item-${i}` }, parentStyles)
     );
   }
   
-  const rule = this._config.render_map[config.type];
+  const rule = this._config.render_map?.[config.type];
   if (!rule) {
     console.warn('Unknown config type:', config.type);
     return null;
@@ -55,7 +55,7 @@ coworker._renderFromConfig = function(config, parentStyles = window.CWStyles) {
   
   // Handler delegation
   if (rule.handler) {
-    return this[rule.handler]({ ...config, parentStyles });
+    return this[rule.handler]({ ...config, parentStyles, key: config.key });
   }
   
   // Element creation
@@ -65,26 +65,37 @@ coworker._renderFromConfig = function(config, parentStyles = window.CWStyles) {
     
   const { type, className, children, content, component, props, key, dangerouslySetInnerHTML, ...rest } = config;
   
-  // Resolve className from CWStyles path (e.g., 'form.wrapper' → 'cw-form')
+  // Resolve className
   const resolvedClass = className 
     ? className.split('.').reduce((obj, k) => obj?.[k], parentStyles)
     : null;
   
   const commonProps = { 
     className: resolvedClass, 
-    key, 
+    key,
     ...rest 
   };
   
-  // Add dangerouslySetInnerHTML if present
   if (dangerouslySetInnerHTML) {
     commonProps.dangerouslySetInnerHTML = dangerouslySetInnerHTML;
+  }
+  
+  // Add keys when rendering children array
+  let renderedChildren = content;
+  if (children && !content) {
+    if (Array.isArray(children)) {
+      renderedChildren = children.map((child, i) => 
+        this._renderFromConfig({ ...child, key: child.key || `child-${i}` }, parentStyles)
+      );
+    } else {
+      renderedChildren = this._renderFromConfig(children, parentStyles);
+    }
   }
   
   return React.createElement(
     element,
     commonProps,
-    content || (children && this._renderFromConfig(children, parentStyles))
+    renderedChildren
   );
 };
 
@@ -104,10 +115,11 @@ coworker._renderComponent = function({ component, props, parentStyles, key }) {
 // ============================================================
 // RENDER FIELD
 // ============================================================
+/*
 coworker._renderField = function({ field, value, docname, doctype, parentStyles }) {
   if (!field) return null;
   
-  const config = this._config.field_handlers[field.fieldtype];
+  const config = this._config.field_handlers?.[field.fieldtype];
   if (!config) {
     console.warn('No handler for fieldtype:', field.fieldtype);
     return null;
@@ -119,8 +131,8 @@ coworker._renderField = function({ field, value, docname, doctype, parentStyles 
     return handler?.({ field, value, docname, doctype, parentStyles });
   }
   
-  // Standard component - return config
-  return {
+  // Standard component - build config
+  const fieldConfig = {
     type: 'container',
     className: 'form.fieldWrapper',
     children: [
@@ -136,4 +148,40 @@ coworker._renderField = function({ field, value, docname, doctype, parentStyles 
       }
     ]
   };
+  
+  // ✅ FIX: Render the config instead of returning it
+  return this._renderFromConfig(fieldConfig, parentStyles);
+};*/
+
+
+coworker._renderField = function({ field, value, docname, doctype, parentStyles, key }) {
+  if (!field) return null;
+  
+  // Skip layout fields
+  if (['Section Break', 'Column Break', 'Table'].includes(field.fieldtype)) {
+    return null;
+  }
+  
+  // Simple fallback renderer - just show label + value
+  return React.createElement('div', 
+    { 
+      key: key,  // ✅ ADD THIS
+      className: 'cw-field-wrapper',
+      style: { marginBottom: '12px' }
+    },
+    React.createElement('label', 
+      { 
+        className: 'cw-label',
+        style: { display: 'block', fontWeight: 'bold', marginBottom: '4px' }
+      }, 
+      field.label
+    ),
+    React.createElement('div', 
+      { 
+        className: 'cw-value',
+        style: { padding: '8px', border: '1px solid #ddd', borderRadius: '4px' }
+      }, 
+      value != null ? String(value) : '-'
+    )
+  );
 };

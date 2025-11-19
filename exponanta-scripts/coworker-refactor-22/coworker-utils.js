@@ -132,11 +132,21 @@ function parseLayout(field_order, fields) {
     };
   }
 
+  // ✅ Create field lookup map
+  const fieldMap = {};
+  fields.forEach(f => {
+    fieldMap[f.fieldname] = f;
+  });
+
   const sections = [];
   let currentSection = null;
   let currentColumn = null;
 
-  field_order.forEach(item => {
+  field_order.forEach(fieldname => {
+    // ✅ Look up the field definition
+    const item = fieldMap[fieldname];
+    if (!item) return; // Skip if field not found
+    
     if (item.fieldtype === 'Section Break') {
       currentSection = {
         type: 'container',
@@ -159,12 +169,11 @@ function parseLayout(field_order, fields) {
       }
 
     } else {
-      if (!item.fieldname || !fields[item.fieldname]) return;
-
+      // ✅ Field already looked up
       const fieldConfig = {
         type: 'field',
-        field: fields[item.fieldname],
-        fieldname: item.fieldname
+        field: item,
+        fieldname: fieldname
       };
 
       if (currentColumn) {
