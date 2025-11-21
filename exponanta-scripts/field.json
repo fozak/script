@@ -1,0 +1,441 @@
+{
+  "name": "Schema_dvmskd",
+  "doctype": "Schema",
+  "_schema_doctype": "Field",
+  "module": "Core",
+  "field_order": [
+    "type_section",
+    "type",
+    "fieldname",
+    "fieldtype",
+    "column_break_0",
+    "is_active",
+    "priority",
+    
+    "section_system_rules",
+    "applies_to",
+    "specific_doctypes",
+    "auto_set_on",
+    "generator_function",
+    "column_break_system",
+    "read_only_after_insert",
+    "unique_constraint",
+    "indexed",
+    "required_on",
+    
+    "section_handler",
+    "is_standard_input",
+    "component",
+    "custom_handler",
+    "column_break_handler",
+    "category",
+    "jstype",
+    
+    "section_processing",
+    "parse",
+    "format",
+    "column_break_proc",
+    "preprocess",
+    "postprocess",
+    
+    "section_validation",
+    "validate",
+    "validate_async",
+    
+    "section_ui",
+    "input_type",
+    "input_props",
+    
+    "section_grid",
+    "grid_format",
+    "grid_width",
+    "column_break_grid",
+    "sortable",
+    "filterable",
+    
+    "section_change",
+    "save_on",
+    "debounce",
+    
+    "section_defaults",
+    "default_value",
+    "default_function",
+    
+    "section_meta",
+    "description",
+    "version"
+  ],
+  "fields": [
+    {
+      "fieldname": "type_section",
+      "fieldtype": "Section Break",
+      "label": "Rule Type"
+    },
+    {
+      "fieldname": "type",
+      "fieldtype": "Select",
+      "label": "Rule Type",
+      "options": "fieldtype\nfieldname",
+      "reqd": 1,
+      "in_list_view": 1,
+      "bold": 1,
+      "description": "fieldtype = fieldtype behavior | fieldname = cross-doctype field rules"
+    },
+    {
+      "fieldname": "fieldname",
+      "fieldtype": "Data",
+      "label": "Field Name",
+      "depends_on": "eval:doc.type=='fieldname'",
+      "mandatory_depends_on": "eval:doc.type=='fieldname'",
+      "in_list_view": 1,
+      "description": "For System Rules: name, owner, creation, etc."
+    },
+    {
+      "fieldname": "fieldtype",
+      "fieldtype": "Data",
+      "label": "Field Type",
+      "depends_on": "eval:doc.type=='doctype'",
+      "mandatory_depends_on": "eval:doc.type=='doctype'",
+      "in_list_view": 1,
+      "unique": 1,
+      "description": "For Handlers: Data, Int, Link, etc."
+    },
+    {
+      "fieldname": "column_break_0",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "is_active",
+      "fieldtype": "Check",
+      "label": "Is Active",
+      "default": "1",
+      "in_list_view": 1
+    },
+    {
+      "fieldname": "priority",
+      "fieldtype": "Int",
+      "label": "Priority",
+      "default": "100",
+      "description": "Execution order for System Rules (lower = earlier)"
+    },
+    
+    {
+      "fieldname": "section_system_rules",
+      "fieldtype": "Section Break",
+      "label": "fieldnames",
+      "depends_on": "eval:doc.type=='fieldname'"
+    },
+    {
+      "fieldname": "applies_to",
+      "fieldtype": "Select",
+      "label": "Applies To",
+      "options": "all\nspecific\nsubmittable\nchild_tables",
+      "default": "all",
+      "depends_on": "eval:doc.type=='fieldname'"
+    },
+    {
+      "fieldname": "specific_doctypes",
+      "fieldtype": "Small Text",
+      "label": "Specific DocTypes",
+      "depends_on": "eval:doc.type=='fieldname' && doc.applies_to=='specific'",
+      "description": "Comma-separated doctype names"
+    },
+    {
+      "fieldname": "auto_set_on",
+      "fieldtype": "Select",
+      "label": "Auto Set On",
+      "options": "\ncreate\nupdate\nboth\nsubmit\ncancel",
+      "depends_on": "eval:doc.type=='fieldname'",
+      "description": "When to auto-generate this field"
+    },
+    {
+      "fieldname": "generator_function",
+      "fieldtype": "Code",
+      "label": "Generator Function",
+      "options": "JavaScript",
+      "depends_on": "eval:doc.type=='fieldname' && doc.auto_set_on",
+      "description": "({ doc, operation, context }) => value"
+    },
+    {
+      "fieldname": "column_break_system",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "read_only_after_insert",
+      "fieldtype": "Check",
+      "label": "Read Only After Insert",
+      "default": "0",
+      "depends_on": "eval:doc.type=='fieldname'"
+    },
+    {
+      "fieldname": "unique_constraint",
+      "fieldtype": "Check",
+      "label": "Unique Constraint",
+      "default": "0",
+      "depends_on": "eval:doc.type=='fieldname'"
+    },
+    {
+      "fieldname": "indexed",
+      "fieldtype": "Check",
+      "label": "Indexed",
+      "default": "0",
+      "depends_on": "eval:doc.type=='fieldname'"
+    },
+    {
+      "fieldname": "required_on",
+      "fieldtype": "Select",
+      "label": "Required On",
+      "options": "\nalways\ncreate\nupdate\nsubmit",
+      "depends_on": "eval:doc.type=='fieldname'"
+    },
+    
+    {
+      "fieldname": "section_handler",
+      "fieldtype": "Section Break",
+      "label": "doctype Config",
+      "depends_on": "eval:doc.type=='doctype'"
+    },
+    {
+      "fieldname": "is_standard_input",
+      "fieldtype": "Check",
+      "label": "Is Standard Input",
+      "default": "1",
+      "depends_on": "eval:doc.type=='doctype'",
+      "description": "Use generic Field component with inputType/inputProps"
+    },
+    {
+      "fieldname": "component",
+      "fieldtype": "Data",
+      "label": "Component Name",
+      "depends_on": "eval:doc.type=='doctype' && !doc.is_standard_input",
+      "description": "React component name (e.g., FieldSelect, FieldLink)"
+    },
+    {
+      "fieldname": "custom_handler",
+      "fieldtype": "Data",
+      "label": "Custom Handler",
+      "depends_on": "eval:doc.type=='doctype' && !doc.is_standard_input",
+      "description": "Coworker method name (e.g., _handleTableField)"
+    },
+    {
+      "fieldname": "column_break_handler",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "category",
+      "fieldtype": "Select",
+      "label": "Category",
+      "options": "text\nnumeric\nboolean\ndate\nchoice\nreference\nlayout\nmedia\nspecial\nchild",
+      "default": "text",
+      "depends_on": "eval:doc.type=='doctype'"
+    },
+    {
+      "fieldname": "jstype",
+      "fieldtype": "Select",
+      "label": "JavaScript Type",
+      "options": "string\nnumber\nboolean\nobject\narray\nnull",
+      "default": "string",
+      "depends_on": "eval:doc.type=='doctype'"
+    },
+    
+    {
+      "fieldname": "section_processing",
+      "fieldtype": "Section Break",
+      "label": "Data Processing",
+      "depends_on": "eval:doc.type=='doctype'"
+    },
+    {
+      "fieldname": "parse",
+      "fieldtype": "Code",
+      "label": "Parse Function",
+      "options": "JavaScript",
+      "depends_on": "eval:doc.type=='doctype'",
+      "description": "Convert string/input to typed value: (val) => typed"
+    },
+    {
+      "fieldname": "format",
+      "fieldtype": "Code",
+      "label": "Format Function",
+      "options": "JavaScript",
+      "depends_on": "eval:doc.type=='doctype'",
+      "description": "Convert typed value to display string: (val) => string"
+    },
+    {
+      "fieldname": "column_break_proc",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "preprocess",
+      "fieldtype": "Code",
+      "label": "Preprocess Function",
+      "options": "JavaScript",
+      "depends_on": "eval:doc.type=='doctype'",
+      "description": "Normalize value on input: ({ val, field, context }) => normalized"
+    },
+    {
+      "fieldname": "postprocess",
+      "fieldtype": "Code",
+      "label": "Postprocess Function",
+      "options": "JavaScript",
+      "depends_on": "eval:doc.type=='doctype'",
+      "description": "Transform after validation, before save: ({ val, field, context }) => transformed"
+    },
+    
+    {
+      "fieldname": "section_validation",
+      "fieldtype": "Section Break",
+      "label": "Validation"
+    },
+    {
+      "fieldname": "validate",
+      "fieldtype": "Code",
+      "label": "Validate Function",
+      "options": "JavaScript",
+      "description": "Sync validation: (val, field) => error_message | null OR ({ val, doc, operation, context }) => error | null"
+    },
+    {
+      "fieldname": "validate_async",
+      "fieldtype": "Code",
+      "label": "Validate Async Function",
+      "options": "JavaScript",
+      "depends_on": "eval:doc.type=='doctype'",
+      "description": "Async validation: async ({ val, field, context }) => error_message | null"
+    },
+    
+    {
+      "fieldname": "section_ui",
+      "fieldtype": "Section Break",
+      "label": "UI Rendering",
+      "depends_on": "eval:doc.type=='doctype'"
+    },
+    {
+      "fieldname": "input_type",
+      "fieldtype": "Select",
+      "label": "Input Type",
+      "options": "text\nnumber\npassword\nemail\nurl\ntel\ndate\ndatetime-local\ntime\ncolor\nfile\ntextarea\nselect\ncheckbox\nradio",
+      "default": "text",
+      "depends_on": "eval:doc.type=='doctype'",
+      "mandatory_depends_on": "eval:doc.type=='doctype' && doc.is_standard_input"
+    },
+    {
+      "fieldname": "input_props",
+      "fieldtype": "Code",
+      "label": "Input Props Function",
+      "options": "JavaScript",
+      "depends_on": "eval:doc.type=='doctype'",
+      "description": "Generate input props: (field) => { type, placeholder, maxLength, ... }"
+    },
+    
+    {
+      "fieldname": "section_grid",
+      "fieldtype": "Section Break",
+      "label": "Grid Display",
+      "depends_on": "eval:doc.type=='doctype'"
+    },
+    {
+      "fieldname": "grid_format",
+      "fieldtype": "Code",
+      "label": "Grid Format Function",
+      "options": "JavaScript",
+      "depends_on": "eval:doc.type=='doctype'",
+      "description": "Format value for grid display: (val) => formatted_string"
+    },
+    {
+      "fieldname": "grid_width",
+      "fieldtype": "Data",
+      "label": "Grid Column Width",
+      "default": "auto",
+      "depends_on": "eval:doc.type=='doctype'",
+      "description": "CSS width value (e.g., 150px, auto, 20%)"
+    },
+    {
+      "fieldname": "column_break_grid",
+      "fieldtype": "Column Break"
+    },
+    {
+      "fieldname": "sortable",
+      "fieldtype": "Check",
+      "label": "Sortable",
+      "default": "1",
+      "depends_on": "eval:doc.type=='doctype'"
+    },
+    {
+      "fieldname": "filterable",
+      "fieldtype": "Check",
+      "label": "Filterable",
+      "default": "1",
+      "depends_on": "eval:doc.type=='doctype'"
+    },
+    
+    {
+      "fieldname": "section_change",
+      "fieldtype": "Section Break",
+      "label": "Change Handling",
+      "depends_on": "eval:doc.type=='doctype'"
+    },
+    {
+      "fieldname": "save_on",
+      "fieldtype": "Select",
+      "label": "Save On",
+      "options": "blur\nchange\nmanual",
+      "default": "blur",
+      "depends_on": "eval:doc.type=='doctype'"
+    },
+    {
+      "fieldname": "debounce",
+      "fieldtype": "Int",
+      "label": "Debounce (ms)",
+      "default": "0",
+      "depends_on": "eval:doc.type=='doctype' && doc.save_on=='change'"
+    },
+    
+    {
+      "fieldname": "section_defaults",
+      "fieldtype": "Section Break",
+      "label": "Default Values"
+    },
+    {
+      "fieldname": "default_value",
+      "fieldtype": "Data",
+      "label": "Default Value",
+      "description": "Static default value"
+    },
+    {
+      "fieldname": "default_function",
+      "fieldtype": "Code",
+      "label": "Default Function",
+      "options": "JavaScript",
+      "description": "({ doc, context }) => default_value"
+    },
+    
+    {
+      "fieldname": "section_meta",
+      "fieldtype": "Section Break",
+      "label": "Metadata"
+    },
+    {
+      "fieldname": "description",
+      "fieldtype": "Small Text",
+      "label": "Description"
+    },
+    {
+      "fieldname": "version",
+      "fieldtype": "Data",
+      "label": "Version",
+      "default": "1.0.0",
+      "read_only": 1
+    }
+  ],
+  "permissions": [
+    {
+      "role": "System Manager",
+      "read": 1,
+      "write": 1,
+      "create": 1,
+      "delete": 1
+    }
+  ],
+  "autoname": "",
+  "title_field": "fieldname",
+  "sort_field": "type,priority"
+}
