@@ -776,7 +776,7 @@ const DocStatus = {
     SUBMITTED: 1,    // Locked, cannot edit (except allow_on_submit fields)
     CANCELLED: 2     // Locked completely, cannot edit
 };
-2. is_submittable Flag
+2. is_submitable Flag
 When a DocType has is_submittable: 1 in its schema:
 The document follows a Draft → Submitted → Cancelled workflow
 Two special fields are automatically added:

@@ -4,7 +4,7 @@
   "docstatus": 1,
   "_schema_doctype": "Field",
   "module": "Core",
-  "autoname": "format:{type}-{fieldtype}{fieldname}",
+  "autoname": "",
   "title_field": "name",
   "sort_field": "type,priority",
   "track_changes": 1,
