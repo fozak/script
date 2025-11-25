@@ -692,194 +692,28 @@ const DOCFIELD_JSON =
 // CORE SYSTEM FIELDS (NON-USER, DOC-INTERNAL)
 // ============================================
 // RULE.CORE_SYSTEM_FIELDS : These fields are automatically added to every document by the system.
-const CORE_SYSTEM_FIELDS = [
-  {
-    fieldname: "doctype",
-    fieldtype: "Data",
-    label: "DocType",
-    system_field: true,
-    protected: true,
-    read_only: true,
-    permlevel: 0,
-    hidden: true,
-    frappe_field: true,
-    conditional_field: false
-  },
-  {
-    fieldname: "name",
-    fieldtype: "Data",
-    label: "ID",
-    system_field: true,
-    protected: true,
-    read_only: true,
-    permlevel: 0,
-    in_list_view: true,
-    reqd: true,
-    frappe_field: true
-  },
-  {
-    fieldname: "owner",
-    fieldtype: "Link",
-    label: "Created By",
-    options: "User",
-    system_field: true,
-    protected: true,
-    read_only: true,
-    set_only_once: true,
-    permlevel: 0,
-    in_list_view: true
-  },
-  {
-    fieldname: "creation",
-    fieldtype: "Datetime",
-    label: "Created On",
-    system_field: true,
-    protected: true,
-    read_only: true,
-    set_only_once: true,
-    permlevel: 0
-  },
-  {
-    fieldname: "modified",
-    fieldtype: "Datetime",
-    label: "Last Updated On",
-    system_field: true,
-    protected: true,
-    read_only: true,
-    permlevel: 0
-  },
-  {
-    fieldname: "modified_by",
-    fieldtype: "Link",
-    label: "Last Updated By",
-    options: "User",
-    system_field: true,
-    protected: true,
-    read_only: true,
-    permlevel: 0
-  },
-  {
-    fieldname: "docstatus",
-    fieldtype: "Int",
-    label: "Document Status",
-    system_field: true,
-    protected: true,
-    read_only: true,
-    permlevel: 0,
-    default: 0,
-    frappe_field: true
-  },
-  {
-    fieldname: "is_submittable",
-    fieldtype: "Check",
-    label: "Is Submittable",
-    system_field: true,
-    protected: true,
-    read_only: true,
-    permlevel: 0,
-    default: false
-  },
-  {
-    fieldname: "amended_from",
-    fieldtype: "Link",
-    label: "Amended From",
-    options: "DocType",
-    system_field: true,
-    protected: true,
-    read_only: true,
-    permlevel: 0
-  },
-  {
-    fieldname: "amendment_date",
-    fieldtype: "Date",
-    label: "Amendment Date",
-    system_field: true,
-    protected: true,
-    read_only: true,
-    permlevel: 0
-  },
-  {
-    fieldname: "idx",
-    fieldtype: "Int",
-    label: "Index",
-    system_field: true,
-    protected: true,
-    permlevel: 0,
-    default: 0,
-    hidden: true
-  },
-  {
-    fieldname: "_user_tags",
-    fieldtype: "Data",
-    label: "Tags",
-    system_field: true,
-    permlevel: 0,
-    hidden: true
-  },
-  {
-    fieldname: "_comments",
-    fieldtype: "Text",
-    label: "Comments",
-    system_field: true,
-    permlevel: 0,
-    hidden: true
-  },
-  {
-    fieldname: "_assign",
-    fieldtype: "Text",
-    label: "Assigned To",
-    system_field: true,
-    permlevel: 0,
-    hidden: true
-  },
-  {
-    fieldname: "_liked_by",
-    fieldtype: "Data",
-    label: "Liked By",
-    system_field: true,
-    permlevel: 0,
-    hidden: true
-  },
-  {
-    fieldname: "_seen",
-    fieldtype: "Data",
-    label: "Seen By",
-    system_field: true,
-    permlevel: 0,
-    hidden: true
-  }
-];
+// all properties are moved to Field schema
+//TODO: own and system doctype (0,1)
 
-// ============================================
-// ADDED SYSTEM FIELDS (NON-USER, DOC-INTERNAL, NOT FRAPPE)
-// ============================================
-// RULE.ADDED_SYSTEM_FIELDS : These fields are automatically added to every document by the system.
-
-const ADDED_SYSTEM_FIELDS = [
-  {
-    fieldname: "_schema_doctype",    //pontentially REMOVE FROM NOT system but belongs only to schema doc
-    fieldtype: "Data",
-    label: "Schema DocType",
-    system_field: true,
-    protected: true,
-    read_only: true,
-    permlevel: 0,
-    hidden: true,
-    frappe_field: false,
-    conditional_field: false
-  },
-    {
-    fieldname: "_schema_name",    //pontentially to keep track of which schema this document belongs to
-    fieldtype: "Data",
-    label: "Schema Name",
-    system_field: true,
-    protected: true,
-    read_only: true,
-    permlevel: 0,
-    hidden: true,
-    frappe_field: false,
-    conditional_field: false
-  }
+const SYSTEM_FIELDS = [
+  { fieldname: "doctype", frappe_field: true, docstatus: 1 },
+  { fieldname: "name", frappe_field: true, docstatus: 1 },
+  { fieldname: "owner", frappe_field: true, docstatus: 1 },
+  { fieldname: "creation", frappe_field: true, docstatus: 1 },
+  { fieldname: "modified", frappe_field: true, docstatus: 1 },
+  { fieldname: "modified_by", frappe_field: true, docstatus: 1 },
+  { fieldname: "docstatus", frappe_field: true, docstatus: 1 },
+  { fieldname: "is_submittable", frappe_field: true, docstatus: 1 },
+  { fieldname: "amended_from", frappe_field: true, docstatus: 1 },
+  { fieldname: "amendment_date", frappe_field: true, docstatus: 1 },
+  { fieldname: "idx", frappe_field: true, docstatus: 1 },
+  { fieldname: "_user_tags", frappe_field: true, docstatus: 1 },
+  { fieldname: "_comments", frappe_field: true, docstatus: 1 },
+  { fieldname: "_assign", frappe_field: true, docstatus: 1 },
+  { fieldname: "_liked_by", frappe_field: true, docstatus: 0 },            // not used    
+  { fieldname: "_seen", frappe_field: true, docstatus: 0 },                   // not used
+  { fieldname: "_schema_doctype", frappe_field: false, docstatus: 1 },        //not frappe
+  { fieldname: "_schema_name", frappe_field: false, docstatus: 1 }
 ];
 
 

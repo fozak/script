@@ -67,8 +67,7 @@
     "default_function",
 
     "section_meta",
-    "description",
-    "version"
+    "description"
   ],
   "fields": [
     {
@@ -430,13 +429,6 @@
       "fieldname": "description",
       "fieldtype": "Small Text",
       "label": "Description"
-    },
-    {
-      "fieldname": "version",
-      "fieldtype": "Data",
-      "label": "Version",
-      "default": "1.0.0",
-      "read_only": 1
     }
   ],
   "permissions": [

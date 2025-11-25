@@ -34,40 +34,43 @@
       // RESOLVER - Maps user input to internal operations
       // ============================================================
 
+      coworker._resolveAll = function (op) {
+        const cfg = this._config;
+        const resolved = {};
 
-coworker._resolveAll = function (op) {
-  const cfg = this._config;
-  const resolved = {};
+        // STEP 1: Resolve operation (user alias → internal name)
+        resolved.operation =
+          cfg.operationAliases[op.operation?.toLowerCase()] || op.operation;
 
-  // STEP 1: Resolve operation (user alias → internal name)
-  resolved.operation = cfg.operationAliases[op.operation?.toLowerCase()] || op.operation;
+        // STEP 2: Resolve doctype (user alias → canonical name)
+        const dtMap = cfg.doctypeAliases || {};
 
-  // STEP 2: Resolve doctype (user alias → canonical name)
-  const dtMap = cfg.doctypeAliases || {};
-  
-  // Determine source/target based on operation
-  const [source_raw, target_raw] = op.from
-    ? [op.from, op.doctype]
-    : ["create", "update"].includes(resolved.operation)
-    ? [null, op.doctype]
-    : [op.doctype, null];
-  
-  resolved.source_doctype = source_raw
-    ? (dtMap[source_raw?.toLowerCase()] || source_raw)
-    : null;
-  resolved.target_doctype = target_raw
-    ? (dtMap[target_raw?.toLowerCase()] || target_raw)
-    : null;
+        // Determine source/target based on operation
+        const [source_raw, target_raw] = op.from
+          ? [op.from, op.doctype]
+          : ["create", "update"].includes(resolved.operation)
+          ? [null, op.doctype]
+          : [op.doctype, null];
 
-  // STEP 3: Chain resolution - operation → view → component/container
-  resolved.view = cfg.operationToView[resolved.operation?.toLowerCase()] ?? null;
-  resolved.component = cfg.viewToComponent[resolved.view?.toLowerCase()] ?? null;
-  resolved.container = cfg.viewToContainer[resolved.view?.toLowerCase()] ?? null;
-  
-  // STEP 4: Defaults
-  resolved.owner = op.owner || "system";
+        resolved.source_doctype = source_raw
+          ? dtMap[source_raw?.toLowerCase()] || source_raw
+          : null;
+        resolved.target_doctype = target_raw
+          ? dtMap[target_raw?.toLowerCase()] || target_raw
+          : null;
 
-  /* DEBUG LOGGING
+        // STEP 3: Chain resolution - operation → view → component/container
+        resolved.view =
+          cfg.operationToView[resolved.operation?.toLowerCase()] ?? null;
+        resolved.component =
+          cfg.viewToComponent[resolved.view?.toLowerCase()] ?? null;
+        resolved.container =
+          cfg.viewToContainer[resolved.view?.toLowerCase()] ?? null;
+
+        // STEP 4: Defaults
+        resolved.owner = op.owner || "system";
+
+        /* DEBUG LOGGING
   if (cfg.debug) {
     console.log("🔍 [_resolveAll] Resolution:", {
       original_operation: op.operation,
@@ -80,8 +83,8 @@ coworker._resolveAll = function (op) {
     });
   }*/
 
-  return resolved;
-};
+        return resolved;
+      };
 
       // ============================================================
       // ORCHESTRATION LAYER - Main run() function
@@ -227,16 +230,18 @@ coworker._resolveAll = function (op) {
       // EXECUTION ROUTER
       // ============================================================
       coworker._exec = async function (run_doc) {
-        const handler = this._handlers[run_doc.operation] || this._handlers.select; //falling back select
+        const previousAdapter = pb._currentAdapter;
+        if (run_doc.options?.adapter) {
+          pb.useAdapter(run_doc.options.adapter);
+        }
 
-        /*if (!handler) {
-          throw new Error(`Unknown operation: ${run_doc.operation}`);
-        }*/ // Modified to allow custom operations
-
-    
-
-
-        return await handler.call(this, run_doc);
+        try {
+          const handler =
+            this._handlers[run_doc.operation] || this._handlers.select;
+          return await handler.call(this, run_doc);
+        } finally {
+          pb.useAdapter(previousAdapter);
+        }
       };
 
       // ============================================================
