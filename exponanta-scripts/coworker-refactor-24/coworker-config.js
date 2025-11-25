@@ -707,6 +707,7 @@ const SYSTEM_FIELDS = [
   { fieldname: "amended_from", frappe_field: true, docstatus: 1 },
   { fieldname: "amendment_date", frappe_field: true, docstatus: 1 },
   { fieldname: "idx", frappe_field: true, docstatus: 1 },
+  { fieldname: "custom", frappe_field: true, docstatus: 1 },      //0- for system 1, for custom
   { fieldname: "_user_tags", frappe_field: true, docstatus: 1 },
   { fieldname: "_comments", frappe_field: true, docstatus: 1 },
   { fieldname: "_assign", frappe_field: true, docstatus: 1 },
