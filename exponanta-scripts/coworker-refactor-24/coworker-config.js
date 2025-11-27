@@ -727,6 +727,13 @@ const SYSTEM_FIELDS = [
 //  || @request.auth.name ~ data._allowed_users
 //  || @request.auth.name ~ data._allowed_users_read
 
+// listRule: @request.auth.name ?= data._allowed_users_read || @request.auth.name ?= data._allowed_users
+//readRule: @request.auth.name ?= data._allowed_users_read || @request.auth.name ?= data._allowed_users
+//updateRule: @request.auth.name ?= data._allowed_users
+//createRule: (empty)
+//deleteRule: locked
+
+
 
 
 coworker._config = {
