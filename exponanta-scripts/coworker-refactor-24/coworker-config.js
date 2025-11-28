@@ -718,7 +718,8 @@ const SYSTEM_FIELDS = [
   { fieldname: "_allowed_roles", frappe_field: false, docstatus: 1 },         //ACL ["Manager"], // Managers read+write
   { fieldname: "_allowed_roles_read", frappe_field: false, docstatus: 1 },    //ACL ["Viewer"], // Viewers read-only      //not frappe
   { fieldname: "_allowed_users", frappe_field: false, docstatus: 1 },         //ACL ["User-B"], // User-B read+write
-  { fieldname: "_allowed_users_read", frappe_field: false, docstatus: 1 }     //["User-C"] // User-C read-only
+  { fieldname: "_allowed_users_read", frappe_field: false, docstatus: 1 },     //["User-C"] // User-C read-only
+  { fieldname: "_is_public", frappe_field: false, docstatus: 1 }
 ]
 //  ACL - this is for pocketbased storage
 //  @request.auth.name = data.owner
