@@ -1,4 +1,196 @@
+Complete RBAC System Documentation
 
+//https://claude.ai/chat/6f6750e6-7f1f-405a-aba6-4f528b6528e9
+1. View Rule
+javascript
+owner = @request.auth.id ||
+@request.auth.item_via_user_id._allowed_read:each ?= _allowed:each ||
+@request.auth.item_via_user_id._allowed_read:each ?= _allowed_read:each
+Logic:
+
+Ownership check: User owns the record (owner field matches authenticated user ID)
+Write role check: User's capabilities (in their _allowed_read) intersect with record's _allowed (write permissions)
+Read role check: User's capabilities (in their _allowed_read) intersect with record's _allowed_read (read-only permissions)
+
+Key principle: User capabilities are stored in their User profile's _allowed_read field.
+
+2. Update Rule
+javascriptowner = @request.auth.id ||
+@request.auth.item_via_user_id._allowed_read:each ?= _allowed:each
+Logic:
+
+Ownership check: User owns the record
+Write role check: User's capabilities (in their _allowed_read) intersect with record's _allowed (write permissions ONLY)
+
+Key principle: Only checks _allowed, not _allowed_read, so users cannot edit via read-only permissions.
+
+3. Complete Examples
+Example 1: System Manager User Profile
+javascript{
+  id: "usersysmanxxxxx",
+  doctype: "User",
+  owner: '',                          // Empty - no ownership
+  user_id: "usersysmanxxxxx",         // Links to @users collection
+  _allowed: [roleSystemManager],      // WHO can edit: System Managers
+  _allowed_read: [roleSystemManager], // WHAT capabilities: System Manager role
+  data: {
+    email: "admin@example.com",
+    full_name: "System Administrator"
+  }
+}
+Access:
+
+✅ Can VIEW own profile (capabilities [roleSystemManager] match profile's _allowed)
+✅ Can EDIT own profile (capabilities [roleSystemManager] match profile's _allowed)
+✅ Can EDIT all other user profiles (all profiles have roleSystemManager in _allowed)
+✅ Can access all records with roleSystemManager in _allowed or _allowed_read
+
+
+Example 2: Regular User Profile (John)
+javascript{
+  id: "userjohnxxxxx",
+  doctype: "User",
+  owner: '',                                      // Empty - no ownership
+  user_id: "userjohnxxxxx",                       // Links to @users collection
+  _allowed: [roleSystemManager],                  // WHO can edit: Only System Managers
+  _allowed_read: [roleProjectsUser, roleManager], // WHAT capabilities: Projects User + Manager roles
+  data: {
+    email: "john@example.com",
+    full_name: "John Doe"
+  }
+}
+Access:
+
+✅ Can VIEW own profile (capabilities [roleProjectsUser, roleManager] check against profile's _allowed and _allowed_read)
+❌ CANNOT EDIT own profile (capabilities don't include roleSystemManager)
+✅ System Manager CAN EDIT this profile (has roleSystemManager in their capabilities)
+✅ Can access records with roleProjectsUser or roleManager in their _allowed or _allowed_read
+
+
+Example 3: Task Record (Accessible by Projects User)
+javascript{
+  id: "taskxxxxxxik28v",
+  doctype: "Task",
+  owner: "userjohnxxxxx",           // John created this task
+  user_id: '',                      // Empty - not a User profile
+  _allowed: [roleProjectsUser],     // WHO can edit: Projects Users
+  _allowed_read: [],                // WHO can read-only: None (edit permission includes read)
+  data: {
+    subject: "Implement RBAC system",
+    status: "Open",
+    priority: "High",
+    description: "Complete role-based access control implementation"
+  }
+}
+Access for John (has roleProjectsUser in capabilities):
+
+✅ Can VIEW via ownership (owner = "userjohnxxxxx")
+✅ Can VIEW via role (capabilities [roleProjectsUser] match task's _allowed)
+✅ Can EDIT via ownership
+✅ Can EDIT via role (capabilities [roleProjectsUser] match task's _allowed)
+
+Access for System Manager (has roleSystemManager in capabilities):
+
+❌ CANNOT VIEW (no ownership, capabilities don't include roleProjectsUser)
+❌ CANNOT EDIT (no ownership, capabilities don't include roleProjectsUser)
+
+Access for Guest User (has roleGuest in capabilities):
+
+❌ CANNOT VIEW (no ownership, capabilities don't include roleProjectsUser)
+❌ CANNOT EDIT (no ownership, capabilities don't include roleProjectsUser)
+
+
+Example 4: Task Record (Read-Only Access for Guests)
+javascript{
+  id: "taskxxxxxx7qp9m",
+  doctype: "Task",
+  owner: "userjohnxxxxx",
+  user_id: '',
+  _allowed: [roleProjectsUser],     // WHO can edit: Projects Users only
+  _allowed_read: [roleGuest],       // WHO can read-only: Guests
+  data: {
+    subject: "Public task - visible to all",
+    status: "Open",
+    priority: "Medium"
+  }
+}
+Access for Guest User (has roleGuest in capabilities):
+
+✅ Can VIEW (capabilities [roleGuest] match task's _allowed_read)
+❌ CANNOT EDIT (capabilities don't include roleProjectsUser)
+
+Access for John (has roleProjectsUser in capabilities):
+
+✅ Can VIEW via ownership
+✅ Can VIEW via role (capabilities include roleProjectsUser)
+✅ Can EDIT via role (capabilities include roleProjectsUser)
+
+
+Field Usage Summary
+For User Profiles (doctype = "User"):
+FieldPurposeExample ValueownerAlways empty''user_idLinks to @users collectionSame as record id_allowedWHO can edit this profile[roleSystemManager]_allowed_readWHAT capabilities this user HAS[roleProjectsUser, roleManager]
+For All Other Records (Tasks, Orders, etc.):
+FieldPurposeExample ValueownerUser ID who created/owns it"userjohnxxxxx" or ''user_idAlways empty (not a User profile)''_allowedRole IDs that can write/edit[roleProjectsUser]_allowed_readRole IDs that can read-only[roleGuest]
+
+The Dualism of User Profiles
+User profiles serve TWO purposes:
+
+Access Control Record (like any other record):
+
+_allowed = who can edit THIS profile
+_allowed_read = (repurposed, see below)
+
+
+User Identity/Capabilities (special for User doctype):
+
+_allowed_read = what roles/permissions this user HAS
+Used via @request.auth.item_via_user_id._allowed_read in rules
+
+
+
+This is why:
+
+Regular users have their working roles in _allowed_read
+System Manager has roleSystemManager in BOTH _allowed and _allowed_read
+System Manager can edit their own profile AND all other profiles
+Regular users cannot edit any profiles (including their own)
+
+
+Critical Rules:
+
+✅ User capabilities go in _allowed_read (User profile only)
+✅ Record write permissions go in _allowed (all records)
+✅ Record read-only permissions go in _allowed_read (non-User records)
+✅ User profiles always have empty owner (prevents self-ownership)
+✅ User profiles always set user_id (enables @request.auth.item_via_user_id)
+✅ Non-User records always have empty user_id (only User profiles need it)
+
+//==============================
+
+TODO  roleispublic 
+
+ Final ViewRule:
+javascriptowner = @request.auth.id ||
+_allowed_read:each ?~ 'roleispublic' ||  // Public access (direct check)
+@request.auth.item_via_user_id._allowed_read:each ?= _allowed:each ||
+@request.auth.item_via_user_id._allowed_read:each ?= _allowed_read:each
+Usage:
+javascript// Public schema
+{
+  doctype: 'Schema',
+  _allowed: [roleSystemManager],
+  _allowed_read: ['roleispublicxxx'],  // Anyone can read
+}
+
+// Mixed access
+{
+  doctype: 'Announcement',
+  _allowed: [roleAdmin],
+  _allowed_read: ['roleispublicxxx', roleEmployee],  // Public + employees
+}
+This keeps Role as the only doctype, but adds special handling for system roles in the ViewRule.
+
+//==================================
 Complete Accurate Flow: User, Role, and Order Creation with New ID System
 Prerequisites
 
@@ -43,7 +235,7 @@ const userProfile = await pb.collection('item').create({
   doctype: 'User',
   owner: '',                     // ⚠️ EMPTY - users cannot own themselves
   user_id: userId,               // ⚠️ CRITICAL - links to @users for back-relation
-  _allowed: [],                  // Roles will be added later
+  _allowed: [roleusermanager],   // this is "role": "System Manager", the only Role that
   _allowed_read: [userId],       // Can read own profile
   data: {
     email: 'newapproach@example.com',
@@ -270,7 +462,8 @@ Summary: Critical Field Usage
 FieldUser ProfileRoleOrderPurposeidusernewappk9zdqrolemanagerxxxxorderxxxxx5qovhUnique ID (generated)doctype'User''Role''Order'Record typeowner'' (empty)'' (empty)userId or ''Who owns/created ituser_iduserId ✅'' (empty)'' (empty) ✅Links to @users (ONLY for User profiles!)_allowed[roleId, ...][][roleId, ...]Who can edit (role IDs)_allowed_read[userId, ...][][roleId, ...]Who can read (role/user IDs)
 
 ViewRule (Final Working Version)
-javascriptowner = @request.auth.id ||
+javascript
+owner = @request.auth.id ||
 (_allowed:length > 0 && @request.auth.item_via_user_id._allowed:each ?= _allowed:each) ||
 (_allowed_read:length > 0 && @request.auth.item_via_user_id._allowed:each ?= _allowed_read:each)
 How it works:
