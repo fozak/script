@@ -696,6 +696,7 @@ const DOCFIELD_JSON =
 //TODO: own and system doctype (0,1)
 
 const SYSTEM_FIELDS = [
+  { fieldname: "id", frappe_field: true, docstatus: 1 },
   { fieldname: "doctype", frappe_field: true, docstatus: 1 },
   { fieldname: "name", frappe_field: true, docstatus: 1 },
   { fieldname: "owner", frappe_field: true, docstatus: 1 },                 // ACL key field
@@ -705,21 +706,14 @@ const SYSTEM_FIELDS = [
   { fieldname: "docstatus", frappe_field: true, docstatus: 1 },
   { fieldname: "is_submittable", frappe_field: true, docstatus: 1 },
   { fieldname: "amended_from", frappe_field: true, docstatus: 1 },
-  { fieldname: "amendment_date", frappe_field: true, docstatus: 1 },
+  { fieldname: "amendment_date", frappe_field: true, docstatus: 1 },   
   { fieldname: "idx", frappe_field: true, docstatus: 1 },
   { fieldname: "custom", frappe_field: true, docstatus: 1 },              //0- for system 1, for custom
-  { fieldname: "_user_tags", frappe_field: true, docstatus: 1 },
-  { fieldname: "_comments", frappe_field: true, docstatus: 1 },
-  { fieldname: "_assign", frappe_field: true, docstatus: 1 },
-  { fieldname: "_liked_by", frappe_field: true, docstatus: 0 },            // not used    
-  { fieldname: "_seen", frappe_field: true, docstatus: 0 },                // not used
   { fieldname: "_schema_doctype", frappe_field: false, docstatus: 1 },     //Potentially move to Schema doctypenot frappe
   { fieldname: "_schema_name", frappe_field: false, docstatus: 1 },
-  { fieldname: "_allowed_roles", frappe_field: false, docstatus: 1 },         //ACL ["Manager"], // Managers read+write
-  { fieldname: "_allowed_roles_read", frappe_field: false, docstatus: 1 },    //ACL ["Viewer"], // Viewers read-only      //not frappe
-  { fieldname: "_allowed_users", frappe_field: false, docstatus: 1 },         //ACL ["User-B"], // User-B read+write
-  { fieldname: "_allowed_users_read", frappe_field: false, docstatus: 1 },     //["User-C"] // User-C read-only
-  { fieldname: "_is_public", frappe_field: false, docstatus: 1 }
+  { fieldname: "_allowed", frappe_field: false, docstatus: 1 },         //combined write access is like ACL ["User-B"] and roles etc ACL ["Manager"], // Managers read+write
+  { fieldname: "_allowed_read", frappe_field: false, docstatus: 1 },    //combined read access is like ACL ["User-B"] and roles etc ACL ["Manager"], // Managers read+write
+   { fieldname: "user_id", frappe_field: false, docstatus: 1 }    // special field for user profile linking to @users colleciton for auth
 ]
 //  ACL - this is for pocketbased storage
 //  @request.auth.name = data.owner

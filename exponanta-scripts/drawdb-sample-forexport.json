@@ -1,0 +1,189 @@
+{
+  "tables": [
+    {
+      "id": "tbl_1",
+      "name": "table_todo",
+      "x": 0,
+      "y": 0,
+      "locked": false,
+      "fields": [
+        {
+          "id": "fld_1",
+          "name": "description_and_status",
+          "type": "TEXT",
+          "primary": false,
+          "unique": false,
+          "notNull": false,
+          "increment": false,
+          "default": "",
+          "check": "",
+          "comment": ""
+        },
+        {
+          "id": "fld_2",
+          "name": "status",
+          "type": "TEXT",
+          "primary": false,
+          "unique": false,
+          "notNull": false,
+          "increment": false,
+          "default": "Open",
+          "check": "",
+          "comment": "Options: Open, Closed, Cancelled"
+        },
+        {
+          "id": "fld_3",
+          "name": "priority",
+          "type": "TEXT",
+          "primary": false,
+          "unique": false,
+          "notNull": false,
+          "increment": false,
+          "default": "Medium",
+          "check": "",
+          "comment": "Options: High, Medium, Low"
+        },
+        {
+          "id": "fld_4",
+          "name": "color",
+          "type": "TEXT",
+          "primary": false,
+          "unique": false,
+          "notNull": false,
+          "increment": false,
+          "default": "",
+          "check": "",
+          "comment": ""
+        },
+        {
+          "id": "fld_5",
+          "name": "date",
+          "type": "DATE",
+          "primary": false,
+          "unique": false,
+          "notNull": false,
+          "increment": false,
+          "default": "Today",
+          "check": "",
+          "comment": ""
+        },
+        {
+          "id": "fld_6",
+          "name": "description",
+          "type": "TEXT",
+          "primary": false,
+          "unique": false,
+          "notNull": true,
+          "increment": false,
+          "default": "",
+          "check": "",
+          "comment": ""
+        },
+        {
+          "id": "fld_7",
+          "name": "reference_type",
+          "type": "TEXT",
+          "primary": false,
+          "unique": false,
+          "notNull": false,
+          "increment": false,
+          "default": "",
+          "check": "",
+          "comment": "Link to DocType"
+        },
+        {
+          "id": "fld_8",
+          "name": "reference_name",
+          "type": "TEXT",
+          "primary": false,
+          "unique": false,
+          "notNull": false,
+          "increment": false,
+          "default": "",
+          "check": "",
+          "comment": "Dynamic Link from reference_type"
+        },
+        {
+          "id": "fld_9",
+          "name": "role",
+          "type": "TEXT",
+          "primary": false,
+          "unique": false,
+          "notNull": false,
+          "increment": false,
+          "default": "",
+          "check": "",
+          "comment": "Link to Role"
+        },
+        {
+          "id": "fld_10",
+          "name": "assigned_by",
+          "type": "TEXT",
+          "primary": false,
+          "unique": false,
+          "notNull": false,
+          "increment": false,
+          "default": "",
+          "check": "",
+          "comment": "Link to User"
+        },
+        {
+          "id": "fld_11",
+          "name": "assigned_by_full_name",
+          "type": "TEXT",
+          "primary": false,
+          "unique": false,
+          "notNull": false,
+          "increment": false,
+          "default": "",
+          "check": "",
+          "comment": "Read Only"
+        },
+        {
+          "id": "fld_12",
+          "name": "sender",
+          "type": "TEXT",
+          "primary": false,
+          "unique": false,
+          "notNull": false,
+          "increment": false,
+          "default": "",
+          "check": "",
+          "comment": "Hidden field"
+        },
+        {
+          "id": "fld_13",
+          "name": "assignment_rule",
+          "type": "TEXT",
+          "primary": false,
+          "unique": false,
+          "notNull": false,
+          "increment": false,
+          "default": "",
+          "check": "",
+          "comment": "Link to Assignment Rule, read-only"
+        },
+        {
+          "id": "fld_14",
+          "name": "allocated_to",
+          "type": "TEXT",
+          "primary": false,
+          "unique": false,
+          "notNull": false,
+          "increment": false,
+          "default": "",
+          "check": "",
+          "comment": "Link to User"
+        }
+      ],
+      "comment": "",
+      "indices": [],
+      "color": "#175e7a"
+    }
+  ],
+  "relationships": [],
+  "notes": [],
+  "subjectAreas": [],
+  "database": "sqlite",
+  "title": "ToDo"
+}

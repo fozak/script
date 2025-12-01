@@ -1,4 +1,16 @@
+
+
 # Overview
+
+# building context
+- Define full context: 
+- we have run_doc (whcih) is 1 ran data (1 set of documents in 1 operation)
+- Missing all schemas (in cache ) (tolal size is about 4MB)
+- Missing user (loggedin user)
+- MIssing config file. 
+
+- we can formalize this as set operations like coworker._exec(select, Schema) 
+
 ## UI
 - grids and tables, tanstack https://claude.ai/chat/4c1e66ee-421d-4513-bf02-9d414c8875c0 
 
