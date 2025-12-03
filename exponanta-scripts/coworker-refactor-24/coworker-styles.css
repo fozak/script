@@ -78,7 +78,7 @@ body[data-theme="dark"] {
   transition: all .15s; 
 }
 .cw-btn-primary { color: #fff; background-color: var(--cw-bg-primary); border-color: var(--cw-bg-primary); }
-.cw-btn-secondary { color: #fff; background-color: var(--cw-bg-secondary); border-color: var(--cw-bg-secondary); }
+.cw-btn-secondary { color: #5416cb; background-color: var(--cw-bg-secondary); border-color: var(--cw-bg-secondary); } /* Updated text color for better contrast */
 .cw-btn-success { color: #fff; background-color: var(--cw-bg-success); border-color: var(--cw-bg-success); }
 .cw-btn-danger { color: #fff; background-color: var(--cw-bg-danger); border-color: var(--cw-bg-danger); }
 .cw-btn-warning { color: #212529; background-color: var(--cw-bg-warning); border-color: var(--cw-bg-warning); }

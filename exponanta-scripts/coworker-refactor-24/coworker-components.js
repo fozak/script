@@ -16,6 +16,17 @@ const RecordLink = ({ record, children, context = {}, as = 'div', ...props }) =>
 // ============================================================
 // FIELD COMPONENTS
 // ============================================================
+// ============================================================
+// SHARED CHANGE HANDLER
+// ============================================================
+const emitChange = (field, run, value) => {
+  if (field.read_only) return; // Prevent changes on read-only fields
+  coworker.onFieldChange(field.fieldname, value, run);
+};
+
+// ============================================================
+// FIELD COMPONENTS
+// ============================================================
 
 const FieldData = ({ field, run, value }) => {
   return React.createElement('div', { className: CWStyles.form.fieldWrapper },
@@ -25,7 +36,8 @@ const FieldData = ({ field, run, value }) => {
       className: CWStyles.field.input,
       value: value || '',
       readOnly: field.read_only,
-      placeholder: field.placeholder
+      placeholder: field.placeholder,
+      onChange: e => emitChange(field, run, e.target.value)
     })
   );
 };
@@ -37,7 +49,8 @@ const FieldText = ({ field, run, value }) => {
       className: CWStyles.field.textarea,
       value: value || '',
       readOnly: field.read_only,
-      rows: 3
+      rows: 3,
+      onChange: e => emitChange(field, run, e.target.value)
     })
   );
 };
@@ -49,7 +62,8 @@ const FieldLongText = ({ field, run, value }) => {
       className: CWStyles.field.textarea,
       value: value || '',
       readOnly: field.read_only,
-      rows: 6
+      rows: 6,
+      onChange: e => emitChange(field, run, e.target.value)
     })
   );
 };
@@ -61,7 +75,8 @@ const FieldInt = ({ field, run, value }) => {
       type: 'number',
       className: CWStyles.field.input,
       value: value || 0,
-      readOnly: field.read_only
+      readOnly: field.read_only,
+      onChange: e => emitChange(field, run, parseInt(e.target.value) || 0)
     })
   );
 };
@@ -74,7 +89,8 @@ const FieldFloat = ({ field, run, value }) => {
       step: '0.01',
       className: CWStyles.field.input,
       value: value || 0,
-      readOnly: field.read_only
+      readOnly: field.read_only,
+      onChange: e => emitChange(field, run, parseFloat(e.target.value) || 0)
     })
   );
 };
@@ -87,21 +103,66 @@ const FieldCurrency = ({ field, run, value }) => {
       step: '0.01',
       className: CWStyles.field.input,
       value: value || 0,
-      readOnly: field.read_only
+      readOnly: field.read_only,
+      onChange: e => emitChange(field, run, parseFloat(e.target.value) || 0)
     })
   );
 };
 
 const FieldCheck = ({ field, run, value }) => {
   return React.createElement('div', { className: CWStyles.form.fieldWrapper },
+    React.createElement('label', { className: CWStyles.form.label },
+      React.createElement('input', {
+        type: 'checkbox',
+        checked: value || false,
+        readOnly: field.read_only,
+        className: CWStyles.field.input,
+        onChange: e => emitChange(field, run, e.target.checked)
+      }),
+      field.label
+    )
+  );
+};
+
+const FieldDate = ({ field, run, value }) => {
+  return React.createElement('div', { className: CWStyles.form.fieldWrapper },
     React.createElement('label', { className: CWStyles.form.label }, field.label),
     React.createElement('input', {
-      type: 'checkbox',
-      checked: value || false,
-      disabled: field.read_only
+      type: 'date',
+      className: CWStyles.field.input,
+      value: value || '',
+      readOnly: field.read_only,
+      onChange: e => emitChange(field, run, e.target.value)
     })
   );
 };
+
+const FieldDatetime = ({ field, run, value }) => {
+  return React.createElement('div', { className: CWStyles.form.fieldWrapper },
+    React.createElement('label', { className: CWStyles.form.label }, field.label),
+    React.createElement('input', {
+      type: 'datetime-local',
+      className: CWStyles.field.input,
+      value: value || '',
+      readOnly: field.read_only,
+      onChange: e => emitChange(field, run, e.target.value)
+    })
+  );
+};
+
+const FieldTime = ({ field, run, value }) => {
+  return React.createElement('div', { className: CWStyles.form.fieldWrapper },
+    React.createElement('label', { className: CWStyles.form.label }, field.label),
+    React.createElement('input', {
+      type: 'time',
+      className: CWStyles.field.input,
+      value: value || '',
+      readOnly: field.read_only,
+      onChange: e => emitChange(field, run, e.target.value)
+    })
+  );
+};
+
 
 const FieldSelect = ({ field, run, value }) => {
   return React.createElement('div', { className: CWStyles.form.fieldWrapper },
@@ -109,7 +170,8 @@ const FieldSelect = ({ field, run, value }) => {
     React.createElement('select', {
       className: CWStyles.field.select,
       value: value || '',
-      disabled: field.read_only
+      disabled: field.read_only,
+      onChange: e => emitChange(field, run, e.target.value)
     },
       (field.options || '').split('\n').map((opt, i) =>
         React.createElement('option', { key: i, value: opt }, opt)
@@ -117,6 +179,7 @@ const FieldSelect = ({ field, run, value }) => {
     )
   );
 };
+
 
 const FieldLink = ({ field, run, value }) => {
   const [options, setOptions] = React.useState([]);
@@ -177,41 +240,7 @@ const FieldLink = ({ field, run, value }) => {
   );
 };
 
-const FieldDate = ({ field, run, value }) => {
-  return React.createElement('div', { className: CWStyles.form.fieldWrapper },
-    React.createElement('label', { className: CWStyles.form.label }, field.label),
-    React.createElement('input', {
-      type: 'date',
-      className: CWStyles.field.input,
-      value: value || '',
-      readOnly: field.read_only
-    })
-  );
-};
 
-const FieldDatetime = ({ field, run, value }) => {
-  return React.createElement('div', { className: CWStyles.form.fieldWrapper },
-    React.createElement('label', { className: CWStyles.form.label }, field.label),
-    React.createElement('input', {
-      type: 'datetime-local',
-      className: CWStyles.field.input,
-      value: value || '',
-      readOnly: field.read_only
-    })
-  );
-};
-
-const FieldTime = ({ field, run, value }) => {
-  return React.createElement('div', { className: CWStyles.form.fieldWrapper },
-    React.createElement('label', { className: CWStyles.form.label }, field.label),
-    React.createElement('input', {
-      type: 'time',
-      className: CWStyles.field.input,
-      value: value || '',
-      readOnly: field.read_only
-    })
-  );
-};
 
 // ============================================================
 // REGISTER FIELD COMPONENTS FIRST
@@ -276,7 +305,54 @@ const MainForm = ({ run }) => {
 // ============================================================
 // MAIN GRID
 // ============================================================
-
+const MainGrid = ({ run }) => {
+  const data = run.output.data;
+  const keys = Object.keys(data[0] || {});
+  
+  return React.createElement('div', { className: CWStyles.grid.wrapper },
+    React.createElement('div', { className: CWStyles.grid.header },
+      React.createElement('h2', {}, run.source_doctype || 'List'),
+      React.createElement('div', { className: CWStyles.grid.toolbar },
+        React.createElement('button', { className: CWStyles.button.primary }, 'New')
+      )
+    ),
+    React.createElement('div', { className: CWStyles.grid.body },
+      React.createElement('table', { className: CWStyles.table.base + ' ' + CWStyles.table.striped },
+        React.createElement('thead', {},
+          React.createElement('tr', { 
+            className: CWStyles.grid.row  // ← ADD THIS
+          },
+            keys.map(key =>
+              React.createElement('th', { 
+                key: key,
+                className: CWStyles.grid.cell
+              }, key)
+            )
+          )
+        ),
+        React.createElement('tbody', {},
+          data.map((row, i) =>
+            React.createElement(RecordLink, {
+              key: i,
+              record: row,
+              as: 'tr',
+              className: CWStyles.grid.row
+            },
+              keys.map(key =>
+                React.createElement('td', { 
+                  key: key, 
+                  className: CWStyles.grid.cell 
+                },
+                  String(row[key] || '')
+                )
+              )
+            )
+          )
+        )
+      )
+    )
+  );
+};
 
 // ============================================================
 // MAIN CHAT

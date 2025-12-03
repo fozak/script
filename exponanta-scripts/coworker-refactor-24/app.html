@@ -22,6 +22,14 @@
 </head>
 <body>
   
+    <!-- NEW: Navigation Bar -->
+  <div id="nav_bar" style="padding: 10px; border-bottom: 1px solid #ddd; background: #f8f9fa;">
+    <button id="back_btn" class="cw-btn cw-btn-secondary cw-btn-sm" onclick="handleBack()" disabled>← Back</button>
+    <button id="forward_btn" class="cw-btn cw-btn-secondary cw-btn-sm" onclick="handleForward()" disabled>Forward →</button>
+    <span id="breadcrumbs" style="margin-left: 20px; color: #666;">Home</span>
+  </div>
+
+  
   <div id="main_container"></div>
 
   <!-- ═══════════════════════════════════════════════════════ -->
@@ -60,6 +68,9 @@
 
   <!---Testing 3 tier-->
   <script src="coworker-field-system.js"></script>
+
+   <!-- NEW: Navigation Layer -->
+  <script src="coworker-navigation.js"></script>
 
   <!-- ═══════════════════════════════════════════════════════ -->
   <!-- LAYER 5: Application (Optional) -->
