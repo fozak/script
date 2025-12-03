@@ -93,9 +93,7 @@ coworker.onRecordClick = function(record, context = {}) {
 // UTILITIES
 // ============================================================
 
-coworker._generateId = function(prefix) {
-  return `${prefix}-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
-};
+
 
 coworker.getConfig = function(key, defaultValue) {
   return this._config?.[key] !== undefined ? this._config[key] : defaultValue;

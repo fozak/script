@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Delta Layer Form with Select</title>
+</head>
+<body>
+
+<h2>Customer Form</h2>
+
+<label>
+  Customer Name:
+  <input type="text" id="customer_name" />
+</label>
+<br/>
+<label>
+  Territory:
+  <input type="text" id="territory" />
+</label>
+<br/>
+<label>
+  Email:
+  <input type="text" id="email" />
+</label>
+<br/>
+<label>
+  Customer Type:
+  <select id="customer_type">
+    <option value="">Loading...</option>
+  </select>
+</label>
+
+<script>
+  // -------------------------
+  // 1. Initial runDoc with original data
+  // -------------------------
+  const runDoc = {
+    output: {
+      data: [{
+        customer_name: "Mike Storough",
+        territory: "Europe",
+        email: "mike@example.com",
+        customer_type: "" // empty initially
+      }]
+    },
+    update: {} // delta layer for edits
+  };
+
+  // -------------------------
+  // 2. Helper to update delta layer safely
+  // -------------------------
+  function updateField(path, value) {
+    const keys = path.split('.');
+    let obj = runDoc;
+    for (let i = 0; i < keys.length - 1; i++) {
+      const k = keys[i];
+      if (!obj[k]) obj[k] = {}; // create nested objects if missing
+      obj = obj[k];
+    }
+    obj[keys[keys.length - 1]] = value;
+    console.log("Delta layer updated:", JSON.stringify(runDoc.update, null, 2));
+  }
+
+  // -------------------------
+  // 3. Debounce helper with proper flush
+  // -------------------------
+  function debounce(fn, delay) {
+    let timer;
+    let lastArgs;
+    const debounced = function(...args) {
+      lastArgs = args;
+      clearTimeout(timer);
+      timer = setTimeout(() => fn(...lastArgs), delay);
+    };
+    debounced.flush = () => {
+      clearTimeout(timer);
+      if (lastArgs) fn(...lastArgs);
+    };
+    return debounced;
+  }
+
+  // -------------------------
+  // 4. Setup text input fields
+  // -------------------------
+  function setupTextField(id, fieldName) {
+    const input = document.getElementById(id);
+    const initialValue = runDoc.output.data[0][fieldName] || "";
+    input.value = initialValue;
+
+    const commit = debounce((val) => {
+      updateField(`update.Task_123.${fieldName}.user_input`, val);
+    }, 300);
+
+    input.addEventListener("input", (e) => commit(e.target.value));
+    input.addEventListener("blur", () => commit.flush());
+  }
+
+  // -------------------------
+  // 5. Setup select field with lazy-loaded options
+  // -------------------------
+  function setupSelectField(id, fieldName, optionsLoader) {
+    const select = document.getElementById(id);
+
+    // Load options lazily (simulate async)
+    optionsLoader().then(options => {
+      select.innerHTML = options.map(opt => 
+        `<option value="${opt.value}">${opt.label}</option>`
+      ).join('');
+      // set initial value
+      select.value = runDoc.output.data[0][fieldName] || "";
+    });
+
+    select.addEventListener("change", (e) => {
+      updateField(`update.Task_123.${fieldName}.user_input`, e.target.value);
+    });
+
+    select.addEventListener("blur", () => {
+      // optional: in case we want to trigger something on blur
+      updateField(`update.Task_123.${fieldName}.user_input`, select.value);
+    });
+  }
+
+  // -------------------------
+  // 6. Lazy loader for select options
+  // -------------------------
+  function loadCustomerTypeOptions() {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve([
+          { value: "retail", label: "Retail" },
+          { value: "wholesale", label: "Wholesale" },
+          { value: "vip", label: "VIP" },
+          { value: "prospect", label: "Prospect" },
+          { value: "internal", label: "Internal" },
+        ]);
+      }, 300); // simulate network delay
+    });
+  }
+
+  // -------------------------
+  // 7. Initialize fields
+  // -------------------------
+  setupTextField("customer_name", "customer_name");
+  setupTextField("territory", "territory");
+  setupTextField("email", "email");
+  setupSelectField("customer_type", "customer_type", loadCustomerTypeOptions);
+
+</script>
+
+</body>
+</html>
+
