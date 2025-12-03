@@ -110,29 +110,29 @@
 
         // Construct run document
         const run_doc = {
-  // Frappe standard fields
-  doctype: "Run",
-  name: generateId("run"),
-  creation: start,
-  modified: start,
-  modified_by: resolved.owner || "system",
-  docstatus: 0,
-  owner: resolved.owner || "system",
+          // Frappe standard fields
+          doctype: "Run",
+          name: generateId("run"),
+          creation: start,
+          modified: start,
+          modified_by: resolved.owner || "system",
+          docstatus: 0,
+          owner: resolved.owner || "system",
 
-  // Operation definition
-  operation: resolved.operation,
-  operation_original: op.operation,
-  source_doctype: resolved.source_doctype,
-  target_doctype: resolved.target_doctype,
+          // Operation definition
+          operation: resolved.operation,
+          operation_original: op.operation,
+          source_doctype: resolved.source_doctype,
+          target_doctype: resolved.target_doctype,
 
-  // UI/Rendering (explicit takes priority over resolved)
-  view: 'view' in op ? op.view : resolved.view,
-  component: 'component' in op ? op.component : resolved.component,
-  container: 'container' in op ? op.container : resolved.container,
+          // UI/Rendering (explicit takes priority over resolved)
+          view: "view" in op ? op.view : resolved.view,
+          component: "component" in op ? op.component : resolved.component,
+          container: "container" in op ? op.container : resolved.container,
 
-  // Data flow
-  input: op.input || {},
-  output: null,
+          // Data flow
+          input: op.input || {},
+          output: null,
 
           // Execution state
           status: "running",
@@ -159,6 +159,22 @@
           // Runtime helpers
           child: null,
         };
+
+        // switch output-input
+
+        // ✅ ADD THIS: Initialize input.data for draft mode
+        if (op.options?.draft) {
+          if (!run_doc.input.data) run_doc.input.data = {};
+        }
+
+        // ✅ ADD THIS: Define run.doc getter
+        Object.defineProperty(run_doc, "doc", {
+          get: function () {
+            return this.options?.draft
+              ? this.input.data
+              : this.output?.data?.[0] || {};
+          },
+        });
 
         // Update state: RUNNING
         if (
@@ -723,41 +739,41 @@
       // SCHEMA MANAGEMENT
       // ============================================================
 
-coworker.getSchema = async function (doctype) {
-  if (schemaCache.has(doctype)) {
-    return schemaCache.get(doctype);
-  }
+      coworker.getSchema = async function (doctype) {
+        if (schemaCache.has(doctype)) {
+          return schemaCache.get(doctype);
+        }
 
-  try {
-    const result = await this.run({
-      operation: 'select',
-      doctype: 'Schema',
-      input: {
-        where: { _schema_doctype: doctype },
-        take: 1,
-      },
-      component: null,  // ← ADD THIS LINE
-      container: null,  // ← ADD THIS LINE
-      options: { includeSchema: false },
-    });
+        try {
+          const result = await this.run({
+            operation: "select",
+            doctype: "Schema",
+            input: {
+              where: { _schema_doctype: doctype },
+              take: 1,
+            },
+            component: null, // ← ADD THIS LINE
+            container: null, // ← ADD THIS LINE
+            options: { includeSchema: false },
+          });
 
-    if (
-      !result.success ||
-      !result.output?.data ||
-      result.output.data.length === 0
-    ) {
-      console.warn(`Schema not found for: ${doctype}`);
-      return null;
-    }
+          if (
+            !result.success ||
+            !result.output?.data ||
+            result.output.data.length === 0
+          ) {
+            console.warn(`Schema not found for: ${doctype}`);
+            return null;
+          }
 
-    const schema = result.output.data[0];
-    schemaCache.set(doctype, schema);
-    return schema;
-  } catch (error) {
-    console.error(`Error fetching schema for ${doctype}:`, error);
-    return null;
-  }
-};
+          const schema = result.output.data[0];
+          schemaCache.set(doctype, schema);
+          return schema;
+        } catch (error) {
+          console.error(`Error fetching schema for ${doctype}:`, error);
+          return null;
+        }
+      };
       coworker.clearSchemaCache = function () {
         schemaCache.clear();
         console.log("🗑️ Schema cache cleared");

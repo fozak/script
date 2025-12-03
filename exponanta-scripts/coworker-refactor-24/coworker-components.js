@@ -5,12 +5,22 @@
 // ============================================================
 // UNIVERSAL RECORD LINK
 // ============================================================
-const RecordLink = ({ record, children, context = {}, as = 'div', ...props }) => {
-  return React.createElement(as, {
-    ...props,
-    onClick: () => coworker.onRecordClick(record, context),
-    style: { cursor: 'pointer', ...props.style }
-  }, children);
+const RecordLink = ({
+  record,
+  children,
+  context = {},
+  as = "div",
+  ...props
+}) => {
+  return React.createElement(
+    as,
+    {
+      ...props,
+      onClick: () => coworker.onRecordClick(record, context),
+      style: { cursor: "pointer", ...props.style },
+    },
+    children
+  );
 };
 
 // ============================================================
@@ -27,97 +37,142 @@ const emitChange = (field, run, value) => {
 // ============================================================
 // FIELD COMPONENTS
 // ============================================================
+// Each field component receives `field`, `run`, and `value` props
 
 const FieldData = ({ field, run, value }) => {
+  const [localValue, setLocalValue] = React.useState(value || '');
+  
+  const handleChange = (e) => {
+    const newValue = e.target.value;
+    setLocalValue(newValue);
+    
+    // ✅ Use run.doc
+    run.doc[field.fieldname] = newValue;
+  };
+  
   return React.createElement('div', { className: CWStyles.form.fieldWrapper },
     React.createElement('label', { className: CWStyles.form.label }, field.label),
     React.createElement('input', {
       type: 'text',
       className: CWStyles.field.input,
-      value: value || '',
+      value: localValue,
       readOnly: field.read_only,
       placeholder: field.placeholder,
-      onChange: e => emitChange(field, run, e.target.value)
+      onChange: handleChange
     })
   );
 };
 
 const FieldText = ({ field, run, value }) => {
-  return React.createElement('div', { className: CWStyles.form.fieldWrapper },
-    React.createElement('label', { className: CWStyles.form.label }, field.label),
-    React.createElement('textarea', {
+  return React.createElement(
+    "div",
+    { className: CWStyles.form.fieldWrapper },
+    React.createElement(
+      "label",
+      { className: CWStyles.form.label },
+      field.label
+    ),
+    React.createElement("textarea", {
       className: CWStyles.field.textarea,
-      value: value || '',
+      value: value || "",
       readOnly: field.read_only,
       rows: 3,
-      onChange: e => emitChange(field, run, e.target.value)
+      onChange: (e) => emitChange(field, run, e.target.value),
     })
   );
 };
 
 const FieldLongText = ({ field, run, value }) => {
-  return React.createElement('div', { className: CWStyles.form.fieldWrapper },
-    React.createElement('label', { className: CWStyles.form.label }, field.label),
-    React.createElement('textarea', {
+  return React.createElement(
+    "div",
+    { className: CWStyles.form.fieldWrapper },
+    React.createElement(
+      "label",
+      { className: CWStyles.form.label },
+      field.label
+    ),
+    React.createElement("textarea", {
       className: CWStyles.field.textarea,
-      value: value || '',
+      value: value || "",
       readOnly: field.read_only,
       rows: 6,
-      onChange: e => emitChange(field, run, e.target.value)
+      onChange: (e) => emitChange(field, run, e.target.value),
     })
   );
 };
 
 const FieldInt = ({ field, run, value }) => {
-  return React.createElement('div', { className: CWStyles.form.fieldWrapper },
-    React.createElement('label', { className: CWStyles.form.label }, field.label),
-    React.createElement('input', {
-      type: 'number',
+  return React.createElement(
+    "div",
+    { className: CWStyles.form.fieldWrapper },
+    React.createElement(
+      "label",
+      { className: CWStyles.form.label },
+      field.label
+    ),
+    React.createElement("input", {
+      type: "number",
       className: CWStyles.field.input,
       value: value || 0,
       readOnly: field.read_only,
-      onChange: e => emitChange(field, run, parseInt(e.target.value) || 0)
+      onChange: (e) => emitChange(field, run, parseInt(e.target.value) || 0),
     })
   );
 };
 
 const FieldFloat = ({ field, run, value }) => {
-  return React.createElement('div', { className: CWStyles.form.fieldWrapper },
-    React.createElement('label', { className: CWStyles.form.label }, field.label),
-    React.createElement('input', {
-      type: 'number',
-      step: '0.01',
+  return React.createElement(
+    "div",
+    { className: CWStyles.form.fieldWrapper },
+    React.createElement(
+      "label",
+      { className: CWStyles.form.label },
+      field.label
+    ),
+    React.createElement("input", {
+      type: "number",
+      step: "0.01",
       className: CWStyles.field.input,
       value: value || 0,
       readOnly: field.read_only,
-      onChange: e => emitChange(field, run, parseFloat(e.target.value) || 0)
+      onChange: (e) => emitChange(field, run, parseFloat(e.target.value) || 0),
     })
   );
 };
 
 const FieldCurrency = ({ field, run, value }) => {
-  return React.createElement('div', { className: CWStyles.form.fieldWrapper },
-    React.createElement('label', { className: CWStyles.form.label }, field.label),
-    React.createElement('input', {
-      type: 'number',
-      step: '0.01',
+  return React.createElement(
+    "div",
+    { className: CWStyles.form.fieldWrapper },
+    React.createElement(
+      "label",
+      { className: CWStyles.form.label },
+      field.label
+    ),
+    React.createElement("input", {
+      type: "number",
+      step: "0.01",
       className: CWStyles.field.input,
       value: value || 0,
       readOnly: field.read_only,
-      onChange: e => emitChange(field, run, parseFloat(e.target.value) || 0)
+      onChange: (e) => emitChange(field, run, parseFloat(e.target.value) || 0),
     })
   );
 };
 
 const FieldCheck = ({ field, run, value }) => {
-  return React.createElement('div', { className: CWStyles.form.fieldWrapper },
-    React.createElement('label', { className: CWStyles.form.label },
-      React.createElement('input', {
-        type: 'checkbox',
+  return React.createElement(
+    "div",
+    { className: CWStyles.form.fieldWrapper },
+    React.createElement(
+      "label",
+      { className: CWStyles.form.label },
+      React.createElement("input", {
+        type: "checkbox",
         checked: value || false,
         readOnly: field.read_only,
         className: CWStyles.field.input,
-        onChange: e => emitChange(field, run, e.target.checked)
+        onChange: (e) => emitChange(field, run, e.target.checked),
       }),
       field.label
     )
@@ -125,122 +180,160 @@ const FieldCheck = ({ field, run, value }) => {
 };
 
 const FieldDate = ({ field, run, value }) => {
-  return React.createElement('div', { className: CWStyles.form.fieldWrapper },
-    React.createElement('label', { className: CWStyles.form.label }, field.label),
-    React.createElement('input', {
-      type: 'date',
+  return React.createElement(
+    "div",
+    { className: CWStyles.form.fieldWrapper },
+    React.createElement(
+      "label",
+      { className: CWStyles.form.label },
+      field.label
+    ),
+    React.createElement("input", {
+      type: "date",
       className: CWStyles.field.input,
-      value: value || '',
+      value: value || "",
       readOnly: field.read_only,
-      onChange: e => emitChange(field, run, e.target.value)
+      onChange: (e) => emitChange(field, run, e.target.value),
     })
   );
 };
 
 const FieldDatetime = ({ field, run, value }) => {
-  return React.createElement('div', { className: CWStyles.form.fieldWrapper },
-    React.createElement('label', { className: CWStyles.form.label }, field.label),
-    React.createElement('input', {
-      type: 'datetime-local',
+  return React.createElement(
+    "div",
+    { className: CWStyles.form.fieldWrapper },
+    React.createElement(
+      "label",
+      { className: CWStyles.form.label },
+      field.label
+    ),
+    React.createElement("input", {
+      type: "datetime-local",
       className: CWStyles.field.input,
-      value: value || '',
+      value: value || "",
       readOnly: field.read_only,
-      onChange: e => emitChange(field, run, e.target.value)
+      onChange: (e) => emitChange(field, run, e.target.value),
     })
   );
 };
 
 const FieldTime = ({ field, run, value }) => {
-  return React.createElement('div', { className: CWStyles.form.fieldWrapper },
-    React.createElement('label', { className: CWStyles.form.label }, field.label),
-    React.createElement('input', {
-      type: 'time',
+  return React.createElement(
+    "div",
+    { className: CWStyles.form.fieldWrapper },
+    React.createElement(
+      "label",
+      { className: CWStyles.form.label },
+      field.label
+    ),
+    React.createElement("input", {
+      type: "time",
       className: CWStyles.field.input,
-      value: value || '',
+      value: value || "",
       readOnly: field.read_only,
-      onChange: e => emitChange(field, run, e.target.value)
+      onChange: (e) => emitChange(field, run, e.target.value),
     })
   );
 };
 
-
 const FieldSelect = ({ field, run, value }) => {
-  return React.createElement('div', { className: CWStyles.form.fieldWrapper },
-    React.createElement('label', { className: CWStyles.form.label }, field.label),
-    React.createElement('select', {
-      className: CWStyles.field.select,
-      value: value || '',
-      disabled: field.read_only,
-      onChange: e => emitChange(field, run, e.target.value)
-    },
-      (field.options || '').split('\n').map((opt, i) =>
-        React.createElement('option', { key: i, value: opt }, opt)
-      )
+  return React.createElement(
+    "div",
+    { className: CWStyles.form.fieldWrapper },
+    React.createElement(
+      "label",
+      { className: CWStyles.form.label },
+      field.label
+    ),
+    React.createElement(
+      "select",
+      {
+        className: CWStyles.field.select,
+        value: value || "",
+        disabled: field.read_only,
+        onChange: (e) => emitChange(field, run, e.target.value),
+      },
+      (field.options || "")
+        .split("\n")
+        .map((opt, i) =>
+          React.createElement("option", { key: i, value: opt }, opt)
+        )
     )
   );
 };
-
 
 const FieldLink = ({ field, run, value }) => {
   const [options, setOptions] = React.useState([]);
   const [isOpen, setIsOpen] = React.useState(false);
-  const [searchText, setSearchText] = React.useState(value || '');
-  
+  const [searchText, setSearchText] = React.useState(value || "");
+
   const loadOptions = async () => {
-    console.log('FieldLink: Loading options for', field.options);
-    
     const childRun = await run.child({
-      operation: 'select',
+      operation: "select",
       doctype: field.options,
-      input: { take: 50 }
+      input: { take: 50 },
     });
-    
-    console.log('FieldLink: Got options', childRun.output.data);
+
     setOptions(childRun.output.data);
     setIsOpen(true);
   };
-  
+
   const handleSelect = (option) => {
     setSearchText(option.name);
     setIsOpen(false);
-    
-    if (!run.input) run.input = {};
-    if (!run.input.data) run.input.data = {};
-    run.input.data[field.fieldname] = option.name;
-    
-    console.log('FieldLink: Selected', option.name);
+
+    // ✅ CHANGED: Use run.doc instead of manual initialization
+    run.doc[field.fieldname] = option.name;
   };
-  
-  return React.createElement('div', { className: CWStyles.form.fieldWrapper },
-    React.createElement('label', { className: CWStyles.form.label }, field.label),
-    React.createElement('div', { style: { position: 'relative' } },
-      React.createElement('input', {
-        type: 'text',
+
+  return React.createElement(
+    "div",
+    { className: CWStyles.form.fieldWrapper },
+    React.createElement(
+      "label",
+      { className: CWStyles.form.label },
+      field.label
+    ),
+    React.createElement(
+      "div",
+      { style: { position: "relative" } },
+      React.createElement("input", {
+        type: "text",
         className: CWStyles.field.input,
         value: searchText,
         onFocus: loadOptions,
         onChange: (e) => setSearchText(e.target.value),
-        placeholder: `Select ${field.label}...`
+        placeholder: `Select ${field.label}...`,
       }),
-      isOpen && React.createElement('div', {
-        className: CWStyles.field.linkDropdown,
-        style: { display: 'block' }
-      },
-        options.map(opt => 
-          React.createElement('div', {
-            key: opt.name,
-            style: { padding: '8px', cursor: 'pointer', borderBottom: '1px solid #eee' },
-            onClick: () => handleSelect(opt),
-            onMouseEnter: (e) => e.target.style.backgroundColor = '#f0f0f0',
-            onMouseLeave: (e) => e.target.style.backgroundColor = 'white'
-          }, opt.name)
+      isOpen &&
+        React.createElement(
+          "div",
+          {
+            className: CWStyles.field.linkDropdown,
+            style: { display: "block" },
+          },
+          options.map((opt) =>
+            React.createElement(
+              "div",
+              {
+                key: opt.name,
+                style: {
+                  padding: "8px",
+                  cursor: "pointer",
+                  borderBottom: "1px solid #eee",
+                },
+                onClick: () => handleSelect(opt),
+                onMouseEnter: (e) =>
+                  (e.target.style.backgroundColor = "#f0f0f0"),
+                onMouseLeave: (e) => (e.target.style.backgroundColor = "white"),
+              },
+              opt.name
+            )
+          )
         )
-      )
     )
   );
 };
-
-
 
 // ============================================================
 // REGISTER FIELD COMPONENTS FIRST
@@ -257,12 +350,13 @@ window.components = {
   FieldLink,
   FieldDate,
   FieldDatetime,
-  FieldTime
+  FieldTime,
 };
 
 // ============================================================
 // MAINFORM COMPONENT
 // ============================================================
+
 const MainForm = ({ run }) => {
   const schema = run.output?.schema;
   
@@ -272,7 +366,8 @@ const MainForm = ({ run }) => {
     );
   }
   
-  const doc = run.output?.data?.[0] || {};
+  // ✅ CHANGED: Use run.doc
+  const doc = run.doc;
   
   const implementedTypes = [
     'Data', 'Text', 'Long Text', 'Int', 'Float', 'Currency',
@@ -296,7 +391,7 @@ const MainForm = ({ run }) => {
           key: field.fieldname,
           field: field,
           run: run,
-          value: doc[field.fieldname]
+          value: doc[field.fieldname]  // ✅ CHANGED: Read from doc
         });
       })
   );
@@ -308,42 +403,70 @@ const MainForm = ({ run }) => {
 const MainGrid = ({ run }) => {
   const data = run.output.data;
   const keys = Object.keys(data[0] || {});
-  
-  return React.createElement('div', { className: CWStyles.grid.wrapper },
-    React.createElement('div', { className: CWStyles.grid.header },
-      React.createElement('h2', {}, run.source_doctype || 'List'),
-      React.createElement('div', { className: CWStyles.grid.toolbar },
-        React.createElement('button', { className: CWStyles.button.primary }, 'New')
+
+  return React.createElement(
+    "div",
+    { className: CWStyles.grid.wrapper },
+    React.createElement(
+      "div",
+      { className: CWStyles.grid.header },
+      React.createElement("h2", {}, run.source_doctype || "List"),
+      React.createElement(
+        "div",
+        { className: CWStyles.grid.toolbar },
+        React.createElement(
+          "button",
+          { className: CWStyles.button.primary },
+          "New"
+        )
       )
     ),
-    React.createElement('div', { className: CWStyles.grid.body },
-      React.createElement('table', { className: CWStyles.table.base + ' ' + CWStyles.table.striped },
-        React.createElement('thead', {},
-          React.createElement('tr', { 
-            className: CWStyles.grid.row  // ← ADD THIS
-          },
-            keys.map(key =>
-              React.createElement('th', { 
-                key: key,
-                className: CWStyles.grid.cell
-              }, key)
+    React.createElement(
+      "div",
+      { className: CWStyles.grid.body },
+      React.createElement(
+        "table",
+        { className: CWStyles.table.base + " " + CWStyles.table.striped },
+        React.createElement(
+          "thead",
+          {},
+          React.createElement(
+            "tr",
+            {
+              className: CWStyles.grid.row, // ← ADD THIS
+            },
+            keys.map((key) =>
+              React.createElement(
+                "th",
+                {
+                  key: key,
+                  className: CWStyles.grid.cell,
+                },
+                key
+              )
             )
           )
         ),
-        React.createElement('tbody', {},
+        React.createElement(
+          "tbody",
+          {},
           data.map((row, i) =>
-            React.createElement(RecordLink, {
-              key: i,
-              record: row,
-              as: 'tr',
-              className: CWStyles.grid.row
-            },
-              keys.map(key =>
-                React.createElement('td', { 
-                  key: key, 
-                  className: CWStyles.grid.cell 
-                },
-                  String(row[key] || '')
+            React.createElement(
+              RecordLink,
+              {
+                key: i,
+                record: row,
+                as: "tr",
+                className: CWStyles.grid.row,
+              },
+              keys.map((key) =>
+                React.createElement(
+                  "td",
+                  {
+                    key: key,
+                    className: CWStyles.grid.cell,
+                  },
+                  String(row[key] || "")
                 )
               )
             )
@@ -359,50 +482,65 @@ const MainGrid = ({ run }) => {
 // ============================================================
 const MainChat = ({ run }) => {
   const [messages, setMessages] = React.useState([]);
-  const [input, setInput] = React.useState('');
-  
+  const [input, setInput] = React.useState("");
+
   const handleSend = async () => {
     if (!input.trim()) return;
-    
-    const userMessage = { role: 'user', content: input };
-    setMessages(prev => [...prev, userMessage]);
-    setInput('');
-    
+
+    const userMessage = { role: "user", content: input };
+    setMessages((prev) => [...prev, userMessage]);
+    setInput("");
+
     const response = await run.child({
-      operation: 'ai_chat',
-      input: { message: input }
+      operation: "ai_chat",
+      input: { message: input },
     });
-    
+
     if (response.success) {
-      const aiMessage = { role: 'ai', content: response.output.message };
-      setMessages(prev => [...prev, aiMessage]);
+      const aiMessage = { role: "ai", content: response.output.message };
+      setMessages((prev) => [...prev, aiMessage]);
     }
   };
-  
-  return React.createElement('div', { className: CWStyles.chat.wrapper },
-    React.createElement('div', { className: CWStyles.chat.messages },
+
+  return React.createElement(
+    "div",
+    { className: CWStyles.chat.wrapper },
+    React.createElement(
+      "div",
+      { className: CWStyles.chat.messages },
       messages.map((msg, i) =>
-        React.createElement('div', { 
-          key: i, 
-          className: msg.role === 'user' 
-            ? CWStyles.chat.messageUser 
-            : CWStyles.chat.messageAI
-        }, msg.content)
+        React.createElement(
+          "div",
+          {
+            key: i,
+            className:
+              msg.role === "user"
+                ? CWStyles.chat.messageUser
+                : CWStyles.chat.messageAI,
+          },
+          msg.content
+        )
       )
     ),
-    React.createElement('div', { className: CWStyles.chat.inputWrapper },
-      React.createElement('input', {
-        type: 'text',
+    React.createElement(
+      "div",
+      { className: CWStyles.chat.inputWrapper },
+      React.createElement("input", {
+        type: "text",
         className: CWStyles.chat.input,
         value: input,
         onChange: (e) => setInput(e.target.value),
-        onKeyPress: (e) => e.key === 'Enter' && handleSend(),
-        placeholder: 'Type a message...'
+        onKeyPress: (e) => e.key === "Enter" && handleSend(),
+        placeholder: "Type a message...",
       }),
-      React.createElement('button', {
-        className: CWStyles.button.primary,
-        onClick: handleSend
-      }, 'Send')
+      React.createElement(
+        "button",
+        {
+          className: CWStyles.button.primary,
+          onClick: handleSend,
+        },
+        "Send"
+      )
     )
   );
 };
@@ -412,13 +550,20 @@ const MainChat = ({ run }) => {
 // ============================================================
 const ErrorConsole = ({ run }) => {
   if (!run?.error) return null;
-  
-  return React.createElement('div', { className: CWStyles.alert.danger },
-    React.createElement('h4', {}, 'Error: ' + (run.error.code || 'UNKNOWN')),
-    React.createElement('p', {}, run.error.message),
-    run.error.stack && React.createElement('pre', { 
-      className: CWStyles.text.monospace 
-    }, run.error.stack)
+
+  return React.createElement(
+    "div",
+    { className: CWStyles.alert.danger },
+    React.createElement("h4", {}, "Error: " + (run.error.code || "UNKNOWN")),
+    React.createElement("p", {}, run.error.message),
+    run.error.stack &&
+      React.createElement(
+        "pre",
+        {
+          className: CWStyles.text.monospace,
+        },
+        run.error.stack
+      )
   );
 };
 
