@@ -1,3 +1,23 @@
+commit 1
+Key Changes Made:
+
+✅ Delta structure - query, input, output separate
+✅ Explicit query format - query: { where: {...} }
+✅ takeone handler - enforces take: 1, validates single result
+✅ Draft mode - only for single-record operations
+✅ UPDATE handler - loads schema by default, reads from query.where
+✅ Fields write - directly to run.input[fieldname]
+✅ Child calls - need updating (BREAKING CHANGE - see next section)
+✅ Uses run.child() - in checkAndSave
+✅ Preserves schema - only updates data, not entire output
+✅ Error handling - kept existing pattern
+✅ Config - expects view defaults in _config.views
+✅ All handlers updated - SELECT, CREATE, UPDATE, DELETE
+✅ Validation - checks merged doc via run.doc getter
+
+Next: Update all child calls in your codebase! 🎯
+
+
 
 MOving into Field-Schema, Rules, processing
 
