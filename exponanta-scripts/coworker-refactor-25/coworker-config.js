@@ -757,7 +757,35 @@ coworker._config = {
     item: "Item",
     invoice: "Sales Invoice"
   },
-  
+
+   // ✅ ADD THIS SECTION:
+  views: {
+    list: {
+      component: "MainGrid",
+      container: "main_container",
+      options: {
+        draft: false,
+        render: true
+      }
+    },
+    form: {
+      component: "MainForm",
+      container: "main_container",
+      options: {
+        draft: true,
+        render: true
+      }
+    },
+    chat: {
+      component: "MainChat",
+      container: "right_pane",
+      options: {
+        draft: false,
+        render: true
+      }
+    }
+  },
+  // old structure
   // Operation → View mapping
   operationToView: {
     select: "list",

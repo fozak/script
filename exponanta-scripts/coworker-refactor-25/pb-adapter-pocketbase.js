@@ -43,19 +43,48 @@ pb._adapters.pocketbase = {
       data: items.map(item => item.data),
       meta: metaData
     };
+  },
+
+  // -------------------------------
+  // CREATE
+  // -------------------------------
+  async create(inputData) {
+    //not implementsd
+  },
+
+  // -------------------------------
+  // UPDATE
+  // -------------------------------
+ async update(name, inputData) {
+  // 1️⃣ Find record by name
+  const records = await pb.collection(window.MAIN_COLLECTION).getList(1, 1, {
+    filter: `name = "${name}"`
+  });
+
+  if (!records.items.length) {
+    throw new Error(`Record with name "${name}" not found`);
   }
+
+  const recordId = records.items[0].id;
+  const currentData = records.items[0].data;
+
+  // 2️⃣ Merge inputData into record.data
+  const updatedData = { ...currentData, ...inputData };  //this merget shoudl happen in run() ANDNOT here
+
+  // 3️⃣ Update using recordId
+  const record = await pb.collection(window.MAIN_COLLECTION).update(recordId, updatedData);
+
+  // 4️⃣ Return in standard run.doc format
+  return {
+    data: [record.data], // ✅ only user fields
+    meta: {
+      name: record.data.name, // ✅ name from record.data
+      updated: true
+    }
+  };
+}
+
+
+  
 };
 
-
-//https://claude.ai/chat/ea5d6df6-3c04-41cf-9d12-3787f3817fe2
-// TODO o add the other operations (CREATE/UPDATE/DELETE)
-
-/*  this moved to switch Set PocketBase as active adapter
-pb._currentAdapter = 'pocketbase';
-
-// Adapter delegation
-pb._dbQuery = async function (params, take, skip) {
-  return await this._adapters[this._currentAdapter].query(params, take, skip);
-};
-
-console.log("✅ PocketBase adapter loaded (SELECT only)");*/
