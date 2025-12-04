@@ -70,19 +70,6 @@
         // STEP 4: Defaults
         resolved.owner = op.owner || "system";
 
-        /* DEBUG LOGGING
-  if (cfg.debug) {
-    console.log("🔍 [_resolveAll] Resolution:", {
-      original_operation: op.operation,
-      resolved_operation: resolved.operation,
-      source_doctype: resolved.source_doctype,
-      target_doctype: resolved.target_doctype,
-      resolved_view: resolved.view,
-      resolved_component: resolved.component,
-      resolved_container: resolved.container
-    });
-  }*/
-
         return resolved;
       };
 
@@ -99,14 +86,6 @@
 
         // Resolve all fields via config
         const resolved = this._resolveAll(op);
-
-        /* ✅ ADD THIS DEBUG LOG
-        console.log("🔍 [run()] After _resolveAll:", {
-          resolved_view: resolved.view,
-          resolved_component: resolved.component,
-          resolved_container: resolved.container,
-          op_options_render: op.options?.render,
-        });*/
 
         // Construct run document
         const run_doc = {
