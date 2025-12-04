@@ -115,9 +115,9 @@
           container: "container" in op ? op.container : resolved.container,
 
           // DATA - Delta architecture
-          query: op.query || {},  // How to find records
-          input: op.input || {},  // Delta (changes only)
-          output: null,           // Original from DB
+          query: op.query || {}, // How to find records
+          input: op.input || {}, // Delta (changes only)
+          output: null, // Original from DB
 
           // Execution state
           status: "running",
@@ -148,7 +148,7 @@
         // Initialize draft mode
         if (run_doc.options.draft) {
           run_doc.input = run_doc.input || {};
-          
+
           // For takeone with query, preserve the name for updates
           if (run_doc.query.where?.name && !run_doc.input.name) {
             run_doc.input.name = run_doc.query.where.name;
@@ -282,13 +282,7 @@
         // ════════════════════════════════════════════════════════
         select: async function (run_doc) {
           const { source_doctype, query, options } = run_doc;
-          const {
-            where,
-            orderBy,
-            take,
-            skip,
-            select,
-          } = query || {};
+          const { where, orderBy, take, skip, select } = query || {};
           const view = query?.view || "list";
           const { includeSchema = true, includeMeta = false } = options || {};
 
@@ -316,7 +310,11 @@
 
           // Field filtering based on view
           let filteredData = data;
-          if (schema && !select) {
+
+          // NEW
+          const shouldFilter = view === "list" || view === "card";
+
+          if (schema && !select && shouldFilter) {
             const viewProp = `in_${view}_view`;
             const viewFields = schema.fields
               .filter((f) => f[viewProp])
@@ -362,25 +360,30 @@
           // Force take: 1
           if (!run_doc.query) run_doc.query = {};
           run_doc.query.take = 1;
-          
+
+          // ✅ ADD THIS: Set view to "form" to get ALL fields
+          run_doc.query.view = "form";
+
           // Delegate to SELECT handler
           const result = await this._handlers.select.call(this, run_doc);
-          
+
           // Validate single result
           if (result.success && result.output?.data?.length > 1) {
-            console.warn(`takeone returned ${result.output.data.length} records, using first only`);
+            console.warn(
+              `takeone returned ${result.output.data.length} records, using first only`
+            );
           }
-          
+
           if (result.success && result.output?.data?.length === 0) {
             return {
               success: false,
               error: {
-                message: 'Record not found',
-                code: 'NOT_FOUND'
-              }
+                message: "Record not found",
+                code: "NOT_FOUND",
+              },
             };
           }
-          
+
           return result;
         },
 
@@ -429,7 +432,7 @@
         update: async function (run_doc) {
           const { target_doctype, input, query, options } = run_doc;
           const { where } = query || {};
-          const { includeSchema = true, includeMeta = false } = options || {};
+          const { includeSchema = true, includeMeta = false } = options || {}; // ✅ No merge option
 
           if (!input || Object.keys(input).length === 0) {
             throw new Error("UPDATE requires input with data");
@@ -464,7 +467,7 @@
             };
           }
 
-          // Update each record
+          // ✅ SIMPLE: Just write input (already complete from controller)
           const updates = await Promise.all(
             items.map((item) => this._dbUpdate(item.name, input))
           );
@@ -797,7 +800,7 @@
           return null;
         }
       };
-      
+
       coworker.clearSchemaCache = function () {
         schemaCache.clear();
         console.log("🗑️ Schema cache cleared");
@@ -807,80 +810,7 @@
       // DRAFT MANAGEMENT
       // ============================================================
 
-      coworker.draft = {
-        
-        isComplete(run) {
-          const schema = run.output?.schema;
-          if (!schema) return false;
-          
-          const current = run.doc;  // Merged state
-          const required = schema.fields.filter(f => f.reqd);
-          
-          return required.every(f => {
-            const val = current[f.fieldname];
-            return val !== null && val !== undefined && val !== '';
-          });
-        },
-        
-        async checkAndSave(run) {
-          if (!run.options?.draft) return;
-          if (run._saving) return;
-          
-          if (!this.isComplete(run)) {
-            if (typeof coworker._render === 'function') {
-              coworker._render(run);
-            }
-            return;
-          }
-          
-          run._saving = true;
-          if (typeof coworker._render === 'function') {
-            coworker._render(run);
-          }
-          
-          try {
-            const original = run.output?.data?.[0] || {};
-            const delta = run.input || {};
-            const merged = { ...original, ...delta };
-            
-            const isNew = !merged.name;
-            
-            const childRun = await run.child({
-              operation: isNew ? 'create' : 'update',
-              doctype: run.source_doctype,
-              input: merged,
-              query: { where: { name: merged.name } },
-              options: { draft: false, includeSchema: false }
-            });
-            
-            if (childRun.success) {
-              // Update data only (preserve schema)
-              run.output.data = [childRun.output.data[0]];
-              run.input = {};
-              run.options.draft = false;
-              delete run._saving;
-              
-              if (typeof coworker._render === 'function') {
-                coworker._render(run);
-              }
-            } else {
-              run._saveError = childRun.error?.message;
-              delete run._saving;
-              
-              if (typeof coworker._render === 'function') {
-                coworker._render(run);
-              }
-            }
-          } catch (error) {
-            run._saveError = error.message;
-            delete run._saving;
-            
-            if (typeof coworker._render === 'function') {
-              coworker._render(run);
-            }
-          }
-        }
-      };
+      // (It's now in coworker-controller.js)
 
       // ============================================================
       // BATCH & PARALLEL OPERATIONS
@@ -968,7 +898,9 @@
       // INSTALLATION COMPLETE
       // ============================================================
 
-      console.log("✅ coworker-run plugin installed (v3.0.0 - DELTA ARCHITECTURE)");
+      console.log(
+        "✅ coworker-run plugin installed (v3.0.0 - DELTA ARCHITECTURE)"
+      );
       console.log("   • coworker.run(config)");
       console.log("   • coworker.draft.isComplete(run)");
       console.log("   • coworker.draft.checkAndSave(run)");

@@ -38,27 +38,38 @@ const emitChange = (field, run, value) => {
 // FIELD COMPONENTS
 // ============================================================
 // Each field component receives `field`, `run`, and `value` props
-
+// the NEW version
 const FieldData = ({ field, run, value }) => {
-  const [localValue, setLocalValue] = React.useState(value || '');
-  
+  const [localValue, setLocalValue] = React.useState(value || "");
+  const debounceTimerRef = React.useRef(null); // ← ADD THIS
+
   const handleChange = (e) => {
     const newValue = e.target.value;
     setLocalValue(newValue);
-    
-    // ✅ Use run.doc
-    run.doc[field.fieldname] = newValue;
+
+    // ✅ NEW: Write to delta + auto-save (debounced)
+    clearTimeout(debounceTimerRef.current);
+    debounceTimerRef.current = setTimeout(() => {
+      run.input[field.fieldname] = newValue;
+      coworker.controller.autoSave(run);
+    }, 300);
   };
-  
-  return React.createElement('div', { className: CWStyles.form.fieldWrapper },
-    React.createElement('label', { className: CWStyles.form.label }, field.label),
-    React.createElement('input', {
-      type: 'text',
+
+  return React.createElement(
+    "div",
+    { className: CWStyles.form.fieldWrapper },
+    React.createElement(
+      "label",
+      { className: CWStyles.form.label },
+      field.label
+    ),
+    React.createElement("input", {
+      type: "text",
       className: CWStyles.field.input,
       value: localValue,
       readOnly: field.read_only,
       placeholder: field.placeholder,
-      onChange: handleChange
+      onChange: handleChange,
     })
   );
 };
@@ -359,39 +370,55 @@ window.components = {
 
 const MainForm = ({ run }) => {
   const schema = run.output?.schema;
-  
+
   if (!schema) {
-    return React.createElement('div', { className: CWStyles.alert.warning }, 
-      'No schema available'
+    return React.createElement(
+      "div",
+      { className: CWStyles.alert.warning },
+      "No schema available"
     );
   }
-  
+
   // ✅ CHANGED: Use run.doc
   const doc = run.doc;
-  
+
   const implementedTypes = [
-    'Data', 'Text', 'Long Text', 'Int', 'Float', 'Currency',
-    'Check', 'Select', 'Link', 'Date', 'Datetime', 'Time'
+    "Data",
+    "Text",
+    "Long Text",
+    "Int",
+    "Float",
+    "Currency",
+    "Check",
+    "Select",
+    "Link",
+    "Date",
+    "Datetime",
+    "Time",
   ];
-  
-  return React.createElement('div', { className: CWStyles.form.wrapper },
-    React.createElement('div', { 
-      className: `${CWStyles.display.flex} ${CWStyles.justify.between} ${CWStyles.spacing.mb3}` 
-    },
-      React.createElement('h5', null, doc.name || `New ${schema.name}`)
+
+  return React.createElement(
+    "div",
+    { className: CWStyles.form.wrapper },
+    React.createElement(
+      "div",
+      {
+        className: `${CWStyles.display.flex} ${CWStyles.justify.between} ${CWStyles.spacing.mb3}`,
+      },
+      React.createElement("h5", null, doc.name || `New ${schema.name}`)
     ),
-    
+
     schema.fields
-      .filter(field => implementedTypes.includes(field.fieldtype))
-      .map(field => {
-        const componentName = `Field${field.fieldtype.replace(/ /g, '')}`;
+      .filter((field) => implementedTypes.includes(field.fieldtype))
+      .map((field) => {
+        const componentName = `Field${field.fieldtype.replace(/ /g, "")}`;
         const Component = window.components[componentName];
-        
+
         return React.createElement(Component, {
           key: field.fieldname,
           field: field,
           run: run,
-          value: doc[field.fieldname]  // ✅ CHANGED: Read from doc
+          value: doc[field.fieldname], // ✅ CHANGED: Read from doc
         });
       })
   );

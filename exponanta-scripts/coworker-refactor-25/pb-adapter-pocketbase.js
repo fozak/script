@@ -13,35 +13,35 @@ pb._adapters.pocketbase = {
 
     if (take !== undefined) {
       const page = skip ? Math.floor(skip / take) + 1 : 1;
-      result = await pb.collection(window.MAIN_COLLECTION).getList(
-        page,
-        take,
-        cleanParams
-      );
-      
+      result = await pb
+        .collection(window.MAIN_COLLECTION)
+        .getList(page, take, cleanParams);
+
       items = result.items;
       metaData = {
         total: result.totalItems,
         page: result.page,
         pageSize: result.perPage,
         totalPages: result.totalPages,
-        hasMore: result.page < result.totalPages
+        hasMore: result.page < result.totalPages,
       };
     } else {
-      items = await pb.collection(window.MAIN_COLLECTION).getFullList(cleanParams);
+      items = await pb
+        .collection(window.MAIN_COLLECTION)
+        .getFullList(cleanParams);
       metaData = {
         total: items.length,
         page: 1,
         pageSize: items.length,
         totalPages: 1,
-        hasMore: false
+        hasMore: false,
       };
     }
 
     // ✅ Extract .data from all items
     return {
-      data: items.map(item => item.data),
-      meta: metaData
+      data: items.map((item) => item.data),
+      meta: metaData,
     };
   },
 
@@ -55,36 +55,47 @@ pb._adapters.pocketbase = {
   // -------------------------------
   // UPDATE
   // -------------------------------
- async update(name, inputData) {
-  // 1️⃣ Find record by name
-  const records = await pb.collection(window.MAIN_COLLECTION).getList(1, 1, {
-    filter: `name = "${name}"`
-  });
 
-  if (!records.items.length) {
-    throw new Error(`Record with name "${name}" not found`);
-  }
-
-  const recordId = records.items[0].id;
-  const currentData = records.items[0].data;
-
-  // 2️⃣ Merge inputData into record.data
-  const updatedData = { ...currentData, ...inputData };  //this merget shoudl happen in run() ANDNOT here
-
-  // 3️⃣ Update using recordId
-  const record = await pb.collection(window.MAIN_COLLECTION).update(recordId, updatedData);
-
-  // 4️⃣ Return in standard run.doc format
-  return {
-    data: [record.data], // ✅ only user fields
-    meta: {
-      name: record.data.name, // ✅ name from record.data
-      updated: true
+  async update(id, data) {
+    if (!id) {
+      throw new Error("UPDATE requires an id (record name)");
     }
-  };
-}
+
+    if (!data || typeof data !== "object") {
+      throw new Error("UPDATE requires data object");
+    }
+
+    try {
+      // Find record by name (to get PocketBase ID)
+      const records = await pb.collection(window.MAIN_COLLECTION).getFullList({
+        filter: `name = "${id}"`,
+      });
+
+      if (records.length === 0) {
+        throw new Error(`Record not found: ${id}`);
+      }
+
+      const record = records[0];
+
+      // ✅ Write complete document (handler already merged if needed)
+      const updated = await pb.collection(window.MAIN_COLLECTION).update(
+        record.id,
+        { data: data } // Complete document from handler
+      );
+
+      return {
+        data: updated.data,
+        meta: {
+          id: updated.id,
+          updated: updated.updated,
+        },
+      };
+    } catch (error) {
+      console.error("PocketBase UPDATE error:", error);
+      throw new Error(`UPDATE failed: ${error.message}`);
+    }
+  },
 
 
   
 };
-
