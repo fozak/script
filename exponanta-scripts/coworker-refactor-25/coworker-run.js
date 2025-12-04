@@ -1,7 +1,7 @@
 // ============================================================================
 // COWORKER-RUN.JS - Operation Execution Plugin
 // Base CRUD operations: select, create, update, delete
-// Version: 2.2.0
+// Version: 3.0.0 - DELTA ARCHITECTURE
 // ============================================================================
 
 (function (root, factory) {
@@ -20,7 +20,7 @@
 
   const coworkerRun = {
     name: "coworker-run",
-    version: "1.0.0",
+    version: "3.0.0",
 
     install: function (coworker) {
       if (!coworker) {
@@ -59,15 +59,17 @@
           ? dtMap[target_raw?.toLowerCase()] || target_raw
           : null;
 
-        // STEP 3: Chain resolution - operation → view → component/container
+        // STEP 3: Resolve view
         resolved.view =
           cfg.operationToView[resolved.operation?.toLowerCase()] ?? null;
-        resolved.component =
-          cfg.viewToComponent[resolved.view?.toLowerCase()] ?? null;
-        resolved.container =
-          cfg.viewToContainer[resolved.view?.toLowerCase()] ?? null;
 
-        // STEP 4: Defaults
+        // STEP 4: Get view configuration (component, container, options)
+        const viewConfig = cfg.views?.[resolved.view?.toLowerCase()] || {};
+        resolved.component = viewConfig.component ?? null;
+        resolved.container = viewConfig.container ?? null;
+        resolved.options = viewConfig.options || {};
+
+        // STEP 5: Defaults
         resolved.owner = op.owner || "system";
 
         return resolved;
@@ -86,6 +88,9 @@
 
         // Resolve all fields via config
         const resolved = this._resolveAll(op);
+
+        // Merge options: config defaults + user overrides
+        const mergedOptions = { ...resolved.options, ...op.options };
 
         // Construct run document
         const run_doc = {
@@ -109,9 +114,10 @@
           component: "component" in op ? op.component : resolved.component,
           container: "container" in op ? op.container : resolved.container,
 
-          // Data flow
-          input: op.input || {},
-          output: null,
+          // DATA - Delta architecture
+          query: op.query || {},  // How to find records
+          input: op.input || {},  // Delta (changes only)
+          output: null,           // Original from DB
 
           // Execution state
           status: "running",
@@ -120,7 +126,7 @@
           duration: 0,
 
           // Hierarchy
-          parent_run_id: op.options?.parentRunId || null,
+          parent_run_id: mergedOptions.parentRunId || null,
           child_run_ids: [],
 
           // Flow context
@@ -133,25 +139,28 @@
           agent: op.agent || null,
 
           // Options
-          options: op.options || {},
+          options: mergedOptions,
 
           // Runtime helpers
           child: null,
         };
 
-        // switch output-input
-
-        // ✅ ADD THIS: Initialize input.data for draft mode
-        if (op.options?.draft) {
-          if (!run_doc.input.data) run_doc.input.data = {};
+        // Initialize draft mode
+        if (run_doc.options.draft) {
+          run_doc.input = run_doc.input || {};
+          
+          // For takeone with query, preserve the name for updates
+          if (run_doc.query.where?.name && !run_doc.input.name) {
+            run_doc.input.name = run_doc.query.where.name;
+          }
         }
 
-        // ✅ ADD THIS: Define run.doc getter
+        // Define run.doc getter (computed merge of original + delta)
         Object.defineProperty(run_doc, "doc", {
-          get: function () {
-            return this.options?.draft
-              ? this.input.data
-              : this.output?.data?.[0] || {};
+          get() {
+            const original = this.output?.data?.[0] || {};
+            const delta = this.input || {};
+            return this.options.draft ? { ...original, ...delta } : original;
           },
         });
 
@@ -177,6 +186,13 @@
           run_doc.output = result.output || result;
           run_doc.success = result.success === true;
           run_doc.error = result.error || null;
+
+          // Copy doctype to input if missing (for saves)
+          if (run_doc.options.draft && run_doc.output?.data?.[0]?.doctype) {
+            if (!run_doc.input.doctype) {
+              run_doc.input.doctype = run_doc.output.data[0].doctype;
+            }
+          }
 
           // Update state: COMPLETED
           run_doc.status = "completed";
@@ -265,15 +281,15 @@
         // SELECT - Read operations
         // ════════════════════════════════════════════════════════
         select: async function (run_doc) {
-          const { source_doctype, input, options } = run_doc;
+          const { source_doctype, query, options } = run_doc;
           const {
             where,
             orderBy,
             take,
             skip,
             select,
-            view = "list",
-          } = input || {};
+          } = query || {};
+          const view = query?.view || "list";
           const { includeSchema = true, includeMeta = false } = options || {};
 
           // Fetch schema if needed
@@ -340,15 +356,43 @@
         },
 
         // ════════════════════════════════════════════════════════
+        // TAKEONE - Single record (enforces take: 1)
+        // ════════════════════════════════════════════════════════
+        takeone: async function (run_doc) {
+          // Force take: 1
+          if (!run_doc.query) run_doc.query = {};
+          run_doc.query.take = 1;
+          
+          // Delegate to SELECT handler
+          const result = await this._handlers.select.call(this, run_doc);
+          
+          // Validate single result
+          if (result.success && result.output?.data?.length > 1) {
+            console.warn(`takeone returned ${result.output.data.length} records, using first only`);
+          }
+          
+          if (result.success && result.output?.data?.length === 0) {
+            return {
+              success: false,
+              error: {
+                message: 'Record not found',
+                code: 'NOT_FOUND'
+              }
+            };
+          }
+          
+          return result;
+        },
+
+        // ════════════════════════════════════════════════════════
         // CREATE - Insert operations
         // ════════════════════════════════════════════════════════
         create: async function (run_doc) {
           const { target_doctype, input, options } = run_doc;
-          const { data } = input || {};
           const { includeSchema = true, includeMeta = false } = options || {};
 
-          if (!data) {
-            throw new Error("CREATE requires input.data");
+          if (!input || Object.keys(input).length === 0) {
+            throw new Error("CREATE requires input with data");
           }
 
           // Fetch schema
@@ -359,9 +403,9 @@
 
           // Prepare record
           const recordData = {
-            ...data,
+            ...input,
             doctype: target_doctype,
-            name: data.name || this._generateName(target_doctype),
+            name: input.name || this._generateName(target_doctype),
           };
 
           // Execute via adapter
@@ -383,15 +427,15 @@
         // UPDATE - Modify operations
         // ════════════════════════════════════════════════════════
         update: async function (run_doc) {
-          const { target_doctype, input, options } = run_doc;
-          const { where, data } = input || {};
+          const { target_doctype, input, query, options } = run_doc;
+          const { where } = query || {};
           const { includeSchema = true, includeMeta = false } = options || {};
 
-          if (!data) {
-            throw new Error("UPDATE requires input.data");
+          if (!input || Object.keys(input).length === 0) {
+            throw new Error("UPDATE requires input with data");
           }
           if (!where) {
-            throw new Error("UPDATE requires input.where");
+            throw new Error("UPDATE requires query.where");
           }
 
           // Fetch schema
@@ -422,7 +466,7 @@
 
           // Update each record
           const updates = await Promise.all(
-            items.map((item) => this._dbUpdate(item.name, data))
+            items.map((item) => this._dbUpdate(item.name, input))
           );
 
           return {
@@ -441,13 +485,13 @@
         // DELETE - Remove operations
         // ════════════════════════════════════════════════════════
         delete: async function (run_doc) {
-          const { source_doctype, input, options } = run_doc;
-          const { where } = input || {};
+          const { source_doctype, query, options } = run_doc;
+          const { where } = query || {};
           const { includeMeta = false } = options || {};
 
           if (!where || Object.keys(where).length === 0) {
             throw new Error(
-              "DELETE requires input.where to prevent accidental mass deletion"
+              "DELETE requires query.where to prevent accidental mass deletion"
             );
           }
 
@@ -727,12 +771,12 @@
           const result = await this.run({
             operation: "select",
             doctype: "Schema",
-            input: {
+            query: {
               where: { _schema_doctype: doctype },
               take: 1,
             },
-            component: null, // ← ADD THIS LINE
-            container: null, // ← ADD THIS LINE
+            component: null,
+            container: null,
             options: { includeSchema: false },
           });
 
@@ -753,9 +797,89 @@
           return null;
         }
       };
+      
       coworker.clearSchemaCache = function () {
         schemaCache.clear();
         console.log("🗑️ Schema cache cleared");
+      };
+
+      // ============================================================
+      // DRAFT MANAGEMENT
+      // ============================================================
+
+      coworker.draft = {
+        
+        isComplete(run) {
+          const schema = run.output?.schema;
+          if (!schema) return false;
+          
+          const current = run.doc;  // Merged state
+          const required = schema.fields.filter(f => f.reqd);
+          
+          return required.every(f => {
+            const val = current[f.fieldname];
+            return val !== null && val !== undefined && val !== '';
+          });
+        },
+        
+        async checkAndSave(run) {
+          if (!run.options?.draft) return;
+          if (run._saving) return;
+          
+          if (!this.isComplete(run)) {
+            if (typeof coworker._render === 'function') {
+              coworker._render(run);
+            }
+            return;
+          }
+          
+          run._saving = true;
+          if (typeof coworker._render === 'function') {
+            coworker._render(run);
+          }
+          
+          try {
+            const original = run.output?.data?.[0] || {};
+            const delta = run.input || {};
+            const merged = { ...original, ...delta };
+            
+            const isNew = !merged.name;
+            
+            const childRun = await run.child({
+              operation: isNew ? 'create' : 'update',
+              doctype: run.source_doctype,
+              input: merged,
+              query: { where: { name: merged.name } },
+              options: { draft: false, includeSchema: false }
+            });
+            
+            if (childRun.success) {
+              // Update data only (preserve schema)
+              run.output.data = [childRun.output.data[0]];
+              run.input = {};
+              run.options.draft = false;
+              delete run._saving;
+              
+              if (typeof coworker._render === 'function') {
+                coworker._render(run);
+              }
+            } else {
+              run._saveError = childRun.error?.message;
+              delete run._saving;
+              
+              if (typeof coworker._render === 'function') {
+                coworker._render(run);
+              }
+            }
+          } catch (error) {
+            run._saveError = error.message;
+            delete run._saving;
+            
+            if (typeof coworker._render === 'function') {
+              coworker._render(run);
+            }
+          }
+        }
       };
 
       // ============================================================
@@ -817,7 +941,7 @@
             throw new Error("operation is required");
           }
 
-          const validOps = ["select", "create", "update", "delete"];
+          const validOps = ["select", "takeone", "create", "update", "delete"];
           if (!validOps.includes(context.operation)) {
             throw new Error(`Invalid operation: ${context.operation}`);
           }
@@ -844,8 +968,10 @@
       // INSTALLATION COMPLETE
       // ============================================================
 
-      console.log("✅ coworker-run plugin installed");
+      console.log("✅ coworker-run plugin installed (v3.0.0 - DELTA ARCHITECTURE)");
       console.log("   • coworker.run(config)");
+      console.log("   • coworker.draft.isComplete(run)");
+      console.log("   • coworker.draft.checkAndSave(run)");
       console.log("   • coworker.runBatch(configs)");
       console.log("   • coworker.runParallel(configs)");
       console.log("   • coworker.runWithTimeout(config, timeout)");
@@ -862,7 +988,3 @@
 
   return coworkerRun;
 });
-
-// ============================================================================
-// END OF COWORKER-RUN.JS
-// ============================================================================
