@@ -49,9 +49,136 @@ coworker.validators = {
   }
 };
 
-
+// ============================================================
+// COWORKER CONTROLLER
+// ============================================================
 
 coworker.controller = {
+  
+  // ══════════════════════════════════════════════════════════
+  // UNIVERSAL EXECUTOR (Config-Driven)
+  // ══════════════════════════════════════════════════════════
+  
+  async execute(run_doc) {
+    const { operation, target_doctype, options = {} } = run_doc;
+    
+    // ✅ ESCAPE HATCH: Skip controller entirely
+    if (options.skipController) {
+      return await coworker._handlers[operation](run_doc);
+    }
+    
+    // ✅ Get operation config (default if not found)
+    const opConfig = coworker._config.operations[operation] || {
+      type: 'custom',
+      requiresSchema: false,
+      validate: false,
+      fetchOriginals: false
+    };
+    
+    // ✅ Fetch schema if needed (with cache)
+    if (opConfig.requiresSchema && !options.skipSchema) {
+      if (!run_doc.output) run_doc.output = {};
+      
+      if (!run_doc.output.schema && target_doctype !== 'Schema') {
+        if (!coworker._schemaCache) coworker._schemaCache = {};
+        if (!coworker._schemaCache[target_doctype]) {
+          coworker._schemaCache[target_doctype] = await coworker._handlers.getSchema.call(
+            coworker,
+            target_doctype
+          );
+        }
+        run_doc.output.schema = coworker._schemaCache[target_doctype];
+      }
+    }
+    
+    // ✅ Route based on type
+    if (opConfig.type === 'read') {
+      return await coworker._handlers[operation](run_doc);
+    }
+    
+    if (opConfig.type === 'write') {
+      if (options.skipValidation || !opConfig.validate) {
+        return await coworker._handlers[operation](run_doc);
+      }
+      return await this._processWrite(run_doc, opConfig);
+    }
+    
+    // Custom operations - pass through
+    return await coworker._handlers[operation](run_doc);
+  },
+  
+  // ══════════════════════════════════════════════════════════
+  // WRITE OPERATIONS (Validation Layer)
+  // ══════════════════════════════════════════════════════════
+  
+  async _processWrite(run_doc, opConfig) {
+    const { operation, target_doctype, input, query } = run_doc;
+    const schema = run_doc.output?.schema;
+    
+    // ✅ Fetch originals if config says so
+    let items = [];
+    if (opConfig.fetchOriginals && query?.where) {
+      const filter = coworker._buildPrismaWhere(target_doctype, query.where);
+      const result = await coworker._dbQuery({ filter });
+      items = result.data;
+      
+      if (items.length === 0) {
+        return { 
+          success: true, 
+          output: { 
+            data: [], 
+            schema, 
+            meta: { operation, affected: 0 } 
+          } 
+        };
+      }
+    }
+    
+    // ✅ Validate based on config
+    if (opConfig.validate) {
+      // For operations that fetch originals (UPDATE), validate merged
+      if (items.length > 0) {
+        for (const item of items) {
+          const merged = { ...item, ...input };
+          const validation = this._validate(merged, schema);
+          if (!validation.valid) {
+            return { success: false, errors: validation.errors };
+          }
+        }
+      } 
+      // For operations that don't fetch (CREATE), validate input
+      else {
+        const validation = this._validate(input, schema);
+        if (!validation.valid) {
+          return { success: false, errors: validation.errors };
+        }
+      }
+    }
+    
+    // ✅ Pass fetched items to handler (avoid double fetch)
+    if (items.length > 0) {
+      run_doc._items = items;
+    }
+    
+    // Execute via handler
+    return await coworker._handlers[operation](run_doc);
+  },
+  
+  // ══════════════════════════════════════════════════════════
+  // VALIDATION HELPERS
+  // ══════════════════════════════════════════════════════════
+  
+  _validate(doc, schema) {
+    if (!schema) return { valid: true, errors: [] };
+    
+    const errors = [];
+    schema.fields.forEach(field => {
+      const error = coworker.validators.validateField(field, doc[field.fieldname]);
+      if (error) errors.push(error);
+    });
+    
+    return { valid: !errors.length, errors };
+  },
   
   validate(run) {
     const errors = [];
@@ -67,11 +194,14 @@ coworker.controller = {
     return { valid: !errors.length, errors };
   },
   
- isComplete(run) {
+  isComplete(run) {
     return this.validate(run).valid;
   },
   
-  // ✅ NEW - Save with merge logic
+  // ══════════════════════════════════════════════════════════
+  // DRAFT MODE HELPERS (UI Form Support)
+  // ══════════════════════════════════════════════════════════
+  
   async save(run) {
     if (!run.options?.draft) {
       console.warn('save() called on non-draft run');
@@ -111,17 +241,16 @@ coworker.controller = {
       const saveRun = await run.child({
         operation: isNew ? 'create' : 'update',
         doctype: run.source_doctype,
-        input: merged,  // ✅ Complete merged document
+        input: merged,
         query: { where: { name: merged.name } },
         options: { 
           draft: false, 
-          includeSchema: false,
-          merge: false  // ✅ Tell UPDATE not to merge again
+          includeSchema: false
         }
       });
       
       if (saveRun.success) {
-        // Update local state (data only, preserve schema)
+        // Update local state
         run.output.data = [saveRun.output.data[0]];
         run.input = {};
         run.options.draft = false;
@@ -155,7 +284,6 @@ coworker.controller = {
     }
   },
   
-  // ✅ Auto-save (called by fields)
   async autoSave(run) {
     if (!run.options?.draft) return;
     if (run._saving) return;

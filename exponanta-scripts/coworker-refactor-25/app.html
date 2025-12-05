@@ -58,7 +58,7 @@
   <script src="coworker-run.js"></script>      <!-- Execution layer --> 
   <script src="coworker-config.js"></script>   <!-- Configuration -->
   <script src="coworker-controller.js"></script>  <!-- ✅ NEW -->
-  
+
 
 
   <!-- ═══════════════════════════════════════════════════════ -->
@@ -90,7 +90,7 @@
       const data = await coworker.run({
         operation: 'select',
         from: 'Customer',
-        input: { take: 10 },
+        query: { take: 10 },
         options: { render: true }
       });
       console.log('Coworker result:', data);

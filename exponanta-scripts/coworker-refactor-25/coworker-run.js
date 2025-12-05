@@ -1,7 +1,7 @@
 // ============================================================================
 // COWORKER-RUN.JS - Operation Execution Plugin
 // Base CRUD operations: select, create, update, delete
-// Version: 3.0.0 - DELTA ARCHITECTURE
+// Version: 4.0.0 - CONTROLLER INTEGRATION
 // ============================================================================
 
 (function (root, factory) {
@@ -20,7 +20,7 @@
 
   const coworkerRun = {
     name: "coworker-run",
-    version: "3.0.0",
+    version: "4.0.0",
 
     install: function (coworker) {
       if (!coworker) {
@@ -238,7 +238,7 @@
       };
 
       // ============================================================
-      // EXECUTION ROUTER
+      // EXECUTION ROUTER - ✅ ROUTE THROUGH CONTROLLER
       // ============================================================
       coworker._exec = async function (run_doc) {
         const previousAdapter = pb._currentAdapter;
@@ -247,9 +247,8 @@
         }
 
         try {
-          const handler =
-            this._handlers[run_doc.operation] || this._handlers.select;
-          return await handler.call(this, run_doc);
+          // ✅ CHANGED: Route through controller instead of direct handler
+          return await this.controller.execute(run_doc);
         } finally {
           pb.useAdapter(previousAdapter);
         }
@@ -310,8 +309,6 @@
 
           // Field filtering based on view
           let filteredData = data;
-
-          // NEW
           const shouldFilter = view === "list" || view === "card";
 
           if (schema && !select && shouldFilter) {
@@ -360,8 +357,6 @@
           // Force take: 1
           if (!run_doc.query) run_doc.query = {};
           run_doc.query.take = 1;
-
-          // ✅ ADD THIS: Set view to "form" to get ALL fields
           run_doc.query.view = "form";
 
           // Delegate to SELECT handler
@@ -427,12 +422,12 @@
         },
 
         // ════════════════════════════════════════════════════════
-        // UPDATE - Modify operations line 430
+        // UPDATE - Modify operations
         // ════════════════════════════════════════════════════════
         update: async function (run_doc) {
           const { target_doctype, input, query, options } = run_doc;
           const { where } = query || {};
-          const { includeSchema = true, includeMeta = false } = options || {}; // ✅ No merge option
+          const { includeSchema = true, includeMeta = false } = options || {};
 
           if (!input || Object.keys(input).length === 0) {
             throw new Error("UPDATE requires input with data");
@@ -451,8 +446,8 @@
           const queryDoctype = target_doctype === "All" ? "" : target_doctype;
           const pbFilter = this._buildPrismaWhere(queryDoctype, where);
 
-          // Find matching records
-          const { data: items } = await this._dbQuery({ filter: pbFilter });
+          // ✅ Use pre-fetched items if controller provided them
+          const items = run_doc._items || (await this._dbQuery({ filter: pbFilter })).data;
 
           if (items.length === 0) {
             return {
@@ -467,9 +462,12 @@
             };
           }
 
-          // ✅ SIMPLE: Just write input (already complete from controller)
+          // ✅ Merge per-item (controller may have validated but not merged)
           const updates = await Promise.all(
-            items.map((item) => this._dbUpdate(item.name, input))
+            items.map((item) => {
+              const merged = { ...item, ...input };
+              return this._dbUpdate(item.name, merged);
+            })
           );
 
           return {
@@ -502,8 +500,8 @@
           const queryDoctype = source_doctype === "All" ? "" : source_doctype;
           const pbFilter = this._buildPrismaWhere(queryDoctype, where);
 
-          // Find matching records
-          const { data: items } = await this._dbQuery({ filter: pbFilter });
+          // ✅ Use pre-fetched items if controller provided them
+          const items = run_doc._items || (await this._dbQuery({ filter: pbFilter })).data;
 
           if (items.length === 0) {
             return {
@@ -529,6 +527,45 @@
                 : undefined,
             },
           };
+        },
+
+        // ════════════════════════════════════════════════════════
+        // GET SCHEMA - Fetch doctype schema
+        // ════════════════════════════════════════════════════════
+        getSchema: async function (doctype) {
+          if (schemaCache.has(doctype)) {
+            return schemaCache.get(doctype);
+          }
+
+          try {
+            const result = await coworker.run({
+              operation: "select",
+              doctype: "Schema",
+              query: {
+                where: { _schema_doctype: doctype },
+                take: 1,
+              },
+              component: null,
+              container: null,
+              options: { includeSchema: false, skipController: true },
+            });
+
+            if (
+              !result.success ||
+              !result.output?.data ||
+              result.output.data.length === 0
+            ) {
+              console.warn(`Schema not found for: ${doctype}`);
+              return null;
+            }
+
+            const schema = result.output.data[0];
+            schemaCache.set(doctype, schema);
+            return schema;
+          } catch (error) {
+            console.error(`Error fetching schema for ${doctype}:`, error);
+            return null;
+          }
         },
       };
 
@@ -766,51 +803,13 @@
       // ============================================================
 
       coworker.getSchema = async function (doctype) {
-        if (schemaCache.has(doctype)) {
-          return schemaCache.get(doctype);
-        }
-
-        try {
-          const result = await this.run({
-            operation: "select",
-            doctype: "Schema",
-            query: {
-              where: { _schema_doctype: doctype },
-              take: 1,
-            },
-            component: null,
-            container: null,
-            options: { includeSchema: false },
-          });
-
-          if (
-            !result.success ||
-            !result.output?.data ||
-            result.output.data.length === 0
-          ) {
-            console.warn(`Schema not found for: ${doctype}`);
-            return null;
-          }
-
-          const schema = result.output.data[0];
-          schemaCache.set(doctype, schema);
-          return schema;
-        } catch (error) {
-          console.error(`Error fetching schema for ${doctype}:`, error);
-          return null;
-        }
+        return await this._handlers.getSchema(doctype);
       };
 
       coworker.clearSchemaCache = function () {
         schemaCache.clear();
         console.log("🗑️ Schema cache cleared");
       };
-
-      // ============================================================
-      // DRAFT MANAGEMENT
-      // ============================================================
-
-      // (It's now in coworker-controller.js)
 
       // ============================================================
       // BATCH & PARALLEL OPERATIONS
@@ -899,11 +898,12 @@
       // ============================================================
 
       console.log(
-        "✅ coworker-run plugin installed (v3.0.0 - DELTA ARCHITECTURE)"
+        "✅ coworker-run plugin installed (v4.0.0 - CONTROLLER INTEGRATION)"
       );
       console.log("   • coworker.run(config)");
-      console.log("   • coworker.draft.isComplete(run)");
-      console.log("   • coworker.draft.checkAndSave(run)");
+      console.log("   • coworker.controller.execute(run_doc)");
+      console.log("   • coworker.controller.save(run)");
+      console.log("   • coworker.controller.autoSave(run)");
       console.log("   • coworker.runBatch(configs)");
       console.log("   • coworker.runParallel(configs)");
       console.log("   • coworker.runWithTimeout(config, timeout)");

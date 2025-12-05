@@ -1,15 +1,19 @@
 // ============================================================
-// COWORKER CORE - Rendering Layer Only
+// COWORKER CORE - Minimal Rendering Coordination
 // Execution logic lives in coworker-run.js
+// UI components live in coworker-components.js
 // ============================================================
 
 // ============================================================
-// RENDERING
+// RENDERING SYSTEM
 // ============================================================
 
 // React 18 roots cache
 coworker._reactRoots = new Map();
 
+/**
+ * Get or create React 18 root for container
+ */
 coworker._getOrCreateRoot = function(containerId) {
   if (!this._reactRoots.has(containerId)) {
     const container = document.getElementById(containerId);
@@ -20,11 +24,16 @@ coworker._getOrCreateRoot = function(containerId) {
   return this._reactRoots.get(containerId);
 };
 
+/**
+ * Check if run should trigger render
+ */
 coworker._preprocessRender = function(run_doc) {
-  // Default: only render if explicitly requested
   return run_doc.options?.render === true;
 };
 
+/**
+ * Main render dispatcher
+ */
 coworker._render = function(run_doc) {
   if (!this._preprocessRender(run_doc)) return;
 
@@ -65,13 +74,6 @@ coworker._renderers = {
     if (root && typeof ErrorConsole !== 'undefined') {
       root.render(React.createElement(ErrorConsole, { run: run_doc }));
     }
-  },
-
-  FieldLink: function(run_doc) {
-    const root = this._getOrCreateRoot(run_doc.container);
-    if (root && typeof FieldLink !== 'undefined') {
-      root.render(React.createElement(FieldLink, { run: run_doc }));
-    }
   }
 };
 
@@ -92,8 +94,6 @@ coworker.onRecordClick = function(record, context = {}) {
 // ============================================================
 // UTILITIES
 // ============================================================
-
-
 
 coworker.getConfig = function(key, defaultValue) {
   return this._config?.[key] !== undefined ? this._config[key] : defaultValue;
