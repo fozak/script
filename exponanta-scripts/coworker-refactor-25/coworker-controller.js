@@ -258,7 +258,7 @@ coworker.controller = {
         // Update local state
         run.output.data = [saveRun.output.data[0]];
         run.input = {};
-        run.options.draft = false;
+        //run.options.draft = false; bug here if we turn off draft mode on save
         delete run._saving;
         delete run._validationErrors;
 
