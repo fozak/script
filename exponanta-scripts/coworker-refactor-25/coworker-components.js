@@ -277,24 +277,32 @@ const FieldLink = ({ field, run, value }) => {
   const [options, setOptions] = React.useState([]);
   const [isOpen, setIsOpen] = React.useState(false);
   const [searchText, setSearchText] = React.useState(value || "");
+  const debounceTimerRef = React.useRef(null);
 
   const loadOptions = async () => {
     const childRun = await run.child({
       operation: "select",
       doctype: field.options,
-      input: { take: 50 },
+      query: { take: 50 },
+      options: { render: false },
     });
 
-    setOptions(childRun.output.data);
-    setIsOpen(true);
+    if (childRun.success) {
+      setOptions(childRun.output.data);
+      setIsOpen(true);
+    }
   };
 
   const handleSelect = (option) => {
     setSearchText(option.name);
     setIsOpen(false);
 
-    // ✅ CHANGED: Use run.doc instead of manual initialization
-    run.doc[field.fieldname] = option.name;
+    // ✅ Write to delta + auto-save (like FieldData)
+    clearTimeout(debounceTimerRef.current);
+    debounceTimerRef.current = setTimeout(() => {
+      run.input[field.fieldname] = option.name;
+      coworker.controller.autoSave(run);
+    }, 300);
   };
 
   return React.createElement(
@@ -315,6 +323,7 @@ const FieldLink = ({ field, run, value }) => {
         onFocus: loadOptions,
         onChange: (e) => setSearchText(e.target.value),
         placeholder: `Select ${field.label}...`,
+        readOnly: field.read_only,
       }),
       isOpen &&
         React.createElement(

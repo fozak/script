@@ -758,6 +758,60 @@ coworker._config = {
     invoice: "Sales Invoice"
   },
 
+  // ✅ NEW: Operation behavior configuration for controller
+  operations: {
+    select: {
+      type: 'read',
+      requiresSchema: false,
+      validate: false,
+      fetchOriginals: false,
+      bypassController: false  // Goes through controller but skips validation
+    },
+    takeone: {
+      type: 'read',
+      requiresSchema: false,
+      validate: false,
+      fetchOriginals: false,
+      bypassController: false
+    },
+    create: {
+      type: 'write',
+      requiresSchema: true,
+      validate: true,
+      fetchOriginals: false,
+      bypassController: false
+    },
+    update: {
+      type: 'write',
+      requiresSchema: true,
+      validate: true,
+      fetchOriginals: true,  // Need originals for merge + validation
+      bypassController: false
+    },
+    delete: {
+      type: 'write',
+      requiresSchema: false,  // Don't need schema to delete
+      validate: false,        // Don't validate on delete
+      fetchOriginals: true,   // Need originals for hooks
+      bypassController: false
+    },
+    // Custom operations can be added
+    upsert: {
+      type: 'write',
+      requiresSchema: true,
+      validate: true,
+      fetchOriginals: true,
+      bypassController: false
+    },
+    bulk_update: {
+      type: 'write',
+      requiresSchema: false,  // Skip schema for performance
+      validate: false,        // Skip validation for bulk
+      fetchOriginals: false,  // Skip fetch for performance
+      bypassController: false
+    }
+  },
+
    // ✅ ADD THIS SECTION:
   views: {
     list: {
@@ -785,6 +839,8 @@ coworker._config = {
       }
     }
   },
+
+
   // old structure
   // Operation → View mapping
   operationToView: {

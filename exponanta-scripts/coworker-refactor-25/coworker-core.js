@@ -83,7 +83,7 @@ coworker.onRecordClick = function(record, context = {}) {
   return this.run({
     operation: 'takeone',
     doctype: record.doctype,
-    input: { where: { name: record.name } },
+    query: { where: { name: record.name } },
     options: { render: true },
     ...context
   });
