@@ -279,41 +279,45 @@
         // ════════════════════════════════════════════════════════
         // SELECT - Read operations
         // ════════════════════════════════════════════════════════
-select: async function (run_doc) {
-  const { source_doctype, query, options } = run_doc;
-  const { where, orderBy, take, skip, select } = query || {};
-  const view = query?.view || "list";
-  const { includeSchema = true, includeMeta = false } = options || {};
+        select: async function (run_doc) {
+          const { source_doctype, query, options } = run_doc;
+          const { where, orderBy, take, skip, select } = query || {};
+          const view = query?.view || "list";
+          const { includeSchema = true, includeMeta = false } = options || {};
 
-  console.log("🔍 SELECT:", {
-    source_doctype,
-    view,
-    includeSchema,
-    willFetchSchema: includeSchema && source_doctype !== "All" && source_doctype !== "Schema" && source_doctype
-  });
+          console.log("🔍 SELECT:", {
+            source_doctype,
+            view,
+            includeSchema,
+            willFetchSchema:
+              includeSchema &&
+              source_doctype !== "All" &&
+              source_doctype !== "Schema" &&
+              source_doctype,
+          });
 
-  // Fetch schema if needed
-  let schema = null;
-  if (
-    includeSchema &&
-    source_doctype !== "All" &&
-    source_doctype !== "Schema" &&
-    source_doctype
-  ) {
-    console.log("📥 Calling getSchema for:", source_doctype);
-    schema = await coworker.getSchema(source_doctype);
-    console.log("📤 getSchema returned:", schema);
-  } else {
-    console.log("❌ Skipping schema fetch because:", {
-      includeSchema,
-      source_doctype,
-      checks: {
-        notAll: source_doctype !== "All",
-        notSchema: source_doctype !== "Schema", 
-        exists: !!source_doctype
-      }
-    });
-  }
+          // Fetch schema if needed
+          let schema = null;
+          if (
+            includeSchema &&
+            source_doctype !== "All" &&
+            source_doctype !== "Schema" &&
+            source_doctype
+          ) {
+            console.log("📥 Calling getSchema for:", source_doctype);
+            schema = await coworker.getSchema(source_doctype);
+            console.log("📤 getSchema returned:", schema);
+          } else {
+            console.log("❌ Skipping schema fetch because:", {
+              includeSchema,
+              source_doctype,
+              checks: {
+                notAll: source_doctype !== "All",
+                notSchema: source_doctype !== "Schema",
+                exists: !!source_doctype,
+              },
+            });
+          }
 
           // ✅ B2: Use coworker._buildPrismaWhere
           const queryDoctype = source_doctype === "All" ? "" : source_doctype;
@@ -332,24 +336,24 @@ select: async function (run_doc) {
           const shouldFilter = view === "list" || view === "card";
 
           if (schema && !select && shouldFilter) {
-  const viewProp = `in_${view}_view`;
-  const viewFields = schema.fields
-    .filter((f) => f[viewProp])
-    .map((f) => f.fieldname);
-  const fields = ["name", ...viewFields];
-  
-  filteredData = data.map((item) => {
-    const filtered = {
-      doctype: source_doctype  // ✅ Always set doctype from source_doctype
-    };
-    fields.forEach((field) => {
-      if (item.hasOwnProperty(field)) {
-        filtered[field] = item[field];
-      }
-    });
-    return filtered;
-  });
-} else if (select && Array.isArray(select)) {
+            const viewProp = `in_${view}_view`;
+            const viewFields = schema.fields
+              .filter((f) => f[viewProp])
+              .map((f) => f.fieldname);
+            const fields = ["name", ...viewFields];
+
+            filteredData = data.map((item) => {
+              const filtered = {
+                doctype: source_doctype, // ✅ Always set doctype from source_doctype
+              };
+              fields.forEach((field) => {
+                if (item.hasOwnProperty(field)) {
+                  filtered[field] = item[field];
+                }
+              });
+              return filtered;
+            });
+          } else if (select && Array.isArray(select)) {
             filteredData = data.map((item) => {
               const filtered = {};
               select.forEach((field) => {
