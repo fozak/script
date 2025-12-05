@@ -480,14 +480,28 @@ const RecordLink = ({
  */
 const MainForm = ({ run }) => {
   const schema = run.output?.schema;
+  // ✅ FORCE LOG EVERYTHING
+  console.log("🖼️ MainForm render:");
+  console.log("  run:", run);
+  console.log("  run.success:", run.success);
+  console.log("  run.status:", run.status);
+  console.log("  run.output:", run.output);
+  console.log("  run.output?.schema:", run.output?.schema);
+  console.log("  Schema exists:", !!run.output?.schema);
+  console.log("  Schema fields count:", run.output?.schema?.fields?.length);
+  
+
 
   if (!schema) {
+    console.log("❌ No schema - returning warning");
     return React.createElement(
       "div",
       { className: CWStyles.alert.warning },
       "No schema available"
     );
   }
+
+
 
   const doc = run.doc;
 

@@ -1,18 +1,15 @@
 // ============================================================================
 // COWORKER-RUN.JS - Operation Execution Plugin
 // Base CRUD operations: select, create, update, delete
-// Version: 4.0.0 - CONTROLLER INTEGRATION
+// Version: 4.1.0 - WORKING WITH CONTROLLER
 // ============================================================================
 
 (function (root, factory) {
   if (typeof define === "function" && define.amd) {
-    // AMD
     define(["coworker"], factory);
   } else if (typeof module === "object" && module.exports) {
-    // CommonJS
     module.exports = factory(require("coworker"));
   } else {
-    // Browser globals
     root.coworkerRun = factory(root.coworker);
   }
 })(typeof self !== "undefined" ? self : this, function (coworker) {
@@ -20,15 +17,17 @@
 
   const coworkerRun = {
     name: "coworker-run",
-    version: "4.0.0",
+    version: "4.1.0",
 
     install: function (coworker) {
       if (!coworker) {
         throw new Error("Coworker instance required");
       }
 
-      // Schema cache (private to plugin)
-      const schemaCache = new Map();
+      // ============================================================
+      // SCHEMA CACHE - Global (accessible everywhere)
+      // ============================================================
+      coworker._schemaCache = new Map();
 
       // ============================================================
       // RESOLVER - Maps user input to internal operations
@@ -115,9 +114,9 @@
           container: "container" in op ? op.container : resolved.container,
 
           // DATA - Delta architecture
-          query: op.query || {}, // How to find records
-          input: op.input || {}, // Delta (changes only)
-          output: null, // Original from DB
+          query: op.query || {},
+          input: op.input || {},
+          output: null,
 
           // Execution state
           status: "running",
@@ -238,7 +237,7 @@
       };
 
       // ============================================================
-      // EXECUTION ROUTER - ✅ ROUTE THROUGH CONTROLLER
+      // EXECUTION ROUTER - Route through controller
       // ============================================================
       coworker._exec = async function (run_doc) {
         const previousAdapter = pb._currentAdapter;
@@ -247,7 +246,7 @@
         }
 
         try {
-          // ✅ CHANGED: Route through controller instead of direct handler
+          // ✅ A1: Route through controller (all operations)
           return await this.controller.execute(run_doc);
         } finally {
           pb.useAdapter(previousAdapter);
@@ -274,60 +273,83 @@
 
       // ============================================================
       // CRUD HANDLERS (select, create, update, delete)
+      // ✅ B2: All use coworker.* instead of this.*
       // ============================================================
       coworker._handlers = {
         // ════════════════════════════════════════════════════════
         // SELECT - Read operations
         // ════════════════════════════════════════════════════════
-        select: async function (run_doc) {
-          const { source_doctype, query, options } = run_doc;
-          const { where, orderBy, take, skip, select } = query || {};
-          const view = query?.view || "list";
-          const { includeSchema = true, includeMeta = false } = options || {};
+select: async function (run_doc) {
+  const { source_doctype, query, options } = run_doc;
+  const { where, orderBy, take, skip, select } = query || {};
+  const view = query?.view || "list";
+  const { includeSchema = true, includeMeta = false } = options || {};
 
-          // Fetch schema if needed
-          let schema = null;
-          if (
-            includeSchema &&
-            source_doctype !== "All" &&
-            source_doctype !== "Schema"
-          ) {
-            schema = await this.getSchema(source_doctype);
-          }
+  console.log("🔍 SELECT:", {
+    source_doctype,
+    view,
+    includeSchema,
+    willFetchSchema: includeSchema && source_doctype !== "All" && source_doctype !== "Schema" && source_doctype
+  });
 
-          // Build query
+  // Fetch schema if needed
+  let schema = null;
+  if (
+    includeSchema &&
+    source_doctype !== "All" &&
+    source_doctype !== "Schema" &&
+    source_doctype
+  ) {
+    console.log("📥 Calling getSchema for:", source_doctype);
+    schema = await coworker.getSchema(source_doctype);
+    console.log("📤 getSchema returned:", schema);
+  } else {
+    console.log("❌ Skipping schema fetch because:", {
+      includeSchema,
+      source_doctype,
+      checks: {
+        notAll: source_doctype !== "All",
+        notSchema: source_doctype !== "Schema", 
+        exists: !!source_doctype
+      }
+    });
+  }
+
+          // ✅ B2: Use coworker._buildPrismaWhere
           const queryDoctype = source_doctype === "All" ? "" : source_doctype;
-          const pbFilter = this._buildPrismaWhere(queryDoctype, where);
-          const pbSort = this._buildPrismaOrderBy(orderBy);
+          const pbFilter = coworker._buildPrismaWhere(queryDoctype, where);
+          const pbSort = coworker._buildPrismaOrderBy(orderBy);
 
           const params = {};
           if (pbFilter) params.filter = pbFilter;
           if (pbSort) params.sort = pbSort;
 
-          // Execute via adapter
-          const { data, meta } = await this._dbQuery(params, take, skip);
+          // ✅ B2: Use coworker._dbQuery
+          const { data, meta } = await coworker._dbQuery(params, take, skip);
 
           // Field filtering based on view
           let filteredData = data;
           const shouldFilter = view === "list" || view === "card";
 
           if (schema && !select && shouldFilter) {
-            const viewProp = `in_${view}_view`;
-            const viewFields = schema.fields
-              .filter((f) => f[viewProp])
-              .map((f) => f.fieldname);
-            const fields = ["name", "doctype", ...viewFields];
-
-            filteredData = data.map((item) => {
-              const filtered = {};
-              fields.forEach((field) => {
-                if (item.hasOwnProperty(field)) {
-                  filtered[field] = item[field];
-                }
-              });
-              return filtered;
-            });
-          } else if (select && Array.isArray(select)) {
+  const viewProp = `in_${view}_view`;
+  const viewFields = schema.fields
+    .filter((f) => f[viewProp])
+    .map((f) => f.fieldname);
+  const fields = ["name", ...viewFields];
+  
+  filteredData = data.map((item) => {
+    const filtered = {
+      doctype: source_doctype  // ✅ Always set doctype from source_doctype
+    };
+    fields.forEach((field) => {
+      if (item.hasOwnProperty(field)) {
+        filtered[field] = item[field];
+      }
+    });
+    return filtered;
+  });
+} else if (select && Array.isArray(select)) {
             filteredData = data.map((item) => {
               const filtered = {};
               select.forEach((field) => {
@@ -354,15 +376,13 @@
         // TAKEONE - Single record (enforces take: 1)
         // ════════════════════════════════════════════════════════
         takeone: async function (run_doc) {
-          // Force take: 1
           if (!run_doc.query) run_doc.query = {};
           run_doc.query.take = 1;
           run_doc.query.view = "form";
 
-          // Delegate to SELECT handler
-          const result = await this._handlers.select.call(this, run_doc);
+          // ✅ B2: Use coworker._handlers.select (not this._handlers)
+          const result = await coworker._handlers.select(run_doc);
 
-          // Validate single result
           if (result.success && result.output?.data?.length > 1) {
             console.warn(
               `takeone returned ${result.output.data.length} records, using first only`
@@ -393,21 +413,21 @@
             throw new Error("CREATE requires input with data");
           }
 
-          // Fetch schema
+          // ✅ B2: Use coworker.getSchema
           let schema = null;
           if (includeSchema && target_doctype !== "Schema") {
-            schema = await this.getSchema(target_doctype);
+            schema = await coworker.getSchema(target_doctype);
           }
 
           // Prepare record
           const recordData = {
             ...input,
             doctype: target_doctype,
-            name: input.name || this._generateName(target_doctype),
+            name: input.name || coworker._generateName(target_doctype),
           };
 
-          // Execute via adapter
-          const result = await this._dbCreate(recordData);
+          // ✅ B2: Use coworker._dbCreate
+          const result = await coworker._dbCreate(recordData);
 
           return {
             success: true,
@@ -436,18 +456,20 @@
             throw new Error("UPDATE requires query.where");
           }
 
-          // Fetch schema
+          // ✅ B2: Use coworker.getSchema
           let schema = null;
           if (includeSchema && target_doctype !== "Schema") {
-            schema = await this.getSchema(target_doctype);
+            schema = await coworker.getSchema(target_doctype);
           }
 
-          // Build filter
+          // ✅ B2: Use coworker._buildPrismaWhere
           const queryDoctype = target_doctype === "All" ? "" : target_doctype;
-          const pbFilter = this._buildPrismaWhere(queryDoctype, where);
+          const pbFilter = coworker._buildPrismaWhere(queryDoctype, where);
 
-          // ✅ Use pre-fetched items if controller provided them
-          const items = run_doc._items || (await this._dbQuery({ filter: pbFilter })).data;
+          // Use pre-fetched items if controller provided them
+          const items =
+            run_doc._items ||
+            (await coworker._dbQuery({ filter: pbFilter })).data;
 
           if (items.length === 0) {
             return {
@@ -462,11 +484,11 @@
             };
           }
 
-          // ✅ Merge per-item (controller may have validated but not merged)
+          // Merge per-item
           const updates = await Promise.all(
             items.map((item) => {
               const merged = { ...item, ...input };
-              return this._dbUpdate(item.name, merged);
+              return coworker._dbUpdate(item.name, merged);
             })
           );
 
@@ -496,12 +518,14 @@
             );
           }
 
-          // Build filter
+          // ✅ B2: Use coworker._buildPrismaWhere
           const queryDoctype = source_doctype === "All" ? "" : source_doctype;
-          const pbFilter = this._buildPrismaWhere(queryDoctype, where);
+          const pbFilter = coworker._buildPrismaWhere(queryDoctype, where);
 
-          // ✅ Use pre-fetched items if controller provided them
-          const items = run_doc._items || (await this._dbQuery({ filter: pbFilter })).data;
+          // Use pre-fetched items if controller provided them
+          const items =
+            run_doc._items ||
+            (await coworker._dbQuery({ filter: pbFilter })).data;
 
           if (items.length === 0) {
             return {
@@ -515,8 +539,8 @@
             };
           }
 
-          // Delete each record
-          await Promise.all(items.map((item) => this._dbDelete(item.name)));
+          // ✅ B2: Use coworker._dbDelete
+          await Promise.all(items.map((item) => coworker._dbDelete(item.name)));
 
           return {
             success: true,
@@ -527,45 +551,6 @@
                 : undefined,
             },
           };
-        },
-
-        // ════════════════════════════════════════════════════════
-        // GET SCHEMA - Fetch doctype schema
-        // ════════════════════════════════════════════════════════
-        getSchema: async function (doctype) {
-          if (schemaCache.has(doctype)) {
-            return schemaCache.get(doctype);
-          }
-
-          try {
-            const result = await coworker.run({
-              operation: "select",
-              doctype: "Schema",
-              query: {
-                where: { _schema_doctype: doctype },
-                take: 1,
-              },
-              component: null,
-              container: null,
-              options: { includeSchema: false, skipController: true },
-            });
-
-            if (
-              !result.success ||
-              !result.output?.data ||
-              result.output.data.length === 0
-            ) {
-              console.warn(`Schema not found for: ${doctype}`);
-              return null;
-            }
-
-            const schema = result.output.data[0];
-            schemaCache.set(doctype, schema);
-            return schema;
-          } catch (error) {
-            console.error(`Error fetching schema for ${doctype}:`, error);
-            return null;
-          }
         },
       };
 
@@ -800,14 +785,49 @@
 
       // ============================================================
       // SCHEMA MANAGEMENT
+      // ✅ A3: Standalone coworker.getSchema (original working code)
+      // ✅ A4: Uses coworker._schemaCache (global accessible)
       // ============================================================
 
       coworker.getSchema = async function (doctype) {
-        return await this._handlers.getSchema(doctype);
+        // Check cache first
+        if (this._schemaCache.has(doctype)) {
+          return this._schemaCache.get(doctype);
+        }
+
+        try {
+          const result = await this.run({
+            operation: "select",
+            doctype: "Schema",
+            query: {
+              where: { _schema_doctype: doctype },
+              take: 1,
+            },
+            component: null,
+            container: null,
+            options: { includeSchema: false, skipController: true },
+          });
+
+          if (
+            !result.success ||
+            !result.output?.data ||
+            result.output.data.length === 0
+          ) {
+            console.warn(`Schema not found for: ${doctype}`);
+            return null;
+          }
+
+          const schema = result.output.data[0];
+          this._schemaCache.set(doctype, schema);
+          return schema;
+        } catch (error) {
+          console.error(`Error fetching schema for ${doctype}:`, error);
+          return null;
+        }
       };
 
       coworker.clearSchemaCache = function () {
-        schemaCache.clear();
+        this._schemaCache.clear();
         console.log("🗑️ Schema cache cleared");
       };
 
@@ -897,17 +917,9 @@
       // INSTALLATION COMPLETE
       // ============================================================
 
-      console.log(
-        "✅ coworker-run plugin installed (v4.0.0 - CONTROLLER INTEGRATION)"
-      );
+      console.log("✅ coworker-run plugin installed (v4.1.0 - WORKING)");
       console.log("   • coworker.run(config)");
       console.log("   • coworker.controller.execute(run_doc)");
-      console.log("   • coworker.controller.save(run)");
-      console.log("   • coworker.controller.autoSave(run)");
-      console.log("   • coworker.runBatch(configs)");
-      console.log("   • coworker.runParallel(configs)");
-      console.log("   • coworker.runWithTimeout(config, timeout)");
-      console.log("   • coworker.dryRun(config)");
       console.log("   • coworker.getSchema(doctype)");
       console.log("   • coworker.clearSchemaCache()");
     },
