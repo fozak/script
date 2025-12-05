@@ -285,7 +285,7 @@
           const view = query?.view || "list";
           const { includeSchema = true, includeMeta = false } = options || {};
 
-          console.log("🔍 SELECT:", {
+          /*console.log("🔍 SELECT:", {
             source_doctype,
             view,
             includeSchema,
@@ -294,7 +294,7 @@
               source_doctype !== "All" &&
               source_doctype !== "Schema" &&
               source_doctype,
-          });
+          });*/
 
           // Fetch schema if needed
           let schema = null;
@@ -304,11 +304,11 @@
             source_doctype !== "Schema" &&
             source_doctype
           ) {
-            console.log("📥 Calling getSchema for:", source_doctype);
+            //console.log("📥 Calling getSchema for:", source_doctype);
             schema = await coworker.getSchema(source_doctype);
-            console.log("📤 getSchema returned:", schema);
+            //console.log("📤 getSchema returned:", schema);
           } else {
-            console.log("❌ Skipping schema fetch because:", {
+            /*console.log("❌ Skipping schema fetch because:", {
               includeSchema,
               source_doctype,
               checks: {
@@ -316,7 +316,7 @@
                 notSchema: source_doctype !== "Schema",
                 exists: !!source_doctype,
               },
-            });
+            });*/
           }
 
           // ✅ B2: Use coworker._buildPrismaWhere
@@ -921,11 +921,11 @@
       // INSTALLATION COMPLETE
       // ============================================================
 
-      console.log("✅ coworker-run plugin installed (v4.1.0 - WORKING)");
+      /*console.log("✅ coworker-run plugin installed (v4.1.0 - WORKING)");
       console.log("   • coworker.run(config)");
       console.log("   • coworker.controller.execute(run_doc)");
       console.log("   • coworker.getSchema(doctype)");
-      console.log("   • coworker.clearSchemaCache()");
+      console.log("   • coworker.clearSchemaCache()");*/
     },
   };
 
