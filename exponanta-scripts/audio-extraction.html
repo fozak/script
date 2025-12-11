@@ -100,10 +100,12 @@
         <div id="status"></div>
     </div>
 
-    <script type="module">
-        import { FFmpeg } from 'https://unpkg.com/@ffmpeg/ffmpeg@0.12.7/dist/esm/index.js';
-        import { fetchFile, toBlobURL } from 'https://unpkg.com/@ffmpeg/util@0.12.1/dist/esm/index.js';
-
+    <script src="https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.12.10/dist/umd/ffmpeg.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@ffmpeg/util@0.12.1/dist/umd/index.min.js"></script>
+    <script>
+        const { FFmpeg } = FFmpegWASM;
+        const { fetchFile } = FFmpegUtil;
+        
         const ffmpeg = new FFmpeg();
         const videoInput = document.getElementById('videoFile');
         const uploadLabel = document.getElementById('uploadLabel');
@@ -138,10 +140,9 @@
             videoInput.disabled = true;
             
             try {
-                const baseURL = 'https://unpkg.com/@ffmpeg/core@0.12.6/dist/esm';
                 await ffmpeg.load({
-                    coreURL: await toBlobURL(`${baseURL}/ffmpeg-core.js`, 'text/javascript'),
-                    wasmURL: await toBlobURL(`${baseURL}/ffmpeg-core.wasm`, 'application/wasm'),
+                    coreURL: 'https://cdn.jsdelivr.net/npm/@ffmpeg/core@0.12.6/dist/umd/ffmpeg-core.js',
+                    wasmURL: 'https://cdn.jsdelivr.net/npm/@ffmpeg/core@0.12.6/dist/umd/ffmpeg-core.wasm',
                 });
                 
                 ffmpegLoaded = true;
@@ -157,7 +158,6 @@
 
         // Process video file
         async function processVideo(file) {
-            // Double-check FFmpeg is loaded
             if (!ffmpegLoaded) {
                 showStatus('⏳ FFmpeg still loading, please wait...', 'info');
                 return;
@@ -173,37 +173,31 @@
             fileInfo.innerHTML = `<strong>File:</strong> ${file.name} (${fileSizeMB} MB)`;
 
             try {
-                // Write video file to FFmpeg virtual file system
                 showStatus('Loading video into memory...', 'info');
                 await ffmpeg.writeFile('input.video', await fetchFile(file));
 
-                // Set up progress logging
                 ffmpeg.on('progress', ({ progress }) => {
                     updateProgress(progress * 100);
                 });
 
-                // Extract audio to MP3
                 showStatus('Extracting audio...', 'info');
                 updateProgress(0);
                 
                 await ffmpeg.exec([
                     '-i', 'input.video',
-                    '-vn',  // No video
-                    '-acodec', 'libmp3lame',  // MP3 codec
-                    '-q:a', '2',  // High quality
+                    '-vn',
+                    '-acodec', 'libmp3lame',
+                    '-q:a', '2',
                     'output.mp3'
                 ]);
 
-                // Read the output file
                 showStatus('Preparing download...', 'info');
                 const data = await ffmpeg.readFile('output.mp3');
                 
-                // Create download link
                 const audioBlob = new Blob([data.buffer], { type: 'audio/mp3' });
                 const audioUrl = URL.createObjectURL(audioBlob);
                 const audioSizeMB = (audioBlob.size / 1024 / 1024).toFixed(2);
                 
-                // Auto-download
                 const a = document.createElement('a');
                 a.href = audioUrl;
                 a.download = file.name.replace(/\.[^/.]+$/, '') + '.mp3';
@@ -212,7 +206,6 @@
                 showStatus(`✅ Audio extracted! (${audioSizeMB} MB) - Download started automatically.`, 'success');
                 progress.style.display = 'none';
                 
-                // Cleanup
                 await ffmpeg.deleteFile('input.video');
                 await ffmpeg.deleteFile('output.mp3');
                 
@@ -225,7 +218,6 @@
             }
         }
 
-        // Handle file selection
         videoInput.addEventListener('change', async (e) => {
             const file = e.target.files[0];
             if (file && ffmpegLoaded) {
@@ -233,11 +225,9 @@
             } else if (file && !ffmpegLoaded) {
                 showStatus('⏳ Please wait for FFmpeg to finish loading...', 'info');
             }
-            // Reset input so same file can be selected again
             videoInput.value = '';
         });
 
-        // Load FFmpeg immediately on page load
         loadFFmpeg();
     </script>
 </body>
