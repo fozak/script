@@ -289,16 +289,29 @@ coworker.controller = {
     }
   },
 
-  async autoSave(run) {
-    if (!run.options?.draft) return;
-    if (run._saving) return;
-    if (!this.isComplete(run)) {
-      if (typeof coworker._render === "function") {
-        coworker._render(run);
-      }
-      return;
+async autoSave(run) {
+  if (!run.options?.draft) return;
+  if (run._saving) return;
+  
+  // ✅ NEW: Check schema-level autosave control
+  const schema = run.output?.schema;
+  
+  if (schema?.is_submittable === 1) {
+    // Submittable docs must explicitly set _autosave
+    if (schema._autosave === 0) return; // No autosave
+    
+    // _autosave=1: only autosave drafts (docstatus=0)
+    if (run.doc?.docstatus !== 0) return;
+  }
+  // Default: is_submittable not in schema = autosave enabled
+  
+  if (!this.isComplete(run)) {
+    if (typeof coworker._render === "function") {
+      coworker._render(run);
     }
+    return;
+  }
 
-    return await this.save(run);
-  },
+  return await this.save(run);
+}
 };

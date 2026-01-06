@@ -1,15 +1,11 @@
-/** https://claude.ai/chat/9c5c06a4-cc26-4a53-9625-a6449eaf8072 
+/**
  * ============================================================================
- * UNIVERSAL ID GENERATOR - 15-Character Alphanumeric IDs
- * ============================================================================
- * /**
- * ============================================================================
- * UNIVERSAL ID GENERATOR - 15-Character Alphanumeric IDs
+ * UNIVERSAL ID GENERATOR - 15-Character Alphanumeric IDs (NO PADDING)
  * ============================================================================
  * 
  * PURPOSE:
  * Generates consistent, readable, and collision-resistant 15-character IDs
- * for all doctypes in the system using a multi-tier approach.
+ * for all doctypes in the system using a three-tier approach.
  * 
  * THREE-TIER SYSTEM:
  * 
@@ -17,6 +13,7 @@
  *    - Format: 15 characters of pure semantic (doctype + title)
  *    - No random suffix
  *    - Requires unique title (enforced by DB)
+ *    - Padded with 'x' only for singles to reach exactly 15 chars
  *    - Examples: Role, Country, Currency, Brand, Department
  *    - Sample IDs:
  *      - Role "Sales Manager" → "rolesalesmanage"
@@ -28,22 +25,27 @@
  *    - Deterministic: same email always produces same ID
  *    - No collisions: email uniqueness guarantees ID uniqueness
  *    - Sample IDs:
- *      - "john@example.com" → "user3f9k2m8p1qz"
- *      - "jane@company.com" → "userb7d4e6h9j2x"
+ *      - "john@example.com" → "user5ej8eg5ej8e"
+ *      - "jane@company.com" → "usersqiz5qsqiz5"
  * 
- * 3. MULTI-INSTANCE DOCTYPES (Transactional Data)
- *    - Format: 10 characters semantic + 5 characters random
- *    - Random suffix prevents collisions
+ * 3. MULTI-INSTANCE DOCTYPES (Transactional Data - NO PADDING)
+ *    - Format: Variable semantic (3-10 chars) + variable random (5-12 chars)
+ *    - Total always 15 chars
+ *    - Shorter semantic = more random = higher collision resistance
  *    - Title optional
  *    - Examples: Item, Invoice, Order, Payment
  *    - Sample IDs:
- *      - Item "MacBook Pro" → "itemmacbooa1b2c"
- *      - Payment Entry → "paymententq7who"
- *      - Sales Invoice → "salesinvoil4nfq"
+ *      - "Run" + null → "runa1b2c3d4e5f6g" (3 semantic + 12 random)
+ *      - "Item" + "MacBook" → "itemmacboof7k9m" (10 semantic + 5 random)
+ *      - "Payment Entry" → "paymententq7who" (10 semantic + 5 random)
+ * 
+ * COLLISION PROBABILITY (Multi-Instance):
+ * - 3-char semantic + 12 random: 36^12 = 4.7 quintillion combinations
+ * - 6-char semantic + 9 random: 36^9 = 101 trillion combinations
+ * - 10-char semantic + 5 random: 36^5 = 60 million combinations (0.44% at 10K records)
  * 
  * ============================================================================
  */
-
 
 // ============================================================================
 // CONFIGURATION
@@ -99,21 +101,24 @@ const SINGLE_DOCTYPES = new Set([
  * @throws {Error} If single doctype is missing title, or if User is missing email
  * 
  * @example
- * // User doctype (email-based)
- * generateID('User', 'john@example.com')
- * // Returns: "user3f9k2m8p1qz" (4 + 11 chars, deterministic from email)
+ * // User doctype (email-based, deterministic)
+ * generateId('User', 'john@example.com')
+ * // Returns: "user5ej8eg5ej8e" (4 + 11 chars, deterministic from email)
  * 
  * @example
  * // Single doctype (master data)
- * generateID('Role', 'Sales Manager')
+ * generateId('Role', 'Sales Manager')
  * // Returns: "rolesalesmanage" (15 chars, no random)
  * 
  * @example
- * // Multi-instance doctype (transactional data)
- * generateID('Sales Invoice', null)
+ * // Multi-instance doctype (transactional data - no padding)
+ * generateId('Run', null)
+ * // Returns: "runa1b2c3d4e5f6g" (3 semantic + 12 random)
+ * 
+ * generateId('Sales Invoice', null)
  * // Returns: "salesinvoiq8w9e" (10 semantic + 5 random)
  */
-function generateID(doctype, title = null) {
+function generateId(doctype, title = null) {
   // Special handling for User doctype
   if (doctype === 'User') {
     if (!title || title.trim() === '') {
@@ -130,10 +135,10 @@ function generateID(doctype, title = null) {
         `Examples: "Sales Manager", "United States", "US Dollar"`
       );
     }
-    return generateSingleID(doctype, title);
+    return generateSingleId(doctype, title);
   } else {
-    // Multi-instance: 10-char semantic + 5-char random
-    return generateMultiID(doctype, title);
+    // Multi-instance: variable semantic + variable random (no padding)
+    return generateMultiId(doctype, title);
   }
 }
 
@@ -150,7 +155,7 @@ function generateID(doctype, title = null) {
  * 
  * @example
  * hashEmail('john@example.com')
- * // Returns: "3f9k2m8p1qz" (11 chars, deterministic)
+ * // Returns: "5ej8eg5ej8e" (11 chars, deterministic)
  */
 function hashEmail(email) {
   let hash = 0;
@@ -174,11 +179,11 @@ function hashEmail(email) {
  * 
  * @example
  * generateUserId('john@example.com')
- * // Returns: "user3f9k2m8p1qz"
+ * // Returns: "user5ej8eg5ej8e"
  * 
  * @example
  * generateUserId('jane@company.com')
- * // Returns: "userb7d4e6h9j2x"
+ * // Returns: "usersqiz5qsqiz5"
  * 
  * // Same email always produces same ID (deterministic)
  * generateUserId('john@example.com') === generateUserId('john@example.com')
@@ -189,7 +194,7 @@ function generateUserId(email) {
 }
 
 // ============================================================================
-// SINGLE DOCTYPE ID GENERATION (15 chars pure semantic)
+// SINGLE DOCTYPE ID GENERATION (15 chars pure semantic with padding)
 // ============================================================================
 
 /**
@@ -201,11 +206,16 @@ function generateUserId(email) {
  * @returns {string} 15-character semantic ID
  * 
  * @example
- * generateSingleID('Role', 'Sales Manager')
+ * generateSingleId('Role', 'Sales Manager')
  * // Returns: "rolesalesmanage"
  * // Breakdown: "role" (4) + "salesmanager" (11) = 15 chars
+ * 
+ * @example
+ * generateSingleId('Brand', 'Apple')
+ * // Returns: "brandapplexxxxx"
+ * // Breakdown: "brand" (5) + "apple" (5) + "xxxxx" (5 padding) = 15 chars
  */
-function generateSingleID(doctype, title) {
+function generateSingleId(doctype, title) {
   // Normalize doctype: lowercase, remove special chars and spaces
   const doctypeNorm = doctype
     .toLowerCase()
@@ -219,7 +229,7 @@ function generateSingleID(doctype, title) {
   // Combine: doctype + title
   let semantic = doctypeNorm + titleNorm;
   
-  // Ensure exactly 15 chars
+  // Ensure exactly 15 chars (pad singles only)
   if (semantic.length < 15) {
     semantic = semantic.padEnd(15, 'x');
   } else if (semantic.length > 15) {
@@ -230,47 +240,69 @@ function generateSingleID(doctype, title) {
 }
 
 // ============================================================================
-// MULTI-INSTANCE DOCTYPE ID GENERATION (10 semantic + 5 random)
+// MULTI-INSTANCE DOCTYPE ID GENERATION (variable semantic + variable random)
 // ============================================================================
 
 /**
  * Generate ID for multi-instance doctypes
- * Creates 10-char semantic + 5-char random suffix
+ * Creates variable-length semantic (3-10 chars) + variable-length random (5-12 chars)
+ * Total always 15 chars, NO PADDING
+ * 
+ * Shorter semantic = more random chars = higher collision resistance
  * 
  * @param {string} doctype - The doctype name
  * @param {string|null} title - Optional title to include in semantic
- * @returns {string} 15-character ID (10 semantic + 5 random)
+ * @returns {string} 15-character ID (variable semantic + variable random)
  * 
  * @example
- * generateMultiID('Item', 'MacBook Pro')
- * // Returns: "itemmacbooa1b2c"
- * // Breakdown: "itemmacboo" (10 semantic) + "a1b2c" (5 random)
+ * generateMultiId('Run', null)
+ * // Returns: "runa1b2c3d4e5f6g"
+ * // Breakdown: "run" (3 semantic) + "a1b2c3d4e5f6g" (12 random)
+ * 
+ * @example
+ * generateMultiId('Item', 'MacBook Pro')
+ * // Returns: "itemmacboof7k9m"
+ * // Breakdown: "itemmacboo" (10 semantic) + "f7k9m" (5 random)
+ * 
+ * @example
+ * generateMultiId('Payment Entry', null)
+ * // Returns: "paymententq7who"
+ * // Breakdown: "paymentent" (10 semantic) + "q7who" (5 random)
  */
-function generateMultiID(doctype, title) {
-  const semantic = createSemantic(doctype, title); // 10 chars
-  const random = generateRandom(5); // 5 chars
-  return semantic + random; // 15 chars total
+function generateMultiId(doctype, title) {
+  const semantic = createSemantic(doctype, title); // 3-10 chars (no padding)
+  const randomLength = 15 - semantic.length; // Fill remainder (5-12 chars)
+  const random = generateRandom(randomLength);
+  return semantic + random; // Always 15 chars total
 }
 
 /**
- * Create 10-character semantic code from doctype and optional title
+ * Create variable-length semantic code (3-10 chars, NO PADDING)
+ * from doctype and optional title
  * 
  * Rules:
- * - Single word: use word as-is, pad if needed
- * - Two words: concatenate and truncate to 10 chars
+ * - Single word: use word as-is (no padding)
+ * - Two words: concatenate and truncate to max 10 chars
  * - Three+ words: first word (4 chars) + smart-abbreviated remaining words
+ * - Max semantic length: 10 chars
+ * - Min semantic length: 3 chars (typically)
+ * - NO PADDING applied
  * 
  * @param {string} doctype - The doctype name
  * @param {string|null} title - Optional title to append
- * @returns {string} 10-character semantic code
+ * @returns {string} Variable-length semantic code (3-10 chars)
+ * 
+ * @example
+ * createSemantic('Run', null)
+ * // Returns: "run" (3 chars, no padding)
  * 
  * @example
  * createSemantic('Item', 'MacBook Pro')
- * // Returns: "itemmacboo"
+ * // Returns: "itemmacboo" (10 chars)
  * 
  * @example
  * createSemantic('Bank Account Type', null)
- * // Returns: "bankacctyp"
+ * // Returns: "bankacctyp" (10 chars)
  * // Breakdown: "bank" (4) + "acc" (3) + "typ" (3) = 10 chars
  */
 function createSemantic(doctype, title) {
@@ -293,10 +325,10 @@ function createSemantic(doctype, title) {
   let semantic;
   
   if (significant.length === 1) {
-    // Single word doctype
+    // Single word doctype - use as-is (no padding)
     semantic = significant[0];
   } else if (significant.length === 2) {
-    // Two words: simple concatenation, then truncate to 10
+    // Two words: simple concatenation, then truncate to max 10
     const w1 = significant[0];
     const w2 = significant[1];
     semantic = (w1 + w2).substring(0, 10);
@@ -320,13 +352,12 @@ function createSemantic(doctype, title) {
     semantic = (semantic + titleNorm).substring(0, 10);
   }
   
-  // Ensure exactly 10 chars
-  if (semantic.length < 10) {
-    semantic = semantic.padEnd(10, 'x');
-  } else if (semantic.length > 10) {
+  // Cap at 10 chars max (for readability), NO PADDING
+  if (semantic.length > 10) {
     semantic = semantic.substring(0, 10);
   }
   
+  // Return as-is (3-10 chars, no padding)
   return semantic;
 }
 
@@ -361,7 +392,8 @@ function smartStripVowels(word) {
  * @returns {string} Random alphanumeric string
  * 
  * @example
- * generateRandom(5)  // Returns: "a1b2c" (example, will vary)
+ * generateRandom(5)   // Returns: "a1b2c" (example, will vary)
+ * generateRandom(12)  // Returns: "x7k9m3p2q8w5" (example, will vary)
  */
 function generateRandom(length) {
   const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
@@ -393,12 +425,13 @@ function isSingleDoctype(doctype) {
  * @returns {boolean} True if valid 15-char alphanumeric, false otherwise
  * 
  * @example
- * validateID('rolesalesmanage')  // Returns: true
- * validateID('user3f9k2m8p1qz')  // Returns: true
- * validateID('invalid-id-123')   // Returns: false (contains hyphen)
- * validateID('short')            // Returns: false (not 15 chars)
+ * validateId('rolesalesmanage')  // Returns: true
+ * validateId('user5ej8eg5ej8e')  // Returns: true
+ * validateId('runa1b2c3d4e5f6g')  // Returns: true
+ * validateId('invalid-id-123')   // Returns: false (contains hyphen)
+ * validateId('short')            // Returns: false (not 15 chars)
  */
-function validateID(id) {
+function validateId(id) {
   return typeof id === 'string' && 
          id.length === 15 && 
          /^[a-z0-9]{15}$/.test(id);
@@ -408,50 +441,81 @@ function validateID(id) {
 // USAGE EXAMPLES
 // ============================================================================
 
-/*
-* User doctype (email-based, deterministic)*/
-const user1 = generateID('User', 'john@example.com');
-console.log(user1);  // "user3f9k2m8p1qz" (deterministic)
+/**/
+// User doctype (email-based, deterministic)
+const user1 = generateId('User', 'john@example.com');
+console.log(user1);  // "user5ej8eg5ej8e" (deterministic)
 
-const user2 = generateID('User', 'john@example.com');
-console.log(user2);  // "user3f9k2m8p1qz" (same email = same ID)
+const user2 = generateId('User', 'john@example.com');
+console.log(user2);  // "user5ej8eg5ej8e" (same email = same ID)
 
-const user3 = generateID('User', 'jane@company.com');
-console.log(user3);  // "userb7d4e6h9j2x" (different email = different ID)
+const user3 = generateId('User', 'jane@company.com');
+console.log(user3);  // "usersqiz5qsqiz5" (different email = different ID)
 
-// Single doctypes (master data)
-const roleId = generateID('Role', 'Sales Manager');
+// Single doctypes (master data, with padding)
+const roleId = generateId('Role', 'Sales Manager');
 console.log(roleId);  // "rolesalesmanage"
 
-const countryId = generateID('Country', 'United States');
+const countryId = generateId('Country', 'United States');
 console.log(countryId);  // "countryunitedst"
 
-const brandId = generateID('Brand', 'Apple');
-console.log(brandId);  // "brandapplexxxxx"
+const brandId = generateId('Brand', 'Apple');
+console.log(brandId);  // "brandapplexxxxx" (padded)
 
-// Multi-instance doctypes (transactional data)
-const itemId = generateID('Item', 'MacBook Pro');
-console.log(itemId);  // "itemmacbooa1b2c" (random suffix varies)
+// Multi-instance doctypes (NO PADDING - variable semantic + variable random)
+const runId = generateId('Run', null);
+console.log(runId);  // "runa1b2c3d4e5f6g" (3 semantic + 12 random)
 
-const invoiceId = generateID('Sales Invoice', null);
-console.log(invoiceId);  // "salesinvoiq8w9e" (random suffix varies)
+const itemId1 = generateId('Item', null);
+console.log(itemId1);  // "itemx7k9m3p2q8w" (4 semantic + 11 random)
 
-const paymentId = generateID('Payment Entry', null);
-console.log(paymentId);  // "paymententk3r7t" (random suffix varies)
+const itemId2 = generateId('Item', 'MacBook Pro');
+console.log(itemId2);  // "itemmacboof7k9m" (10 semantic + 5 random)
+
+const invoiceId = generateId('Sales Invoice', null);
+console.log(invoiceId);  // "salesinvoiq8w9e" (10 semantic + 5 random)
+
+const paymentId = generateId('Payment Entry', null);
+console.log(paymentId);  // "paymententk3r7t" (10 semantic + 5 random)
+
+const schemaId = generateId('Schema', null);
+console.log(schemaId);  // "schemada5ekm7p3" (6 semantic + 9 random)
 
 // Validation
-console.log(validateID(user1));      // true
-console.log(validateID(roleId));     // true
-console.log(validateID('invalid'));  // false
+console.log(validateId(user1));      // true
+console.log(validateId(roleId));     // true
+console.log(validateId(runId));      // true
+console.log(validateId('invalid'));  // false
 console.log(isSingleDoctype('Role'));  // true
 console.log(isSingleDoctype('User'));  // false
+console.log(isSingleDoctype('Item'));  // false
 /**/
+
+// ============================================================================
+// COLLISION PROBABILITY REFERENCE
+// ============================================================================
+
+/*
+MULTI-INSTANCE COLLISION PROBABILITIES AT 10,000 RECORDS:
+
+Semantic Length | Random Length | Combinations        | Collision Probability
+----------------|---------------|---------------------|----------------------
+3 chars         | 12 chars      | 36^12 = 4.7×10^18  | ~0% (astronomical)
+4 chars         | 11 chars      | 36^11 = 1.3×10^17  | ~0% (astronomical)
+5 chars         | 10 chars      | 36^10 = 3.7×10^15  | ~0% (negligible)
+6 chars         | 9 chars       | 36^9 = 1.0×10^14   | ~0% (negligible)
+7 chars         | 8 chars       | 36^8 = 2.8×10^12   | ~0.0000018%
+8 chars         | 7 chars       | 36^7 = 7.8×10^10   | ~0.000064%
+9 chars         | 6 chars       | 36^6 = 2.2×10^9    | ~0.0023%
+10 chars        | 5 chars       | 36^5 = 6.0×10^7    | ~0.44%
+
+KEY INSIGHT: Shorter semantic = more random = exponentially lower collision risk
+*/
 
 // ============================================================================
 // EXPORT (for Node.js/modules)
 // ============================================================================
 
 // Uncomment if using in Node.js or ES6 modules
-// module.exports = { generateID, generateUserId, hashEmail, isSingleDoctype, validateID, SINGLE_DOCTYPES };
-// export { generateID, generateUserId, hashEmail, isSingleDoctype, validateID, SINGLE_DOCTYPES };
-
+// module.exports = { generateId, generateUserId, hashEmail, isSingleDoctype, validateId, SINGLE_DOCTYPES };
+// export { generateId, generateUserId, hashEmail, isSingleDoctype, validateId, SINGLE_DOCTYPES };

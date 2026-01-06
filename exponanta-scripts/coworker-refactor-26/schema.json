@@ -1,9 +1,11 @@
 {
   "doctype": "Schema",
-  "name": "Schema",
+  "name": "schemascherfnw8",
+  "_schema_doctype": "Schema",
   "module": "Core",
   "description": "Meta-schema that defines doctype structure",
   "is_submittable": 0,
+  "_autosave": 1,
   "icon": "fa fa-code",
   "title_field": "name",
   "search_fields": "_schema_doctype,name,module",
