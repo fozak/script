@@ -298,12 +298,20 @@ async autoSave(run) {
   
   if (schema?.is_submittable === 1) {
     // Submittable docs must explicitly set _autosave
-    if (schema._autosave === 0) return; // No autosave
+    const autosave = schema._autosave !== undefined ? schema._autosave : 1;
+    
+    if (autosave === 0) {
+      console.log("🚫 AutoSave BLOCKED: _autosave=0 for", schema._schema_doctype);
+      return;  // ← Block here
+    }
     
     // _autosave=1: only autosave drafts (docstatus=0)
-    if (run.doc?.docstatus !== 0) return;
+    if (run.doc?.docstatus !== 0) {
+      console.log("🚫 AutoSave BLOCKED: docstatus != 0");
+      return;
+    }
   }
-  // Default: is_submittable not in schema = autosave enabled
+  // Default: is_submittable=0 → autosave enabled
   
   if (!this.isComplete(run)) {
     if (typeof coworker._render === "function") {
@@ -312,6 +320,7 @@ async autoSave(run) {
     return;
   }
 
+  console.log("✅ AutoSave proceeding to save()");
   return await this.save(run);
 }
 };
