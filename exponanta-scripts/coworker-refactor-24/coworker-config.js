@@ -713,7 +713,7 @@ const SYSTEM_FIELDS = [
   { fieldname: "_schema_name", frappe_field: false, docstatus: 1 },
   { fieldname: "_allowed", frappe_field: false, docstatus: 1 },         //combined write access is like ACL ["User-B"] and roles etc ACL ["Manager"], // Managers read+write
   { fieldname: "_allowed_read", frappe_field: false, docstatus: 1 },    //combined read access is like ACL ["User-B"] and roles etc ACL ["Manager"], // Managers read+write
-   { fieldname: "user_id", frappe_field: false, docstatus: 1 }    // special field for user profile linking to @users colleciton for auth
+   { fieldname: "user_id", frappe_field: false, docstatus: 1 }    // not used. special field for user profile linking to @users colleciton for auth
 ]
 //  ACL - this is for pocketbased storage
 //  @request.auth.name = data.owner

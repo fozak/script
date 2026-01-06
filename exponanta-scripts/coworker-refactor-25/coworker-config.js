@@ -1,5 +1,5 @@
 // ============================================================
-// coworker-config.js COWORKER CONFIG - Configuration Only (No Execution Logic)
+// coworker-config.js v1.25COWORKER CONFIG - Configuration Only (No Execution Logic)
 // ============================================================
 
 
