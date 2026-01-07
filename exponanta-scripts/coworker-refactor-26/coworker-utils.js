@@ -797,3 +797,44 @@ KEY INSIGHT: Shorter semantic = more random = exponentially lower collision risk
 // Uncomment if using in Node.js or ES6 modules
 // module.exports = { generateId, generateUserId, hashEmail, isSingleDoctype, validateId, SINGLE_DOCTYPES };
 // export { generateId, generateUserId, hashEmail, isSingleDoctype, validateId, SINGLE_DOCTYPES };
+
+
+// ============================================================
+// DEPENDS_ON EVALUATOR
+// ============================================================
+
+/**
+ * Evaluates a depends_on expression from schema
+ * @param {string} dependsOn - Expression like "eval:doc.docstatus===0" or "fieldname"
+ * @param {object} doc - Current document data
+ * @returns {boolean} - True if field should be shown
+ */
+function evaluateDependsOn(dependsOn, doc) {
+  if (!dependsOn) return true;
+  
+  // Handle eval: expressions
+  if (dependsOn.startsWith('eval:')) {
+    const expression = dependsOn.substring(5); // Remove 'eval:'
+    
+    try {
+      // Create safe evaluation context
+      const evalFunc = new Function('doc', `
+        "use strict";
+        return ${expression};
+      `);
+      
+      return !!evalFunc(doc);
+    } catch (error) {
+      console.warn('Failed to evaluate depends_on:', dependsOn, error);
+      return true; // Show field if evaluation fails (fail-safe)
+    }
+  }
+  
+  // Handle simple field references (field must be truthy)
+  // Example: depends_on: "customer" means show only if customer is set
+  if (typeof dependsOn === 'string') {
+    return !!doc[dependsOn];
+  }
+  
+  return true;
+}

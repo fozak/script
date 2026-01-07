@@ -428,8 +428,70 @@ const FieldLink = ({ field, run, value }) => {
   );
 };
 
+/**
+ * FieldSectionBreak - Visual separator with optional label
+ */
+const FieldSectionBreak = ({ field }) => {
+  return React.createElement(
+    "div",
+    { 
+      className: CWStyles.form.sectionBreak,
+      style: { 
+        marginTop: '2rem',
+        marginBottom: '1rem',
+        borderTop: '1px solid #e5e7eb',
+        paddingTop: '1rem'
+      }
+    },
+    field.label && React.createElement('h4', {
+      style: { 
+        marginBottom: '1rem',
+        fontSize: '1.1rem',
+        fontWeight: '600'
+      }
+    }, field.label)
+  );
+};
+
+/**
+ * FieldButton - Action button (triggers save/submit operations)
+ */
+const FieldButton = ({ field, run }) => {
+  const [loading, setLoading] = React.useState(false);
+  
+  const handleClick = async () => {
+    setLoading(true);
+    
+    try {
+      // Check if this is a submit button
+      if (field.fieldname === 'submit_button') {
+        run.input.docstatus = 1;
+      }
+      
+      // Call save directly (Option 1 - Simple)
+      await coworker.controller.save(run);
+      
+    } catch (error) {
+      console.error("Button error:", error);
+    }
+    
+    setLoading(false);
+  };
+  
+  return React.createElement(
+    "div",
+    { className: CWStyles.form.fieldWrapper },
+    React.createElement('button', {
+      className: CWStyles.button.primary,
+      onClick: handleClick,
+      disabled: loading || field.read_only,
+      type: "button"
+    }, loading ? 'Saving...' : field.label)
+  );
+};
+
 // ============================================================
-// REGISTER FIELD COMPONENTS (CRITICAL: Before MainForm)
+// REGISTER FIELD COMPONENTS - SINGLE SOURCE OF TRUTH
 // ============================================================
 window.components = {
   FieldData,
@@ -444,6 +506,8 @@ window.components = {
   FieldDate,
   FieldDatetime,
   FieldTime,
+  FieldSectionBreak,
+  FieldButton,
 };
 
 // ============================================================
@@ -478,32 +542,34 @@ const RecordLink = ({
 /**
  * MainForm - Document form with all fields
  */
+// ============================================================
+// MAIN FORM COMPONENT - With Whitelist
+// ============================================================
+
 const MainForm = ({ run }) => {
-  const schema = run.output?.schema;
-  // ✅ FORCE LOG EVERYTHING
-  console.log("🖼️ MainForm render:");
-  console.log("  run:", run);
-  console.log("  run.success:", run.success);
-  console.log("  run.status:", run.status);
-  console.log("  run.output:", run.output);
-  console.log("  run.output?.schema:", run.output?.schema);
-  console.log("  Schema exists:", !!run.output?.schema);
-  console.log("  Schema fields count:", run.output?.schema?.fields?.length);
+  const [schema, setSchema] = React.useState(run?.output?.schema || null);
   
+  const doc = run?.doc || {};
+  const doctype = doc.doctype || run?.source_doctype || run?.target_doctype;
 
+  // Load schema if missing
+  React.useEffect(() => {
+    if (!schema && doctype && coworker?.getSchema) {
+      coworker.getSchema(doctype).then(setSchema);
+    }
+  }, [doctype]);
 
+  // Guard clause
   if (!schema) {
-    console.log("❌ No schema - returning warning");
-    return React.createElement(
-      "div",
-      { className: CWStyles.alert.warning },
-      "No schema available"
+    return React.createElement("div", { className: CWStyles.alert.warning }, 
+      "Loading schema..."
     );
   }
 
-
-
-  const doc = run.doc;
+  // Safe extracts
+  const titleField = schema.title_field || 'name';
+  const title = doc[titleField] || doc.name || 'New';
+  const fields = schema.fields || [];
 
   const implementedTypes = [
     "Data",
@@ -523,19 +589,22 @@ const MainForm = ({ run }) => {
   return React.createElement(
     "div",
     { className: CWStyles.form.wrapper },
+    
+    // Header
     React.createElement(
       "div",
       {
         className: `${CWStyles.display.flex} ${CWStyles.justify.between} ${CWStyles.spacing.mb3}`,
       },
-      React.createElement("h5", null, doc.name || `New ${schema.name}`)
+      React.createElement("h5", null, title)
     ),
 
-    schema.fields
+    // Fields
+    fields
       .filter((field) => implementedTypes.includes(field.fieldtype))
       .map((field) => {
         const componentName = `Field${field.fieldtype.replace(/ /g, "")}`;
-        const Component = window.components[componentName];
+        const Component = window.components?.[componentName];
 
         if (!Component) {
           console.warn(`Component not found: ${componentName}`);
@@ -552,11 +621,27 @@ const MainForm = ({ run }) => {
   );
 };
 
+function renderField(field, doc, run) {
+  if (!field || field.fieldtype === 'Section Break') return null;
+  
+  const fieldname = field.fieldname;
+  const value = doc[fieldname] ?? '';
+  
+  return React.createElement("div", { key: fieldname, className: CWStyles.formGroup },
+    React.createElement("label", null, field.label || fieldname),
+    React.createElement("input", {
+      type: "text",
+      value: value,
+      onChange: (e) => { run.input[fieldname] = e.target.value; }
+    })
+  );
+}
+
 /**
  * MainGrid - List view with table
  */
 const MainGrid = ({ run }) => {
-  const data = run.output.data;
+  const data = run.output?.data;
   
   if (!data || data.length === 0) {
     return React.createElement(
@@ -719,7 +804,7 @@ const ErrorConsole = ({ run }) => {
 };
 
 // ============================================================
-// REGISTER MAIN COMPONENTS (CRITICAL: After field components)
+// REGISTER MAIN COMPONENTS
 // ============================================================
 window.MainForm = MainForm;
 window.MainGrid = MainGrid;

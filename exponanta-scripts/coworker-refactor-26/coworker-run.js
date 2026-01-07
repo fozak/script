@@ -285,23 +285,13 @@
           const view = query?.view || "list";
           const { includeSchema = true, includeMeta = false } = options || {};
 
-          /*console.log("🔍 SELECT:", {
-            source_doctype,
-            view,
-            includeSchema,
-            willFetchSchema:
-              includeSchema &&
-              source_doctype !== "All" &&
-              source_doctype !== "Schema" &&
-              source_doctype,
-          });*/
-
+          
           // Fetch schema if needed
           let schema = null;
           if (
             includeSchema &&
             source_doctype !== "All" &&
-            source_doctype !== "Schema" &&
+            //deleted source_doctype !== "Schema" && 
             source_doctype
           ) {
             //console.log("📥 Calling getSchema for:", source_doctype);
@@ -419,7 +409,7 @@
 
           // ✅ B2: Use coworker.getSchema
           let schema = null;
-          if (includeSchema && target_doctype !== "Schema") {
+          if (includeSchema ) {      //was if (includeSchema && target_doctype !== "Schema") {
             schema = await coworker.getSchema(target_doctype);
           }
 
@@ -462,7 +452,7 @@
 
           // ✅ B2: Use coworker.getSchema
           let schema = null;
-          if (includeSchema && target_doctype !== "Schema") {
+          if (includeSchema ) {  //was if (includeSchema && target_doctype !== "Schema") {
             schema = await coworker.getSchema(target_doctype);
           }
 

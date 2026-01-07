@@ -1,5 +1,5 @@
 // ============================================================
-// COWORKER STYLES - Style Configuration
+// coworker-styles.js - Style Configuration
 // ============================================================
 
 window.CWStyles = {
@@ -161,3 +161,7 @@ window.CWStyles = {
     stretch: 'cw-align-stretch'
   }
 };
+
+// Initialize theme on load
+document.body.dataset.theme = CWStyles.theme;
+console.log('✅ Theme initialized:', CWStyles.theme);
