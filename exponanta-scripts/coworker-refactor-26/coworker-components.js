@@ -546,6 +546,10 @@ const RecordLink = ({
 // MAIN FORM COMPONENT - With Whitelist
 // ============================================================
 
+// ============================================================
+// MAIN FORM COMPONENT - Using CWStyles
+// ============================================================
+
 const MainForm = ({ run }) => {
   const [schema, setSchema] = React.useState(run?.output?.schema || null);
   
@@ -571,6 +575,7 @@ const MainForm = ({ run }) => {
   const title = doc[titleField] || doc.name || 'New';
   const fields = schema.fields || [];
 
+  // Implemented field types
   const implementedTypes = [
     "Data",
     "Text",
@@ -584,7 +589,23 @@ const MainForm = ({ run }) => {
     "Date",
     "Datetime",
     "Time",
+    "Section Break",
+    "Button"
   ];
+
+  // Docstatus badge class helper
+  const getDocstatusBadge = (docstatus) => {
+    if (docstatus === 0) {
+      return { className: CWStyles.badge.warning, label: 'Draft' };
+    }
+    if (docstatus === 1) {
+      return { className: CWStyles.badge.success, label: 'Submitted' };
+    }
+    if (docstatus === 2) {
+      return { className: CWStyles.badge.danger, label: 'Cancelled' };
+    }
+    return null;
+  };
 
   return React.createElement(
     "div",
@@ -596,12 +617,30 @@ const MainForm = ({ run }) => {
       {
         className: `${CWStyles.display.flex} ${CWStyles.justify.between} ${CWStyles.spacing.mb3}`,
       },
-      React.createElement("h5", null, title)
+      React.createElement("h5", null, title),
+      
+      // Show docstatus badge if submittable
+      schema.is_submittable && doc.docstatus !== undefined
+        ? (() => {
+            const badge = getDocstatusBadge(doc.docstatus);
+            return badge 
+              ? React.createElement("span", { className: badge.className }, badge.label)
+              : null;
+          })()
+        : null
     ),
 
-    // Fields
+    // Fields - Filter by implemented types AND depends_on
     fields
-      .filter((field) => implementedTypes.includes(field.fieldtype))
+      .filter((field) => {
+        // Check if field type is implemented
+        if (!implementedTypes.includes(field.fieldtype)) {
+          return false;
+        }
+        
+        // Check depends_on condition
+        return evaluateDependsOn(field.depends_on, doc);
+      })
       .map((field) => {
         const componentName = `Field${field.fieldtype.replace(/ /g, "")}`;
         const Component = window.components?.[componentName];
@@ -611,31 +650,21 @@ const MainForm = ({ run }) => {
           return null;
         }
 
+        // Get validation error for this field (if any)
+        const fieldError = run._validationErrors?.find(
+          err => err.field === field.fieldname
+        )?.message;
+
         return React.createElement(Component, {
           key: field.fieldname,
           field: field,
           run: run,
           value: doc[field.fieldname],
+          error: fieldError
         });
       })
   );
 };
-
-function renderField(field, doc, run) {
-  if (!field || field.fieldtype === 'Section Break') return null;
-  
-  const fieldname = field.fieldname;
-  const value = doc[fieldname] ?? '';
-  
-  return React.createElement("div", { key: fieldname, className: CWStyles.formGroup },
-    React.createElement("label", null, field.label || fieldname),
-    React.createElement("input", {
-      type: "text",
-      value: value,
-      onChange: (e) => { run.input[fieldname] = e.target.value; }
-    })
-  );
-}
 
 /**
  * MainGrid - List view with table
