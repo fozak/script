@@ -1,5 +1,3 @@
-//https://claude.ai/chat/a92d380b-8725-40c1-98f2-2486fc9ba997
-
 Summary of All Code Changes
 1. Resolver Fix (coworker-run.js)
 Problem: Resolver only checked op.source_doctype, ignored op.target_doctype
