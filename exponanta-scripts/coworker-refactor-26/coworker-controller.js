@@ -1,5 +1,6 @@
 // ============================================================
-// COWORKER-CONTROLLER.JS
+// COWORKER-CONTROLLER.JS - PRODUCTION READY
+// Version: 5.0.0 - Centralized Draft, Smart Validation
 // ============================================================
 
 // ============================================================
@@ -28,16 +29,12 @@ coworker.validators = {
     };
 
     if (typeChecks[field.fieldtype] && !typeChecks[field.fieldtype](value)) {
-      return `${field.label || field.fieldname} must be valid ${
-        field.fieldtype
-      }`;
+      return `${field.label || field.fieldname} must be valid ${field.fieldtype}`;
     }
 
     // Length validation
     if (field.length && value.length > field.length) {
-      return `${field.label || field.fieldname} exceeds max length ${
-        field.length
-      }`;
+      return `${field.label || field.fieldname} exceeds max length ${field.length}`;
     }
 
     // Range validation
@@ -62,7 +59,14 @@ coworker.controller = {
   // ══════════════════════════════════════════════════════════
 
   async execute(run_doc) {
-    const { operation, target_doctype, options = {} } = run_doc;
+    const { operation, options = {} } = run_doc;
+
+    // ✅ SINGLE SOURCE OF TRUTH: Set draft from operation config
+    if (options.draft === undefined) {
+      const opConfig = coworker._config.operations[operation];
+      run_doc.options = run_doc.options || {};
+      run_doc.options.draft = opConfig?.draft ?? false;
+    }
 
     // ✅ ESCAPE HATCH: Skip controller entirely
     if (options.skipController) {
@@ -77,11 +81,11 @@ coworker.controller = {
       fetchOriginals: false,
     };
 
-    // ✅ Fetch schema if needed (with cache)
+    // ✅ Fetch schema if needed (use correct doctype)
     if (opConfig.requiresSchema && !options.skipSchema) {
       if (!run_doc.output) run_doc.output = {};
 
-      // ✅ Use source_doctype for reads, target_doctype for writes
+      // ✅ Use source_doctype for reads/updates, target_doctype for creates
       const doctype = run_doc.source_doctype || run_doc.target_doctype;
 
       if (!run_doc.output.schema && doctype && doctype !== "Schema") {
@@ -111,13 +115,19 @@ coworker.controller = {
   // ══════════════════════════════════════════════════════════
 
   async _processWrite(run_doc, opConfig) {
-    const { operation, target_doctype, input, query } = run_doc;
+    const { operation, input, query } = run_doc;
+
+    // ✅ Get correct doctype based on operation
+    // - CREATE/INSERT: target_doctype (writing TO new)
+    // - UPDATE/DELETE: source_doctype (reading FROM existing)
+    const doctype = run_doc.source_doctype || run_doc.target_doctype;
+
     const schema = run_doc.output?.schema;
 
     // ✅ Fetch originals if config says so
     let items = [];
     if (opConfig.fetchOriginals && query?.where) {
-      const filter = coworker._buildPrismaWhere(target_doctype, query.where);
+      const filter = coworker._buildPrismaWhere(doctype, query.where);
       const result = await coworker._dbQuery({ filter });
       items = result.data;
 
@@ -135,10 +145,13 @@ coworker.controller = {
 
     // ✅ Validate based on config
     if (opConfig.validate) {
+      // ✅ Accept both wrapped (input.data) and unwrapped (input) formats
+      const inputData = input?.data || input;
+
       // For operations that fetch originals (UPDATE), validate merged
       if (items.length > 0) {
         for (const item of items) {
-          const merged = { ...item, ...input };
+          const merged = { ...item, ...inputData };
           const validation = this._validate(merged, schema);
           if (!validation.valid) {
             return { success: false, errors: validation.errors };
@@ -147,7 +160,7 @@ coworker.controller = {
       }
       // For operations that don't fetch (CREATE), validate input
       else {
-        const validation = this._validate(input, schema);
+        const validation = this._validate(inputData, schema);
         if (!validation.valid) {
           return { success: false, errors: validation.errors };
         }
@@ -205,6 +218,7 @@ coworker.controller = {
   // ══════════════════════════════════════════════════════════
 
   async save(run) {
+    // ✅ Check draft flag (set by execute())
     if (!run.options?.draft) {
       console.warn("save() called on non-draft run");
       return {
@@ -236,6 +250,17 @@ coworker.controller = {
     // Determine if new or update
     const isNew = !merged.name || merged.name.startsWith("new-");
 
+    // ✅ Get doctype from parent run (works for both create and update)
+    const doctype = run.source_doctype || run.target_doctype;
+
+    if (!doctype) {
+      console.error("save() requires doctype");
+      return {
+        success: false,
+        error: { message: "No doctype found in run" }
+      };
+    }
+
     // Save
     run._saving = true;
     if (typeof coworker._render === "function") {
@@ -245,11 +270,14 @@ coworker.controller = {
     try {
       const saveRun = await run.child({
         operation: isNew ? "create" : "update",
-        doctype: run.source_doctype,
+        
+        // ✅ Pass both doctypes - resolver will use the correct one
+        source_doctype: doctype,
+        target_doctype: doctype,
+        
         input: merged,
-        query: { where: { name: merged.name } },
+        query: isNew ? undefined : { where: { name: merged.name } },
         options: {
-          draft: false,
           includeSchema: false,
         },
       });
@@ -258,10 +286,10 @@ coworker.controller = {
         // Update local state
         run.output.data = [saveRun.output.data[0]];
         run.input = {};
-        //run.options.draft = false; bug here if we turn off draft mode on save
         delete run._saving;
         delete run._validationErrors;
 
+        // ✅ Re-render to show updated state (buttons may change based on docstatus)
         if (typeof coworker._render === "function") {
           coworker._render(run);
         }
@@ -289,38 +317,38 @@ coworker.controller = {
     }
   },
 
-async autoSave(run) {
-  if (!run.options?.draft) return;
-  if (run._saving) return;
-  
-  // ✅ NEW: Check schema-level autosave control
-  const schema = run.output?.schema;
-  
-  if (schema?.is_submittable === 1) {
-    // Submittable docs must explicitly set _autosave
-    const autosave = schema._autosave !== undefined ? schema._autosave : 1;
-    
-    if (autosave === 0) {
-      console.log("🚫 AutoSave BLOCKED: _autosave=0 for", schema._schema_doctype);
-      return;  // ← Block here
+  async autoSave(run) {
+    // ✅ Check draft flag (set by execute())
+    if (!run.options?.draft) return;
+    if (run._saving) return;
+
+    // ✅ Schema-level autosave control
+    const schema = run.output?.schema;
+
+    if (schema?.is_submittable === 1) {
+      const autosave = schema._autosave !== undefined ? schema._autosave : 1;
+
+      if (autosave === 0) {
+        console.log("🚫 AutoSave BLOCKED: _autosave=0 for", schema._schema_doctype);
+        return;
+      }
+
+      if (run.doc?.docstatus !== 0) {
+        console.log("🚫 AutoSave BLOCKED: docstatus != 0");
+        return;
+      }
     }
-    
-    // _autosave=1: only autosave drafts (docstatus=0)
-    if (run.doc?.docstatus !== 0) {
-      console.log("🚫 AutoSave BLOCKED: docstatus != 0");
+
+    if (!this.isComplete(run)) {
+      if (typeof coworker._render === "function") {
+        coworker._render(run);
+      }
       return;
     }
-  }
-  // Default: is_submittable=0 → autosave enabled
-  
-  if (!this.isComplete(run)) {
-    if (typeof coworker._render === "function") {
-      coworker._render(run);
-    }
-    return;
-  }
 
-  console.log("✅ AutoSave proceeding to save()");
-  return await this.save(run);
-}
+    console.log("✅ AutoSave proceeding to save()");
+    return await this.save(run);
+  }
 };
+
+console.log('✅ Controller loaded: v5.0.0 - Centralized draft, smart validation');

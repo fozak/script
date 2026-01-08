@@ -1,5 +1,10 @@
 // ============================================================================
-// TIER 1: SYSTEM FIELD RULES - CORRECTED
+// COWORKER-FIELD-SYSTEM.JS
+// Three-tier document processing system
+// ============================================================================
+
+// ============================================================================
+// TIER 1: SYSTEM FIELD RULES
 // ============================================================================
 
 coworker._applySystemFieldRules = async function(run_doc) {
@@ -84,7 +89,7 @@ coworker._applySystemFieldRules = async function(run_doc) {
 
 
 // ============================================================================
-// TIER 2: FIELD TYPE HANDLERS - CORRECTED
+// TIER 2: FIELD TYPE HANDLERS
 // ============================================================================
 
 coworker._applyFieldTypeHandlers = async function(run_doc) {
@@ -160,7 +165,34 @@ coworker._applyFieldTypeHandlers = async function(run_doc) {
 
 
 // ============================================================================
-// MAIN PROCESSOR - CORRECTED
+// TIER 3: CUSTOM FIELD RULES (PLACEHOLDER)
+// ============================================================================
+
+coworker._applyCustomFieldRules = async function(run_doc) {
+  // Tier 3: Custom business rules
+  // This is where you would add:
+  // - Computed fields (e.g., total = quantity * rate)
+  // - Cross-field validation (e.g., end_date > start_date)
+  // - Domain-specific business logic
+  
+  const doctype = run_doc.target_doctype || run_doc.source_doctype;
+  const doc = run_doc.input?.data;
+  
+  if (!doc) {
+    throw new Error('No document data in run_doc.input.data');
+  }
+  
+  // Example: Add custom rules here when needed
+  // if (doctype === 'Invoice') {
+  //   doc.total = doc.quantity * doc.rate;
+  // }
+  
+  console.log(`  ⏭️  Tier 3: Custom rules (not implemented)`);
+};
+
+
+// ============================================================================
+// MAIN PROCESSOR
 // ============================================================================
 
 coworker.processDocument = async function(run_doc) {
@@ -186,31 +218,35 @@ coworker.processDocument = async function(run_doc) {
 
 
 // ============================================================================
-// UPDATED CREATE HANDLER - CORRECTED
+// CREATE HANDLER
 // ============================================================================
 
 coworker._handlers.create = async function (run_doc) {
   const { target_doctype, input, options } = run_doc;
-  const { data } = input || {};
   const { includeSchema = true, includeMeta = false } = options || {};
 
-  if (!data) throw new Error("CREATE requires input.data");
+  // ✅ Accept both wrapped (input.data) and unwrapped (input) formats
+  const inputData = input?.data || input;
 
-  // Ensure input.data exists with doctype
+  if (!inputData || Object.keys(inputData).length === 0) {
+    throw new Error("CREATE requires input with data");
+  }
+
+  // Ensure input.data exists with doctype for 3-tier system
   run_doc.input = run_doc.input || {};
   run_doc.input.data = {
-    ...data,
+    ...inputData,
     doctype: target_doctype
   };
 
   // ✅ RUN THE 3-TIER ENGINE (pass run_doc)
-  const processedDoc = await this.processDocument(run_doc);
+  const processedDoc = await coworker.processDocument(run_doc);
 
   // Execute via adapter
-  const result = await this._dbCreate(processedDoc);
+  const result = await coworker._dbCreate(processedDoc);
 
   // Store schema in output if we fetched it
-  const schema = run_doc._schema || (includeSchema ? await this.getSchema(target_doctype) : undefined);
+  const schema = run_doc._schema || (includeSchema ? await coworker.getSchema(target_doctype) : undefined);
 
   return {
     success: true,
@@ -221,3 +257,10 @@ coworker._handlers.create = async function (run_doc) {
     }
   };
 };
+
+
+// ============================================================================
+// INITIALIZATION
+// ============================================================================
+
+console.log('✅ Field system loaded (3-tier processing)');

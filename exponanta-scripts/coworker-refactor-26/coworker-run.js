@@ -44,19 +44,30 @@
         // STEP 2: Resolve doctype (user alias → canonical name)
         const dtMap = cfg.doctypeAliases || {};
 
-        // Determine source/target based on operation
-        const [source_raw, target_raw] = op.from
-          ? [op.from, op.doctype]
-          : ["create", "update"].includes(resolved.operation)
-          ? [null, op.doctype]
-          : [op.doctype, null];
+        // ✅ FIX: Check if user provided source_doctype/target_doctype directly
+        if (op.source_doctype || op.target_doctype) {
+          resolved.source_doctype = op.source_doctype
+            ? dtMap[op.source_doctype?.toLowerCase()] || op.source_doctype
+            : null;
+          resolved.target_doctype = op.target_doctype
+            ? dtMap[op.target_doctype?.toLowerCase()] || op.target_doctype
+            : null;
+        }
+        // ✅ Fallback: Use from/doctype resolution (backward compatibility)
+        else {
+          const [source_raw, target_raw] = op.from
+            ? [op.from, op.doctype]
+            : ["create", "update"].includes(resolved.operation)
+            ? [null, op.doctype]
+            : [op.doctype, null];
 
-        resolved.source_doctype = source_raw
-          ? dtMap[source_raw?.toLowerCase()] || source_raw
-          : null;
-        resolved.target_doctype = target_raw
-          ? dtMap[target_raw?.toLowerCase()] || target_raw
-          : null;
+          resolved.source_doctype = source_raw
+            ? dtMap[source_raw?.toLowerCase()] || source_raw
+            : null;
+          resolved.target_doctype = target_raw
+            ? dtMap[target_raw?.toLowerCase()] || target_raw
+            : null;
+        }
 
         // STEP 3: Resolve view
         resolved.view =
@@ -285,13 +296,12 @@
           const view = query?.view || "list";
           const { includeSchema = true, includeMeta = false } = options || {};
 
-          
           // Fetch schema if needed
           let schema = null;
           if (
             includeSchema &&
             source_doctype !== "All" &&
-            //deleted source_doctype !== "Schema" && 
+            //deleted source_doctype !== "Schema" &&
             source_doctype
           ) {
             //console.log("📥 Calling getSchema for:", source_doctype);
@@ -397,31 +407,42 @@
         },
 
         // ════════════════════════════════════════════════════════
-        // CREATE - Insert operations
+        // CREATE - Insert operations (CORRECTED)
         // ════════════════════════════════════════════════════════
+        // ✅ Updated (flexible)
         create: async function (run_doc) {
           const { target_doctype, input, options } = run_doc;
           const { includeSchema = true, includeMeta = false } = options || {};
 
-          if (!input || Object.keys(input).length === 0) {
+          // ✅ Accept both wrapped (input.data) and unwrapped (input) formats
+          const inputData = input?.data || input;
+
+          if (!inputData || Object.keys(inputData).length === 0) {
             throw new Error("CREATE requires input with data");
           }
 
-          // ✅ B2: Use coworker.getSchema
+          console.log("📝 CREATE handler:", {
+            doctype: target_doctype,
+            hasWrappedData: !!input?.data,
+            fields: Object.keys(inputData),
+          });
+
+          // ✅ Fetch schema if needed
           let schema = null;
-          if (includeSchema ) {      //was if (includeSchema && target_doctype !== "Schema") {
+          if (includeSchema) {
             schema = await coworker.getSchema(target_doctype);
           }
 
-          // Prepare record
+          // ✅ Prepare record data (adapter will handle id/name generation)
           const recordData = {
-            ...input,
+            ...inputData,
             doctype: target_doctype,
-            name: input.name || coworker._generateName(target_doctype),
           };
 
-          // ✅ B2: Use coworker._dbCreate
+          // ✅ Use proper abstraction layer (goes through adapter switch)
           const result = await coworker._dbCreate(recordData);
+
+          console.log("✅ CREATE success:", result.data.name);
 
           return {
             success: true,
@@ -429,38 +450,43 @@
               data: [result.data],
               schema: includeSchema ? schema : undefined,
               meta: includeMeta
-                ? { operation: "create", created: 1 }
+                ? {
+                    operation: "create",
+                    created: 1,
+                    id: result.meta?.id,
+                    name: result.data.name,
+                  }
                 : undefined,
             },
           };
         },
 
         // ════════════════════════════════════════════════════════
-        // UPDATE - Modify operations
+        // HANDLER - Just Execution (No Logic) https://claude.ai/chat/a92d380b-8725-40c1-98f2-2486fc9ba997
         // ════════════════════════════════════════════════════════
         update: async function (run_doc) {
-          const { target_doctype, input, query, options } = run_doc;
-          const { where } = query || {};
+          const { source_doctype, input, query, options } = run_doc;
+          const inputData = input?.data || input;
+          const where = query?.where || query;
+
+          // ✅ Controller already did all the hard work:
+          // - Fetched originals
+          // - Validated
+          // - Checked collisions
+          // - Merged data
+
+          // Handler just executes the update
           const { includeSchema = true, includeMeta = false } = options || {};
 
-          if (!input || Object.keys(input).length === 0) {
-            throw new Error("UPDATE requires input with data");
-          }
-          if (!where) {
-            throw new Error("UPDATE requires query.where");
-          }
-
-          // ✅ B2: Use coworker.getSchema
           let schema = null;
-          if (includeSchema ) {  //was if (includeSchema && target_doctype !== "Schema") {
-            schema = await coworker.getSchema(target_doctype);
+          if (includeSchema) {
+            schema = await coworker.getSchema(source_doctype);
           }
 
-          // ✅ B2: Use coworker._buildPrismaWhere
-          const queryDoctype = target_doctype === "All" ? "" : target_doctype;
+          const queryDoctype = source_doctype === "All" ? "" : source_doctype;
           const pbFilter = coworker._buildPrismaWhere(queryDoctype, where);
 
-          // Use pre-fetched items if controller provided them
+          // Use controller's pre-fetched items (already validated)
           const items =
             run_doc._items ||
             (await coworker._dbQuery({ filter: pbFilter })).data;
@@ -468,21 +494,15 @@
           if (items.length === 0) {
             return {
               success: true,
-              output: {
-                data: [],
-                schema: includeSchema ? schema : undefined,
-                meta: includeMeta
-                  ? { operation: "update", updated: 0 }
-                  : undefined,
-              },
+              output: { data: [], schema, meta: { updated: 0 } },
             };
           }
 
-          // Merge per-item
+          // Simple update - no logic, controller did everything
           const updates = await Promise.all(
-            items.map((item) => {
-              const merged = { ...item, ...input };
-              return coworker._dbUpdate(item.name, merged);
+            items.map(async (item) => {
+              const merged = { ...item, ...inputData, doctype: source_doctype };
+              return await coworker._dbUpdate(item.name || item.id, merged);
             })
           );
 
@@ -490,10 +510,8 @@
             success: true,
             output: {
               data: updates.map((u) => u.data),
-              schema: includeSchema ? schema : undefined,
-              meta: includeMeta
-                ? { operation: "update", updated: updates.length }
-                : undefined,
+              schema,
+              meta: { operation: "update", updated: updates.length },
             },
           };
         },

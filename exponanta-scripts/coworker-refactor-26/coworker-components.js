@@ -667,12 +667,15 @@ const MainForm = ({ run }) => {
 };
 
 /**
- * MainGrid - List view with table
+ * MainGrid - List view with table (WITH NULL PROTECTION)
  */
 const MainGrid = ({ run }) => {
   const data = run.output?.data;
   
-  if (!data || data.length === 0) {
+  // ✅ Filter out null/undefined records
+  const validData = data?.filter(row => row != null) || [];
+  
+  if (validData.length === 0) {
     return React.createElement(
       "div",
       { className: CWStyles.alert.info },
@@ -680,7 +683,8 @@ const MainGrid = ({ run }) => {
     );
   }
 
-  const keys = Object.keys(data[0] || {});
+  // ✅ Get keys from first valid record
+  const keys = Object.keys(validData[0] || {});
 
   return React.createElement(
     "div",
@@ -723,7 +727,7 @@ const MainGrid = ({ run }) => {
         React.createElement(
           "tbody",
           {},
-          data.map((row, i) =>
+          validData.map((row, i) =>  // ✅ Use validData instead of data
             React.createElement(
               RecordLink,
               {
@@ -736,7 +740,8 @@ const MainGrid = ({ run }) => {
                 React.createElement(
                   "td",
                   { key: key, className: CWStyles.grid.cell },
-                  String(row[key] || "")
+                  // ✅ Extra protection on cell value
+                  String(row?.[key] ?? "")
                 )
               )
             )
