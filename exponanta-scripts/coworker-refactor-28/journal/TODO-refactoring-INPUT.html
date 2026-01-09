@@ -1,0 +1,11 @@
+🤔 Proposed Options
+Option A: Input = Table (data + changes)
+input: {
+  data: [{ name: 'TASK-001', subject: 'Old', ... }],  // Source documents
+  changes: { subject: 'New' },                         // Delta
+  schema: {...}
+}
+output: {
+  data: [{ name: 'TASK-001', subject: 'New', ... }],  // Results
+  schema: {...}
+}

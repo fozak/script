@@ -883,6 +883,244 @@ coworker._config = {
     MainChat: "right_pane",
   },
 
+
+  behaviorMatrix : {
+  
+  // ═══════════════════════════════════════════════════════════
+  // MATRIX: [is_submittable]-[docstatus]-[_autosave]
+  // Only 8 meaningful combinations (2 × 4 × 1 for non-submittable)
+  // ═══════════════════════════════════════════════════════════
+  
+  // ───────────────────────────────────────────────────────────
+  // Non-Submittable Documents (is_submittable = 0)
+  // ───────────────────────────────────────────────────────────
+  
+  "0-0-0": {
+    name: "Non-Submittable, Manual Save",
+    ui: {
+      fieldsEditable: true,
+      showButtons: ['save', 'delete'],
+      badge: null
+    },
+    controller: {
+      autoSave: false,        // Don't auto-save
+      validateOnChange: true  // But do validate for feedback
+    },
+    guardian: {
+      allowOperations: ['update', 'delete', 'takeone'],
+      blockOperations: []
+    }
+  },
+  
+  "0-0-1": {
+    name: "Non-Submittable, Auto-Save",
+    ui: {
+      fieldsEditable: true,
+      showButtons: ['save', 'delete'],  // Keep save button anyway
+      badge: null
+    },
+    controller: {
+      autoSave: true,         // Auto-save enabled
+      validateOnChange: true  // Validate before saving
+    },
+    guardian: {
+      allowOperations: ['update', 'delete', 'takeone'],
+      blockOperations: []
+    }
+  },
+  
+  // ───────────────────────────────────────────────────────────
+  // Submittable Documents - DRAFT (is_submittable = 1, docstatus = 0)
+  // ───────────────────────────────────────────────────────────
+  
+  "1-0-0": {
+    name: "Submittable Draft, Manual Save",
+    ui: {
+      fieldsEditable: true,
+      showButtons: ['save', 'submit', 'delete'],
+      badge: { label: 'Draft', class: 'warning' }
+    },
+    controller: {
+      autoSave: false,
+      validateOnChange: true
+    },
+    guardian: {
+      allowOperations: ['update', 'submit', 'delete', 'takeone'],
+      blockOperations: ['cancel', 'amend']
+    }
+  },
+  
+  "1-0-1": {
+    name: "Submittable Draft, Auto-Save",
+    ui: {
+      fieldsEditable: true,
+      showButtons: ['save', 'submit', 'delete'],
+      badge: { label: 'Draft', class: 'warning' }
+    },
+    controller: {
+      autoSave: true,
+      validateOnChange: true
+    },
+    guardian: {
+      allowOperations: ['update', 'submit', 'delete', 'takeone'],
+      blockOperations: ['cancel', 'amend']
+    }
+  },
+  
+  // ───────────────────────────────────────────────────────────
+  // Submittable Documents - SUBMITTED (is_submittable = 1, docstatus = 1)
+  // ───────────────────────────────────────────────────────────
+  
+  "1-1-0": {
+    name: "Submitted Document, Manual Save",
+    ui: {
+      fieldsEditable: false,  // Unless field.allow_on_submit
+      showButtons: ['cancel'],
+      badge: { label: 'Submitted', class: 'success' }
+    },
+    controller: {
+      autoSave: false,
+      validateOnChange: true
+    },
+    guardian: {
+      allowOperations: ['cancel', 'takeone'],
+      blockOperations: ['update', 'submit', 'delete', 'amend'],
+      exceptions: {
+        update: { condition: 'field.allow_on_submit === 1' }
+      }
+    }
+  },
+  
+  "1-1-1": {
+    name: "Submitted Document, Auto-Save",
+    ui: {
+      fieldsEditable: false,  // Unless field.allow_on_submit
+      showButtons: ['cancel'],
+      badge: { label: 'Submitted', class: 'success' }
+    },
+    controller: {
+      autoSave: true,  // For allow_on_submit fields
+      validateOnChange: true
+    },
+    guardian: {
+      allowOperations: ['cancel', 'takeone'],
+      blockOperations: ['update', 'submit', 'delete', 'amend'],
+      exceptions: {
+        update: { condition: 'field.allow_on_submit === 1' }
+      }
+    }
+  },
+  
+  // ───────────────────────────────────────────────────────────
+  // Submittable Documents - CANCELLED (is_submittable = 1, docstatus = 2)
+  // ───────────────────────────────────────────────────────────
+  
+  "1-2-0": {
+    name: "Cancelled Document",
+    ui: {
+      fieldsEditable: false,
+      showButtons: ['amend'],
+      badge: { label: 'Cancelled', class: 'danger' }
+    },
+    controller: {
+      autoSave: false,
+      validateOnChange: false
+    },
+    guardian: {
+      allowOperations: ['amend', 'takeone'],
+      blockOperations: ['update', 'submit', 'delete', 'cancel']
+    }
+  },
+  
+  "1-2-1": {
+    name: "Cancelled Document",
+    ui: {
+      fieldsEditable: false,
+      showButtons: ['amend'],
+      badge: { label: 'Cancelled', class: 'danger' }
+    },
+    controller: {
+      autoSave: false,  // Doesn't matter, nothing editable
+      validateOnChange: false
+    },
+    guardian: {
+      allowOperations: ['amend', 'takeone'],
+      blockOperations: ['update', 'submit', 'delete', 'cancel']
+    }
+  }
+},
+
+fieldInteractionConfig : {
+  
+  // ═══════════════════════════════════════════════════════════
+  // Field interaction triggers (independent of auto-save)
+  // ═══════════════════════════════════════════════════════════
+  
+  triggers: {
+    
+    onChange: {
+      enabled: true,          // Fire on every change
+      debounce: 300,         // Wait 300ms after last change
+      action: 'write_draft'   // Always write to draft
+    },
+    
+    onBlur: {
+      enabled: true,          // Fire when field loses focus
+      debounce: 0,           // Immediate
+      action: 'validate'      // Validate when leaving field
+    }
+  },
+  
+  // You can configure different profiles
+  profiles: {
+    
+    'default': {
+      onChange: { enabled: true, debounce: 300, action: 'write_draft' },
+      onBlur: { enabled: true, debounce: 0, action: 'validate' }
+    },
+    
+    'blur_save': {
+      onChange: { enabled: true, debounce: 0, action: 'write_draft' },
+      onBlur: { enabled: true, debounce: 0, action: 'auto_save' }
+    },
+    
+    'instant': {
+      onChange: { enabled: true, debounce: 0, action: 'auto_save' },
+      onBlur: { enabled: false }
+    },
+    
+    'manual_only': {
+      onChange: { enabled: true, debounce: 0, action: 'write_draft' },
+      onBlur: { enabled: true, debounce: 0, action: 'validate' }
+    }
+  },
+  
+  // Active profile
+  activeProfile: 'default'
+},
+
+getBehavior : function(schema, doc) {
+  
+  // Extract key parameters
+  const isSubmittable = schema?.is_submittable || 0;
+  const docstatus = doc?.docstatus !== undefined ? doc.docstatus : 0;
+  const autosave = schema?._autosave !== undefined ? schema._autosave : 1;
+  
+  // Build key
+  const key = `${isSubmittable}-${docstatus}-${autosave}`;
+  
+  // Lookup behavior
+  const behavior = this.behaviorMatrix[key];
+  
+  if (!behavior) {
+    console.warn(`No behavior defined for: ${key}`);
+    // Return safe defaults
+    return this.behaviorMatrix["0-0-0"];
+  }
+  
+  return behavior;
+},
+
   // ============================================================
   // FIELD HANDLERS CONFIG (Rendering Only)
   // ============================================================
