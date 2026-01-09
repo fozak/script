@@ -8,347 +8,6 @@
 // ============================================================
 
 /**
- * FieldData - Text input with auto-save
- */
-const FieldData = ({ field, run, value }) => {
-  const [localValue, setLocalValue] = React.useState(value || "");
-  const debounceTimerRef = React.useRef(null);
-
-  const handleChange = (e) => {
-    const newValue = e.target.value;
-    setLocalValue(newValue);
-
-    clearTimeout(debounceTimerRef.current);
-    debounceTimerRef.current = setTimeout(() => {
-      run.input[field.fieldname] = newValue;
-      coworker.controller.autoSave(run);
-    }, 300);
-  };
-
-  return React.createElement(
-    "div",
-    { className: CWStyles.form.fieldWrapper },
-    React.createElement("label", { className: CWStyles.form.label }, field.label),
-    React.createElement("input", {
-      type: "text",
-      className: CWStyles.field.input,
-      value: localValue,
-      readOnly: field.read_only,
-      placeholder: field.placeholder,
-      onChange: handleChange,
-    })
-  );
-};
-
-/**
- * FieldText - Textarea (3 rows)
- */
-const FieldText = ({ field, run, value }) => {
-  const [localValue, setLocalValue] = React.useState(value || "");
-  const debounceTimerRef = React.useRef(null);
-
-  const handleChange = (e) => {
-    const newValue = e.target.value;
-    setLocalValue(newValue);
-
-    clearTimeout(debounceTimerRef.current);
-    debounceTimerRef.current = setTimeout(() => {
-      run.input[field.fieldname] = newValue;
-      coworker.controller.autoSave(run);
-    }, 300);
-  };
-
-  return React.createElement(
-    "div",
-    { className: CWStyles.form.fieldWrapper },
-    React.createElement("label", { className: CWStyles.form.label }, field.label),
-    React.createElement("textarea", {
-      className: CWStyles.field.textarea,
-      value: localValue,
-      readOnly: field.read_only,
-      rows: 3,
-      onChange: handleChange,
-    })
-  );
-};
-
-/**
- * FieldLongText - Textarea (6 rows)
- */
-const FieldLongText = ({ field, run, value }) => {
-  const [localValue, setLocalValue] = React.useState(value || "");
-  const debounceTimerRef = React.useRef(null);
-
-  const handleChange = (e) => {
-    const newValue = e.target.value;
-    setLocalValue(newValue);
-
-    clearTimeout(debounceTimerRef.current);
-    debounceTimerRef.current = setTimeout(() => {
-      run.input[field.fieldname] = newValue;
-      coworker.controller.autoSave(run);
-    }, 300);
-  };
-
-  return React.createElement(
-    "div",
-    { className: CWStyles.form.fieldWrapper },
-    React.createElement("label", { className: CWStyles.form.label }, field.label),
-    React.createElement("textarea", {
-      className: CWStyles.field.textarea,
-      value: localValue,
-      readOnly: field.read_only,
-      rows: 6,
-      onChange: handleChange,
-    })
-  );
-};
-
-/**
- * FieldInt - Integer input
- */
-const FieldInt = ({ field, run, value }) => {
-  const [localValue, setLocalValue] = React.useState(value || 0);
-  const debounceTimerRef = React.useRef(null);
-
-  const handleChange = (e) => {
-    const newValue = parseInt(e.target.value) || 0;
-    setLocalValue(newValue);
-
-    clearTimeout(debounceTimerRef.current);
-    debounceTimerRef.current = setTimeout(() => {
-      run.input[field.fieldname] = newValue;
-      coworker.controller.autoSave(run);
-    }, 300);
-  };
-
-  return React.createElement(
-    "div",
-    { className: CWStyles.form.fieldWrapper },
-    React.createElement("label", { className: CWStyles.form.label }, field.label),
-    React.createElement("input", {
-      type: "number",
-      className: CWStyles.field.input,
-      value: localValue,
-      readOnly: field.read_only,
-      onChange: handleChange,
-    })
-  );
-};
-
-/**
- * FieldFloat - Float input
- */
-const FieldFloat = ({ field, run, value }) => {
-  const [localValue, setLocalValue] = React.useState(value || 0);
-  const debounceTimerRef = React.useRef(null);
-
-  const handleChange = (e) => {
-    const newValue = parseFloat(e.target.value) || 0;
-    setLocalValue(newValue);
-
-    clearTimeout(debounceTimerRef.current);
-    debounceTimerRef.current = setTimeout(() => {
-      run.input[field.fieldname] = newValue;
-      coworker.controller.autoSave(run);
-    }, 300);
-  };
-
-  return React.createElement(
-    "div",
-    { className: CWStyles.form.fieldWrapper },
-    React.createElement("label", { className: CWStyles.form.label }, field.label),
-    React.createElement("input", {
-      type: "number",
-      step: "0.01",
-      className: CWStyles.field.input,
-      value: localValue,
-      readOnly: field.read_only,
-      onChange: handleChange,
-    })
-  );
-};
-
-/**
- * FieldCurrency - Currency input
- */
-const FieldCurrency = ({ field, run, value }) => {
-  const [localValue, setLocalValue] = React.useState(value || 0);
-  const debounceTimerRef = React.useRef(null);
-
-  const handleChange = (e) => {
-    const newValue = parseFloat(e.target.value) || 0;
-    setLocalValue(newValue);
-
-    clearTimeout(debounceTimerRef.current);
-    debounceTimerRef.current = setTimeout(() => {
-      run.input[field.fieldname] = newValue;
-      coworker.controller.autoSave(run);
-    }, 300);
-  };
-
-  return React.createElement(
-    "div",
-    { className: CWStyles.form.fieldWrapper },
-    React.createElement("label", { className: CWStyles.form.label }, field.label),
-    React.createElement("input", {
-      type: "number",
-      step: "0.01",
-      className: CWStyles.field.input,
-      value: localValue,
-      readOnly: field.read_only,
-      onChange: handleChange,
-    })
-  );
-};
-
-/**
- * FieldCheck - Checkbox
- */
-const FieldCheck = ({ field, run, value }) => {
-  const [localValue, setLocalValue] = React.useState(value || false);
-
-  const handleChange = (e) => {
-    const newValue = e.target.checked;
-    setLocalValue(newValue);
-    run.input[field.fieldname] = newValue;
-    coworker.controller.autoSave(run);
-  };
-
-  return React.createElement(
-    "div",
-    { className: CWStyles.form.fieldWrapper },
-    React.createElement(
-      "label",
-      { className: CWStyles.form.label },
-      React.createElement("input", {
-        type: "checkbox",
-        checked: localValue,
-        disabled: field.read_only,
-        className: CWStyles.field.input,
-        onChange: handleChange,
-      }),
-      " " + field.label
-    )
-  );
-};
-
-/**
- * FieldDate - Date picker
- */
-const FieldDate = ({ field, run, value }) => {
-  const [localValue, setLocalValue] = React.useState(value || "");
-
-  const handleChange = (e) => {
-    const newValue = e.target.value;
-    setLocalValue(newValue);
-    run.input[field.fieldname] = newValue;
-    coworker.controller.autoSave(run);
-  };
-
-  return React.createElement(
-    "div",
-    { className: CWStyles.form.fieldWrapper },
-    React.createElement("label", { className: CWStyles.form.label }, field.label),
-    React.createElement("input", {
-      type: "date",
-      className: CWStyles.field.input,
-      value: localValue,
-      readOnly: field.read_only,
-      onChange: handleChange,
-    })
-  );
-};
-
-/**
- * FieldDatetime - Datetime picker
- */
-const FieldDatetime = ({ field, run, value }) => {
-  const [localValue, setLocalValue] = React.useState(value || "");
-
-  const handleChange = (e) => {
-    const newValue = e.target.value;
-    setLocalValue(newValue);
-    run.input[field.fieldname] = newValue;
-    coworker.controller.autoSave(run);
-  };
-
-  return React.createElement(
-    "div",
-    { className: CWStyles.form.fieldWrapper },
-    React.createElement("label", { className: CWStyles.form.label }, field.label),
-    React.createElement("input", {
-      type: "datetime-local",
-      className: CWStyles.field.input,
-      value: localValue,
-      readOnly: field.read_only,
-      onChange: handleChange,
-    })
-  );
-};
-
-/**
- * FieldTime - Time picker
- */
-const FieldTime = ({ field, run, value }) => {
-  const [localValue, setLocalValue] = React.useState(value || "");
-
-  const handleChange = (e) => {
-    const newValue = e.target.value;
-    setLocalValue(newValue);
-    run.input[field.fieldname] = newValue;
-    coworker.controller.autoSave(run);
-  };
-
-  return React.createElement(
-    "div",
-    { className: CWStyles.form.fieldWrapper },
-    React.createElement("label", { className: CWStyles.form.label }, field.label),
-    React.createElement("input", {
-      type: "time",
-      className: CWStyles.field.input,
-      value: localValue,
-      readOnly: field.read_only,
-      onChange: handleChange,
-    })
-  );
-};
-
-/**
- * FieldSelect - Dropdown select
- */
-const FieldSelect = ({ field, run, value }) => {
-  const [localValue, setLocalValue] = React.useState(value || "");
-
-  const handleChange = (e) => {
-    const newValue = e.target.value;
-    setLocalValue(newValue);
-    run.input[field.fieldname] = newValue;
-    coworker.controller.autoSave(run);
-  };
-
-  return React.createElement(
-    "div",
-    { className: CWStyles.form.fieldWrapper },
-    React.createElement("label", { className: CWStyles.form.label }, field.label),
-    React.createElement(
-      "select",
-      {
-        className: CWStyles.field.select,
-        value: localValue,
-        disabled: field.read_only,
-        onChange: handleChange,
-      },
-      (field.options || "")
-        .split("\n")
-        .map((opt, i) =>
-          React.createElement("option", { key: i, value: opt }, opt)
-        )
-    )
-  );
-};
-
-/**
  * FieldLink - Link to another doctype with dropdown
  */
 const FieldLink = ({ field, run, value }) => {
@@ -385,7 +44,11 @@ const FieldLink = ({ field, run, value }) => {
   return React.createElement(
     "div",
     { className: CWStyles.form.fieldWrapper },
-    React.createElement("label", { className: CWStyles.form.label }, field.label),
+    React.createElement(
+      "label",
+      { className: CWStyles.form.label },
+      field.label
+    ),
     React.createElement(
       "div",
       { style: { position: "relative" } },
@@ -434,22 +97,27 @@ const FieldLink = ({ field, run, value }) => {
 const FieldSectionBreak = ({ field }) => {
   return React.createElement(
     "div",
-    { 
+    {
       className: CWStyles.form.sectionBreak,
-      style: { 
-        marginTop: '2rem',
-        marginBottom: '1rem',
-        borderTop: '1px solid #e5e7eb',
-        paddingTop: '1rem'
-      }
+      style: {
+        marginTop: "2rem",
+        marginBottom: "1rem",
+        borderTop: "1px solid #e5e7eb",
+        paddingTop: "1rem",
+      },
     },
-    field.label && React.createElement('h4', {
-      style: { 
-        marginBottom: '1rem',
-        fontSize: '1.1rem',
-        fontWeight: '600'
-      }
-    }, field.label)
+    field.label &&
+      React.createElement(
+        "h4",
+        {
+          style: {
+            marginBottom: "1rem",
+            fontSize: "1.1rem",
+            fontWeight: "600",
+          },
+        },
+        field.label
+      )
   );
 };
 
@@ -458,41 +126,44 @@ const FieldSectionBreak = ({ field }) => {
  */
 const FieldButton = ({ field, run }) => {
   const [loading, setLoading] = React.useState(false);
-  
+
   const handleClick = async () => {
     setLoading(true);
-    
+
     try {
       // Check if this is a submit button
-      if (field.fieldname === 'submit_button') {
+      if (field.fieldname === "submit_button") {
         run.input.docstatus = 1;
       }
-      
+
       // Call save directly (Option 1 - Simple)
       await coworker.controller.save(run);
-      
     } catch (error) {
       console.error("Button error:", error);
     }
-    
+
     setLoading(false);
   };
-  
+
   return React.createElement(
     "div",
     { className: CWStyles.form.fieldWrapper },
-    React.createElement('button', {
-      className: CWStyles.button.primary,
-      onClick: handleClick,
-      disabled: loading || field.read_only,
-      type: "button"
-    }, loading ? 'Saving...' : field.label)
+    React.createElement(
+      "button",
+      {
+        className: CWStyles.button.primary,
+        onClick: handleClick,
+        disabled: loading || field.read_only,
+        type: "button",
+      },
+      loading ? "Saving..." : field.label
+    )
   );
 };
 
 // ============================================================
 // REGISTER FIELD COMPONENTS - SINGLE SOURCE OF TRUTH
-// ============================================================
+/* ============================================================
 window.components = {
   FieldData,
   FieldText,
@@ -508,7 +179,7 @@ window.components = {
   FieldTime,
   FieldSectionBreak,
   FieldButton,
-};
+};*/
 
 // ============================================================
 // UTILITY COMPONENTS
@@ -539,72 +210,154 @@ const RecordLink = ({
 // MAIN COMPONENTS
 // ============================================================
 
-
 // ============================================================
 // MAIN FORM COMPONENT - With Whitelist CRITICAL TO KEEP renderField
 // ============================================================
 
-//funtion added 
+//funtion added
 
-coworker.renderField = function({ field, value, handlers, run }) {
-  
-  // ✅ Get field type definition
+coworker.renderField = function ({ field, value, handlers, run }) {
   const fieldType = this._config.fieldTypes[field.fieldtype];
   if (!fieldType) return null;
-  
-  // ✅ Get element defaults (just input props, no wrapper)
+
   const elementDefaults = this._config.elementDefaults[fieldType.element] || {};
-  
-  // Build props
-  const evalContext = { field, value, readOnly: !handlers.onChange, CWStyles, run };
-  
+
+  const evalContext = {
+    field,
+    value,
+    readOnly: !handlers.onChange,
+    CWStyles: window.CWStyles,
+    run,
+    item: null, // For repeat loops
+  };
+
   const elementProps = {
     ...this._config._evalTemplateObj(elementDefaults, evalContext),
-    ...this._config._evalTemplateObj(fieldType.props, evalContext)
+    ...this._config._evalTemplateObj(fieldType.props, evalContext),
   };
-  
+
   // Create state
   const [state, setState] = React.useState(() => {
     const stateConfig = fieldType.state || {};
     const initialState = {};
     for (const key in stateConfig) {
-      initialState[key] = this._config._evalTemplate(stateConfig[key], evalContext);
+      initialState[key] = this._config._evalTemplate(
+        stateConfig[key],
+        evalContext
+      );
     }
     return initialState;
   });
-  
+
   // Create event handlers
   const eventHandlers = {};
   for (const eventName in fieldType.events || {}) {
     const eventConfig = fieldType.events[eventName];
-    
+
     eventHandlers[eventName] = (e) => {
-      const newValue = e.target.value;
-      
-      if (eventConfig.updateState) {
-        setState(prev => ({ ...prev, [eventConfig.updateState]: newValue }));
+      // ✅ Extract value based on config
+      let newValue;
+      if (eventConfig.extract) {
+        // Extract specific property (e.g., "checked" for checkboxes)
+        newValue = e.target[eventConfig.extract];
+      } else {
+        // Default: extract value
+        newValue = e.target.value;
       }
-      
+
+      // ✅ Transform if specified
+      if (eventConfig.transform) {
+        if (eventConfig.transform === "parseInt") {
+          newValue = parseInt(newValue, 10) || 0;
+        } else if (eventConfig.transform === "parseFloat") {
+          newValue = parseFloat(newValue) || 0;
+        }
+      }
+
+      // Update local state
+      if (eventConfig.updateState) {
+        setState((prev) => ({
+          ...prev,
+          [eventConfig.updateState]: newValue,
+        }));
+      }
+
+      // Delegate to handler
       if (eventConfig.delegate && handlers[eventConfig.delegate]) {
         handlers[eventConfig.delegate](field.fieldname, newValue);
       }
     };
   }
-  
+
+  // Use state value if available
   if (state.localValue !== undefined) {
-    elementProps.value = state.localValue;
+    if (fieldType.element === "input" && fieldType.props.type === "checkbox") {
+      elementProps.checked = state.localValue;
+    } else {
+      elementProps.value = state.localValue;
+    }
   }
-  
-  // ✅ Just return the element - no wrapper, no label, no error
-  return React.createElement(fieldType.element, {
-    ...elementProps,
-    ...eventHandlers
-  });
+
+  // ✅ Handle children (for select options)
+  let children = null;
+  if (fieldType.children) {
+    children = fieldType.children
+      .map((childDesc, idx) => {
+        // Handle repeat (for select options)
+        if (childDesc.repeat) {
+          const items = this._config._evalTemplate(
+            childDesc.repeat,
+            evalContext
+          );
+          return items.map((item, i) => {
+            const childContext = { ...evalContext, item };
+            const childProps = this._config._evalTemplateObj(
+              childDesc.props,
+              childContext
+            );
+            const childContent = this._config._evalTemplate(
+              childDesc.content,
+              childContext
+            );
+
+            return React.createElement(
+              childDesc.element,
+              { key: `repeat-${idx}-${i}`, ...childProps }, // ✅ Unique key
+              childContent
+            );
+          });
+        }
+
+        // Single child
+        const childProps = this._config._evalTemplateObj(
+          childDesc.props,
+          evalContext
+        );
+        const childContent = this._config._evalTemplate(
+          childDesc.content,
+          evalContext
+        );
+
+        return React.createElement(
+          childDesc.element,
+          { key: `static-${idx}`, ...childProps }, // ✅ Unique key
+          childContent
+        );
+      })
+      .flat();
+  }
+
+  // Create element
+  return React.createElement(
+    fieldType.element,
+    { ...elementProps, ...eventHandlers },
+    children
+  );
 };
 
 const MainForm = ({ run }) => {
   const [schema, setSchema] = React.useState(run?.output?.schema || null);
-  
+
   const doc = run?.doc || {};
   const doctype = doc.doctype || run?.source_doctype || run?.target_doctype;
 
@@ -617,46 +370,54 @@ const MainForm = ({ run }) => {
 
   // Guard clause
   if (!schema) {
-    return React.createElement("div", { className: CWStyles.alert.warning }, 
+    return React.createElement(
+      "div",
+      { className: CWStyles.alert.warning },
       "Loading schema..."
     );
   }
 
   // Safe extracts
-  const titleField = schema.title_field || 'name';
-  const title = doc[titleField] || doc.name || 'New';
+  const titleField = schema.title_field || "name";
+  const title = doc[titleField] || doc.name || "New";
   const fields = schema.fields || [];
 
   // ✅ Whitelist - start with just "Data" for testing
   const implementedTypes = [
-    "Data"
-    // "Text",
-    // "Long Text",
-    // "Int",
+    "Data",
+    "Text",
+    "Long Text",
+    "Int",
+    "Float",
+    "Currency",
+    "Check",
+    "Date",
+    "Datetime",
+    "Time",
+    "Select",
     // ... add more after testing Data works
   ];
 
   // ✅ Get behavior from config
   const behavior = coworker._config.getBehavior(schema, doc);
-  
+
   // ✅ Get interaction profile
   const interactionConfig = coworker._config.fieldInteractionConfig;
   const profile = interactionConfig.profiles[interactionConfig.activeProfile];
-  
+
   // ✅ Debounce timers
   const timersRef = React.useRef({});
-  
+
   // ✅ Config-driven handlers
   const handlers = React.useMemo(() => {
-    
     const executeAction = (action, fieldname, value) => {
       switch (action) {
-        case 'write_draft':
+        case "write_draft":
           run.input[fieldname] = value;
           console.log(`✅ Draft: ${fieldname} = ${value}`);
           break;
-          
-        case 'validate':
+
+        case "validate":
           run.input[fieldname] = value;
           if (coworker.controller.validate) {
             const validation = coworker.controller.validate(run);
@@ -666,8 +427,8 @@ const MainForm = ({ run }) => {
           }
           console.log(`✅ Validated: ${fieldname}`);
           break;
-          
-        case 'auto_save':
+
+        case "auto_save":
           run.input[fieldname] = value;
           if (behavior.controller.autoSave) {
             coworker.controller.autoSave(run);
@@ -676,53 +437,59 @@ const MainForm = ({ run }) => {
             console.log(`⚠️ Auto-save disabled by behavior`);
           }
           break;
-          
+
         default:
           console.warn(`Unknown action: ${action}`);
       }
     };
-    
+
     return {
       onChange: (fieldname, value) => {
         const config = profile.onChange;
         if (!config.enabled) return;
-        
+
         const perform = () => executeAction(config.action, fieldname, value);
-        
+
         if (config.debounce > 0) {
           clearTimeout(timersRef.current[`onChange_${fieldname}`]);
-          timersRef.current[`onChange_${fieldname}`] = setTimeout(perform, config.debounce);
+          timersRef.current[`onChange_${fieldname}`] = setTimeout(
+            perform,
+            config.debounce
+          );
         } else {
           perform();
         }
       },
-      
+
       onBlur: (fieldname, value) => {
         const config = profile.onBlur;
         if (!config.enabled) return;
-        
+
         const perform = () => executeAction(config.action, fieldname, value);
-        
+
         if (config.debounce > 0) {
           clearTimeout(timersRef.current[`onBlur_${fieldname}`]);
-          timersRef.current[`onBlur_${fieldname}`] = setTimeout(perform, config.debounce);
+          timersRef.current[`onBlur_${fieldname}`] = setTimeout(
+            perform,
+            config.debounce
+          );
         } else {
           perform();
         }
-      }
+      },
     };
   }, [run, behavior, profile]);
 
   // Docstatus badge helper
   const getDocstatusBadge = (docstatus) => {
     if (docstatus === 0) {
-      return { className: CWStyles.badge.warning, label: 'Draft' };
+      return { className: CWStyles.badge.warning, label: "Draft" };
     }
     if (docstatus === 1) {
-      return { className: CWStyles.badge.success, label: 'Submitted' };
+      return { className: CWStyles.badge.success, label: "Submitted" };
     }
     if (docstatus === 2) {
-      return { className: CWStyles.badge.danger, label: 'Cancelled' };
+      return { className: CWStyles.badge.danger, label: "Cancelled" };
     }
     return null;
   };
@@ -730,7 +497,7 @@ const MainForm = ({ run }) => {
   return React.createElement(
     "div",
     { className: CWStyles.form.wrapper },
-    
+
     // Header
     React.createElement(
       "div",
@@ -738,18 +505,26 @@ const MainForm = ({ run }) => {
         className: `${CWStyles.display.flex} ${CWStyles.justify.between} ${CWStyles.spacing.mb3}`,
       },
       React.createElement("h5", null, title),
-      
+
       // ✅ Use behavior config for badge
-      behavior.ui.badge 
-        ? React.createElement("span", { className: CWStyles.badge[behavior.ui.badge.class] }, behavior.ui.badge.label)
+      behavior.ui.badge
+        ? React.createElement(
+            "span",
+            { className: CWStyles.badge[behavior.ui.badge.class] },
+            behavior.ui.badge.label
+          )
         : schema.is_submittable && doc.docstatus !== undefined
-          ? (() => {
-              const badge = getDocstatusBadge(doc.docstatus);
-              return badge 
-                ? React.createElement("span", { className: badge.className }, badge.label)
-                : null;
-            })()
-          : null
+        ? (() => {
+            const badge = getDocstatusBadge(doc.docstatus);
+            return badge
+              ? React.createElement(
+                  "span",
+                  { className: badge.className },
+                  badge.label
+                )
+              : null;
+          })()
+        : null
     ),
 
     // ✅ Fields - with all checks + new renderer
@@ -759,19 +534,19 @@ const MainForm = ({ run }) => {
         if (!implementedTypes.includes(field.fieldtype)) {
           return false;
         }
-        
+
         // ✅ depends_on check
         return evaluateDependsOn(field.depends_on, doc);
       })
       .map((field) => {
         // Get validation error
         const fieldError = run._validationErrors?.find(
-          err => err.field === field.fieldname
+          (err) => err.field === field.fieldname
         )?.message;
 
         // ✅ Check if field type is in config
         const fieldType = coworker._config.fieldTypes[field.fieldtype];
-        
+
         if (!fieldType) {
           console.warn(`Field type not in config: ${field.fieldtype}`);
           return null;
@@ -780,32 +555,34 @@ const MainForm = ({ run }) => {
         // ✅ MainForm controls presentation (wrapper/label/error)
         return React.createElement(
           "div",
-          { 
+          {
             key: field.fieldname,
-            className: CWStyles.form.fieldWrapper 
+            className: CWStyles.form.fieldWrapper,
           },
-          
+
           // Label
-          field.label && React.createElement(
-            "label",
-            { className: CWStyles.form.label },
-            field.label
-          ),
-          
+          field.label &&
+            React.createElement(
+              "label",
+              { className: CWStyles.form.label },
+              field.label
+            ),
+
           // ✅ Field element (config-driven)
           coworker.renderField({
             field: field,
             value: doc[field.fieldname],
             handlers: handlers,
-            run: run
+            run: run,
           }),
-          
+
           // Error
-          fieldError && React.createElement(
-            "span",
-            { className: CWStyles.text.danger },
-            fieldError
-          )
+          fieldError &&
+            React.createElement(
+              "span",
+              { className: CWStyles.text.danger },
+              fieldError
+            )
         );
       })
   );
@@ -816,10 +593,10 @@ const MainForm = ({ run }) => {
  */
 const MainGrid = ({ run }) => {
   const data = run.output?.data;
-  
+
   // ✅ Filter out null/undefined records
-  const validData = data?.filter(row => row != null) || [];
-  
+  const validData = data?.filter((row) => row != null) || [];
+
   if (validData.length === 0) {
     return React.createElement(
       "div",
@@ -872,24 +649,28 @@ const MainGrid = ({ run }) => {
         React.createElement(
           "tbody",
           {},
-          validData.map((row, i) =>  // ✅ Use validData instead of data
-            React.createElement(
-              RecordLink,
-              {
-                key: i,
-                record: row,
-                as: "tr",
-                className: CWStyles.grid.row,
-              },
-              keys.map((key) =>
-                React.createElement(
-                  "td",
-                  { key: key, className: CWStyles.grid.cell },
-                  // ✅ Extra protection on cell value
-                  String(row?.[key] ?? "")
+          validData.map(
+            (
+              row,
+              i // ✅ Use validData instead of data
+            ) =>
+              React.createElement(
+                RecordLink,
+                {
+                  key: i,
+                  record: row,
+                  as: "tr",
+                  className: CWStyles.grid.row,
+                },
+                keys.map((key) =>
+                  React.createElement(
+                    "td",
+                    { key: key, className: CWStyles.grid.cell },
+                    // ✅ Extra protection on cell value
+                    String(row?.[key] ?? "")
+                  )
                 )
               )
-            )
           )
         )
       )
@@ -992,5 +773,4 @@ window.ErrorConsole = ErrorConsole;
 window.RecordLink = RecordLink;
 
 console.log("✅ Coworker components loaded");
-console.log("   • Field components:", Object.keys(window.components).length);
-console.log("   • Main components: MainForm, MainGrid, MainChat, ErrorConsole");
+

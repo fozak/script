@@ -832,7 +832,7 @@ coworker._config = {
       component: "MainGrid",
       container: "main_container",
       options: {
-        render: true,     
+        render: true,
       },
     },
     form: {
@@ -883,306 +883,476 @@ coworker._config = {
     MainChat: "right_pane",
   },
 
+  behaviorMatrix: {
+    // ═══════════════════════════════════════════════════════════
+    // MATRIX: [is_submittable]-[docstatus]-[_autosave]
+    // Only 8 meaningful combinations (2 × 4 × 1 for non-submittable)
+    // ═══════════════════════════════════════════════════════════
 
-  behaviorMatrix : {
-  
-  // ═══════════════════════════════════════════════════════════
-  // MATRIX: [is_submittable]-[docstatus]-[_autosave]
-  // Only 8 meaningful combinations (2 × 4 × 1 for non-submittable)
-  // ═══════════════════════════════════════════════════════════
-  
-  // ───────────────────────────────────────────────────────────
-  // Non-Submittable Documents (is_submittable = 0)
-  // ───────────────────────────────────────────────────────────
-  
-  "0-0-0": {
-    name: "Non-Submittable, Manual Save",
-    ui: {
-      fieldsEditable: true,
-      showButtons: ['save', 'delete'],
-      badge: null
-    },
-    controller: {
-      autoSave: false,        // Don't auto-save
-      validateOnChange: true  // But do validate for feedback
-    },
-    guardian: {
-      allowOperations: ['update', 'delete', 'takeone'],
-      blockOperations: []
-    }
-  },
-  
-  "0-0-1": {
-    name: "Non-Submittable, Auto-Save",
-    ui: {
-      fieldsEditable: true,
-      showButtons: ['save', 'delete'],  // Keep save button anyway
-      badge: null
-    },
-    controller: {
-      autoSave: true,         // Auto-save enabled
-      validateOnChange: true  // Validate before saving
-    },
-    guardian: {
-      allowOperations: ['update', 'delete', 'takeone'],
-      blockOperations: []
-    }
-  },
-  
-  // ───────────────────────────────────────────────────────────
-  // Submittable Documents - DRAFT (is_submittable = 1, docstatus = 0)
-  // ───────────────────────────────────────────────────────────
-  
-  "1-0-0": {
-    name: "Submittable Draft, Manual Save",
-    ui: {
-      fieldsEditable: true,
-      showButtons: ['save', 'submit', 'delete'],
-      badge: { label: 'Draft', class: 'warning' }
-    },
-    controller: {
-      autoSave: false,
-      validateOnChange: true
-    },
-    guardian: {
-      allowOperations: ['update', 'submit', 'delete', 'takeone'],
-      blockOperations: ['cancel', 'amend']
-    }
-  },
-  
-  "1-0-1": {
-    name: "Submittable Draft, Auto-Save",
-    ui: {
-      fieldsEditable: true,
-      showButtons: ['save', 'submit', 'delete'],
-      badge: { label: 'Draft', class: 'warning' }
-    },
-    controller: {
-      autoSave: true,
-      validateOnChange: true
-    },
-    guardian: {
-      allowOperations: ['update', 'submit', 'delete', 'takeone'],
-      blockOperations: ['cancel', 'amend']
-    }
-  },
-  
-  // ───────────────────────────────────────────────────────────
-  // Submittable Documents - SUBMITTED (is_submittable = 1, docstatus = 1)
-  // ───────────────────────────────────────────────────────────
-  
-  "1-1-0": {
-    name: "Submitted Document, Manual Save",
-    ui: {
-      fieldsEditable: false,  // Unless field.allow_on_submit
-      showButtons: ['cancel'],
-      badge: { label: 'Submitted', class: 'success' }
-    },
-    controller: {
-      autoSave: false,
-      validateOnChange: true
-    },
-    guardian: {
-      allowOperations: ['cancel', 'takeone'],
-      blockOperations: ['update', 'submit', 'delete', 'amend'],
-      exceptions: {
-        update: { condition: 'field.allow_on_submit === 1' }
-      }
-    }
-  },
-  
-  "1-1-1": {
-    name: "Submitted Document, Auto-Save",
-    ui: {
-      fieldsEditable: false,  // Unless field.allow_on_submit
-      showButtons: ['cancel'],
-      badge: { label: 'Submitted', class: 'success' }
-    },
-    controller: {
-      autoSave: true,  // For allow_on_submit fields
-      validateOnChange: true
-    },
-    guardian: {
-      allowOperations: ['cancel', 'takeone'],
-      blockOperations: ['update', 'submit', 'delete', 'amend'],
-      exceptions: {
-        update: { condition: 'field.allow_on_submit === 1' }
-      }
-    }
-  },
-  
-  // ───────────────────────────────────────────────────────────
-  // Submittable Documents - CANCELLED (is_submittable = 1, docstatus = 2)
-  // ───────────────────────────────────────────────────────────
-  
-  "1-2-0": {
-    name: "Cancelled Document",
-    ui: {
-      fieldsEditable: false,
-      showButtons: ['amend'],
-      badge: { label: 'Cancelled', class: 'danger' }
-    },
-    controller: {
-      autoSave: false,
-      validateOnChange: false
-    },
-    guardian: {
-      allowOperations: ['amend', 'takeone'],
-      blockOperations: ['update', 'submit', 'delete', 'cancel']
-    }
-  },
-  
-  "1-2-1": {
-    name: "Cancelled Document",
-    ui: {
-      fieldsEditable: false,
-      showButtons: ['amend'],
-      badge: { label: 'Cancelled', class: 'danger' }
-    },
-    controller: {
-      autoSave: false,  // Doesn't matter, nothing editable
-      validateOnChange: false
-    },
-    guardian: {
-      allowOperations: ['amend', 'takeone'],
-      blockOperations: ['update', 'submit', 'delete', 'cancel']
-    }
-  }
-},
+    // ───────────────────────────────────────────────────────────
+    // Non-Submittable Documents (is_submittable = 0)
+    // ───────────────────────────────────────────────────────────
 
-fieldInteractionConfig : {
-  
-  // ═══════════════════════════════════════════════════════════
-  // Field interaction triggers (independent of auto-save)
-  // ═══════════════════════════════════════════════════════════
-  
-  triggers: {
-    
-    onChange: {
-      enabled: true,          // Fire on every change
-      debounce: 300,         // Wait 300ms after last change
-      action: 'write_draft'   // Always write to draft
+    "0-0-0": {
+      name: "Non-Submittable, Manual Save",
+      ui: {
+        fieldsEditable: true,
+        showButtons: ["save", "delete"],
+        badge: null,
+      },
+      controller: {
+        autoSave: false, // Don't auto-save
+        validateOnChange: true, // But do validate for feedback
+      },
+      guardian: {
+        allowOperations: ["update", "delete", "takeone"],
+        blockOperations: [],
+      },
     },
-    
-    onBlur: {
-      enabled: true,          // Fire when field loses focus
-      debounce: 0,           // Immediate
-      action: 'validate'      // Validate when leaving field
-    }
-  },
-  
-  // You can configure different profiles
-  profiles: {
-    
-    'default': {
-      onChange: { enabled: true, debounce: 300, action: 'write_draft' },
-      onBlur: { enabled: true, debounce: 0, action: 'validate' }
-    },
-    
-    'blur_save': {
-      onChange: { enabled: true, debounce: 0, action: 'write_draft' },
-      onBlur: { enabled: true, debounce: 0, action: 'auto_save' }
-    },
-    
-    'instant': {
-      onChange: { enabled: true, debounce: 0, action: 'auto_save' },
-      onBlur: { enabled: false }
-    },
-    
-    'manual_only': {
-      onChange: { enabled: true, debounce: 0, action: 'write_draft' },
-      onBlur: { enabled: true, debounce: 0, action: 'validate' }
-    }
-  },
-  
-  // Active profile
-  activeProfile: 'default'
-},
 
-// ✅ Field types - just element + events
+    "0-0-1": {
+      name: "Non-Submittable, Auto-Save",
+      ui: {
+        fieldsEditable: true,
+        showButtons: ["save", "delete"], // Keep save button anyway
+        badge: null,
+      },
+      controller: {
+        autoSave: true, // Auto-save enabled
+        validateOnChange: true, // Validate before saving
+      },
+      guardian: {
+        allowOperations: ["update", "delete", "takeone"],
+        blockOperations: [],
+      },
+    },
+
+    // ───────────────────────────────────────────────────────────
+    // Submittable Documents - DRAFT (is_submittable = 1, docstatus = 0)
+    // ───────────────────────────────────────────────────────────
+
+    "1-0-0": {
+      name: "Submittable Draft, Manual Save",
+      ui: {
+        fieldsEditable: true,
+        showButtons: ["save", "submit", "delete"],
+        badge: { label: "Draft", class: "warning" },
+      },
+      controller: {
+        autoSave: false,
+        validateOnChange: true,
+      },
+      guardian: {
+        allowOperations: ["update", "submit", "delete", "takeone"],
+        blockOperations: ["cancel", "amend"],
+      },
+    },
+
+    "1-0-1": {
+      name: "Submittable Draft, Auto-Save",
+      ui: {
+        fieldsEditable: true,
+        showButtons: ["save", "submit", "delete"],
+        badge: { label: "Draft", class: "warning" },
+      },
+      controller: {
+        autoSave: true,
+        validateOnChange: true,
+      },
+      guardian: {
+        allowOperations: ["update", "submit", "delete", "takeone"],
+        blockOperations: ["cancel", "amend"],
+      },
+    },
+
+    // ───────────────────────────────────────────────────────────
+    // Submittable Documents - SUBMITTED (is_submittable = 1, docstatus = 1)
+    // ───────────────────────────────────────────────────────────
+
+    "1-1-0": {
+      name: "Submitted Document, Manual Save",
+      ui: {
+        fieldsEditable: false, // Unless field.allow_on_submit
+        showButtons: ["cancel"],
+        badge: { label: "Submitted", class: "success" },
+      },
+      controller: {
+        autoSave: false,
+        validateOnChange: true,
+      },
+      guardian: {
+        allowOperations: ["cancel", "takeone"],
+        blockOperations: ["update", "submit", "delete", "amend"],
+        exceptions: {
+          update: { condition: "field.allow_on_submit === 1" },
+        },
+      },
+    },
+
+    "1-1-1": {
+      name: "Submitted Document, Auto-Save",
+      ui: {
+        fieldsEditable: false, // Unless field.allow_on_submit
+        showButtons: ["cancel"],
+        badge: { label: "Submitted", class: "success" },
+      },
+      controller: {
+        autoSave: true, // For allow_on_submit fields
+        validateOnChange: true,
+      },
+      guardian: {
+        allowOperations: ["cancel", "takeone"],
+        blockOperations: ["update", "submit", "delete", "amend"],
+        exceptions: {
+          update: { condition: "field.allow_on_submit === 1" },
+        },
+      },
+    },
+
+    // ───────────────────────────────────────────────────────────
+    // Submittable Documents - CANCELLED (is_submittable = 1, docstatus = 2)
+    // ───────────────────────────────────────────────────────────
+
+    "1-2-0": {
+      name: "Cancelled Document",
+      ui: {
+        fieldsEditable: false,
+        showButtons: ["amend"],
+        badge: { label: "Cancelled", class: "danger" },
+      },
+      controller: {
+        autoSave: false,
+        validateOnChange: false,
+      },
+      guardian: {
+        allowOperations: ["amend", "takeone"],
+        blockOperations: ["update", "submit", "delete", "cancel"],
+      },
+    },
+
+    "1-2-1": {
+      name: "Cancelled Document",
+      ui: {
+        fieldsEditable: false,
+        showButtons: ["amend"],
+        badge: { label: "Cancelled", class: "danger" },
+      },
+      controller: {
+        autoSave: false, // Doesn't matter, nothing editable
+        validateOnChange: false,
+      },
+      guardian: {
+        allowOperations: ["amend", "takeone"],
+        blockOperations: ["update", "submit", "delete", "cancel"],
+      },
+    },
+  },
+
+  fieldInteractionConfig: {
+    // ═══════════════════════════════════════════════════════════
+    // Field interaction triggers (independent of auto-save)
+    // ═══════════════════════════════════════════════════════════
+
+    triggers: {
+      onChange: {
+        enabled: true, // Fire on every change
+        debounce: 300, // Wait 300ms after last change
+        action: "write_draft", // Always write to draft
+      },
+
+      onBlur: {
+        enabled: true, // Fire when field loses focus
+        debounce: 0, // Immediate
+        action: "validate", // Validate when leaving field
+      },
+    },
+
+    // You can configure different profiles
+    profiles: {
+      default: {
+        onChange: { enabled: true, debounce: 300, action: "write_draft" },
+        onBlur: { enabled: true, debounce: 0, action: "validate" },
+      },
+
+      blur_save: {
+        onChange: { enabled: true, debounce: 0, action: "write_draft" },
+        onBlur: { enabled: true, debounce: 0, action: "auto_save" },
+      },
+
+      instant: {
+        onChange: { enabled: true, debounce: 0, action: "auto_save" },
+        onBlur: { enabled: false },
+      },
+
+      manual_only: {
+        onChange: { enabled: true, debounce: 0, action: "write_draft" },
+        onBlur: { enabled: true, debounce: 0, action: "validate" },
+      },
+    },
+
+    // Active profile
+    activeProfile: "default",
+  },
+
+  // ✅ Field types - just element + events
   fieldTypes: {
-    "Data": {
+    // ════════════════════════════════════════════════════════
+    // TEXT INPUTS
+    // ════════════════════════════════════════════════════════
+
+    Data: {
       element: "input",
       props: { type: "text" },
       state: { localValue: "{{value}}" },
       events: {
         onChange: { updateState: "localValue", delegate: "onChange" },
-        onBlur: { delegate: "onBlur" }
-      }
-    }
+        onBlur: { delegate: "onBlur" },
+      },
+    },
+
+    Text: {
+      element: "textarea",
+      props: { rows: 3 },
+      state: { localValue: "{{value}}" },
+      events: {
+        onChange: { updateState: "localValue", delegate: "onChange" },
+        onBlur: { delegate: "onBlur" },
+      },
+    },
+
+    "Long Text": {
+      element: "textarea",
+      props: { rows: 6 },
+      state: { localValue: "{{value}}" },
+      events: {
+        onChange: { updateState: "localValue", delegate: "onChange" },
+        onBlur: { delegate: "onBlur" },
+      },
+    },
+
+    // ════════════════════════════════════════════════════════
+    // NUMERIC INPUTS
+    // ════════════════════════════════════════════════════════
+
+    Int: {
+      element: "input",
+      props: {
+        type: "number",
+      },
+      state: { localValue: "{{value || 0}}" },
+      events: {
+        onChange: {
+          updateState: "localValue",
+          transform: "parseInt", // Parse to integer
+          delegate: "onChange",
+        },
+        onBlur: { delegate: "onBlur" },
+      },
+    },
+
+    Float: {
+      element: "input",
+      props: {
+        type: "number",
+        step: "0.01",
+      },
+      state: { localValue: "{{value || 0}}" },
+      events: {
+        onChange: {
+          updateState: "localValue",
+          transform: "parseFloat", // Parse to float
+          delegate: "onChange",
+        },
+        onBlur: { delegate: "onBlur" },
+      },
+    },
+
+    Currency: {
+      element: "input",
+      props: {
+        type: "number",
+        step: "0.01",
+      },
+      state: { localValue: "{{value || 0}}" },
+      events: {
+        onChange: {
+          updateState: "localValue",
+          transform: "parseFloat", // Parse to float
+          delegate: "onChange",
+        },
+        onBlur: { delegate: "onBlur" },
+      },
+    },
+
+    // ════════════════════════════════════════════════════════
+    // BOOLEAN
+    // ════════════════════════════════════════════════════════
+
+    Check: {
+      element: "input",
+      props: {
+        type: "checkbox",
+        checked: "{{value || false}}", // Use checked, not value
+        disabled: "{{readOnly}}",
+      },
+      state: { localValue: "{{value || false}}" },
+      events: {
+        onChange: {
+          updateState: "localValue",
+          extract: "checked", // Extract e.target.checked instead of value
+          delegate: "onChange",
+        },
+        // No onBlur for checkbox - change is immediate
+      },
+    },
+
+    // ════════════════════════════════════════════════════════
+    // DATE/TIME
+    // ════════════════════════════════════════════════════════
+
+    Date: {
+      element: "input",
+      props: { type: "date" },
+      state: { localValue: "{{value}}" },
+      events: {
+        onChange: {
+          updateState: "localValue",
+          delegate: "onChange",
+        },
+        // No debounce for date picker - selection is final
+      },
+    },
+
+    Datetime: {
+      element: "input",
+      props: { type: "datetime-local" },
+      state: { localValue: "{{value}}" },
+      events: {
+        onChange: {
+          updateState: "localValue",
+          delegate: "onChange",
+        },
+      },
+    },
+
+    Time: {
+      element: "input",
+      props: { type: "time" },
+      state: { localValue: "{{value}}" },
+      events: {
+        onChange: {
+          updateState: "localValue",
+          delegate: "onChange",
+        },
+      },
+    },
+
+    // ════════════════════════════════════════════════════════
+    // SELECT
+    // ════════════════════════════════════════════════════════
+
+    Select: {
+      element: "select",
+      props: {
+        disabled: "{{readOnly}}",
+      },
+      state: { localValue: "{{value}}" },
+      children: [
+        {
+          element: "option",
+          props: { value: "" },
+          content: "",
+        },
+        {
+          repeat:
+            "{{(field.options || '').split('\\n').filter(o => o.trim())}}",
+          element: "option",
+          props: { value: "{{item}}" },
+          content: "{{item}}",
+        },
+      ],
+      events: {
+        onChange: {
+          updateState: "localValue",
+          delegate: "onChange",
+        },
+        // No onBlur for select - selection is final
+      },
+    },
   },
-  
+
   // ✅ Element defaults - applied automatically
   elementDefaults: {
-    "input": {
-      className: "{{CWStyles.field.input}}",
-      readOnly: "{{readOnly}}",
-      placeholder: "{{field.placeholder}}"
-    },
-    "textarea": {
-      className: "{{CWStyles.field.textarea}}",
-      readOnly: "{{readOnly}}",
-      placeholder: "{{field.placeholder}}"
-    },
-    "select": {
-      className: "{{CWStyles.field.select}}",
-      disabled: "{{readOnly}}"
-    }
+   "input": {
+    className: "{{CWStyles.field.input}}",
+    readOnly: "{{readOnly}}",
+    placeholder: "{{field.placeholder}}"
   },
   
+  "textarea": {
+    className: "{{CWStyles.field.textarea}}",
+    readOnly: "{{readOnly}}",
+    placeholder: "{{field.placeholder}}"
+  },
+  
+  "select": {
+    className: "{{CWStyles.field.select}}",
+    disabled: "{{readOnly}}"
+  }
+  },
+
   // ✅ Interaction config
   fieldInteractionConfig: {
-    activeProfile: 'default',
+    activeProfile: "default",
     profiles: {
-      'default': {
-        onChange: { enabled: true, debounce: 300, action: 'write_draft' },
-        onBlur: { enabled: true, debounce: 0, action: 'auto_save' }
-      }
-    }
+      default: {
+        onChange: { enabled: true, debounce: 300, action: "write_draft" },
+        onBlur: { enabled: true, debounce: 0, action: "auto_save" },
+      },
+    },
   },
 
-getBehavior : function(schema, doc) {
-  
-  // Extract key parameters
-  const isSubmittable = schema?.is_submittable || 0;
-  const docstatus = doc?.docstatus !== undefined ? doc.docstatus : 0;
-  const autosave = schema?._autosave !== undefined ? schema._autosave : 1;
-  
-  // Build key
-  const key = `${isSubmittable}-${docstatus}-${autosave}`;
-  
-  // Lookup behavior
-  const behavior = this.behaviorMatrix[key];
-  
-  if (!behavior) {
-    console.warn(`No behavior defined for: ${key}`);
-    // Return safe defaults
-    return this.behaviorMatrix["0-0-0"];
-  }
-  
-  return behavior;
+  getBehavior: function (schema, doc) {
+    // Extract key parameters
+    const isSubmittable = schema?.is_submittable || 0;
+    const docstatus = doc?.docstatus !== undefined ? doc.docstatus : 0;
+    const autosave = schema?._autosave !== undefined ? schema._autosave : 1;
 
-  
-},
+    // Build key
+    const key = `${isSubmittable}-${docstatus}-${autosave}`;
 
-_evalTemplate: function(template, context) {
-    if (typeof template !== 'string') return template;
-    
+    // Lookup behavior
+    const behavior = this.behaviorMatrix[key];
+
+    if (!behavior) {
+      console.warn(`No behavior defined for: ${key}`);
+      // Return safe defaults
+      return this.behaviorMatrix["0-0-0"];
+    }
+
+    return behavior;
+  },
+
+  _evalTemplate: function (template, context) {
+    if (typeof template !== "string") return template;
+
     const match = template.match(/^\{\{(.+)\}\}$/);
     if (!match) return template;
-    
+
     const expr = match[1];
     try {
-      return new Function(...Object.keys(context), `return ${expr}`)(...Object.values(context));
+      return new Function(...Object.keys(context), `return ${expr}`)(
+        ...Object.values(context)
+      );
     } catch (e) {
       console.warn(`Template eval error: ${expr}`, e);
       return template;
     }
   },
-  
-  _evalTemplateObj: function(obj, context) {
+
+  _evalTemplateObj: function (obj, context) {
     if (!obj) return {};
-    
+
     const result = {};
     for (const key in obj) {
       result[key] = this._evalTemplate(obj[key], context);
