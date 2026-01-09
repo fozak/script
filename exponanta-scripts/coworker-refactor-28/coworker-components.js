@@ -541,7 +541,7 @@ const RecordLink = ({
 
 
 // ============================================================
-// MAIN FORM COMPONENT - With Whitelist
+// MAIN FORM COMPONENT - With Whitelist CRITICAL TO KEEP renderField
 // ============================================================
 
 //funtion added 
