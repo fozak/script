@@ -79,7 +79,7 @@ coworker._renderers = {
 
 // ============================================================
 // UNIVERSAL RECORD HANDLER
-// ============================================================
+/* ============================================================
 
 coworker.onRecordClick = function(record, context = {}) {
   return this.run({
@@ -89,7 +89,7 @@ coworker.onRecordClick = function(record, context = {}) {
     options: { render: true },
     ...context
   });
-};
+};*/
 
 // ============================================================
 // UTILITIES

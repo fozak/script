@@ -584,6 +584,23 @@ const MainForm = ({ run }) => {
   );
 };
 
+
+
+// ============================================================
+// UNIVERSAL RECORD HANDLER moved from Core - key functtion for record 
+//============================================================
+
+coworker.onRecordClick = function(record, context = {}) {
+  return this.run({
+    operation: 'takeone',
+    doctype: record.doctype,
+    query: { where: { name: record.name } },
+    options: { render: true },
+    ...context
+  });
+};
+
+
 /**
  * MainGrid - List view with table (WITH NULL PROTECTION)
  */
