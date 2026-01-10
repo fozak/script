@@ -10,86 +10,6 @@
 /**
  * FieldLink - Link to another doctype with dropdown
  */
-const FieldLink = ({ field, run, value }) => {
-  const [options, setOptions] = React.useState([]);
-  const [isOpen, setIsOpen] = React.useState(false);
-  const [searchText, setSearchText] = React.useState(value || "");
-  const debounceTimerRef = React.useRef(null);
-
-  const loadOptions = async () => {
-    const childRun = await run.child({
-      operation: "select",
-      doctype: field.options,
-      query: { take: 50 },
-      options: { render: false },
-    });
-
-    if (childRun.success) {
-      setOptions(childRun.output.data);
-      setIsOpen(true);
-    }
-  };
-
-  const handleSelect = (option) => {
-    setSearchText(option.name);
-    setIsOpen(false);
-
-    clearTimeout(debounceTimerRef.current);
-    debounceTimerRef.current = setTimeout(() => {
-      run.input[field.fieldname] = option.name;
-      coworker.controller.autoSave(run);
-    }, 300);
-  };
-
-  return React.createElement(
-    "div",
-    { className: CWStyles.form.fieldWrapper },
-    React.createElement(
-      "label",
-      { className: CWStyles.form.label },
-      field.label
-    ),
-    React.createElement(
-      "div",
-      { style: { position: "relative" } },
-      React.createElement("input", {
-        type: "text",
-        className: CWStyles.field.input,
-        value: searchText,
-        onFocus: loadOptions,
-        onChange: (e) => setSearchText(e.target.value),
-        placeholder: `Select ${field.label}...`,
-        readOnly: field.read_only,
-      }),
-      isOpen &&
-        React.createElement(
-          "div",
-          {
-            className: CWStyles.field.linkDropdown,
-            style: { display: "block" },
-          },
-          options.map((opt) =>
-            React.createElement(
-              "div",
-              {
-                key: opt.name,
-                style: {
-                  padding: "8px",
-                  cursor: "pointer",
-                  borderBottom: "1px solid #eee",
-                },
-                onClick: () => handleSelect(opt),
-                onMouseEnter: (e) =>
-                  (e.target.style.backgroundColor = "#f0f0f0"),
-                onMouseLeave: (e) => (e.target.style.backgroundColor = "white"),
-              },
-              opt.name
-            )
-          )
-        )
-    )
-  );
-};
 
 /**
  * FieldSectionBreak - Visual separator with optional label
@@ -217,18 +137,37 @@ const RecordLink = ({
 //funtion added
 
 coworker.renderField = function ({ field, value, handlers, run }) {
+  // Get field type definition
   const fieldType = this._config.fieldTypes[field.fieldtype];
   if (!fieldType) return null;
 
+  // Sanitize null/undefined values
+  const sanitizeValue = (val, fieldType) => {
+    if (val === null || val === undefined) {
+      if (
+        fieldType.element === "input" &&
+        fieldType.props?.type === "checkbox"
+      ) {
+        return false;
+      }
+      if (fieldType.element === "input" && fieldType.props?.type === "number") {
+        return "";
+      }
+      return "";
+    }
+    return val;
+  };
+
+  const safeValue = sanitizeValue(value, fieldType);
   const elementDefaults = this._config.elementDefaults[fieldType.element] || {};
 
   const evalContext = {
     field,
-    value,
+    value: safeValue,
     readOnly: !handlers.onChange,
     CWStyles: window.CWStyles,
     run,
-    item: null, // For repeat loops
+    item: null,
   };
 
   const elementProps = {
@@ -241,9 +180,10 @@ coworker.renderField = function ({ field, value, handlers, run }) {
     const stateConfig = fieldType.state || {};
     const initialState = {};
     for (const key in stateConfig) {
+      const stateEvalContext = { ...evalContext, value: safeValue };
       initialState[key] = this._config._evalTemplate(
         stateConfig[key],
-        evalContext
+        stateEvalContext
       );
     }
     return initialState;
@@ -254,18 +194,23 @@ coworker.renderField = function ({ field, value, handlers, run }) {
   for (const eventName in fieldType.events || {}) {
     const eventConfig = fieldType.events[eventName];
 
+    // Handle custom events
+    if (eventConfig.custom && eventConfig.handler) {
+      eventHandlers[eventName] = (e) => {
+        eventConfig.handler(e, setState, handlers, field);
+      };
+      continue;
+    }
+
+    // Standard events
     eventHandlers[eventName] = (e) => {
-      // ✅ Extract value based on config
       let newValue;
       if (eventConfig.extract) {
-        // Extract specific property (e.g., "checked" for checkboxes)
         newValue = e.target[eventConfig.extract];
       } else {
-        // Default: extract value
         newValue = e.target.value;
       }
 
-      // ✅ Transform if specified
       if (eventConfig.transform) {
         if (eventConfig.transform === "parseInt") {
           newValue = parseInt(newValue, 10) || 0;
@@ -274,7 +219,6 @@ coworker.renderField = function ({ field, value, handlers, run }) {
         }
       }
 
-      // Update local state
       if (eventConfig.updateState) {
         setState((prev) => ({
           ...prev,
@@ -282,7 +226,6 @@ coworker.renderField = function ({ field, value, handlers, run }) {
         }));
       }
 
-      // Delegate to handler
       if (eventConfig.delegate && handlers[eventConfig.delegate]) {
         handlers[eventConfig.delegate](field.fieldname, newValue);
       }
@@ -291,25 +234,24 @@ coworker.renderField = function ({ field, value, handlers, run }) {
 
   // Use state value if available
   if (state.localValue !== undefined) {
-    if (fieldType.element === "input" && fieldType.props.type === "checkbox") {
+    if (fieldType.element === "input" && fieldType.props?.type === "checkbox") {
       elementProps.checked = state.localValue;
     } else {
       elementProps.value = state.localValue;
     }
   }
 
-  // ✅ Handle children (for select options)
+  // Handle children (for select options)
   let children = null;
   if (fieldType.children) {
     children = fieldType.children
-      .map((childDesc, idx) => {
-        // Handle repeat (for select options)
+      .map((childDesc, childIdx) => {
         if (childDesc.repeat) {
           const items = this._config._evalTemplate(
             childDesc.repeat,
             evalContext
           );
-          return items.map((item, i) => {
+          return items.map((item, itemIdx) => {
             const childContext = { ...evalContext, item };
             const childProps = this._config._evalTemplateObj(
               childDesc.props,
@@ -322,13 +264,12 @@ coworker.renderField = function ({ field, value, handlers, run }) {
 
             return React.createElement(
               childDesc.element,
-              { key: `repeat-${idx}-${i}`, ...childProps }, // ✅ Unique key
+              { key: `repeat-${childIdx}-${itemIdx}`, ...childProps },
               childContent
             );
           });
         }
 
-        // Single child
         const childProps = this._config._evalTemplateObj(
           childDesc.props,
           evalContext
@@ -340,7 +281,7 @@ coworker.renderField = function ({ field, value, handlers, run }) {
 
         return React.createElement(
           childDesc.element,
-          { key: `static-${idx}`, ...childProps }, // ✅ Unique key
+          { key: `static-${childIdx}`, ...childProps },
           childContent
         );
       })
@@ -348,11 +289,29 @@ coworker.renderField = function ({ field, value, handlers, run }) {
   }
 
   // Create element
-  return React.createElement(
+  const element = React.createElement(
     fieldType.element,
     { ...elementProps, ...eventHandlers },
     children
   );
+
+  // Handle suffix (e.g., "%" for Percent fields)
+  if (fieldType.suffix) {
+    return React.createElement(
+      "div",
+      { className: window.CWStyles.field.percentWrapper },
+      element,
+      React.createElement(
+        "span",
+        {
+          className: window.CWStyles.field.percentSuffix,
+        },
+        fieldType.suffix
+      )
+    );
+  }
+
+  return element;
 };
 
 const MainForm = ({ run }) => {
@@ -382,20 +341,46 @@ const MainForm = ({ run }) => {
   const title = doc[titleField] || doc.name || "New";
   const fields = schema.fields || [];
 
-  // ✅ Whitelist - start with just "Data" for testing
+  // ✅ Whitelist
   const implementedTypes = [
+    // Basic inputs
     "Data",
     "Text",
     "Long Text",
+    "Password", // ✅ ADD
+    "Read Only", // ✅ ADD
+
+    // Numbers
     "Int",
     "Float",
     "Currency",
+    "Percent", // ✅ ADD - CRITICAL for Project
+
+    // Boolean
     "Check",
+
+    // Date/Time
     "Date",
     "Datetime",
     "Time",
+
+    // Selection
     "Select",
-    // ... add more after testing Data works
+    "Link",
+
+    // Text content
+    "Text Editor", // ✅ ADD - CRITICAL for Project
+    "Code",
+    "HTML", // ✅ ADD
+
+    // Layout
+    "Section Break",
+    "Column Break",
+    "Tab Break",
+
+    // Actions/Media
+    "Button", // ✅ ADD
+    "Attach Image",
   ];
 
   // ✅ Get behavior from config
@@ -506,7 +491,7 @@ const MainForm = ({ run }) => {
       },
       React.createElement("h5", null, title),
 
-      // ✅ Use behavior config for badge
+      // Badge
       behavior.ui.badge
         ? React.createElement(
             "span",
@@ -527,24 +512,22 @@ const MainForm = ({ run }) => {
         : null
     ),
 
-    // ✅ Fields - with all checks + new renderer
+    // ✅ Fields - with custom component support
     fields
       .filter((field) => {
-        // ✅ Whitelist check
+        // Whitelist check
         if (!implementedTypes.includes(field.fieldtype)) {
           return false;
         }
 
-        // ✅ depends_on check
+        // depends_on check
         return evaluateDependsOn(field.depends_on, doc);
       })
       .map((field) => {
-        // Get validation error
         const fieldError = run._validationErrors?.find(
           (err) => err.field === field.fieldname
         )?.message;
 
-        // ✅ Check if field type is in config
         const fieldType = coworker._config.fieldTypes[field.fieldtype];
 
         if (!fieldType) {
@@ -552,7 +535,25 @@ const MainForm = ({ run }) => {
           return null;
         }
 
-        // ✅ MainForm controls presentation (wrapper/label/error)
+        // ✅ CRITICAL: Handle layout-only fields FIRST
+        if (fieldType.layoutOnly && fieldType.render) {
+          return React.createElement(
+            React.Fragment,
+            { key: field.fieldname },
+            fieldType.render({ field, run })
+          );
+        }
+
+        // Sanitize values
+        const fieldValue = doc[field.fieldname];
+        const safeValue =
+          fieldValue === null || fieldValue === undefined
+            ? field.fieldtype === "Check"
+              ? false
+              : ""
+            : fieldValue;
+
+        // Regular fields
         return React.createElement(
           "div",
           {
@@ -560,7 +561,6 @@ const MainForm = ({ run }) => {
             className: CWStyles.form.fieldWrapper,
           },
 
-          // Label
           field.label &&
             React.createElement(
               "label",
@@ -568,15 +568,11 @@ const MainForm = ({ run }) => {
               field.label
             ),
 
-          // ✅ Field element (config-driven)
-          coworker.renderField({
-            field: field,
-            value: doc[field.fieldname],
-            handlers: handlers,
-            run: run,
-          }),
+          // ✅ Check for custom component OR use renderField
+          fieldType.customComponent && fieldType.render
+            ? fieldType.render({ field, value: safeValue, handlers, run })
+            : coworker.renderField({ field, value: safeValue, handlers, run }),
 
-          // Error
           fieldError &&
             React.createElement(
               "span",
@@ -773,4 +769,3 @@ window.ErrorConsole = ErrorConsole;
 window.RecordLink = RecordLink;
 
 console.log("✅ Coworker components loaded");
-

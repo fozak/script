@@ -1279,26 +1279,375 @@ coworker._config = {
         // No onBlur for select - selection is final
       },
     },
+    // ════════════════════════════════════════════════════════
+    // LAYOUT FIELDS - NO INLINE STYLES
+    // ════════════════════════════════════════════════════════
+
+    "Section Break": {
+      layoutOnly: true,
+      render: function ({ field }) {
+        if (!field.label) {
+          return React.createElement("div", {
+            className: window.CWStyles.form.sectionBreak, // ✅ CSS only
+          });
+        }
+
+        return React.createElement(
+          "div",
+          { className: window.CWStyles.form.sectionBreak }, // ✅ CSS only
+          React.createElement(
+            "h4",
+            {
+              className: window.CWStyles.form.sectionBreakTitle, // ✅ CSS only
+            },
+            field.label
+          )
+        );
+      },
+    },
+
+    "Tab Break": {
+      layoutOnly: true,
+      render: function ({ field }) {
+        return React.createElement(
+          "div",
+          { className: window.CWStyles.form.tabBreak }, // ✅ CSS only
+          field.label &&
+            React.createElement(
+              "h3",
+              {
+                className: window.CWStyles.form.tabBreakTitle, // ✅ CSS only
+              },
+              field.label
+            )
+        );
+      },
+    },
+
+    "Column Break": {
+      layoutOnly: true,
+      render: function () {
+        return null; // ✅ CSS Grid handles layout
+      },
+    },
+
+ "Code": {
+    element: "textarea",
+    props: { 
+      rows: 10,
+      className: "{{CWStyles.field.code}}"  // ✅ Single class
+    },
+    state: { localValue: "{{value || ''}}" },
+    events: {
+      onChange: { updateState: "localValue", delegate: "onChange" },
+      onBlur: { delegate: "onBlur" },
+      onKeyDown: {
+        custom: true,
+        handler: function(e, setState, handlers, field) {
+          if (e.key === 'Tab') {
+            e.preventDefault();
+            const start = e.target.selectionStart;
+            const end = e.target.selectionEnd;
+            const value = e.target.value;
+            const newValue = value.substring(0, start) + '  ' + value.substring(end);
+            
+            setState(prev => ({ ...prev, localValue: newValue }));
+            setTimeout(() => {
+              e.target.selectionStart = e.target.selectionEnd = start + 2;
+            }, 0);
+          }
+        }
+      }
+    }
+  },
+
+    // ════════════════════════════════════════════════════════
+    // ATTACH IMAGE - NO INLINE STYLES
+    // ════════════════════════════════════════════════════════
+
+    "Attach Image": {
+      customComponent: true,
+      render: function ({ field, value, handlers, run }) {
+        const [preview, setPreview] = React.useState(value || null);
+        const [uploading, setUploading] = React.useState(false);
+
+        const handleFileSelect = async (e) => {
+          const file = e.target.files[0];
+          if (!file) return;
+
+          if (!file.type.startsWith("image/")) {
+            alert("Please select an image file");
+            return;
+          }
+
+          const reader = new FileReader();
+          reader.onload = (e) => setPreview(e.target.result);
+          reader.readAsDataURL(file);
+
+          setUploading(true);
+          const base64 = await new Promise((resolve) => {
+            const r = new FileReader();
+            r.onload = () => resolve(r.result);
+            r.readAsDataURL(file);
+          });
+
+          if (handlers.onChange) {
+            handlers.onChange(field.fieldname, base64);
+          }
+          setUploading(false);
+        };
+
+        const handleRemove = () => {
+          setPreview(null);
+          if (handlers.onChange) {
+            handlers.onChange(field.fieldname, null);
+          }
+        };
+
+        return React.createElement(
+          "div",
+          { className: window.CWStyles.field.attachImageWrapper }, // ✅ CSS only
+
+          // Preview
+          preview &&
+            React.createElement(
+              "div",
+              {
+                className: window.CWStyles.field.attachImagePreview, // ✅ CSS only
+              },
+              React.createElement("img", { src: preview }),
+              React.createElement(
+                "button",
+                {
+                  type: "button",
+                  className: window.CWStyles.field.attachImageRemove, // ✅ CSS only
+                  onClick: handleRemove,
+                },
+                "×"
+              )
+            ),
+
+          // File input
+          !preview &&
+            React.createElement("input", {
+              type: "file",
+              accept: "image/*",
+              onChange: handleFileSelect,
+              disabled: field.read_only || uploading,
+            }),
+
+          uploading &&
+            React.createElement(
+              "span",
+              {
+                className: window.CWStyles.field.attachImageUploading, // ✅ CSS only
+              },
+              "Uploading..."
+            )
+        );
+      },
+    },
+
+    // ════════════════════════════════════════════════════════
+  // MISSING EASY TYPES
+  // ════════════════════════════════════════════════════════
+  
+  "Percent": {
+    element: "input",
+    props: { 
+      type: "number",
+      step: "0.01",
+      min: "0",
+      max: "100"
+    },
+    state: { 
+      localValue: "{{value === null || value === undefined ? '' : value}}"
+    },
+    events: {
+      onChange: { 
+        updateState: "localValue",
+        transform: "parseFloat",
+        delegate: "onChange" 
+      },
+      onBlur: { delegate: "onBlur" }
+    },
+    suffix: "%"  // ✅ Will display % after input
+  },
+  
+  "Text Editor": {
+    element: "textarea",
+    props: { 
+      rows: 10,
+      className: "{{CWStyles.field.textarea}}"
+    },
+    state: { 
+      localValue: "{{value || ''}}"
+    },
+    events: {
+      onChange: { 
+        updateState: "localValue",
+        delegate: "onChange" 
+      },
+      onBlur: { delegate: "onBlur" }
+    }
+  },
+  
+  "Password": {
+    element: "input",
+    props: { 
+      type: "password",
+      autocomplete: "current-password"
+    },
+    state: { localValue: "{{value || ''}}" },
+    events: {
+      onChange: { updateState: "localValue", delegate: "onChange" },
+      onBlur: { delegate: "onBlur" }
+    }
+  },
+  
+// ════════════════════════════════════════════════════════
+  // FIX: Read Only - Proper className concatenation
+  // ════════════════════════════════════════════════════════
+  
+  "Read Only": {
+    element: "input",
+    props: { 
+      type: "text",
+      readOnly: true,
+      // ✅ Concatenate inside single template expression
+      className: "{{CWStyles.field.input + ' ' + CWStyles.input.readOnly}}"
+    },
+    state: { localValue: "{{value || ''}}" },
+    events: {}  // No events for read-only
+  },
+  
+  "HTML": {
+    layoutOnly: true,
+    render: function({ field, value }) {
+      // Display HTML content from field.options or value
+      const htmlContent = field.options || value || '';
+      
+      return React.createElement("div", {
+        className: window.CWStyles.field.html,
+        dangerouslySetInnerHTML: { __html: htmlContent }
+      });
+    }
+  },
+  
+  "Button": {
+    layoutOnly: true,
+    render: function({ field, handlers }) {
+      const handleClick = () => {
+        if (handlers.onAction) {
+          handlers.onAction(field.fieldname, {
+            action: field.fieldname,
+            label: field.label
+          });
+        }
+      };
+      
+      return React.createElement("button", {
+        type: "button",
+        className: window.CWStyles.button.primary,
+        onClick: handleClick,
+        disabled: field.read_only
+      }, field.label || 'Button');
+    }
+  },
+
+    // ════════════════════════════════════════════════════════
+    // COMPLEX FIELDS (inline component definitions)
+    // ════════════════════════════════════════════════════════
+
+    Link: {
+      customComponent: true,
+
+      render: function ({ field, value, handlers, run }) {
+        const [options, setOptions] = React.useState([]);
+        const [isOpen, setIsOpen] = React.useState(false);
+        const [searchText, setSearchText] = React.useState(value || "");
+
+        const loadOptions = async () => {
+          const childRun = await run.child({
+            operation: "select",
+            doctype: field.options,
+            query: { take: 50 },
+            options: { render: false },
+          });
+
+          if (childRun.success) {
+            setOptions(childRun.output.data);
+            setIsOpen(true);
+          }
+        };
+
+        const handleSelect = (option) => {
+          setSearchText(option.name);
+          setIsOpen(false);
+
+          if (handlers.onChange) {
+            handlers.onChange(field.fieldname, option.name);
+          }
+        };
+
+        return React.createElement(
+          "div",
+          { className: window.CWStyles.field.link }, // ✅ Your existing cw-field-link
+
+          // Input
+          React.createElement("input", {
+            type: "text",
+            className: window.CWStyles.field.linkInput, // ✅ Your existing cw-field-link-input
+            value: searchText,
+            onFocus: loadOptions,
+            onChange: (e) => setSearchText(e.target.value),
+            placeholder: `Select ${field.label}...`,
+            readOnly: field.read_only,
+          }),
+
+          // Dropdown
+          isOpen &&
+            React.createElement(
+              "div",
+              {
+                className: window.CWStyles.field.linkDropdown, // ✅ Your existing cw-field-link-dropdown
+                style: { display: "block" }, // ✅ Override display: none from CSS when open
+              },
+              options.map((opt) =>
+                React.createElement(
+                  "div",
+                  {
+                    key: opt.name,
+                    className: window.CWStyles.field.linkOption, // ✅ New class we just added
+                    onClick: () => handleSelect(opt),
+                  },
+                  opt.name
+                )
+              )
+            )
+        );
+      },
+    },
   },
 
   // ✅ Element defaults - applied automatically
   elementDefaults: {
-   "input": {
-    className: "{{CWStyles.field.input}}",
-    readOnly: "{{readOnly}}",
-    placeholder: "{{field.placeholder}}"
-  },
-  
-  "textarea": {
-    className: "{{CWStyles.field.textarea}}",
-    readOnly: "{{readOnly}}",
-    placeholder: "{{field.placeholder}}"
-  },
-  
-  "select": {
-    className: "{{CWStyles.field.select}}",
-    disabled: "{{readOnly}}"
-  }
+    input: {
+      className: "{{CWStyles.field.input}}",
+      readOnly: "{{readOnly}}",
+      placeholder: "{{field.placeholder}}",
+    },
+
+    textarea: {
+      className: "{{CWStyles.field.textarea}}",
+      readOnly: "{{readOnly}}",
+      placeholder: "{{field.placeholder}}",
+    },
+
+    select: {
+      className: "{{CWStyles.field.select}}",
+      disabled: "{{readOnly}}",
+    },
   },
 
   // ✅ Interaction config
