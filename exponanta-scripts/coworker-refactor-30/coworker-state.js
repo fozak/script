@@ -6,15 +6,23 @@ window.CoworkerState = {
   runs: {},
   current_run: null,
 
-  _updateFromRun: function(run_doc) {
-    this.runs[run_doc.name] = run_doc;
+
+//filtered out NON MAIN runs
+_updateFromRun: function(run_doc) {
+  this.runs[run_doc.name] = run_doc;
+  
+  // Only track navigation runs as "current"
+  if (
+    run_doc.component?.startsWith('Main') &&
+    run_doc.options?.render !== false
+  ) {
     this.current_run = run_doc.name;
-    
-    // Emit state change event
-    window.dispatchEvent(new CustomEvent('coworker:state:change', {
-      detail: { run: run_doc }
-    }));
-  },
+  }
+  
+  window.dispatchEvent(new CustomEvent('coworker:state:change', {
+    detail: { run: run_doc }
+  }));
+},
 
   getRun: function(run_id) {
     return this.runs[run_id];

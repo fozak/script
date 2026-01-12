@@ -12,7 +12,7 @@ run_doc = {
   
   // Command
   query: { where: {...} },
-  patch: { status: "Done" },
+  input: { status: "Done" },
   
   // Pipeline Data (ONLY doctypes here)
   source: {

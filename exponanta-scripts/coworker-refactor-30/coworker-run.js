@@ -182,12 +182,45 @@
           CoworkerState._updateFromRun(run_doc);
         }
 
-        // Inject child factory for nested operations
-        run_doc.child = (cfg) =>
-          this.run({
+        // ✅ IMPROVED: Child factory with context inheritance & tracking https://claude.ai/chat/c50f00d4-2043-404b-ad94-6e6d204da92e
+        run_doc.child = async (cfg) => {
+          const childRun = await coworker.run({
+            // Spread user config first
             ...cfg,
-            options: { ...cfg.options, parentRunId: run_doc.name },
+
+            // ✅ Inherit parent context (unless explicitly overridden)
+            flow_id: cfg.flow_id ?? run_doc.flow_id,
+            flow_template: cfg.flow_template ?? run_doc.flow_template,
+            agent: cfg.agent ?? run_doc.agent,
+
+            // Merge options with parent context
+            options: {
+              // Parent context defaults
+              adapter: run_doc.options?.adapter,
+
+              // User overrides
+              ...cfg.options,
+
+              // ✅ Always set parentRunId
+              parentRunId: run_doc.name,
+            },
           });
+
+          // ✅ Track bidirectional relationship
+          if (!run_doc.child_run_ids.includes(childRun.name)) {
+            run_doc.child_run_ids.push(childRun.name);
+
+            // Update state if tracking is active
+            if (
+              typeof CoworkerState !== "undefined" &&
+              CoworkerState._updateFromRun
+            ) {
+              CoworkerState._updateFromRun(run_doc);
+            }
+          }
+
+          return childRun;
+        };
 
         // Execute operation
         try {

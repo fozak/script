@@ -1,172 +1,144 @@
 // ============================================================
-// COWORKER NAVIGATION - coworker-navigation.js Timestamp-based navigation
+// COWORKER NAVIGATION - Simplified & Fixed
 // ============================================================
 
-// Get all Main* runs in chronological order
+// Get all Main* navigation runs
 function getMainRuns() {
   return Object.values(CoworkerState.runs)
-    .filter(r => r.component?.startsWith('Main'))
+    .filter(r => r.component?.startsWith('Main') && r.options?.render !== false)
     .sort((a, b) => a.creation - b.creation);
 }
 
-// Get current run index in Main* runs
+// Get current index
 function getCurrentIndex() {
+  return getMainRuns().findIndex(r => r.name === CoworkerState.current_run);
+}
+
+// Generic navigation function
+function navigate(direction) {
   const mainRuns = getMainRuns();
-  return mainRuns.findIndex(r => r.name === CoworkerState.current_run);
+  const currentIndex = getCurrentIndex();
+  const targetIndex = direction === 'back' ? currentIndex - 1 : currentIndex + 1;
+  
+  if (targetIndex >= 0 && targetIndex < mainRuns.length) {
+    const targetRun = mainRuns[targetIndex];
+    CoworkerState.current_run = targetRun.name;  // ✅ Update before render
+    coworker._render(targetRun);
+    updateNavUI();
+    return true;
+  }
+  return false;
 }
 
 // Navigate to specific run
 function navigateTo(runName) {
   const run = CoworkerState.runs[runName];
-  if (run && typeof coworker._render === 'function') {
+  if (run) {
+    CoworkerState.current_run = runName;  // ✅ Update before render
     coworker._render(run);
-    CoworkerState.current_run = runName;
     updateNavUI();
     return true;
   }
   return false;
 }
 
-// Navigate back
-function navigateBack() {
-  const mainRuns = getMainRuns();
-  const currentIndex = getCurrentIndex();
-  
-  if (currentIndex > 0) {
-    const prevRun = mainRuns[currentIndex - 1];
-    if (typeof coworker._render === 'function') {
-      coworker._render(prevRun);
-    }
-    CoworkerState.current_run = prevRun.name;
-    return true;
-  }
-  return false;
+// Navigate to grid (create if needed)
+async function navigateToGrid(doctype) {
+  await coworker.run({
+    operation: 'select',
+    doctype: doctype,
+    component: 'MainGrid',
+    container: 'main_container',
+    query: { take: 10 }
+  });
 }
 
-// Navigate forward
-function navigateForward() {
-  const mainRuns = getMainRuns();
-  const currentIndex = getCurrentIndex();
-  
-  if (currentIndex < mainRuns.length - 1) {
-    const nextRun = mainRuns[currentIndex + 1];
-    if (typeof coworker._render === 'function') {
-      coworker._render(nextRun);
-    }
-    CoworkerState.current_run = nextRun.name;
-    return true;
-  }
-  return false;
-}
-
-// Check if can navigate back
-function canNavigateBack() {
-  return getCurrentIndex() > 0;
-}
-
-// Check if can navigate forward
-function canNavigateForward() {
-  const mainRuns = getMainRuns();
-  const currentIndex = getCurrentIndex();
-  return currentIndex >= 0 && currentIndex < mainRuns.length - 1;
-}
-
-// Find most recent MainGrid for a doctype (before current run)
+// Find grid for doctype (search backwards from current)
 function findGridRunForDoctype(doctype) {
   const mainRuns = getMainRuns();
   const currentIndex = getCurrentIndex();
   
-  // Search backwards from current position
   for (let i = currentIndex - 1; i >= 0; i--) {
-    const run = mainRuns[i];
-    if (run.component === 'MainGrid' && run.source_doctype === doctype) {
-      return run.name;
+    if (mainRuns[i].component === 'MainGrid' && mainRuns[i].source_doctype === doctype) {
+      return mainRuns[i].name;
     }
   }
-  
-  // If not found before, search all
-  const gridRun = mainRuns.find(r => 
-    r.component === 'MainGrid' && r.source_doctype === doctype
-  );
-  return gridRun?.name;
+  return null;
 }
 
-// Get breadcrumbs for current run
+// Get breadcrumbs
 function getBreadcrumbs() {
-  const currentRun = CoworkerState.getCurrentRun();
-  const mainRuns = getMainRuns();
-  const homeRun = mainRuns[0]?.name; // First Main* run as home
+  const current = CoworkerState.getCurrentRun();
+  const home = getMainRuns()[0]?.name;
   
-  if (!currentRun?.component?.startsWith('Main')) {
-    return [{ text: 'Home', runName: homeRun }];
+  if (!current?.component?.startsWith('Main')) {
+    return [{ text: 'Home', runName: home }];
   }
   
-  // MainGrid: Home > Doctype
-  if (currentRun.component === 'MainGrid') {
+  if (current.component === 'MainGrid') {
     return [
-      { text: 'Home', runName: homeRun },
-      { text: currentRun.source_doctype || 'List', runName: null } // current
+      { text: 'Home', runName: home },
+      { text: current.source_doctype || 'List', runName: null }
     ];
   }
   
-  // MainForm: Home > Doctype > Docname
-  if (currentRun.component === 'MainForm') {
-    const doctype = currentRun.source_doctype || currentRun.target_doctype;
-    const docname = currentRun.output?.data?.[0]?.name || 'New';
+  if (current.component === 'MainForm') {
+    const doctype = current.source_doctype || current.target_doctype;
+    const docname = current.output?.data?.[0]?.name || 'New';
     const gridRun = findGridRunForDoctype(doctype);
     
     return [
-      { text: 'Home', runName: homeRun },
-      { text: doctype, runName: gridRun },
-      { text: docname, runName: null } // current
+      { text: 'Home', runName: home },
+      { text: doctype, runName: gridRun, doctype: doctype },
+      { text: docname, runName: null }  // ✅ Explicit null for consistency
     ];
   }
   
-  // MainChat or other
   return [
-    { text: 'Home', runName: homeRun },
-    { text: currentRun.component?.replace('Main', ''), runName: null }
+    { text: 'Home', runName: home },
+    { text: current.component?.replace('Main', ''), runName: null }
   ];
 }
 
-// Update navigation UI
+// Update UI
 function updateNavUI() {
+  const currentIndex = getCurrentIndex();
+  const mainRuns = getMainRuns();
+  
+  // Back/Forward buttons
   const backBtn = document.getElementById('back_btn');
   const forwardBtn = document.getElementById('forward_btn');
+  if (backBtn) backBtn.disabled = currentIndex <= 0;
+  if (forwardBtn) forwardBtn.disabled = currentIndex >= mainRuns.length - 1;
+  
+  // Breadcrumbs
   const breadcrumbsEl = document.getElementById('breadcrumbs');
-  
-  if (backBtn) backBtn.disabled = !canNavigateBack();
-  if (forwardBtn) forwardBtn.disabled = !canNavigateForward();
-  
   if (breadcrumbsEl) {
-    const breadcrumbs = getBreadcrumbs();
-    breadcrumbsEl.innerHTML = breadcrumbs.map((crumb, i) => {
-      const isLast = i === breadcrumbs.length - 1;
+    breadcrumbsEl.innerHTML = getBreadcrumbs().map((crumb, i, arr) => {
+      const isLast = i === arr.length - 1;
       
-      if (crumb.runName && !isLast) {
-        return `<a href="#" onclick="navigateTo('${crumb.runName}'); return false;" style="color: #0066cc; text-decoration: none;">${crumb.text}</a>`;
-      } else {
-        return `<span style="${isLast ? 'font-weight: 500;' : ''}">${crumb.text}</span>`;
+      // Last crumb (never clickable)
+      if (isLast) {
+        return `<span style="font-weight: 500;">${crumb.text}</span>`;
       }
+      
+      // Has existing run to navigate to
+      if (crumb.runName) {
+        return `<a href="#" onclick="navigateTo('${crumb.runName}'); return false;">${crumb.text}</a>`;
+      }
+      
+      // Has doctype but no run (create grid on click)
+      if (crumb.doctype) {
+        return `<a href="#" onclick="navigateToGrid('${crumb.doctype}'); return false;">${crumb.text}</a>`;
+      }
+      
+      // Fallback (should not happen)
+      return `<span>${crumb.text}</span>`;
+      
     }).join(' <span style="color: #999;">/</span> ');
   }
 }
 
-// Button handlers
-function handleBack() {
-  if (navigateBack()) {
-    updateNavUI();
-  }
-}
-
-function handleForward() {
-  if (navigateForward()) {
-    updateNavUI();
-  }
-}
-
-// Listen for state changes
+// Listeners
 window.addEventListener('coworker:state:change', updateNavUI);
-
-// Initial update on load
 window.addEventListener('load', updateNavUI);

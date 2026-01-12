@@ -1665,26 +1665,34 @@ coworker._config = {
     },
   },
 
-  getBehavior: function (schema, doc) {
-    // Extract key parameters
-    const isSubmittable = schema?.is_submittable || 0;
-    const docstatus = doc?.docstatus !== undefined ? doc.docstatus : 0;
-    const autosave = schema?._autosave !== undefined ? schema._autosave : 1;
+  //== version 2 = checking for wrong combitations https://claude.ai/chat/fc16e068-e05b-4631-9ec0-928dface364a
 
-    // Build key
-    const key = `${isSubmittable}-${docstatus}-${autosave}`;
-
-    // Lookup behavior
-    const behavior = this.behaviorMatrix[key];
-
-    if (!behavior) {
-      console.warn(`No behavior defined for: ${key}`);
-      // Return safe defaults
-      return this.behaviorMatrix["0-0-0"];
-    }
-
-    return behavior;
-  },
+getBehavior: function (schema, doc) {
+  // Extract key parameters
+  const isSubmittable = schema?.is_submittable || 0;
+  let docstatus = doc?.docstatus !== undefined ? doc.docstatus : 0;
+  const autosave = schema?._autosave !== undefined ? schema._autosave : 1;
+  
+  // ✅ NORMALIZE: Non-submittable documents should always have docstatus = 0
+  if (isSubmittable === 0 && docstatus !== 0) {
+    console.warn(`Invalid docstatus ${docstatus} for non-submittable document. Resetting to 0.`);
+    docstatus = 0;
+  }
+  
+  // Build key
+  const key = `${isSubmittable}-${docstatus}-${autosave}`;
+  
+  // Lookup behavior
+  const behavior = this.behaviorMatrix[key];
+  
+  if (!behavior) {
+    console.warn(`No behavior defined for: ${key}`);
+    // Return safe defaults
+    return this.behaviorMatrix["0-0-0"];
+  }
+  
+  return behavior;
+},
 
   _evalTemplate: function (template, context) {
     if (typeof template !== "string") return template;
