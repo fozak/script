@@ -1,5 +1,5 @@
 // ============================================================
-// COWORKER STATE - Centralized State Management
+// COWORKER STATE - Centralized State Management - now only Main and 
 // ============================================================
 
 window.CoworkerState = {
