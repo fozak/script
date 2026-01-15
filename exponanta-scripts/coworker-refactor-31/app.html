@@ -35,9 +35,15 @@
   <!-- ═══════════════════════════════════════════════════════ -->
   <!-- LAYER 1: Foundation (Coworker Core System) -->
   <!-- ═══════════════════════════════════════════════════════ -->
+
+  <script src="coworker.js"></script>      <!-- Execution layer -->
+  <script src="coworker-config.js"></script>   <!-- MOVED -->
   <script src="coworker-state.js"></script>
   <script src="coworker-styles.js"></script>   <!-- YOUR existing file -->
   <script src="coworker-utils.js"></script>
+
+ 
+  <!--we dont need <script src="coworker-adapter-manager.js"></script>  NEW:-->
 
   <!-- ═══════════════════════════════════════════════════════ -->
   <!-- LAYER 2: PocketBase Layer (Database Client) -->
@@ -54,10 +60,11 @@
   <!-- ═══════════════════════════════════════════════════════ -->
 
   
-  <script src="coworker.js"></script>      <!-- Execution layer -->
+  <!--<script src="coworker.js"></script>      Execution layer -->
   <script src="coworker-run.js"></script>      <!-- Execution layer --> 
-  <script src="coworker-config.js"></script>   <!-- Configuration -->
+  <!--<script src="coworker-config.js"></script>    Configuration -->
   <script src="coworker-controller.js"></script>  <!-- ✅ NEW -->
+  <script src="coworker-rbac.js"></script>  <!-- ✅ Add this -->
 
 
 
@@ -73,6 +80,9 @@
 
    <!-- NEW: Navigation Layer -->
   <script src="coworker-navigation.js"></script>
+
+    <!--======== TEST ONLY------>
+<script src="coworker-rbac.js"></script>
 
   <!-- ═══════════════════════════════════════════════════════ -->
   <!-- LAYER 5: Application (Optional) -->

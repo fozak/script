@@ -838,3 +838,78 @@ function evaluateDependsOn(dependsOn, doc) {
   
   return true;
 }
+
+// ============================================================
+// UTILITIES
+// ============================================================
+
+// ──────────────────────────────────────────────────────
+// COWORKER API METHODS (config/behavior/templates)
+// ──────────────────────────────────────────────────────
+/**
+ * Get nested object value by path
+ * Example: getByPath({a: {b: {c: 1}}}, "a.b.c") → 1
+ */
+function getByPath(obj, path) {
+  return path.split('.').reduce((o, key) => o?.[key], obj);
+}
+
+
+coworker.getConfig = function(path) {
+  return getByPath(this._config, path);
+};
+
+coworker.setConfig = function(key, value) {
+  if (!this._config) this._config = {};
+  this._config[key] = value;
+};
+
+coworker.getBehavior = function(schema, doc) {
+  const isSubmittable = schema?.is_submittable || 0;
+  let docstatus = doc?.docstatus !== undefined ? doc.docstatus : 0;
+  const autosave = schema?._autosave !== undefined ? schema._autosave : 1;
+  
+  if (isSubmittable === 0 && docstatus !== 0) {
+    console.warn(`Invalid docstatus ${docstatus} for non-submittable document. Resetting to 0.`);
+    docstatus = 0;
+  }
+  
+  const key = `${isSubmittable}-${docstatus}-${autosave}`;
+  const behavior = this._config.behaviorMatrix?.[key];
+  
+  if (!behavior) {
+    console.warn(`No behavior defined for: ${key}`);
+    return this._config.behaviorMatrix?.["0-0-0"];
+  }
+  
+  return behavior;
+};
+
+coworker.evalTemplate = function(template, context) {
+  if (typeof template !== "string") return template;
+
+  const match = template.match(/^\{\{(.+)\}\}$/);
+  if (!match) return template;
+
+  const expr = match[1];
+  try {
+    return new Function(...Object.keys(context), `return ${expr}`)(
+      ...Object.values(context)
+    );
+  } catch (e) {
+    console.warn(`Template eval error: ${expr}`, e);
+    return template;
+  }
+};
+
+coworker.evalTemplateObj = function(obj, context) {
+  if (!obj) return {};
+
+  const result = {};
+  for (const key in obj) {
+    result[key] = this.evalTemplate(obj[key], context);
+  }
+  return result;
+};
+
+console.log("✅ Utils loaded");

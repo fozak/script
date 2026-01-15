@@ -744,9 +744,118 @@ coworker._config = {
   // SYSTEM CONFIG
   // ============================================================
   debug: true,
+  adapters: {
+    // Default adapter per category
+    defaults: {
+      db: "pocketbase",
+      auth: "jwt",
+      storage: null, // Future
+      email: null, // Future
+    },
 
-  // User aliases → Internal operations
+    // Adapter registry (defines what's available)
+    registry: {
+      // ──────────────────────────────────────────────────────
+      // DATABASE ADAPTERS
+      // ──────────────────────────────────────────────────────
+      pocketbase: {
+        type: "db",
+        name: "PocketBase",
+        description: "PocketBase cloud database",
+        handler: "_dbAdapters.pocketbase",
+        capabilities: ["select", "create", "update", "delete"], // ✅ "select" not "query"
+        config: {
+          url: "http://127.0.0.1:8090",
+          collection: "item",
+        },
+      },
+
+      memory: {
+        type: "db",
+        name: "Memory",
+        description: "In-memory storage (volatile)",
+        handler: "_dbAdapters.memory",
+        capabilities: ["select", "create", "update", "delete"],
+        config: {
+          maxRecords: 10000,
+        },
+      },
+
+      storage: {
+        type: "db",
+        name: "Local Storage",
+        description: "Browser localStorage persistence",
+        handler: "_dbAdapters.storage",
+        capabilities: ["select", "create", "update", "delete"],
+        config: {
+          prefix: "coworker_",
+          maxSize: 5 * 1024 * 1024, // 5MB
+        },
+      },
+
+      // ──────────────────────────────────────────────────────
+      // AUTH ADAPTERS
+      // ──────────────────────────────────────────────────────
+      jwt: {
+        type: "auth",
+        name: "JWT Auth",
+        description: "JSON Web Token authentication",
+        handler: "_authAdapters.jwt",
+        capabilities: [
+          "register",
+          "login",
+          "logout",
+          "refresh",
+          "verify",
+          "change_password",
+        ],
+        config: {
+          // Uses coworker._config.auth settings below
+        },
+      },
+    },
+  },
+
+  // ============================================================
+  // AUTH CONFIG (✅ NEW SECTION)
+  // ============================================================
+  auth: {
+    // JWT Configuration
+    jwtSecret:
+      (typeof process !== "undefined" && process.env?.JWT_SECRET) ||
+      "change-this-secret-in-production",
+    jwtAlgorithm: "HS256",
+
+    // Token expiration
+    accessTokenExpiry: "15m", // 15 minutes
+    refreshTokenExpiry: "30d", // 30 days
+
+    // For manual calculations (milliseconds)
+    accessTokenExpiryMs: 15 * 60 * 1000, // 15 minutes
+    refreshTokenExpiryMs: 30 * 24 * 60 * 60 * 1000, // 30 days
+
+    // Security settings
+    passwordHashIterations: 100000,
+    saltLength: 16,
+    maxFailedAttempts: 5,
+    lockDurationMs: 15 * 60 * 1000, // 15 minutes
+    maxRefreshTokens: 5, // Max concurrent sessions per user
+
+    // User doctype configuration
+    userDoctype: "User",
+    userEmailField: "email",
+
+    // Default roles for new users
+    defaultRoles: ["Desk User"],
+    adminRole: "System Manager",
+    publicRole: "Is Public",
+  },
+
+  // ============================================================
+  // OPERATION ALIASES (existing)
+  // ============================================================
   operationAliases: {
+    // CRUD aliases
     read: "select",
     insert: "create",
     query: "select",
@@ -755,9 +864,17 @@ coworker._config = {
     remove: "delete",
     modify: "update",
     patch: "update",
+
+    // Auth aliases (✅ NEW)
+    signin: "login",
+    signup: "register",
+    signout: "logout",
+    refresh_token: "refresh",
   },
 
-  // User aliases → Canonical doctypes
+  // ============================================================
+  // DOCTYPE ALIASES (existing)
+  // ============================================================
   doctypeAliases: {
     user: "User",
     order: "Sales Order",
@@ -766,7 +883,141 @@ coworker._config = {
     invoice: "Sales Invoice",
   },
 
-  // ✅ NEW: Operation behavior configuration for controller
+  // ============================================================
+  // OPERATION BEHAVIOR CONFIGURATION
+  // ============================================================
+  operations: {
+    // ──────────────────────────────────────────────────────
+    // READ OPERATIONS
+    // ──────────────────────────────────────────────────────
+    select: {
+      type: "read",
+      adapterType: "db", // ✅ NEW: Explicit adapter type
+      draft: false,
+      requiresSchema: false,
+      validate: false,
+      fetchOriginals: false,
+      bypassController: false,
+    },
+    takeone: {
+      type: "read",
+      adapterType: "db", // ✅ NEW
+      draft: true,       // ✅ error corrected the true is correct
+      requiresSchema: false,
+      validate: false,
+      fetchOriginals: false,
+      bypassController: false,
+    },
+
+    // ──────────────────────────────────────────────────────
+    // WRITE OPERATIONS
+    // ──────────────────────────────────────────────────────
+    create: {
+      type: "write",
+      adapterType: "db", // ✅ NEW
+      draft: true,
+      requiresSchema: true,
+      validate: true,
+      fetchOriginals: false,
+      bypassController: false,
+    },
+    update: {
+      type: "write",
+      adapterType: "db", // ✅ NEW
+      draft: true,
+      requiresSchema: true,
+      validate: true,
+      fetchOriginals: true,
+      bypassController: false,
+    },
+    delete: {
+      type: "write",
+      adapterType: "db", // ✅ NEW
+      draft: false,
+      requiresSchema: false,
+      validate: false,
+      fetchOriginals: true,
+      bypassController: false,
+    },
+    upsert: {
+      type: "write",
+      adapterType: "db", // ✅ NEW
+      draft: true,
+      requiresSchema: true,
+      validate: true,
+      fetchOriginals: true,
+      bypassController: false,
+    },
+    bulk_update: {
+      type: "write",
+      adapterType: "db", // ✅ NEW
+      draft: false,
+      requiresSchema: false,
+      validate: false,
+      fetchOriginals: false,
+      bypassController: false,
+    },
+
+    // ──────────────────────────────────────────────────────
+    // AUTH OPERATIONS (✅ NEW)
+    // ──────────────────────────────────────────────────────
+    register: {
+      type: "auth",
+      adapterType: "auth",
+      draft: false,
+      requiresSchema: false,
+      validate: true,
+      fetchOriginals: false,
+      bypassController: false,
+    },
+    login: {
+      type: "auth",
+      adapterType: "auth",
+      draft: false,
+      requiresSchema: false,
+      validate: true,
+      fetchOriginals: false,
+      bypassController: false,
+    },
+    logout: {
+      type: "auth",
+      adapterType: "auth",
+      draft: false,
+      requiresSchema: false,
+      validate: false,
+      fetchOriginals: false,
+      bypassController: false,
+    },
+    refresh: {
+      type: "auth",
+      adapterType: "auth",
+      draft: false,
+      requiresSchema: false,
+      validate: false,
+      fetchOriginals: false,
+      bypassController: false,
+    },
+    verify: {
+      type: "auth",
+      adapterType: "auth",
+      draft: false,
+      requiresSchema: false,
+      validate: false,
+      fetchOriginals: false,
+      bypassController: false,
+    },
+    change_password: {
+      type: "auth",
+      adapterType: "auth",
+      draft: false,
+      requiresSchema: false,
+      validate: true,
+      fetchOriginals: false,
+      bypassController: false,
+    },
+  },
+
+  /* OLD: Operation behavior configuration for controller
   operations: {
     select: {
       type: "read",
@@ -824,7 +1075,7 @@ coworker._config = {
       fetchOriginals: false,
       bypassController: false,
     },
-  },
+  }, */
 
   // ✅ ADD THIS SECTION:
   views: {
@@ -1594,6 +1845,11 @@ coworker._config = {
           if (handlers.onChange) {
             handlers.onChange(field.fieldname, option.name);
           }
+          // ✅ Trigger save
+          if (handlers.onBlur) {
+            console.log("Triggering onBlur after selection");
+            handlers.onBlur(field.fieldname, option.name);
+          }
         };
 
         return React.createElement(
@@ -1666,60 +1922,6 @@ coworker._config = {
   },
 
   //== version 2 = checking for wrong combitations https://claude.ai/chat/fc16e068-e05b-4631-9ec0-928dface364a
-
-getBehavior: function (schema, doc) {
-  // Extract key parameters
-  const isSubmittable = schema?.is_submittable || 0;
-  let docstatus = doc?.docstatus !== undefined ? doc.docstatus : 0;
-  const autosave = schema?._autosave !== undefined ? schema._autosave : 1;
-  
-  // ✅ NORMALIZE: Non-submittable documents should always have docstatus = 0
-  if (isSubmittable === 0 && docstatus !== 0) {
-    console.warn(`Invalid docstatus ${docstatus} for non-submittable document. Resetting to 0.`);
-    docstatus = 0;
-  }
-  
-  // Build key
-  const key = `${isSubmittable}-${docstatus}-${autosave}`;
-  
-  // Lookup behavior
-  const behavior = this.behaviorMatrix[key];
-  
-  if (!behavior) {
-    console.warn(`No behavior defined for: ${key}`);
-    // Return safe defaults
-    return this.behaviorMatrix["0-0-0"];
-  }
-  
-  return behavior;
-},
-
-  _evalTemplate: function (template, context) {
-    if (typeof template !== "string") return template;
-
-    const match = template.match(/^\{\{(.+)\}\}$/);
-    if (!match) return template;
-
-    const expr = match[1];
-    try {
-      return new Function(...Object.keys(context), `return ${expr}`)(
-        ...Object.values(context)
-      );
-    } catch (e) {
-      console.warn(`Template eval error: ${expr}`, e);
-      return template;
-    }
-  },
-
-  _evalTemplateObj: function (obj, context) {
-    if (!obj) return {};
-
-    const result = {};
-    for (const key in obj) {
-      result[key] = this._evalTemplate(obj[key], context);
-    }
-    return result;
-  },
 
   // ============================================================
   // FIELD HANDLERS CONFIG (Rendering Only)

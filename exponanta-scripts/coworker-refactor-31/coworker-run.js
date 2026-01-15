@@ -445,9 +445,12 @@
         // ✅ Updated (flexible)
         create: async function (run_doc) {
           const { target_doctype, input, options } = run_doc;
-          const { includeSchema = true, includeMeta = false } = options || {};
+          const {
+            includeSchema = true,
+            includeMeta = false,
+            applyRBAC = true,
+          } = options || {};
 
-          // ✅ Accept both wrapped (input.data) and unwrapped (input) formats
           const inputData = input?.data || input;
 
           if (!inputData || Object.keys(inputData).length === 0) {
@@ -460,17 +463,35 @@
             fields: Object.keys(inputData),
           });
 
+          // ✅ AUTO-APPLY RBAC PERMISSIONS (if not already present)
+          let recordData = { ...inputData, doctype: target_doctype };
+
+          if (applyRBAC && !inputData._allowed && !inputData._allowed_read) {
+            console.log("🔐 Auto-applying RBAC for:", target_doctype);
+            try {
+              const perms = await coworker.rbac.applyPermissions(
+                target_doctype,
+                recordData
+              );
+              recordData = perms;
+              console.log("✅ RBAC applied:", {
+                _allowed: recordData._allowed,
+                _allowed_read: recordData._allowed_read,
+              });
+            } catch (error) {
+              console.warn(
+                "⚠️ RBAC failed, proceeding without:",
+                error.message
+              );
+              // Continue without RBAC if it fails
+            }
+          }
+
           // ✅ Fetch schema if needed
           let schema = null;
           if (includeSchema) {
             schema = await coworker.getSchema(target_doctype);
           }
-
-          // ✅ Prepare record data (adapter will handle id/name generation)
-          const recordData = {
-            ...inputData,
-            doctype: target_doctype,
-          };
 
           // ✅ Use proper abstraction layer (goes through adapter switch)
           const result = await coworker._dbCreate(recordData);

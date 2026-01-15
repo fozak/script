@@ -171,8 +171,8 @@ coworker.renderField = function ({ field, value, handlers, run }) {
   };
 
   const elementProps = {
-    ...this._config._evalTemplateObj(elementDefaults, evalContext),
-    ...this._config._evalTemplateObj(fieldType.props, evalContext),
+    ...this.evalTemplateObj(elementDefaults, evalContext),
+    ...this.evalTemplateObj(fieldType.props, evalContext),
   };
 
   // Create state
@@ -181,7 +181,7 @@ coworker.renderField = function ({ field, value, handlers, run }) {
     const initialState = {};
     for (const key in stateConfig) {
       const stateEvalContext = { ...evalContext, value: safeValue };
-      initialState[key] = this._config._evalTemplate(
+      initialState[key] = this.evalTemplate(
         stateConfig[key],
         stateEvalContext
       );
@@ -247,17 +247,17 @@ coworker.renderField = function ({ field, value, handlers, run }) {
     children = fieldType.children
       .map((childDesc, childIdx) => {
         if (childDesc.repeat) {
-          const items = this._config._evalTemplate(
+          const items = this.evalTemplate(
             childDesc.repeat,
             evalContext
           );
           return items.map((item, itemIdx) => {
             const childContext = { ...evalContext, item };
-            const childProps = this._config._evalTemplateObj(
+            const childProps = this.evalTemplateObj(
               childDesc.props,
               childContext
             );
-            const childContent = this._config._evalTemplate(
+            const childContent = this.evalTemplate(
               childDesc.content,
               childContext
             );
@@ -270,11 +270,11 @@ coworker.renderField = function ({ field, value, handlers, run }) {
           });
         }
 
-        const childProps = this._config._evalTemplateObj(
+        const childProps = this.evalTemplateObj(
           childDesc.props,
           evalContext
         );
-        const childContent = this._config._evalTemplate(
+        const childContent = this.evalTemplate(
           childDesc.content,
           evalContext
         );
@@ -354,7 +354,7 @@ const MainForm = ({ run }) => {
   ];
 
   // Get behavior from config
-  const behavior = coworker._config.getBehavior(schema, doc);
+  const behavior = coworker.getBehavior(schema, doc);
 
   // Get interaction profile
   const interactionConfig = coworker._config.fieldInteractionConfig;

@@ -78,7 +78,7 @@ coworker._renderers = {
 };
 
 // ============================================================
-// UNIVERSAL RECORD HANDLER
+// UNIVERSAL RECORD HANDLER - moved components
 /* ============================================================
 
 coworker.onRecordClick = function(record, context = {}) {
@@ -91,15 +91,3 @@ coworker.onRecordClick = function(record, context = {}) {
   });
 };*/
 
-// ============================================================
-// UTILITIES
-// ============================================================
-
-coworker.getConfig = function(key, defaultValue) {
-  return this._config?.[key] !== undefined ? this._config[key] : defaultValue;
-};
-
-coworker.setConfig = function(key, value) {
-  if (!this._config) this._config = {};
-  this._config[key] = value;
-};
