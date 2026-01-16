@@ -58,8 +58,8 @@
           const [source_raw, target_raw] = op.from
             ? [op.from, op.doctype]
             : ["create", "update"].includes(resolved.operation)
-            ? [null, op.doctype]
-            : [op.doctype, null];
+              ? [null, op.doctype]
+              : [op.doctype, null];
 
           resolved.source_doctype = source_raw
             ? dtMap[source_raw?.toLowerCase()] || source_raw
@@ -422,7 +422,7 @@
 
           if (result.success && result.output?.data?.length > 1) {
             console.warn(
-              `takeone returned ${result.output.data.length} records, using first only`
+              `takeone returned ${result.output.data.length} records, using first only`,
             );
           }
 
@@ -471,7 +471,7 @@
             try {
               const perms = await coworker.rbac.applyPermissions(
                 target_doctype,
-                recordData
+                recordData,
               );
               recordData = perms;
               console.log("✅ RBAC applied:", {
@@ -481,7 +481,7 @@
             } catch (error) {
               console.warn(
                 "⚠️ RBAC failed, proceeding without:",
-                error.message
+                error.message,
               );
               // Continue without RBAC if it fails
             }
@@ -519,56 +519,74 @@
         // HANDLER - Just Execution (No Logic) https://claude.ai/chat/a92d380b-8725-40c1-98f2-2486fc9ba997
         // ════════════════════════════════════════════════════════
         update: async function (run_doc) {
-          const { source_doctype, input, query, options } = run_doc;
-          const inputData = input?.data || input;
-          const where = query?.where || query;
+  const { source_doctype, target_doctype, input, query, options } = run_doc;  // ← Add target_doctype here
+  const inputData = input?.data || input;
+  const where = query?.where || query;
 
-          // ✅ Controller already did all the hard work:
-          // - Fetched originals
-          // - Validated
-          // - Checked collisions
-          // - Merged data
+  const { includeSchema = true, includeMeta = false } = options || {};
+  const doctype = source_doctype || target_doctype;  // ← Now target_doctype is defined
 
-          // Handler just executes the update
-          const { includeSchema = true, includeMeta = false } = options || {};
+  let schema = null;
+  if (includeSchema) {
+    schema = await coworker.getSchema(doctype);  // ← Use doctype (not source_doctype)
+  }
 
-          let schema = null;
-          if (includeSchema) {
-            schema = await coworker.getSchema(source_doctype);
-          }
+  const queryDoctype = source_doctype === "All" ? "" : source_doctype;
+  const pbFilter = coworker._buildPrismaWhere(queryDoctype, where);
 
-          const queryDoctype = source_doctype === "All" ? "" : source_doctype;
-          const pbFilter = coworker._buildPrismaWhere(queryDoctype, where);
+  const items =
+    run_doc._items ||
+    (await coworker._dbQuery({ filter: pbFilter })).data;
 
-          // Use controller's pre-fetched items (already validated)
-          const items =
-            run_doc._items ||
-            (await coworker._dbQuery({ filter: pbFilter })).data;
+  if (items.length === 0) {
+    return {
+      success: true,
+      output: { data: [], schema, meta: { updated: 0 } },
+    };
+  }
 
-          if (items.length === 0) {
-            return {
-              success: true,
-              output: { data: [], schema, meta: { updated: 0 } },
-            };
-          }
+  // ✅ Process each update through field system
+  const updates = await Promise.all(
+    items.map(async (item) => {
+      const merged = { ...item, ...inputData, doctype };  // ← Use doctype
 
-          // Simple update - no logic, controller did everything
-          const updates = await Promise.all(
-            items.map(async (item) => {
-              const merged = { ...item, ...inputData, doctype: source_doctype };
-              return await coworker._dbUpdate(item.name || item.id, merged);
-            })
-          );
+      // ✅ SERIALIZE: Create temporary run_doc for processing
+      const tempRunDoc = {
+        operation: "update",
+        target_doctype: doctype,  // ← Use target_doctype (field handlers check this)
+        input: { data: merged },
+        output: { schema },
+      };
 
-          return {
-            success: true,
-            output: {
-              data: updates.map((u) => u.data),
-              schema,
-              meta: { operation: "update", updated: updates.length },
-            },
-          };
-        },
+      // Apply field handlers (serialization)
+      await coworker._applyFieldTypeHandlers(tempRunDoc);
+
+      // Use processed data
+      const result = await coworker._dbUpdate(
+        item.name || item.id,
+        tempRunDoc.input.data,
+      );
+
+      // ✅ DESERIALIZE result
+      return {
+        ...result,
+        data: await coworker.deserializeDocument(
+          result.data,
+          doctype,  // ← Use doctype
+        ),
+      };
+    }),
+  );
+
+  return {
+    success: true,
+    output: {
+      data: updates.map((u) => u.data),
+      schema,
+      meta: { operation: "update", updated: updates.length },
+    },
+  };
+},
 
         // ════════════════════════════════════════════════════════
         // DELETE - Remove operations
@@ -580,7 +598,7 @@
 
           if (!where || Object.keys(where).length === 0) {
             throw new Error(
-              "DELETE requires query.where to prevent accidental mass deletion"
+              "DELETE requires query.where to prevent accidental mass deletion",
             );
           }
 
@@ -705,7 +723,7 @@
                   parts.push(
                     typeof opValue === "string"
                       ? `${fieldPath} = "${opValue}"`
-                      : `${fieldPath} = ${opValue}`
+                      : `${fieldPath} = ${opValue}`,
                   );
                   break;
                 case "contains":
@@ -734,7 +752,7 @@
                     const inValues = opValue.map((v) =>
                       typeof v === "string"
                         ? `${fieldPath} = "${v}"`
-                        : `${fieldPath} = ${v}`
+                        : `${fieldPath} = ${v}`,
                     );
                     parts.push(`(${inValues.join(" || ")})`);
                   }
@@ -744,7 +762,7 @@
                     const notInValues = opValue.map((v) =>
                       typeof v === "string"
                         ? `${fieldPath} != "${v}"`
-                        : `${fieldPath} != ${v}`
+                        : `${fieldPath} != ${v}`,
                     );
                     parts.push(`(${notInValues.join(" && ")})`);
                   }
@@ -816,7 +834,7 @@
       coworker._dbQuery = async function (params, take, skip) {
         if (!pb || typeof pb._dbQuery !== "function") {
           throw new Error(
-            "pb._dbQuery not found. Load pb-adapter files first."
+            "pb._dbQuery not found. Load pb-adapter files first.",
           );
         }
         return await pb._dbQuery(params, take, skip);
@@ -825,7 +843,7 @@
       coworker._dbCreate = async function (data) {
         if (!pb || typeof pb._dbCreate !== "function") {
           throw new Error(
-            "pb._dbCreate not found. Load pb-adapter files first."
+            "pb._dbCreate not found. Load pb-adapter files first.",
           );
         }
         return await pb._dbCreate(data);
@@ -834,7 +852,7 @@
       coworker._dbUpdate = async function (id, data) {
         if (!pb || typeof pb._dbUpdate !== "function") {
           throw new Error(
-            "pb._dbUpdate not found. Load pb-adapter files first."
+            "pb._dbUpdate not found. Load pb-adapter files first.",
           );
         }
         return await pb._dbUpdate(id, data);
@@ -843,7 +861,7 @@
       coworker._dbDelete = async function (id) {
         if (!pb || typeof pb._dbDelete !== "function") {
           throw new Error(
-            "pb._dbDelete not found. Load pb-adapter files first."
+            "pb._dbDelete not found. Load pb-adapter files first.",
           );
         }
         return await pb._dbDelete(id);
@@ -930,7 +948,7 @@
         return Promise.race([
           this.run(config),
           new Promise((_, reject) =>
-            setTimeout(() => reject(new Error("Operation timeout")), timeout)
+            setTimeout(() => reject(new Error("Operation timeout")), timeout),
           ),
         ]);
       };

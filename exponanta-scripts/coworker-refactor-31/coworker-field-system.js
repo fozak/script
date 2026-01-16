@@ -1,7 +1,37 @@
 // ============================================================================
 // COWORKER-FIELD-SYSTEM.JS
-// Three-tier document processing system
+// Three-tier document processing system + Serialization/Deserialization
 // ============================================================================
+
+// ============================================================================
+// FIELD TYPE HANDLERS REGISTRY
+// ============================================================================
+
+coworker._fieldHandlers = coworker._fieldHandlers || {};
+
+// Code field handler (JSON serialization/deserialization)
+coworker._fieldHandlers.Code = {
+  // On READ: Parse JSON strings to objects
+  preprocess({ val, field }) {
+    if (field.options === "JSON" && typeof val === "string" && val) {
+      try {
+        return JSON.parse(val);
+      } catch (e) {
+        console.warn(`Failed to parse JSON for ${field.fieldname}:`, e);
+        return val;  // Keep as string if invalid
+      }
+    }
+    return val;
+  },
+  
+  // On WRITE: Stringify objects to JSON
+  postprocess({ val, field }) {
+    if (field.options === "JSON" && typeof val === "object" && val !== null) {
+      return JSON.stringify(val);
+    }
+    return val;
+  }
+};
 
 // ============================================================================
 // TIER 1: SYSTEM FIELD RULES
@@ -192,7 +222,7 @@ coworker._applyCustomFieldRules = async function(run_doc) {
 
 
 // ============================================================================
-// MAIN PROCESSOR
+// SERIALIZATION: For WRITE operations (create/update)
 // ============================================================================
 
 coworker.processDocument = async function(run_doc) {
@@ -208,7 +238,7 @@ coworker.processDocument = async function(run_doc) {
 
   // All tiers receive run_doc
   await this._applySystemFieldRules(run_doc);
-  await this._applyFieldTypeHandlers(run_doc);
+  await this._applyFieldTypeHandlers(run_doc);  // ← postprocess serializes
   await this._applyCustomFieldRules(run_doc);
 
   console.log(`✅ Document processed: ${run_doc.input.data.name || 'unnamed'}`);
@@ -218,7 +248,44 @@ coworker.processDocument = async function(run_doc) {
 
 
 // ============================================================================
-// CREATE HANDLER
+// DESERIALIZATION: For READ operations (select/takeone)
+// ============================================================================
+
+coworker.deserializeDocument = async function(doc, doctype) {
+  if (!doc || typeof doc !== 'object') return doc;
+  
+  // Fetch schema
+  const schema = await this.getSchema(doctype);
+  if (!schema?.fields) return doc;
+
+  // Apply preprocess to each field
+  for (const field of schema.fields) {
+    const handler = this._fieldHandlers?.[field.fieldtype];
+    if (handler?.preprocess) {
+      doc[field.fieldname] = handler.preprocess({
+        val: doc[field.fieldname],
+        field,
+        doc,
+        doctype
+      });
+    }
+  }
+
+  return doc;
+};
+
+// Batch deserialization helper
+coworker.deserializeDocuments = async function(docs, doctype) {
+  if (!Array.isArray(docs) || docs.length === 0) return docs;
+  
+  return await Promise.all(
+    docs.map(doc => this.deserializeDocument(doc, doctype))
+  );
+};
+
+
+// ============================================================================
+// CREATE HANDLER (with serialization)
 // ============================================================================
 
 coworker._handlers.create = async function (run_doc) {
@@ -239,11 +306,17 @@ coworker._handlers.create = async function (run_doc) {
     doctype: target_doctype
   };
 
-  // ✅ RUN THE 3-TIER ENGINE (pass run_doc)
+  // ✅ RUN THE 3-TIER ENGINE (includes serialization via postprocess)
   const processedDoc = await coworker.processDocument(run_doc);
 
-  // Execute via adapter
+  // Execute via adapter (processedDoc has serialized JSON strings)
   const result = await coworker._dbCreate(processedDoc);
+
+  // ✅ DESERIALIZE the returned document
+  const deserializedDoc = await coworker.deserializeDocument(
+    result.data,
+    target_doctype
+  );
 
   // Store schema in output if we fetched it
   const schema = run_doc._schema || (includeSchema ? await coworker.getSchema(target_doctype) : undefined);
@@ -251,7 +324,7 @@ coworker._handlers.create = async function (run_doc) {
   return {
     success: true,
     output: {
-      data: [result.data],
+      data: [deserializedDoc],  // ← Deserialized for user
       schema: includeSchema ? schema : undefined,
       meta: includeMeta ? { operation: 'create', created: 1 } : undefined
     }
@@ -263,4 +336,4 @@ coworker._handlers.create = async function (run_doc) {
 // INITIALIZATION
 // ============================================================================
 
-console.log('✅ Field system loaded (3-tier processing)');
+console.log('✅ Field system loaded (3-tier processing + serialization)');

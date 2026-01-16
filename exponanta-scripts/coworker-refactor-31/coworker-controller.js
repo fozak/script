@@ -1,6 +1,6 @@
 // ============================================================
 // COWORKER-CONTROLLER.JS - PRODUCTION READY
-// Version: 5.0.0 - Centralized Draft, Smart Validation
+// Version: 5.1.0 - Centralized Draft, Smart Validation, Auto-Serialization
 // ============================================================
 
 // ============================================================
@@ -96,7 +96,20 @@ coworker.controller = {
 
     // ✅ Route based on type
     if (opConfig.type === "read") {
-      return await coworker._handlers[operation](run_doc);
+      const result = await coworker._handlers[operation](run_doc);
+      
+      // ✅ AUTO-DESERIALIZE: Convert JSON strings to objects
+      if (result.output?.data && Array.isArray(result.output.data)) {
+        const doctype = run_doc.source_doctype || run_doc.target_doctype;
+        if (doctype) {
+          result.output.data = await coworker.deserializeDocuments(
+            result.output.data,
+            doctype
+          );
+        }
+      }
+      
+      return result;
     }
 
     if (opConfig.type === "write") {
@@ -351,4 +364,29 @@ coworker.controller = {
   }
 };
 
-console.log('✅ Controller loaded: v5.0.0 - Centralized draft, smart validation');
+console.log('✅ Controller loaded: v5.1.0 - Centralized draft, smart validation, auto-serialization');
+/*
+
+**Key Changes:**
+
+1. **Version bump**: 5.0.0 → 5.1.0
+2. **Added auto-deserialization** for read operations (lines 67-76)
+3. **No handler changes required** - all handlers work as-is
+
+**Flow:**
+```
+READ Operations:
+  Handler returns raw strings from DB
+    ↓
+  Controller intercepts (type === "read")
+    ↓
+  Calls deserializeDocuments()
+    ↓
+  Returns objects to user
+
+WRITE Operations:
+  User provides objects
+    ↓
+  processDocument() serializes (in CREATE handler)
+    ↓
+  DB receives strings*/
