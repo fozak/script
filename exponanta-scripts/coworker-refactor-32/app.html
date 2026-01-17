@@ -32,6 +32,11 @@
   
   <div id="main_container"></div>
 
+  <div id="query_builder">
+  <p>query builder</p>
+  <input id="expr" placeholder="Type JS expression..." style="width:100%" />
+  <pre id="preview" style="background:#f3f3f3;padding:10px;"></pre>
+</div>
   <!-- ═══════════════════════════════════════════════════════ -->
   <!-- LAYER 1: Foundation (Coworker Core System) -->
   <!-- ═══════════════════════════════════════════════════════ -->
@@ -83,6 +88,7 @@
 
     <!--======== TEST ONLY------>
 <script src="coworker-rbac.js"></script>
+<script src="coworker-proxy.js"></script>
 
   <!-- ═══════════════════════════════════════════════════════ -->
   <!-- LAYER 5: Application (Optional) -->
@@ -98,8 +104,9 @@
 
       // Test coworker.run
       const data = await coworker.run({
-        operation: 'takeone', 
-        from: 'Customer',
+        operation: 'select', 
+        from: 'Adapter',
+        view: 'form',
         //query: { take: 10 },
         options: { render: true }
       });

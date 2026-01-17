@@ -1,6 +1,10 @@
+/* coworker-proxy.js */
+
 (() => {
 
-  /*************************************************
+  
+  
+    /*************************************************
    * 1. VIRTUAL ROW (context without mutation)
    *************************************************/
 
@@ -111,20 +115,26 @@
     }
   });
 
+
+  /* UI */
+  const input = document.getElementById("expr");
+const preview = document.getElementById("preview");
+
+// Polling function every 200ms
+setInterval(() => {
+  const expr = input.value;
+  if (!expr) return preview.textContent = '';
+  
+  try {
+    // Evaluate in the browser context
+    const value = eval(expr);
+    preview.textContent = JSON.stringify(value, null, 2);
+  } catch(e) {
+    preview.textContent = e.message;
+  }
+}, 200);
+
+
+
 })();
 
-/*Usage 
-
-undefined
-CoworkerState.$.Customer.first().customer_name
-
-'Jim Vorough - required field updated from FORM223'
-CoworkerState.$.Customer
-  .fromRun("runcw2z9q4fpjpi")
-  .schema();
-
-null
-CoworkerState.$.Customer.first().$.schema()
-{_schema_doctype: 'Customer', actions: Array(0), allow_events_in_timeline: 1, allow_import: 1, allow_rename: 1, …}
-CoworkerState.$.Customer.first().$.schema()._schema_doctype
-'Customer' */
