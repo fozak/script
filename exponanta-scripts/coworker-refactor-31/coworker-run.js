@@ -323,23 +323,36 @@
         // ════════════════════════════════════════════════════════
         // SELECT - Read operations
         // ════════════════════════════════════════════════════════
-
         select: async function (run_doc) {
           const { source_doctype, query, options } = run_doc;
           const { where, orderBy, take, skip, select } = query || {};
-
-          // ✅ FIX: Read view from run_doc, not query
-          const view = run_doc.view || "list";
-
+          const view = query?.view || "list";
           const { includeSchema = true, includeMeta = false } = options || {};
 
           // Fetch schema if needed
           let schema = null;
-          if (includeSchema && source_doctype !== "All" && source_doctype) {
+          if (
+            includeSchema &&
+            source_doctype !== "All" &&
+            //deleted source_doctype !== "Schema" &&
+            source_doctype
+          ) {
+            //console.log("📥 Calling getSchema for:", source_doctype);
             schema = await coworker.getSchema(source_doctype);
+            //console.log("📤 getSchema returned:", schema);
+          } else {
+            /*console.log("❌ Skipping schema fetch because:", {
+              includeSchema,
+              source_doctype,
+              checks: {
+                notAll: source_doctype !== "All",
+                notSchema: source_doctype !== "Schema",
+                exists: !!source_doctype,
+              },
+            });*/
           }
 
-          // Build and execute query
+          // ✅ B2: Use coworker._buildPrismaWhere
           const queryDoctype = source_doctype === "All" ? "" : source_doctype;
           const pbFilter = coworker._buildPrismaWhere(queryDoctype, where);
           const pbSort = coworker._buildPrismaOrderBy(orderBy);
@@ -348,41 +361,34 @@
           if (pbFilter) params.filter = pbFilter;
           if (pbSort) params.sort = pbSort;
 
+          // ✅ B2: Use coworker._dbQuery
           const { data, meta } = await coworker._dbQuery(params, take, skip);
 
-          // ✅ View determines data shape
+          // Field filtering based on view
           let filteredData = data;
+          const shouldFilter = view === "list" || view === "card";
 
-          // ✅ NEW: If view is 'all', return everything
-          if (view === "all") {
-            filteredData = data;
-          }
-          // Filter by view if schema available and no explicit select
-          else if (schema && !select) {
-            const shouldFilter = view === "list" || view === "card";
+          if (schema && !select && shouldFilter) {
+            const viewProp = `${view}_view`;
+            const viewFields = schema.fields
+              .filter((f) => f[viewProp])
+              .map((f) => f.fieldname);
+            const fields = ["name", ...viewFields];
 
-            if (shouldFilter) {
-              const viewProp = `in_${view}_view`;
-              const viewFields = schema.fields
-                .filter((f) => f[viewProp])
-                .map((f) => f.fieldname);
-              const fields = ["name", "doctype", ...viewFields];
-
-              filteredData = data.map((item) => {
-                const filtered = { doctype: source_doctype };
-                fields.forEach((field) => {
-                  if (item.hasOwnProperty(field)) {
-                    filtered[field] = item[field];
-                  }
-                });
-                return filtered;
-              });
-            }
-          }
-          // Explicit field selection
-          else if (select && Array.isArray(select)) {
             filteredData = data.map((item) => {
-              const filtered = { doctype: source_doctype };
+              const filtered = {
+                doctype: source_doctype, // ✅ Always set doctype from source_doctype
+              };
+              fields.forEach((field) => {
+                if (item.hasOwnProperty(field)) {
+                  filtered[field] = item[field];
+                }
+              });
+              return filtered;
+            });
+          } else if (select && Array.isArray(select)) {
+            filteredData = data.map((item) => {
+              const filtered = {};
               select.forEach((field) => {
                 if (item.hasOwnProperty(field)) {
                   filtered[field] = item[field];
@@ -513,75 +519,74 @@
         // HANDLER - Just Execution (No Logic) https://claude.ai/chat/a92d380b-8725-40c1-98f2-2486fc9ba997
         // ════════════════════════════════════════════════════════
         update: async function (run_doc) {
-          const { source_doctype, target_doctype, input, query, options } =
-            run_doc; // ← Add target_doctype here
-          const inputData = input?.data || input;
-          const where = query?.where || query;
+  const { source_doctype, target_doctype, input, query, options } = run_doc;  // ← Add target_doctype here
+  const inputData = input?.data || input;
+  const where = query?.where || query;
 
-          const { includeSchema = true, includeMeta = false } = options || {};
-          const doctype = source_doctype || target_doctype; // ← Now target_doctype is defined
+  const { includeSchema = true, includeMeta = false } = options || {};
+  const doctype = source_doctype || target_doctype;  // ← Now target_doctype is defined
 
-          let schema = null;
-          if (includeSchema) {
-            schema = await coworker.getSchema(doctype); // ← Use doctype (not source_doctype)
-          }
+  let schema = null;
+  if (includeSchema) {
+    schema = await coworker.getSchema(doctype);  // ← Use doctype (not source_doctype)
+  }
 
-          const queryDoctype = source_doctype === "All" ? "" : source_doctype;
-          const pbFilter = coworker._buildPrismaWhere(queryDoctype, where);
+  const queryDoctype = source_doctype === "All" ? "" : source_doctype;
+  const pbFilter = coworker._buildPrismaWhere(queryDoctype, where);
 
-          const items =
-            run_doc._items ||
-            (await coworker._dbQuery({ filter: pbFilter })).data;
+  const items =
+    run_doc._items ||
+    (await coworker._dbQuery({ filter: pbFilter })).data;
 
-          if (items.length === 0) {
-            return {
-              success: true,
-              output: { data: [], schema, meta: { updated: 0 } },
-            };
-          }
+  if (items.length === 0) {
+    return {
+      success: true,
+      output: { data: [], schema, meta: { updated: 0 } },
+    };
+  }
 
-          // ✅ Process each update through field system
-          const updates = await Promise.all(
-            items.map(async (item) => {
-              const merged = { ...item, ...inputData, doctype }; // ← Use doctype
+  // ✅ Process each update through field system
+  const updates = await Promise.all(
+    items.map(async (item) => {
+      const merged = { ...item, ...inputData, doctype };  // ← Use doctype
 
-              // ✅ SERIALIZE: Create temporary run_doc for processing
-              const tempRunDoc = {
-                operation: "update",
-                target_doctype: doctype, // ← Use target_doctype (field handlers check this)
-                input: { data: merged },
-                output: { schema },
-              };
+      // ✅ SERIALIZE: Create temporary run_doc for processing
+      const tempRunDoc = {
+        operation: "update",
+        target_doctype: doctype,  // ← Use target_doctype (field handlers check this)
+        input: { data: merged },
+        output: { schema },
+      };
 
-              // Apply field handlers (serialization)
-              await coworker._applyFieldTypeHandlers(tempRunDoc);
+      // Apply field handlers (serialization)
+      await coworker._applyFieldTypeHandlers(tempRunDoc);
 
-              // Use processed data
-              const result = await coworker._dbUpdate(
-                item.name || item.id,
-                tempRunDoc.input.data,
-              );
+      // Use processed data
+      const result = await coworker._dbUpdate(
+        item.name || item.id,
+        tempRunDoc.input.data,
+      );
 
-              // ✅ DESERIALIZE result
-              return {
-                ...result,
-                data: await coworker.deserializeDocument(
-                  result.data,
-                  doctype, // ← Use doctype
-                ),
-              };
-            }),
-          );
+      // ✅ DESERIALIZE result
+      return {
+        ...result,
+        data: await coworker.deserializeDocument(
+          result.data,
+          doctype,  // ← Use doctype
+        ),
+      };
+    }),
+  );
 
-          return {
-            success: true,
-            output: {
-              data: updates.map((u) => u.data),
-              schema,
-              meta: { operation: "update", updated: updates.length },
-            },
-          };
-        },
+  return {
+    success: true,
+    output: {
+      data: updates.map((u) => u.data),
+      schema,
+      meta: { operation: "update", updated: updates.length },
+    },
+  };
+},
 
         // ════════════════════════════════════════════════════════
         // DELETE - Remove operations
