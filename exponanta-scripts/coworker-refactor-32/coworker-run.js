@@ -326,7 +326,7 @@
         select: async function (run_doc) {
           const { source_doctype, query, options } = run_doc;
           const { where, orderBy, take, skip, select } = query || {};
-          const view = query.view || "list";
+          const view = run_doc.view || query.view || "list";  //working const view = query.view || "list";
           const { includeSchema = true, includeMeta = false } = options || {};
 
           // Fetch schema if needed
