@@ -369,7 +369,7 @@
           const shouldFilter = view === "list" || view === "card";
 
           if (schema && !select && shouldFilter) {
-            const viewProp = `in_${view}_view`;
+            const viewProp = `${view}_view`;
             const viewFields = schema.fields
               .filter((f) => f[viewProp])
               .map((f) => f.fieldname);
