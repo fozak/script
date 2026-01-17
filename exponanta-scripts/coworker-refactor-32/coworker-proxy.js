@@ -1,13 +1,11 @@
 /* coworker-proxy.js */
 
-(() => {
+
 
   
-  
-    /*************************************************
+/*************************************************
    * 1. VIRTUAL ROW (context without mutation)
    *************************************************/
-
   function createVirtualRow(row, run) {
     return new Proxy(row, {
       get(target, key) {
@@ -29,11 +27,9 @@
     });
   }
 
-
   /*************************************************
    * 2. MINI-QUERY (immutable & chainable)
    *************************************************/
-
   function Query(rows) {
     return {
       rows,
@@ -46,79 +42,71 @@
                 Object.entries(predicateOrObject)
                   .every(([k, v]) => r[k] === v)
               );
-
         return Query(filtered);
       },
 
-      first() {
-        return rows[0] || null;
-      },
+      first() { return rows[0] || null; },
 
       one() {
-        if (rows.length !== 1) {
-          throw new Error(`Expected 1 row, got ${rows.length}`);
-        }
+        if (rows.length !== 1) throw new Error(`Expected 1 row, got ${rows.length}`);
         return rows[0];
       },
 
-      byId(id) {
-        return rows.find(r => r.id === id) || null;
-      },
+      byId(id) { return rows.find(r => r.id === id) || null; },
 
-      count() {
-        return rows.length;
-      },
+      count() { return rows.length; },
 
-      map(fn) {
-        return rows.map(fn);
-      },
+      map(fn) { return rows.map(fn); },
 
-      value() {
-        return rows;
-      },
+      value() { return rows; },
 
-      schema() {
-        return rows[0]?.$?.schema() || null;
-      },
+      schema() { return rows[0]?.$?.schema() || null; },
 
-      fromRun(runId) {
-        return Query(rows.filter(r => r.$.runId() === runId));
-      },
+      fromRun(runId) { return Query(rows.filter(r => r.$.runId() === runId)); },
 
-      // ✅ new helper
-    all() {
-      return rows.map(r => r); // returns array of all rows
-    }
+      /*************************************************
+       * ✅ NEW: all() returns array of all rows
+       *************************************************/
+      all() { return rows.map(r => r); }
     };
   }
 
-
   /*************************************************
-   * 3. $ PROXY (pure read-only facade)
+   * 3. PROXY ENTRY FOR DOCTYPES
    *************************************************/
-
-  CoworkerState.$ = new Proxy({}, {
-    get(_, key) {
-
-      // $.Run("runId")
-      if (key === "Run") {
-        return (runId) => CoworkerState.runs[runId] || null;
-      }
-
-      // $.Customer / $.Invoice / etc
-      const rows = [];
-
-      for (const run of Object.values(CoworkerState.runs)) {
-        for (const row of run.output?.data || []) {
-          if (row.doctype === key) {
-            rows.push(createVirtualRow(row, run));
-          }
-        }
-      }
+  window.CoworkerState.$ = new Proxy({}, {
+    get(_, doctype) {
+      // Return a Query over all runs output data of this doctype
+      const rows = Object.values(CoworkerState.runs)
+        .flatMap(r => r.output?.data || [])
+        .filter(d => d.doctype === doctype)
+        .map(d => createVirtualRow(d, d));
 
       return Query(rows);
     }
   });
+
+  /*************************************************
+   * 4. GLOBAL FUNCTION LOOKUP + EXECUTION
+   *************************************************/
+  async function runAdapterFunction(funcName, input = {}) {
+  const adapter = CoworkerState.$.Adapter.all().find(a => a.functions?.[funcName]);
+  if (!adapter) throw new Error(`Function "${funcName}" not found`);
+
+  const run_doc = {
+    adapter,
+    input,
+    target: { doctype: null, data: [] },
+    output: {}
+  };
+
+  const fnStr = adapter.functions[funcName];
+  const fn = eval('(' + fnStr + ')');
+  return await fn(run_doc);
+}
+
+
+
 
 
   /* UI */
@@ -140,6 +128,4 @@ setInterval(() => {
 }, 200);
 
 
-
-})();
 
