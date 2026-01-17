@@ -326,7 +326,7 @@
         select: async function (run_doc) {
           const { source_doctype, query, options } = run_doc;
           const { where, orderBy, take, skip, select } = query || {};
-          const view = query?.view || "list";
+          const view = query.view || "list";
           const { includeSchema = true, includeMeta = false } = options || {};
 
           // Fetch schema if needed
@@ -368,8 +368,12 @@
           let filteredData = data;
           const shouldFilter = view === "list" || view === "card";
 
-          if (schema && !select && shouldFilter) {
-            const viewProp = `${view}_view`;
+          /*if (view === "all") {     //dont work
+    filteredData = data;
+  }
+
+          else*/ if (schema && !select && shouldFilter) {   //was if not else if
+            const viewProp = `in_${view}_view`;
             const viewFields = schema.fields
               .filter((f) => f[viewProp])
               .map((f) => f.fieldname);
@@ -416,6 +420,8 @@
           if (!run_doc.query) run_doc.query = {};
           run_doc.query.take = 1;
           run_doc.query.view = "form";
+
+
 
           // ✅ B2: Use coworker._handlers.select (not this._handlers)
           const result = await coworker._handlers.select(run_doc);

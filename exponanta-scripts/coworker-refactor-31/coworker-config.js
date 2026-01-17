@@ -1583,35 +1583,48 @@ coworker._config = {
     },
 
     Code: {
-      element: "textarea",
-      props: {
-        rows: 10,
-        className: "{{CWStyles.field.code}}", // ✅ Single class
-      },
-      state: { localValue: "{{value || ''}}" },
-      events: {
-        onChange: { updateState: "localValue", delegate: "onChange" },
-        onBlur: { delegate: "onBlur" },
-        onKeyDown: {
-          custom: true,
-          handler: function (e, setState, handlers, field) {
-            if (e.key === "Tab") {
-              e.preventDefault();
-              const start = e.target.selectionStart;
-              const end = e.target.selectionEnd;
-              const value = e.target.value;
-              const newValue =
-                value.substring(0, start) + "  " + value.substring(end);
+  element: "textarea",
+  props: {
+    rows: 10,
+    className: "{{CWStyles.field.code}}",
+  },
+  state: { 
+    // ✅ Stringify objects for display in textarea
+    localValue: "{{typeof value === 'object' && value !== null ? JSON.stringify(value, null, 2) : (value || '')}}" 
+  },
+  events: {
+    onChange: { 
+      updateState: "localValue", 
+      // ✅ Try to parse JSON, otherwise keep as string
+      delegate: function(value) {
+        try {
+          return JSON.parse(value);
+        } catch {
+          return value;
+        }
+      }
+    },
+    onBlur: { delegate: "onBlur" },
+    onKeyDown: {
+      custom: true,
+      handler: function (e, setState, handlers, field) {
+        if (e.key === "Tab") {
+          e.preventDefault();
+          const start = e.target.selectionStart;
+          const end = e.target.selectionEnd;
+          const value = e.target.value;
+          const newValue =
+            value.substring(0, start) + "  " + value.substring(end);
 
-              setState((prev) => ({ ...prev, localValue: newValue }));
-              setTimeout(() => {
-                e.target.selectionStart = e.target.selectionEnd = start + 2;
-              }, 0);
-            }
-          },
-        },
+          setState((prev) => ({ ...prev, localValue: newValue }));
+          setTimeout(() => {
+            e.target.selectionStart = e.target.selectionEnd = start + 2;
+          }, 0);
+        }
       },
     },
+  },
+},
 
     // ════════════════════════════════════════════════════════
     // ATTACH IMAGE - NO INLINE STYLES
