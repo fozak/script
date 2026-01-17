@@ -83,7 +83,12 @@
 
       fromRun(runId) {
         return Query(rows.filter(r => r.$.runId() === runId));
-      }
+      },
+
+      // ✅ new helper
+    all() {
+      return rows.map(r => r); // returns array of all rows
+    }
     };
   }
 
