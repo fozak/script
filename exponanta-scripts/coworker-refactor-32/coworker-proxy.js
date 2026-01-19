@@ -74,17 +74,18 @@
   /*************************************************
    * 3. PROXY ENTRY FOR DOCTYPES
    *************************************************/
-  window.CoworkerState.$ = new Proxy({}, {
-    get(_, doctype) {
-      // Return a Query over all runs output data of this doctype
-      const rows = Object.values(CoworkerState.runs)
-        .flatMap(r => r.output?.data || [])
-        .filter(d => d.doctype === doctype)
-        .map(d => createVirtualRow(d, d));
-
-      return Query(rows);
-    }
-  });
+window.CoworkerState.$ = new Proxy({}, {
+  get(_, doctype) {
+    const rows = Object.values(CoworkerState.runs)
+      .flatMap(r => {  // ✅ r is defined here
+        return (r.output?.data || [])
+          .filter(d => d.doctype === doctype)
+          .map(d => createVirtualRow(d, r));  // ✅ r is still in scope
+      });
+    
+    return Query(rows);
+  }
+});
 
   /*************************************************
    * 4. GLOBAL FUNCTION LOOKUP + EXECUTION
