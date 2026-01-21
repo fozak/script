@@ -74,15 +74,32 @@
   /*************************************************
    * 3. PROXY ENTRY FOR DOCTYPES
    *************************************************/
-window.CoworkerState.$ = new Proxy({}, {
-  get(_, doctype) {
+window.CoworkerState.$ = new Proxy({
+  // Static methods
+  all() {
+    return Query(
+      Object.values(CoworkerState.runs)
+        .flatMap(r => (r.output?.data || []).map(d => createVirtualRow(d, r)))
+    );
+  },
+  
+  runs() {
+    return Query(
+      Object.values(CoworkerState.runs).map(r => createVirtualRow(r, r))
+    );
+  }
+}, {
+  get(target, doctype) {
+    // Check if it's a static method first
+    if (doctype in target) return target[doctype];
+    
+    // Otherwise, filter by doctype (current behavior)
     const rows = Object.values(CoworkerState.runs)
-      .flatMap(r => {  // ✅ r is defined here
+      .flatMap(r => {
         return (r.output?.data || [])
           .filter(d => d.doctype === doctype)
-          .map(d => createVirtualRow(d, r));  // ✅ r is still in scope
+          .map(d => createVirtualRow(d, r));
       });
-    
     return Query(rows);
   }
 });
@@ -129,4 +146,9 @@ setInterval(() => {
 }, 200);
 
 
+/* USAGE 
 
+CoworkerState.$.Adapter.first().$.run()
+
+
+*/

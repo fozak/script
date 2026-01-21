@@ -10,7 +10,7 @@ pb._currentAdapter = pb._currentAdapter || 'pocketbase';
 /**
  * @function pb.useAdapter
  * @description Switch between database adapters
- * @param {string} adapter - 'pocketbase' | 'memory' | 'storage'
+ * @param {string} adapter - 'pocketbase' | 'memory' | 'run_memory' 
  */
 pb.useAdapter = function(adapter) {
   if (!this._adapters) {

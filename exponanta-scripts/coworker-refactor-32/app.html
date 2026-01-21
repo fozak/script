@@ -88,8 +88,13 @@
 
     <!--======== TEST ONLY------>
 <script src="coworker-rbac.js"></script>
-<script src="coworker-proxy.js"></script>
+<!--<script src="coworker-proxy.js"></script>-//--->
 
+<script src="coworker-query-builder.js"></script>
+
+<script src="coworker-rbac.js"></script>
+
+<script src="pb-adapter-run_memory.js"></script>
   <!-- ═══════════════════════════════════════════════════════ -->
   <!-- LAYER 5: Application (Optional) -->
   <!-- ═══════════════════════════════════════════════════════ -->
@@ -101,6 +106,17 @@
       // Test PocketBase connection
       const result = await connectToPocketBase();
       console.log('Connection result:', result);
+
+
+//load schemas
+      await coworker.run({
+  operation: 'select',
+  from: 'Schema',
+  view: 'form',
+  options: { adapter: 'pocketbase' }
+});
+
+console.log('Schemas loaded');
 
       // Test coworker.run
       const data = await coworker.run({

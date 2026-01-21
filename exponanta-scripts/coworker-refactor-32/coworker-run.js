@@ -109,6 +109,7 @@
           name: generateId("run"),
           creation: start,
           modified: start,
+          operation_key: JSON.stringify(op),    //added operation_key
           modified_by: resolved.owner || "system",
           docstatus: 0,
           owner: resolved.owner || "system",
