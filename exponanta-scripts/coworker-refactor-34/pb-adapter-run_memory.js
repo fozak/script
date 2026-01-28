@@ -1,20 +1,21 @@
 // ============================================================================
-// pb-adapter-memory.js - Queries CoworkerState.runs
+// pb-adapter-run_memory.js - Queries CoworkerState.runs
 // ============================================================================
 
 pb._adapters = pb._adapters || {};
 
 // Define MEMORY_DB as a getter that computes from CoworkerState
-Object.defineProperty(window, 'MEMORY_DB', {
+Object.defineProperty(window, 'RUN_MEMORY_DB', {
   get() {
     if (typeof CoworkerState === 'undefined') return [];
-    return Object.values(CoworkerState.runs).flatMap(r => r.target?.data || []);
+    // ✅ Just return Run documents as-is
+    return Object.values(CoworkerState.runs);
   },
   enumerable: true,
   configurable: true
 });
 
-pb._adapters.memory = {
+pb._adapters.run_memory = {
   /**
    * @function query
    * @description Execute SELECT query on in-memory array
@@ -25,7 +26,7 @@ pb._adapters.memory = {
    */
   async query(params = {}, take, skip) {
     // Start with all records
-    let items = [...window.MEMORY_DB];
+    let items = [...window.RUN_MEMORY_DB];
 
     // Apply filter
     if (params.filter) {
