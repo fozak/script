@@ -3,6 +3,217 @@
 
 /* PLAN lets move */
 
+const doc = await coworker.run({
+  operation: "takeone",
+  from: "Task",
+  query: { where: { name: "TASK-2025-00003" } }
+});
+
+// 3. Query available actions
+const vector_state = doc.target.data[0]._states;
+const actions = coworker.FSM.getActionsForState(vector_state);
+
+// 4. Render UI based on actions
+if (actions.includes("save")) {
+  // Show save button
+}
+if (actions.includes("submit")) {
+  // Show submit button
+}
+
+
+
+// ---- DO NOT USE - this is NOT json
+
+await coworker.run({
+  operation: "update",
+  doctype: "State Machine",
+  query: {
+    where: {
+      statemachine_name: "Document_FSM"
+    }
+  },
+  input: {
+    states: {
+      docstatus: {
+        options: [0, 1, 2],
+        transitions: {
+          "0": [1],
+          "1": [2],
+          "2": []
+        }
+      },
+      dirty: {
+        options: [0, 1],
+        transitions: {
+          "0": [1],
+          "1": [0]
+        }
+      },
+      validating: {
+        options: ["idle", "validating", "valid", "validatingErrors"],
+        transitions: {
+          idle: ["validating"],
+          validating: ["valid", "validatingErrors"],
+          valid: ["idle"],
+          validatingErrors: ["idle", "validating"]  // ← Added retry path
+        }
+      },
+      saving: {
+        options: ["idle", "saving", "saved", "savingErrors"],
+        transitions: {
+          idle: ["saving"],
+          saving: ["saved", "savingErrors"],
+          saved: ["idle"],
+          savingErrors: ["idle", "saving"]  // ← Added retry path
+        }
+      },
+      submitting: {
+        options: ["idle", "submitting", "submitted", "submittingErrors"],
+        transitions: {
+          idle: ["submitting"],
+          submitting: ["submitted", "submittingErrors"],
+          submitted: ["idle"],
+          submittingErrors: ["idle", "submitting"]  // ← Added retry path
+        }
+      },
+      cancelling: {
+        options: ["idle", "cancelling", "cancelled", "cancellingErrors"],
+        transitions: {
+          idle: ["cancelling"],
+          cancelling: ["cancelled", "cancellingErrors"],
+          cancelled: ["idle"],
+          cancellingErrors: ["idle", "cancelling"]  // ← Added retry path
+        }
+      },
+      is_submittable: {
+        options: [0, 1],
+        transitions: {
+          "0": [],
+          "1": []
+        }
+      },
+      autosave_enabled: {
+        options: [0, 1],
+        transitions: {
+          "0": [],
+          "1": []
+        }
+      }
+    },
+    rules: {
+      docstatus: {
+        "0_to_1": {
+          requires: {
+            dirty: 0,
+            validating: "valid",
+            saving: "idle",
+            submitting: "idle"
+          }
+        },
+        "1_to_2": {
+          requires: {
+            saving: "idle",
+            submitting: "idle",
+            cancelling: "idle"
+          }
+        }
+      },
+      dirty: {
+        "0_to_1": {
+          requires: {
+            docstatus: 0
+          }
+        },
+        "1_to_0": {
+          requires: {
+            saving: ["saved", "idle"]
+          }
+        }
+      },
+      validating: {
+        idle_to_validating: {
+          requires: {
+            saving: "idle",
+            submitting: "idle",
+            cancelling: "idle"
+          }
+        },
+        validatingErrors_to_validating: {  // ← Added rule for retry
+          requires: {
+            saving: "idle",
+            submitting: "idle",
+            cancelling: "idle"
+          }
+        }
+      },
+      saving: {
+        idle_to_saving: {
+          requires: {
+            docstatus: 0,
+            dirty: 1,
+            validating: "valid",
+            submitting: "idle",
+            cancelling: "idle"
+          }
+        },
+        savingErrors_to_saving: {  // ← Added rule for retry
+          requires: {
+            docstatus: 0,
+            dirty: 1,
+            validating: "valid",
+            submitting: "idle",
+            cancelling: "idle"
+          }
+        }
+      },
+      submitting: {
+        idle_to_submitting: {
+          requires: {
+            docstatus: 0,
+            dirty: 0,
+            validating: "valid",
+            saving: "idle",
+            cancelling: "idle"
+          }
+        },
+        submittingErrors_to_submitting: {  // ← Added rule for retry
+          requires: {
+            docstatus: 0,
+            dirty: 0,
+            validating: "valid",
+            saving: "idle",
+            cancelling: "idle"
+          }
+        }
+      },
+      cancelling: {
+        idle_to_cancelling: {
+          requires: {
+            docstatus: 1,
+            saving: "idle",
+            submitting: "idle"
+          }
+        },
+        cancellingErrors_to_cancelling: {  // ← Added rule for retry
+          requires: {
+            docstatus: 1,
+            saving: "idle",
+            submitting: "idle"
+          }
+        }
+      }
+    }
+  }
+});
+
+console.log("✅ State Machine updated");
+
+// Reload FSM
+await coworker.FSM.load();
+console.log("✅ FSM reloaded");
+
+
 const fsmConfig = {
   "states": {
     "docstatus": {

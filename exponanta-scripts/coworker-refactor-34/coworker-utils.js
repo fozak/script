@@ -1,5 +1,5 @@
 // ============================================================
-// coworker-utils.js — MERGED UTILITIES from pb-utils.js + coworker-utils.js v 21
+// coworker-utils.js —
 // ============================================================
 
 
@@ -914,3 +914,217 @@ coworker.evalTemplateObj = function(obj, context) {
 };
 
 console.log("✅ Utils loaded");
+
+// ====STATE MACHINE EVALUATOR====
+// ============================================================================
+// HELPER FUNCTIONS (Must be defined first)
+// ============================================================================
+
+function evaluateFSM(fsmConfig, vector_state) {
+  const available = [];
+  
+  // Skip dimensions that can't change
+  const staticDimensions = ['is_submittable', 'autosave_enabled'];
+  
+  // Priority order for evaluation
+  const dimensionPriority = [
+    'docstatus',
+    'dirty',
+    'validating',
+    'saving',
+    'submitting',
+    'cancelling'
+  ];
+  
+  // Early exit: If not submittable, skip submit/cancel transitions
+  if (vector_state.is_submittable === 0) {
+    dimensionPriority.splice(dimensionPriority.indexOf('submitting'), 1);
+    dimensionPriority.splice(dimensionPriority.indexOf('cancelling'), 1);
+  }
+  
+  // Early exit: If docstatus != 0, most operations blocked
+  if (vector_state.docstatus !== 0) {
+    if (vector_state.docstatus === 1 && vector_state.is_submittable === 1) {
+      return evaluateDimension(
+        'cancelling',
+        fsmConfig.states.cancelling,
+        fsmConfig.rules.cancelling,
+        vector_state
+      );
+    }
+    return [];
+  }
+  
+  // Evaluate each dimension in priority order
+  for (const dimension of dimensionPriority) {
+    if (staticDimensions.includes(dimension)) continue;
+    
+    const stateConfig = fsmConfig.states[dimension];
+    if (!stateConfig) continue;
+    
+    const transitions = evaluateDimension(
+      dimension,
+      stateConfig,
+      fsmConfig.rules[dimension],
+      vector_state
+    );
+    
+    available.push(...transitions);
+  }
+  
+  return available;
+}
+
+function evaluateDimension(dimension, stateConfig, rules, vector_state) {
+  const available = [];
+  const currentValue = vector_state[dimension];
+  
+  // Get possible next values from graph
+  const possibleNext = stateConfig.transitions[String(currentValue)] || [];
+  
+  // Skip if no transitions possible
+  if (possibleNext.length === 0) return [];
+  
+  // Check each possible transition
+  for (const nextValue of possibleNext) {
+    const ruleKey = `${currentValue}_to_${nextValue}`;
+    const rule = rules?.[ruleKey];
+    
+    // Fast path if no rule
+    if (!rule) {
+      available.push({
+        dimension: dimension,
+        from: currentValue,
+        to: nextValue,
+        action: findActionForTransition(dimension, nextValue)
+      });
+      continue;
+    }
+    
+    // Check requirements
+    if (checkRequirements(rule.requires, vector_state)) {
+      available.push({
+        dimension: dimension,
+        from: currentValue,
+        to: nextValue,
+        action: findActionForTransition(dimension, nextValue)
+      });
+    }
+  }
+  
+  return available;
+}
+
+function checkRequirements(requires, state) {
+  if (!requires) return true;
+  
+  // Check most restrictive first (fail fast)
+  if ('docstatus' in requires) {
+    if (!checkSingleRequirement('docstatus', requires.docstatus, state)) {
+      return false;
+    }
+  }
+  
+  if ('dirty' in requires) {
+    if (!checkSingleRequirement('dirty', requires.dirty, state)) {
+      return false;
+    }
+  }
+  
+  // Check remaining requirements
+  for (const [key, value] of Object.entries(requires)) {
+    if (key === 'docstatus' || key === 'dirty') continue;
+    
+    if (!checkSingleRequirement(key, value, state)) {
+      return false;
+    }
+  }
+  
+  return true;
+}
+
+function checkSingleRequirement(key, value, state) {
+  const actualValue = state[key];
+  
+  // Array means "must be one of these values"
+  if (Array.isArray(value)) {
+    return value.includes(actualValue);
+  }
+  
+  // Single value means "must equal this"
+  return actualValue === value;
+}
+
+function findActionForTransition(dimension, toValue) {
+  const actionMap = {
+    'saving-saving': 'save',
+    'submitting-submitting': 'submit',
+    'cancelling-cancelling': 'cancel',
+    'validating-validating': 'validate'
+  };
+  
+  const key = `${dimension}-${toValue}`;
+  return actionMap[key] || null;
+}
+
+// ============================================================================
+// COWORKER.FSM MODULE
+// ============================================================================
+
+coworker.FSM = {
+  config: null,
+  
+  async load() {
+    const result = await coworker.run({
+      operation: "takeone",
+      from: "State Machine",
+      query: { where: { statemachine_name: "Document_FSM" } }
+    });
+    
+    if (!result.success || !result.target.data[0]) {
+      throw new Error("State Machine not found");
+    }
+    
+    this.config = result.target.data[0];
+    console.log("✅ FSM loaded:", this.config.statemachine_name);
+  },
+  
+  evaluate(vector_state) {
+    if (!this.config) {
+      throw new Error("FSM not loaded. Call FSM.load() first.");
+    }
+    
+    return evaluateFSM(this.config, vector_state);
+  },
+  
+  canTransition(dimension, from, to, vector_state) {
+    if (!this.config) {
+      throw new Error("FSM not loaded. Call FSM.load() first.");
+    }
+    
+    const stateConfig = this.config.states[dimension];
+    if (!stateConfig) return false;
+    
+    const allowed = stateConfig.transitions[String(from)];
+    if (!allowed || !allowed.includes(to)) return false;
+    
+    const ruleKey = `${from}_to_${to}`;
+    const rule = this.config.rules[dimension]?.[ruleKey];
+    
+    if (!rule) return true;
+    
+    return checkRequirements(rule.requires, vector_state);
+  },
+  
+  getActionsForState(vector_state) {
+    return this.evaluate(vector_state)
+      .map(t => t.action)
+      .filter(Boolean);
+  },
+  
+  canExecuteAction(action, vector_state) {
+    return this.getActionsForState(vector_state).includes(action);
+  }
+};
+
+console.log("✅ FSM module loaded");
