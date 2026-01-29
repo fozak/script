@@ -916,6 +916,7 @@ coworker.evalTemplateObj = function(obj, context) {
 console.log("✅ Utils loaded");
 
 // ====STATE MACHINE EVALUATOR====
+// ====STATE MACHINE EVALUATOR====
 // ============================================================================
 // HELPER FUNCTIONS (Must be defined first)
 // ============================================================================
@@ -1038,15 +1039,11 @@ function checkSingleRequirement(key, value, state) {
 }
 
 function findActionForTransition(dimension, toValue) {
-  const actionMap = {
-    'saving-saving': 'save',
-    'submitting-submitting': 'submit',
-    'cancelling-cancelling': 'cancel',
-    'validating-validating': 'validate'
-  };
-  
-  const key = `${dimension}-${toValue}`;
-  return actionMap[key] || null;
+  // Action name is the dimension name when transitioning to "pending"
+  if (toValue === "pending") {
+    return dimension;
+  }
+  return null;
 }
 
 // ============================================================================
