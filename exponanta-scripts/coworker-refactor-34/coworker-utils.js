@@ -923,42 +923,24 @@ console.log("✅ Utils loaded");
 function evaluateFSM(fsmConfig, vector_state) {
   const available = [];
   
-  // Skip dimensions that can't change
-  const staticDimensions = ['is_submittable', 'autosave_enabled'];
+  // Get all dimensions from FSM config
+  const allDimensions = Object.keys(fsmConfig.states);
   
-  // Priority order for evaluation
-  const dimensionPriority = [
-    'docstatus',
-    'dirty',
-    'validating',
-    'saving',
-    'submitting',
-    'cancelling'
-  ];
-  
-  // Early exit: If not submittable, skip submit/cancel transitions
-  if (vector_state.is_submittable === 0) {
-    dimensionPriority.splice(dimensionPriority.indexOf('submitting'), 1);
-    dimensionPriority.splice(dimensionPriority.indexOf('cancelling'), 1);
-  }
-  
-  // Early exit: If docstatus != 0, most operations blocked
+  // Early exit: If docstatus != 0, check only cancel
   if (vector_state.docstatus !== 0) {
-    if (vector_state.docstatus === 1 && vector_state.is_submittable === 1) {
+    if (vector_state.docstatus === 1 && fsmConfig.states.cancel) {
       return evaluateDimension(
-        'cancelling',
-        fsmConfig.states.cancelling,
-        fsmConfig.rules.cancelling,
+        'cancel',
+        fsmConfig.states.cancel,
+        fsmConfig.rules.cancel,
         vector_state
       );
     }
     return [];
   }
   
-  // Evaluate each dimension in priority order
-  for (const dimension of dimensionPriority) {
-    if (staticDimensions.includes(dimension)) continue;
-    
+  // Evaluate all dimensions
+  for (const dimension of allDimensions) {
     const stateConfig = fsmConfig.states[dimension];
     if (!stateConfig) continue;
     
