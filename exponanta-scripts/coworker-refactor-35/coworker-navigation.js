@@ -4,14 +4,14 @@
 
 // Get all Main* navigation runs
 function getMainRuns() {
-  return Object.values(CoworkerState.runs)
+  return Object.values(CW.runs)
     .filter(r => r.component?.startsWith('Main') && r.options?.render !== false)
     .sort((a, b) => a.creation - b.creation);
 }
 
 // Get current index
 function getCurrentIndex() {
-  return getMainRuns().findIndex(r => r.name === CoworkerState.current_run);
+  return getMainRuns().findIndex(r => r.name === CW.current_run);
 }
 
 // Generic navigation function
@@ -22,7 +22,7 @@ function navigate(direction) {
   
   if (targetIndex >= 0 && targetIndex < mainRuns.length) {
     const targetRun = mainRuns[targetIndex];
-    CoworkerState.current_run = targetRun.name;  // ✅ Update before render
+    CW.current_run = targetRun.name;  // ✅ Update before render
     coworker._render(targetRun);
     updateNavUI();
     return true;
@@ -32,9 +32,9 @@ function navigate(direction) {
 
 // Navigate to specific run
 function navigateTo(runName) {
-  const run = CoworkerState.runs[runName];
+  const run = CW.runs[runName];
   if (run) {
-    CoworkerState.current_run = runName;  // ✅ Update before render
+    CW.current_run = runName;  // ✅ Update before render
     coworker._render(run);
     updateNavUI();
     return true;
@@ -68,7 +68,7 @@ function findGridRunForDoctype(doctype) {
 
 // Get breadcrumbs
 function getBreadcrumbs() {
-  const current = CoworkerState.getCurrentRun();
+  const current = CW.getCurrentRun();
   const home = getMainRuns()[0]?.name;
   
   if (!current?.component?.startsWith('Main')) {

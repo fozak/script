@@ -2,7 +2,7 @@
 // COWORKER STATE - Centralized State Management - now only Main and
 // ============================================================
 
-window.CoworkerState = {
+window.CW = {
   runs: {}, // indexed by run.name
   runsByOpKey: {}, // indexed by operation_key
   current_run: null,

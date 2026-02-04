@@ -184,10 +184,10 @@
 
         // Update state: RUNNING
         if (
-          typeof CoworkerState !== "undefined" &&
-          CoworkerState._updateFromRun
+          typeof CW !== "undefined" &&
+          CW._updateFromRun
         ) {
-          CoworkerState._updateFromRun(run_doc);
+          CW._updateFromRun(run_doc);
         }
 
         // ✅ IMPROVED: Child factory with context inheritance & tracking https://claude.ai/chat/c50f00d4-2043-404b-ad94-6e6d204da92e
@@ -220,10 +220,10 @@
 
             // Update state if tracking is active
             if (
-              typeof CoworkerState !== "undefined" &&
-              CoworkerState._updateFromRun
+              typeof CW !== "undefined" &&
+              CW._updateFromRun
             ) {
-              CoworkerState._updateFromRun(run_doc);
+              CW._updateFromRun(run_doc);
             }
           }
 
@@ -251,10 +251,10 @@
           run_doc.modified = Date.now();
 
           if (
-            typeof CoworkerState !== "undefined" &&
-            CoworkerState._updateFromRun
+            typeof CW !== "undefined" &&
+            CW._updateFromRun
           ) {
-            CoworkerState._updateFromRun(run_doc);
+            CW._updateFromRun(run_doc);
           }
         } catch (err) {
           run_doc.success = false;
@@ -273,10 +273,10 @@
           run_doc.modified = Date.now();
 
           if (
-            typeof CoworkerState !== "undefined" &&
-            CoworkerState._updateFromRun
+            typeof CW !== "undefined" &&
+            CW._updateFromRun
           ) {
-            CoworkerState._updateFromRun(run_doc);
+            CW._updateFromRun(run_doc);
           }
         }
 

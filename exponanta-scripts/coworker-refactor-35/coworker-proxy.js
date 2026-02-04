@@ -74,18 +74,18 @@
   /*************************************************
    * 3. PROXY ENTRY FOR DOCTYPES
    *************************************************/
-window.CoworkerState.$ = new Proxy({
+window.CW.$ = new Proxy({
   // Static methods
   all() {
     return Query(
-      Object.values(CoworkerState.runs)
+      Object.values(CW.runs)
         .flatMap(r => (r.target?.data || []).map(d => createVirtualRow(d, r)))
     );
   },
   
   runs() {
     return Query(
-      Object.values(CoworkerState.runs).map(r => createVirtualRow(r, r))
+      Object.values(CW.runs).map(r => createVirtualRow(r, r))
     );
   }
 }, {
@@ -94,7 +94,7 @@ window.CoworkerState.$ = new Proxy({
     if (doctype in target) return target[doctype];
     
     // Otherwise, filter by doctype (current behavior)
-    const rows = Object.values(CoworkerState.runs)
+    const rows = Object.values(CW.runs)
       .flatMap(r => {
         return (r.target?.data || [])
           .filter(d => d.doctype === doctype)
@@ -108,7 +108,7 @@ window.CoworkerState.$ = new Proxy({
    * 4. GLOBAL FUNCTION LOOKUP + EXECUTION
    *************************************************/
   async function runAdapterFunction(funcName, input = {}) {
-  const adapter = CoworkerState.$.Adapter.all().find(a => a.functions?.[funcName]);
+  const adapter = CW.$.Adapter.all().find(a => a.functions?.[funcName]);
   if (!adapter) throw new Error(`Function "${funcName}" not found`);
 
   const run_doc = {
@@ -148,7 +148,7 @@ setInterval(() => {
 
 /* USAGE 
 
-CoworkerState.$.Adapter.first().$.run()
+CW.$.Adapter.first().$.run()
 
 
 */

@@ -1,15 +1,15 @@
 // ============================================================================
-// pb-adapter-run_memory.js - Queries CoworkerState.runs
+// pb-adapter-run_memory.js - Queries CW.runs
 // ============================================================================
 
 pb._adapters = pb._adapters || {};
 
-// Define MEMORY_DB as a getter that computes from CoworkerState
+// Define MEMORY_DB as a getter that computes from CW
 Object.defineProperty(window, 'RUN_MEMORY_DB', {
   get() {
-    if (typeof CoworkerState === 'undefined') return [];
+    if (typeof CW === 'undefined') return [];
     // ✅ Just return Run documents as-is
-    return Object.values(CoworkerState.runs);
+    return Object.values(CW.runs);
   },
   enumerable: true,
   configurable: true

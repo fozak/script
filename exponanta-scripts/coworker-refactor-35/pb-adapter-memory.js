@@ -1,14 +1,14 @@
 // ============================================================================
-// pb-adapter-memory.js - Queries CoworkerState.runs
+// pb-adapter-memory.js - Queries CW.runs
 // ============================================================================
 
 pb._adapters = pb._adapters || {};
 
-// Define MEMORY_DB as a getter that computes from CoworkerState
+// Define MEMORY_DB as a getter that computes from CW
 Object.defineProperty(window, 'MEMORY_DB', {
   get() {
-    if (typeof CoworkerState === 'undefined') return [];
-    return Object.values(CoworkerState.runs).flatMap(r => r.target?.data || []);
+    if (typeof CW === 'undefined') return [];
+    return Object.values(CW.runs).flatMap(r => r.target?.data || []);
   },
   enumerable: true,
   configurable: true
