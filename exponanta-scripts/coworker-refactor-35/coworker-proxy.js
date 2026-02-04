@@ -74,7 +74,7 @@
   /*************************************************
    * 3. PROXY ENTRY FOR DOCTYPES
    *************************************************/
-window.CW.$ = new Proxy({
+globalThis.CW.$ = new Proxy({
   // Static methods
   all() {
     return Query(

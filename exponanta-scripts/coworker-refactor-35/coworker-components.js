@@ -84,7 +84,7 @@ const FieldButton = ({ field, run }) => {
 // ============================================================
 // REGISTER FIELD COMPONENTS - SINGLE SOURCE OF TRUTH
 /* ============================================================
-window.components = {
+globalThis.components = {
   FieldData,
   FieldText,
   FieldLongText,
@@ -165,7 +165,7 @@ coworker.renderField = function ({ field, value, handlers, run }) {
     field,
     value: safeValue,
     readOnly: !handlers.onChange,
-    CWStyles: window.CWStyles,
+    CWStyles: globalThis.CWStyles,
     run,
     item: null,
   };
@@ -287,12 +287,12 @@ coworker.renderField = function ({ field, value, handlers, run }) {
   if (fieldType.suffix) {
     return React.createElement(
       "div",
-      { className: window.CWStyles.field.percentWrapper },
+      { className: globalThis.CWStyles.field.percentWrapper },
       element,
       React.createElement(
         "span",
         {
-          className: window.CWStyles.field.percentSuffix,
+          className: globalThis.CWStyles.field.percentSuffix,
         },
         fieldType.suffix,
       ),
@@ -791,10 +791,10 @@ const ErrorConsole = ({ run }) => {
 // ============================================================
 // REGISTER MAIN COMPONENTS
 // ============================================================
-window.MainForm = MainForm;
-window.MainGrid = MainGrid;
-window.MainChat = MainChat;
-window.ErrorConsole = ErrorConsole;
-window.RecordLink = RecordLink;
+globalThis.MainForm = MainForm;
+globalThis.MainGrid = MainGrid;
+globalThis.MainChat = MainChat;
+globalThis.ErrorConsole = ErrorConsole;
+globalThis.RecordLink = RecordLink;
 
 console.log("✅ Coworker components loaded");

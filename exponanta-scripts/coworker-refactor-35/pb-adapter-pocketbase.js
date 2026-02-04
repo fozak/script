@@ -21,7 +21,7 @@ pb._adapters.pocketbase = {
     if (take !== undefined) {
       const page = skip ? Math.floor(skip / take) + 1 : 1;
       result = await pb
-        .collection(window.MAIN_COLLECTION)
+        .collection(globalThis.MAIN_COLLECTION)
         .getList(page, take, cleanParams);
 
       items = result.items;
@@ -34,7 +34,7 @@ pb._adapters.pocketbase = {
       };
     } else {
       items = await pb
-        .collection(window.MAIN_COLLECTION)
+        .collection(globalThis.MAIN_COLLECTION)
         .getFullList(cleanParams);
       metaData = {
         total: items.length,
@@ -102,7 +102,7 @@ pb._adapters.pocketbase = {
       //     ...
       //   }
       // }
-      const created = await pb.collection(window.MAIN_COLLECTION).create({
+      const created = await pb.collection(globalThis.MAIN_COLLECTION).create({
         id: recordId,           // ✅ PocketBase record ID
         name: recordId,         // ✅ Top-level name (same as id)
         doctype: doctype,       // ✅ Top-level doctype
@@ -154,12 +154,12 @@ pb._adapters.pocketbase = {
         console.log('📝 PocketBase UPDATE by ID:', recordId);
         
         // Fetch existing record
-        existingRecord = await pb.collection(window.MAIN_COLLECTION).getOne(recordId);
+        existingRecord = await pb.collection(globalThis.MAIN_COLLECTION).getOne(recordId);
       } else {
         // Lookup by name
         console.log('🔍 PocketBase UPDATE: Looking up by name:', identifier);
         
-        const records = await pb.collection(window.MAIN_COLLECTION).getFullList({
+        const records = await pb.collection(globalThis.MAIN_COLLECTION).getFullList({
           filter: `data.name = "${identifier}"`,
         });
 
@@ -195,7 +195,7 @@ pb._adapters.pocketbase = {
       });
 
       // ✅ Update record (complete document replacement)
-      const updated = await pb.collection(window.MAIN_COLLECTION).update(
+      const updated = await pb.collection(globalThis.MAIN_COLLECTION).update(
         recordId,
         {
           name: recordName,      // ✅ Update top-level name
@@ -240,7 +240,7 @@ pb._adapters.pocketbase = {
         recordId = identifier;
       } else {
         // Lookup by name
-        const records = await pb.collection(window.MAIN_COLLECTION).getFullList({
+        const records = await pb.collection(globalThis.MAIN_COLLECTION).getFullList({
           filter: `data.name = "${identifier}"`,
         });
 
@@ -253,7 +253,7 @@ pb._adapters.pocketbase = {
 
       console.log('🗑️ PocketBase DELETE:', recordId);
 
-      await pb.collection(window.MAIN_COLLECTION).delete(recordId);
+      await pb.collection(globalThis.MAIN_COLLECTION).delete(recordId);
 
       console.log('✅ PocketBase DELETE success');
 

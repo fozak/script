@@ -389,8 +389,8 @@ Net reduction: 80 lines while adding takeone functionality and fixing rendering 
   <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
   <script src="https://unpkg.com/@tanstack/react-table@8.20.5/build/umd/index.production.js"></script>
   <script>
-    window.TanStackTable = window.ReactTable;
-    console.log('✅ TanStack Table loaded:', !!window.TanStackTable);
+    globalThis.TanStackTable = globalThis.ReactTable;
+    console.log('✅ TanStack Table loaded:', !!globalThis.TanStackTable);
   </script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </head>
@@ -446,7 +446,7 @@ Net reduction: 80 lines while adding takeone functionality and fixing rendering 
     }
 
     // Auto-run on load
-    window.addEventListener('load', testIntegration);
+    globalThis.addEventListener('load', testIntegration);
   </script>
 
 </body>

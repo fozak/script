@@ -25,7 +25,7 @@ pb._adapters.memory = {
    */
   async query(params = {}, take, skip) {
     // Start with all records
-    let items = [...window.MEMORY_DB];
+    let items = [...globalThis.MEMORY_DB];
 
     // Apply filter
     if (params.filter) {

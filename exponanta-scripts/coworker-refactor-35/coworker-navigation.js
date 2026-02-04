@@ -140,5 +140,5 @@ function updateNavUI() {
 }
 
 // Listeners
-window.addEventListener('coworker:state:change', updateNavUI);
-window.addEventListener('load', updateNavUI);
+globalThis.addEventListener('coworker:state:change', updateNavUI);
+globalThis.addEventListener('load', updateNavUI);

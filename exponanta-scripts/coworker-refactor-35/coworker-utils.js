@@ -108,8 +108,8 @@ class Fingerprinter {
 // COWORKER GLOBAL INITIALIZATION
 // ============================================================
 
-if (typeof window.coworker === 'undefined') {
-  window.coworker = {
+if (typeof globalThis.coworker === 'undefined') {
+  globalThis.coworker = {
     _config: {},
     _handlers: {},
     _renderers: {}

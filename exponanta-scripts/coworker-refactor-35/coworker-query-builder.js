@@ -272,16 +272,16 @@
 
   if (typeof window !== "undefined") {
     function initQueryBuilder() {
-      if (typeof window.coworker === "undefined") {
+      if (typeof globalThis.coworker === "undefined") {
         console.warn("⚠️ coworker not found, waiting...");
         setTimeout(initQueryBuilder, 100);
         return;
       }
 
-      const coworker = window.coworker;
+      const coworker = globalThis.coworker;
 
       // Expose QueryBuilder globally
-      window.QueryBuilder = QueryBuilder;
+      globalThis.QueryBuilder = QueryBuilder;
 
       console.log("✅ Query Builder installed");
     }

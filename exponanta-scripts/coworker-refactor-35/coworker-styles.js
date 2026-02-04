@@ -2,7 +2,7 @@
 // coworker-styles.js - Style Configuration
 // ============================================================
 
-window.CWStyles = {
+globalThis.CWStyles = {
   theme: "light",
 
   switchTheme: function (theme) {

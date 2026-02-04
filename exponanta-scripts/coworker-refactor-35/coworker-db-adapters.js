@@ -22,7 +22,7 @@ coworker._dbAdapters = {
       if (take !== undefined) {
         const page = skip ? Math.floor(skip / take) + 1 : 1;
         result = await pb
-          .collection(window.MAIN_COLLECTION)
+          .collection(globalThis.MAIN_COLLECTION)
           .getList(page, take, cleanParams);
 
         items = result.items;
@@ -35,7 +35,7 @@ coworker._dbAdapters = {
         };
       } else {
         items = await pb
-          .collection(window.MAIN_COLLECTION)
+          .collection(globalThis.MAIN_COLLECTION)
           .getFullList(cleanParams);
         metaData = {
           total: items.length,
@@ -89,7 +89,7 @@ coworker._dbAdapters = {
         });
 
         // Create record in PocketBase
-        const created = await pb.collection(window.MAIN_COLLECTION).create({
+        const created = await pb.collection(globalThis.MAIN_COLLECTION).create({
           id: recordId,
           name: recordId,
           doctype: doctype,
@@ -138,11 +138,11 @@ coworker._dbAdapters = {
           recordName = identifier;
           console.log('📝 PocketBase UPDATE by ID:', recordId);
           
-          existingRecord = await pb.collection(window.MAIN_COLLECTION).getOne(recordId);
+          existingRecord = await pb.collection(globalThis.MAIN_COLLECTION).getOne(recordId);
         } else {
           console.log('🔍 PocketBase UPDATE: Looking up by name:', identifier);
           
-          const records = await pb.collection(window.MAIN_COLLECTION).getFullList({
+          const records = await pb.collection(globalThis.MAIN_COLLECTION).getFullList({
             filter: `data.name = "${identifier}"`,
           });
 
@@ -177,7 +177,7 @@ coworker._dbAdapters = {
           fields: Object.keys(completeData)
         });
 
-        const updated = await pb.collection(window.MAIN_COLLECTION).update(
+        const updated = await pb.collection(globalThis.MAIN_COLLECTION).update(
           recordId,
           {
             name: recordName,
@@ -219,7 +219,7 @@ coworker._dbAdapters = {
         if (isPocketBaseId) {
           recordId = identifier;
         } else {
-          const records = await pb.collection(window.MAIN_COLLECTION).getFullList({
+          const records = await pb.collection(globalThis.MAIN_COLLECTION).getFullList({
             filter: `data.name = "${identifier}"`,
           });
 
@@ -232,7 +232,7 @@ coworker._dbAdapters = {
 
         console.log('🗑️ PocketBase DELETE:', recordId);
 
-        await pb.collection(window.MAIN_COLLECTION).delete(recordId);
+        await pb.collection(globalThis.MAIN_COLLECTION).delete(recordId);
 
         console.log('✅ PocketBase DELETE success');
 

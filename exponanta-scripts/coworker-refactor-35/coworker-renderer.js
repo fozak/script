@@ -37,7 +37,7 @@ coworker._enrichConfig = function(config, doc, doctype) {
 // ============================================================
 // RENDER FROM CONFIG
 // ============================================================
-coworker._renderFromConfig = function(config, parentStyles = window.CWStyles) {
+coworker._renderFromConfig = function(config, parentStyles = globalThis.CWStyles) {
   if (!config) return null;
   
   // Handle arrays

@@ -2,7 +2,7 @@
 // COWORKER STATE - Centralized State Management - now only Main and
 // ============================================================
 
-window.CW = {
+globalThis.CW = {
   runs: {}, // indexed by run.name
   runsByOpKey: {}, // indexed by operation_key
   current_run: null,
@@ -23,7 +23,7 @@ window.CW = {
       this.current_run = run_doc.name;
     }
 
-    window.dispatchEvent(
+    globalThis.dispatchEvent(
       new CustomEvent("coworker:state:change", {
         detail: { run: run_doc },
       }),

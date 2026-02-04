@@ -2,13 +2,13 @@
 // POCKETBASE CORE - Client initialization and utilities
 // ============================================================================
 
-window.pb = window.pb || new PocketBase("http://143.198.29.88:8090/");
+globalThis.pb = globalThis.pb || new PocketBase("http://143.198.29.88:8090/");
 // DISABLE auto-cancellation properly in UMD build
-window.pb.autoCancellation(false);
+globalThis.pb.autoCancellation(false);
 
 // Global config
-window.MAIN_COLLECTION = window.MAIN_COLLECTION || 'item';
-window.currentUser = pb.authStore.model;
+globalThis.MAIN_COLLECTION = globalThis.MAIN_COLLECTION || 'item';
+globalThis.currentUser = pb.authStore.model;
 
 // ============================================================================
 // CONNECTION

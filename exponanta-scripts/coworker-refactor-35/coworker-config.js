@@ -1544,17 +1544,17 @@ coworker._config = {
       render: function ({ field }) {
         if (!field.label) {
           return React.createElement("div", {
-            className: window.CWStyles.form.sectionBreak, // ✅ CSS only
+            className: globalThis.CWStyles.form.sectionBreak, // ✅ CSS only
           });
         }
 
         return React.createElement(
           "div",
-          { className: window.CWStyles.form.sectionBreak }, // ✅ CSS only
+          { className: globalThis.CWStyles.form.sectionBreak }, // ✅ CSS only
           React.createElement(
             "h4",
             {
-              className: window.CWStyles.form.sectionBreakTitle, // ✅ CSS only
+              className: globalThis.CWStyles.form.sectionBreakTitle, // ✅ CSS only
             },
             field.label,
           ),
@@ -1567,12 +1567,12 @@ coworker._config = {
       render: function ({ field }) {
         return React.createElement(
           "div",
-          { className: window.CWStyles.form.tabBreak }, // ✅ CSS only
+          { className: globalThis.CWStyles.form.tabBreak }, // ✅ CSS only
           field.label &&
             React.createElement(
               "h3",
               {
-                className: window.CWStyles.form.tabBreakTitle, // ✅ CSS only
+                className: globalThis.CWStyles.form.tabBreakTitle, // ✅ CSS only
               },
               field.label,
             ),
@@ -1677,21 +1677,21 @@ coworker._config = {
 
         return React.createElement(
           "div",
-          { className: window.CWStyles.field.attachImageWrapper }, // ✅ CSS only
+          { className: globalThis.CWStyles.field.attachImageWrapper }, // ✅ CSS only
 
           // Preview
           preview &&
             React.createElement(
               "div",
               {
-                className: window.CWStyles.field.attachImagePreview, // ✅ CSS only
+                className: globalThis.CWStyles.field.attachImagePreview, // ✅ CSS only
               },
               React.createElement("img", { src: preview }),
               React.createElement(
                 "button",
                 {
                   type: "button",
-                  className: window.CWStyles.field.attachImageRemove, // ✅ CSS only
+                  className: globalThis.CWStyles.field.attachImageRemove, // ✅ CSS only
                   onClick: handleRemove,
                 },
                 "×",
@@ -1711,7 +1711,7 @@ coworker._config = {
             React.createElement(
               "span",
               {
-                className: window.CWStyles.field.attachImageUploading, // ✅ CSS only
+                className: globalThis.CWStyles.field.attachImageUploading, // ✅ CSS only
               },
               "Uploading...",
             ),
@@ -1799,7 +1799,7 @@ coworker._config = {
         const htmlContent = field.options || value || "";
 
         return React.createElement("div", {
-          className: window.CWStyles.field.html,
+          className: globalThis.CWStyles.field.html,
           dangerouslySetInnerHTML: { __html: htmlContent },
         });
       },
@@ -1819,7 +1819,7 @@ coworker._config = {
           "button",
           {
             type: "button",
-            className: window.CWStyles.button.primary,
+            className: globalThis.CWStyles.button.primary,
             onClick: handleClick,
             disabled: field.read_only,
           },
@@ -1871,10 +1871,10 @@ coworker._config = {
 
         return React.createElement(
           "div",
-          { className: window.CWStyles.field.link },
+          { className: globalThis.CWStyles.field.link },
           React.createElement("input", {
             type: "text",
-            className: window.CWStyles.field.linkInput,
+            className: globalThis.CWStyles.field.linkInput,
             value: searchText,
             onFocus: loadOptions,
             onChange: (e) => setSearchText(e.target.value),
@@ -1887,7 +1887,7 @@ coworker._config = {
             React.createElement(
               "div",
               {
-                className: window.CWStyles.field.linkDropdown,
+                className: globalThis.CWStyles.field.linkDropdown,
                 style: { display: "block" },
               },
               options.map((opt) =>
@@ -1895,7 +1895,7 @@ coworker._config = {
                   "div",
                   {
                     key: opt.name,
-                    className: window.CWStyles.field.linkOption,
+                    className: globalThis.CWStyles.field.linkOption,
                     onClick: () => handleSelect(opt),
                   },
                   opt.name,
