@@ -73,23 +73,35 @@ globalThis.CW = {
   },
 
   // ─── Index Management ───────────────────────────────────
-  _buildIndex: function() {
-    if (this._index) return;
-    
-    this._index = {};
-    
-    for (const run of Object.values(this.runs)) {
-      const doc = run.target?.data?.[0];
+  _buildIndex: function () {
+  if (this._index) return;
+
+  this._index = {};
+
+  for (const run of Object.values(this.runs)) {
+    const docs = run.target?.data;
+    if (!Array.isArray(docs)) continue;
+
+    for (const doc of docs) {
       if (!doc?.doctype || !doc?.name) continue;
-      
+
       if (!this._index[doc.doctype]) {
         this._index[doc.doctype] = {};
       }
-      
-      // Return runtime if exists, otherwise the doc
-      this._index[doc.doctype][doc.name] = run.target?.runtime || doc;
+
+      // Prefer runtime instance if available
+      const runtime =
+        run.target?.runtime &&
+        docs.length === 1
+          ? run.target.runtime
+          : null;
+
+      this._index[doc.doctype][doc.name] =
+        runtime || doc;
     }
-  },
+  }
+},
+
 
   _invalidateIndex: function() {
     this._index = null;
@@ -220,7 +232,44 @@ globalThis.CW = {
     }
     console.log(`✓ Compiled ${compiled} document(s)`);
     return compiled;
+  },
+// ─── handleField ──────────────────────────────────
+
+_handleField : function(fieldname, fieldtype, rootObj, path) {
+  // Navigate to container (the data array/object)
+  const parts = path.replace(/\[(\d+)\]/g, '.$1').split('.').filter(Boolean);
+  let container = globalThis;
+  
+  for (const part of parts) {
+    container = container[part];
+    if (!container) throw new Error(`Invalid path: ${path}`);
   }
+  
+  // Container IS the data (array or object)
+  const target = Array.isArray(container) ? container[0] : container;
+  
+  // ✅ Get doctype FROM the data object
+  const doctype = target.doctype;
+  if (!doctype) throw new Error(`No doctype in data at path: ${path}`);
+  
+  // ✅ Get schema from CW
+  const schema = CW.Schema[doctype];
+  if (!schema) throw new Error(`Schema not found: ${doctype}`);
+  
+  // ✅ Get field from schema
+  const field = schema.fields.find(f => f.fieldname === fieldname);
+  if (!field) throw new Error(`Field "${fieldname}" not in ${doctype} schema`);
+  
+  // Apply handler
+  const handler = this._fieldHandlers[fieldtype || field.fieldtype];
+  const value = handler 
+    ? handler(target[fieldname], field, { rootObj, schema })
+    : target[fieldname];
+  
+  target[fieldname] = value;
+  return value;
+},
+
 };
 
 // ============================================================
