@@ -5,7 +5,7 @@
 pb._adapters = pb._adapters || {};
 
 // Define MEMORY_DB as a getter that computes from CW
-Object.defineProperty(window, 'MEMORY_DB', {
+Object.defineProperty(globalThis.CW, 'MEMORY', {
   get() {
     if (typeof CW === 'undefined') return [];
     return Object.values(CW.runs).flatMap(r => r.target?.data || []);
