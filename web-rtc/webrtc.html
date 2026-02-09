@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head><title>WebRTC P2P Test</title></head>
+<body>
+<h2>Direct Browser Call</h2>
+<video id="local" autoplay muted playsinline style="width:300px"></video>
+<video id="remote" autoplay playsinline style="width:300px"></video>
+<textarea id="out" placeholder="Copy this" style="width:600px;height:100px"></textarea>
+<textarea id="in" placeholder="Paste remote" style="width:600px;height:100px"></textarea>
+<button id="offer">Create Offer</button>
+<button id="answer">Create Answer</button>
+<button id="set">Set Remote</button>
+
+<script>
+const pc = new RTCPeerConnection({iceServers: [{urls: "stun:74.125.140.127:19302"}]});
+const out = document.getElementById("out");
+
+navigator.mediaDevices.getUserMedia({audio: true, video: true})
+  .then(s => { document.getElementById("local").srcObject = s; s.getTracks().forEach(t => pc.addTrack(t, s)); });
+
+pc.ontrack = e => document.getElementById("remote").srcObject = e.streams[0];
+
+// Auto-update SDP with new ICE candidates
+pc.onicecandidate = () => out.value = JSON.stringify(pc.localDescription);
+
+document.getElementById("offer").onclick = async () => {
+  await pc.setLocalDescription(await pc.createOffer());
+};
+
+document.getElementById("answer").onclick = async () => {
+  await pc.setRemoteDescription(JSON.parse(document.getElementById("in").value));
+  await pc.setLocalDescription(await pc.createAnswer());
+};
+
+document.getElementById("set").onclick = () => 
+  pc.setRemoteDescription(JSON.parse(document.getElementById("in").value));
+
+// Debug
+pc.oniceconnectionstatechange = () => console.log("ICE:", pc.iceConnectionState);
+</script>
+</body>
+</html>
