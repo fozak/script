@@ -73,34 +73,37 @@ globalThis.CW = {
   },
 
   // ─── Index Management ───────────────────────────────────
-  _buildIndex: function () {
-    if (this._index) return;
+_buildIndex: function () {
+  if (this._index) return;
 
-    this._index = {};
+  this._index = {};
 
-    for (const run of Object.values(this.runs)) {
-      const docs = run.target?.data;
-      if (!Array.isArray(docs)) continue;
+  for (const run of Object.values(this.runs)) {
+    const docs = run.target?.data;
+    if (!Array.isArray(docs)) continue;
 
-      for (const doc of docs) {
-        if (!doc?.doctype || !doc?.name) continue;
+    for (const doc of docs) {
+      if (!doc?.doctype || !doc?.name) continue;
 
-        if (!this._index[doc.doctype]) {
-          this._index[doc.doctype] = {};
-        }
+      if (!this._index[doc.doctype]) {
+        this._index[doc.doctype] = {};
+      }
 
-        // Prefer runtime instance if available
-        const runtime =
-          run.target?.runtime &&
-          docs.length === 1
-            ? run.target.runtime
-            : null;
+      // Check globalThis for compiled runtime
+      const runtime = globalThis[doc.doctype]?.[doc.name] || 
+                     globalThis[doc.doctype]?.[doc.adapter_name];
 
-        this._index[doc.doctype][doc.name] =
-          runtime || doc;
+      this._index[doc.doctype][doc.name] = runtime || doc;
+      
+      // Also index by adapter_name if it exists
+      if (doc.adapter_name && runtime) {
+        this._index[doc.doctype][doc.adapter_name] = runtime;
+      } else if (doc.adapter_name) {
+        this._index[doc.doctype][doc.adapter_name] = doc;
       }
     }
-  },
+  }
+},
 
   _invalidateIndex: function() {
     this._index = null;
@@ -117,129 +120,64 @@ globalThis.CW = {
   },
 
   // ─── Compilation ────────────────────────────────────────
-  _compileDocument: async function(run_doc) {
-    if (!run_doc || !run_doc.target || !run_doc.target.data) {
-      console.error('Invalid run_doc structure:', run_doc);
-      return;
-    }
-    
-    const doc = run_doc.target.data[0];
-    if (!doc) {
-      console.warn('No document found in run_doc.target.data[0]');
-      return;
-    }
-    
-    if (!run_doc.target.runtime) {
-      run_doc.target.runtime = {};
-    }
-    
-    const namespace = doc.adapter_name || doc.name;
+_compileDocument: async function(run_doc) {
+  const docs = Array.isArray(run_doc.target?.data) ? run_doc.target.data : [run_doc.target?.data].filter(Boolean);
+  
+  for (const doc of docs) {
+    const ns = doc.adapter_name || doc.name;
+    if (!globalThis[doc.doctype]) globalThis[doc.doctype] = {};
     
     // ─── Load Scripts (SDK) ─────────────────────────────────
     if (doc.scripts && Array.isArray(doc.scripts)) {
       for (const script of doc.scripts) {
-        
         if (script.type === 'sdk' || (!script.type && script.src)) {
-          const ns = script.namespace || namespace;
+          const scriptNs = script.namespace || ns;
           
-          if (globalThis[ns]) {
-            console.log(`✓ ${ns} already loaded`);
-            continue;
-          }
+          if (globalThis[scriptNs]) continue;
           
           if (script.source && script.source.trim() !== "") {
-            try {
-              (0, eval)(script.source);
-              console.log(`✓ Loaded ${ns} (cached)`);
-            } catch (e) {
-              console.error(`Failed to load ${ns} from cache:`, e);
-              throw e;
-            }
-          }
-          else if (script.src) {
-            try {
-              console.log(`📥 Fetching ${ns} from CDN...`);
-              
-              const response = await Promise.race([
-                fetch(script.src),
-                new Promise((_, reject) => 
-                  setTimeout(() => reject(new Error('Fetch timeout')), 10000)
-                )
-              ]);
-              
-              if (!response.ok) {
-                throw new Error(`HTTP ${response.status}`);
-              }
-              
-              script.source = await response.text();
-              
-              if (script.source.length < 100) {
-                throw new Error('Source too small, likely corrupted');
-              }
-              
-              (0, eval)(script.source);
-              console.log(`✓ Loaded ${ns} from CDN (${(script.source.length / 1024).toFixed(1)}KB)`);
-              
-              if (!globalThis[ns]) {
-                console.warn(`⚠ ${ns} didn't create global, check namespace`);
-              }
-              
-            } catch (error) {
-              console.error(`❌ Failed to load ${ns}:`, error.message);
-              throw error;
-            }
+            (0, eval)(script.source);
+          } else if (script.src) {
+            const response = await fetch(script.src);
+            script.source = await response.text();
+            (0, eval)(script.source);
           }
         }
       }
     }
     
     // ─── Compile Functions ──────────────────────────────────
+    const runtime = { config: doc.config };
     if (doc.functions) {
-      Object.entries(doc.functions).forEach(([name, fnString]) => {
-        try {
-          run_doc.target.runtime[name] = eval(`(${fnString})`);
-        } catch (e) {
-          console.error(`Failed to compile function '${name}':`, e);
-        }
+      Object.entries(doc.functions).forEach(([name, fnStr]) => {
+        runtime[name] = eval(`(${fnStr})`);
       });
-      console.log(`✓ Compiled ${Object.keys(doc.functions).length} function(s)`);
     }
+    if (runtime.init) runtime.init(run_doc);
     
-    // ─── Call init() if present ─────────────────────────────
-    if (run_doc.target.runtime.init) {
-      try {
-        run_doc.target.runtime.init(run_doc);
-      } catch (e) {
-        console.error('Init function failed:', e);
-      }
-    }
-    
-    // ─── Expose Runtime Globally ────────────────────────────
-    if (run_doc.target.runtime && doc.doctype && doc.name) {
-      if (!globalThis[doc.doctype]) {
-        globalThis[doc.doctype] = {};
-      }
-      globalThis[doc.doctype][doc.name] = run_doc.target.runtime;
-    }
-    
-    this._invalidateIndex();
-    
-    return run_doc;
-  },
+    globalThis[doc.doctype][doc.name] = runtime;
+    if (doc.adapter_name) globalThis[doc.doctype][doc.adapter_name] = runtime;
+  }
+  
+  this._invalidateIndex();
+},
 
   // ─── Compile All ────────────────────────────────────────
-  compileAll: async function() {
-    let compiled = 0;
-    for (const run of Object.values(this.runs)) {
-      const doc = run.target?.data?.[0];
-      if (doc?.functions || doc?.scripts) {
-        await this._compileDocument(run);
-        compiled++;
-      }
+compileAll: async function() {
+  let compiled = 0;
+  for (const run of Object.values(this.runs)) {
+    const docs = run.target?.data;
+    if (!Array.isArray(docs)) continue;
+    
+    const hasCompilable = docs.some(doc => doc?.functions || doc?.scripts);
+    if (hasCompilable) {
+      await this._compileDocument(run);
+      compiled++;
     }
-    console.log(`✓ Compiled ${compiled} document(s)`);
-    return compiled;
-  },
+  }
+  console.log(`✓ Compiled ${compiled} run(s)`);
+  return compiled;
+},
 
   // ─── handleField ──────────────────────────────────
   _handleField : function(fieldname, fieldtype, rootObj, path) {
