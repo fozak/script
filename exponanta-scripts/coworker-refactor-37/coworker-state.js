@@ -75,7 +75,6 @@ globalThis.CW = {
   // ─── Index Management ───────────────────────────────────
 _buildIndex: function () {
   if (this._index) return;
-
   this._index = {};
 
   for (const run of Object.values(this.runs)) {
@@ -89,17 +88,19 @@ _buildIndex: function () {
         this._index[doc.doctype] = {};
       }
 
-      // Check globalThis for compiled runtime
-      const runtime = globalThis[doc.doctype]?.[doc.name] || 
-                     globalThis[doc.doctype]?.[doc.adapter_name];
+      const runtime = globalThis[doc.doctype]?.[doc.name];
+      const entry = runtime || doc;
 
-      this._index[doc.doctype][doc.name] = runtime || doc;
-      
-      // Also index by adapter_name if it exists
-      if (doc.adapter_name && runtime) {
-        this._index[doc.doctype][doc.adapter_name] = runtime;
-      } else if (doc.adapter_name) {
-        this._index[doc.doctype][doc.adapter_name] = doc;
+      this._index[doc.doctype][doc.name] = entry;
+
+      // Schema-driven semantic alias
+      const autoname = CW.Schema?.[doc.doctype]?.autoname;
+      if (autoname?.startsWith('field:')) {
+        const semanticField = autoname.slice(6);
+        const semanticValue = doc[semanticField];
+        if (semanticValue && semanticValue !== doc.name) {
+          this._index[doc.doctype][semanticValue] = entry;
+        }
       }
     }
   }
@@ -120,22 +121,26 @@ _buildIndex: function () {
   },
 
   // ─── Compilation ────────────────────────────────────────
-_compileDocument: async function(run_doc) {
-  const docs = Array.isArray(run_doc.target?.data) ? run_doc.target.data : [run_doc.target?.data].filter(Boolean);
-  
+_compileDocument: async function (run_doc) {
+  const docs = Array.isArray(run_doc.target?.data)
+    ? run_doc.target.data
+    : [run_doc.target?.data].filter(Boolean);
+
   for (const doc of docs) {
-    const ns = doc.adapter_name || doc.name;
     if (!globalThis[doc.doctype]) globalThis[doc.doctype] = {};
-    
-    // ─── Load Scripts (SDK) ─────────────────────────────────
-    if (doc.scripts && Array.isArray(doc.scripts)) {
+
+    // Derive semantic alias from schema instead of hardcoding adapter_name
+    const autoname = CW.Schema?.[doc.doctype]?.autoname;
+    const semanticField = autoname?.startsWith('field:') ? autoname.slice(6) : null;
+    const semanticValue = semanticField ? doc[semanticField] : null;
+
+    // Load Scripts
+    if (Array.isArray(doc.scripts)) {
       for (const script of doc.scripts) {
         if (script.type === 'sdk' || (!script.type && script.src)) {
-          const scriptNs = script.namespace || ns;
-          
+          const scriptNs = script.namespace || semanticValue || doc.name;
           if (globalThis[scriptNs]) continue;
-          
-          if (script.source && script.source.trim() !== "") {
+          if (script.source?.trim()) {
             (0, eval)(script.source);
           } else if (script.src) {
             const response = await fetch(script.src);
@@ -145,8 +150,8 @@ _compileDocument: async function(run_doc) {
         }
       }
     }
-    
-    // ─── Compile Functions ──────────────────────────────────
+
+    // Compile Functions
     const runtime = { config: doc.config };
     if (doc.functions) {
       Object.entries(doc.functions).forEach(([name, fnStr]) => {
@@ -154,11 +159,14 @@ _compileDocument: async function(run_doc) {
       });
     }
     if (runtime.init) runtime.init(run_doc);
-    
+
+    // Register under PK always, semantic alias when available
     globalThis[doc.doctype][doc.name] = runtime;
-    if (doc.adapter_name) globalThis[doc.doctype][doc.adapter_name] = runtime;
+    if (semanticValue && semanticValue !== doc.name) {
+      globalThis[doc.doctype][semanticValue] = runtime;
+    }
   }
-  
+
   this._invalidateIndex();
 },
 
