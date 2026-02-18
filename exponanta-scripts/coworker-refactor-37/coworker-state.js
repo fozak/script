@@ -163,10 +163,10 @@ _compileDocument: async function (run_doc) {
     const runtime = { config: doc.config };
     if (doc.functions) {
       Object.entries(doc.functions).forEach(([name, fnStr]) => {
-        runtime[name] = eval(`(${fnStr})`);
+        runtime[name] = eval('(' + fnStr + ')');
       });
     }
-    if (runtime.init) runtime.init(run_doc);
+    //if (runtime.init) runtime.init(run_doc);   commented OUT init
 
     // Register under PK always, semantic alias when available
     globalThis[doc.doctype][doc.name] = runtime;
