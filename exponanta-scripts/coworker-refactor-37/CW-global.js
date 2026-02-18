@@ -69,7 +69,7 @@ globalThis.CW = {
           },
         ],
         schema: {
-          _schema_doctype: "Adapter",
+          schema_name: "Adapter",
           actions: [],
           allow_rename: 1,
           autoname: "field:adapter_name",

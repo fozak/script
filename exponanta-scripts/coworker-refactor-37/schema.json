@@ -1,14 +1,14 @@
 {
   "doctype": "Schema",
   "name": "schemascherfnw8",
-  "_schema_doctype": "Schema",
+  "schema_name": "Schema",
   "module": "Core",
   "description": "Meta-schema that defines doctype structure",
   "is_submittable": 0,
   "_autosave": 1,
   "icon": "fa fa-code",
   "title_field": "name",
-  "search_fields": "_schema_doctype,name,module",
+  "search_fields": "schema_name,name,module",
   "sort_field": "modified",
   "sort_order": "DESC",
   "track_changes": 1,
@@ -17,7 +17,7 @@
   
   "field_order": [
     "basic_section",
-    "_schema_doctype",
+    "schema_name",
     "name",
     "module",
     "description",
@@ -58,7 +58,7 @@
       "label": "Basic Info"
     },
     {
-      "fieldname": "_schema_doctype",
+      "fieldname": "schema_name",
       "fieldtype": "Data",
       "label": "DocType",
       "reqd": 1,

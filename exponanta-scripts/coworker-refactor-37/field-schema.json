@@ -2,7 +2,7 @@
   "name": "Field",
   "doctype": "Schema",
   "docstatus": 1,
-  "_schema_doctype": "Field",
+  "schema_name": "Field",
   "module": "Core",
   "autoname": "",
   "title_field": "name",

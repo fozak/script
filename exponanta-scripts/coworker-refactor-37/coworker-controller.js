@@ -342,7 +342,7 @@ coworker.controller = {
       const autosave = schema._autosave !== undefined ? schema._autosave : 1;
 
       if (autosave === 0) {
-        console.log("🚫 AutoSave BLOCKED: _autosave=0 for", schema._schema_doctype);
+        console.log("🚫 AutoSave BLOCKED: _autosave=0 for", schema.schema_name);
         return;
       }
 

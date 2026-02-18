@@ -107,11 +107,13 @@ coworker.rbac = {
   },
 
   // ══════════════════════════════════════════════════════
+
+  //Prototype of function
   // CHECK USER PERMISSION
   // ══════════════════════════════════════════════════════
   async checkPermission(userId, record, operation = "read") {
     // Get user's roles
-    const userRun = await coworker.run({
+    const userRun = await coworker.run({     //wrong - we resolve from jwt
       operation: 'select',
       source_doctype: 'User',
       query: {

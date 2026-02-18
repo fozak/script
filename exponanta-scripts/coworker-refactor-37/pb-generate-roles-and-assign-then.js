@@ -109,14 +109,14 @@ async function extractPermissions(schema) {
  * 
  * Searches for:
  * - doctype = "Schema"
- * - data._schema_doctype = {requested doctype}
+ * - data.schema_name = {requested doctype}
  * 
  * Example: getSchema("Task") finds the Schema document where
- * data._schema_doctype = "Task"
+ * data.schema_name = "Task"
  */
 async function getSchema(doctype) {
   const schemas = await pb.collection('item').getList(1, 1, {
-    filter: `doctype = "Schema" && data._schema_doctype = "${doctype}"`
+    filter: `doctype = "Schema" && data.schema_name = "${doctype}"`
   });
 
   if (schemas.items.length === 0) {
@@ -136,7 +136,7 @@ async function getSchema(doctype) {
  * This is the main function that ties everything together:
  * 
  * STEP 1: Fetch the Schema document for this doctype
- *         Example: For doctype="Task", fetches Schema with _schema_doctype="Task"
+ *         Example: For doctype="Task", fetches Schema with schema_name="Task"
  * 
  * STEP 2: Extract permissions from schema.data.permissions
  *         Separates roles into write-enabled and read-only
@@ -238,7 +238,7 @@ const order = await createRecord('Order', {
  * 
  * 1. Schema Structure Required:
  *    - Schema documents must have doctype = "Schema"
- *    - Must have data._schema_doctype = {target doctype}
+ *    - Must have data.schema_name = {target doctype}
  *    - Must have data.permissions array with role definitions
  * 
  * 2. Permission Structure:

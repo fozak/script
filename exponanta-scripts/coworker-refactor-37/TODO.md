@@ -543,7 +543,7 @@ coworker.getSchema = async function (doctype) {
       operation: "select",
       doctype: "Schema",
       query: {
-        where: { _schema_doctype: doctype },
+        where: { schema_name: doctype },
         take: 1,
       },
       component: null,
