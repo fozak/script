@@ -77,30 +77,38 @@ _buildIndex: function () {
   if (this._index) return;
   this._index = {};
 
+  const allDocs = [];
+
+  // Pass 1: index everything by name (PK) only
   for (const run of Object.values(this.runs)) {
     const docs = run.target?.data;
     if (!Array.isArray(docs)) continue;
 
     for (const doc of docs) {
       if (!doc?.doctype || !doc?.name) continue;
-
-      if (!this._index[doc.doctype]) {
-        this._index[doc.doctype] = {};
-      }
-
+      if (!this._index[doc.doctype]) this._index[doc.doctype] = {};
       const runtime = globalThis[doc.doctype]?.[doc.name];
-      const entry = runtime || doc;
+      this._index[doc.doctype][doc.name] = runtime || doc;
+      allDocs.push(doc);
+    }
+  }
 
-      this._index[doc.doctype][doc.name] = entry;
+  // Pass 1.5: build doctype->autoname map directly from Schema index
+  const autonameMap = {};
+  for (const entry of Object.values(this._index['Schema'] || {})) {
+    if (entry?.schema_name && entry?.autoname) {
+      autonameMap[entry.schema_name] = entry.autoname;
+    }
+  }
 
-      // Schema-driven semantic alias
-      const autoname = CW.Schema?.[doc.doctype]?.autoname;
-      if (autoname?.startsWith('field:')) {
-        const semanticField = autoname.slice(6);
-        const semanticValue = doc[semanticField];
-        if (semanticValue && semanticValue !== doc.name) {
-          this._index[doc.doctype][semanticValue] = entry;
-        }
+  // Pass 2: semantic aliases using autonameMap
+  for (const doc of allDocs) {
+    const autoname = autonameMap[doc.doctype];
+    if (autoname?.startsWith('field:')) {
+      const semanticField = autoname.slice(6);
+      const semanticValue = doc[semanticField];
+      if (semanticValue && semanticValue !== doc.name) {
+        this._index[doc.doctype][semanticValue] = this._index[doc.doctype][doc.name];
       }
     }
   }

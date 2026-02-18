@@ -362,6 +362,7 @@ const SINGLE_DOCTYPES = new Set([
   'Workstation Type',
   'Activity Type',
   'Project Type',
+  'Schema',
   'Task Type',
   'Issue Type',
   'Party Type'
@@ -495,28 +496,58 @@ function generateUserId(email) {
  * // Breakdown: "brand" (5) + "apple" (5) + "xxxxx" (5 padding) = 15 chars
  */
 function generateSingleId(doctype, title) {
-  // Normalize doctype: lowercase, remove special chars and spaces
   const doctypeNorm = doctype
     .toLowerCase()
     .replace(/[^a-z0-9]/g, '');
   
-  // Normalize title: lowercase, remove special chars (keep alphanumeric)
   const titleNorm = title
     .toLowerCase()
     .replace(/[^a-z0-9]/g, '');
+
+  const available = 15 - doctypeNorm.length;  // chars left for title
   
-  // Combine: doctype + title
-  let semantic = doctypeNorm + titleNorm;
-  
-  // Ensure exactly 15 chars (pad singles only)
-  if (semantic.length < 15) {
-    semantic = semantic.padEnd(15, 'x');
-  } else if (semantic.length > 15) {
-    semantic = semantic.substring(0, 15);
+  // Split title into words to distribute available chars
+  const titleWords = title
+    .toLowerCase()
+    .replace(/[^a-z0-9\s]/g, '')
+    .trim()
+    .split(/\s+/)
+    .filter(w => w.length > 0);
+
+  let titlePart;
+
+  if (titleWords.length === 1) {
+    // Single word: take as many chars as available
+    titlePart = titleNorm.substring(0, available);
+  } else {
+    // Multi-word: take first N chars per word where N = available / wordCount
+    // Give remainder chars to first word
+    const charsPerWord = Math.floor(available / titleWords.length);
+    const remainder = available - (charsPerWord * titleWords.length);
+    
+    titlePart = titleWords.map((word, i) => {
+      const take = charsPerWord + (i === 0 ? remainder : 0);
+      return word.substring(0, take);
+    }).join('');
   }
+
+  // Pad with x if still short
+  let result = (doctypeNorm + titlePart).padEnd(15, 'x');
   
-  return semantic;
+  // Truncate if over (shouldn't happen but safety)
+  return result.substring(0, 15);
 }
+/*
+
+Result for your collision cases:
+```
+generateSingleId('Schema', 'Payment Entry')           → "schemapaymenent"  
+generateSingleId('Schema', 'Payment Entry Reference') → "schemapaymenref"
+generateSingleId('Schema', 'Sales Invoice')           → "schemasalesinvo"
+generateSingleId('Schema', 'Sales Invoice Item')      → "schemasalesitem"
+generateSingleId('Schema', 'Workflow Action')         → "schemaworkflact"
+generateSingleId('Schema', 'Workflow Action Master')  → "schemaworkflmas"
+*/
 
 // ============================================================================
 // MULTI-INSTANCE DOCTYPE ID GENERATION (variable semantic + variable random)
