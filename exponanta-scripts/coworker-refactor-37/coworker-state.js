@@ -247,3 +247,44 @@ globalThis.CW = new Proxy(globalThis.CW, {
     return target._index[prop] || {};
   }
 });
+
+
+//========================================================
+//
+// new controller
+//========================================================
+
+globalThis.CW.controller = async function(run_doc) {
+  const options = run_doc.options || {};
+  const delta = { ...run_doc.input }; // snapshot before FSM mutates
+
+  Object.assign(run_doc.target.data[0], run_doc.input);
+
+  if (Object.keys(delta).length > 0) {
+    run_doc._oplog = run_doc._oplog || [];
+    run_doc._oplog.push({
+      delta,
+      timestamp: Date.now(),
+      source:  options.source  || "user",
+      trigger: options.trigger || "unknown"
+    });
+  }
+   // UNCOMMENT AFTER TESTING
+  //await coworker.fsm.handle(run_doc);
+
+  if (!run_doc._saved_once) {
+    run_doc._saved_once = true;
+    console.log("[controller] first save", { ...run_doc.target.data[0] });
+    for (const k of Object.keys(run_doc.input)) delete run_doc.input[k];
+    return run_doc;
+  }
+
+  clearTimeout(run_doc._saveTimer);
+  run_doc._saveTimer = setTimeout(() => {
+    console.log("[controller] debounced save", { ...run_doc.target.data[0] });
+    for (const k of Object.keys(run_doc.input)) delete run_doc.input[k];
+    run_doc._saveTimer = null;
+  }, options.debounce ?? 300);
+
+  return run_doc;
+};

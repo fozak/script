@@ -901,10 +901,12 @@ coworker.getBehavior = function(schema, doc) {
   let docstatus = doc?.docstatus !== undefined ? doc.docstatus : 0;
   const autosave = schema?._autosave !== undefined ? schema._autosave : 1;
   
+  /*wrong check
   if (isSubmittable === 0 && docstatus !== 0) {
     console.warn(`Invalid docstatus ${docstatus} for non-submittable document. Resetting to 0.`);
     docstatus = 0;
   }
+  */
   
   const key = `${isSubmittable}-${docstatus}-${autosave}`;
   const behavior = this._config.behaviorMatrix?.[key];

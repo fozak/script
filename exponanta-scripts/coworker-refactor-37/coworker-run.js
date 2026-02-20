@@ -109,7 +109,7 @@
           name: generateId("run"),
           creation: start,
           modified: start,
-          operation_key: JSON.stringify(op),    //added operation_key
+          operation_key: JSON.stringify(op), //added operation_key
           modified_by: resolved.owner || "system",
           docstatus: 0,
           owner: resolved.owner || "system",
@@ -163,6 +163,17 @@
           child: null,
         };
 
+        // ADDED wrap input in Proxy so all writes trigger system controller
+        run_doc.input = new Proxy(run_doc.input, {
+          set(target, prop, value) {
+            target[prop] = value;
+            CW.controller(run_doc); // always calls system-level controller
+            return true;
+          },
+        });
+        //Added for testing
+        globalThis.CW.RUN = run_doc;
+
         // Initialize draft mode
         if (run_doc.options.draft) {
           run_doc.input = run_doc.input || {};
@@ -183,10 +194,7 @@
         });
 
         // Update state: RUNNING
-        if (
-          typeof CW !== "undefined" &&
-          CW._updateFromRun
-        ) {
+        if (typeof CW !== "undefined" && CW._updateFromRun) {
           CW._updateFromRun(run_doc);
         }
 
@@ -219,10 +227,7 @@
             run_doc.child_run_ids.push(childRun.name);
 
             // Update state if tracking is active
-            if (
-              typeof CW !== "undefined" &&
-              CW._updateFromRun
-            ) {
+            if (typeof CW !== "undefined" && CW._updateFromRun) {
               CW._updateFromRun(run_doc);
             }
           }
@@ -250,10 +255,7 @@
           run_doc.duration = Date.now() - start;
           run_doc.modified = Date.now();
 
-          if (
-            typeof CW !== "undefined" &&
-            CW._updateFromRun
-          ) {
+          if (typeof CW !== "undefined" && CW._updateFromRun) {
             CW._updateFromRun(run_doc);
           }
         } catch (err) {
@@ -272,10 +274,7 @@
           run_doc.duration = Date.now() - start;
           run_doc.modified = Date.now();
 
-          if (
-            typeof CW !== "undefined" &&
-            CW._updateFromRun
-          ) {
+          if (typeof CW !== "undefined" && CW._updateFromRun) {
             CW._updateFromRun(run_doc);
           }
         }
@@ -334,7 +333,7 @@
         select: async function (run_doc) {
           const { source_doctype, query, options } = run_doc;
           const { where, orderBy, take, skip, select } = query || {};
-          const view = run_doc.view || query.view || "list";  //working const view = query.view || "list";
+          const view = run_doc.view || query.view || "list"; //working const view = query.view || "list";
           const { includeSchema = true, includeMeta = false } = options || {};
 
           // Fetch schema if needed
@@ -380,7 +379,8 @@
     filteredData = data;
   }
 
-          else*/ if (schema && !select && shouldFilter) {   //was if not else if
+          else*/ if (schema && !select && shouldFilter) {
+            //was if not else if
             const viewProp = `in_${view}_view`;
             const viewFields = schema.fields
               .filter((f) => f[viewProp])
@@ -428,8 +428,6 @@
           if (!run_doc.query) run_doc.query = {};
           run_doc.query.take = 1;
           run_doc.query.view = "form";
-
-
 
           // ✅ B2: Use coworker._handlers.select (not this._handlers)
           const result = await coworker._handlers.select(run_doc);
@@ -533,74 +531,75 @@
         // HANDLER - Just Execution (No Logic) https://claude.ai/chat/a92d380b-8725-40c1-98f2-2486fc9ba997
         // ════════════════════════════════════════════════════════
         update: async function (run_doc) {
-  const { source_doctype, target_doctype, input, query, options } = run_doc;  // ← Add target_doctype here
-  const inputData = input?.data || input;
-  const where = query?.where || query;
+          const { source_doctype, target_doctype, input, query, options } =
+            run_doc; // ← Add target_doctype here
+          const inputData = input?.data || input;
+          const where = query?.where || query;
 
-  const { includeSchema = true, includeMeta = false } = options || {};
-  const doctype = source_doctype || target_doctype;  // ← Now target_doctype is defined
+          const { includeSchema = true, includeMeta = false } = options || {};
+          const doctype = source_doctype || target_doctype; // ← Now target_doctype is defined
 
-  let schema = null;
-  if (includeSchema) {
-    schema = await coworker.getSchema(doctype);  // ← Use doctype (not source_doctype)
-  }
+          let schema = null;
+          if (includeSchema) {
+            schema = await coworker.getSchema(doctype); // ← Use doctype (not source_doctype)
+          }
 
-  const queryDoctype = source_doctype === "All" ? "" : source_doctype;
-  const pbFilter = coworker._buildPrismaWhere(queryDoctype, where);
+          const queryDoctype = source_doctype === "All" ? "" : source_doctype;
+          const pbFilter = coworker._buildPrismaWhere(queryDoctype, where);
 
-  const items =
-    run_doc._items ||
-    (await coworker._dbQuery({ filter: pbFilter })).data;
+          const items =
+            run_doc._items ||
+            (await coworker._dbQuery({ filter: pbFilter })).data;
 
-  if (items.length === 0) {
-    return {
-      success: true,
-      target: { data: [], schema, meta: { updated: 0 } },
-    };
-  }
+          if (items.length === 0) {
+            return {
+              success: true,
+              target: { data: [], schema, meta: { updated: 0 } },
+            };
+          }
 
-  // ✅ Process each update through field system
-  const updates = await Promise.all(
-    items.map(async (item) => {
-      const merged = { ...item, ...inputData, doctype };  // ← Use doctype
+          // ✅ Process each update through field system
+          const updates = await Promise.all(
+            items.map(async (item) => {
+              const merged = { ...item, ...inputData, doctype }; // ← Use doctype
 
-      // ✅ SERIALIZE: Create temporary run_doc for processing
-      const tempRunDoc = {
-        operation: "update",
-        target_doctype: doctype,  // ← Use target_doctype (field handlers check this)
-        input: { data: merged },
-        target: { schema },
-      };
+              // ✅ SERIALIZE: Create temporary run_doc for processing
+              const tempRunDoc = {
+                operation: "update",
+                target_doctype: doctype, // ← Use target_doctype (field handlers check this)
+                input: { data: merged },
+                target: { schema },
+              };
 
-      // Apply field handlers (serialization)
-      await coworker._applyFieldTypeHandlers(tempRunDoc);
+              // Apply field handlers (serialization)
+              await coworker._applyFieldTypeHandlers(tempRunDoc);
 
-      // Use processed data
-      const result = await coworker._dbUpdate(
-        item.name || item.id,
-        tempRunDoc.input.data,
-      );
+              // Use processed data
+              const result = await coworker._dbUpdate(
+                item.name || item.id,
+                tempRunDoc.input.data,
+              );
 
-      // ✅ DESERIALIZE result
-      return {
-        ...result,
-        data: await coworker.deserializeDocument(
-          result.data,
-          doctype,  // ← Use doctype
-        ),
-      };
-    }),
-  );
+              // ✅ DESERIALIZE result
+              return {
+                ...result,
+                data: await coworker.deserializeDocument(
+                  result.data,
+                  doctype, // ← Use doctype
+                ),
+              };
+            }),
+          );
 
-  return {
-    success: true,
-    target: {
-      data: updates.map((u) => u.data),
-      schema,
-      meta: { operation: "update", updated: updates.length },
-    },
-  };
-},
+          return {
+            success: true,
+            target: {
+              data: updates.map((u) => u.data),
+              schema,
+              meta: { operation: "update", updated: updates.length },
+            },
+          };
+        },
 
         // ════════════════════════════════════════════════════════
         // DELETE - Remove operations
