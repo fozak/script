@@ -251,40 +251,48 @@ globalThis.CW = new Proxy(globalThis.CW, {
 
 //========================================================
 //
-// new controller
+// new controller v2 with state, prev in v37
 //========================================================
 
 globalThis.CW.controller = async function(run_doc) {
-  const options = run_doc.options || {};
-  const delta = { ...run_doc.input }; // snapshot before FSM mutates
+  if (run_doc._running) return;
+  run_doc._running = true;
 
-  Object.assign(run_doc.target.data[0], run_doc.input);
+  const { _state, ...dataKeys } = run_doc.input;
 
-  if (Object.keys(delta).length > 0) {
+  Object.assign(run_doc.target.data[0], dataKeys);
+  if (_state) Object.assign(run_doc.target.data[0]._state ||= {}, _state);
+
+  console.log("[controller] doc after merge", { ...run_doc.target.data[0] });
+  console.log("[controller] doc._state after merge", { ...run_doc.target.data[0]._state });
+
+  if (Object.keys(dataKeys).length > 0) {
     run_doc._oplog = run_doc._oplog || [];
     run_doc._oplog.push({
-      delta,
+      delta: dataKeys,
+      state: _state || {},
       timestamp: Date.now(),
-      source:  options.source  || "user",
-      trigger: options.trigger || "unknown"
     });
   }
-   // UNCOMMENT AFTER TESTING
-  //await coworker.fsm.handle(run_doc);
 
-  if (!run_doc._saved_once) {
-    run_doc._saved_once = true;
-    console.log("[controller] first save", { ...run_doc.target.data[0] });
-    for (const k of Object.keys(run_doc.input)) delete run_doc.input[k];
-    return run_doc;
-  }
+  //await CW.fsm.handle(run_doc);
 
   clearTimeout(run_doc._saveTimer);
-  run_doc._saveTimer = setTimeout(() => {
-    console.log("[controller] debounced save", { ...run_doc.target.data[0] });
-    for (const k of Object.keys(run_doc.input)) delete run_doc.input[k];
-    run_doc._saveTimer = null;
-  }, options.debounce ?? 300);
+  const doc = run_doc.target.data[0];
+  const immediate = doc._docstatus === 1 || doc._docstatus === 2;
 
+  if (immediate) {
+    await persist(run_doc);
+  } else {
+    run_doc._saveTimer = setTimeout(() => {
+      persist(run_doc);
+      run_doc._saveTimer = null;
+    }, 300);
+  }
+
+  for (const k of Object.keys(dataKeys)) delete run_doc.input[k];
+  delete run_doc.input._state;
+
+  run_doc._running = false;
   return run_doc;
 };

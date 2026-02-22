@@ -1140,3 +1140,10 @@ coworker.FSM = {
 };
 
 console.log("✅ FSM module loaded");
+
+
+//NOT YET IMPLEMENTED
+
+const persist = async (run_doc) => {
+  console.log("[persist] would save", { ...run_doc.target.data[0] });
+};

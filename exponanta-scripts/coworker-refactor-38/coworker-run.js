@@ -163,14 +163,14 @@
           child: null,
         };
 
-        // ADDED wrap input in Proxy so all writes trigger system controller
-        run_doc.input = new Proxy(run_doc.input, {
-          set(target, prop, value) {
-            target[prop] = value;
-            CW.controller(run_doc); // always calls system-level controller
-            return true;
-          },
-        });
+        // ADDED wrap input in Proxy so all writes trigger system controller prev in 37
+run_doc.input = new Proxy(run_doc.input, {
+  set(target, prop, value) {
+    target[prop] = value;
+    CW.controller(run_doc);
+    return true;
+  }
+});
         //Added for testing
         globalThis.CW.RUN = run_doc;
 
