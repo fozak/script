@@ -7,13 +7,6 @@
 // FIELD COMPONENTS (MUST BE FIRST)
 // ============================================================
 
-/**
- * FieldLink - Link to another doctype with dropdown
- */
-
-/**
- * FieldSectionBreak - Visual separator with optional label
- */
 const FieldSectionBreak = ({ field }) => {
   return React.createElement(
     "div",
@@ -41,73 +34,10 @@ const FieldSectionBreak = ({ field }) => {
   );
 };
 
-/**
- * FieldButton MOVED TO CONFIG - Action button (triggers save/submit operations) old 
- 
-const FieldButton = ({ field, run }) => {
-  const [loading, setLoading] = React.useState(false);
-
-  const handleClick = async () => {
-    setLoading(true);
-
-    try {
-      // Check if this is a submit button
-      if (field.fieldname === "submit_button") {
-        run.input.docstatus = 1;
-      }
-
-      // Call save directly (Option 1 - Simple)
-      await coworker.controller.save(run);
-    } catch (error) {
-      console.error("Button error:", error);
-    }
-
-    setLoading(false);
-  };
-
-  return React.createElement(
-    "div",
-    { className: CWStyles.form.fieldWrapper },
-    React.createElement(
-      "button",
-      {
-        className: CWStyles.button.primary,
-        onClick: handleClick,
-        disabled: loading || field.read_only,
-        type: "button",
-      },
-      loading ? "Saving..." : field.label
-    )
-  );
-};*/
-
-// ============================================================
-// REGISTER FIELD COMPONENTS - SINGLE SOURCE OF TRUTH
-/* ============================================================
-globalThis.components = {
-  FieldData,
-  FieldText,
-  FieldLongText,
-  FieldInt,
-  FieldFloat,
-  FieldCurrency,
-  FieldCheck,
-  FieldSelect,
-  FieldLink,
-  FieldDate,
-  FieldDatetime,
-  FieldTime,
-  FieldSectionBreak,
-  FieldButton,
-};*/
-
 // ============================================================
 // UTILITY COMPONENTS
 // ============================================================
 
-/**
- * RecordLink - Clickable record link
- */
 const RecordLink = ({
   record,
   children,
@@ -127,79 +57,77 @@ const RecordLink = ({
 };
 
 // ============================================================
-// MAIN COMPONENTS
+// FIELD RENDERER - Proper React component (fixes Rules of Hooks)
 // ============================================================
 
-// ============================================================
-// MAIN FORM COMPONENT - With Whitelist CRITICAL TO KEEP renderField
-// ============================================================
-
-//funtion added
-
-coworker.renderField = function ({ field, value, handlers, run }) {
-  // Get field type definition
-  const fieldType = this._config.fieldTypes[field.fieldtype];
-  if (!fieldType) return null;
+coworker.FieldRenderer = function ({ field, value, handlers, run }) {
+  const coworkerRef = coworker;
+  const fieldType = coworkerRef._config.fieldTypes[field.fieldtype];
 
   // Sanitize null/undefined values
-  const sanitizeValue = (val, fieldType) => {
+  const sanitizeValue = (val, ft) => {
     if (val === null || val === undefined) {
-      if (
-        fieldType.element === "input" &&
-        fieldType.props?.type === "checkbox"
-      ) {
-        return false;
-      }
-      if (fieldType.element === "input" && fieldType.props?.type === "number") {
-        return "";
-      }
+      if (ft.element === "input" && ft.props?.type === "checkbox") return false;
+      if (ft.element === "input" && ft.props?.type === "number") return "";
       return "";
     }
     return val;
   };
 
-  const safeValue = sanitizeValue(value, fieldType);
-  const elementDefaults = this._config.elementDefaults[fieldType.element] || {};
+  const safeValue = fieldType ? sanitizeValue(value, fieldType) : "";
+  const elementDefaults = fieldType
+    ? coworkerRef._config.elementDefaults[fieldType.element] || {}
+    : {};
 
   const evalContext = {
     field,
     value: safeValue,
-    readOnly: !handlers.onChange,
+    readOnly: !handlers?.onChange,
     CWStyles: globalThis.CWStyles,
     run,
     item: null,
   };
 
-  const elementProps = {
-    ...this.evalTemplateObj(elementDefaults, evalContext),
-    ...this.evalTemplateObj(fieldType.props, evalContext),
-  };
-
-  // Create state
+  // ✅ ALL hooks unconditionally at the top
   const [state, setState] = React.useState(() => {
+    if (!fieldType) return {};
     const stateConfig = fieldType.state || {};
     const initialState = {};
     for (const key in stateConfig) {
       const stateEvalContext = { ...evalContext, value: safeValue };
-      initialState[key] = this.evalTemplate(stateConfig[key], stateEvalContext);
+      initialState[key] = coworkerRef.evalTemplate(
+        stateConfig[key],
+        stateEvalContext,
+      );
     }
     return initialState;
   });
+
+  const handlersRef = React.useRef(handlers);
+  React.useEffect(() => {
+    handlersRef.current = handlers;
+  });
+
+  // ✅ Early return AFTER all hooks
+  if (!fieldType) return null;
+
+  const elementProps = {
+    ...coworkerRef.evalTemplateObj(elementDefaults, evalContext),
+    ...coworkerRef.evalTemplateObj(fieldType.props, evalContext),
+  };
 
   // Create event handlers
   const eventHandlers = {};
   for (const eventName in fieldType.events || {}) {
     const eventConfig = fieldType.events[eventName];
 
-    // Handle custom events
     if (eventConfig.custom && eventConfig.handler) {
       eventHandlers[eventName] = (e) => {
-        eventConfig.handler(e, setState, handlers, field);
+        eventConfig.handler(e, setState, handlersRef.current, field);
       };
       continue;
     }
 
-    // Standard events
     eventHandlers[eventName] = (e) => {
       let newValue;
       if (eventConfig.extract) {
@@ -223,8 +151,8 @@ coworker.renderField = function ({ field, value, handlers, run }) {
         }));
       }
 
-      if (eventConfig.delegate && handlers[eventConfig.delegate]) {
-        handlers[eventConfig.delegate](field.fieldname, newValue);
+      if (eventConfig.delegate && handlersRef.current?.[eventConfig.delegate]) {
+        handlersRef.current[eventConfig.delegate](field.fieldname, newValue);
       }
     };
   }
@@ -244,18 +172,20 @@ coworker.renderField = function ({ field, value, handlers, run }) {
     children = fieldType.children
       .map((childDesc, childIdx) => {
         if (childDesc.repeat) {
-          const items = this.evalTemplate(childDesc.repeat, evalContext);
+          const items = coworkerRef.evalTemplate(
+            childDesc.repeat,
+            evalContext,
+          );
           return items.map((item, itemIdx) => {
             const childContext = { ...evalContext, item };
-            const childProps = this.evalTemplateObj(
+            const childProps = coworkerRef.evalTemplateObj(
               childDesc.props,
               childContext,
             );
-            const childContent = this.evalTemplate(
+            const childContent = coworkerRef.evalTemplate(
               childDesc.content,
               childContext,
             );
-
             return React.createElement(
               childDesc.element,
               { key: `repeat-${childIdx}-${itemIdx}`, ...childProps },
@@ -264,8 +194,14 @@ coworker.renderField = function ({ field, value, handlers, run }) {
           });
         }
 
-        const childProps = this.evalTemplateObj(childDesc.props, evalContext);
-        const childContent = this.evalTemplate(childDesc.content, evalContext);
+        const childProps = coworkerRef.evalTemplateObj(
+          childDesc.props,
+          evalContext,
+        );
+        const childContent = coworkerRef.evalTemplate(
+          childDesc.content,
+          evalContext,
+        );
 
         return React.createElement(
           childDesc.element,
@@ -276,14 +212,12 @@ coworker.renderField = function ({ field, value, handlers, run }) {
       .flat();
   }
 
-  // Create element
   const element = React.createElement(
     fieldType.element,
     { ...elementProps, ...eventHandlers },
     children,
   );
 
-  // Handle suffix (e.g., "%" for Percent fields)
   if (fieldType.suffix) {
     return React.createElement(
       "div",
@@ -291,9 +225,7 @@ coworker.renderField = function ({ field, value, handlers, run }) {
       element,
       React.createElement(
         "span",
-        {
-          className: globalThis.CWStyles.field.percentSuffix,
-        },
+        { className: globalThis.CWStyles.field.percentSuffix },
         fieldType.suffix,
       ),
     );
@@ -302,72 +234,33 @@ coworker.renderField = function ({ field, value, handlers, run }) {
   return element;
 };
 
+// ============================================================
+// MAIN FORM COMPONENT
+// ============================================================
+
 const MainForm = ({ run }) => {
   const [schema, setSchema] = React.useState(run?.target?.schema || null);
 
   const doc = run?.doc || {};
   const doctype = doc.doctype || run?.source_doctype || run?.target_doctype;
 
-  // Load schema if missing
+  // ✅ ALL hooks before any early return
   React.useEffect(() => {
     if (!schema && doctype && coworker?.getSchema) {
       coworker.getSchema(doctype).then(setSchema);
     }
   }, [doctype]);
 
-  // Guard clause
-  if (!schema) {
-    return React.createElement(
-      "div",
-      { className: CWStyles.alert.warning },
-      "Loading schema...",
-    );
-  }
+  const timersRef = React.useRef({});
 
-  // Safe extracts
-  const titleField = schema.title_field || "name";
-  const title = doc[titleField] || doc.name || "New";
-  const fields = schema.fields || [];
-
-  // Whitelist
-  const implementedTypes = [
-    "Data",
-    "Text",
-    "Long Text",
-    "Password",
-    "Read Only",
-    "Int",
-    "Float",
-    "Currency",
-    "Percent",
-    "Check",
-    "Date",
-    "Datetime",
-    "Time",
-    "Select",
-    "Link",
-    "Text Editor",
-    "Code",
-    "HTML",
-    "Section Break",
-    "Column Break",
-    "Tab Break",
-    "Button",
-    "Attach Image",
-  ];
-
-  // Get behavior from config
-  const behavior = coworker.getBehavior(schema, doc);
-
-  // Get interaction profile
+  // Derive these before useMemo - safe even if schema is null
+  const behavior = schema ? coworker.getBehavior(schema, doc) : null;
   const interactionConfig = coworker._config.fieldInteractionConfig;
   const profile = interactionConfig.profiles[interactionConfig.activeProfile];
 
-  // Debounce timers
-  const timersRef = React.useRef({});
-
-  // Config-driven handlers
   const handlers = React.useMemo(() => {
+    if (!behavior) return {};
+
     const executeAction = (action, fieldname, value) => {
       switch (action) {
         case "write_draft":
@@ -397,7 +290,6 @@ const MainForm = ({ run }) => {
           break;
 
         case "workflow_action":
-          // Use existing save method
           if (coworker.controller?.save) {
             coworker.controller.save(run);
             console.log(`✅ Button action: ${fieldname}`);
@@ -413,9 +305,7 @@ const MainForm = ({ run }) => {
       onChange: (fieldname, value) => {
         const config = profile.onChange;
         if (!config.enabled) return;
-
         const perform = () => executeAction(config.action, fieldname, value);
-
         if (config.debounce > 0) {
           clearTimeout(timersRef.current[`onChange_${fieldname}`]);
           timersRef.current[`onChange_${fieldname}`] = setTimeout(
@@ -430,9 +320,7 @@ const MainForm = ({ run }) => {
       onBlur: (fieldname, value) => {
         const config = profile.onBlur;
         if (!config.enabled) return;
-
         const perform = () => executeAction(config.action, fieldname, value);
-
         if (config.debounce > 0) {
           clearTimeout(timersRef.current[`onBlur_${fieldname}`]);
           timersRef.current[`onBlur_${fieldname}`] = setTimeout(
@@ -447,9 +335,7 @@ const MainForm = ({ run }) => {
       onButtonClick: (fieldname, value) => {
         const config = profile.onButtonClick;
         if (!config?.enabled) return;
-
         const perform = () => executeAction(config.action, fieldname, value);
-
         if (config.debounce > 0) {
           clearTimeout(timersRef.current[`onButtonClick_${fieldname}`]);
           timersRef.current[`onButtonClick_${fieldname}`] = setTimeout(
@@ -463,17 +349,49 @@ const MainForm = ({ run }) => {
     };
   }, [run, behavior, profile]);
 
-  // Docstatus badge helper
+  // ✅ Early return AFTER all hooks
+  if (!schema) {
+    return React.createElement(
+      "div",
+      { className: CWStyles.alert.warning },
+      "Loading schema...",
+    );
+  }
+
+  const titleField = schema.title_field || "name";
+  const title = doc[titleField] || doc.name || "New";
+  const fields = schema.fields || [];
+
+  const implementedTypes = [
+    "Data",
+    "Text",
+    "Long Text",
+    "Password",
+    "Read Only",
+    "Int",
+    "Float",
+    "Currency",
+    "Percent",
+    "Check",
+    "Date",
+    "Datetime",
+    "Time",
+    "Select",
+    "Link",
+    "Text Editor",
+    "Code",
+    "HTML",
+    "Section Break",
+    "Column Break",
+    "Tab Break",
+    "Button",
+    "Attach Image",
+  ];
+
   const getDocstatusBadge = (docstatus) => {
-    if (docstatus === 0) {
-      return { className: CWStyles.badge.warning, label: "Draft" };
-    }
-    if (docstatus === 1) {
-      return { className: CWStyles.badge.success, label: "Submitted" };
-    }
-    if (docstatus === 2) {
-      return { className: CWStyles.badge.danger, label: "Cancelled" };
-    }
+    if (docstatus === 0) return { className: CWStyles.badge.warning, label: "Draft" };
+    if (docstatus === 1) return { className: CWStyles.badge.success, label: "Submitted" };
+    if (docstatus === 2) return { className: CWStyles.badge.danger, label: "Cancelled" };
     return null;
   };
 
@@ -489,7 +407,6 @@ const MainForm = ({ run }) => {
       },
       React.createElement("h5", null, title),
 
-      // Badge
       behavior.ui.badge
         ? React.createElement(
             "span",
@@ -510,7 +427,7 @@ const MainForm = ({ run }) => {
           : null,
     ),
 
-    // ✅ Fields with 2-column grid
+    // Fields grid
     React.createElement(
       "div",
       {
@@ -546,8 +463,8 @@ const MainForm = ({ run }) => {
                 key: field.fieldname,
                 style: { gridColumn: "1 / -1" },
               },
-               fieldType.render({ field, handlers, run }),  // ← Add handlers here
-              fieldType.render({ field, run }),
+              // ✅ Single call, with handlers
+              fieldType.render({ field, handlers, run }),
             );
           }
 
@@ -578,9 +495,11 @@ const MainForm = ({ run }) => {
                 field.label,
               ),
 
+            // ✅ Use React.createElement with FieldRenderer - fixes hooks violation
             fieldType.customComponent && fieldType.render
               ? fieldType.render({ field, value: safeValue, handlers, run })
-              : coworker.renderField({
+              : React.createElement(coworker.FieldRenderer, {
+                  key: field.fieldname,
                   field,
                   value: safeValue,
                   handlers,
@@ -600,8 +519,8 @@ const MainForm = ({ run }) => {
 };
 
 // ============================================================
-// UNIVERSAL RECORD HANDLER moved from Core - key functtion for record
-//============================================================
+// UNIVERSAL RECORD HANDLER
+// ============================================================
 
 coworker.onRecordClick = function (record, context = {}) {
   return this.run({
@@ -613,13 +532,12 @@ coworker.onRecordClick = function (record, context = {}) {
   });
 };
 
-/**
- * MainGrid - List view with table (WITH NULL PROTECTION)
- */
+// ============================================================
+// MAIN GRID COMPONENT
+// ============================================================
+
 const MainGrid = ({ run }) => {
   const data = run.target?.data;
-
-  // ✅ Filter out null/undefined records
   const validData = data?.filter((row) => row != null) || [];
 
   if (validData.length === 0) {
@@ -630,7 +548,6 @@ const MainGrid = ({ run }) => {
     );
   }
 
-  // ✅ Get keys from first valid record
   const keys = Object.keys(validData[0] || {});
 
   return React.createElement(
@@ -674,28 +591,23 @@ const MainGrid = ({ run }) => {
         React.createElement(
           "tbody",
           {},
-          validData.map(
-            (
-              row,
-              i, // ✅ Use validData instead of data
-            ) =>
-              React.createElement(
-                RecordLink,
-                {
-                  key: i,
-                  record: row,
-                  as: "tr",
-                  className: CWStyles.grid.row,
-                },
-                keys.map((key) =>
-                  React.createElement(
-                    "td",
-                    { key: key, className: CWStyles.grid.cell },
-                    // ✅ Extra protection on cell value
-                    String(row?.[key] ?? ""),
-                  ),
+          validData.map((row, i) =>
+            React.createElement(
+              RecordLink,
+              {
+                key: i,
+                record: row,
+                as: "tr",
+                className: CWStyles.grid.row,
+              },
+              keys.map((key) =>
+                React.createElement(
+                  "td",
+                  { key: key, className: CWStyles.grid.cell },
+                  String(row?.[key] ?? ""),
                 ),
               ),
+            ),
           ),
         ),
       ),
@@ -703,9 +615,10 @@ const MainGrid = ({ run }) => {
   );
 };
 
-/**
- * MainChat - AI chat interface
- */
+// ============================================================
+// MAIN CHAT COMPONENT
+// ============================================================
+
 const MainChat = ({ run }) => {
   const [messages, setMessages] = React.useState([]);
   const [input, setInput] = React.useState("");
@@ -768,9 +681,10 @@ const MainChat = ({ run }) => {
   );
 };
 
-/**
- * ErrorConsole - Error display
- */
+// ============================================================
+// ERROR CONSOLE COMPONENT
+// ============================================================
+
 const ErrorConsole = ({ run }) => {
   if (!run?.error) return null;
 
@@ -789,7 +703,7 @@ const ErrorConsole = ({ run }) => {
 };
 
 // ============================================================
-// REGISTER MAIN COMPONENTS
+// REGISTER COMPONENTS
 // ============================================================
 globalThis.MainForm = MainForm;
 globalThis.MainGrid = MainGrid;
