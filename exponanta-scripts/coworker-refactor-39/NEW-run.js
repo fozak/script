@@ -1,33 +1,27 @@
 // ============================================================
 // coworker-run.js
 // ============================================================
-const CW = globalThis.CW;
+// const CW = globalThis.CW; no need
 
 // ============================================================
 // SCHEMA CACHE
 // ============================================================
-CW._schemaCache = new Map();
+//CW._schemaCache = new Map(); we have already CW.Schema[doctype] loaded
 
 // ============================================================
 // RESOLVER
 // ============================================================
-CW._resolveAll = function (op) {
+CW._resolveAll = function(op) {
   const cfg = CW._config;
   const resolved = {};
 
-  resolved.operation =
-    cfg.operationAliases[op.operation?.toLowerCase()] || op.operation;
+  resolved.operation = cfg.operationAliases[op.operation?.toLowerCase()] || op.operation;
 
   const dtMap = cfg.doctypeAliases || {};
-  resolved.source_doctype = op.source_doctype
-    ? dtMap[op.source_doctype.toLowerCase()] || op.source_doctype
-    : null;
-  resolved.target_doctype = op.target_doctype
-    ? dtMap[op.target_doctype.toLowerCase()] || op.target_doctype
-    : null;
+  resolved.source_doctype = op.source_doctype ? dtMap[op.source_doctype.toLowerCase()] || op.source_doctype : null;
+  resolved.target_doctype = op.target_doctype ? dtMap[op.target_doctype.toLowerCase()] || op.target_doctype : null;
 
-  resolved.view =
-    cfg.operationToView[resolved.operation?.toLowerCase()] ?? null;
+  resolved.view = cfg.operationToView[resolved.operation?.toLowerCase()] ?? null;
 
   const viewConfig = cfg.views?.[resolved.view?.toLowerCase()] || {};
   resolved.component = viewConfig.component ?? null;
@@ -36,13 +30,17 @@ CW._resolveAll = function (op) {
 
   resolved.owner = op.owner || "system";
 
+  // resolve adapter from input._state key OR default db
+  const adapterKey = Object.keys(op.input?._state || {}).find(k => k.startsWith('Adapter.'));
+  resolved.adapter = adapterKey ? adapterKey.split('.')[1] : cfg.adapters.defaults.db;
+
   return resolved;
 };
 
 // ============================================================
 // MAIN run()
 // ============================================================
-CW.run = async function (op) {
+CW.run = async function(op) {
   const start = Date.now();
 
   if (!op?.operation) return CW._failEarly("operation is required", start);
@@ -69,7 +67,13 @@ CW.run = async function (op) {
     container: "container" in op ? op.container : resolved.container,
 
     query: op.query || {},
-    input: op.input || {},
+    input: {
+      ...op.input,
+      _state: {
+        [`Adapter.${resolved.adapter}.${resolved.operation}`]: "",
+        ...op.input?._state
+      }
+    },
     target: op.target || null,
 
     config: op.config || {},
@@ -96,31 +100,27 @@ CW.run = async function (op) {
       target[prop] = value;
       CW.controller(run_doc);
       return true;
-    },
+    }
   });
 
-  // browser only — global reference for console testing
-  if (typeof window !== "undefined") {
+  if (typeof window !== 'undefined') {
     globalThis.CW.RUN = run_doc;
   }
 
-  // draft init
   if (run_doc.options.draft) {
     if (run_doc.query.where?.name && !run_doc.input.name) {
       run_doc.input.name = run_doc.query.where.name;
     }
   }
 
-  // computed doc getter
   Object.defineProperty(run_doc, "doc", {
     get() {
       const original = this.target?.data?.[0] || {};
       const delta = this.input || {};
       return this.options.draft ? { ...original, ...delta } : original;
-    },
+    }
   });
 
-  // child factory
   run_doc.child = async (cfg) => {
     const childRun = await CW.run({
       ...cfg,
@@ -130,17 +130,14 @@ CW.run = async function (op) {
         parentRunId: run_doc.name,
       },
     });
-
     if (!run_doc.child_run_ids.includes(childRun.name)) {
       run_doc.child_run_ids.push(childRun.name);
     }
-
     return childRun;
   };
 
   if (CW._updateFromRun) CW._updateFromRun(run_doc);
 
-  // execute
   try {
     const result = await CW._exec(run_doc);
 
@@ -148,24 +145,21 @@ CW.run = async function (op) {
     run_doc.success = result.success === true;
     run_doc.error = result.error || null;
 
-    if (
-      run_doc.options.draft &&
-      run_doc.target?.data?.[0]?.doctype &&
-      !run_doc.input.doctype
-    ) {
+    if (run_doc.options.draft && run_doc.target?.data?.[0]?.doctype && !run_doc.input.doctype) {
       run_doc.input.doctype = run_doc.target.data[0].doctype;
     }
 
     run_doc.status = "completed";
     run_doc.duration = Date.now() - start;
     run_doc.modified = Date.now();
+
   } catch (err) {
     run_doc.success = false;
     run_doc.status = "failed";
     run_doc.error = {
       message: err.message,
       code: `${run_doc.operation?.toUpperCase() || "OPERATION"}_FAILED`,
-      stack: CW.getConfig("debug") ? err.stack : undefined,
+      stack: CW.getConfig('debug') ? err.stack : undefined,
     };
     run_doc.duration = Date.now() - start;
     run_doc.modified = Date.now();
@@ -180,10 +174,9 @@ CW.run = async function (op) {
 // ============================================================
 // EXEC
 // ============================================================
-CW._exec = async function (run_doc) {
-  const hasStateIntents =
-    run_doc.input?._state &&
-    Object.values(run_doc.input._state).some((v) => v === "");
+CW._exec = async function(run_doc) {
+  const hasStateIntents = run_doc.input?._state &&
+    Object.values(run_doc.input._state).some(v => v === '');
 
   if (hasStateIntents) {
     return await CW.controller(run_doc);
@@ -195,7 +188,7 @@ CW._exec = async function (run_doc) {
 // ============================================================
 // FAIL EARLY
 // ============================================================
-CW._failEarly = function (message, start) {
+CW._failEarly = function(message, start) {
   return {
     doctype: "Run",
     name: generateId("run"),
@@ -205,6 +198,68 @@ CW._failEarly = function (message, start) {
     error: { message, code: "VALIDATION_FAILED" },
     duration: Date.now() - start,
   };
+};
+
+// ============================================================
+// HANDLERS — materialize target.data (view filtering only)
+// ============================================================
+CW._handlers = {
+
+  select: async function(run_doc) {
+    const { source_doctype, query = {} } = run_doc;
+    const { view = 'list', select } = query;
+    const data = run_doc.target?.data || [];
+    const schema = CW.Schema[source_doctype];
+
+    if (schema && !select) {
+      const shouldFilter = view === 'list' || view === 'card';
+      if (shouldFilter) {
+        const viewProp = `in_${view}_view`;
+        const viewFields = schema.fields
+          .filter(f => f[viewProp])
+          .map(f => f.fieldname);
+        const fields = ['name', 'doctype', ...viewFields];
+
+        run_doc.target.data = data.map(item => {
+          const filtered = {};
+          fields.forEach(f => { if (f in item) filtered[f] = item[f]; });
+          return filtered;
+        });
+      }
+    } else if (select && Array.isArray(select)) {
+      run_doc.target.data = data.map(item => {
+        const filtered = {};
+        select.forEach(f => { if (f in item) filtered[f] = item[f]; });
+        return filtered;
+      });
+    }
+
+    return run_doc;
+  },
+
+  takeone: async function(run_doc) {
+    run_doc.query = run_doc.query || {};
+    run_doc.query.take = 1;
+    run_doc.query.view = 'form';
+    return await CW._handlers.select(run_doc);
+  },
+
+  create: async function(run_doc) {
+    run_doc.input.doctype = run_doc.input.doctype || run_doc.target_doctype;
+    run_doc.input.name = run_doc.input.name || generateId(run_doc.target_doctype);
+    return run_doc;
+  },
+
+  update: async function(run_doc) {
+    return run_doc;
+  },
+
+  delete: async function(run_doc) {
+    if (!run_doc.query?.where || Object.keys(run_doc.query.where).length === 0) {
+      throw new Error('DELETE requires query.where to prevent mass deletion');
+    }
+    return run_doc;
+  }
 };
 
 console.log("✅ coworker-run.js loaded");
