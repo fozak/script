@@ -2,33 +2,9 @@
 // coworker-config.js v1.25COWORKER CONFIG - Configuration Only (No Execution Logic)
 // ============================================================
 
-// RULES - the system used the frappe enriched approach  --//
-// RULE 1. Used exact doctype and schemas (so each doctype has mandatory schema) in frappe-format. TODO: cross-link
-// RULE 2. Each schema is doctype itself with doctype = "Schema".
-// RULE 3. The lifecicle of schema and doctype is identical and based on frappe-like docstatus (0 = draft, 1 = submitted, 2 = cancelled).
-// RULE 4. Lifecicle of schemas and documents is exactly 0,1,2
-// RULE 5. Each doctype should have ONE schema with doctype = "Schema" and docstatus = 1 (submitted). prev. schemas for this doctype
-
-// RULE.FIELD_TYPES : FIELD TYPES (lowest level, foundational)
-// Field is the single important element in document and its schema. Each field type has a category and JS type for validation / UI
-
-// deleted const FIELD_TYPES = {
-//  Attach: { category: "media", jstype: "string" },
-// AttachImage: { category: "media", jstype: "string" },
-//...
-//RULE.DOCFIELD_JSON deleted - the JSON structure for a docfield (field in a doctype) from FRAPPE, used as a reference. NOT used directly in code.
-
-
-// ============================================
-// CORE SYSTEM FIELDS (NON-USER, DOC-INTERNAL)
-// ============================================
-// RULE.CORE_SYSTEM_FIELDS : These fields are automatically added to every document by the system.
-// all properties are moved to Field schema
-//TODO: own and system doctype (0,1)
-
-// const SYSTEM_FIELDS =  
-
-coworker._config = {
+// coworker-config.js — 39 refactor
+const CW = globalThis.CW;
+CW._config = {
   // ============================================================
   // SYSTEM CONFIG
   // ============================================================
@@ -1642,10 +1618,11 @@ coworker._config = {
   },
 };
 
+// ==== NOT used
 // ============================================================
 // FIELD RESOLVERS (For fetching field options)
 // ============================================================
-
+/*
 coworker._resolverLink = async function (field, searchTerm) {
   return await this.run({
     operation: "select",
@@ -1829,4 +1806,4 @@ coworker._handleGeolocationField = function ({
     component: "GeolocationField",
     props: { field, value, docname, doctype },
   };
-};
+}; */
