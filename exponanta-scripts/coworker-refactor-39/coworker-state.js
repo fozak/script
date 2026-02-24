@@ -2,6 +2,15 @@
 // globalThis.CW - Centralized State & Runtime. ADDED 
 // ============================================================
 
+// refactored 
+
+
+globalThis.CW = globalThis.CW || {};
+const CW = globalThis.CW;
+
+
+// =========================================
+
 globalThis.CW = {
   runs: {}, // indexed by run.name
   runsByOpKey: {}, // indexed by operation_key
