@@ -34,7 +34,7 @@
       // ============================================================
 
       coworker._resolveAll = function (op) {
-        const cfg = this._config;
+        const cfg = CW._config;  // ADDED 39 refactoring
         const resolved = {};
 
         // STEP 1: Resolve operation (user alias → internal name)
