@@ -834,15 +834,7 @@ run_doc.input = new Proxy(run_doc.input, {
         return `data.${fieldName}`;
       };
 
-      // ============================================================
-      // UTILITIES
-      // ============================================================
 
-      coworker._generateName = function (doctype) {
-        const timestamp = Date.now();
-        const random = Math.random().toString(36).substring(2, 8);
-        return `${doctype.toLowerCase()}-${timestamp}-${random}`;
-      };
 
       // ============================================================
       // ADAPTER WRAPPERS (Delegate to pb)

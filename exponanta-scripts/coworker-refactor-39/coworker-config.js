@@ -13,7 +13,7 @@ CW._config = {
     // Default adapter per category
     defaults: {
       db: "pocketbase",
-      auth: "jwt",
+      auth: "auth",
       storage: null, // Future
       email: null, // Future
     },
