@@ -1,16 +1,11 @@
 // ============================================================
-// COWORKER-.JS - PRODUCTION READY
+// coworker-controller.JS - PRODUCTION READY
 // Version: 5.1.0 - Centralized Draft, Smart Validation, Auto-Serialization
 // ============================================================
+const CW = globalThis.CW;
 
-// ============================================================
-// COWORKER VALIDATORS
-// ============================================================
-
-coworker.validators = {
-  /**
-   * Validate field based on fieldtype and properties
-   */
+CW.validators = {
+  /**    * Validate field based on fieldtype and properties  */
   validateField(field, value) {
     // Required check
     if (field.reqd && (value == null || value === "")) {
@@ -53,7 +48,7 @@ coworker.validators = {
 // COWORKER CONTROLLER
 // ============================================================
 
-coworker.controller = {
+CW.controllerLegacy = {
   // ══════════════════════════════════════════════════════════
   // UNIVERSAL EXECUTOR (Config-Driven)
   // ══════════════════════════════════════════════════════════
@@ -63,18 +58,18 @@ coworker.controller = {
 
     // ✅ SINGLE SOURCE OF TRUTH: Set draft from operation config
     if (options.draft === undefined) {
-      const opConfig = coworker._config.operations[operation];
+      const opConfig = CW._config.operations[operation];
       run_doc.options = run_doc.options || {};
       run_doc.options.draft = opConfig?.draft ?? false;
     }
 
     // ✅ ESCAPE HATCH: Skip controller entirely
     if (options.skipController) {
-      return await coworker._handlers[operation](run_doc);
+      return await CW._handlers[operation](run_doc);
     }
 
     // ✅ Get operation config (default if not found)
-    const opConfig = coworker._config.operations[operation] || {
+    const opConfig = CW._config.operations[operation] || {
       type: "custom",
       requiresSchema: false,
       validate: false,
@@ -89,20 +84,20 @@ coworker.controller = {
       const doctype = run_doc.source_doctype || run_doc.target_doctype;
 
       if (!run_doc.target.schema && doctype && doctype !== "Schema") {
-        const schema = await coworker.getSchema(doctype);
+        const schema = await CW.getSchema(doctype);
         run_doc.target.schema = schema;
       }
     }
 
     // ✅ Route based on type
     if (opConfig.type === "read") {
-      const result = await coworker._handlers[operation](run_doc);
+      const result = await CW._handlers[operation](run_doc);
       
       // ✅ AUTO-DESERIALIZE: Convert JSON strings to objects
       if (result.target?.data && Array.isArray(result.target.data)) {
         const doctype = run_doc.source_doctype || run_doc.target_doctype;
         if (doctype) {
-          result.target.data = await coworker.deserializeDocuments(
+          result.target.data = await CW.deserializeDocuments(
             result.target.data,
             doctype
           );
@@ -114,13 +109,13 @@ coworker.controller = {
 
     if (opConfig.type === "write") {
       if (options.skipValidation || !opConfig.validate) {
-        return await coworker._handlers[operation](run_doc);
+        return await CW._handlers[operation](run_doc);
       }
       return await this._processWrite(run_doc, opConfig);
     }
 
     // Custom operations - pass through
-    return await coworker._handlers[operation](run_doc);
+    return await CW._handlers[operation](run_doc);
   },
 
   // ══════════════════════════════════════════════════════════
@@ -140,8 +135,8 @@ coworker.controller = {
     // ✅ Fetch originals if config says so
     let items = [];
     if (opConfig.fetchOriginals && query?.where) {
-      const filter = coworker._buildPrismaWhere(doctype, query.where);
-      const result = await coworker._dbQuery({ filter });
+      const filter = CW._buildPrismaWhere(doctype, query.where);
+      const result = await CW._dbQuery({ filter });
       items = result.data;
 
       if (items.length === 0) {
@@ -186,7 +181,7 @@ coworker.controller = {
     }
 
     // Execute via handler
-    return await coworker._handlers[operation](run_doc);
+    return await CW._handlers[operation](run_doc);
   },
 
   // ══════════════════════════════════════════════════════════
@@ -198,7 +193,7 @@ coworker.controller = {
 
     const errors = [];
     schema.fields.forEach((field) => {
-      const error = coworker.validators.validateField(
+      const error = CW.validators.validateField(
         field,
         doc[field.fieldname]
       );
@@ -212,7 +207,7 @@ coworker.controller = {
     const errors = [];
 
     run.target?.schema?.fields.forEach((field) => {
-      const error = coworker.validators.validateField(
+      const error = CW.validators.validateField(
         field,
         run.doc[field.fieldname]
       );
@@ -249,8 +244,8 @@ coworker.controller = {
     const validation = this.validate(run);
     if (!validation.valid) {
       run._validationErrors = validation.errors;
-      if (typeof coworker._render === "function") {
-        coworker._render(run);
+      if (typeof CW._render === "function") {
+        CW._render(run);
       }
       return { success: false, errors: validation.errors };
     }
@@ -276,8 +271,8 @@ coworker.controller = {
 
     // Save
     run._saving = true;
-    if (typeof coworker._render === "function") {
-      coworker._render(run);
+    if (typeof CW._render === "function") {
+      CW._render(run);
     }
 
     try {
@@ -303,8 +298,8 @@ coworker.controller = {
         delete run._validationErrors;
 
         // ✅ Re-render to show updated state (buttons may change based on docstatus)
-        if (typeof coworker._render === "function") {
-          coworker._render(run);
+        if (typeof CW._render === "function") {
+          CW._render(run);
         }
 
         return { success: true, data: saveRun.target.data[0] };
@@ -312,8 +307,8 @@ coworker.controller = {
         run._saveError = saveRun.error?.message;
         delete run._saving;
 
-        if (typeof coworker._render === "function") {
-          coworker._render(run);
+        if (typeof CW._render === "function") {
+          CW._render(run);
         }
 
         return { success: false, error: saveRun.error };
@@ -322,8 +317,8 @@ coworker.controller = {
       run._saveError = error.message;
       delete run._saving;
 
-      if (typeof coworker._render === "function") {
-        coworker._render(run);
+      if (typeof CW._render === "function") {
+        CW._render(run);
       }
 
       return { success: false, error: { message: error.message } };
@@ -353,8 +348,8 @@ coworker.controller = {
     }
 
     if (!this.isComplete(run)) {
-      if (typeof coworker._render === "function") {
-        coworker._render(run);
+      if (typeof CW._render === "function") {
+        CW._render(run);
       }
       return;
     }
@@ -364,29 +359,4 @@ coworker.controller = {
   }
 };
 
-console.log('✅ Controller loaded: v5.1.0 - Centralized draft, smart validation, auto-serialization');
-/*
-
-**Key Changes:**
-
-1. **Version bump**: 5.0.0 → 5.1.0
-2. **Added auto-deserialization** for read operations (lines 67-76)
-3. **No handler changes required** - all handlers work as-is
-
-**Flow:**
-```
-READ Operations:
-  Handler returns raw strings from DB
-    ↓
-  Controller intercepts (type === "read")
-    ↓
-  Calls deserializeDocuments()
-    ↓
-  Returns objects to user
-
-WRITE Operations:
-  User provides objects
-    ↓
-  processDocument() serializes (in CREATE handler)
-    ↓
-  DB receives strings*/
+console.log('✅ legacyController loaded: Centralized draft, smart validation, auto-serialization');

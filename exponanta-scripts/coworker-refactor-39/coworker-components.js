@@ -269,8 +269,8 @@ const MainForm = ({ run }) => {
 
         case "validate":
           run.input[fieldname] = value;
-          if (coworker.controller.validate) {
-            const validation = coworker.controller.validate(run);
+          if (CW.controllerLegacy.validate) {
+            const validation = CW.controllerLegacy.validate(run);
             if (validation && !validation.valid) {
               run._validationErrors = validation.errors;
             }
@@ -281,7 +281,7 @@ const MainForm = ({ run }) => {
         case "auto_save":
           run.input[fieldname] = value;
           if (behavior.controller.autoSave) {
-            coworker.controller.autoSave(run);
+            CW.controllerLegacy.autoSave(run);
             console.log(`✅ Auto-saved: ${fieldname}`);
           } else {
             console.log(`⚠️ Auto-save disabled by behavior`);
@@ -289,8 +289,8 @@ const MainForm = ({ run }) => {
           break;
 
         case "workflow_action":
-          if (coworker.controller?.save) {
-            coworker.controller.save(run);
+          if (CW.controllerLegacy?.save) {
+            CW.controllerLegacy.save(run);
             console.log(`✅ Button action: ${fieldname}`);
           }
           break;

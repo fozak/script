@@ -302,7 +302,7 @@ run_doc.input = new Proxy(run_doc.input, {
 
         try {
           // ✅ A1: Route through controller (all operations)
-          return await this.controller.execute(run_doc);
+          return await CW.controllerLegacy.execute(run_doc);
         } finally {
           pb.useAdapter(previousAdapter);
         }
@@ -1020,7 +1020,7 @@ run_doc.input = new Proxy(run_doc.input, {
 
       /*console.log("✅ coworker-run plugin installed (v4.1.0 - WORKING)");
       console.log("   • coworker.run(config)");
-      console.log("   • coworker.controller.execute(run_doc)");
+      console.log("   • CW.controllerLegacy.execute(run_doc)");
       console.log("   • coworker.getSchema(doctype)");
       console.log("   • coworker.clearSchemaCache()");*/
     },
