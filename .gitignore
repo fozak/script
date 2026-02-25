@@ -1,2 +1,11 @@
 notebooks/avcodec-61.dll 
 notebooks/lena.m4a 
+
+node_modules/
+.env
+.env.local
+dist/
+build/
+*.log
+.DS_Store
+Thumbs.db
