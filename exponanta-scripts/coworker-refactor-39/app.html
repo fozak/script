@@ -40,10 +40,11 @@
   <!-- ═══════════════════════════════════════════════════════ -->
   <!-- LAYER 1: Foundation (Coworker Core System) -->
   <!-- ═══════════════════════════════════════════════════════ -->
+ <script src="coworker-state.js"></script>
 
   <script src="coworker.js"></script>      <!-- Execution layer -->
   <script src="coworker-config.js"></script>   <!-- MOVED -->
-  <script src="coworker-state.js"></script>
+ 
   <script src="coworker-styles.js"></script>   <!-- YOUR existing file -->
   <script src="coworker-utils.js"></script>
 
@@ -66,7 +67,7 @@
 
   
   <!--<script src="coworker.js"></script>      Execution layer -->
-  <script src="coworker-run.js"></script>      <!-- Execution layer --> 
+  <script src="NEW-run.js"></script>      <!-- Execution layer --> 
   <!--<script src="coworker-config.js"></script>    Configuration -->
   <script src="coworker-controller.js"></script>  <!-- ✅ NEW -->
   <script src="coworker-rbac.js"></script>  <!-- ✅ Add this -->
@@ -109,7 +110,7 @@
 
 
 //load schemas
-      await coworker.run({
+      await CW.run({
   operation: 'select',
   from: 'Schema',
   view: 'form',
@@ -119,7 +120,7 @@
 console.log('Schemas loaded');
 
       // Test coworker.run
-      const data = await coworker.run({
+      const data = await CW.run({
         operation: 'select', 
         from: 'Adapter',
         view: 'form',

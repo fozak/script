@@ -1,0 +1,1444 @@
+{
+  "debug": true,
+  "adapters": {
+    "defaults": {
+      "db": "pocketbase",
+      "auth": "auth",
+      "storage": null,
+      "email": null
+    },
+    "registry": {
+      "pocketbase": {
+        "type": "db",
+        "name": "PocketBase",
+        "description": "PocketBase cloud database",
+        "handler": "_dbAdapters.pocketbase",
+        "capabilities": [
+          "select",
+          "create",
+          "update",
+          "delete"
+        ],
+        "config": {
+          "url": "http://127.0.0.1:8090",
+          "collection": "item"
+        }
+      },
+      "memory": {
+        "type": "db",
+        "name": "Memory",
+        "description": "In-memory storage (volatile)",
+        "handler": "_dbAdapters.memory",
+        "capabilities": [
+          "select",
+          "create",
+          "update",
+          "delete"
+        ],
+        "config": {
+          "maxRecords": 10000
+        }
+      },
+      "storage": {
+        "type": "db",
+        "name": "Local Storage",
+        "description": "Browser localStorage persistence",
+        "handler": "_dbAdapters.storage",
+        "capabilities": [
+          "select",
+          "create",
+          "update",
+          "delete"
+        ],
+        "config": {
+          "prefix": "coworker_",
+          "maxSize": 5242880
+        }
+      },
+      "jwt": {
+        "type": "auth",
+        "name": "JWT Auth",
+        "description": "JSON Web Token authentication",
+        "handler": "_authAdapters.jwt",
+        "capabilities": [
+          "register",
+          "login",
+          "logout",
+          "refresh",
+          "verify",
+          "change_password"
+        ],
+        "config": {}
+      }
+    }
+  },
+  "auth": {
+    "jwtSecret": "change-this-secret-in-production",
+    "jwtAlgorithm": "HS256",
+    "accessTokenExpiry": "15m",
+    "refreshTokenExpiry": "30d",
+    "accessTokenExpiryMs": 900000,
+    "refreshTokenExpiryMs": 2592000000,
+    "passwordHashIterations": 100000,
+    "saltLength": 16,
+    "maxFailedAttempts": 5,
+    "lockDurationMs": 900000,
+    "maxRefreshTokens": 5,
+    "userDoctype": "User",
+    "userEmailField": "email",
+    "defaultRoles": [
+      "Desk User"
+    ],
+    "adminRole": "System Manager",
+    "publicRole": "Is Public"
+  },
+  "operationAliases": {
+    "read": "select",
+    "insert": "create",
+    "query": "select",
+    "fetch": "select",
+    "add": "create",
+    "remove": "delete",
+    "modify": "update",
+    "patch": "update",
+    "signin": "login",
+    "signup": "register",
+    "signout": "logout",
+    "refresh_token": "refresh"
+  },
+  "doctypeAliases": {
+    "user": "User",
+    "order": "Sales Order",
+    "customer": "Customer",
+    "item": "Item",
+    "invoice": "Sales Invoice"
+  },
+  "operations": {
+    "select": {
+      "type": "read",
+      "adapterType": "db",
+      "draft": false,
+      "requiresSchema": false,
+      "validate": false,
+      "fetchOriginals": false,
+      "bypassController": false
+    },
+    "takeone": {
+      "type": "read",
+      "adapterType": "db",
+      "draft": true,
+      "requiresSchema": false,
+      "validate": false,
+      "fetchOriginals": false,
+      "bypassController": false
+    },
+    "create": {
+      "type": "write",
+      "adapterType": "db",
+      "draft": true,
+      "requiresSchema": true,
+      "validate": true,
+      "fetchOriginals": false,
+      "bypassController": false
+    },
+    "update": {
+      "type": "write",
+      "adapterType": "db",
+      "draft": true,
+      "requiresSchema": true,
+      "validate": true,
+      "fetchOriginals": true,
+      "bypassController": false
+    },
+    "delete": {
+      "type": "write",
+      "adapterType": "db",
+      "draft": false,
+      "requiresSchema": false,
+      "validate": false,
+      "fetchOriginals": true,
+      "bypassController": false
+    },
+    "upsert": {
+      "type": "write",
+      "adapterType": "db",
+      "draft": true,
+      "requiresSchema": true,
+      "validate": true,
+      "fetchOriginals": true,
+      "bypassController": false
+    },
+    "bulk_update": {
+      "type": "write",
+      "adapterType": "db",
+      "draft": false,
+      "requiresSchema": false,
+      "validate": false,
+      "fetchOriginals": false,
+      "bypassController": false
+    },
+    "register": {
+      "type": "auth",
+      "adapterType": "auth",
+      "draft": false,
+      "requiresSchema": false,
+      "validate": true,
+      "fetchOriginals": false,
+      "bypassController": false
+    },
+    "login": {
+      "type": "auth",
+      "adapterType": "auth",
+      "draft": false,
+      "requiresSchema": false,
+      "validate": true,
+      "fetchOriginals": false,
+      "bypassController": false
+    },
+    "logout": {
+      "type": "auth",
+      "adapterType": "auth",
+      "draft": false,
+      "requiresSchema": false,
+      "validate": false,
+      "fetchOriginals": false,
+      "bypassController": false
+    },
+    "refresh": {
+      "type": "auth",
+      "adapterType": "auth",
+      "draft": false,
+      "requiresSchema": false,
+      "validate": false,
+      "fetchOriginals": false,
+      "bypassController": false
+    },
+    "verify": {
+      "type": "auth",
+      "adapterType": "auth",
+      "draft": false,
+      "requiresSchema": false,
+      "validate": false,
+      "fetchOriginals": false,
+      "bypassController": false
+    },
+    "change_password": {
+      "type": "auth",
+      "adapterType": "auth",
+      "draft": false,
+      "requiresSchema": false,
+      "validate": true,
+      "fetchOriginals": false,
+      "bypassController": false
+    }
+  },
+  "views": {
+    "list": {
+      "component": "MainGrid",
+      "container": "main_container",
+      "options": {
+        "render": true
+      }
+    },
+    "form": {
+      "component": "MainForm",
+      "container": "main_container",
+      "options": {
+        "render": true
+      }
+    },
+    "chat": {
+      "component": "MainChat",
+      "container": "right_pane",
+      "options": {
+        "render": true
+      }
+    }
+  },
+  "operationToView": {
+    "select": "list",
+    "create": "form",
+    "update": "form",
+    "delete": null,
+    "takeone": "form"
+  },
+  "viewToComponent": {
+    "list": "MainGrid",
+    "form": "MainForm",
+    "chat": "MainChat",
+    "grid": "MainGrid",
+    "detail": "MainForm",
+    "conversation": "MainChat"
+  },
+  "viewToContainer": {
+    "list": "main_container",
+    "form": "main_container",
+    "chat": "right_pane",
+    "grid": "main_container",
+    "detail": "main_container",
+    "MainGrid": "main_container",
+    "MainForm": "main_container",
+    "MainChat": "right_pane"
+  },
+  "behaviorMatrix": {
+    "0-0-0": {
+      "name": "Non-Submittable, Manual Save",
+      "ui": {
+        "fieldsEditable": true,
+        "showButtons": [
+          "save",
+          "delete"
+        ],
+        "badge": null
+      },
+      "controller": {
+        "autoSave": false,
+        "validateOnChange": true
+      },
+      "guardian": {
+        "allowOperations": [
+          "update",
+          "delete",
+          "takeone"
+        ],
+        "blockOperations": []
+      }
+    },
+    "0-0-1": {
+      "name": "Non-Submittable, Auto-Save",
+      "ui": {
+        "fieldsEditable": true,
+        "showButtons": [
+          "save",
+          "delete"
+        ],
+        "badge": null
+      },
+      "controller": {
+        "autoSave": true,
+        "validateOnChange": true
+      },
+      "guardian": {
+        "allowOperations": [
+          "update",
+          "delete",
+          "takeone"
+        ],
+        "blockOperations": []
+      }
+    },
+    "1-0-0": {
+      "name": "Submittable Draft, Manual Save",
+      "ui": {
+        "fieldsEditable": true,
+        "showButtons": [
+          "save",
+          "submit",
+          "delete"
+        ],
+        "badge": {
+          "label": "Draft",
+          "class": "warning"
+        }
+      },
+      "controller": {
+        "autoSave": false,
+        "validateOnChange": true
+      },
+      "guardian": {
+        "allowOperations": [
+          "update",
+          "submit",
+          "delete",
+          "takeone"
+        ],
+        "blockOperations": [
+          "cancel",
+          "amend"
+        ]
+      }
+    },
+    "1-0-1": {
+      "name": "Submittable Draft, Auto-Save",
+      "ui": {
+        "fieldsEditable": true,
+        "showButtons": [
+          "save",
+          "submit",
+          "delete"
+        ],
+        "badge": {
+          "label": "Draft",
+          "class": "warning"
+        }
+      },
+      "controller": {
+        "autoSave": true,
+        "validateOnChange": true
+      },
+      "guardian": {
+        "allowOperations": [
+          "update",
+          "submit",
+          "delete",
+          "takeone"
+        ],
+        "blockOperations": [
+          "cancel",
+          "amend"
+        ]
+      }
+    },
+    "1-1-0": {
+      "name": "Submitted Document, Manual Save",
+      "ui": {
+        "fieldsEditable": false,
+        "showButtons": [
+          "cancel"
+        ],
+        "badge": {
+          "label": "Submitted",
+          "class": "success"
+        }
+      },
+      "controller": {
+        "autoSave": false,
+        "validateOnChange": true
+      },
+      "guardian": {
+        "allowOperations": [
+          "cancel",
+          "takeone"
+        ],
+        "blockOperations": [
+          "update",
+          "submit",
+          "delete",
+          "amend"
+        ],
+        "exceptions": {
+          "update": {
+            "condition": "field.allow_on_submit === 1"
+          }
+        }
+      }
+    },
+    "1-1-1": {
+      "name": "Submitted Document, Auto-Save",
+      "ui": {
+        "fieldsEditable": false,
+        "showButtons": [
+          "cancel"
+        ],
+        "badge": {
+          "label": "Submitted",
+          "class": "success"
+        }
+      },
+      "controller": {
+        "autoSave": true,
+        "validateOnChange": true
+      },
+      "guardian": {
+        "allowOperations": [
+          "cancel",
+          "takeone"
+        ],
+        "blockOperations": [
+          "update",
+          "submit",
+          "delete",
+          "amend"
+        ],
+        "exceptions": {
+          "update": {
+            "condition": "field.allow_on_submit === 1"
+          }
+        }
+      }
+    },
+    "1-2-0": {
+      "name": "Cancelled Document",
+      "ui": {
+        "fieldsEditable": false,
+        "showButtons": [
+          "amend"
+        ],
+        "badge": {
+          "label": "Cancelled",
+          "class": "danger"
+        }
+      },
+      "controller": {
+        "autoSave": false,
+        "validateOnChange": false
+      },
+      "guardian": {
+        "allowOperations": [
+          "amend",
+          "takeone"
+        ],
+        "blockOperations": [
+          "update",
+          "submit",
+          "delete",
+          "cancel"
+        ]
+      }
+    },
+    "1-2-1": {
+      "name": "Cancelled Document",
+      "ui": {
+        "fieldsEditable": false,
+        "showButtons": [
+          "amend"
+        ],
+        "badge": {
+          "label": "Cancelled",
+          "class": "danger"
+        }
+      },
+      "controller": {
+        "autoSave": false,
+        "validateOnChange": false
+      },
+      "guardian": {
+        "allowOperations": [
+          "amend",
+          "takeone"
+        ],
+        "blockOperations": [
+          "update",
+          "submit",
+          "delete",
+          "cancel"
+        ]
+      }
+    }
+  },
+  "fieldInteractionConfig": {
+    "activeProfile": "default",
+    "profiles": {
+      "default": {
+        "onChange": {
+          "enabled": true,
+          "debounce": 300,
+          "action": "write_draft"
+        },
+        "onBlur": {
+          "enabled": true,
+          "debounce": 0,
+          "action": "auto_save"
+        },
+        "onButtonClick": {
+          "enabled": true,
+          "debounce": 0,
+          "action": "workflow_action"
+        }
+      }
+    }
+  },
+  "fieldTypes": {
+    "Data": {
+      "element": "input",
+      "props": {
+        "type": "text"
+      },
+      "state": {
+        "localValue": "{{value}}"
+      },
+      "events": {
+        "onChange": {
+          "updateState": "localValue",
+          "delegate": "onChange"
+        },
+        "onBlur": {
+          "delegate": "onBlur"
+        }
+      }
+    },
+    "Text": {
+      "element": "textarea",
+      "props": {
+        "rows": 3
+      },
+      "state": {
+        "localValue": "{{value}}"
+      },
+      "events": {
+        "onChange": {
+          "updateState": "localValue",
+          "delegate": "onChange"
+        },
+        "onBlur": {
+          "delegate": "onBlur"
+        }
+      }
+    },
+    "Long Text": {
+      "element": "textarea",
+      "props": {
+        "rows": 6
+      },
+      "state": {
+        "localValue": "{{value}}"
+      },
+      "events": {
+        "onChange": {
+          "updateState": "localValue",
+          "delegate": "onChange"
+        },
+        "onBlur": {
+          "delegate": "onBlur"
+        }
+      }
+    },
+    "Int": {
+      "element": "input",
+      "props": {
+        "type": "number"
+      },
+      "state": {
+        "localValue": "{{value || 0}}"
+      },
+      "events": {
+        "onChange": {
+          "updateState": "localValue",
+          "transform": "parseInt",
+          "delegate": "onChange"
+        },
+        "onBlur": {
+          "delegate": "onBlur"
+        }
+      }
+    },
+    "Float": {
+      "element": "input",
+      "props": {
+        "type": "number",
+        "step": "0.01"
+      },
+      "state": {
+        "localValue": "{{value || 0}}"
+      },
+      "events": {
+        "onChange": {
+          "updateState": "localValue",
+          "transform": "parseFloat",
+          "delegate": "onChange"
+        },
+        "onBlur": {
+          "delegate": "onBlur"
+        }
+      }
+    },
+    "Currency": {
+      "element": "input",
+      "props": {
+        "type": "number",
+        "step": "0.01"
+      },
+      "state": {
+        "localValue": "{{value || 0}}"
+      },
+      "events": {
+        "onChange": {
+          "updateState": "localValue",
+          "transform": "parseFloat",
+          "delegate": "onChange"
+        },
+        "onBlur": {
+          "delegate": "onBlur"
+        }
+      }
+    },
+    "Check": {
+      "element": "input",
+      "props": {
+        "type": "checkbox",
+        "checked": "{{value || false}}",
+        "disabled": "{{readOnly}}"
+      },
+      "state": {
+        "localValue": "{{value || false}}"
+      },
+      "events": {
+        "onChange": {
+          "updateState": "localValue",
+          "extract": "checked",
+          "delegate": "onChange"
+        }
+      }
+    },
+    "Date": {
+      "element": "input",
+      "props": {
+        "type": "date"
+      },
+      "state": {
+        "localValue": "{{value}}"
+      },
+      "events": {
+        "onChange": {
+          "updateState": "localValue",
+          "delegate": "onChange"
+        }
+      }
+    },
+    "Datetime": {
+      "element": "input",
+      "props": {
+        "type": "datetime-local"
+      },
+      "state": {
+        "localValue": "{{value}}"
+      },
+      "events": {
+        "onChange": {
+          "updateState": "localValue",
+          "delegate": "onChange"
+        }
+      }
+    },
+    "Time": {
+      "element": "input",
+      "props": {
+        "type": "time"
+      },
+      "state": {
+        "localValue": "{{value}}"
+      },
+      "events": {
+        "onChange": {
+          "updateState": "localValue",
+          "delegate": "onChange"
+        }
+      }
+    },
+    "Select": {
+      "element": "select",
+      "props": {
+        "disabled": "{{readOnly}}"
+      },
+      "state": {
+        "localValue": "{{value}}"
+      },
+      "children": [
+        {
+          "element": "option",
+          "props": {
+            "value": ""
+          },
+          "content": ""
+        },
+        {
+          "repeat": "{{(field.options || '').split('\\n').filter(o => o.trim())}}",
+          "element": "option",
+          "props": {
+            "value": "{{item}}"
+          },
+          "content": "{{item}}"
+        }
+      ],
+      "events": {
+        "onChange": {
+          "updateState": "localValue",
+          "delegate": "onChange"
+        }
+      }
+    },
+    "Section Break": {
+      "layoutOnly": true
+    },
+    "Tab Break": {
+      "layoutOnly": true
+    },
+    "Column Break": {
+      "layoutOnly": true
+    },
+    "Code": {
+      "element": "textarea",
+      "props": {
+        "rows": 10,
+        "className": "{{CWStyles.field.code}}"
+      },
+      "state": {
+        "localValue": "{{typeof value === 'object' && value !== null ? JSON.stringify(value, null, 2) : (value || '')}}"
+      },
+      "events": {
+        "onChange": {
+          "updateState": "localValue"
+        },
+        "onBlur": {
+          "delegate": "onBlur"
+        },
+        "onKeyDown": {
+          "custom": true
+        }
+      }
+    },
+    "Attach Image": {
+      "customComponent": true
+    },
+    "Percent": {
+      "element": "input",
+      "props": {
+        "type": "number",
+        "step": "0.01",
+        "min": "0",
+        "max": "100"
+      },
+      "state": {
+        "localValue": "{{value === null || value === undefined ? '' : value}}"
+      },
+      "events": {
+        "onChange": {
+          "updateState": "localValue",
+          "transform": "parseFloat",
+          "delegate": "onChange"
+        },
+        "onBlur": {
+          "delegate": "onBlur"
+        }
+      },
+      "suffix": "%"
+    },
+    "Text Editor": {
+      "element": "textarea",
+      "props": {
+        "rows": 10,
+        "className": "{{CWStyles.field.textarea}}"
+      },
+      "state": {
+        "localValue": "{{value || ''}}"
+      },
+      "events": {
+        "onChange": {
+          "updateState": "localValue",
+          "delegate": "onChange"
+        },
+        "onBlur": {
+          "delegate": "onBlur"
+        }
+      }
+    },
+    "Password": {
+      "element": "input",
+      "props": {
+        "type": "password",
+        "autoComplete": "current-password"
+      },
+      "state": {
+        "localValue": "{{value || ''}}"
+      },
+      "events": {
+        "onChange": {
+          "updateState": "localValue",
+          "delegate": "onChange"
+        },
+        "onBlur": {
+          "delegate": "onBlur"
+        }
+      }
+    },
+    "Read Only": {
+      "element": "input",
+      "props": {
+        "type": "text",
+        "readOnly": true,
+        "className": "{{CWStyles.field.input + ' ' + CWStyles.input.readOnly}}"
+      },
+      "state": {
+        "localValue": "{{value || ''}}"
+      },
+      "events": {}
+    },
+    "HTML": {
+      "layoutOnly": true
+    },
+    "Button": {
+      "customComponent": true
+    },
+    "Link": {
+      "customComponent": true
+    }
+  },
+  "elementDefaults": {
+    "input": {
+      "className": "{{CWStyles.field.input}}",
+      "readOnly": "{{readOnly}}",
+      "placeholder": "{{field.placeholder}}"
+    },
+    "textarea": {
+      "className": "{{CWStyles.field.textarea}}",
+      "readOnly": "{{readOnly}}",
+      "placeholder": "{{field.placeholder}}"
+    },
+    "select": {
+      "className": "{{CWStyles.field.select}}",
+      "disabled": "{{readOnly}}"
+    }
+  },
+  "field_handlers": {
+    "Data": {
+      "component": "FieldData",
+      "category": "text",
+      "jstype": "string",
+      "value_processor": "text"
+    },
+    "Text": {
+      "component": "FieldText",
+      "category": "text",
+      "jstype": "string",
+      "value_processor": "text"
+    },
+    "Long Text": {
+      "component": "FieldLongText",
+      "category": "text",
+      "jstype": "string",
+      "value_processor": "text"
+    },
+    "Small Text": {
+      "component": "FieldText",
+      "category": "text",
+      "jstype": "string",
+      "value_processor": "text"
+    },
+    "Read Only": {
+      "component": "FieldData",
+      "category": "input",
+      "jstype": "string",
+      "value_processor": "text"
+    },
+    "Int": {
+      "component": "FieldInt",
+      "category": "numeric",
+      "jstype": "number",
+      "value_processor": "numeric"
+    },
+    "Float": {
+      "component": "FieldFloat",
+      "category": "numeric",
+      "jstype": "number",
+      "value_processor": "numeric"
+    },
+    "Currency": {
+      "component": "FieldCurrency",
+      "category": "numeric",
+      "jstype": "number",
+      "value_processor": "numeric"
+    },
+    "Percent": {
+      "component": "FieldFloat",
+      "category": "numeric",
+      "jstype": "number",
+      "value_processor": "numeric"
+    },
+    "Rating": {
+      "component": "FieldInt",
+      "category": "numeric",
+      "jstype": "number",
+      "value_processor": "numeric"
+    },
+    "Duration": {
+      "component": "FieldFloat",
+      "category": "numeric",
+      "jstype": "number",
+      "value_processor": "numeric"
+    },
+    "Check": {
+      "component": "FieldCheck",
+      "category": "boolean",
+      "jstype": "boolean",
+      "value_processor": "boolean"
+    },
+    "Select": {
+      "component": "FieldSelect",
+      "category": "choice",
+      "jstype": "string",
+      "value_processor": "text",
+      "_optionsResolver": "_resolverSelect"
+    },
+    "Link": {
+      "component": "FieldLink",
+      "category": "reference",
+      "jstype": "string",
+      "value_processor": "text",
+      "_optionsResolver": "_resolverLink"
+    },
+    "Dynamic Link": {
+      "component": "FieldLink",
+      "category": "reference",
+      "jstype": "string",
+      "value_processor": "text"
+    },
+    "Date": {
+      "component": "FieldDate",
+      "category": "date",
+      "jstype": "string",
+      "value_processor": "date"
+    },
+    "Datetime": {
+      "component": "FieldDatetime",
+      "category": "date",
+      "jstype": "string",
+      "value_processor": "date"
+    },
+    "Time": {
+      "component": "FieldTime",
+      "category": "date",
+      "jstype": "string",
+      "value_processor": "text"
+    },
+    "MultiSelect": {
+      "_handler": "_handleMultiSelectField",
+      "category": "multi",
+      "jstype": "array",
+      "value_processor": "multi"
+    },
+    "MultiCheck": {
+      "_handler": "_handleMultiCheckField",
+      "category": "multi",
+      "jstype": "array",
+      "value_processor": "multi"
+    },
+    "Table": {
+      "_handler": "_handleTableField",
+      "category": "child",
+      "jstype": "array",
+      "value_processor": "multi"
+    },
+    "Table MultiSelect": {
+      "_handler": "_handleTableMultiSelectField",
+      "category": "child",
+      "jstype": "array",
+      "value_processor": "multi"
+    },
+    "Attach": {
+      "_handler": "_handleAttachField",
+      "category": "media",
+      "jstype": "string",
+      "value_processor": "text"
+    },
+    "Attach Image": {
+      "_handler": "_handleAttachImageField",
+      "category": "media",
+      "jstype": "string",
+      "value_processor": "text"
+    },
+    "Image": {
+      "_handler": "_handleAttachImageField",
+      "category": "media",
+      "jstype": "string",
+      "value_processor": "text"
+    },
+    "Signature": {
+      "_handler": "_handleSignatureField",
+      "category": "media",
+      "jstype": "string",
+      "value_processor": "text"
+    },
+    "HTML": {
+      "_handler": "_handleHTMLField",
+      "category": "layout",
+      "jstype": "string",
+      "value_processor": "text"
+    },
+    "HTML Editor": {
+      "_handler": "_handleHTMLEditorField",
+      "category": "text",
+      "jstype": "string",
+      "value_processor": "text"
+    },
+    "Code": {
+      "_handler": "_handleCodeField",
+      "category": "text",
+      "jstype": "string",
+      "value_processor": "text"
+    },
+    "Markdown Editor": {
+      "_handler": "_handleMarkdownField",
+      "category": "text",
+      "jstype": "string",
+      "value_processor": "text"
+    },
+    "JSON": {
+      "_handler": "_handleJSONField",
+      "category": "data",
+      "jstype": "object",
+      "value_processor": "text"
+    },
+    "Geolocation": {
+      "_handler": "_handleGeolocationField",
+      "category": "data",
+      "jstype": "object",
+      "value_processor": "text"
+    },
+    "Autocomplete": {
+      "component": "FieldData",
+      "category": "input",
+      "jstype": "string",
+      "value_processor": "text"
+    },
+    "Barcode": {
+      "component": "FieldData",
+      "category": "input",
+      "jstype": "string",
+      "value_processor": "text"
+    },
+    "Color": {
+      "component": "FieldData",
+      "category": "input",
+      "jstype": "string",
+      "value_processor": "text"
+    },
+    "Phone": {
+      "component": "FieldData",
+      "category": "input",
+      "jstype": "string",
+      "value_processor": "text"
+    },
+    "Section Break": {
+      "category": "layout",
+      "jstype": "null"
+    },
+    "Column Break": {
+      "category": "layout",
+      "jstype": "null"
+    },
+    "Heading": {
+      "category": "layout",
+      "jstype": "null"
+    },
+    "Fold": {
+      "category": "layout",
+      "jstype": "null"
+    },
+    "Button": {
+      "category": "control",
+      "jstype": "null"
+    }
+  },
+  "fieldtypes": {
+    "all_fieldtypes": {
+      "Attach": {
+        "category": "media",
+        "jstype": "string"
+      },
+      "AttachImage": {
+        "category": "media",
+        "jstype": "string"
+      },
+      "Autocomplete": {
+        "category": "input",
+        "jstype": "string"
+      },
+      "Barcode": {
+        "category": "input",
+        "jstype": "string"
+      },
+      "Button": {
+        "category": "control",
+        "jstype": "null"
+      },
+      "Check": {
+        "category": "boolean",
+        "jstype": "boolean"
+      },
+      "Code": {
+        "category": "text",
+        "jstype": "string"
+      },
+      "Color": {
+        "category": "input",
+        "jstype": "string"
+      },
+      "Column Break": {
+        "category": "layout",
+        "jstype": "null"
+      },
+      "Currency": {
+        "category": "numeric",
+        "jstype": "number"
+      },
+      "Data": {
+        "category": "text",
+        "jstype": "string"
+      },
+      "Date": {
+        "category": "date",
+        "jstype": "string"
+      },
+      "Datetime": {
+        "category": "date",
+        "jstype": "string"
+      },
+      "Duration": {
+        "category": "numeric",
+        "jstype": "number"
+      },
+      "Dynamic Link": {
+        "category": "reference",
+        "jstype": "string"
+      },
+      "Float": {
+        "category": "numeric",
+        "jstype": "number"
+      },
+      "Fold": {
+        "category": "layout",
+        "jstype": "null"
+      },
+      "Geolocation": {
+        "category": "data",
+        "jstype": "object"
+      },
+      "Heading": {
+        "category": "layout",
+        "jstype": "null"
+      },
+      "HTML": {
+        "category": "layout",
+        "jstype": "string"
+      },
+      "HTML Editor": {
+        "category": "text",
+        "jstype": "string"
+      },
+      "Image": {
+        "category": "media",
+        "jstype": "string"
+      },
+      "Int": {
+        "category": "numeric",
+        "jstype": "number"
+      },
+      "JSON": {
+        "category": "data",
+        "jstype": "object"
+      },
+      "Link": {
+        "category": "reference",
+        "jstype": "string"
+      },
+      "Long Text": {
+        "category": "text",
+        "jstype": "string"
+      },
+      "Markdown Editor": {
+        "category": "text",
+        "jstype": "string"
+      },
+      "MultiCheck": {
+        "category": "multi",
+        "jstype": "array"
+      },
+      "MultiSelect": {
+        "category": "multi",
+        "jstype": "array"
+      },
+      "Percent": {
+        "category": "numeric",
+        "jstype": "number"
+      },
+      "Phone": {
+        "category": "input",
+        "jstype": "string"
+      },
+      "Read Only": {
+        "category": "input",
+        "jstype": "string"
+      },
+      "Rating": {
+        "category": "numeric",
+        "jstype": "number"
+      },
+      "Section Break": {
+        "category": "layout",
+        "jstype": "null"
+      },
+      "Select": {
+        "category": "choice",
+        "jstype": "string"
+      },
+      "Signature": {
+        "category": "media",
+        "jstype": "string"
+      },
+      "Small Text": {
+        "category": "text",
+        "jstype": "string"
+      },
+      "Table": {
+        "category": "child",
+        "jstype": "array"
+      },
+      "Table MultiSelect": {
+        "category": "child",
+        "jstype": "array"
+      },
+      "Text": {
+        "category": "text",
+        "jstype": "string"
+      },
+      "Time": {
+        "category": "date",
+        "jstype": "string"
+      }
+    },
+    "boolean_fieldtypes": [
+      "Check"
+    ],
+    "child_fieldtypes": [
+      "Table",
+      "Table MultiSelect"
+    ],
+    "date_fieldtypes": [
+      "Date",
+      "Datetime",
+      "Duration",
+      "Time"
+    ],
+    "html_fieldtypes": [
+      "HTML",
+      "HTML Editor",
+      "Markdown Editor"
+    ],
+    "layout_fieldtypes": [
+      "Column Break",
+      "Fold",
+      "Heading",
+      "Section Break"
+    ],
+    "multi_value_fieldtypes": [
+      "MultiCheck",
+      "MultiSelect",
+      "Table MultiSelect"
+    ],
+    "numeric_fieldtypes": [
+      "Currency",
+      "Duration",
+      "Float",
+      "Int",
+      "Percent",
+      "Rating"
+    ],
+    "text_fieldtypes": [
+      "Autocomplete",
+      "Barcode",
+      "Code",
+      "Color",
+      "Data",
+      "Long Text",
+      "Phone",
+      "Read Only",
+      "Select",
+      "Small Text",
+      "Text"
+    ],
+    "link_behavior": {
+      "default": "lazy",
+      "overrides": {
+        "Company": "cached",
+        "Role": "lazy",
+        "User": "eager"
+      }
+    },
+    "std_fields_override": {
+      "creation": {
+        "jstype": "string",
+        "description": "ISO datetime string when created"
+      },
+      "docstatus": {
+        "jstype": "number",
+        "enum": [
+          0,
+          1,
+          2
+        ]
+      },
+      "idx": {
+        "jstype": "number"
+      },
+      "modified": {
+        "jstype": "string"
+      },
+      "modified_by": {
+        "jstype": "string",
+        "link": "User"
+      },
+      "name": {
+        "jstype": "string",
+        "description": "Primary key"
+      },
+      "owner": {
+        "jstype": "string",
+        "link": "User"
+      },
+      "parent": {
+        "jstype": "string",
+        "link": "Any"
+      },
+      "parentfield": {
+        "jstype": "string"
+      },
+      "parenttype": {
+        "jstype": "string"
+      }
+    }
+  },
+  "render_behavior": {
+    "value_processors": {
+      "boolean": "Boolean(value)",
+      "date": "new Date(value).toISOString()",
+      "numeric": "Number(value)",
+      "text": "String(value)",
+      "multi": "Array.isArray(value) ? value : []"
+    }
+  },
+  "layout_rules": {
+    "Section Break": {
+      "type": "container",
+      "className": "form.section",
+      "creates_section": true,
+      "header": {
+        "type": "heading",
+        "level": 3,
+        "className": "form.sectionLabel"
+      }
+    },
+    "Column Break": {
+      "type": "container",
+      "className": "form.column",
+      "creates_column": true
+    },
+    "_default": {
+      "type": "field",
+      "wrapper": {
+        "type": "container",
+        "className": "form.fieldWrapper"
+      }
+    }
+  },
+  "render_map": {
+    "container": {
+      "element": "div"
+    },
+    "heading": {},
+    "label": {
+      "element": "label"
+    },
+    "field": {
+      "handler": "_renderField"
+    },
+    "button": {
+      "element": "button"
+    },
+    "link": {
+      "element": "a"
+    },
+    "component": {
+      "handler": "_renderComponent"
+    }
+  }
+}

@@ -6,12 +6,12 @@
 
 
 globalThis.CW = globalThis.CW || {};
-const CW = globalThis.CW;
+
 
 
 // =========================================
 
-globalThis.CW = {
+Object.assign(globalThis.CW, {
   runs: {}, // indexed by run.name
   runsByOpKey: {}, // indexed by operation_key
   current_run: null,
@@ -240,7 +240,7 @@ compileAll: async function() {
     return value;
   },
 
-};
+});
 
 // ============================================================
 // Wrap CW in Proxy for Dynamic Doctype Access
