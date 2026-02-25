@@ -6,31 +6,31 @@ if (typeof process !== "undefined") {
 }
 
 async function bootstrap(env) {
-  // Node.js — use process.env after dotenv loaded
-  const resolvedEnv =
-    env || (typeof process !== "undefined" ? process.env : {});
-
+  const resolvedEnv = env || (typeof process !== "undefined" ? process.env : {});
   const base = resolvedEnv.BASE_URL || "http://localhost:3000";
-  const config = await fetch(`${base}/config.json`).then((r) => r.json());
-  if (resolvedEnv.JWT_SECRET) config.auth.jwtSecret = resolvedEnv.JWT_SECRET;
-  globalThis.CW._config = config;
+
+  globalThis.CW._config = await fetch(`${base}/config.json`).then((r) => r.json());
+  if (resolvedEnv.JWT_SECRET) globalThis.CW._config.auth.jwtSecret = resolvedEnv.JWT_SECRET;
 
   const docs = await fetch(`${base}/db.json`).then((r) => r.json());
 
-  // ADD HERE
-  const schemas = docs.filter((d) => d.doctype === "Schema");
   globalThis.Schema = {};
-  for (const s of schemas) {
+  for (const s of docs.filter((d) => d.doctype === "Schema")) {
     globalThis.Schema[s.schema_name] = s;
   }
 
   await globalThis.CW._compileDocument({
     target: {
-      data: docs.filter(
-        (d) => d.doctype === "Adapter" || d.doctype === "Schema",
-      ),
+      data: docs.filter((d) => d.doctype === "Adapter" || d.doctype === "Schema"),
     },
   });
+
+  if (globalThis.CW.Adapter[globalThis.CW._config.adapters.defaults.db]?.init) {
+    await globalThis.CW.Adapter[globalThis.CW._config.adapters.defaults.db].init({
+      target: { data: [globalThis.CW.Adapter[globalThis.CW._config.adapters.defaults.db]] },
+    });
+  }
+
   console.log("✅ bootstrap complete");
 }
 
