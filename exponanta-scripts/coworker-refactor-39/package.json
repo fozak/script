@@ -1,0 +1,18 @@
+{
+  "name": "coworker-refactor-39",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "serve": "serve .",
+    "start": "node index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "dotenv": "^17.3.1",
+    "serve": "^14.2.5"
+  }
+}
