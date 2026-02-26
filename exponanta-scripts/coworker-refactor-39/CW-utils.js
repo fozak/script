@@ -243,6 +243,145 @@ const persist = async (run_doc) => {
   console.log("[persist] would save", { ...run_doc.target.data[0] });
 };
 
+// ============================================================
+//  AUTH 
+// ============================================================
+
+
+async function generateToken(run_doc) {
+  if (!globalThis.crypto?.subtle) {
+    throw new Error('WebCrypto (crypto.subtle) is required');
+  }
+
+  const user = run_doc.target.data[0];
+  const now = Math.floor(Date.now() / 1000);
+  const exp = now + 86400; // 24h
+
+  // --- base64url helpers ---
+  function base64urlFromBytes(bytes) {
+    let binary = '';
+    for (let i = 0; i < bytes.length; i++) {
+      binary += String.fromCharCode(bytes[i]);
+    }
+    return btoa(binary)
+      .replace(/\+/g, '-')
+      .replace(/\//g, '_')
+      .replace(/=+$/, '');
+  }
+
+  function base64urlFromJSON(obj) {
+    const json = JSON.stringify(obj);
+    const bytes = new TextEncoder().encode(json);
+    return base64urlFromBytes(bytes);
+  }
+
+  // --- JWT parts ---
+  const header = base64urlFromJSON({
+    alg: 'HS256',
+    typ: 'JWT'
+  });
+
+  const payload = base64urlFromJSON({
+  sub: user.email,
+  email: user.email,
+  name: user.name,
+  _allowed_read: user._allowed_read,
+  email_verified: user.email_verified ? 1 : 0, // <-- 1/0 instead of true/false
+  exp
+});
+
+  const data = `${header}.${payload}`;
+
+  // --- sign ---
+const key = await crypto.subtle.importKey(
+  'raw',
+  new TextEncoder().encode(globalThis.CW._config.auth.jwtSecret),
+  { name: 'HMAC', hash: 'SHA-256' },
+  false,
+  ['sign']
+);
+
+  const signatureBuffer = await crypto.subtle.sign(
+    'HMAC',
+    key,
+    new TextEncoder().encode(data)
+  );
+
+  const signature = base64urlFromBytes(
+    new Uint8Array(signatureBuffer)
+  );
+
+  // --- attach token to user ---
+  user.token = `${data}.${signature}`;
+
+  return run_doc;
+}
+
+// ============================================================
+
+async function verifyJWT(token, jwtSecret) {
+  if (!globalThis.crypto?.subtle) {
+    throw new Error("WebCrypto (crypto.subtle) is required");
+  }
+
+  if (!token || !jwtSecret) return null;
+
+  const parts = token.split(".");
+  if (parts.length !== 3) return null;
+
+  const [headerB64, payloadB64, signatureB64] = parts;
+
+  // --- base64url helpers ---
+  function base64urlToBytes(str) {
+    str = str.replace(/-/g, "+").replace(/_/g, "/");
+    const padded = str + "===".slice((str.length + 3) % 4);
+    const binary = atob(padded);
+    return new Uint8Array([...binary].map(c => c.charCodeAt(0)));
+  }
+
+  function base64urlToJSON(str) {
+    const bytes = base64urlToBytes(str);
+    return JSON.parse(new TextDecoder().decode(bytes));
+  }
+
+  // --- re-create data string ---
+  const data = `${headerB64}.${payloadB64}`;
+
+  // --- import key ---
+  const key = await crypto.subtle.importKey(
+    "raw",
+    new TextEncoder().encode(jwtSecret),
+    { name: "HMAC", hash: "SHA-256" },
+    false,
+    ["verify"]
+  );
+
+  // --- verify signature ---
+  const signatureBytes = base64urlToBytes(signatureB64);
+  const valid = await crypto.subtle.verify(
+    "HMAC",
+    key,
+    signatureBytes,
+    new TextEncoder().encode(data)
+  );
+
+  if (!valid) return null;
+
+  // --- decode payload ---
+  let payload;
+  try {
+    payload = base64urlToJSON(payloadB64);
+  } catch (e) {
+    return null;
+  }
+
+  // --- check expiration ---
+  const now = Math.floor(Date.now() / 1000);
+  if (payload.exp && payload.exp < now) return null;
+
+  return payload;
+}
+// ============================================================
 
 Object.assign(globalThis, {
   generateId,
@@ -253,6 +392,8 @@ Object.assign(globalThis, {
   evaluateDependsOn,
   validateId,
   persist,
+  generateToken,
+  verifyJWT
 });
 
 console.log("✅ Utils loaded");

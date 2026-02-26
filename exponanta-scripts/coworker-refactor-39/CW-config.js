@@ -1,8 +1,6 @@
 // ============================================================
-// CW-config.js 
+// CW-config.js
 // ============================================================
-
-
 
 globalThis.CW._config = {
   // ============================================================
@@ -18,10 +16,10 @@ globalThis.CW._config = {
       email: null, // Future
     },
     payloadAdapters: {
-    "Request": "http-gateway",
-    "Object": "run-builder",
-    "Run": null,
-  },
+      Request: "http-gateway",
+      Object: "run-builder",
+      Run: null,
+    },
 
     // Adapter registry (defines what's available)
     registry: {
@@ -66,28 +64,59 @@ globalThis.CW._config = {
       // ──────────────────────────────────────────────────────
       // AUTH ADAPTERS
       // ──────────────────────────────────────────────────────
-      jwt: {
+      auth: {
         type: "auth",
         name: "JWT Auth",
-        description: "JSON Web Token authentication",
+        description: "JSOauthentication",
         handler: "_authAdapters.jwt",
         capabilities: [
-          "register",
-          "login",
-          "logout",
+          "signup",
+          "signin",
+          "signout",
           "refresh",
-          "verify",
+          "verifyJWT",
           "change_password",
         ],
         config: {
-          // Uses coworker._config.auth settings below
+          jwtSecret:
+            (typeof process !== "undefined" && process.env?.JWT_SECRET) ||
+            "change-this-secret-in-production",
+          jwtAlgorithm: "HS256",
+
+          // Token expiration
+          accessTokenExpiry: "15m", // 15 minutes
+          refreshTokenExpiry: "30d", // 30 days
+
+          // For internal calculations
+          accessTokenExpiryMs: 15 * 60 * 1000, // 15 minutes
+          refreshTokenExpiryMs: 30 * 24 * 60 * 60 * 1000, // 30 days
+
+          // Security settings
+          passwordHashIterations: 100000,
+          saltLength: 16,
+          maxFailedAttempts: 5,
+          lockDurationMs: 15 * 60 * 1000, // 15 minutes
+          maxRefreshTokens: 5, // Max concurrent sessions per user
+
+          // User doctype fields
+          userDoctype: "User",
+          userEmailField: "email",
+          emailVerifiedField: "email_verified", // <-- 1/0 field
+
+          // Default roles
+          defaultRoles: ["Desk User"],
+          adminRole: "System Manager",
+          publicRole: "Is Public",
+
+          // Optional: include any flags in JWT payload
+          includeInJWT: ["_allowed_read", "email_verified"], // ensures payload has 1/0
         },
       },
     },
   },
 
   // ============================================================
-  // AUTH CONFIG (✅ NEW SECTION)
+  // AUTH CONFIG (✅ NEW SECTION) DO NOW USE - moved to upper
   // ============================================================
   auth: {
     // JWT Configuration
@@ -906,82 +935,82 @@ globalThis.CW._config = {
     // ATTACH IMAGE - NO INLINE STYLES
     // ════════════════════════════════════════════════════════
 
-"Attach Image": {
-  customComponent: true,
-  render: function AttachImage({ field, value, handlers, run }) {
-    const [preview, setPreview] = React.useState(value || null);
-    const [uploading, setUploading] = React.useState(false);
+    "Attach Image": {
+      customComponent: true,
+      render: function AttachImage({ field, value, handlers, run }) {
+        const [preview, setPreview] = React.useState(value || null);
+        const [uploading, setUploading] = React.useState(false);
 
-    const handleFileSelect = async (e) => {
-      const file = e.target.files[0];
-      if (!file) return;
+        const handleFileSelect = async (e) => {
+          const file = e.target.files[0];
+          if (!file) return;
 
-      if (!file.type.startsWith("image/")) {
-        alert("Please select an image file");
-        return;
-      }
+          if (!file.type.startsWith("image/")) {
+            alert("Please select an image file");
+            return;
+          }
 
-      const reader = new FileReader();
-      reader.onload = (e) => setPreview(e.target.result);
-      reader.readAsDataURL(file);
+          const reader = new FileReader();
+          reader.onload = (e) => setPreview(e.target.result);
+          reader.readAsDataURL(file);
 
-      setUploading(true);
-      const base64 = await new Promise((resolve) => {
-        const r = new FileReader();
-        r.onload = () => resolve(r.result);
-        r.readAsDataURL(file);
-      });
+          setUploading(true);
+          const base64 = await new Promise((resolve) => {
+            const r = new FileReader();
+            r.onload = () => resolve(r.result);
+            r.readAsDataURL(file);
+          });
 
-      if (handlers.onChange) {
-        handlers.onChange(field.fieldname, base64);
-      }
-      setUploading(false);
-    };
+          if (handlers.onChange) {
+            handlers.onChange(field.fieldname, base64);
+          }
+          setUploading(false);
+        };
 
-    const handleRemove = () => {
-      setPreview(null);
-      if (handlers.onChange) {
-        handlers.onChange(field.fieldname, null);
-      }
-    };
+        const handleRemove = () => {
+          setPreview(null);
+          if (handlers.onChange) {
+            handlers.onChange(field.fieldname, null);
+          }
+        };
 
-    return React.createElement(
-      "div",
-      { className: globalThis.CWStyles.field.attachImageWrapper },
-
-      preview &&
-        React.createElement(
+        return React.createElement(
           "div",
-          { className: globalThis.CWStyles.field.attachImagePreview },
-          React.createElement("img", { src: preview }),
-          React.createElement(
-            "button",
-            {
-              type: "button",
-              className: globalThis.CWStyles.field.attachImageRemove,
-              onClick: handleRemove,
-            },
-            "×",
-          ),
-        ),
+          { className: globalThis.CWStyles.field.attachImageWrapper },
 
-      !preview &&
-        React.createElement("input", {
-          type: "file",
-          accept: "image/*",
-          onChange: handleFileSelect,
-          disabled: field.read_only || uploading,
-        }),
+          preview &&
+            React.createElement(
+              "div",
+              { className: globalThis.CWStyles.field.attachImagePreview },
+              React.createElement("img", { src: preview }),
+              React.createElement(
+                "button",
+                {
+                  type: "button",
+                  className: globalThis.CWStyles.field.attachImageRemove,
+                  onClick: handleRemove,
+                },
+                "×",
+              ),
+            ),
 
-      uploading &&
-        React.createElement(
-          "span",
-          { className: globalThis.CWStyles.field.attachImageUploading },
-          "Uploading...",
-        ),
-    );
-  },
-},
+          !preview &&
+            React.createElement("input", {
+              type: "file",
+              accept: "image/*",
+              onChange: handleFileSelect,
+              disabled: field.read_only || uploading,
+            }),
+
+          uploading &&
+            React.createElement(
+              "span",
+              { className: globalThis.CWStyles.field.attachImageUploading },
+              "Uploading...",
+            ),
+        );
+      },
+    },
 
     // ════════════════════════════════════════════════════════
     // MISSING EASY TYPES
@@ -1031,7 +1060,7 @@ globalThis.CW._config = {
       element: "input",
       props: {
         type: "password",
-        autoComplete: "current-password",   //was autocomplete
+        autoComplete: "current-password", //was autocomplete
       },
       state: { localValue: "{{value || ''}}" },
       events: {
