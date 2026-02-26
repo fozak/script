@@ -9,6 +9,11 @@
       "storage": null,
       "email": null
     },
+    "payloadAdapters": {
+    "Request": "http-gateway",
+    "Object": "run-builder",
+    "Run": null
+  },
     "registry": {
       "pocketbase": {
         "type": "db",

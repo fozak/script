@@ -1,8 +1,8 @@
 // ============================================================
-// coworker-config.js v1.25COWORKER CONFIG - Configuration Only (No Execution Logic)
+// CW-config.js 
 // ============================================================
 
-// coworker-config.js — 39 refactor
+
 
 globalThis.CW._config = {
   // ============================================================
@@ -17,6 +17,11 @@ globalThis.CW._config = {
       storage: null, // Future
       email: null, // Future
     },
+    payloadAdapters: {
+    "Request": "http-gateway",
+    "Object": "run-builder",
+    "Run": null,
+  },
 
     // Adapter registry (defines what's available)
     registry: {

@@ -1,4 +1,9 @@
+//==index.js===
+
 import "./CW-state.js";
+//import "./CW-config.js";  loaded as json in index.js
+import "./CW-utils.js";
+import "./NEW-controller.js";
 
 if (typeof process !== "undefined") {
   const { config } = await import("dotenv");
