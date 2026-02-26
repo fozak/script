@@ -1,7 +1,5 @@
-//==index.js===
-
 import "./CW-state.js";
-//import "./CW-config.js";  loaded as json in index.js
+import "./CW-config.js";
 import "./CW-utils.js";
 import "./NEW-controller.js";
 

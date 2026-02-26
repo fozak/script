@@ -1,19 +1,90 @@
-CW._buildRun = function(op) {
+CW._resolveAll = function(op) {
+  const cfg = CW._config;
 
-const resolved = CW._resolveAll(op);
+  // 1. Resolve operation
+  const operation = cfg.operationAliases[op.operation?.toLowerCase()] || op.operation;
+
+  // 2. Resolve doctypes
+  const dtMap = cfg.doctypeAliases || {};
+  const source_doctype = op.source_doctype ? dtMap[op.source_doctype.toLowerCase()] || op.source_doctype : null;
+  const target_doctype = op.target_doctype ? dtMap[op.target_doctype.toLowerCase()] || op.target_doctype : null;
+
+  // 3. Resolve operation config
+  const opConfig = cfg.operations[operation] || {};
+
+  // 4. Resolve adapter from operation type
+  const adapterType = opConfig.adapterType || 'db';
+  const adapter = cfg.adapters.defaults[adapterType] || cfg.adapters.defaults.db;
+
+  // 5. Resolve view
+  const view = cfg.operationToView?.[operation] ?? null;
+  const viewConfig = cfg.views?.[view?.toLowerCase()] || {};
+
+  return {
+    operation,
+    operation_original: op.operation,
+    source_doctype,
+    target_doctype,
+    adapter,
+    view: 'view' in op ? op.view : view,
+    component: 'component' in op ? op.component : (viewConfig.component ?? null),
+    container: 'container' in op ? op.container : (viewConfig.container ?? null),
+    owner: op.owner || 'system',
+  };
+};
+
+
+
+CW._buildRun = function(op) {
+  const resolved = CW._resolveAll(op);
+
   const run_doc = {
+    // Frappe standard fields
     doctype: 'Run',
     name: generateId('run'),
     creation: Date.now(),
-    operation: op.operation || null,
-    target_doctype: op.target_doctype || null,
+    modified: Date.now(),
+    operation_key: JSON.stringify(op),
+    modified_by: resolved.owner || 'system',
+    docstatus: 0,
+    owner: resolved.owner || 'system',
+
+    // compatibility
+    config: op.config || {},
+    functions: op.functions || {},
+
+    // Operation definition
+    operation: resolved.operation,
+    operation_original: op.operation,
+    source: op.source || null,
+    source_doctype: resolved.source_doctype,
+    target_doctype: resolved.target_doctype,
+
+    // UI/Rendering
+    view: 'view' in op ? op.view : resolved.view,
+    component: 'component' in op ? op.component : resolved.component,
+    container: 'container' in op ? op.container : resolved.container,
+
+    // Data
     query: op.query || {},
     input: op.input || {},
-    target: null,
-    user: op.user || null,
+    target: op.target || null,
+
+    // Execution state
+    _state: {},
     status: 'running',
     success: false,
     error: null,
+
+    // Hierarchy
+    parent_run_id: op.parent_run_id || null,
+    child_run_ids: [],
+
+    // Authorization
+    user: op.user || null,
+    child: null,
+
+    // Controller internals
     _running: false,
     _needsRun: false,
   };
@@ -27,6 +98,18 @@ const resolved = CW._resolveAll(op);
     set(t, p, v)         { t[p] = v;    wake(); return true; },
     deleteProperty(t, p) { delete t[p]; wake(); return true; }
   });
+
+  run_doc.child = async (cfg) => {
+    const childRun = await CW.controller({
+      ...cfg,
+      user: cfg.user ?? run_doc.user,
+      parent_run_id: run_doc.name,
+    });
+    if (!run_doc.child_run_ids.includes(childRun.name)) {
+      run_doc.child_run_ids.push(childRun.name);
+    }
+    return childRun;
+  };
 
   return run_doc;
 };
