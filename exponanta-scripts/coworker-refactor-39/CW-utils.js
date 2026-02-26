@@ -250,12 +250,15 @@ const persist = async (run_doc) => {
 
 async function generateToken(run_doc) {
   if (!globalThis.crypto?.subtle) {
-    throw new Error('WebCrypto (crypto.subtle) is required');
+    throw new Error("WebCrypto (crypto.subtle) is required");
   }
 
   const user = run_doc.target.data[0];
+
+  // --- calculate exp from config ---
+  const cfg = globalThis.CW._config.adapters.registry.auth.config;
   const now = Math.floor(Date.now() / 1000);
-  const exp = now + 86400; // 24h
+  const exp = now + Math.floor(cfg.accessTokenExpiryMs / 1000);
 
   // --- base64url helpers ---
   function base64urlFromBytes(bytes) {
@@ -263,10 +266,7 @@ async function generateToken(run_doc) {
     for (let i = 0; i < bytes.length; i++) {
       binary += String.fromCharCode(bytes[i]);
     }
-    return btoa(binary)
-      .replace(/\+/g, '-')
-      .replace(/\//g, '_')
-      .replace(/=+$/, '');
+    return btoa(binary).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
   }
 
   function base64urlFromJSON(obj) {
@@ -276,30 +276,27 @@ async function generateToken(run_doc) {
   }
 
   // --- JWT parts ---
-  const header = base64urlFromJSON({
-    alg: 'HS256',
-    typ: 'JWT'
-  });
+  const header = base64urlFromJSON({ alg: cfg.jwtAlgorithm || 'HS256', typ: 'JWT' });
 
   const payload = base64urlFromJSON({
-  sub: user.email,
-  email: user.email,
-  name: user.name,
-  _allowed_read: user._allowed_read,
-  email_verified: user.email_verified ? 1 : 0, // <-- 1/0 instead of true/false
-  exp
-});
+    sub: user.email,
+    email: user.email,
+    name: user.name,
+    _allowed_read: user._allowed_read,
+    email_verified: user.email_verified ? 1 : 0,
+    exp
+  });
 
   const data = `${header}.${payload}`;
 
   // --- sign ---
-const key = await crypto.subtle.importKey(
-  'raw',
-  new TextEncoder().encode(globalThis.CW._config.auth.jwtSecret),
-  { name: 'HMAC', hash: 'SHA-256' },
-  false,
-  ['sign']
-);
+  const key = await crypto.subtle.importKey(
+    'raw',
+    new TextEncoder().encode(cfg.jwtSecret),
+    { name: 'HMAC', hash: 'SHA-256' },
+    false,
+    ['sign']
+  );
 
   const signatureBuffer = await crypto.subtle.sign(
     'HMAC',
@@ -307,9 +304,7 @@ const key = await crypto.subtle.importKey(
     new TextEncoder().encode(data)
   );
 
-  const signature = base64urlFromBytes(
-    new Uint8Array(signatureBuffer)
-  );
+  const signature = base64urlFromBytes(new Uint8Array(signatureBuffer));
 
   // --- attach token to user ---
   user.token = `${data}.${signature}`;

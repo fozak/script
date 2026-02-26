@@ -166,7 +166,7 @@ globalThis.CW._config = {
 
     // Auth aliases (✅ NEW)
     signin: "login",
-    signup: "register",
+    signup: "create",
     signout: "logout",
     refresh_token: "refresh",
   },

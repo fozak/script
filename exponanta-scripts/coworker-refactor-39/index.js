@@ -12,7 +12,12 @@ async function bootstrap(env) {
   const resolvedEnv = env || (typeof process !== "undefined" ? process.env : {});
   const base = resolvedEnv.BASE_URL || "http://localhost:3000";
 
-  globalThis.CW._config = await fetch(`${base}/config.json`).then((r) => r.json());
+  //globalThis.CW._config = await fetch(`${base}/config.json`).then((r) => r.json());
+  // Only fetch config.json if CW._config is not already set
+  if (!globalThis.CW._config) {
+    globalThis.CW._config = await fetch(`${base}/config.json`).then((r) => r.json());
+  }
+
   if (resolvedEnv.JWT_SECRET) globalThis.CW._config.auth.jwtSecret = resolvedEnv.JWT_SECRET;
 
   const docs = await fetch(`${base}/db.json`).then((r) => r.json());
