@@ -1,5 +1,5 @@
 // ============================================================
-// coworker-utils.js
+// CW-utils.js
 // ============================================================
 
 
@@ -242,5 +242,17 @@ CW.evalTemplateObj = (obj, context) => {
 const persist = async (run_doc) => {
   console.log("[persist] would save", { ...run_doc.target.data[0] });
 };
+
+
+Object.assign(globalThis, {
+  generateId,
+  parseLayout,
+  debounce,
+  deepClone,
+  getByPath,
+  evaluateDependsOn,
+  validateId,
+  persist,
+});
 
 console.log("✅ Utils loaded");
