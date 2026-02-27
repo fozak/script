@@ -118,7 +118,7 @@ globalThis.CW._config = {
   // ============================================================
   // AUTH CONFIG (✅ NEW SECTION) DO NOW USE - moved to upper
   // ============================================================
-  auth: {
+  /*auth: {
     // JWT Configuration
     jwtSecret:
       (typeof process !== "undefined" && process.env?.JWT_SECRET) ||
@@ -148,7 +148,7 @@ globalThis.CW._config = {
     defaultRoles: ["Desk User"],
     adminRole: "System Manager",
     publicRole: "Is Public",
-  },
+  },*/
 
   // ============================================================
   // OPERATION ALIASES (existing)
@@ -165,9 +165,9 @@ globalThis.CW._config = {
     patch: "update",
 
     // Auth aliases (✅ NEW)
-    signin: "login",
-    signup: "create",
-    signout: "logout",
+    login: "signin",
+    register: "signup",
+    logout: "signout",
     refresh_token: "refresh",
   },
 
