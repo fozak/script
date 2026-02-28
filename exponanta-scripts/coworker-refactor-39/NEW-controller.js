@@ -1,3 +1,24 @@
+//new-controller.js
+
+CW._resolveInput = function(run_doc) {
+  for (const [key, value] of Object.entries(run_doc.input)) {
+    if (key.startsWith('.')) {
+      run_doc[key.slice(1)] = value;
+      delete run_doc.input[key];
+    } else if (key.startsWith('Adapter.')) {
+      // FSM handles these
+    } else if (key.includes('.')) {
+      const [root, ...rest] = key.split('.');
+      run_doc[root] = run_doc[root] || {};
+      run_doc[root][rest.join('.')] = value;
+      delete run_doc.input[key];
+    }
+    // plain field — stays in input- to implement later
+  }
+};
+
+
+
 CW._resolveAll = function(op) {
   const cfg = CW._config;
 
@@ -35,7 +56,7 @@ CW._resolveAll = function(op) {
 
 
 
-CW._buildRun = function(op) {
+CW.run = function(op) {
   const resolved = CW._resolveAll(op);
 
   const run_doc = {
@@ -114,20 +135,27 @@ CW._buildRun = function(op) {
   return run_doc;
 };
 
+
+
 CW.controller = async function(payload) {
   if (payload._running) { payload._needsRun = true; return payload; }
 
-  const type = payload instanceof Request ? 'Request' : payload.doctype || 'Object';
-  const adapterName = CW._config.adapters.payloadAdapters[type];
+  let run_doc;
 
-  const run_doc = adapterName
-    ? CW._buildRun({ operation: payload.operation, target_doctype: payload.target_doctype, query: payload.query, input: { ...payload.input }, user: payload.user })
-    : payload;
+  if (payload instanceof Request) {
+    run_doc = CW.run({});
+    run_doc._running = true;
+    await CW.Adapter[CW._config.adapters.payloadAdapters['Request']].execute(payload, run_doc);
+    run_doc._running = false;
+  } else if (payload.doctype === 'Run') {
+    run_doc = payload;
+  } else {
+    run_doc = CW.run(payload);
+  }
 
-  if (adapterName) CW._updateFromRun(run_doc);
-
+  CW._resolveInput(run_doc);
+  CW._updateFromRun(run_doc);
   run_doc._running = true;
-  if (adapterName) await CW.Adapter[adapterName].execute(payload, run_doc);
   if (!run_doc.error) await CW.fsm.handle(run_doc);
   run_doc._running = false;
 
@@ -138,6 +166,9 @@ CW.controller = async function(payload) {
 
   return run_doc;
 };
+
+
+
 
 
 
@@ -176,7 +207,7 @@ Good move.
 
 This line is strong:
 
-const run_doc = adapterName ? CW._buildRun(...) : payload;
+const run_doc = adapterName ? CW.run(...) : payload;
 
 You now have a clear split:
 

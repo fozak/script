@@ -1,6 +1,7 @@
 // ============================================================
 // RISK 1 — Fields not lost during ingress
 // ============================================================
+import ./auth-adapter.js
 
 
 (async () => {
@@ -12,7 +13,7 @@
   });
 console.group('Risk 1: Field preservation');
 const op = { operation: 'signup', target_doctype: 'User', query: { take: 5 }, input: { email: 'a@b.com' }, user: { name: 'anon' } };
-const run1 = CW._buildRun(op);
+const run1 = CW.run(op);
 console.assert(run1.operation === 'signup', '❌ operation lost');
 console.assert(run1.target_doctype === 'User', '❌ target_doctype lost');
 console.assert(run1.query.take === 5, '❌ query lost');
@@ -25,7 +26,7 @@ console.groupEnd();
 // RISK 2 — Proxy observes deletes
 // ============================================================
 console.group('Risk 2: Proxy delete observation');
-const run2 = CW._buildRun({ input: { email: 'a@b.com' } });
+const run2 = CW.run({ input: { email: 'a@b.com' } });
 let wakeCount = 0;
 const origController = CW.controller;
 CW.controller = async (p) => { wakeCount++; };
@@ -42,7 +43,7 @@ console.groupEnd();
 // RISK 3 — No lost intent during execution
 // ============================================================
 console.group('Risk 3: _needsRun replay');
-const run3 = CW._buildRun({ input: {} });
+const run3 = CW.run({ input: {} });
 run3._running = true;
 CW.controller(run3);  // should set _needsRun
 console.assert(run3._needsRun === true, '❌ _needsRun not set');
@@ -59,7 +60,7 @@ console.groupEnd();
 // Risk 5: _running flag blocks re-entry
 // ============================================================
 console.group('Risk 5: _running guard');
-const run5 = CW._buildRun({ operation: 'select' });
+const run5 = CW.run({ operation: 'select' });
 run5._running = true;
 const result5 = await CW.controller(run5);
 console.assert(run5._needsRun === true, '❌ _needsRun not set when blocked');
@@ -71,7 +72,7 @@ console.groupEnd();
 // Risk 6: status transitions correctly
 // ============================================================
 console.group('Risk 6: status transitions');
-const run6 = CW._buildRun({ operation: 'select', target_doctype: 'Item' });
+const run6 = CW.run({ operation: 'select', target_doctype: 'Item' });
 console.assert(run6.status === 'running', '❌ initial status should be running');
 run6.error = '404 Not Found';
 run6.status = run6.error ? 'failed' : 'completed';
@@ -97,7 +98,7 @@ console.groupEnd();
 // Risk 8: proxy fires on Object.assign
 // ============================================================
 console.group('Risk 8: proxy fires on Object.assign');
-const run8 = CW._buildRun({ input: {} });
+const run8 = CW.run({ input: {} });
 let fired8 = false;
 const origController8 = CW.controller;
 CW.controller = async () => { fired8 = true; };
@@ -158,7 +159,7 @@ Good move.
 
 This line is strong:
 
-const run_doc = adapterName ? CW._buildRun(...) : payload;
+const run_doc = adapterName ? CW.run(...) : payload;
 
 You now have a clear split:
 

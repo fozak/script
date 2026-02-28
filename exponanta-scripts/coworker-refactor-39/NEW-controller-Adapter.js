@@ -19,7 +19,7 @@ const makeReq = () => new Request('http://localhost:3000', {
   body: JSON.stringify({ operation: 'select', target_doctype: 'Item' })
 });
 
-const run10 = CW._buildRun({});
+const run10 = CW.run({});
 httpGateway._rateLimits = new Map(); // reset
 httpGateway.config.rateLimit.ip.max = 2; // low limit for test
 await httpGateway.execute(makeReq(), run10);
@@ -38,7 +38,7 @@ console.groupEnd();
 console.group('Risk 11: http-gateway populates run_doc');
 httpGateway._rateLimits = new Map();
 httpGateway.config.rateLimit.ip.max = 100;
-const run11 = CW._buildRun({});
+const run11 = CW.run({});
 const req11 = new Request('http://localhost:3000', {
   method: 'POST',
   headers: { 
@@ -63,12 +63,12 @@ console.groupEnd();
 console.group('Risk 12: http-gateway rejects invalid requests');
 httpGateway._rateLimits = new Map();
 
-const run12a = CW._buildRun({});
+const run12a = CW.run({});
 await httpGateway.execute(new Request('http://localhost:3000', { method: 'GET' }), run12a);
 console.assert(run12a.input['Adapter.http-gateway'] === '-1', '❌ GET should be rejected');
 console.assert(run12a.error === '405 Method Not Allowed', '❌ wrong error for GET');
 
-const run12b = CW._buildRun({});
+const run12b = CW.run({});
 await httpGateway.execute(new Request('http://localhost:3000', { 
   method: 'POST',
   headers: { 'Content-Type': 'text/plain' },
@@ -76,7 +76,7 @@ await httpGateway.execute(new Request('http://localhost:3000', {
 }), run12b);
 console.assert(run12b.input['Adapter.http-gateway'] === '-1', '❌ wrong content-type should be rejected');
 
-const run12c = CW._buildRun({});
+const run12c = CW.run({});
 await httpGateway.execute(new Request('http://localhost:3000', {
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },

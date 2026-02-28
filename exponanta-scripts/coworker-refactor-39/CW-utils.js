@@ -244,9 +244,9 @@ const persist = async (run_doc) => {
 };
 
 // ============================================================
-//  AUTH 
+//  AUTH MOVED to auth adapter 
 // ============================================================
-
+/*
 
 async function generateToken(run_doc) {
   if (!globalThis.crypto?.subtle) {
@@ -377,7 +377,7 @@ async function verifyJWT(token, jwtSecret) {
   return payload;
 }
 // ============================================================
-
+*/
 Object.assign(globalThis, {
   generateId,
   parseLayout,
@@ -386,9 +386,7 @@ Object.assign(globalThis, {
   getByPath,
   evaluateDependsOn,
   validateId,
-  persist,
-  generateToken,
-  verifyJWT
+  persist
 });
 
-console.log("✅ Utils loaded");
+console.log("✅ Utils loaded");  

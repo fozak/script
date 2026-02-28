@@ -1,5 +1,5 @@
 // ============================================================
-// CW-config.js
+// CW-config.js  /updated auth
 // ============================================================
 
 globalThis.CW._config = {
@@ -16,8 +16,8 @@ globalThis.CW._config = {
       email: null, // Future
     },
     payloadAdapters: {
-      Request: "http-gateway",
-      Object: "run-builder",
+      Request: "auth",
+      Object: null,  //was "run-builder"
       Run: null,
     },
 
@@ -66,10 +66,14 @@ globalThis.CW._config = {
       // ──────────────────────────────────────────────────────
       auth: {
         type: "auth",
-        name: "JWT Auth",
-        description: "JSOauthentication",
-        handler: "_authAdapters.jwt",
+        name: "auth",
+        description: "",
+        handler: "_authAdapters.jwt", // not used
         capabilities: [
+          // HTTP gateway
+          "parse_request",
+          "rate_limit",
+          // Auth
           "signup",
           "signin",
           "signout",
@@ -78,6 +82,16 @@ globalThis.CW._config = {
           "change_password",
         ],
         config: {
+          // ── HTTP Gateway ──────────────────────────────────────
+          rateLimit: {
+            ip: { max: 100, window: 60000 },
+            user: { max: 1000, window: 60000 },
+          },
+          bodySize: 102400,
+          methods: ["POST"],
+          contentType: "application/json",
+
+          // ── JWT Auth ──────────────────────────────────────────
           jwtSecret:
             (typeof process !== "undefined" && process.env?.JWT_SECRET) ||
             "change-this-secret-in-production",
@@ -114,41 +128,6 @@ globalThis.CW._config = {
       },
     },
   },
-
-  // ============================================================
-  // AUTH CONFIG (✅ NEW SECTION) DO NOW USE - moved to upper
-  // ============================================================
-  /*auth: {
-    // JWT Configuration
-    jwtSecret:
-      (typeof process !== "undefined" && process.env?.JWT_SECRET) ||
-      "change-this-secret-in-production",
-    jwtAlgorithm: "HS256",
-
-    // Token expiration
-    accessTokenExpiry: "15m", // 15 minutes
-    refreshTokenExpiry: "30d", // 30 days
-
-    // For manual calculations (milliseconds)
-    accessTokenExpiryMs: 15 * 60 * 1000, // 15 minutes
-    refreshTokenExpiryMs: 30 * 24 * 60 * 60 * 1000, // 30 days
-
-    // Security settings
-    passwordHashIterations: 100000,
-    saltLength: 16,
-    maxFailedAttempts: 5,
-    lockDurationMs: 15 * 60 * 1000, // 15 minutes
-    maxRefreshTokens: 5, // Max concurrent sessions per user
-
-    // User doctype configuration
-    userDoctype: "User",
-    userEmailField: "email",
-
-    // Default roles for new users
-    defaultRoles: ["Desk User"],
-    adminRole: "System Manager",
-    publicRole: "Is Public",
-  },*/
 
   // ============================================================
   // OPERATION ALIASES (existing)
@@ -260,7 +239,7 @@ globalThis.CW._config = {
     // ──────────────────────────────────────────────────────
     // AUTH OPERATIONS (✅ NEW)
     // ──────────────────────────────────────────────────────
-    register: {
+    signup: {
       type: "auth",
       adapterType: "auth",
       draft: false,
@@ -269,7 +248,7 @@ globalThis.CW._config = {
       fetchOriginals: false,
       bypassController: false,
     },
-    login: {
+    signin: {
       type: "auth",
       adapterType: "auth",
       draft: false,
@@ -278,7 +257,7 @@ globalThis.CW._config = {
       fetchOriginals: false,
       bypassController: false,
     },
-    logout: {
+    signout: {
       type: "auth",
       adapterType: "auth",
       draft: false,
@@ -296,7 +275,7 @@ globalThis.CW._config = {
       fetchOriginals: false,
       bypassController: false,
     },
-    verify: {
+    verifyJWT: {
       type: "auth",
       adapterType: "auth",
       draft: false,
@@ -313,7 +292,7 @@ globalThis.CW._config = {
       validate: true,
       fetchOriginals: false,
       bypassController: false,
-    },
+    }
   },
 
   /* OLD: Operation behavior configuration for controller
