@@ -27,11 +27,11 @@ async function bootstrap(env) {
     globalThis.Schema[s.schema_name] = s;
   }
 
-  await globalThis.CW._compileDocument({
+  /*await globalThis.CW._compileDocument({
     target: {
-      data: docs.filter((d) => d.doctype === "Adapter" || d.doctype === "Schema"),
+      data: docs.filter((d) => d.doctype === "Schema"),//data: docs.filter((d) => d.doctype === "Adapter" || d.doctype === "Schema"),
     },
-  });
+  });*/
 
   if (globalThis.CW.Adapter[globalThis.CW._config.adapters.defaults.db]?.init) {
     await globalThis.CW.Adapter[globalThis.CW._config.adapters.defaults.db].init({

@@ -4,9 +4,13 @@ import './CW-config.js';
 import './CW-utils.js';
 import './NEW-controller.js';
 import authAdapter from './auth-adapter.js';
+import './pocketbase-adapter.js'; // self-registers to globalThis.Adapter['pocketbase']
+
+await Adapter['pocketbase'].init();
 
 globalThis.CW.Adapter = globalThis.CW.Adapter || {};
 globalThis.CW.Adapter['auth'] = authAdapter;
+// pocketbase is already at globalThis.Adapter['pocketbase'] → accessible via CW Proxy
 
 const secret = globalThis.CW._config.adapters.registry.auth.config.jwtSecret;
 
@@ -213,4 +217,68 @@ console.assert(run12.target_doctype === 'Item',       '❌ target_doctype not re
 console.assert(run12.query.take === 10,               '❌ query not resolved');
 console.assert(run12.input.filter === 'active',       '❌ input data lost');
 console.log('✅ Test 12 passed');
+console.groupEnd();
+
+
+// Test 13: select via controller - no auth
+console.group('Test 13: select via CW.controller');
+const run13 = await CW.controller({
+  operation: 'select',
+  source_doctype: 'Item',
+  query: { take: 5 }
+});
+console.log('run_doc:', JSON.stringify(run13, null, 2));
+console.assert(run13.status === 'completed',           '❌ status not completed');
+console.assert(run13.operation === 'select',           '❌ operation wrong');
+console.assert(Array.isArray(run13.target?.data),      '❌ target.data not array');
+console.log('✅ Test 13 passed');
+console.groupEnd();
+
+// Test 14: select with where filter
+console.group('Test 14: select with where filter');
+const run14 = await CW.controller({
+  operation: 'select',
+  source_doctype: 'Item',
+  query: { where: { doctype: 'Item' }, take: 3 }
+});
+console.log('run_doc:', JSON.stringify(run14, null, 2));
+console.assert(run14.status === 'completed',           '❌ status not completed');
+console.assert(Array.isArray(run14.target?.data),      '❌ target.data not array');
+console.log('✅ Test 14 passed');
+console.groupEnd();
+
+// Test 15: select with alias 'read'
+console.group('Test 15: operation alias read → select');
+const run15 = await CW.controller({
+  operation: 'read',
+  source_doctype: 'Item',
+  query: { take: 2 }
+});
+console.assert(run15.operation === 'select',           '❌ alias not resolved');
+console.assert(Array.isArray(run15.target?.data),      '❌ target.data not array');
+console.log('✅ Test 15 passed');
+console.groupEnd();
+
+// Test 16: select via HTTP Request
+console.group('Test 16: select via HTTP Request');
+const request16 = new Request('http://localhost:3000', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'Content-Length': '80',
+    'CF-Connecting-IP': '1.2.3.4',
+  },
+  body: JSON.stringify({
+    operation: 'select',
+    source_doctype: 'Item',
+    query: { take: 5 },
+    input: {},
+  }),
+});
+const run16 = await CW.controller(request16);
+console.log('run_doc:', JSON.stringify(run16, null, 2));
+console.assert(run16.status === 'completed',           '❌ status not completed');
+console.assert(run16.operation === 'select',           '❌ operation wrong');
+console.assert(Array.isArray(run16.target?.data),      '❌ target.data not array');
+console.log('✅ Test 16 passed');
 console.groupEnd();

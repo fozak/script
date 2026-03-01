@@ -1,41 +1,45 @@
 //new-controller.js
 
-CW._resolveInput = function(run_doc) {
+CW._resolveInput = function (run_doc) {
   for (const [key, value] of Object.entries(run_doc.input)) {
-    if (key.startsWith('.')) {
+    if (key.startsWith(".")) {
       run_doc[key.slice(1)] = value;
       delete run_doc.input[key];
-    } else if (key.startsWith('Adapter.')) {
+    } else if (key.startsWith("Adapter.")) {
       // FSM handles these
-    } else if (key.includes('.')) {
-      const [root, ...rest] = key.split('.');
+    } else if (key.includes(".")) {
+      const [root, ...rest] = key.split(".");
       run_doc[root] = run_doc[root] || {};
-      run_doc[root][rest.join('.')] = value;
+      run_doc[root][rest.join(".")] = value;
       delete run_doc.input[key];
     }
     // plain field — stays in input- to implement later
   }
 };
 
-
-
-CW._resolveAll = function(op) {
+CW._resolveAll = function (op) {
   const cfg = CW._config;
 
   // 1. Resolve operation
-  const operation = cfg.operationAliases[op.operation?.toLowerCase()] || op.operation;
+  const operation =
+    cfg.operationAliases[op.operation?.toLowerCase()] || op.operation;
 
   // 2. Resolve doctypes
   const dtMap = cfg.doctypeAliases || {};
-  const source_doctype = op.source_doctype ? dtMap[op.source_doctype.toLowerCase()] || op.source_doctype : null;
-  const target_doctype = op.target_doctype ? dtMap[op.target_doctype.toLowerCase()] || op.target_doctype : null;
+  const source_doctype = op.source_doctype
+    ? dtMap[op.source_doctype.toLowerCase()] || op.source_doctype
+    : null;
+  const target_doctype = op.target_doctype
+    ? dtMap[op.target_doctype.toLowerCase()] || op.target_doctype
+    : null;
 
   // 3. Resolve operation config
   const opConfig = cfg.operations[operation] || {};
 
   // 4. Resolve adapter from operation type
-  const adapterType = opConfig.adapterType || 'db';
-  const adapter = cfg.adapters.defaults[adapterType] || cfg.adapters.defaults.db;
+  const adapterType = opConfig.adapterType || "db";
+  const adapter =
+    cfg.adapters.defaults[adapterType] || cfg.adapters.defaults.db;
 
   // 5. Resolve view
   const view = cfg.operationToView?.[operation] ?? null;
@@ -47,28 +51,28 @@ CW._resolveAll = function(op) {
     source_doctype,
     target_doctype,
     adapter,
-    view: 'view' in op ? op.view : view,
-    component: 'component' in op ? op.component : (viewConfig.component ?? null),
-    container: 'container' in op ? op.container : (viewConfig.container ?? null),
-    owner: op.owner || 'system',
+    view: "view" in op ? op.view : view,
+    component:
+      "component" in op ? op.component : (viewConfig.component ?? null),
+    container:
+      "container" in op ? op.container : (viewConfig.container ?? null),
+    owner: op.owner || "system",
   };
 };
 
-
-
-CW.run = function(op) {
+CW.run = function (op) {
   const resolved = CW._resolveAll(op);
 
   const run_doc = {
     // Frappe standard fields
-    doctype: 'Run',
-    name: generateId('run'),
+    doctype: "Run",
+    name: generateId("run"),
     creation: Date.now(),
     modified: Date.now(),
     operation_key: JSON.stringify(op),
-    modified_by: resolved.owner || 'system',
+    modified_by: resolved.owner || "system",
     docstatus: 0,
-    owner: resolved.owner || 'system',
+    owner: resolved.owner || "system",
 
     // compatibility
     config: op.config || {},
@@ -82,9 +86,9 @@ CW.run = function(op) {
     target_doctype: resolved.target_doctype,
 
     // UI/Rendering
-    view: 'view' in op ? op.view : resolved.view,
-    component: 'component' in op ? op.component : resolved.component,
-    container: 'container' in op ? op.container : resolved.container,
+    view: "view" in op ? op.view : resolved.view,
+    component: "component" in op ? op.component : resolved.component,
+    container: "container" in op ? op.container : resolved.container,
 
     // Data
     query: op.query || {},
@@ -93,7 +97,7 @@ CW.run = function(op) {
 
     // Execution state
     _state: {},
-    status: 'running',
+    status: "running",
     success: false,
     error: null,
 
@@ -110,14 +114,24 @@ CW.run = function(op) {
     _needsRun: false,
   };
 
-  const wake = () => queueMicrotask(() =>
-    Promise.resolve(CW.controller(run_doc))
-      .catch(err => console.error('[CW]', err))
-  );
+  const wake = () =>
+    queueMicrotask(() =>
+      Promise.resolve(CW.controller(run_doc)).catch((err) =>
+        console.error("[CW]", err),
+      ),
+    );
 
   run_doc.input = new Proxy(run_doc.input, {
-    set(t, p, v)         { t[p] = v;    wake(); return true; },
-    deleteProperty(t, p) { delete t[p]; wake(); return true; }
+    set(t, p, v) {
+      t[p] = v;
+      wake();
+      return true;
+    },
+    deleteProperty(t, p) {
+      delete t[p];
+      wake();
+      return true;
+    },
   });
 
   run_doc.child = async (cfg) => {
@@ -135,19 +149,23 @@ CW.run = function(op) {
   return run_doc;
 };
 
-
-
-CW.controller = async function(payload) {
-  if (payload._running) { payload._needsRun = true; return payload; }
+CW.controller = async function (payload) {
+  if (payload._running) {
+    payload._needsRun = true;
+    return payload;
+  }
 
   let run_doc;
 
   if (payload instanceof Request) {
     run_doc = CW.run({});
     run_doc._running = true;
-    await CW.Adapter[CW._config.adapters.payloadAdapters['Request']].execute(payload, run_doc);
+    await CW.Adapter[CW._config.adapters.payloadAdapters["Request"]].execute(
+      payload,
+      run_doc,
+    );
     run_doc._running = false;
-  } else if (payload.doctype === 'Run') {
+  } else if (payload.doctype === "Run") {
     run_doc = payload;
   } else {
     run_doc = CW.run(payload);
@@ -155,25 +173,64 @@ CW.controller = async function(payload) {
 
   CW._resolveInput(run_doc);
   CW._updateFromRun(run_doc);
-  run_doc._running = true;
-  if (!run_doc.error) await CW.fsm.handle(run_doc);
-  run_doc._running = false;
 
-  run_doc.status = run_doc.error ? 'failed' : 'completed';
+  run_doc._running = true;
+
+  const hasStateTransitions =
+    run_doc.input?._state &&
+    Object.values(run_doc.input._state).some((v) => v === "");
+
+  if (hasStateTransitions) {
+    await CW.fsm.handle(run_doc);
+  } else {
+    await CW._handlers[run_doc.operation]?.(run_doc);
+  }
+
+  run_doc._running = false;
+  run_doc.status = run_doc.error ? "failed" : "completed";
   CW._updateFromRun(run_doc);
 
-  if (run_doc._needsRun) { run_doc._needsRun = false; CW.controller(run_doc); }
+  if (run_doc._needsRun) {
+    run_doc._needsRun = false;
+    CW.controller(run_doc);
+  }
 
   return run_doc;
 };
 
+CW._handlers = {
+ select: async function(run_doc) {
+  const schema     = CW.Schema[run_doc.target_doctype] || null;
+  const activeView = run_doc.view || run_doc.query?.view || 'list';
+  const select     = run_doc.query?.select;
+  const db         = CW._config.adapters.defaults.db;
 
+  await CW.Adapter[db].select(run_doc);
 
+  if (run_doc.error) return;
+  if (!run_doc.target?.data) return;
 
-
-
-
-
+  if (schema && !select) {
+    const shouldFilter = activeView === 'list' || activeView === 'card';
+    if (shouldFilter) {
+      const viewProp   = `in_${activeView}_view`;
+      const viewFields = schema.fields.filter(f => f[viewProp]).map(f => f.fieldname);
+      const fields     = ['name', 'doctype', ...viewFields];
+      run_doc.target.data = run_doc.target.data.map(item => {
+        const filtered = {};
+        fields.forEach(f => { if (f in item) filtered[f] = item[f]; });
+        return filtered;
+      });
+    }
+  } else if (select && Array.isArray(select)) {
+    run_doc.target.data = run_doc.target.data.map(item => {
+      const filtered = {};
+      select.forEach(f => { if (f in item) filtered[f] = item[f]; });
+      return filtered;
+    });
+  }
+},
+};
 
 /*✅ What you improved
 1️⃣ Removed unnecessary _pending complexity
