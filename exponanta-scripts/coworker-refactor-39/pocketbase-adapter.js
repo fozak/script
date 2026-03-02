@@ -24,7 +24,68 @@ async function init(run_doc) {
   globalThis.pb.autoCancellation(config.autoCancellation);
   console.log('PocketBase initialized:', config.url);
 }
+async function select(run_doc) {
+  const query      = run_doc.query || {};
+  const collection = config.defaultCollection;
 
+  const doctype =
+    run_doc.target_doctype ??
+    run_doc.source_doctype;
+
+  if (!doctype) {
+    run_doc.error = "400 Missing doctype";
+    return;
+  }
+
+  const params = {
+    filter: `data.doctype = "${doctype}"`,
+  };
+
+  if (query.filter) {
+    params.filter = `${params.filter} && (${query.filter})`;
+  }
+
+  if (query.sort) {
+    params.sort = query.sort;
+  }
+
+  const take = query.take;
+  const skip = query.skip;
+
+  let items, meta;
+
+  if (take !== undefined) {
+    const page   = skip ? Math.floor(skip / take) + 1 : 1;
+    const result = await globalThis.pb.collection(collection).getList(page, take, params);
+
+    items = result.items;
+    meta  = {
+      total:      result.totalItems,
+      page:       result.page,
+      pageSize:   result.perPage,
+      totalPages: result.totalPages,
+      hasMore:    result.page < result.totalPages,
+    };
+  } else {
+    items = await globalThis.pb.collection(collection).getFullList(params);
+    meta  = {
+      total: items.length,
+      page: 1,
+      pageSize: items.length,
+      totalPages: 1,
+      hasMore: false
+    };
+  }
+
+  run_doc.target = {
+    data: items.map(item => item.data || item).filter(Boolean),
+    meta,
+  };
+
+  run_doc.success = true;
+}
+
+/* previuos version
 async function select(run_doc) {
   const query      = run_doc.query || {};
   const collection = config.defaultCollection;
@@ -60,7 +121,7 @@ async function select(run_doc) {
   };
   run_doc.success = true;
 }
-
+*/
 async function create(run_doc) {
   const input      = run_doc.input || {};
   const collection = config.defaultCollection;

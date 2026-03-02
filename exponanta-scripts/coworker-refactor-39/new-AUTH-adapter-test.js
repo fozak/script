@@ -270,8 +270,8 @@ const request16 = new Request('http://localhost:3000', {
   },
   body: JSON.stringify({
     operation: 'select',
-    source_doctype: 'Item',
-    query: { take: 5 },
+    target_doctype: 'Project',
+    query: { take: 2 },
     input: {},
   }),
 });
