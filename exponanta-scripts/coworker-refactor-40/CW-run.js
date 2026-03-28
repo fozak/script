@@ -1,32 +1,31 @@
 // ============================================================
 // CW-run.js
-// Controller, preflight, handlers.
-// All functions: function(run_doc) — mutate only, no return.
 // ============================================================
+
+const CW = globalThis.CW;
 
 // ============================================================
 // RESOLVER
 // ============================================================
 
-CW._resolveAll = function(run_doc_or_op) {
-  const op  = run_doc_or_op;
+CW._resolveAll = function(op) {
   const cfg = CW._config;
 
-  op.operation     = cfg.operationAliases[op.operation?.toLowerCase()] || op.operation;
+  op.operation      = cfg.operationAliases?.[op.operation?.toLowerCase()] || op.operation;
 
-  const dtMap      = cfg.doctypeAliases || {};
+  const dtMap       = cfg.doctypeAliases || {};
   op.source_doctype = op.source_doctype ? dtMap[op.source_doctype.toLowerCase()] || op.source_doctype : null;
   op.target_doctype = op.target_doctype ? dtMap[op.target_doctype.toLowerCase()] || op.target_doctype : null;
 
-  const opConfig   = cfg.operations[op.operation] || {};
+  const opConfig    = cfg.operations?.[op.operation] || {};
   const adapterType = opConfig.adapterType || "db";
-  op.adapter       = cfg.adapters.defaults[adapterType] || cfg.adapters.defaults.db;
+  op.adapter        = cfg.adapters?.defaults?.[adapterType] || cfg.adapters?.defaults?.db;
 
-  const view       = cfg.operationToView?.[op.operation] ?? null;
-  const viewConfig = cfg.views?.[view?.toLowerCase()] || {};
-  op.view          = "view"      in op ? op.view      : view;
-  op.component     = "component" in op ? op.component : (viewConfig.component ?? null);
-  op.container     = "container" in op ? op.container : (viewConfig.container ?? null);
+  const view        = cfg.operationToView?.[op.operation] ?? null;
+  const viewConfig  = cfg.views?.[view?.toLowerCase()] || {};
+  op.view           = "view"      in op ? op.view      : view;
+  op.component      = "component" in op ? op.component : (viewConfig.component ?? null);
+  op.container      = "container" in op ? op.container : (viewConfig.container ?? null);
 };
 
 // ============================================================
@@ -36,6 +35,8 @@ CW._resolveAll = function(run_doc_or_op) {
 CW.run = function(op) {
   CW._resolveAll(op);
 
+  const _input = op.input || {};
+
   const run_doc = {
     doctype:            "Run",
     name:               generateId("Run"),
@@ -44,7 +45,6 @@ CW.run = function(op) {
     owner:              op.owner || "system",
     modified_by:        op.owner || "system",
     docstatus:          0,
-    operation_key:      JSON.stringify(op),
 
     operation:          op.operation,
     operation_original: op.operation,
@@ -57,7 +57,6 @@ CW.run = function(op) {
     container:          op.container,
 
     query:              op.query  || {},
-    input:              op.input  || {},
     target:             op.target || null,
 
     status:             "pending",
@@ -67,30 +66,40 @@ CW.run = function(op) {
     parent_run_id:      op.parent_run_id || null,
     child_run_ids:      [],
     user:               op.user || null,
+
+    _running:           false,
+    _needsRun:          false,
   };
 
-  // Proxy on input — wakes controller on every mutation
-  run_doc.input = new Proxy(run_doc.input, {
+  // Proxy on input — only wakes controller when NOT running and NOT completed
+  run_doc.input = new Proxy(_input, {
     set(t, p, v) {
       t[p] = v;
-      queueMicrotask(() =>
-        Promise.resolve(CW.controller(run_doc)).catch(err => console.error("[CW]", err))
-      );
+      if (!run_doc._running) {
+        queueMicrotask(() => {
+          if (run_doc.status === "completed" || run_doc.status === "failed") return;
+          CW.controller(run_doc).catch(err => console.error("[CW]", err));
+        });
+      }
       return true;
     },
     deleteProperty(t, p) {
       delete t[p];
-      queueMicrotask(() =>
-        Promise.resolve(CW.controller(run_doc)).catch(err => console.error("[CW]", err))
-      );
+      if (!run_doc._running) {
+        queueMicrotask(() => {
+          if (run_doc.status === "completed" || run_doc.status === "failed") return;
+          CW.controller(run_doc).catch(err => console.error("[CW]", err));
+        });
+      }
       return true;
     },
   });
 
-  run_doc.child = async function(op) {
-    op.parent_run_id = run_doc.name;
-    op.user          = op.user ?? run_doc.user;
-    const child      = await CW.controller(CW.run(op));
+  run_doc.child = async function(childOp) {
+    childOp.parent_run_id = run_doc.name;
+    childOp.user          = childOp.user ?? run_doc.user;
+    const child           = CW.run(childOp);
+    await CW.controller(child);
     if (!run_doc.child_run_ids.includes(child.name)) {
       run_doc.child_run_ids.push(child.name);
     }
@@ -108,18 +117,22 @@ CW.run = function(op) {
 
 CW.controller = async function(run_doc) {
   if (run_doc._running) { run_doc._needsRun = true; return; }
+  if (run_doc.status === "completed" || run_doc.status === "failed") return;
 
   run_doc._running = true;
   run_doc.status   = "running";
 
   try {
-    // Check _state signals first
-    const signal = run_doc.input?._state
-      ? Object.entries(run_doc.input._state).find(([, v]) => v === "")
-      : null;
+    // read _state from raw object behind Proxy
+    const rawInput     = Object.getPrototypeOf(run_doc.input) === Object.prototype
+      ? run_doc.input
+      : run_doc.input;
+    const stateEntries = Object.entries(run_doc.input._state || {});
+    const signal       = stateEntries.find(([, v]) => v === "");
 
     if (signal) {
-      await CW._handleSignal(run_doc, signal[0]);
+      run_doc._signal = signal[0];
+      await CW._handleSignal(run_doc);
     } else {
       const handler = CW._handlers[run_doc.operation];
       if (handler) await handler(run_doc);
@@ -146,17 +159,22 @@ CW.controller = async function(run_doc) {
 };
 
 // ============================================================
-// SIGNAL HANDLER (_state signals from UI buttons)
+// SIGNAL HANDLER
 // ============================================================
 
-CW._handleSignal = async function(run_doc, signal) {
-  const behavior = CW.getBehavior(
-    CW.Schema?.[run_doc.target_doctype],
-    run_doc.input
-  );
+CW._handleSignal = async function(run_doc) {
+  const signal   = run_doc._signal;
+  const schema   = CW.Schema?.[run_doc.target_doctype];
+  const db       = CW._config.adapters.defaults.db;
+
+  // fetch existing doc first — guardian needs current DB state
+  await globalThis.Adapter[db].select(run_doc);
+  const existingDoc = run_doc.target?.data?.[0] || {};
+
+  const behavior = CW.getBehavior(schema, existingDoc);
 
   if (behavior?.guardian?.blockOperations?.includes(signal)) {
-    run_doc.input._state = { ...run_doc.input._state, [signal]: "-1" };
+    run_doc.input._state[signal] = "-1";
     run_doc.error = `${signal} not allowed in current state`;
     return;
   }
@@ -164,17 +182,14 @@ CW._handleSignal = async function(run_doc, signal) {
   if (signal === "save") {
     run_doc.operation = run_doc.input.name ? "update" : "create";
     await CW._handlers[run_doc.operation](run_doc);
-
   } else if (signal === "submit") {
     run_doc.input.docstatus = 1;
     run_doc.operation = "update";
     await CW._handlers.update(run_doc);
-
   } else if (signal === "cancel") {
     run_doc.input.docstatus = 2;
     run_doc.operation = "update";
     await CW._handlers.update(run_doc);
-
   } else if (signal === "amend") {
     run_doc.input.amended_from = run_doc.input.name;
     delete run_doc.input.name;
@@ -183,40 +198,21 @@ CW._handleSignal = async function(run_doc, signal) {
     await CW._handlers.create(run_doc);
   }
 
-  if (!run_doc.error) {
-    run_doc.input._state = { ...run_doc.input._state, [signal]: "1" };
-  } else {
-    run_doc.input._state = { ...run_doc.input._state, [signal]: "-1" };
-  }
+  run_doc.input._state[signal] = run_doc.error ? "-1" : "1";
 };
 
 // ============================================================
-// PREFLIGHT (schema-driven, mutates run_doc.input)
+// PREFLIGHT — all mutations happen while _running = true
+//             so Proxy will NOT re-trigger controller
 // ============================================================
 
 CW._preflight = function(run_doc, operation) {
-  const schema  = CW.Schema?.[run_doc.target_doctype];
-  const input   = run_doc.input;
+  const schema = CW.Schema?.[run_doc.target_doctype];
+  const input  = run_doc.input;  // Proxy is safe — _running = true
 
   if (operation === "create") {
-    // 1. generateId from schema.autoname
-    if (!input.name) {
-      const autoname = schema?.autoname;
-      input.name = autoname?.startsWith("field:")
-        ? generateId(run_doc.target_doctype, input[autoname.slice(6)])
-        : generateId(run_doc.target_doctype);
-    }
 
-    // 2. apply field defaults
-    if (schema?.fields) {
-      for (const f of schema.fields) {
-        if (f.default !== undefined && input[f.fieldname] === undefined) {
-          input[f.fieldname] = f.default;
-        }
-      }
-    }
-
-    // 3. validate reqd fields
+    // 1. validate reqd FIRST — before generateId
     if (schema?.fields) {
       const missing = schema.fields
         .filter(f => f.reqd && (input[f.fieldname] === undefined || input[f.fieldname] === null || input[f.fieldname] === ""))
@@ -226,12 +222,28 @@ CW._preflight = function(run_doc, operation) {
         return;
       }
     }
+
+    // 2. generateId AFTER validation
+    if (!input.name) {
+      const autoname = schema?.autoname;
+      input.name = autoname?.startsWith("field:")
+        ? generateId(run_doc.target_doctype, input[autoname.slice(6)])
+        : generateId(run_doc.target_doctype);
+    }
+
+    // 3. apply field defaults
+    if (schema?.fields) {
+      for (const f of schema.fields) {
+        if (f.default !== undefined && input[f.fieldname] === undefined) {
+          input[f.fieldname] = f.default;
+        }
+      }
+    }
   }
 
   if (operation === "update") {
-    // validate reqd on merged doc
     if (schema?.fields) {
-      const merged  = { ...run_doc.target?.data?.[0], ...input };
+      const merged  = Object.assign({}, run_doc.target?.data?.[0], input);
       const missing = schema.fields
         .filter(f => f.reqd && (merged[f.fieldname] === undefined || merged[f.fieldname] === null || merged[f.fieldname] === ""))
         .map(f => f.label || f.fieldname);
@@ -242,7 +254,6 @@ CW._preflight = function(run_doc, operation) {
     }
   }
 
-  // 4. serialize JSON/Code fields (both create + update)
   if (schema?.fields) {
     for (const f of schema.fields) {
       if (f.fieldtype === "Code" && f.options === "JSON" && typeof input[f.fieldname] === "object") {
@@ -251,8 +262,7 @@ CW._preflight = function(run_doc, operation) {
     }
   }
 
-  // 5. stamp doctype + modified
-  input.doctype  = input.doctype || run_doc.target_doctype;
+  input.doctype  = input.doctype  || run_doc.target_doctype;
   input.modified = Date.now();
 };
 
@@ -263,19 +273,18 @@ CW._preflight = function(run_doc, operation) {
 CW._handlers = {
 
   select: async function(run_doc) {
-    const db     = CW._config.adapters.defaults.db;
-    await CW.Adapter[db].select(run_doc);
+    const db = CW._config.adapters.defaults.db;
+    await globalThis.Adapter[db].select(run_doc);
     if (run_doc.error || !run_doc.target?.data) return;
 
-    // Field filtering by view
     const schema     = CW.Schema?.[run_doc.target_doctype ?? run_doc.source_doctype];
     const activeView = run_doc.view || run_doc.query?.view || "list";
-    const select     = run_doc.query?.select;
+    const sel        = run_doc.query?.select;
 
-    if (schema && !select) {
+    if (schema && !sel) {
       const shouldFilter = activeView === "list" || activeView === "card";
       if (shouldFilter) {
-        const viewProp  = `in_${activeView}_view`;
+        const viewProp   = `in_${activeView}_view`;
         const viewFields = schema.fields.filter(f => f[viewProp]).map(f => f.fieldname);
         const fields     = ["name", "doctype", ...viewFields];
         run_doc.target.data = run_doc.target.data.map(item => {
@@ -284,10 +293,10 @@ CW._handlers = {
           return filtered;
         });
       }
-    } else if (select && Array.isArray(select)) {
+    } else if (sel && Array.isArray(sel)) {
       run_doc.target.data = run_doc.target.data.map(item => {
         const filtered = {};
-        select.forEach(f => { if (f in item) filtered[f] = item[f]; });
+        sel.forEach(f => { if (f in item) filtered[f] = item[f]; });
         return filtered;
       });
     }
@@ -296,22 +305,17 @@ CW._handlers = {
   create: async function(run_doc) {
     CW._preflight(run_doc, "create");
     if (run_doc.error) return;
-
     const db = CW._config.adapters.defaults.db;
-    await CW.Adapter[db].create(run_doc);
+    await globalThis.Adapter[db].create(run_doc);
   },
 
   update: async function(run_doc) {
     const db = CW._config.adapters.defaults.db;
-
-    // Fetch existing first
-    await CW.Adapter[db].select(run_doc);
+    await globalThis.Adapter[db].select(run_doc);
     if (run_doc.error) return;
-
     CW._preflight(run_doc, "update");
     if (run_doc.error) return;
-
-    await CW.Adapter[db].update(run_doc);
+    await globalThis.Adapter[db].update(run_doc);
   },
 
   delete: async function(run_doc) {

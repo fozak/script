@@ -1,98 +1,130 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Coworker Integration Test</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <title>CW Test</title>
+  <style>
+    body { font-family: monospace; padding: 20px; }
+    #log { background: #f3f3f3; padding: 10px; white-space: pre; font-size: 12px; max-height: 400px; overflow-y: auto; }
+    #expr { width: 100%; padding: 8px; font-family: monospace; margin-top: 10px; }
+    #preview { background: #f3f3f3; padding: 10px; white-space: pre; font-size: 11px; max-height: 300px; overflow-y: auto; }
+    .pass { color: green; }
+    .fail { color: red; }
+  </style>
 </head>
 <body>
 
-  <div id="nav_bar" style="padding: 10px; border-bottom: 1px solid #ddd; background: #f8f9fa;">
-    <span id="breadcrumbs" style="margin-left: 20px; color: blue;">Home</span>
-  </div>
+<h3>CW Integration Tests</h3>
+<div id="log">Waiting for bootstrap...</div>
 
-  <div id="main_container" style="padding: 20px;"></div>
+<h3>REPL (press Enter)</h3>
+<input id="expr" placeholder="e.g. CW.Schema" />
+<pre id="preview"></pre>
 
-  <div id="query_builder" style="padding: 20px; border-top: 1px solid #ddd;">
-    <p>query builder</p>
-    <input id="expr" placeholder="Type JS expression..." style="width:100%" />
-    <pre id="preview" style="background:#f3f3f3;padding:10px;"></pre>
-  </div>
+<script src="https://cdn.jsdelivr.net/npm/pocketbase@latest/dist/pocketbase.umd.js"></script>
+<script type="module" src="index.js"></script>
 
-  <!-- ═══════════════════════════════════════ -->
-  <!-- LAYER 1: PocketBase SDK               -->
-  <!-- ═══════════════════════════════════════ -->
-  <script src="https://cdn.jsdelivr.net/npm/pocketbase@latest/dist/pocketbase.umd.js"></script>
+<script type="module">
+  const log = document.getElementById("log");
 
-  <!-- ═══════════════════════════════════════ -->
-  <!-- LAYER 2: CW Core                      -->
-  <!-- ═══════════════════════════════════════ -->
-  <script type="module" src="index.js"></script>
+  function write(msg, cls) {
+    const line = document.createElement("div");
+    line.className = cls || "";
+    line.textContent = msg;
+    log.appendChild(line);
+  }
 
-  <!-- ═══════════════════════════════════════ -->
-  <!-- LAYER 3: TEST                         -->
-  <!-- ═══════════════════════════════════════ -->
-  <script type="module">
-    // Wait for bootstrap
-    window.addEventListener('load', async () => {
-      await new Promise(r => setTimeout(r, 500));
+  async function waitForBoot() {
+    return new Promise(resolve => {
+      const check = setInterval(() => {
+        if (globalThis.CW?._booted) { clearInterval(check); resolve(); }
+      }, 100);
+    });
+  }
 
-      // Test 1: select
-      console.group('TEST 1: select');
-      const run1 = CW.run({ operation: 'select', target_doctype: 'Schema' });
+  async function runTests() {
+    await waitForBoot();
+    log.textContent = "";
+    write("=== TESTS START ===");
+
+    // TEST 1: select
+    write("\n--- TEST 1: select Schema ---");
+    try {
+      const run1 = CW.run({ operation: "select", target_doctype: "Schema" });
       await CW.controller(run1);
-      console.log('target.data count:', run1.target?.data?.length);
-      console.log('success:', run1.success);
-      console.groupEnd();
-
-      // Test 2: create
-      console.group('TEST 2: create');
-      const run2 = CW.run({ operation: 'create', target_doctype: 'Role' });
-      run2.input.role_name = 'Test Role';
-      await CW.controller(run2);
-      console.log('created name:', run2.target?.data?.[0]?.name);
-      console.log('success:', run2.success);
-      console.groupEnd();
-
-      // Test 3: update
-      console.group('TEST 3: update');
-      const run3 = CW.run({ 
-        operation: 'update', 
-        target_doctype: 'Role',
-        query: { where: { name: run2.target?.data?.[0]?.name } }
-      });
-      run3.input.role_name = 'Test Role Updated';
-      await CW.controller(run3);
-      console.log('updated:', run3.target?.data?.[0]?.role_name);
-      console.log('success:', run3.success);
-      console.groupEnd();
-
-      // Test 4: delete
-      console.group('TEST 4: delete');
-      const run4 = CW.run({ 
-        operation: 'delete', 
-        target_doctype: 'Role',
-        query: { where: { name: run2.target?.data?.[0]?.name } }
-      });
-      await CW.controller(run4);
-      console.log('docstatus:', run4.target?.data?.[0]?.docstatus);
-      console.log('success:', run4.success);
-      console.groupEnd();
-
-    });
-
-    // REPL helper
-    document.getElementById('expr').addEventListener('keydown', async (e) => {
-      if (e.key !== 'Enter') return;
-      try {
-        const result = await eval(e.target.value);
-        document.getElementById('preview').textContent = JSON.stringify(result ?? CW.getCurrentRun()?.target?.data, null, 2);
-      } catch(err) {
-        document.getElementById('preview').textContent = 'Error: ' + err.message;
+      if (run1.success && run1.target?.data?.length > 0) {
+        write(`✅ select: ${run1.target.data.length} records`, "pass");
+      } else {
+        write(`❌ select failed: ${JSON.stringify(run1.error)}`, "fail");
       }
-    });
-  </script>
+    } catch(e) { write(`❌ select threw: ${e.message}`, "fail"); }
+
+    // TEST 2: create
+    write("\n--- TEST 2: create Role ---");
+    let createdName;
+    try {
+      const run2 = CW.run({ operation: "create", target_doctype: "Role" });
+      run2.input.role_name = "Test Role " + Date.now();
+      await CW.controller(run2);
+      if (run2.success) {
+        createdName = run2.target?.data?.[0]?.name;
+        write(`✅ create: ${createdName}`, "pass");
+      } else {
+        write(`❌ create failed: ${JSON.stringify(run2.error)}`, "fail");
+      }
+    } catch(e) { write(`❌ create threw: ${e.message}`, "fail"); }
+
+    // TEST 3: update
+    write("\n--- TEST 3: update Role ---");
+    if (createdName) {
+      try {
+        const run3 = CW.run({ operation: "update", target_doctype: "Role", query: { where: { name: createdName } } });
+        run3.input.role_name = "Updated Role";
+        await CW.controller(run3);
+        if (run3.success) {
+          write(`✅ update: ${run3.target?.data?.[0]?.role_name}`, "pass");
+        } else {
+          write(`❌ update failed: ${JSON.stringify(run3.error)}`, "fail");
+        }
+      } catch(e) { write(`❌ update threw: ${e.message}`, "fail"); }
+    } else {
+      write("⚠️ skipped — no created record", "fail");
+    }
+
+    // TEST 4: delete
+    write("\n--- TEST 4: delete Role ---");
+    if (createdName) {
+      try {
+        const run4 = CW.run({ operation: "delete", target_doctype: "Role", query: { where: { name: createdName } } });
+        await CW.controller(run4);
+        if (run4.success) {
+          write(`✅ delete: docstatus=${run4.target?.data?.[0]?.docstatus}`, "pass");
+        } else {
+          write(`❌ delete failed: ${JSON.stringify(run4.error)}`, "fail");
+        }
+      } catch(e) { write(`❌ delete threw: ${e.message}`, "fail"); }
+    } else {
+      write("⚠️ skipped — no created record", "fail");
+    }
+
+    write("\n=== TESTS END ===");
+  }
+
+  window.addEventListener("load", runTests);
+
+  // REPL
+  document.getElementById("expr").addEventListener("keydown", async (e) => {
+    if (e.key !== "Enter") return;
+    try {
+      const result = await eval(e.target.value);
+      document.getElementById("preview").textContent =
+        JSON.stringify(result, null, 2);
+    } catch(err) {
+      document.getElementById("preview").textContent = "Error: " + err.message;
+    }
+  });
+</script>
 
 </body>
 </html>

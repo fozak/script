@@ -1,6 +1,6 @@
 // ============================================================
 // pb-adapter-pocketbase.js
-// Pure DB connector. No business logic. No schema knowledge.
+// Pure DB connector. No business logic.
 // All functions: function(run_doc) — mutate only, no return.
 // ============================================================
 
@@ -9,18 +9,10 @@ const config = {
   collection: "item",
 };
 
-// ============================================================
-// TOP-LEVEL POCKETBASE FIELDS (outside data blob)
-// ============================================================
-
 const PB_TOP = new Set([
   "id", "name", "doctype", "docstatus",
   "owner", "_allowed", "_allowed_read", "created",
 ]);
-
-// ============================================================
-// PRIVATE HELPERS
-// ============================================================
 
 function _splitRecord(doc) {
   const top  = {};
@@ -33,16 +25,12 @@ function _splitRecord(doc) {
 }
 
 function _mergeRecord(rec) {
-  const doc = rec.data || {};
+  const doc = Object.assign({}, rec.data || {});
   for (const k of PB_TOP) {
     if (k in rec) doc[k] = rec[k];
   }
   return doc;
 }
-
-// ============================================================
-// QUERY BUILDER (PocketBase filter syntax)
-// ============================================================
 
 function _getFieldPath(fieldName) {
   if (PB_TOP.has(fieldName)) return fieldName;
@@ -55,18 +43,18 @@ function _buildWhereClause(where) {
 
   for (const [key, value] of Object.entries(where)) {
     if (key === "OR") {
-      const orParts = value.map(_buildWhereClause).filter(Boolean);
-      if (orParts.length) parts.push(`(${orParts.join(" || ")})`);
+      const p = value.map(_buildWhereClause).filter(Boolean);
+      if (p.length) parts.push(`(${p.join(" || ")})`);
       continue;
     }
     if (key === "AND") {
-      const andParts = value.map(_buildWhereClause).filter(Boolean);
-      if (andParts.length) parts.push(`(${andParts.join(" && ")})`);
+      const p = value.map(_buildWhereClause).filter(Boolean);
+      if (p.length) parts.push(`(${p.join(" && ")})`);
       continue;
     }
     if (key === "NOT") {
-      const notClause = _buildWhereClause(value);
-      if (notClause) parts.push(`!(${notClause})`);
+      const p = _buildWhereClause(value);
+      if (p) parts.push(`!(${p})`);
       continue;
     }
 
@@ -81,38 +69,33 @@ function _buildWhereClause(where) {
     } else if (typeof value === "object" && !Array.isArray(value)) {
       for (const [op, opValue] of Object.entries(value)) {
         switch (op) {
-          case "equals":    parts.push(`${field} = "${opValue}"`); break;
-          case "contains":  parts.push(`${field} ~ "${opValue}"`); break;
-          case "gt":        parts.push(`${field} > ${opValue}`); break;
-          case "gte":       parts.push(`${field} >= ${opValue}`); break;
-          case "lt":        parts.push(`${field} < ${opValue}`); break;
-          case "lte":       parts.push(`${field} <= ${opValue}`); break;
-          case "not":       parts.push(`${field} != "${opValue}"`); break;
+          case "equals":   parts.push(`${field} = "${opValue}"`); break;
+          case "contains": parts.push(`${field} ~ "${opValue}"`); break;
+          case "gt":       parts.push(`${field} > ${opValue}`); break;
+          case "gte":      parts.push(`${field} >= ${opValue}`); break;
+          case "lt":       parts.push(`${field} < ${opValue}`); break;
+          case "lte":      parts.push(`${field} <= ${opValue}`); break;
+          case "not":      parts.push(`${field} != "${opValue}"`); break;
           case "in":
-            if (Array.isArray(opValue) && opValue.length) {
+            if (Array.isArray(opValue) && opValue.length)
               parts.push(`(${opValue.map(v => `${field} = "${v}"`).join(" || ")})`);
-            }
             break;
         }
       }
     }
   }
-
   return parts.join(" && ");
 }
 
 function _buildFilter(run_doc) {
   const doctype = run_doc.target_doctype ?? run_doc.source_doctype;
   const parts   = [];
-
   if (doctype) parts.push(`doctype = "${doctype}"`);
-
   const where = run_doc.query?.where;
   if (where) {
     const clause = _buildWhereClause(where);
     if (clause) parts.push(`(${clause})`);
   }
-
   return parts.join(" && ") || undefined;
 }
 
@@ -121,7 +104,7 @@ function _buildSort(run_doc) {
   if (!sort) return undefined;
   if (typeof sort === "string") return sort;
   return Object.entries(sort)
-    .map(([field, dir]) => `${dir === "desc" ? "-" : "+"}${_getFieldPath(field)}`)
+    .map(([f, dir]) => `${dir === "desc" ? "-" : "+"}${_getFieldPath(f)}`)
     .join(",");
 }
 
@@ -147,23 +130,17 @@ async function select(run_doc) {
   const params = {};
   const filter = _buildFilter(run_doc);
   if (filter) params.filter = filter;
-
   const sort = _buildSort(run_doc);
   if (sort) params.sort = sort;
-
-  if (run_doc.query?.fields)  params.fields  = run_doc.query.fields;
-  if (run_doc.query?.expand)  params.expand  = run_doc.query.expand;
+  if (run_doc.query?.fields) params.fields = run_doc.query.fields;
 
   const take = run_doc.query?.take;
   const skip = run_doc.query?.skip;
-
   let items, meta;
 
   if (take !== undefined) {
     const page   = skip ? Math.floor(skip / take) + 1 : 1;
-    const result = await globalThis.pb
-      .collection(config.collection)
-      .getList(page, take, params);
+    const result = await globalThis.pb.collection(config.collection).getList(page, take, params);
     items = result.items;
     meta  = {
       total:      result.totalItems,
@@ -173,16 +150,8 @@ async function select(run_doc) {
       hasMore:    result.page < result.totalPages,
     };
   } else {
-    items = await globalThis.pb
-      .collection(config.collection)
-      .getFullList(params);
-    meta = {
-      total:      items.length,
-      page:       1,
-      pageSize:   items.length,
-      totalPages: 1,
-      hasMore:    false,
-    };
+    items = await globalThis.pb.collection(config.collection).getFullList(params);
+    meta  = { total: items.length, page: 1, pageSize: items.length, totalPages: 1, hasMore: false };
   }
 
   run_doc.target  = { data: items.map(_mergeRecord).filter(Boolean), meta };
@@ -197,12 +166,15 @@ async function create(run_doc) {
   const doc           = run_doc.input;
   const { top, data } = _splitRecord(doc);
 
-  const created = await globalThis.pb
-    .collection(config.collection)
-    .create({ id: doc.name, ...top, data });
-
-  run_doc.target  = { data: [_mergeRecord(created)], meta: { id: created.id, name: created.name } };
-  run_doc.success = true;
+  try {
+    const created = await globalThis.pb.collection(config.collection)
+      .create({ id: doc.name, ...top, data });
+    run_doc.target  = { data: [_mergeRecord(created)], meta: { id: created.id, name: created.name } };
+    run_doc.success = true;
+  } catch(err) {
+    console.error("PB create error:", JSON.stringify(err.response?.data || err.message));
+    run_doc.error = err.message;
+  }
 }
 
 // ============================================================
@@ -210,36 +182,36 @@ async function create(run_doc) {
 // ============================================================
 
 async function update(run_doc) {
-  const doc           = run_doc.input;
-  const { top, data } = _splitRecord(doc);
+  const filter = _buildFilter(run_doc);
+  if (!filter) { run_doc.error = "400 update: missing query.where or doctype"; return; }
 
-  const filter   = _buildFilter(run_doc);
-  if (!filter) { run_doc.error = "400 update: missing query.where"; return; }
+  try {
+    const existing = await globalThis.pb.collection(config.collection).getFullList({ filter });
 
-  const existing = await globalThis.pb
-    .collection(config.collection)
-    .getFullList({ filter });
+    if (!existing.length) {
+      run_doc.target  = { data: [], meta: { updated: 0 } };
+      run_doc.success = true;
+      return;
+    }
 
-  if (!existing.length) {
-    run_doc.target  = { data: [], meta: { updated: 0 } };
+    const { top, data } = _splitRecord(run_doc.input);
+
+    const updated = await Promise.all(existing.map(async rec => {
+      const mergedData = Object.assign({}, rec.data, data);
+      await globalThis.pb.collection(config.collection).update(rec.id, { ...top, data: mergedData });
+      return Object.assign({}, mergedData, top);
+    }));
+
+    run_doc.target  = { data: updated, meta: { updated: updated.length } };
     run_doc.success = true;
-    return;
+  } catch(err) {
+    console.error("PB update error:", JSON.stringify(err.response?.data || err.message));
+    run_doc.error = err.message;
   }
-
-  const updated = await Promise.all(existing.map(async rec => {
-    const mergedData = { ...rec.data, ...data };
-    await globalThis.pb
-      .collection(config.collection)
-      .update(rec.id, { ...top, data: mergedData });
-    return { ...mergedData, ...top };
-  }));
-
-  run_doc.target  = { data: updated, meta: { updated: updated.length } };
-  run_doc.success = true;
 }
 
 // ============================================================
-// DELETE (soft — sets docstatus = 2 via update)
+// DELETE (soft — docstatus = 2)
 // ============================================================
 
 async function del(run_doc) {

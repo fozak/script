@@ -1,51 +1,38 @@
-// index.js
 import "./CW-state.js";
 import "./CW-config.js";
 import "./CW-utils.js";
 import "./CW-run.js";
 import "./pb-adapter-pocketbase.js";
 
-if (typeof process !== "undefined") {
-  const { config } = await import("dotenv");
-  config();
-}
-
-async function bootstrap(env) {
-  const resolvedEnv = env || (typeof process !== "undefined" ? process.env : {});
-  const base = resolvedEnv.BASE_URL || window.location.origin;
+async function bootstrap() {
+  const base = typeof window !== "undefined" ? window.location.origin : "http://localhost:3000";
 
   if (!globalThis.CW._config) {
     globalThis.CW._config = await fetch(`${base}/config.json`).then(r => r.json());
   }
 
-  if (resolvedEnv.JWT_SECRET) {
-    globalThis.CW._config.auth.jwtSecret = resolvedEnv.JWT_SECRET;
-  }
-
   const docs = await fetch(`${base}/db.json`).then(r => r.json());
 
-  globalThis.Schema = {};
+  globalThis.CW.Schema = {};
   for (const s of docs.filter(d => d.doctype === "Schema")) {
-    globalThis.Schema[s.schema_name] = s;
+    globalThis.CW.Schema[s.schema_name] = s;
   }
 
-  await CW.Adapter.pocketbase.init();
+  await globalThis.Adapter.pocketbase.init();
 
   console.log("✅ bootstrap complete");
+  globalThis.CW._booted = true;
 }
 
 if (typeof window !== "undefined") {
   window.addEventListener("load", () => bootstrap());
 } else {
-  bootstrap();
+  await bootstrap();
 }
 
 export default {
   async fetch(request, env) {
-    if (!globalThis.CW._booted) {
-      await bootstrap(env);
-      globalThis.CW._booted = true;
-    }
+    if (!globalThis.CW._booted) await bootstrap();
     return globalThis.CW.controller(request);
   }
 };
