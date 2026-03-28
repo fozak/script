@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coworker Integration Test</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+  <div id="nav_bar" style="padding: 10px; border-bottom: 1px solid #ddd; background: #f8f9fa;">
+    <span id="breadcrumbs" style="margin-left: 20px; color: blue;">Home</span>
+  </div>
+
+  <div id="main_container" style="padding: 20px;"></div>
+
+  <div id="query_builder" style="padding: 20px; border-top: 1px solid #ddd;">
+    <p>query builder</p>
+    <input id="expr" placeholder="Type JS expression..." style="width:100%" />
+    <pre id="preview" style="background:#f3f3f3;padding:10px;"></pre>
+  </div>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- LAYER 1: PocketBase SDK               -->
+  <!-- ═══════════════════════════════════════ -->
+  <script src="https://cdn.jsdelivr.net/npm/pocketbase@latest/dist/pocketbase.umd.js"></script>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- LAYER 2: CW Core                      -->
+  <!-- ═══════════════════════════════════════ -->
+  <script type="module" src="index.js"></script>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- LAYER 3: TEST                         -->
+  <!-- ═══════════════════════════════════════ -->
+  <script type="module">
+    // Wait for bootstrap
+    window.addEventListener('load', async () => {
+      await new Promise(r => setTimeout(r, 500));
+
+      // Test 1: select
+      console.group('TEST 1: select');
+      const run1 = CW.run({ operation: 'select', target_doctype: 'Schema' });
+      await CW.controller(run1);
+      console.log('target.data count:', run1.target?.data?.length);
+      console.log('success:', run1.success);
+      console.groupEnd();
+
+      // Test 2: create
+      console.group('TEST 2: create');
+      const run2 = CW.run({ operation: 'create', target_doctype: 'Role' });
+      run2.input.role_name = 'Test Role';
+      await CW.controller(run2);
+      console.log('created name:', run2.target?.data?.[0]?.name);
+      console.log('success:', run2.success);
+      console.groupEnd();
+
+      // Test 3: update
+      console.group('TEST 3: update');
+      const run3 = CW.run({ 
+        operation: 'update', 
+        target_doctype: 'Role',
+        query: { where: { name: run2.target?.data?.[0]?.name } }
+      });
+      run3.input.role_name = 'Test Role Updated';
+      await CW.controller(run3);
+      console.log('updated:', run3.target?.data?.[0]?.role_name);
+      console.log('success:', run3.success);
+      console.groupEnd();
+
+      // Test 4: delete
+      console.group('TEST 4: delete');
+      const run4 = CW.run({ 
+        operation: 'delete', 
+        target_doctype: 'Role',
+        query: { where: { name: run2.target?.data?.[0]?.name } }
+      });
+      await CW.controller(run4);
+      console.log('docstatus:', run4.target?.data?.[0]?.docstatus);
+      console.log('success:', run4.success);
+      console.groupEnd();
+
+    });
+
+    // REPL helper
+    document.getElementById('expr').addEventListener('keydown', async (e) => {
+      if (e.key !== 'Enter') return;
+      try {
+        const result = await eval(e.target.value);
+        document.getElementById('preview').textContent = JSON.stringify(result ?? CW.getCurrentRun()?.target?.data, null, 2);
+      } catch(err) {
+        document.getElementById('preview').textContent = 'Error: ' + err.message;
+      }
+    });
+  </script>
+
+</body>
+</html>
