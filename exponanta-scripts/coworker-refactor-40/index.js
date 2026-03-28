@@ -1,3 +1,5 @@
+//index.js
+
 import "./CW-state.js";
 import "./CW-config.js";
 import "./CW-utils.js";
