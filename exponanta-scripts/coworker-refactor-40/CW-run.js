@@ -29,6 +29,19 @@ CW._resolveAll = function(op) {
 };
 
 // ============================================================
+// RESOLVE INPUT — promote .field keys to run_doc top level
+// ============================================================
+
+CW._resolveInput = function(run_doc) {
+  for (const [key, value] of Object.entries(run_doc.input)) {
+    if (key.startsWith(".")) {
+      run_doc[key.slice(1)] = value;
+      delete run_doc.input[key];
+    }
+  }
+};
+
+// ============================================================
 // RUN FACTORY
 // ============================================================
 
@@ -72,13 +85,11 @@ CW.run = function(op) {
     _needsRun:          false,
   };
 
-  // Proxy on input — only wakes controller when NOT running and NOT completed
   run_doc.input = new Proxy(_input, {
     set(t, p, v) {
       t[p] = v;
       if (!run_doc._running) {
         queueMicrotask(() => {
-          if (run_doc.status === "completed" || run_doc.status === "failed") return;
           CW.controller(run_doc).catch(err => console.error("[CW]", err));
         });
       }
@@ -88,7 +99,6 @@ CW.run = function(op) {
       delete t[p];
       if (!run_doc._running) {
         queueMicrotask(() => {
-          if (run_doc.status === "completed" || run_doc.status === "failed") return;
           CW.controller(run_doc).catch(err => console.error("[CW]", err));
         });
       }
@@ -118,16 +128,15 @@ CW.run = function(op) {
 
 CW.controller = async function(run_doc) {
   if (run_doc._running) { run_doc._needsRun = true; return; }
-  if (run_doc.status === "completed" || run_doc.status === "failed") return;
 
   run_doc._running = true;
   run_doc.status   = "running";
+  run_doc.error    = null;
 
   try {
-    // read _state from raw object behind Proxy
-    const rawInput     = Object.getPrototypeOf(run_doc.input) === Object.prototype
-      ? run_doc.input
-      : run_doc.input;
+    // 1. promote .field keys before anything else
+    CW._resolveInput(run_doc);
+
     const stateEntries = Object.entries(run_doc.input._state || {});
     const signal       = stateEntries.find(([, v]) => v === "");
 
@@ -135,8 +144,22 @@ CW.controller = async function(run_doc) {
       run_doc._signal = signal[0];
       await CW._handleSignal(run_doc);
     } else {
-      const handler = CW._handlers[run_doc.operation];
-      if (handler) await handler(run_doc);
+      const schema   = CW.Schema?.[run_doc.target_doctype];
+      const behavior = CW.getBehavior(schema, run_doc.target?.data?.[0] || run_doc.input);
+      const opConfig = CW._config.operations?.[run_doc.operation] || {};
+
+      if (opConfig.type === "read" || opConfig.type === "auth") {
+        await CW._handlers[run_doc.operation]?.(run_doc);
+      } else if (opConfig.type === "write") {
+        const dataKeys = Object.keys(run_doc.input).filter(k => k !== '_state');
+        if (behavior?.controller?.autoSave && dataKeys.length > 0) {
+          run_doc.operation = (run_doc.input.name || run_doc.target?.data?.[0]?.name) ? "update" : "create";
+          await CW._handlers[run_doc.operation](run_doc);
+          if (!run_doc.error) {
+            Object.keys(run_doc.input).filter(k => k !== '_state').forEach(k => delete run_doc.input[k]);
+          }
+        }
+      }
     }
 
     run_doc.status  = run_doc.error ? "failed" : "completed";
@@ -169,7 +192,6 @@ CW._handleSignal = async function(run_doc) {
   const schema   = CW.Schema?.[run_doc.target_doctype];
   const db       = CW._config.adapters.defaults.db;
 
-  // fetch existing doc first — guardian needs current DB state
   await globalThis.Adapter[db].select(run_doc);
   const existingDoc = run_doc.target?.data?.[0] || {};
 
@@ -182,7 +204,7 @@ CW._handleSignal = async function(run_doc) {
   }
 
   if (signal === "save") {
-    run_doc.operation = run_doc.input.name ? "update" : "create";
+    run_doc.operation = (run_doc.input.name || run_doc.target?.data?.[0]?.name) ? "update" : "create";
     await CW._handlers[run_doc.operation](run_doc);
   } else if (signal === "submit") {
     run_doc.input.docstatus = 1;
@@ -200,21 +222,23 @@ CW._handleSignal = async function(run_doc) {
     await CW._handlers.create(run_doc);
   }
 
+  if (!run_doc.error && (signal === "save" || signal === "submit" || signal === "cancel")) {
+    const keys = Object.keys(run_doc.input).filter(k => k !== '_state');
+    keys.forEach(k => delete run_doc.input[k]);
+  }
+
   run_doc.input._state[signal] = run_doc.error ? "-1" : "1";
 };
 
 // ============================================================
-// PREFLIGHT — all mutations happen while _running = true
-//             so Proxy will NOT re-trigger controller
+// PREFLIGHT
 // ============================================================
 
 CW._preflight = function(run_doc, operation) {
   const schema = CW.Schema?.[run_doc.target_doctype];
-  const input  = run_doc.input;  // Proxy is safe — _running = true
+  const input  = run_doc.input;
 
   if (operation === "create") {
-
-    // 1. validate reqd FIRST — before generateId
     if (schema?.fields) {
       const missing = schema.fields
         .filter(f => f.reqd && (input[f.fieldname] === undefined || input[f.fieldname] === null || input[f.fieldname] === ""))
@@ -225,7 +249,6 @@ CW._preflight = function(run_doc, operation) {
       }
     }
 
-    // 2. generateId AFTER validation
     if (!input.name) {
       const autoname = schema?.autoname;
       input.name = autoname?.startsWith("field:")
@@ -233,7 +256,6 @@ CW._preflight = function(run_doc, operation) {
         : generateId(run_doc.target_doctype);
     }
 
-    // 3. apply field defaults
     if (schema?.fields) {
       for (const f of schema.fields) {
         if (f.default !== undefined && input[f.fieldname] === undefined) {

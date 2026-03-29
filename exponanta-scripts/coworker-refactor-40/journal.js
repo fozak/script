@@ -1,5 +1,118 @@
-//======== 40-2 c
+//========= 40-3 commit abcdef1234567890abcdef1234567890abcdef12
+What's in code now
+Files
+index.js                 — bootstrap, loads all CW files, connects PocketBase
+CW-state.js              — globalThis.CW, runs registry, _updateFromRun, _buildIndex, Proxy, FSM
+CW-config.js             — _config: adapters, operationAliases, doctypeAliases, operations, views, behaviorMatrix
+CW-utils.js              — generateId, parseLayout, helpers, CW.getBehavior, CW.evalTemplate
+CW-run.js                — controller, handlers, preflight
+pb-adapter-pocketbase.js — PocketBase DB connector
+CW-ui.js                 — React 18 render system, navigation, FieldRenderer, MainForm, MainGrid
+app.html                 — Tabler CSS + React UMD + script loads
 
+CW-run.js
+CW._resolveAll(op) — mutates op: resolves operation aliases, doctype aliases, adapter, view, component, container from config.
+CW._resolveInput(run_doc) — promotes .field keys from input to run_doc top level, removes them from input. Called at start of every controller execution. Enables reactive streaming of run_doc properties via input mutations:
+javascriptrun_doc.input['.operation'] = 'update'  // → run_doc.operation = 'update'
+run_doc.input['.view']      = 'form'    // → run_doc.view = 'form'
+CW.run(op) — builds run_doc factory. Wraps input in Proxy — every mutation wakes CW.controller via queueMicrotask, but only when _running = false. run_doc fields: operation, source/target_doctype, adapter, view, component, container, query, input, target, status, success, error, options, child_run_ids.
+CW.controller(run_doc) — main execution loop:
+
+Mutex via _running + _needsRun
+Calls _resolveInput first
+Routes to _handleSignal if _state has "" key
+For read ops → always executes handler
+For write ops → only executes if behavior.controller.autoSave = true AND input has data fields
+Resolves create vs update from target.data[0].name or input.name
+Clears input after successful save
+Calls CW._render if options.render = true
+
+CW._handleSignal(run_doc) — handles UI button signals:
+
+Fetches existing doc first (guardian needs real docstatus)
+Checks behaviorMatrix.guardian.blockOperations
+Routes: save → create/update, submit → update+docstatus=1, cancel → update+docstatus=2, amend → create+amended_from
+Sets _state[signal] = "1" or "-1"
+Clears input after successful signal
+
+CW._preflight(run_doc, operation) — schema-driven, runs while _running=true:
+
+create: validate reqd → generateId → apply defaults → serialize JSON fields → stamp
+update: validate reqd on merged doc → serialize JSON fields → stamp
+
+CW._handlers — select, create, update, delete:
+
+select: adapter.select + field filtering by view (list/card/form)
+create: preflight → adapter.create
+update: adapter.select → preflight → adapter.update
+delete: set docstatus=2 → update
+
+
+pb-adapter-pocketbase.js
+Pure PocketBase connector. No business logic.
+
+PB_TOP — top-level fields: name, doctype, docstatus, owner, _allowed, _allowed_read
+_splitRecord(doc) — separates top fields from data blob
+_mergeRecord(rec) — flattens PB record back to doc
+_buildFilter(run_doc) — builds PocketBase filter string from query.where
+_buildSort(run_doc) — builds PocketBase sort string
+select(run_doc) — getList (paginated) or getFullList
+create(run_doc) — pb.create with split record
+update(run_doc) — fetch by filter → merge data → pb.update
+delete(run_doc) — soft delete via update+docstatus=2 (same as handler)
+Self-registers: globalThis.Adapter.pocketbase
+
+
+CW-ui.js
+Render system:
+
+CW._reactRoots — React 18 root cache per container
+CW._getOrCreateRoot(containerId) — creates/reuses root
+CW._render(run_doc) — dispatches to CW._components[run_doc.component]
+
+Navigation:
+
+navigate(direction) — back/forward through main runs
+navigateTo(runName) — jump to specific run
+_updateNavUI() — updates breadcrumbs + back/forward buttons
+Listens to coworker:state:change
+
+FieldRenderer({ field, run_doc }):
+
+useState initialized from run_doc.target.data[0][fieldname] — React owns display
+onChange → setLocalVal (immediate) + debounced 300ms run_doc.input[field] = val
+onBlur → immediate run_doc.input[field] = val
+Handles: Data, Text, Long Text, Int, Float, Currency, Percent, Check, Select, Date, Datetime, Time, Code, Password, Link, Read Only, Section Break
+readOnly from behavior.ui.fieldsEditable
+
+MainForm({ run_doc }):
+
+Schema from CW.Schema[doctype] — synchronous
+Behavior from CW.getBehavior(schema, target.data[0])
+Title from target.data[0][schema.title_field]
+Renders fields filtered by evaluateDependsOn
+Buttons from behavior.ui.showButtons → run_doc.input._state = { [action]: "" }
+Badge from behavior.ui.badge or docstatus
+Error display from run_doc.error
+
+MainGrid({ run_doc }):
+
+Tabler table from run_doc.target.data
+onRowClick → select with view:'form' → CW.controller → stream input['.operation']='update'
+onNew → CW.run({ operation:'create' }) → CW.controller
+
+
+Key architectural decisions
+Single source of truth — run_doc is the only shared mutable object. All mutations go through run_doc.input. Proxy wakes controller.
+.field streaming — top-level run_doc properties changed reactively via input['.operation'], input['.view'] etc. _resolveInput promotes and removes them before any data operation.
+Optimistic UI — React useState owns display. Controller owns persistence. No merging in React. No React state in controller.
+Delta architecture — run_doc.target.data[0] = original from DB. run_doc.input = only what changed. Merged only in _preflight before write.
+Soft delete — docstatus=2 via update. No hard deletes.
+Behavior-driven — behaviorMatrix drives autoSave, fieldsEditable, showButtons, guardian.blockOperations. All from is_submittable + docstatus + _autosave key.
+AutoSave — write ops only execute when behavior.controller.autoSave=true AND input has data fields. Form stays alive after save — status resets for next mutation.
+
+//======== 40-2 7f2d26c121ec261cfc7af796752e667457bf2fda = 
+just rendering
 
 //======== 40-1 commit 9f1b2c3d4e5f67890abcdef1234567890abcdef
 CW-run.js — Architecture Summary

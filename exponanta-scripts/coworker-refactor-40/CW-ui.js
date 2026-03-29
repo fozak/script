@@ -1,7 +1,6 @@
 // ============================================================
 // CW-ui.js
 // React 18 UMD, no JSX, Tabler CSS
-// All functions: function(run_doc) — mutate only, no return
 // ============================================================
 
 const CW = globalThis.CW;
@@ -24,18 +23,15 @@ CW._getOrCreateRoot = function(containerId) {
 
 CW._render = function(run_doc) {
   if (!run_doc?.component || !run_doc?.container) return;
-
   const component = CW._components[run_doc.component];
   if (!component) return;
-
   const root = CW._getOrCreateRoot(run_doc.container);
   if (!root) return;
-
   root.render(React.createElement(component, { run_doc }));
 };
 
 // ============================================================
-// NAVIGATION HELPERS
+// NAVIGATION
 // ============================================================
 
 function _getMainRuns() {
@@ -49,8 +45,8 @@ function _getCurrentIndex() {
 }
 
 function navigate(direction) {
-  const runs  = _getMainRuns();
-  const idx   = _getCurrentIndex();
+  const runs   = _getMainRuns();
+  const idx    = _getCurrentIndex();
   const target = direction === 'back' ? idx - 1 : idx + 1;
   if (target >= 0 && target < runs.length) {
     CW.current_run = runs[target].name;
@@ -70,6 +66,18 @@ function navigateTo(runName) {
   return true;
 }
 
+function _findGridRun(doctype) {
+  const runs = _getMainRuns();
+  const idx  = _getCurrentIndex();
+  for (let i = idx - 1; i >= 0; i--) {
+    if (runs[i].component === 'MainGrid' &&
+       (runs[i].source_doctype === doctype || runs[i].target_doctype === doctype)) {
+      return runs[i].name;
+    }
+  }
+  return null;
+}
+
 function _getBreadcrumbs() {
   const current = CW.getCurrentRun();
   const home    = _getMainRuns()[0]?.name;
@@ -77,37 +85,25 @@ function _getBreadcrumbs() {
   if (!current?.component?.startsWith('Main')) {
     return [{ text: 'Home', runName: home }];
   }
-
   if (current.component === 'MainGrid') {
     return [
       { text: 'Home', runName: home },
       { text: current.source_doctype || current.target_doctype || 'List', runName: null },
     ];
   }
-
   if (current.component === 'MainForm') {
-    const doctype = current.source_doctype || current.target_doctype;
-    const docname = current.target?.data?.[0]?.name || 'New';
-    const gridRun = _findGridRun(doctype);
+    const doctype    = current.source_doctype || current.target_doctype;
+    const schema     = CW.Schema?.[doctype];
+    const titleField = schema?.title_field || 'name';
+    const doc        = current.target?.data?.[0] || {};
+    const docname    = doc[titleField] || doc.name || 'New';
     return [
       { text: 'Home', runName: home },
-      { text: doctype, runName: gridRun },
+      { text: doctype, runName: _findGridRun(doctype) },
       { text: docname, runName: null },
     ];
   }
-
   return [{ text: 'Home', runName: home }];
-}
-
-function _findGridRun(doctype) {
-  const runs = _getMainRuns();
-  const idx  = _getCurrentIndex();
-  for (let i = idx - 1; i >= 0; i--) {
-    if (runs[i].component === 'MainGrid' && (runs[i].source_doctype === doctype || runs[i].target_doctype === doctype)) {
-      return runs[i].name;
-    }
-  }
-  return null;
 }
 
 function _updateNavUI() {
@@ -123,9 +119,9 @@ function _updateNavUI() {
   if (breadcrumbsEl) {
     breadcrumbsEl.innerHTML = _getBreadcrumbs().map((crumb, i, arr) => {
       const isLast = i === arr.length - 1;
-      if (isLast) return `<span class="breadcrumb-item active">${crumb.text}</span>`;
-      if (crumb.runName) return `<span class="breadcrumb-item"><a href="#" onclick="navigateTo('${crumb.runName}');return false;">${crumb.text}</a></span>`;
-      return `<span class="breadcrumb-item">${crumb.text}</span>`;
+      if (isLast)        return `<li class="breadcrumb-item active">${crumb.text}</li>`;
+      if (crumb.runName) return `<li class="breadcrumb-item"><a href="#" onclick="navigateTo('${crumb.runName}');return false;">${crumb.text}</a></li>`;
+      return             `<li class="breadcrumb-item">${crumb.text}</li>`;
     }).join('');
   }
 }
@@ -137,18 +133,33 @@ globalThis.addEventListener('coworker:state:change', _updateNavUI);
 
 // ============================================================
 // FIELD RENDERER
+// React owns localVal — display only, preserves focus
+// Controller owns run_doc.input — delta only
+// No merging here
 // ============================================================
 
 const FieldRenderer = function({ field, run_doc }) {
-  const schema  = CW.Schema?.[run_doc.target_doctype];
-  const doc     = Object.assign({}, run_doc.target?.data?.[0], run_doc.input);
-  const value   = doc[field.fieldname];
-  const safeVal = value === null || value === undefined
-    ? (field.fieldtype === 'Check' ? false : '')
-    : value;
+  const behavior   = CW.getBehavior(CW.Schema?.[run_doc.target_doctype], run_doc.target?.data?.[0]);
+  const readOnly   = behavior?.ui?.fieldsEditable === false;
+  const initial    = run_doc.target?.data?.[0]?.[field.fieldname];
+  const safeInitial = initial === null || initial === undefined
+    ? (field.fieldtype === 'Check' ? 0 : '')
+    : initial;
+
+  const [localVal, setLocalVal] = React.useState(safeInitial);
+  const timerRef = React.useRef(null);
 
   const onChange = (val) => {
-    run_doc.input[field.fieldname] = val;
+    setLocalVal(val);                           // React — immediate, preserves focus
+    clearTimeout(timerRef.current);
+    timerRef.current = setTimeout(() => {
+      run_doc.input[field.fieldname] = val;     // delta → Proxy → controller
+    }, 300);
+  };
+
+  const onBlur = (val) => {
+    clearTimeout(timerRef.current);
+    run_doc.input[field.fieldname] = val;       // immediate on blur
   };
 
   // Section Break
@@ -159,16 +170,13 @@ const FieldRenderer = function({ field, run_doc }) {
     );
   }
 
-  // Column Break — handled by grid layout
+  // Column Break
   if (field.fieldtype === 'Column Break') return null;
 
   // Read Only
-  if (field.fieldtype === 'Read Only') {
+  if (field.fieldtype === 'Read Only' || readOnly) {
     return React.createElement('input', {
-      type: 'text',
-      className: 'form-control',
-      value: safeVal,
-      readOnly: true,
+      type: 'text', className: 'form-control', value: localVal, readOnly: true,
     });
   }
 
@@ -176,9 +184,8 @@ const FieldRenderer = function({ field, run_doc }) {
   if (field.fieldtype === 'Check') {
     return React.createElement('div', { className: 'form-check' },
       React.createElement('input', {
-        type: 'checkbox',
-        className: 'form-check-input',
-        checked: !!safeVal,
+        type: 'checkbox', className: 'form-check-input',
+        checked: !!localVal,
         onChange: (e) => onChange(e.target.checked ? 1 : 0),
       })
     );
@@ -188,8 +195,7 @@ const FieldRenderer = function({ field, run_doc }) {
   if (field.fieldtype === 'Select') {
     const options = (field.options || '').split('\n').filter(Boolean);
     return React.createElement('select', {
-      className: 'form-select',
-      value: safeVal,
+      className: 'form-select', value: localVal,
       onChange: (e) => onChange(e.target.value),
     },
       React.createElement('option', { value: '' }, ''),
@@ -200,39 +206,46 @@ const FieldRenderer = function({ field, run_doc }) {
   // Int / Float / Currency / Percent
   if (['Int', 'Float', 'Currency', 'Percent'].includes(field.fieldtype)) {
     return React.createElement('input', {
-      type: 'number',
-      className: 'form-control',
-      value: safeVal,
+      type: 'number', className: 'form-control', value: localVal,
       step: field.fieldtype === 'Int' ? '1' : '0.01',
-      onChange: (e) => onChange(field.fieldtype === 'Int' ? parseInt(e.target.value) : parseFloat(e.target.value)),
+      onChange: (e) => onChange(field.fieldtype === 'Int' ? parseInt(e.target.value) || 0 : parseFloat(e.target.value) || 0),
+      onBlur:   (e) => onBlur(field.fieldtype === 'Int' ? parseInt(e.target.value) || 0 : parseFloat(e.target.value) || 0),
     });
   }
 
   // Date / Datetime / Time
-  if (field.fieldtype === 'Date')     return React.createElement('input', { type: 'date',           className: 'form-control', value: safeVal, onChange: (e) => onChange(e.target.value) });
-  if (field.fieldtype === 'Datetime') return React.createElement('input', { type: 'datetime-local', className: 'form-control', value: safeVal, onChange: (e) => onChange(e.target.value) });
-  if (field.fieldtype === 'Time')     return React.createElement('input', { type: 'time',           className: 'form-control', value: safeVal, onChange: (e) => onChange(e.target.value) });
+  if (field.fieldtype === 'Date')     return React.createElement('input', { type: 'date',           className: 'form-control', value: localVal, onChange: (e) => onChange(e.target.value), onBlur: (e) => onBlur(e.target.value) });
+  if (field.fieldtype === 'Datetime') return React.createElement('input', { type: 'datetime-local', className: 'form-control', value: localVal, onChange: (e) => onChange(e.target.value), onBlur: (e) => onBlur(e.target.value) });
+  if (field.fieldtype === 'Time')     return React.createElement('input', { type: 'time',           className: 'form-control', value: localVal, onChange: (e) => onChange(e.target.value), onBlur: (e) => onBlur(e.target.value) });
 
   // Text / Long Text / Text Editor
   if (['Text', 'Long Text', 'Text Editor'].includes(field.fieldtype)) {
     return React.createElement('textarea', {
       className: 'form-control',
       rows: field.fieldtype === 'Long Text' ? 6 : 3,
-      value: safeVal,
+      value: localVal,
       onChange: (e) => onChange(e.target.value),
+      onBlur:   (e) => onBlur(e.target.value),
     });
   }
 
   // Code
   if (field.fieldtype === 'Code') {
-    const displayVal = typeof safeVal === 'object' ? JSON.stringify(safeVal, null, 2) : safeVal;
+    const displayVal = typeof localVal === 'object' ? JSON.stringify(localVal, null, 2) : (localVal || '');
     return React.createElement('textarea', {
-      className: 'form-control font-monospace',
-      rows: 6,
+      className: 'form-control font-monospace', rows: 6,
       value: displayVal,
       onChange: (e) => {
-        try { onChange(JSON.parse(e.target.value)); }
-        catch { onChange(e.target.value); }
+        setLocalVal(e.target.value);
+        clearTimeout(timerRef.current);
+        timerRef.current = setTimeout(() => {
+          try { run_doc.input[field.fieldname] = JSON.parse(e.target.value); }
+          catch { run_doc.input[field.fieldname] = e.target.value; }
+        }, 300);
+      },
+      onBlur: (e) => {
+        try { run_doc.input[field.fieldname] = JSON.parse(e.target.value); }
+        catch { run_doc.input[field.fieldname] = e.target.value; }
       },
     });
   }
@@ -240,42 +253,40 @@ const FieldRenderer = function({ field, run_doc }) {
   // Password
   if (field.fieldtype === 'Password') {
     return React.createElement('input', {
-      type: 'password',
-      className: 'form-control',
-      value: safeVal,
+      type: 'password', className: 'form-control', value: localVal,
       onChange: (e) => onChange(e.target.value),
+      onBlur:   (e) => onBlur(e.target.value),
     });
   }
 
-  // Link
+  // Link — simple text for now
   if (field.fieldtype === 'Link') {
     return React.createElement('input', {
-      type: 'text',
-      className: 'form-control',
-      value: safeVal,
+      type: 'text', className: 'form-control', value: localVal,
       placeholder: `Select ${field.label || field.fieldname}...`,
       onChange: (e) => onChange(e.target.value),
+      onBlur:   (e) => onBlur(e.target.value),
     });
   }
 
   // Default — Data
   return React.createElement('input', {
-    type: 'text',
-    className: 'form-control',
-    value: safeVal,
+    type: 'text', className: 'form-control', value: localVal,
     onChange: (e) => onChange(e.target.value),
+    onBlur:   (e) => onBlur(e.target.value),
   });
 };
 
 // ============================================================
 // MAIN FORM
+// Reads target.data[0] for display only — no merging
 // ============================================================
 
 const MainForm = function({ run_doc }) {
   const doctype  = run_doc.target_doctype || run_doc.source_doctype;
   const schema   = CW.Schema?.[doctype];
-  const behavior = schema ? CW.getBehavior(schema, run_doc.input) : null;
-  const doc      = Object.assign({}, run_doc.target?.data?.[0], run_doc.input);
+  const doc      = run_doc.target?.data?.[0] || {};
+  const behavior = schema ? CW.getBehavior(schema, doc) : null;
 
   if (!schema) {
     return React.createElement('div', { className: 'alert alert-warning' }, `Schema not found: ${doctype}`);
@@ -283,9 +294,8 @@ const MainForm = function({ run_doc }) {
 
   const title     = doc[schema.title_field || 'name'] || doc.name || 'New';
   const fields    = schema.fields || [];
-  const skipTypes = new Set(['Section Break', 'Column Break', 'Tab Break', 'HTML']);
+  const skipTypes = new Set(['Column Break', 'Tab Break', 'HTML']);
 
-  // badge
   const badge = behavior?.ui?.badge;
   const docstatusBadge = !badge && schema.is_submittable
     ? [null, { cls: 'bg-warning', label: 'Draft' }, { cls: 'bg-success', label: 'Submitted' }, { cls: 'bg-danger', label: 'Cancelled' }][doc.docstatus ?? 0]
@@ -300,7 +310,6 @@ const MainForm = function({ run_doc }) {
           : docstatusBadge
             ? React.createElement('span', { className: `badge ${docstatusBadge.cls}` }, docstatusBadge.label)
             : null,
-        // behavior buttons
         behavior?.ui?.showButtons?.map(action =>
           React.createElement('button', {
             key: action,
@@ -314,31 +323,25 @@ const MainForm = function({ run_doc }) {
       React.createElement('div', { className: 'row g-3' },
         fields
           .filter(f => evaluateDependsOn(f.depends_on, doc))
-          .map(f => {
-            if (f.fieldtype === 'Section Break') {
-              return React.createElement('div', { key: f.fieldname, className: 'col-12 mt-2' },
-                f.label ? React.createElement('h5', { className: 'mb-1' }, f.label) : null,
-                React.createElement('hr', { className: 'mt-0 mb-2' })
-              );
-            }
-            if (skipTypes.has(f.fieldtype)) return null;
-
-            return React.createElement('div', { key: f.fieldname, className: 'col-md-6' },
-              f.label && React.createElement('label', { className: 'form-label' },
-                f.label,
-                f.reqd && React.createElement('span', { className: 'text-danger ms-1' }, '*')
-              ),
-              React.createElement(FieldRenderer, { field: f, run_doc }),
-              run_doc._validationErrors?.find(e => e.field === f.fieldname) &&
-                React.createElement('div', { className: 'text-danger small mt-1' },
-                  run_doc._validationErrors.find(e => e.field === f.fieldname).message
+          .filter(f => !skipTypes.has(f.fieldtype))
+          .map(f =>
+            f.fieldtype === 'Section Break'
+              ? React.createElement('div', { key: f.fieldname, className: 'col-12 mt-2' },
+                  f.label ? React.createElement('h5', { className: 'mb-1' }, f.label) : null,
+                  React.createElement('hr', { className: 'mt-0 mb-2' })
                 )
-            );
-          })
+              : React.createElement('div', { key: f.fieldname, className: 'col-md-6' },
+                  f.label && React.createElement('label', { className: 'form-label' },
+                    f.label,
+                    f.reqd && React.createElement('span', { className: 'text-danger ms-1' }, '*')
+                  ),
+                  React.createElement(FieldRenderer, { field: f, run_doc })
+                )
+          )
       )
     ),
     run_doc.error && React.createElement('div', { className: 'card-footer' },
-      React.createElement('div', { className: 'alert alert-danger mb-0' }, 
+      React.createElement('div', { className: 'alert alert-danger mb-0' },
         typeof run_doc.error === 'string' ? run_doc.error : run_doc.error.message
       )
     )
@@ -355,27 +358,32 @@ const MainGrid = function({ run_doc }) {
   const validData = data.filter(Boolean);
 
   const onNew = () => {
-    CW.run({
-      operation: 'create',
+    const r = CW.run({
+      operation:      'create',
       target_doctype: doctype,
-      view: 'form',
-      component: 'MainForm',
-      container: run_doc.container,
-      options: { render: true },
+      view:           'form',
+      component:      'MainForm',
+      container:      run_doc.container,
+      options:        { render: true },
     });
+    CW.controller(r);
   };
 
   const onRowClick = (record) => {
     const r = CW.run({
-      operation: 'select',
+      operation:      'select',
       target_doctype: record.doctype || doctype,
-      query: { where: { name: record.name }, view: 'form' },
-      view: 'form',
-      component: 'MainForm',
-      container: run_doc.container,
-      options: { render: true },
+      query:          { where: { name: record.name }, view: 'form' },
+      view:           'form',
+      component:      'MainForm',
+      container:      run_doc.container,
+      options:        { render: true },
     });
-    CW.controller(r);
+    // after select fetches full record, stream .operation=update
+    // so field mutations trigger autoSave
+    CW.controller(r).then(() => {
+      r.input['.operation'] = 'update';
+    });
   };
 
   if (!validData.length) {
@@ -428,7 +436,6 @@ const MainGrid = function({ run_doc }) {
 
 CW._components = { MainForm, MainGrid };
 
-// Listen for state changes → re-render current run
 globalThis.addEventListener('coworker:state:change', (e) => {
   const run_doc = e.detail?.run;
   if (run_doc?.options?.render === true) {
