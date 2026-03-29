@@ -148,18 +148,24 @@ const FieldRenderer = function({ field, run_doc }) {
 
   const [localVal, setLocalVal] = React.useState(safeInitial);
   const timerRef = React.useRef(null);
+  const debounceOnChange = CW._config?.fieldInteractionConfig?.onChange?.debounce ?? 5000;
+  const debounceOnBlur   = CW._config?.fieldInteractionConfig?.onBlur?.debounce   ?? 0;
 
   const onChange = (val) => {
     setLocalVal(val);                           // React — immediate, preserves focus
     clearTimeout(timerRef.current);
     timerRef.current = setTimeout(() => {
       run_doc.input[field.fieldname] = val;     // delta → Proxy → controller
-    }, 300);
+    }, debounceOnChange);
   };
 
   const onBlur = (val) => {
     clearTimeout(timerRef.current);
-    run_doc.input[field.fieldname] = val;       // immediate on blur
+    if (debounceOnBlur === 0) {
+      run_doc.input[field.fieldname] = val;     // immediate on blur
+    } else {
+      setTimeout(() => { run_doc.input[field.fieldname] = val; }, debounceOnBlur);
+    }
   };
 
   // Section Break
@@ -437,11 +443,7 @@ const MainGrid = function({ run_doc }) {
 CW._components = { MainForm, MainGrid };
 
 globalThis.addEventListener('coworker:state:change', (e) => {
-  const run_doc = e.detail?.run;
-  if (run_doc?.options?.render === true) {
-    CW._render(run_doc);
-    _updateNavUI();
-  }
+  _updateNavUI();
 });
 
 console.log('✅ CW-ui.js loaded');

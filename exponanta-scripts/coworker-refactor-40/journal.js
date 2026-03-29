@@ -1,3 +1,12 @@
+//========= 40-4 commit abcdef1234567890abcdef1234567890abcdef12
+Two fixes:
+
+CW.run — _updateFromRun restored (needed for run registration)
+CW-ui.js — coworker:state:change listener no longer triggers _render — only updates nav UI. All renders now happen exclusively from CW.controller after data is fetched.
+
+This means FieldRenderer useState always initializes with populated target.data[0].Cw runJS Download
+
+
 //========= 40-3 commit 39e67305478eddf7caf9b411b9de3848e67aa358
 What's in code now
 Files
