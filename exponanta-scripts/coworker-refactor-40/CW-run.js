@@ -66,6 +66,7 @@ CW.run = function(op) {
     parent_run_id:      op.parent_run_id || null,
     child_run_ids:      [],
     user:               op.user || null,
+    options:            op.options || {},
 
     _running:           false,
     _needsRun:          false,
@@ -151,6 +152,7 @@ CW.controller = async function(run_doc) {
   run_doc._running = false;
 
   if (CW._updateFromRun) CW._updateFromRun(run_doc);
+  if (CW._render && run_doc.options?.render === true) CW._render(run_doc);
 
   if (run_doc._needsRun) {
     run_doc._needsRun = false;
