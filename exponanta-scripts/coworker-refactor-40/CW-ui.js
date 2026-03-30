@@ -139,8 +139,8 @@ globalThis.addEventListener('coworker:state:change', _updateNavUI);
 // ============================================================
 
 const FieldRenderer = function({ field, run_doc }) {
-  const behavior   = CW.getBehavior(CW.Schema?.[run_doc.target_doctype], run_doc.target?.data?.[0]);
-  const readOnly   = behavior?.ui?.fieldsEditable === false;
+  const doc_       = run_doc.target?.data?.[0] || {};
+  const readOnly   = (doc_.docstatus ?? 0) !== 0;
   const initial    = run_doc.target?.data?.[0]?.[field.fieldname];
   const safeInitial = initial === null || initial === undefined
     ? (field.fieldtype === 'Check' ? 0 : '')
@@ -151,16 +151,55 @@ const FieldRenderer = function({ field, run_doc }) {
   const debounceOnChange = CW._config?.fieldInteractionConfig?.onChange?.debounce ?? 5000;
   const debounceOnBlur   = CW._config?.fieldInteractionConfig?.onBlur?.debounce   ?? 0;
 
+  // Link field state — must be at top level (Rules of Hooks)
+  const linkSchema  = CW.Schema?.[field.options];
+  const titleField  = linkSchema?.title_field || 'name';
+  const [linkOptions, setLinkOptions] = React.useState([]);
+  const [isOpen, setIsOpen]           = React.useState(false);
+  const [searchText, setSearchText]   = React.useState(field.fieldtype === 'Link' ? (safeInitial || '') : '');
+
+  // Table field state — must be at top level (Rules of Hooks)
+  const childSchema   = CW.Schema?.[field.options];
+  const colFields     = React.useMemo(() => {
+    if (field.fieldtype !== 'Table') return [];
+    const listFields = childSchema?.fields?.filter(f => f.in_list_view) || [];
+    return listFields.length > 0
+      ? listFields
+      : childSchema?.fields?.filter(f => !['Section Break','Column Break','Tab Break','HTML','Button'].includes(f.fieldtype))?.slice(0,5) || [];
+  }, [field.options, field.fieldtype]);
+  const [childData, setChildData]     = React.useState([]);
+  const [childLoaded, setChildLoaded] = React.useState(false);
+  const doc__ = run_doc.target?.data?.[0] || {};
+  React.useEffect(() => {
+    if (field.fieldtype !== 'Table') return;
+    if (!field.options || !doc__.name || childLoaded) return;
+    setChildLoaded(true);
+    run_doc.child({
+      operation:      'select',
+      target_doctype: field.options,
+      query:          { where: { parent: doc__.name, parentfield: field.fieldname } },
+      options:        { render: false },
+    }).then(childRun => {
+      if (childRun.success) setChildData(childRun.target?.data || []);
+    });
+  }, [doc__.name, field.fieldtype]);
+
   const onChange = (val) => {
     setLocalVal(val);                           // React — immediate, preserves focus
     clearTimeout(timerRef.current);
     timerRef.current = setTimeout(() => {
+      // skip write if value unchanged from what DB already has
+      const persisted = run_doc.target?.data?.[0]?.[field.fieldname];
+      if (val === persisted) return;
       run_doc.input[field.fieldname] = val;     // delta → Proxy → controller
     }, debounceOnChange);
   };
 
   const onBlur = (val) => {
     clearTimeout(timerRef.current);
+    // skip write if value unchanged from what DB already has
+    const persisted = run_doc.target?.data?.[0]?.[field.fieldname];
+    if (val === persisted) return;
     if (debounceOnBlur === 0) {
       run_doc.input[field.fieldname] = val;     // immediate on blur
     } else {
@@ -186,13 +225,17 @@ const FieldRenderer = function({ field, run_doc }) {
     });
   }
 
-  // Check
+  // Check — immediate write on click, no debounce needed
   if (field.fieldtype === 'Check') {
     return React.createElement('div', { className: 'form-check' },
       React.createElement('input', {
         type: 'checkbox', className: 'form-check-input',
         checked: !!localVal,
-        onChange: (e) => onChange(e.target.checked ? 1 : 0),
+        onChange: (e) => {
+          const val = e.target.checked ? 1 : 0;
+          setLocalVal(val);
+          onBlur(val);  // immediate write, bypasses debounce
+        },
       })
     );
   }
@@ -265,14 +308,108 @@ const FieldRenderer = function({ field, run_doc }) {
     });
   }
 
-  // Link — simple text for now
+  // Table — child grid
+  if (field.fieldtype === 'Table') {
+    const onChildRowClick = (row) => {
+      const r = CW.run({
+        operation:      'select',
+        target_doctype: field.options,
+        query:          { where: { name: row.name }, view: 'form' },
+        view:           'form',
+        component:      'MainForm',
+        container:      run_doc.container,
+        options:        { render: true },
+      });
+      CW.controller(r).then(() => { r.input['.operation'] = 'update'; });
+    };
+
+    if (childData.length === 0) {
+      return React.createElement('div', { className: 'text-muted small py-2' }, 
+        childLoaded ? 'No records' : 'Loading...'
+      );
+    }
+
+    const keys = colFields.map(f => f.fieldname).filter(k => childData[0] && k in childData[0]);
+
+    return React.createElement('div', { className: 'table-responsive' },
+      React.createElement('table', { className: 'table table-vcenter table-hover table-sm card-table mb-0' },
+        React.createElement('thead', {},
+          React.createElement('tr', {},
+            keys.map(k => {
+              const f = colFields.find(cf => cf.fieldname === k);
+              return React.createElement('th', { key: k }, f?.label || k);
+            })
+          )
+        ),
+        React.createElement('tbody', {},
+          childData.map((row, i) =>
+            React.createElement('tr', {
+              key: row.name || i,
+              style: { cursor: 'pointer' },
+              onClick: () => onChildRowClick(row),
+            },
+              keys.map(k => React.createElement('td', { key: k }, String(row[k] ?? '')))
+            )
+          )
+        )
+      )
+    );
+  }
+
+  // Link — dropdown search
   if (field.fieldtype === 'Link') {
-    return React.createElement('input', {
-      type: 'text', className: 'form-control', value: localVal,
-      placeholder: `Select ${field.label || field.fieldname}...`,
-      onChange: (e) => onChange(e.target.value),
-      onBlur:   (e) => onBlur(e.target.value),
-    });
+    const loadOptions = async () => {
+      if (!field.options) return;
+      const childRun = await run_doc.child({
+        operation:      'select',
+        target_doctype: field.options,
+        query:          { take: 50, select: ['name', titleField] },
+        options:        { render: false },
+      });
+      if (childRun.success) {
+        setLinkOptions(childRun.target?.data || []);
+        setIsOpen(true);
+      }
+    };
+
+    const handleSelect = (opt) => {
+      const display    = opt[titleField] || opt.name;
+      setSearchText(display);
+      setIsOpen(false);
+      run_doc.input[field.fieldname] = opt.name;
+    };
+
+    const handleBlur = () => {
+      setTimeout(() => setIsOpen(false), 200);
+      if (searchText !== localVal) {
+        run_doc.input[field.fieldname] = searchText;
+      }
+    };
+
+    return React.createElement('div', { className: 'position-relative' },
+      React.createElement('input', {
+        type: 'text', className: 'form-control',
+        value: searchText,
+        placeholder: `Select ${field.label || field.fieldname}...`,
+        readOnly: readOnly,
+        onFocus:  () => { if (!readOnly) loadOptions(); },
+        onChange: (e) => setSearchText(e.target.value),
+        onBlur:   handleBlur,
+      }),
+      isOpen && linkOptions.length > 0 && React.createElement('div', {
+        className: 'dropdown-menu show w-100',
+        style: { maxHeight: '200px', overflowY: 'auto', zIndex: 1050 },
+      },
+        linkOptions.map(opt =>
+          React.createElement('button', {
+            key:       opt.name,
+            className: 'dropdown-item',
+            type:      'button',
+            onMouseDown: (e) => { e.preventDefault(); handleSelect(opt); },
+          }, opt[titleField] || opt.name)
+        )
+      )
+    );
   }
 
   // Default — Data
@@ -292,7 +429,6 @@ const MainForm = function({ run_doc }) {
   const doctype  = run_doc.target_doctype || run_doc.source_doctype;
   const schema   = CW.Schema?.[doctype];
   const doc      = run_doc.target?.data?.[0] || {};
-  const behavior = schema ? CW.getBehavior(schema, doc) : null;
 
   if (!schema) {
     return React.createElement('div', { className: 'alert alert-warning' }, `Schema not found: ${doctype}`);
@@ -302,26 +438,49 @@ const MainForm = function({ run_doc }) {
   const fields    = schema.fields || [];
   const skipTypes = new Set(['Column Break', 'Tab Break', 'HTML']);
 
-  const badge = behavior?.ui?.badge;
-  const docstatusBadge = !badge && schema.is_submittable
-    ? [null, { cls: 'bg-warning', label: 'Draft' }, { cls: 'bg-success', label: 'Submitted' }, { cls: 'bg-danger', label: 'Cancelled' }][doc.docstatus ?? 0]
-    : null;
+  // FSM — dimension 0
+  const stateDef  = CW._getStateDef(doctype);
+  const dim0      = stateDef?.['0'];
+  const current   = doc._state?.['0'] ?? doc.docstatus ?? 0;
+  const editable  = current === 0;
+
+  // badge from FSM options
+  const badgeLabels = ['bg-warning', 'bg-success', 'bg-danger'];
+  const badgeLabel  = dim0?.options?.[current] || '';
+  const badgeCls    = badgeLabels[current] || 'bg-secondary';
+
+  // buttons from FSM transitions
+  const buttons = [];
+  const allowed = dim0?.transitions?.[String(current)] || [];
+  for (const to of allowed) {
+    const key      = `${current}_${to}`;
+    const requires = dim0?.requires?.[key] || {};
+    const rule     = dim0?.rules?.[key];
+    const reqPassed  = Object.entries(requires).every(([k, v]) => schema[k] === v);
+    const rulePassed = typeof rule === 'function' ? rule(run_doc) : true;
+    if (reqPassed && rulePassed) {
+      buttons.push({ key, label: dim0?.labels?.[key] || key, confirm: dim0?.confirm?.[key] });
+    }
+  }
+
+  const onButtonClick = (btn) => {
+    if (btn.confirm && !window.confirm(btn.confirm)) return;
+    run_doc.input._state = { [btn.key]: '' };
+  };
 
   return React.createElement('div', { className: 'card' },
     React.createElement('div', { className: 'card-header d-flex justify-content-between align-items-center' },
       React.createElement('h3', { className: 'card-title mb-0' }, title),
       React.createElement('div', { className: 'd-flex gap-2 align-items-center' },
-        badge
-          ? React.createElement('span', { className: `badge ${badge.class}` }, badge.label)
-          : docstatusBadge
-            ? React.createElement('span', { className: `badge ${docstatusBadge.cls}` }, docstatusBadge.label)
-            : null,
-        behavior?.ui?.showButtons?.map(action =>
+        badgeLabel
+          ? React.createElement('span', { className: `badge ${badgeCls}` }, badgeLabel)
+          : null,
+        buttons.map(btn =>
           React.createElement('button', {
-            key: action,
-            className: action === 'delete' ? 'btn btn-danger btn-sm' : 'btn btn-primary btn-sm',
-            onClick: () => { run_doc.input._state = { [action]: '' }; },
-          }, action.charAt(0).toUpperCase() + action.slice(1))
+            key: btn.key,
+            className: (btn.label === 'Delete' || btn.label === 'Cancel') ? 'btn btn-danger btn-sm' : 'btn btn-primary btn-sm',
+            onClick: () => onButtonClick(btn),
+          }, btn.label)
         )
       )
     ),

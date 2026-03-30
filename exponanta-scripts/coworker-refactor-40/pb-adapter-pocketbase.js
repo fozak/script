@@ -199,7 +199,10 @@ async function update(run_doc) {
     const updated = await Promise.all(existing.map(async rec => {
       const mergedData = Object.assign({}, rec.data, data);
       await globalThis.pb.collection(config.collection).update(rec.id, { ...top, data: mergedData });
-      return Object.assign({}, mergedData, top);
+      // always include PB top-level fields in returned record so target.data[0].name is never lost
+      const recTop = {};
+      for (const k of PB_TOP) { if (rec[k] !== undefined) recTop[k] = rec[k]; }
+      return Object.assign({}, recTop, mergedData, top);
     }));
 
     run_doc.target  = { data: updated, meta: { updated: updated.length } };
