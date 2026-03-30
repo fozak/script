@@ -2,6 +2,14 @@
 // CW-config.js  /updated auth
 // ============================================================
 
+// System fields always included in every fetch regardless of view
+globalThis.CW.defaultFields = [
+  'name', 'doctype', 'docstatus', 'owner',
+  'modified', 'modified_by', '_state',
+  'parent', 'parentfield', 'parenttype', 'idx',
+];
+
+
 globalThis.CW._config = {
   // ============================================================
   // SYSTEM CONFIG

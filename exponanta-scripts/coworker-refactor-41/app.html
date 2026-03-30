@@ -53,10 +53,13 @@
 <!-- 1. PocketBase SDK — must be first (pb global used by adapter + auth) -->
 <script src="https://cdn.jsdelivr.net/npm/pocketbase@latest/dist/pocketbase.umd.js"></script>
 
-<!-- 2. React UMD — before CW-ui.js -->
+<!-- 2. React UMD — must be before TanStack -->
 <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
 <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-
+<!-- TanStack Table UMD — after React -->
+<!--<script src="https://unpkg.com/@tanstack/react-table@8.20.5/build/umd/index.production.js"></script>
+<script>globalThis.TanStackTable = globalThis.ReactTable; console.log('✅ TanStack Table loaded:', !!globalThis.TanStackTable);</script>
+-->
 <!-- 3. Alpine — before Alpine.start() -->
 <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
 

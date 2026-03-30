@@ -185,6 +185,13 @@ CW.run = function(op) {
 
   if (CW._updateFromRun) CW._updateFromRun(run_doc);
 
+  // auto-wake controller if caller declared render intent upfront
+  if (op.options?.render === true) {
+    queueMicrotask(() => {
+      CW.controller(run_doc).catch(err => console.error('[CW]', err));
+    });
+  }
+
   return run_doc;
 };
 
@@ -225,6 +232,10 @@ CW.controller = async function(run_doc) {
           run_doc.operation = (run_doc.input.name || run_doc.target?.data?.[0]?.name) ? "update" : "create";
           await CW._handlers[run_doc.operation](run_doc);
           if (!run_doc.error) {
+            // after create — lock in the name so _needsRun replays as update not create
+            if (run_doc.operation === "create" && run_doc.target?.data?.[0]?.name) {
+              run_doc.query = Object.assign({}, run_doc.query, { where: { name: run_doc.target.data[0].name } });
+            }
             Object.keys(run_doc.input).filter(k => k !== '_state').forEach(k => delete run_doc.input[k]);
           }
         }
@@ -339,6 +350,10 @@ CW._handleSignal = async function(run_doc) {
 
   // clear input after signal (keep _state for result tracking)
   if (!run_doc.error) {
+    // lock in name after create so subsequent mutations update not re-create
+    if (run_doc.operation === "create" && run_doc.target?.data?.[0]?.name) {
+      run_doc.query = Object.assign({}, run_doc.query, { where: { name: run_doc.target.data[0].name } });
+    }
     Object.keys(run_doc.input).filter(k => k !== '_state').forEach(k => delete run_doc.input[k]);
     // merge _state result — not replace
     if (run_doc.input._state) {
@@ -452,9 +467,13 @@ CW._handlers = {
     if (schema && !sel) {
       const shouldFilter = activeView === "list" || activeView === "card";
       if (shouldFilter) {
-        const viewProp   = `in_${activeView}_view`;
-        const viewFields = schema.fields.filter(f => f[viewProp]).map(f => f.fieldname);
-        const fields     = ["name", "doctype", ...viewFields];
+        // in_list_view drives both list and card display columns
+        const viewFields  = schema.fields.filter(f => f.in_list_view).map(f => f.fieldname);
+        // title_field always included for display (breadcrumbs, card title, Link dropdown)
+        const titleField  = schema.title_field ? [schema.title_field] : [];
+        // system defaults always included (FSM, ownership, identity)
+        const systemFields = CW.defaultFields || [];
+        const fields = [...new Set([...systemFields, ...titleField, ...viewFields])];
         run_doc.target.data = run_doc.target.data.map(item => {
           const filtered = {};
           fields.forEach(f => { if (f in item) filtered[f] = item[f]; });
@@ -462,9 +481,13 @@ CW._handlers = {
         });
       }
     } else if (sel && Array.isArray(sel)) {
+      // explicit select — always add defaultFields + title_field on top
+      const titleField   = schema?.title_field ? [schema.title_field] : [];
+      const systemFields = CW.defaultFields || [];
+      const allFields    = [...new Set([...systemFields, ...titleField, ...sel])];
       run_doc.target.data = run_doc.target.data.map(item => {
         const filtered = {};
-        sel.forEach(f => { if (f in item) filtered[f] = item[f]; });
+        allFields.forEach(f => { if (f in item) filtered[f] = item[f]; });
         return filtered;
       });
     }
