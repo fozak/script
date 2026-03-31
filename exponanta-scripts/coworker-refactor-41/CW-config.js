@@ -6,11 +6,16 @@
 globalThis.CW.defaultFields = [
   'name', 'doctype', 'docstatus', 'owner',
   'modified', 'modified_by', '_state',
-  'parent', 'parentfield', 'parenttype', 'idx',
+  'parent', 'parentfield', 'parenttype', 'idx','_allowed', '_allowed_read'
 ];
 
 
 globalThis.CW._config = {
+
+
+
+
+
   // ============================================================
   // SYSTEM CONFIG
   // ============================================================
@@ -133,6 +138,59 @@ globalThis.CW._config = {
           // Optional: include any flags in JWT payload
           includeInJWT: ["_allowed_read", "email_verified"], // ensures payload has 1/0
         },
+      },
+    },
+  },
+
+  relationshipTypes: {
+    "Event": {
+      "User":         ["Attendee", "Speaker", "Volunteer", "Organizer", "Sponsor Contact"],
+      "Organization": ["Sponsor", "Partner", "Media Partner"],
+      "Event":        ["Related Event", "Follow-up Event"],
+    },
+    "Task": {
+      "User":         ["Assignee", "Reviewer", "Observer"],
+      "Task":         ["Blocks", "Blocked By", "Related"],
+      "Project":      ["Belongs To"],
+    },
+  },
+ 
+  // Access granted when Relationship is Submitted (docstatus=1)
+  // write → _allowed     (can edit parent)
+  // read  → _allowed_read (can read parent)
+  // none  → business relationship only, no system access
+  relationshipAccessMap: {
+    "Event": {
+      "User": {
+        "Attendee":        "read",
+        "Speaker":         "read",
+        "Volunteer":       "read",
+        "Organizer":       "write",
+        "Sponsor Contact": "read",
+      },
+      "Organization": {
+        "Sponsor":         "none",
+        "Partner":         "none",
+        "Media Partner":   "none",
+      },
+      "Event": {
+        "Related Event":   "none",
+        "Follow-up Event": "none",
+      },
+    },
+    "Task": {
+      "User": {
+        "Assignee":        "write",
+        "Reviewer":        "read",
+        "Observer":        "read",
+      },
+      "Task": {
+        "Blocks":          "none",
+        "Blocked By":      "none",
+        "Related":         "none",
+      },
+      "Project": {
+        "Belongs To":      "none",
       },
     },
   },

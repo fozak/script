@@ -105,6 +105,11 @@ CW._execTransition = async function(run_doc, dim, key) {
     run_doc.input._state = {};
   }
   run_doc.input._state[dim] = to;
+
+  // dim 0 drives docstatus — keep PB top-level field in sync
+  if (String(dim) === "0") {
+    run_doc.input.docstatus = to;
+  }
 };
 
 // ============================================================
@@ -508,7 +513,11 @@ CW._handlers = {
     if (!run_doc.query?.where?.name) {
       run_doc.query = Object.assign({}, run_doc.query, { where: { name } });
     }
+    // strip query.select for internal re-fetch — always need full record for _preflight merge
+    const savedSelect = run_doc.query?.select;
+    if (savedSelect) run_doc.query = Object.assign({}, run_doc.query, { select: undefined });
     await globalThis.Adapter[db].select(run_doc);
+    if (savedSelect) run_doc.query = Object.assign({}, run_doc.query, { select: savedSelect });
     if (run_doc.error) return;
     CW._preflight(run_doc, "update");
     if (run_doc.error) return;
