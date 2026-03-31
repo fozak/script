@@ -4,45 +4,23 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CW App</title>
-  <!-- Tabler CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta17/dist/css/tabler.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
 </head>
 <body class="antialiased">
 <div class="wrapper">
 
-  <!-- Nav -->
-  <div class="navbar navbar-expand-md navbar-light d-print-none border-bottom">
-    <div class="container-xl">
-      <button id="back_btn" class="btn btn-sm btn-outline-secondary me-1" onclick="navigate('back')">←</button>
-      <button id="forward_btn" class="btn btn-sm btn-outline-secondary me-2" onclick="navigate('forward')">→</button>
-      <nav aria-label="breadcrumb">
-        <ol class="breadcrumb mb-0" id="breadcrumbs">
-          <li class="breadcrumb-item active">Home</li>
-        </ol>
-      </nav>
-      <!-- Auth state — Alpine handles this section -->
-      <div class="ms-auto d-flex align-items-center gap-2" x-data x-show="$store.auth.isValid">
-        <span class="avatar avatar-sm"
-          :style="`background-color:${$store.auth.avatarColor}`"
-          x-text="$store.auth.initials">
-        </span>
-        <span x-text="$store.auth.name" class="d-none d-md-inline"></span>
-        <a href="#" class="btn btn-sm btn-outline-secondary" @click.prevent="authLogout(); location.reload()">Logout</a>
-      </div>
-      <div class="ms-auto" x-data x-show="!$store.auth.isValid">
-        <a href="/login.html" class="btn btn-sm btn-primary">Login</a>
-      </div>
-    </div>
-  </div>
+  <!-- Navbar — rendered by app-ui.js NavBar component -->
+  <div id="nav_container"></div>
 
-  <!-- Main -->
+  <!-- Main content -->
   <div class="page-wrapper">
     <div class="container-xl py-4">
       <div id="main_container"></div>
     </div>
   </div>
 
-  <!-- REPL -->
+  <!-- REPL (dev tool) -->
   <div class="container-xl pb-4">
     <input id="expr" class="form-control font-monospace" placeholder="JS expression (Enter to run)">
     <pre id="preview" class="mt-2 p-3 bg-light border rounded" style="font-size:11px;max-height:200px;overflow-y:auto"></pre>
@@ -50,27 +28,25 @@
 
 </div>
 
-<!-- 1. PocketBase SDK — must be first (pb global used by adapter + auth) -->
+<!-- Toast container — rendered by app-ui.js -->
+<div id="toast_container"></div>
+
+<!-- 1. PocketBase SDK -->
 <script src="https://cdn.jsdelivr.net/npm/pocketbase@latest/dist/pocketbase.umd.js"></script>
 
-<!-- 2. React UMD — must be before TanStack -->
+<!-- 2. React UMD -->
 <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
 <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-<!-- TanStack Table UMD — after React -->
-<!--<script src="https://unpkg.com/@tanstack/react-table@8.20.5/build/umd/index.production.js"></script>
-<script>globalThis.TanStackTable = globalThis.ReactTable; console.log('✅ TanStack Table loaded:', !!globalThis.TanStackTable);</script>
--->
-<!-- 3. Alpine — before Alpine.start() -->
-<script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
 
-<!-- 4. Tabler JS — UI components -->
+<!-- 3. Tabler JS (dropdown, collapse etc) -->
 <script src="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta17/dist/js/tabler.min.js"></script>
 
-<!-- 5. CW modules — order matters -->
-<script type="module" src="index.js"></script>   <!-- CW-state, CW-config, CW-utils, CW-run, pb-adapter, auth -->
-<script type="module" src="CW-ui.js"></script>   <!-- React components, CW._render, CW._components -->
+<!-- 4. CW modules -->
+<script type="module" src="index.js"></script>
+<script type="module" src="CW-ui.js"></script>
+<script type="module" src="app-ui.js"></script>
 
-<!-- 6. App bootstrap — after CW booted -->
+<!-- 5. Bootstrap -->
 <script type="module">
   async function waitForBoot() {
     return new Promise(resolve => {
@@ -83,20 +59,19 @@
   window.addEventListener('load', async () => {
     await waitForBoot();
 
-    // Restore auth session
+    // Restore auth — fires cw:auth:change -> app-ui.js renders navbar
     if (typeof authRestore === 'function') authRestore();
 
-    // Initial render
-    const run = CW.run({
+    // Initial grid
+    CW.run({
       operation:      'select',
-      target_doctype: 'Role',
-      query:          { take: 10 },
+      target_doctype: 'Task',
+      query:          { take: 20 },
       view:           'list',
       component:      'MainGrid',
       container:      'main_container',
       options:        { render: true },
     });
-    await CW.controller(run);
   });
 
   // REPL
@@ -104,26 +79,11 @@
     if (e.key !== 'Enter') return;
     try {
       const result = await eval(e.target.value);
-      document.getElementById('preview').textContent = JSON.stringify(result, null, 2);
+      document.getElementById('preview').textContent =
+        result === undefined ? 'undefined' : JSON.stringify(result, null, 2);
     } catch(err) {
       document.getElementById('preview').textContent = 'Error: ' + err.message;
     }
-  });
-</script>
-
-<!-- 7. Alpine store init — inline defaults, authStoreDefaults may not be loaded yet -->
-<script>
-  document.addEventListener('alpine:init', () => {
-    Alpine.store('auth', {
-      isValid:    false,
-      verified:   false,
-      id:         null,
-      name:       '',
-      email:      '',
-      avatar:     null,
-      initials:   '',
-      avatarColor: '#3b5bdb'
-    });
   });
 </script>
 

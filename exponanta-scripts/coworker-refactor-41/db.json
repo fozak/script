@@ -1,4 +1,245 @@
-[{
+[
+  {
+  "schema_name": "UserPublicProfile",
+  "doctype": "Schema",
+  "is_submittable": 1,
+  "title_field": "full_name",
+  "autoname": "generateId",
+
+  "fields": [
+    {
+      "fieldname": "full_name",
+      "fieldtype": "Data",
+      "label": "Full Name",
+      "reqd": 1,
+      "in_list_view": 1
+    },
+    {
+      "fieldname": "section_identity",
+      "fieldtype": "Section Break",
+      "label": "Identity"
+    },
+    {
+      "fieldname": "title",
+      "fieldtype": "Data",
+      "label": "Title / Role",
+      "in_list_view": 1
+    },
+    {
+      "fieldname": "organization",
+      "fieldtype": "Data",
+      "label": "Organization",
+      "in_list_view": 1
+    },
+    {
+      "fieldname": "chapter",
+      "fieldtype": "Data",
+      "label": "Chapter"
+    },
+    {
+      "fieldname": "avatar_url",
+      "fieldtype": "Data",
+      "label": "Avatar URL"
+    },
+    {
+      "fieldname": "section_bio",
+      "fieldtype": "Section Break",
+      "label": "About"
+    },
+    {
+      "fieldname": "bio",
+      "fieldtype": "Text",
+      "label": "Bio"
+    },
+    {
+      "fieldname": "section_links",
+      "fieldtype": "Section Break",
+      "label": "Links"
+    },
+    {
+      "fieldname": "linkedin",
+      "fieldtype": "Data",
+      "label": "LinkedIn URL"
+    },
+    {
+      "fieldname": "website",
+      "fieldtype": "Data",
+      "label": "Website"
+    },
+    {
+      "fieldname": "section_relationships",
+      "fieldtype": "Section Break",
+      "label": "Relationships"
+    },
+    {
+      "fieldname": "relationships",
+      "fieldtype": "Relationship Panel",
+      "label": "Relationships"
+    }
+  ],
+
+  "_state": {
+    "0": {
+      "options":  ["Draft", "Published", "Unpublished"],
+      "labels": {
+        "0_1": "Publish",
+        "0_2": "Discard",
+        "1_2": "Unpublish",
+        "2_0": "Edit"
+      },
+      "confirm": {
+        "1_2": "Unpublish your profile? It will no longer be visible to others."
+      }
+    }
+  }
+},
+{
+  "schema_name": "WebPage",
+  "doctype": "Schema",
+  "is_child": 1,
+  "is_submittable": 1,
+  "title_field": "slug",
+  "autoname": "generateId",
+  "fields": [
+    {
+      "fieldname": "domain",
+      "fieldtype": "Data",
+      "label": "Domain",
+      "reqd": 1,
+      "in_list_view": 1
+    },
+    {
+      "fieldname": "slug",
+      "fieldtype": "Data",
+      "label": "URL Slug",
+      "reqd": 1,
+      "in_list_view": 1
+    },
+    {
+      "fieldname": "meta_title",
+      "fieldtype": "Data",
+      "label": "Meta Title",
+      "in_list_view": 1
+    },
+    {
+      "fieldname": "meta_desc",
+      "fieldtype": "Text",
+      "label": "Meta Description"
+    },
+    {
+      "fieldname": "og_image",
+      "fieldtype": "Data",
+      "label": "OG Image URL"
+    },
+    {
+      "fieldname": "noindex",
+      "fieldtype": "Check",
+      "label": "No Index"
+    },
+    {
+      "fieldname": "expires",
+      "fieldtype": "Date",
+      "label": "Expires"
+    },
+    {
+      "fieldname": "sort_order",
+      "fieldtype": "Int",
+      "label": "Sort Order"
+    },
+    {
+      "fieldname": "content",
+      "fieldtype": "Text",
+      "label": "Content"
+    }
+  ],
+  "_state": {
+    "0": {
+      "options": [
+        "Draft",
+        "Published",
+        "Unpublished"
+      ],
+      "labels": {
+        "0_1": "Publish",
+        "0_2": "Discard",
+        "1_2": "Unpublish",
+        "2_0": "Republish"
+      },
+      "confirm": {
+        "1_2": "Unpublish? The public URL will stop working."
+      },
+      "sideEffects": {
+        "0_1": "async function(run_doc) { var rec = run_doc.target && run_doc.target.data && run_doc.target.data[0]; if (!rec || !rec.parent) return; var sel = CW.run({ operation: 'select', target_doctype: rec.parenttype, query: { where: { name: rec.parent } }, options: { render: false } }); await CW.controller(sel); var pDoc = sel.target && sel.target.data && sel.target.data[0]; if (!pDoc) return; var updateRun = CW.run({ operation: 'update', target_doctype: rec.parenttype, query: { where: { name: rec.parent } }, options: { render: false } }); updateRun.target = { data: [pDoc] }; var cur = pDoc._allowed_read || []; if (!cur.includes('roleispublicxxx')) updateRun.input._allowed_read = cur.concat(['roleispublicxxx']); await CW.controller(updateRun); }",
+        "1_2": "async function(run_doc) { var rec = run_doc.target && run_doc.target.data && run_doc.target.data[0]; if (!rec || !rec.parent) return; var siblings = CW.run({ operation: 'select', target_doctype: 'WebPage', query: { where: { parent: rec.parent, parenttype: rec.parenttype } }, options: { render: false } }); await CW.controller(siblings); var otherPublished = (siblings.target && siblings.target.data || []).filter(function(s){ return s.name !== rec.name && s.docstatus === 1; }); if (otherPublished.length > 0) return; var sel = CW.run({ operation: 'select', target_doctype: rec.parenttype, query: { where: { name: rec.parent } }, options: { render: false } }); await CW.controller(sel); var pDoc = sel.target && sel.target.data && sel.target.data[0]; if (!pDoc) return; var updateRun = CW.run({ operation: 'update', target_doctype: rec.parenttype, query: { where: { name: rec.parent } }, options: { render: false } }); updateRun.target = { data: [pDoc] }; updateRun.input._allowed_read = (pDoc._allowed_read || []).filter(function(id){ return id !== 'roleispublicxxx'; }); await CW.controller(updateRun); }",
+        "2_0": "async function(run_doc) { var rec = run_doc.target && run_doc.target.data && run_doc.target.data[0]; if (!rec || !rec.parent) return; var sel = CW.run({ operation: 'select', target_doctype: rec.parenttype, query: { where: { name: rec.parent } }, options: { render: false } }); await CW.controller(sel); var pDoc = sel.target && sel.target.data && sel.target.data[0]; if (!pDoc) return; var updateRun = CW.run({ operation: 'update', target_doctype: rec.parenttype, query: { where: { name: rec.parent } }, options: { render: false } }); updateRun.target = { data: [pDoc] }; var cur = pDoc._allowed_read || []; if (!cur.includes('roleispublicxxx')) updateRun.input._allowed_read = cur.concat(['roleispublicxxx']); await CW.controller(updateRun); }"
+      }
+    }
+  }
+},
+  {
+  "schema_name": "Event",
+  "doctype": "Schema",
+  "is_submittable": 1,
+  "title_field": "title",
+  "autoname": "generateId",
+
+  "fields": [
+    { "fieldname": "section_identity", "fieldtype": "Section Break", "label": "Event" },
+    { "fieldname": "title",            "fieldtype": "Data",   "label": "Title",       "reqd": 1, "in_list_view": 1 },
+    { "fieldname": "deck",             "fieldtype": "Text",   "label": "Tagline" },
+    { "fieldname": "kicker",           "fieldtype": "Data",   "label": "Kicker" },
+    { "fieldname": "featured",         "fieldtype": "Check",  "label": "Featured" },
+    { "fieldname": "lang",             "fieldtype": "Select", "label": "Language",    "options": "en\nru\nes" },
+
+    { "fieldname": "section_classify", "fieldtype": "Section Break", "label": "Classification" },
+    { "fieldname": "category",         "fieldtype": "Data",   "label": "Category" },
+    { "fieldname": "content_category", "fieldtype": "Data",   "label": "Content Category" },
+    { "fieldname": "audience",         "fieldtype": "Data",   "label": "Primary Audience" },
+    { "fieldname": "tags",             "fieldtype": "Data",   "label": "Tags" },
+
+    { "fieldname": "section_logistics","fieldtype": "Section Break", "label": "Logistics" },
+    { "fieldname": "event_slot",       "fieldtype": "Data",   "label": "Date/Time Slot",  "in_list_view": 1 },
+    { "fieldname": "format",           "fieldtype": "Select", "label": "Format",       "options": "in-person\nonline\nhybrid" },
+    { "fieldname": "event_type",       "fieldtype": "Select", "label": "Event Type",   "options": "conference\nmeetup\nworkshop\nwebinar\nother" },
+    { "fieldname": "status",           "fieldtype": "Select", "label": "Status",       "options": "upcoming\npast\ncancelled", "in_list_view": 1 },
+    { "fieldname": "location",         "fieldtype": "Data",   "label": "Location" },
+    { "fieldname": "city",             "fieldtype": "Data",   "label": "City" },
+    { "fieldname": "region",           "fieldtype": "Data",   "label": "Region" },
+    { "fieldname": "country",          "fieldtype": "Data",   "label": "Country" },
+    { "fieldname": "virtual_url",      "fieldtype": "Data",   "label": "Virtual URL" },
+    { "fieldname": "price",            "fieldtype": "Currency","label": "Price" },
+    { "fieldname": "currency",         "fieldtype": "Data",   "label": "Currency" },
+    { "fieldname": "capacity",         "fieldtype": "Int",    "label": "Capacity" },
+
+    { "fieldname": "section_settings", "fieldtype": "Section Break", "label": "Settings" },
+    { "fieldname": "allow_guest_booking","fieldtype":"Check", "label": "Allow Guest Booking" },
+    { "fieldname": "guest_verification","fieldtype": "Select","label": "Guest Verification", "options": "none\nemail\napproval" },
+
+    { "fieldname": "section_content",  "fieldtype": "Section Break", "label": "Content" },
+    { "fieldname": "body",             "fieldtype": "Text",   "label": "Description" },
+    { "fieldname": "highlights",       "fieldtype": "Code",   "label": "Highlights",  "options": "JSON" },
+    { "fieldname": "photos",           "fieldtype": "Code",   "label": "Photos",      "options": "JSON" },
+
+    { "fieldname": "section_web",      "fieldtype": "Section Break", "label": "Web Page" },
+    { "fieldname": "webpage",          "fieldtype": "Relationship Panel", "label": "Web Page" },
+
+    { "fieldname": "section_people",   "fieldtype": "Section Break", "label": "People & Organizations" },
+    { "fieldname": "relationships",    "fieldtype": "Relationship Panel", "label": "Relationships" }
+  ],
+
+  "_state": {
+    "0": {
+      "options": ["Draft", "Published", "Archived"],
+      "labels": {
+        "0_1": "Publish",
+        "0_2": "Archive",
+        "1_2": "Archive",
+        "2_0": "Restore"
+      }
+    }
+  }
+},
+  {
   "doctype": "Schema",
   "schema_name": "SystemSchema",
   "_state": {

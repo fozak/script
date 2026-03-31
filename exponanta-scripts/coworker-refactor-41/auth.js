@@ -1,8 +1,8 @@
 // ============================================================
-// auth.js — version 40
-// Exponanta auth module
-// Depends on: pocketbase.umd.js, adapter-pocketbase.js, CW-utils.js
-// Load order: pb SDK → adapter → CW-utils → auth.js → Alpine
+// auth.js — Exponanta auth module
+// Depends on: pocketbase.umd.js, CW-utils.js
+// Load order: pb SDK → CW-utils → auth.js
+// No Alpine dependency — fires cw:auth:change event instead
 // ============================================================
 
 const SYSTEM_MANAGER_ROLE_ID = 'rolesystemmanag';
@@ -44,11 +44,8 @@ function saveProfile(profile) {
 
 function loadProfile(userId) {
   if (!userId) return null;
-  try {
-    return JSON.parse(localStorage.getItem(userId) || 'null');
-  } catch {
-    return null;
-  }
+  try { return JSON.parse(localStorage.getItem(userId) || 'null'); }
+  catch { return null; }
 }
 
 function clearProfile(userId) {
@@ -56,18 +53,54 @@ function clearProfile(userId) {
 }
 
 function buildProfile(authModel, itemData = {}) {
-  const id = authModel.id;
-  const name = itemData.name || authModel.name || authModel.email || '';
+  const id     = authModel.id;
+  const name   = itemData.name || authModel.name || authModel.email || '';
   const avatar = itemData.avatar || null;
   return {
     id,
     name,
-    email: authModel.email,
+    email:       authModel.email,
     avatar,
-    initials: getInitials(name),
+    initials:    getInitials(name),
     avatarColor: getAvatarColor(id),
-    verified: authModel.verified || false
+    verified:    authModel.verified || false,
   };
+}
+
+// ============================================================
+// AUTH STATE EVENT
+// Replaces syncAlpineAuth — fire event, let consumers handle it
+// app-ui.js listens for this and re-renders navbar
+// Alpine pages can also listen if needed
+// ============================================================
+
+function _dispatchAuthChange(profile) {
+  globalThis.dispatchEvent(new CustomEvent('cw:auth:change', { detail: profile }));
+
+  // backwards compat — sync Alpine store if Alpine is present
+  if (typeof Alpine !== 'undefined') {
+    const store = Alpine.store('auth');
+    if (!store) return;
+    if (profile) {
+      store.isValid     = true;
+      store.verified    = profile.verified;
+      store.id          = profile.id;
+      store.name        = profile.name;
+      store.email       = profile.email;
+      store.avatar      = profile.avatar;
+      store.initials    = profile.initials;
+      store.avatarColor = profile.avatarColor;
+    } else {
+      store.isValid     = false;
+      store.verified    = false;
+      store.id          = null;
+      store.name        = '';
+      store.email       = '';
+      store.avatar      = null;
+      store.initials    = '';
+      store.avatarColor = '#3b5bdb';
+    }
+  }
 }
 
 // ============================================================
@@ -85,69 +118,69 @@ async function fetchItemProfile(userId) {
 }
 
 // ============================================================
-// ALPINE STORE SYNC
-// ============================================================
-
-function syncAlpineAuth(profile) {
-  if (typeof Alpine === 'undefined') return;
-  const store = Alpine.store('auth');
-  if (!store) return;
-  if (profile) {
-    store.isValid    = true;
-    store.verified   = profile.verified;
-    store.id         = profile.id;
-    store.name       = profile.name;
-    store.email      = profile.email;
-    store.avatar     = profile.avatar;
-    store.initials   = profile.initials;
-    store.avatarColor = profile.avatarColor;
-  } else {
-    store.isValid    = false;
-    store.verified   = false;
-    store.id         = null;
-    store.name       = '';
-    store.email      = '';
-    store.avatar     = null;
-    store.initials   = '';
-    store.avatarColor = '#3b5bdb';
-  }
-}
-
-// ============================================================
-// PROVISION USER (registration)
+// PROVISION USER
+// Creates: @users auth record + User item + UserPublicProfile item
+// Must be called before login (creates auth record first)
 // ============================================================
 
 async function provisionUser(email, password, name) {
-  const userId = generateId('User', email);
+  const userId    = generateId('User', email);
+  const profileId = generateId('UserPublicProfile', userId);
 
   // Step 1: Create auth user
   await pb.collection('users').create({
-    id: userId,
+    id:              userId,
     email,
     password,
     passwordConfirm: password,
     name,
-    emailVisibility: true
+    emailVisibility: true,
   });
 
-  // Step 2: Login
+  // Step 2: Login (required — item createRule needs @request.auth.id != "")
   await pb.collection('users').authWithPassword(email, password);
 
-  // Step 3: Create item record
+  // Step 3: Create User item record
+  // owner = "" (User doctype never has personal ownership)
+  // _allowed = [SYSTEM_MANAGER_ROLE_ID] (only sysmanager edits)
+  // _allowed_read = [userId] (user reads own record)
   await pb.collection('item').create({
-    id: userId,
-    name: userId,
-    doctype: 'User',
-    docstatus: 0,
-    data: { id: userId, email, name, doctype: 'User', docstatus: 0 },
-    _allowed: [SYSTEM_MANAGER_ROLE_ID],
-    _allowed_read: []
+    id:            userId,
+    name:          userId,
+    doctype:       'User',
+    docstatus:     0,
+    owner:         '',
+    _allowed:      [SYSTEM_MANAGER_ROLE_ID],
+    _allowed_read: [userId],
+    data:          { id: userId, email, name, doctype: 'User', docstatus: 0 },
   });
 
-  // Step 4: Send verification email
+  // Step 4: Create UserPublicProfile item record
+  // owner = userId (user owns their public profile)
+  // _allowed = [userId] (user edits own public profile)
+  // _allowed_read = [roleispublicxxx] (everyone can read)
+  await pb.collection('item').create({
+    id:            profileId,
+    name:          profileId,
+    doctype:       'UserPublicProfile',
+    docstatus:     0,
+    owner:         userId,
+    _allowed:      [userId],
+    _allowed_read: ['roleispublicxxx'],
+    data: {
+      id:        profileId,
+      doctype:   'UserPublicProfile',
+      docstatus: 0,
+      full_name: name,
+      // other fields empty — user fills in later
+    },
+  });
+
+  // Step 5: Send verification email
   await pb.collection('users').requestVerification(email);
 
-  return userId;
+  console.log('✅ User provisioned:', userId, '+ profile:', profileId);
+  return { userId, profileId };
 }
 
 // ============================================================
@@ -157,9 +190,9 @@ async function provisionUser(email, password, name) {
 async function authLogin(email, password) {
   const authData = await pb.collection('users').authWithPassword(email, password);
   const itemData = await fetchItemProfile(authData.record.id);
-  const profile = buildProfile(authData.record, itemData);
+  const profile  = buildProfile(authData.record, itemData);
   saveProfile(profile);
-  syncAlpineAuth(profile);
+  _dispatchAuthChange(profile);
   console.log('✅ Logged in:', profile.id);
   return profile;
 }
@@ -170,7 +203,12 @@ async function authLogin(email, password) {
 
 async function authRegister(email, password, name) {
   await provisionUser(email, password, name);
-  const profile = await authLogin(email, password);
+  // provisionUser already logged in — just build profile
+  const model    = pb.authStore.model;
+  const itemData = await fetchItemProfile(model.id);
+  const profile  = buildProfile(model, itemData);
+  saveProfile(profile);
+  _dispatchAuthChange(profile);
   return profile;
 }
 
@@ -182,23 +220,23 @@ function authLogout() {
   const userId = pb.authStore.model?.id;
   pb.authStore.clear();
   clearProfile(userId);
-  syncAlpineAuth(null);
+  _dispatchAuthChange(null);
   console.log('✅ Logged out');
 }
 
 // ============================================================
-// REFRESH (call after email verification)
+// REFRESH (call after email verification or periodically)
 // ============================================================
 
 async function authRefresh() {
   try {
     await pb.collection('users').authRefresh();
-    const model = pb.authStore.model;
-    const cached = loadProfile(model.id) || {};
-    const profile = buildProfile(model, cached);
-    profile.verified = model.verified; // get fresh verified status
+    const model    = pb.authStore.model;
+    const cached   = loadProfile(model.id) || {};
+    const profile  = buildProfile(model, cached);
+    profile.verified = model.verified;
     saveProfile(profile);
-    syncAlpineAuth(profile);
+    _dispatchAuthChange(profile);
     console.log('✅ Auth refreshed, verified:', profile.verified);
     return profile;
   } catch (e) {
@@ -214,21 +252,21 @@ async function authRefresh() {
 
 function authRestore() {
   if (!pb.authStore.isValid) {
-    syncAlpineAuth(null);
+    _dispatchAuthChange(null);
     return null;
   }
-  const userId = pb.authStore.model?.id;
+  const userId  = pb.authStore.model?.id;
   const profile = loadProfile(userId);
   if (profile) {
-    syncAlpineAuth(profile);
+    _dispatchAuthChange(profile);
     console.log('✅ Auth restored from cache:', userId);
     return profile;
   }
-  // Cache miss — fetch fresh
+  // cache miss — fetch fresh
   fetchItemProfile(userId).then(itemData => {
     const profile = buildProfile(pb.authStore.model, itemData);
     saveProfile(profile);
-    syncAlpineAuth(profile);
+    _dispatchAuthChange(profile);
   });
   return null;
 }
@@ -253,19 +291,20 @@ function authGuard(requireVerified = false) {
 }
 
 // ============================================================
-// ALPINE STORE DEFINITION — call in Alpine.store() before init
+// ALPINE STORE DEFAULTS
+// Still exported for backwards compat with Alpine pages
 // ============================================================
 
 function authStoreDefaults() {
   return {
-    isValid: false,
-    verified: false,
-    id: null,
-    name: '',
-    email: '',
-    avatar: null,
-    initials: '',
-    avatarColor: '#3b5bdb'
+    isValid:     false,
+    verified:    false,
+    id:          null,
+    name:        '',
+    email:       '',
+    avatar:      null,
+    initials:    '',
+    avatarColor: '#3b5bdb',
   };
 }
 
@@ -287,7 +326,8 @@ Object.assign(globalThis, {
   buildProfile,
   saveProfile,
   loadProfile,
-  clearProfile
+  clearProfile,
+  SYSTEM_MANAGER_ROLE_ID,
 });
 
 console.log('✅ auth.js loaded');

@@ -1,8 +1,10 @@
 // ============================================================
 // CW-config.js  /updated auth
 // ============================================================
+// CW-config.js — add this
 
-// System fields always included in every fetch regardless of view
+
+
 globalThis.CW.defaultFields = [
   'name', 'doctype', 'docstatus', 'owner',
   'modified', 'modified_by', '_state',
@@ -12,7 +14,10 @@ globalThis.CW.defaultFields = [
 
 globalThis.CW._config = {
 
-
+publicSites: {
+  "exponanta.com": "/var/www/exponanta.com",
+  "cfeglobal.org": "/var/www/cfeglobal.org"
+},
 
 
 

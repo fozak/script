@@ -45,12 +45,19 @@ CW._resolveInput = function(run_doc) {
 // FSM HELPERS
 // ============================================================
 
-// Get merged _state definition for a doctype:
-// SystemSchema dim 0 + doctype dims 1+
+// Get merged _state definition for a doctype.
+// Deep merges SystemSchema dims with doctype overrides —
+// doctype only needs to specify labels/options/confirm to reskin.
+// transitions, requires, values, sideEffects come from SystemSchema.
 CW._getStateDef = function(doctype) {
-  const sys    = CW.Schema?.SystemSchema?._state || {};
-  const dt     = CW.Schema?.[doctype]?._state    || {};
-  return Object.assign({}, sys, dt);
+  const sys  = CW.Schema?.SystemSchema?._state || {};
+  const dt   = CW.Schema?.[doctype]?._state    || {};
+  const dims = new Set([...Object.keys(sys), ...Object.keys(dt)]);
+  const merged = {};
+  for (const dim of dims) {
+    merged[dim] = Object.assign({}, sys[dim] || {}, dt[dim] || {});
+  }
+  return merged;
 };
 
 // Get current value for a dimension from doc._state
