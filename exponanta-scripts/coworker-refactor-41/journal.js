@@ -1,3 +1,50 @@
+
+removed LIST/VIEW
+_allowed_read ?~ "roleispublixxxx" ||
+(
+  @request.auth.id != "" && (
+    id = @request.auth.id ||
+    owner = @request.auth.id ||
+    _allowed ?~ @request.auth.id ||
+    _allowed_read ?~ @request.auth.id ||
+    (
+      @collection.item_users.id ?= @request.auth.id &&
+      _allowed ?~ @collection.item_users.role_id
+    ) ||
+    (
+      @collection.item_users.id ?= @request.auth.id &&
+      _allowed_read ?~ @collection.item_users.role_id
+    )
+  )
+)
+
+create 
+doctype != "User" || (
+  @request.auth.id != "" &&
+  @request.body._allowed_read:length = 0 &&
+  @request.body._allowed:length = 1 &&
+  @request.body._allowed:each ~ "rolesystemmanag" &&
+  @request.body.owner = "" &&
+  (
+    @request.body.id = @request.auth.id ||
+    @collection.item_users.id ?= @request.auth.id &&
+    @collection.item_users.role_id ?= "rolesystemmanag"
+  )
+)
+
+delete
+@request.auth.id != "" &&
+(@request.body.doctype:isset = false || @request.body.doctype = doctype) &&
+(
+  owner = @request.auth.id ||
+  _allowed ?~ @request.auth.id ||
+  (
+    @collection.item_users.id ?= @request.auth.id &&
+    _allowed ?~ @collection.item_users.role_id
+  )
+)
+
+
 //=======40-8=======
 
 Relationships 

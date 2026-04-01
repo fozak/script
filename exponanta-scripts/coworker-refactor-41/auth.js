@@ -140,10 +140,8 @@ async function provisionUser(email, password, name) {
   // Step 2: Login (required — item createRule needs @request.auth.id != "")
   await pb.collection('users').authWithPassword(email, password);
 
-  // Step 3: Create User item record
-  // owner = "" (User doctype never has personal ownership)
-  // _allowed = [SYSTEM_MANAGER_ROLE_ID] (only sysmanager edits)
-  // _allowed_read = [userId] (user reads own record)
+  // Step 3: Create User item record without self-references
+  // (PocketBase relation validation requires referenced records to exist first)
   await pb.collection('item').create({
     id:            userId,
     name:          userId,
@@ -151,14 +149,23 @@ async function provisionUser(email, password, name) {
     docstatus:     0,
     owner:         '',
     _allowed:      [SYSTEM_MANAGER_ROLE_ID],
-    _allowed_read: [userId],
+    _allowed_read: [],
     data:          { id: userId, email, name, doctype: 'User', docstatus: 0 },
   });
+
+  // Step 3b: add self-reference now that record exists
+  // owner stays "" — User doctype never has personal ownership
+  // _allowed_read: [userId] — user can read their own record only
+  /*  NOT NEEDED 
+
+  await pb.collection('item').update(userId, {
+    _allowed_read: [userId],
+  });  */
 
   // Step 4: Create UserPublicProfile item record
   // owner = userId (user owns their public profile)
   // _allowed = [userId] (user edits own public profile)
-  // _allowed_read = [roleispublicxxx] (everyone can read)
+  // _allowed_read = [roleispublixxxx] (everyone can read)
   await pb.collection('item').create({
     id:            profileId,
     name:          profileId,
@@ -166,7 +173,7 @@ async function provisionUser(email, password, name) {
     docstatus:     0,
     owner:         userId,
     _allowed:      [userId],
-    _allowed_read: ['roleispublicxxx'],
+    _allowed_read: ['roleispublixxxx'],
     data: {
       id:        profileId,
       doctype:   'UserPublicProfile',

@@ -1,0 +1,99 @@
+item collection — Final API Rules
+
+List / View Rule
+_allowed_read ?~ "roleispublixxxx" ||
+(
+  @request.auth.id != "" && (
+    id = @request.auth.id ||
+    owner = @request.auth.id ||
+    _allowed ?~ @request.auth.id ||
+    _allowed_read ?~ @request.auth.id ||
+    (
+      @collection.item_users.id ?= @request.auth.id &&
+      _allowed ?~ @collection.item_users.role_id
+    ) ||
+    (
+      @collection.item_users.id ?= @request.auth.id &&
+      _allowed_read ?~ @collection.item_users.role_id
+    )
+  )
+)
+Access granted if any condition matches:
+
+Record has roleispublixxxx in _allowed_read — public, anyone including guests
+id = @request.auth.id — User reading their own User item (self-read)
+owner = @request.auth.id — record owner
+_allowed ?~ @request.auth.id — user directly granted edit access
+_allowed_read ?~ @request.auth.id — user directly granted read access
+User's role is in _allowed via item_users — role-based edit access
+User's role is in _allowed_read via item_users — role-based read access
+
+
+Create Rule
+doctype != "User" || (
+  @request.auth.id != "" &&
+  @request.body._allowed_read:length = 0 &&
+  @request.body._allowed:length = 1 &&
+  @request.body._allowed:each ~ "rolesystemmanag" &&
+  @request.body.owner = "" &&
+  (
+    @request.body.id = @request.auth.id ||
+    (
+      @collection.item_users.id ?= @request.auth.id &&
+      @collection.item_users.role_id ?= "rolesystemmanag"
+    )
+  )
+)
+Logic:
+
+Non-User doctypes: anyone can create (access controlled by owner/_allowed at creation)
+User doctype: restricted to prevent privilege escalation:
+
+Must be authenticated
+_allowed_read must be empty at create time (self-read handled by view rule)
+_allowed must contain exactly rolesystemmanag and nothing else
+owner must be empty (users never own their own User record)
+Either self-provisioning (body.id = auth.id) OR System Manager provisioning for others
+
+
+
+
+Update Rule
+@request.auth.id != "" &&
+(@request.body.doctype:isset = false || @request.body.doctype = doctype) &&
+(
+  owner = @request.auth.id ||
+  _allowed ?~ @request.auth.id ||
+  (
+    @collection.item_users.id ?= @request.auth.id &&
+    _allowed ?~ @collection.item_users.role_id
+  )
+)
+Logic:
+
+Must be authenticated
+doctype is immutable — cannot be changed after creation
+Access granted if: owner, directly in _allowed, or role in _allowed via item_users
+User cannot update their own User item (owner is "", only rolesystemmanag is in _allowed)
+User can update their own UserPublicProfile (owner = userId)
+
+
+Delete Rule
+@request.auth.id != "" &&
+(@request.body.doctype:isset = false || @request.body.doctype = doctype) &&
+(
+  owner = @request.auth.id ||
+  _allowed ?~ @request.auth.id ||
+  (
+    @collection.item_users.id ?= @request.auth.id &&
+    _allowed ?~ @collection.item_users.role_id
+  )
+)
+Same as update rule — only owner, directly allowed user, or role-based edit access can delete.
+
+Key design decisions
+
+User item (doctype=User): owner="", _allowed=[rolesystemmanag], _allowed_read=[] — only System Manager can edit, self-read via id = @request.auth.id in view rule
+UserPublicProfile: owner=userId, _allowed=[userId], _allowed_read=[roleispublixxxx] — user owns and edits their public profile, world-readable
+item_users is a SQLite view that flattens the _allowed/_allowed_read relation arrays into rows for efficient role lookups in rules
+No PocketBase hooks needed — all access control is enforced purely via collection rules

@@ -127,31 +127,49 @@ async function select(run_doc) {
   const doctype = run_doc.target_doctype ?? run_doc.source_doctype;
   if (!doctype) { run_doc.error = "400 select: missing doctype"; return; }
 
-  const params = {};
-  const filter = _buildFilter(run_doc);
-  if (filter) params.filter = filter;
-  const sort = _buildSort(run_doc);
-  if (sort) params.sort = sort;
-  if (run_doc.query?.fields) params.fields = run_doc.query.fields;
-
-  const take = run_doc.query?.take;
-  const skip = run_doc.query?.skip;
   let items, meta;
 
-  if (take !== undefined) {
-    const page   = skip ? Math.floor(skip / take) + 1 : 1;
-    const result = await globalThis.pb.collection(config.collection).getList(page, take, params);
-    items = result.items;
-    meta  = {
-      total:      result.totalItems,
-      page:       result.page,
-      pageSize:   result.perPage,
-      totalPages: result.totalPages,
-      hasMore:    result.page < result.totalPages,
-    };
+  // fast path: single record by name — use getOne (O(1) PK lookup)
+  const where      = run_doc.query?.where || {};
+  const whereKeys  = Object.keys(where);
+  const singleName = whereKeys.length === 1 && whereKeys[0] === 'name' && typeof where.name === 'string'
+    ? where.name : null;
+
+  if (singleName && !run_doc.query?.take) {
+    try {
+      const rec = await globalThis.pb.collection(config.collection).getOne(singleName);
+      items = rec ? [rec] : [];
+    } catch(err) {
+      // 404 = not found, not an error
+      items = [];
+    }
+    meta = { total: items.length, page: 1, pageSize: items.length, totalPages: 1, hasMore: false };
   } else {
-    items = await globalThis.pb.collection(config.collection).getFullList(params);
-    meta  = { total: items.length, page: 1, pageSize: items.length, totalPages: 1, hasMore: false };
+    const params = {};
+    const filter = _buildFilter(run_doc);
+    if (filter) params.filter = filter;
+    const sort = _buildSort(run_doc);
+    if (sort) params.sort = sort;
+    if (run_doc.query?.fields) params.fields = run_doc.query.fields;
+
+    const take = run_doc.query?.take;
+    const skip = run_doc.query?.skip;
+
+    if (take !== undefined) {
+      const page   = skip ? Math.floor(skip / take) + 1 : 1;
+      const result = await globalThis.pb.collection(config.collection).getList(page, take, params);
+      items = result.items;
+      meta  = {
+        total:      result.totalItems,
+        page:       result.page,
+        pageSize:   result.perPage,
+        totalPages: result.totalPages,
+        hasMore:    result.page < result.totalPages,
+      };
+    } else {
+      items = await globalThis.pb.collection(config.collection).getFullList(params);
+      meta  = { total: items.length, page: 1, pageSize: items.length, totalPages: 1, hasMore: false };
+    }
   }
 
   run_doc.target  = { data: items.map(_mergeRecord).filter(Boolean), meta };
@@ -186,7 +204,23 @@ async function update(run_doc) {
   if (!filter) { run_doc.error = "400 update: missing query.where or doctype"; return; }
 
   try {
-    const existing = await globalThis.pb.collection(config.collection).getFullList({ filter });
+    let existing;
+
+    // skip re-fetch if target already has the correct record
+    if (run_doc.target?.data?.length &&
+        run_doc.target.data[0].name === run_doc.query?.where?.name) {
+      existing = run_doc.target.data.map(doc => {
+        const top  = {};
+        const data = {};
+        for (const [k, v] of Object.entries(doc)) {
+          if (PB_TOP.has(k)) top[k] = v;
+          else data[k] = v;
+        }
+        return { ...top, data, id: doc.name };
+      });
+    } else {
+      existing = await globalThis.pb.collection(config.collection).getFullList({ filter });
+    }
 
     if (!existing.length) {
       run_doc.target  = { data: [], meta: { updated: 0 } };
@@ -199,7 +233,6 @@ async function update(run_doc) {
     const updated = await Promise.all(existing.map(async rec => {
       const mergedData = Object.assign({}, rec.data, data);
       await globalThis.pb.collection(config.collection).update(rec.id, { ...top, data: mergedData });
-      // always include PB top-level fields in returned record so target.data[0].name is never lost
       const recTop = {};
       for (const k of PB_TOP) { if (rec[k] !== undefined) recTop[k] = rec[k]; }
       return Object.assign({}, recTop, mergedData, top);

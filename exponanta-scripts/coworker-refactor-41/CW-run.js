@@ -45,10 +45,6 @@ CW._resolveInput = function(run_doc) {
 // FSM HELPERS
 // ============================================================
 
-// Get merged _state definition for a doctype.
-// Deep merges SystemSchema dims with doctype overrides —
-// doctype only needs to specify labels/options/confirm to reskin.
-// transitions, requires, values, sideEffects come from SystemSchema.
 CW._getStateDef = function(doctype) {
   const sys  = CW.Schema?.SystemSchema?._state || {};
   const dt   = CW.Schema?.[doctype]?._state    || {};
@@ -60,15 +56,12 @@ CW._getStateDef = function(doctype) {
   return merged;
 };
 
-// Get current value for a dimension from doc._state
 CW._getDimValue = function(doc, dim, dimDef) {
   if (doc._state && dim in doc._state) return doc._state[dim];
-  // fallback to fieldname for dim 0 (docstatus)
   if (dimDef?.fieldname && dimDef.fieldname in doc) return doc[dimDef.fieldname];
   return dimDef?.values?.[0] ?? 0;
 };
 
-// Get available transition keys for current state
 CW._getTransitions = function(schema, doc, dim) {
   const stateDef = CW._getStateDef(schema.schema_name || schema.name);
   const dimDef   = stateDef[dim];
@@ -82,19 +75,14 @@ CW._getTransitions = function(schema, doc, dim) {
       const key      = `${current}_${to}`;
       const requires = dimDef.requires?.[key] || {};
       const rule     = dimDef.rules?.[key];
-
-      // check requires against schema — coerce to Number, treat undefined as 0
       const reqPassed = Object.entries(requires).every(([k, v]) => Number(schema[k] ?? 0) === Number(v));
-      // check rule against run_doc (rule is compiled fn)
       const rulePassed = typeof rule === "function" ? rule({ target: { data: [doc] }, input: {} }) : true;
-
       if (!reqPassed || !rulePassed) return null;
       return { key, from: current, to, label: dimDef.labels?.[key], confirm: dimDef.confirm?.[key] };
     })
     .filter(Boolean);
 };
 
-// Execute FSM transition — run sideEffects, merge _state
 CW._execTransition = async function(run_doc, dim, key) {
   const doctype  = run_doc.target_doctype;
   const stateDef = CW._getStateDef(doctype);
@@ -106,14 +94,12 @@ CW._execTransition = async function(run_doc, dim, key) {
     await sideEffect(run_doc);
   }
 
-  // ensure _state is merged not replaced
   const to = parseInt(key.split("_")[1]);
   if (!run_doc.input._state || typeof run_doc.input._state !== "object") {
     run_doc.input._state = {};
   }
   run_doc.input._state[dim] = to;
 
-  // dim 0 drives docstatus — keep PB top-level field in sync
   if (String(dim) === "0") {
     run_doc.input.docstatus = to;
   }
@@ -197,7 +183,6 @@ CW.run = function(op) {
 
   if (CW._updateFromRun) CW._updateFromRun(run_doc);
 
-  // auto-wake controller if caller declared render intent upfront
   if (op.options?.render === true) {
     queueMicrotask(() => {
       CW.controller(run_doc).catch(err => console.error('[CW]', err));
@@ -219,7 +204,6 @@ CW.controller = async function(run_doc) {
   run_doc.error    = null;
 
   try {
-    // 1. promote .field keys
     CW._resolveInput(run_doc);
 
     const stateEntries = Object.entries(run_doc.input._state || {});
@@ -231,7 +215,6 @@ CW.controller = async function(run_doc) {
     } else {
       const schema   = CW.Schema?.[run_doc.target_doctype];
       const doc      = run_doc.target?.data?.[0] || run_doc.input;
-      // fieldsEditable: docstatus === 0
       const editable = (doc.docstatus ?? 0) === 0;
       const opConfig = CW._config.operations?.[run_doc.operation] || {};
 
@@ -239,12 +222,10 @@ CW.controller = async function(run_doc) {
         await CW._handlers[run_doc.operation]?.(run_doc);
       } else if (opConfig.type === "write") {
         const dataKeys = Object.keys(run_doc.input).filter(k => k !== '_state');
-        // autoSave: always true when docstatus=0 and has data
         if (editable && dataKeys.length > 0) {
           run_doc.operation = (run_doc.input.name || run_doc.target?.data?.[0]?.name) ? "update" : "create";
           await CW._handlers[run_doc.operation](run_doc);
           if (!run_doc.error) {
-            // after create — lock in the name so _needsRun replays as update not create
             if (run_doc.operation === "create" && run_doc.target?.data?.[0]?.name) {
               run_doc.query = Object.assign({}, run_doc.query, { where: { name: run_doc.target.data[0].name } });
             }
@@ -276,7 +257,7 @@ CW.controller = async function(run_doc) {
 };
 
 // ============================================================
-// SIGNAL HANDLER — FSM path first, fallback to legacy
+// SIGNAL HANDLER
 // ============================================================
 
 CW._handleSignal = async function(run_doc) {
@@ -285,27 +266,25 @@ CW._handleSignal = async function(run_doc) {
   const schema  = CW.Schema?.[doctype];
   const db      = CW._config.adapters.defaults.db;
 
-  // fetch existing doc — only if we have a specific record name (skip for new/create runs)
   const existingName = run_doc.target?.data?.[0]?.name || run_doc.input?.name || run_doc.query?.where?.name;
   let existingDoc = run_doc.target?.data?.[0] || {};
-  if (existingName) {
+
+  // CHANGE 1: skip re-fetch if target already has the correct record
+  if (existingName && run_doc.target?.data?.[0]?.name !== existingName) {
     run_doc.query = Object.assign({}, run_doc.query, { where: { name: existingName } });
     await globalThis.Adapter[db].select(run_doc);
     existingDoc = run_doc.target?.data?.[0] || {};
+  } else if (existingName) {
+    run_doc.query = Object.assign({}, run_doc.query, { where: { name: existingName } });
+    existingDoc = run_doc.target?.data?.[0] || {};
   }
 
-  // --- FSM PATH ---
-  // check if signal matches a transition key format: "dim_from_to" e.g. "0_1"
-  // or just "from_to" for dim 0
   const stateDef = CW._getStateDef(doctype);
 
-  // find which dim+key this signal belongs to
   let matched = false;
   for (const [dim, dimDef] of Object.entries(stateDef)) {
-    // signal can be "0_1" (dim0) or "1.0_1" (explicit dim)
     const key = signal.startsWith(dim + ".") ? signal.slice(dim.length + 1) : signal;
     if (dimDef.sideEffects?.[key] !== undefined || dimDef.labels?.[key] !== undefined) {
-      // validate requires
       const requires   = dimDef.requires?.[key] || {};
       const reqPassed  = Object.entries(requires).every(([k, v]) => Number(schema?.[k] ?? 0) === Number(v));
       if (!reqPassed) {
@@ -314,7 +293,6 @@ CW._handleSignal = async function(run_doc) {
         return;
       }
 
-      // validate rule
       const rule = dimDef.rules?.[key];
       if (typeof rule === "function" && !rule(run_doc)) {
         run_doc.error = `${signal} rule not satisfied`;
@@ -322,10 +300,8 @@ CW._handleSignal = async function(run_doc) {
         return;
       }
 
-      // execute FSM transition
       await CW._execTransition(run_doc, dim, key);
 
-      // now write to DB
       run_doc.operation = run_doc.input.name || existingDoc.name ? "update" : "create";
       if (run_doc.operation === "update") {
         await CW._handlers.update(run_doc);
@@ -338,7 +314,6 @@ CW._handleSignal = async function(run_doc) {
     }
   }
 
-  // --- FALLBACK: legacy signals ---
   if (!matched) {
     if (signal === "save") {
       run_doc.operation = (run_doc.input.name || existingDoc.name) ? "update" : "create";
@@ -360,14 +335,11 @@ CW._handleSignal = async function(run_doc) {
     }
   }
 
-  // clear input after signal (keep _state for result tracking)
   if (!run_doc.error) {
-    // lock in name after create so subsequent mutations update not re-create
     if (run_doc.operation === "create" && run_doc.target?.data?.[0]?.name) {
       run_doc.query = Object.assign({}, run_doc.query, { where: { name: run_doc.target.data[0].name } });
     }
     Object.keys(run_doc.input).filter(k => k !== '_state').forEach(k => delete run_doc.input[k]);
-    // merge _state result — not replace
     if (run_doc.input._state) {
       run_doc.input._state[signal] = "1";
     }
@@ -379,7 +351,7 @@ CW._handleSignal = async function(run_doc) {
 };
 
 // ============================================================
-// PREFLIGHT — init/merge doc._state, validate, stamp
+// PREFLIGHT
 // ============================================================
 
 CW._preflight = function(run_doc, operation) {
@@ -387,7 +359,6 @@ CW._preflight = function(run_doc, operation) {
   const input   = run_doc.input;
 
   if (operation === "create") {
-    // validate reqd
     if (schema?.fields) {
       const missing = schema.fields
         .filter(f => f.reqd && f.fieldtype !== 'Table' && (input[f.fieldname] === undefined || input[f.fieldname] === null || input[f.fieldname] === ""))
@@ -395,7 +366,6 @@ CW._preflight = function(run_doc, operation) {
       if (missing.length) { run_doc.error = `Required: ${missing.join(", ")}`; return; }
     }
 
-    // generateId
     if (!input.name) {
       const autoname = schema?.autoname;
       input.name = autoname?.startsWith("field:")
@@ -403,7 +373,6 @@ CW._preflight = function(run_doc, operation) {
         : generateId(run_doc.target_doctype);
     }
 
-    // apply field defaults
     if (schema?.fields) {
       for (const f of schema.fields) {
         if (f.default !== undefined && input[f.fieldname] === undefined) {
@@ -412,7 +381,6 @@ CW._preflight = function(run_doc, operation) {
       }
     }
 
-    // initialize _state fresh from schema template — never inherit old DB values
     const stateDef = CW._getStateDef(run_doc.target_doctype);
     const freshState = {};
     for (const [dim, dimDef] of Object.entries(stateDef)) {
@@ -422,7 +390,6 @@ CW._preflight = function(run_doc, operation) {
   }
 
   if (operation === "update") {
-    // validate reqd on merged doc
     if (schema?.fields) {
       const merged  = Object.assign({}, run_doc.target?.data?.[0], input);
       const missing = schema.fields
@@ -431,7 +398,6 @@ CW._preflight = function(run_doc, operation) {
       if (missing.length) { run_doc.error = `Required: ${missing.join(", ")}`; return; }
     }
 
-    // merge _state — only copy dimension keys (numeric) from target, not signal result keys
     if (run_doc.target?.data?.[0]?._state) {
       const targetState = run_doc.target.data[0]._state;
       const dimKeys = Object.keys(targetState).filter(k => !isNaN(k));
@@ -441,7 +407,6 @@ CW._preflight = function(run_doc, operation) {
     }
   }
 
-  // serialize JSON/Code fields
   if (schema?.fields) {
     for (const f of schema.fields) {
       if (f.fieldtype === "Code" && f.options === "JSON" && typeof input[f.fieldname] === "object") {
@@ -453,7 +418,6 @@ CW._preflight = function(run_doc, operation) {
   input.doctype     = input.doctype || run_doc.target_doctype;
   input.modified    = Date.now();
   input.modified_by = globalThis.pb?.authStore?.model?.id || '';
-  // User doctype: owner must always be empty (no personal ownership)
   if (input.doctype === 'User') {
     input.owner = '';
   } else if (operation === 'create') {
@@ -479,11 +443,8 @@ CW._handlers = {
     if (schema && !sel) {
       const shouldFilter = activeView === "list" || activeView === "card";
       if (shouldFilter) {
-        // in_list_view drives both list and card display columns
-        const viewFields  = schema.fields.filter(f => f.in_list_view).map(f => f.fieldname);
-        // title_field always included for display (breadcrumbs, card title, Link dropdown)
-        const titleField  = schema.title_field ? [schema.title_field] : [];
-        // system defaults always included (FSM, ownership, identity)
+        const viewFields   = schema.fields.filter(f => f.in_list_view).map(f => f.fieldname);
+        const titleField   = schema.title_field ? [schema.title_field] : [];
         const systemFields = CW.defaultFields || [];
         const fields = [...new Set([...systemFields, ...titleField, ...viewFields])];
         run_doc.target.data = run_doc.target.data.map(item => {
@@ -493,7 +454,6 @@ CW._handlers = {
         });
       }
     } else if (sel && Array.isArray(sel)) {
-      // explicit select — always add defaultFields + title_field on top
       const titleField   = schema?.title_field ? [schema.title_field] : [];
       const systemFields = CW.defaultFields || [];
       const allFields    = [...new Set([...systemFields, ...titleField, ...sel])];
@@ -512,20 +472,24 @@ CW._handlers = {
     await globalThis.Adapter[db].create(run_doc);
   },
 
+  // CHANGE 2: skip re-fetch if target already has the correct record
   update: async function(run_doc) {
     const db   = CW._config.adapters.defaults.db;
-    // must have a specific record name — never update without one
     const name = run_doc.input?.name || run_doc.target?.data?.[0]?.name || run_doc.query?.where?.name;
     if (!name) { run_doc.error = 'Update requires a record name'; return; }
     if (!run_doc.query?.where?.name) {
       run_doc.query = Object.assign({}, run_doc.query, { where: { name } });
     }
-    // strip query.select for internal re-fetch — always need full record for _preflight merge
-    const savedSelect = run_doc.query?.select;
-    if (savedSelect) run_doc.query = Object.assign({}, run_doc.query, { select: undefined });
-    await globalThis.Adapter[db].select(run_doc);
-    if (savedSelect) run_doc.query = Object.assign({}, run_doc.query, { select: savedSelect });
-    if (run_doc.error) return;
+
+    if (run_doc.target?.data?.[0]?.name !== name) {
+      // target is stale or missing — re-fetch
+      const savedSelect = run_doc.query?.select;
+      if (savedSelect) run_doc.query = Object.assign({}, run_doc.query, { select: undefined });
+      await globalThis.Adapter[db].select(run_doc);
+      if (savedSelect) run_doc.query = Object.assign({}, run_doc.query, { select: savedSelect });
+      if (run_doc.error) return;
+    }
+
     CW._preflight(run_doc, "update");
     if (run_doc.error) return;
     await globalThis.Adapter[db].update(run_doc);
