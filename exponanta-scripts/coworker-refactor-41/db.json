@@ -221,7 +221,7 @@
     { "fieldname": "photos",           "fieldtype": "Code",   "label": "Photos",      "options": "JSON" },
 
     { "fieldname": "section_web",      "fieldtype": "Section Break", "label": "Web Page" },
-    { "fieldname": "webpage",          "fieldtype": "Relationship Panel", "label": "Web Page" },
+    { "fieldname": "webpage", "fieldtype": "Table", "options": "WebPage", "label": "Web Page" },
 
     { "fieldname": "section_people",   "fieldtype": "Section Break", "label": "People & Organizations" },
     { "fieldname": "relationships",    "fieldtype": "Relationship Panel", "label": "Relationships" }

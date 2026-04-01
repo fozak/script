@@ -679,20 +679,18 @@ const RelationshipPanel = function({ run_doc }) {
 
   // FSM action on existing relationship (Accept/Cancel/Reopen/Reject)
   const onRelAction = async (rel, btnKey) => {
-    const r = CW.run({
-      operation:      'select',
-      target_doctype: 'Relationship',
-      query:          { where: { name: rel.name } },
-      options:        { render: false },
-    });
-    await CW.controller(r);
-    if (r.error) return;
-    r.input['.operation'] = 'update';
-    await new Promise(r2 => setTimeout(r2, 50));
-    r.input._state = { [btnKey]: '' };
-    await new Promise(r2 => setTimeout(r2, 1500));
-    await loadRels();
-  };
+  const r = CW.run({
+    operation:      'select',
+    target_doctype: 'Relationship',
+    query:          { where: { name: rel.name } },
+    options:        { render: false },
+  });
+  await CW.controller(r);
+  if (r.error) return;
+  r.input._state = { [btnKey]: '' };
+  await CW.controller(r);
+  await loadRels();
+};
 
   // get FSM buttons for a relationship record
   const getRelButtons = (rel) => {
