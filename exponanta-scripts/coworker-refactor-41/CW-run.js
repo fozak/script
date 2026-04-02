@@ -51,7 +51,11 @@ CW._getStateDef = function(doctype) {
   const dims = new Set([...Object.keys(sys), ...Object.keys(dt)]);
   const merged = {};
   for (const dim of dims) {
-    merged[dim] = Object.assign({}, sys[dim] || {}, dt[dim] || {});
+    const sysDim = sys[dim] || {};
+    const dtDim  = dt[dim]  || {};
+    merged[dim] = Object.assign({}, sysDim, dtDim);
+    // deep merge sideEffects — don't let empty {} override SystemSchema
+    merged[dim].sideEffects = Object.assign({}, sysDim.sideEffects || {}, dtDim.sideEffects || {});
   }
   return merged;
 };
@@ -152,7 +156,7 @@ CW.run = function(op) {
   run_doc.input = new Proxy(_input, {
     set(t, p, v) {
       t[p] = v;
-      if (!run_doc._running) {
+      if (!run_doc._running && run_doc.options?.render !== false) {
         queueMicrotask(() => {
           CW.controller(run_doc).catch(err => console.error("[CW]", err));
         });
@@ -161,7 +165,7 @@ CW.run = function(op) {
     },
     deleteProperty(t, p) {
       delete t[p];
-      if (!run_doc._running) {
+      if (!run_doc._running && run_doc.options?.render !== false) {
         queueMicrotask(() => {
           CW.controller(run_doc).catch(err => console.error("[CW]", err));
         });
@@ -222,7 +226,7 @@ CW.controller = async function(run_doc) {
         await CW._handlers[run_doc.operation]?.(run_doc);
       } else if (opConfig.type === "write") {
         const dataKeys = Object.keys(run_doc.input).filter(k => k !== '_state');
-        if (editable && dataKeys.length > 0) {
+        if ((editable || run_doc.options?.internal) && dataKeys.length > 0) {
           run_doc.operation = (run_doc.input.name || run_doc.target?.data?.[0]?.name) ? "update" : "create";
           await CW._handlers[run_doc.operation](run_doc);
           if (!run_doc.error) {

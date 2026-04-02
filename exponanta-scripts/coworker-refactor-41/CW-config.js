@@ -14,6 +14,8 @@ globalThis.CW.defaultFields = [
 
 globalThis.CW._config = {
 
+  publicDoctypes: ['Event', 'WebPage', 'UserPublicProfile', 'Session'],
+
 publicSites: {
   "exponanta.com": "/var/www/exponanta.com",
   "cfeglobal.org": "/var/www/cfeglobal.org"
