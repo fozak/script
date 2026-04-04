@@ -3,7 +3,7 @@
 // ============================================================
 
 const CW = globalThis.CW;
-const ce = React.createElement;   // shorthand — saves ~18 chars × 100 calls
+const ce = React.createElement;
 
 // ============================================================
 // RENDER SYSTEM
@@ -26,7 +26,6 @@ CW._render = function(run_doc) {
   if (!component) return;
   const root = CW._getOrCreateRoot(run_doc.container);
   if (!root) return;
-  // pass data as explicit prop — new reference on every render call
   root.render(ce(component, {
     run_doc,
     data: run_doc.target?.data || [],
@@ -91,10 +90,10 @@ function _getBreadcrumbs() {
       { text: current.source_doctype || current.target_doctype || 'List', runName: null },
     ];
   if (current.component === 'MainForm') {
-    const doctype    = current.source_doctype || current.target_doctype;
-    const schema     = CW.Schema?.[doctype];
-    const doc        = current.target?.data?.[0] || {};
-    const docname    = doc[schema?.title_field || 'name'] || doc.name || 'New';
+    const doctype  = current.source_doctype || current.target_doctype;
+    const schema   = CW.Schema?.[doctype];
+    const doc      = current.target?.data?.[0] || {};
+    const docname  = doc[schema?.title_field || 'name'] || doc.name || 'New';
     return [
       { text: 'Home', runName: home },
       { text: doctype, runName: _findGridRun(doctype) },
@@ -127,7 +126,7 @@ globalThis.addEventListener('coworker:state:change', _updateNavUI);
 // ============================================================
 // FIELD RENDERER
 // React owns localVal (display, preserves focus)
-// CW owns run_doc.input (delta only)
+// CW owns run_doc.input (delta) — controller called explicitly on commit
 // ============================================================
 
 const FieldRenderer = function({ field, run_doc }) {
@@ -137,16 +136,16 @@ const FieldRenderer = function({ field, run_doc }) {
   const safeInitial = initial === null || initial === undefined
     ? (field.fieldtype === 'Check' ? 0 : '') : initial;
 
-  const [localVal, setLocalVal]   = React.useState(safeInitial);
-  const timerRef                  = React.useRef(null);
-  const debounce                  = CW._config?.fieldInteractionConfig?.onChange?.debounce ?? 5000;
+  const [localVal, setLocalVal] = React.useState(safeInitial);
+  const timerRef                = React.useRef(null);
+  const debounce                = CW._config?.fieldInteractionConfig?.onChange?.debounce ?? 5000;
 
   // Link state — top level (Rules of Hooks)
-  const linkSchema  = CW.Schema?.[field.options];
-  const titleField  = linkSchema?.title_field || 'name';
-  const [linkOpts, setLinkOpts]   = React.useState([]);
-  const [isOpen, setIsOpen]       = React.useState(false);
-  const [searchText, setSearch]   = React.useState(field.fieldtype === 'Link' ? (safeInitial || '') : '');
+  const linkSchema = CW.Schema?.[field.options];
+  const titleField = linkSchema?.title_field || 'name';
+  const [linkOpts, setLinkOpts] = React.useState([]);
+  const [isOpen, setIsOpen]     = React.useState(false);
+  const [searchText, setSearch] = React.useState(field.fieldtype === 'Link' ? (safeInitial || '') : '');
 
   // Table state — top level (Rules of Hooks)
   const childSchema = CW.Schema?.[field.options];
@@ -159,6 +158,7 @@ const FieldRenderer = function({ field, run_doc }) {
   const [childData, setChildData]     = React.useState([]);
   const [childLoaded, setChildLoaded] = React.useState(false);
   const docName = doc_.name;
+
   React.useEffect(() => {
     if (field.fieldtype !== 'Table' || !field.options || !docName || childLoaded) return;
     setChildLoaded(true);
@@ -170,19 +170,23 @@ const FieldRenderer = function({ field, run_doc }) {
     }).then(cr => { if (cr.success) setChildData(cr.target?.data || []); });
   }, [docName, field.fieldtype]);
 
+  // commit field delta to input and call controller explicitly
+  // controller re-renders form — enables live depends_on reactions
+  const commitField = (val) => {
+    if (val === run_doc.target?.data?.[0]?.[field.fieldname]) return;
+    run_doc.input[field.fieldname] = val;
+    CW.controller(run_doc).catch(err => console.error('[CW]', err));
+  };
+
   const onChange = (val) => {
     setLocalVal(val);
     clearTimeout(timerRef.current);
-    timerRef.current = setTimeout(() => {
-      if (val === run_doc.target?.data?.[0]?.[field.fieldname]) return;
-      run_doc.input[field.fieldname] = val;
-    }, debounce);
+    timerRef.current = setTimeout(() => commitField(val), debounce);
   };
 
   const onBlur = (val) => {
     clearTimeout(timerRef.current);
-    if (val === run_doc.target?.data?.[0]?.[field.fieldname]) return;
-    run_doc.input[field.fieldname] = val;
+    commitField(val);
   };
 
   if (field.fieldtype === 'Section Break')
@@ -200,13 +204,13 @@ const FieldRenderer = function({ field, run_doc }) {
     return ce('div', { className: 'form-check' },
       ce('input', {
         type: 'checkbox', className: 'form-check-input', checked: !!localVal,
-        onChange: (e) => { const v = e.target.checked ? 1 : 0; setLocalVal(v); onBlur(v); },
+        onChange: (e) => { const v = e.target.checked ? 1 : 0; setLocalVal(v); commitField(v); },
       })
     );
 
   if (field.fieldtype === 'Select') {
     const opts = (field.options || '').split('\n').filter(Boolean);
-    return ce('select', { className: 'form-select', value: localVal, onChange: (e) => onChange(e.target.value) },
+    return ce('select', { className: 'form-select', value: localVal, onChange: (e) => { setLocalVal(e.target.value); commitField(e.target.value); } },
       ce('option', { value: '' }, ''),
       opts.map(o => ce('option', { key: o, value: o }, o))
     );
@@ -217,7 +221,7 @@ const FieldRenderer = function({ field, run_doc }) {
       type: 'number', className: 'form-control', value: localVal,
       step: field.fieldtype === 'Int' ? '1' : '0.01',
       onChange: (e) => onChange(field.fieldtype === 'Int' ? parseInt(e.target.value)||0 : parseFloat(e.target.value)||0),
-      onBlur:   (e) => onBlur  (field.fieldtype === 'Int' ? parseInt(e.target.value)||0 : parseFloat(e.target.value)||0),
+      onBlur:   (e) => onBlur (field.fieldtype === 'Int' ? parseInt(e.target.value)||0 : parseFloat(e.target.value)||0),
     });
 
   if (field.fieldtype === 'Date')     return ce('input', { type: 'date',           className: 'form-control', value: localVal, onChange: (e) => onChange(e.target.value), onBlur: (e) => onBlur(e.target.value) });
@@ -238,13 +242,16 @@ const FieldRenderer = function({ field, run_doc }) {
         setLocalVal(e.target.value);
         clearTimeout(timerRef.current);
         timerRef.current = setTimeout(() => {
-          try { run_doc.input[field.fieldname] = JSON.parse(e.target.value); }
-          catch { run_doc.input[field.fieldname] = e.target.value; }
+          try       { run_doc.input[field.fieldname] = JSON.parse(e.target.value); }
+          catch (_) { run_doc.input[field.fieldname] = e.target.value; }
+          CW.controller(run_doc).catch(err => console.error('[CW]', err));
         }, 300);
       },
       onBlur: (e) => {
-        try { run_doc.input[field.fieldname] = JSON.parse(e.target.value); }
-        catch { run_doc.input[field.fieldname] = e.target.value; }
+        clearTimeout(timerRef.current);
+        try       { run_doc.input[field.fieldname] = JSON.parse(e.target.value); }
+        catch (_) { run_doc.input[field.fieldname] = e.target.value; }
+        CW.controller(run_doc).catch(err => console.error('[CW]', err));
       },
     });
   }
@@ -256,14 +263,17 @@ const FieldRenderer = function({ field, run_doc }) {
     });
 
   if (field.fieldtype === 'Table') {
+    // child click — genuinely subordinate record, use child()
     const onChildClick = (row) => {
-      const r = CW.run({
-        operation: 'select', target_doctype: field.options,
-        query: { where: { name: row.name }, view: 'form' },
-        view: 'form', component: 'MainForm', container: run_doc.container,
-        options: { render: true },
+      run_doc.child({
+        operation:      'select',
+        target_doctype: field.options,
+        query:          { where: { name: row.name }, view: 'form' },
+        view:           'form',
+        component:      'MainForm',
+        container:      run_doc.container,
+        options:        { render: true },
       });
-      CW.controller(r).then(() => { r.input['.operation'] = 'update'; });
     };
     if (!childData.length)
       return ce('div', { className: 'text-muted small py-2' }, childLoaded ? 'No records' : 'Loading...');
@@ -284,8 +294,10 @@ const FieldRenderer = function({ field, run_doc }) {
     const loadOptions = async () => {
       if (!field.options) return;
       const cr = await run_doc.child({
-        operation: 'select', target_doctype: field.options,
-        query: { take: 50, select: ['name', titleField] }, options: { render: false },
+        operation:      'select',
+        target_doctype: field.options,
+        query:          { take: 50, select: ['name', titleField] },
+        options:        { render: false },
       });
       if (cr.success) { setLinkOpts(cr.target?.data || []); setIsOpen(true); }
     };
@@ -295,7 +307,10 @@ const FieldRenderer = function({ field, run_doc }) {
         placeholder: `Select ${field.label || field.fieldname}...`, readOnly,
         onFocus: () => { if (!readOnly) loadOptions(); },
         onChange: (e) => setSearch(e.target.value),
-        onBlur:  () => { setTimeout(() => setIsOpen(false), 200); if (searchText !== localVal) run_doc.input[field.fieldname] = searchText; },
+        onBlur:  () => {
+          setTimeout(() => setIsOpen(false), 200);
+          if (searchText !== localVal) commitField(searchText);
+        },
       }),
       isOpen && linkOpts.length > 0 && ce('div', {
         className: 'dropdown-menu show w-100',
@@ -307,14 +322,13 @@ const FieldRenderer = function({ field, run_doc }) {
             e.preventDefault();
             setSearch(o[titleField] || o.name);
             setIsOpen(false);
-            run_doc.input[field.fieldname] = o.name;
+            commitField(o.name);
           },
         }, o[titleField] || o.name))
       )
     );
   }
 
-  // Relationship Panel — full-width, spans col-12
   if (field.fieldtype === 'Relationship Panel')
     return ce(RelationshipPanel, { run_doc });
 
@@ -341,19 +355,23 @@ const MainForm = function({ run_doc }) {
   const fields    = schema.fields || [];
   const skipTypes = new Set(['Column Break', 'Tab Break', 'HTML']);
 
-  // FSM buttons
-  const stateDef = CW._getStateDef(doctype);
-  const dim0     = stateDef?.['0'];
-  const current  = doc._state?.['0'] ?? doc.docstatus ?? 0;
-  const buttons  = (dim0?.transitions?.[String(current)] || [])
+  // FSM buttons from stateDef
+  const stateDef  = CW._getStateDef(doctype);
+  const dim0      = stateDef?.['0'];
+  const current   = doc._state?.['0'] ?? doc.docstatus ?? 0;
+  const buttons   = (dim0?.transitions?.[String(current)] || [])
     .filter(to => {
-      const key = `${current}_${to}`;
-      const req = dim0?.requires?.[key] || {};
+      const key  = `${current}_${to}`;
+      const req  = dim0?.requires?.[key] || {};
       const rule = dim0?.rules?.[key];
       return Object.entries(req).every(([k,v]) => schema[k] === v)
         && (typeof rule === 'function' ? rule(run_doc) : true);
     })
-    .map(to => ({ key: `${current}_${to}`, label: dim0?.labels?.[`${current}_${to}`] || `${current}_${to}`, confirm: dim0?.confirm?.[`${current}_${to}`] }));
+    .map(to => ({
+      key:     `${current}_${to}`,
+      label:   dim0?.labels?.[`${current}_${to}`] || `${current}_${to}`,
+      confirm: dim0?.confirm?.[`${current}_${to}`],
+    }));
 
   const badgeLabel = dim0?.options?.[current] || '';
   const badgeCls   = ['bg-warning','bg-success','bg-danger'][current] || 'bg-secondary';
@@ -364,11 +382,13 @@ const MainForm = function({ run_doc }) {
       ce('div', { className: 'd-flex gap-2 align-items-center' },
         badgeLabel ? ce('span', { className: `badge ${badgeCls}` }, badgeLabel) : null,
         buttons.map(btn => ce('button', {
-          key: btn.key,
+          key:       btn.key,
           className: (btn.label==='Delete'||btn.label==='Cancel') ? 'btn btn-danger btn-sm' : 'btn btn-primary btn-sm',
           onClick: () => {
             if (btn.confirm && !window.confirm(btn.confirm)) return;
+            // signal — explicit controller call
             run_doc.input._state = { [btn.key]: '' };
+            CW.controller(run_doc).catch(err => console.error('[CW]', err));
           },
         }, btn.label))
       )
@@ -404,8 +424,7 @@ const MainForm = function({ run_doc }) {
 
 // ============================================================
 // MAIN GRID
-// data is a prop (passed from CW._render) — no useState for rows
-// UI state only: viewMode, sortCol, sortDir
+// data passed as explicit prop — UI state only: viewMode, sortCol, sortDir
 // ============================================================
 
 const MainGrid = function({ run_doc, data }) {
@@ -413,12 +432,10 @@ const MainGrid = function({ run_doc, data }) {
   const schema     = CW.Schema?.[doctype];
   const titleField = schema?.title_field || 'name';
 
-  // UI state only
   const [viewMode, setViewMode] = React.useState('list');
   const [sortCol,  setSortCol]  = React.useState(null);
   const [sortDir,  setSortDir]  = React.useState('asc');
 
-  // schema-driven columns from in_list_view
   const listFields = React.useMemo(() => {
     if (!schema?.fields) return [];
     const lf = schema.fields.filter(f =>
@@ -430,7 +447,6 @@ const MainGrid = function({ run_doc, data }) {
           .map(k => ({ fieldname: k, label: k }));
   }, [doctype, data.length]);
 
-  // sorting — pure, no TanStack needed
   const rows = React.useMemo(() => {
     if (!sortCol) return data;
     return [...data].sort((a, b) => {
@@ -445,54 +461,65 @@ const MainGrid = function({ run_doc, data }) {
     else { setSortCol(fieldname); setSortDir('asc'); }
   };
 
-  // FSM helpers
   const getCardButtons = (record) => {
     const stateDef = CW._getStateDef(doctype);
     const dim0     = stateDef?.['0'];
     if (!dim0) return [];
-    const cur  = record._state?.['0'] ?? 0;
+    const cur = record._state?.['0'] ?? 0;
     return (dim0.transitions?.[cur] || [])
       .filter(to => {
         const key = `${cur}_${to}`;
         const req = dim0.requires?.[key] || {};
         return Object.entries(req).every(([k,v]) => Number(schema?.[k]??0) === Number(v));
       })
-      .map(to => ({ key: `${cur}_${to}`, label: dim0.labels?.[`${cur}_${to}`] || `${cur}_${to}`, confirm: dim0.confirm?.[`${cur}_${to}`] }));
+      .map(to => ({
+        key:     `${cur}_${to}`,
+        label:   dim0.labels?.[`${cur}_${to}`] || `${cur}_${to}`,
+        confirm: dim0.confirm?.[`${cur}_${to}`],
+      }));
   };
 
+  // card action — peer record, CW.run with pre-populated target to skip re-fetch
   const onCardAction = async (record, btnKey) => {
     const btn = getCardButtons(record).find(b => b.key === btnKey);
     if (btn?.confirm && !window.confirm(btn.confirm)) return;
-    const r = CW.run({ operation: 'select', target_doctype: doctype, query: { where: { name: record.name } }, options: { render: false } });
-    await CW.controller(r);
-    if (r.error) return;
-    r.input._state = { [btnKey]: '' };
-    await CW.controller(r);
+    const r = await CW.run({
+      operation:      'update',
+      target_doctype: doctype,
+      query:          { where: { name: record.name } },
+      input:          { _state: { [btnKey]: '' } },
+      options:        { render: false },
+    });
     if (!r.error && r.target?.data?.[0]) {
-      run_doc.target.data = (run_doc.target.data || []).map(row =>
+      run_doc.target.data = run_doc.target.data.map(row =>
         row.name === record.name ? r.target.data[0] : row
       );
-      CW._render(run_doc);  // explicit re-render with updated data
+      CW._render(run_doc);
     }
   };
 
+  // row click — fire and forget, CW.run bundles controller + render
   const onRowClick = (record) => {
-    const r = CW.run({
-      operation: 'select', target_doctype: record.doctype || doctype,
-      query: { where: { name: record.name }, view: 'form' },
-      view: 'form', component: 'MainForm', container: run_doc.container,
-      options: { render: true },
+    CW.run({
+      operation:      'select',
+      target_doctype: record.doctype || doctype,
+      query:          { where: { name: record.name }, view: 'form' },
+      view:           'form',
+      component:      'MainForm',
+      container:      run_doc.container,
+      options:        { render: true },
     });
-    CW.controller(r).then(() => { r.input['.operation'] = 'update'; });
   };
 
   const onNew = () => {
-    const r = CW.run({
-      operation: 'create', target_doctype: doctype,
-      view: 'form', component: 'MainForm', container: run_doc.container,
-      options: { render: true },
+    CW.run({
+      operation:      'create',
+      target_doctype: doctype,
+      view:           'form',
+      component:      'MainForm',
+      container:      run_doc.container,
+      options:        { render: true },
     });
-    CW.controller(r);
   };
 
   const toolbar = ce('div', { className: 'd-flex justify-content-between align-items-center mb-2 px-1' },
@@ -549,9 +576,9 @@ const MainGrid = function({ run_doc, data }) {
               ),
               btns.length > 0 && ce('div', { className: 'd-flex gap-1 ms-3 flex-shrink-0' },
                 btns.map(btn => ce('button', {
-                  key: btn.key,
+                  key:       btn.key,
                   className: btn.key.endsWith('_2') ? 'btn btn-sm btn-danger' : 'btn btn-sm btn-outline-primary',
-                  onClick: (e) => { e.stopPropagation(); onCardAction(record, btn.key); },
+                  onClick:   (e) => { e.stopPropagation(); onCardAction(record, btn.key); },
                 }, btn.label))
               )
             )
@@ -571,29 +598,15 @@ const MainGrid = function({ run_doc, data }) {
 };
 
 // ============================================================
-// COMPONENT REGISTRY
-// ============================================================
-
-CW._components = { MainForm, MainGrid };
-
-globalThis.addEventListener('coworker:state:change', _updateNavUI);
-
-console.log('✅ CW-ui.js loaded');
-
-// ============================================================
 // RELATIONSHIP PANEL
-// Fieldtype: "Relationship Panel"
-// Shows existing relationships + add new via type-first flow
 // ============================================================
 
 const RelationshipPanel = function({ run_doc }) {
-  const doc      = run_doc.target?.data?.[0] || {};
-  const doctype  = run_doc.target_doctype || run_doc.source_doctype;
-  const docName  = doc.name;
+  const doc     = run_doc.target?.data?.[0] || {};
+  const doctype = run_doc.target_doctype || run_doc.source_doctype;
+  const docName = doc.name;
 
-  // flatten relationshipTypes config for this parent doctype
-  // { "Assignee": "User", "Reviewer": "User", "Blocks": "Task", ... }
-  const typeMap  = React.useMemo(() => {
+  const typeMap = React.useMemo(() => {
     const map    = {};
     const dtConf = CW._config?.relationshipTypes?.[doctype] || {};
     for (const [relatedDoctype, types] of Object.entries(dtConf)) {
@@ -604,11 +617,8 @@ const RelationshipPanel = function({ run_doc }) {
 
   const allTypes = Object.keys(typeMap);
 
-  // existing relationships
   const [rels, setRels]         = React.useState([]);
   const [loaded, setLoaded]     = React.useState(false);
-
-  // add form state
   const [selType, setSelType]   = React.useState('');
   const [searchText, setSearch] = React.useState('');
   const [linkOpts, setLinkOpts] = React.useState([]);
@@ -618,7 +628,6 @@ const RelationshipPanel = function({ run_doc }) {
   const [notes, setNotes]       = React.useState('');
   const [saving, setSaving]     = React.useState(false);
 
-  // load existing relationships
   const loadRels = React.useCallback(async () => {
     if (!docName) return;
     const cr = await run_doc.child({
@@ -633,7 +642,6 @@ const RelationshipPanel = function({ run_doc }) {
 
   React.useEffect(() => { loadRels(); }, [docName]);
 
-  // when type changes, clear selection and load options
   const onTypeChange = async (type) => {
     setSelType(type);
     setSelName(''); setSelTitle(''); setSearch(''); setLinkOpts([]); setLinkOpen(false);
@@ -651,48 +659,44 @@ const RelationshipPanel = function({ run_doc }) {
     if (cr.success) { setLinkOpts(cr.target?.data || []); setLinkOpen(true); }
   };
 
-  // add relationship
+  // pass all input at construction — controller runs once with complete data
   const onAdd = async () => {
     if (!selType || !selName) return;
     setSaving(true);
     const cr = await run_doc.child({
       operation:      'create',
       target_doctype: 'Relationship',
-      options:        { render: false },
+      input: {
+        related_doctype: typeMap[selType],
+        related_name:    selName,
+        related_title:   selTitle || selName,
+        type:            selType,
+        notes:           notes,
+        parent:          docName,
+        parenttype:      doctype,
+        parentfield:     'relationships',
+      },
+      options: { render: false },
     });
-    Object.assign(cr.input, {
-      related_doctype: typeMap[selType],
-      related_name:    selName,
-      related_title:   selTitle || selName,
-      type:            selType,
-      notes:           notes,
-      parent:          docName,
-      parenttype:      doctype,
-      parentfield:     'relationships',
-    });
-    await new Promise(r => setTimeout(r, 300));
     setSaving(false);
-    // reset form
-    setSelType(''); setSelName(''); setSelTitle(''); setSearch(''); setNotes('');
-    await loadRels();
+    if (!cr.error) {
+      setSelType(''); setSelName(''); setSelTitle(''); setSearch(''); setNotes('');
+      await loadRels();
+    }
   };
 
-  // FSM action on existing relationship (Accept/Cancel/Reopen/Reject)
+  // FSM action on existing relationship — peer record, CW.run directly
   const onRelAction = async (rel, btnKey) => {
-  const r = CW.run({
-    operation:      'select',
-    target_doctype: 'Relationship',
-    query:          { where: { name: rel.name } },
-    options:        { render: false },
-  });
-  await CW.controller(r);
-  if (r.error) return;
-  r.input._state = { [btnKey]: '' };
-  await CW.controller(r);
-  await loadRels();
-};
+    const r = await CW.run({
+      operation:      'update',
+      target_doctype: 'Relationship',
+      query:          { where: { name: rel.name } },
+      input:          { _state: { [btnKey]: '' } },
+      options:        { render: false },
+    });
+    if (!r.error) await loadRels();
+  };
 
-  // get FSM buttons for a relationship record
   const getRelButtons = (rel) => {
     const stateDef = CW._getStateDef('Relationship');
     const dim0     = stateDef?.['0'];
@@ -703,28 +707,26 @@ const RelationshipPanel = function({ run_doc }) {
   };
 
   const statusBadge = (rel) => {
-    const dim0    = CW._getStateDef('Relationship')?.['0'];
-    const cur     = rel._state?.['0'] ?? rel.docstatus ?? 0;
-    const label   = dim0?.options?.[cur] || '';
-    const cls     = ['bg-warning text-dark','bg-success','bg-danger'][cur] || 'bg-secondary';
+    const dim0  = CW._getStateDef('Relationship')?.['0'];
+    const cur   = rel._state?.['0'] ?? rel.docstatus ?? 0;
+    const label = dim0?.options?.[cur] || '';
+    const cls   = ['bg-warning text-dark','bg-success','bg-danger'][cur] || 'bg-secondary';
     return label ? ce('span', { className: `badge ${cls} ms-1` }, label) : null;
   };
 
   const relatedDoctype = typeMap[selType] || '';
   const titleField     = CW.Schema?.[relatedDoctype]?.title_field || 'name';
   const filteredOpts   = linkOpts
-    .filter(o => o.name || o.id)  // skip records with no id
+    .filter(o => o.name || o.id)
     .filter(o => !searchText || (o[titleField] || o.name || o.id || '').toLowerCase().includes(searchText.toLowerCase()));
 
   return ce('div', { className: 'mt-3' },
 
-    // ── Existing relationships ──────────────────────────────
     loaded && rels.length > 0 && ce('div', { className: 'mb-3' },
       rels.map(rel => ce('div', {
         key: rel.name,
         className: 'border rounded p-2 mb-2 d-flex justify-content-between align-items-center',
       },
-        // left: info
         ce('div', {},
           ce('div', { className: 'd-flex align-items-center gap-2' },
             ce('span', { className: 'fw-medium' }, rel.related_title || rel.related_name),
@@ -733,10 +735,9 @@ const RelationshipPanel = function({ run_doc }) {
           ),
           rel.notes && ce('div', { className: 'text-muted small mt-1' }, rel.notes)
         ),
-        // right: FSM buttons
         ce('div', { className: 'd-flex gap-1' },
           getRelButtons(rel).map(btn => ce('button', {
-            key: btn.key,
+            key:       btn.key,
             className: btn.key.endsWith('_2')
               ? 'btn btn-sm btn-outline-danger'
               : btn.key.endsWith('_0')
@@ -750,12 +751,10 @@ const RelationshipPanel = function({ run_doc }) {
 
     loaded && rels.length === 0 && ce('div', { className: 'text-muted small mb-2' }, 'No relationships yet'),
 
-    // ── Add form ────────────────────────────────────────────
     allTypes.length === 0
       ? ce('div', { className: 'text-muted small' }, `No relationship types configured for ${doctype}`)
       : ce('div', { className: 'd-flex gap-2 align-items-start flex-wrap' },
 
-          // type select
           ce('select', {
             className: 'form-select form-select-sm',
             style: { width: '140px' },
@@ -766,7 +765,6 @@ const RelationshipPanel = function({ run_doc }) {
             allTypes.map(t => ce('option', { key: t, value: t }, t))
           ),
 
-          // link search — only shown after type selected
           selType && ce('div', { className: 'position-relative', style: { width: '200px' } },
             ce('input', {
               type: 'text', className: 'form-control form-control-sm',
@@ -797,7 +795,6 @@ const RelationshipPanel = function({ run_doc }) {
             )
           ),
 
-          // notes
           selType && ce('input', {
             type: 'text', className: 'form-control form-control-sm',
             style: { width: '160px' },
@@ -806,7 +803,6 @@ const RelationshipPanel = function({ run_doc }) {
             onChange: (e) => setNotes(e.target.value),
           }),
 
-          // add button
           selType && ce('button', {
             className: 'btn btn-sm btn-primary',
             disabled: !selName || saving,
@@ -815,3 +811,11 @@ const RelationshipPanel = function({ run_doc }) {
         )
   );
 };
+
+// ============================================================
+// COMPONENT REGISTRY
+// ============================================================
+
+CW._components = { MainForm, MainGrid };
+
+console.log('✅ CW-ui.js loaded');

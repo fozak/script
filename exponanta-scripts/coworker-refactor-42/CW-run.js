@@ -76,10 +76,10 @@ CW._getTransitions = function(schema, doc, dim) {
 
   return tos
     .map(to => {
-      const key      = `${current}_${to}`;
-      const requires = dimDef.requires?.[key] || {};
-      const rule     = dimDef.rules?.[key];
-      const reqPassed = Object.entries(requires).every(([k, v]) => Number(schema[k] ?? 0) === Number(v));
+      const key        = `${current}_${to}`;
+      const requires   = dimDef.requires?.[key] || {};
+      const rule       = dimDef.rules?.[key];
+      const reqPassed  = Object.entries(requires).every(([k, v]) => Number(schema[k] ?? 0) === Number(v));
       const rulePassed = typeof rule === "function" ? rule({ target: { data: [doc] }, input: {} }) : true;
       if (!reqPassed || !rulePassed) return null;
       return { key, from: current, to, label: dimDef.labels?.[key], confirm: dimDef.confirm?.[key] };
@@ -110,13 +110,11 @@ CW._execTransition = async function(run_doc, dim, key) {
 };
 
 // ============================================================
-// RUN FACTORY
+// RUN FACTORY — async, bundles controller call
 // ============================================================
 
-CW.run = function(op) {
+CW.run = async function(op) {
   CW._resolveAll(op);
-
-  const _input = op.input || {};
 
   const run_doc = {
     doctype:            "Run",
@@ -140,6 +138,9 @@ CW.run = function(op) {
     query:              op.query  || {},
     target:             op.target || null,
 
+    // input is a plain object — no Proxy, no auto-wake
+    input:              op.input  || {},
+
     status:             "pending",
     success:            false,
     error:              null,
@@ -148,37 +149,12 @@ CW.run = function(op) {
     child_run_ids:      [],
     user:               op.user || null,
     options:            op.options || {},
-
-    _running:           false,
-    _needsRun:          false,
   };
-
-  run_doc.input = new Proxy(_input, {
-    set(t, p, v) {
-      t[p] = v;
-      if (!run_doc._running && run_doc.options?.render !== false) {
-        queueMicrotask(() => {
-          CW.controller(run_doc).catch(err => console.error("[CW]", err));
-        });
-      }
-      return true;
-    },
-    deleteProperty(t, p) {
-      delete t[p];
-      if (!run_doc._running && run_doc.options?.render !== false) {
-        queueMicrotask(() => {
-          CW.controller(run_doc).catch(err => console.error("[CW]", err));
-        });
-      }
-      return true;
-    },
-  });
 
   run_doc.child = async function(childOp) {
     childOp.parent_run_id = run_doc.name;
     childOp.user          = childOp.user ?? run_doc.user;
-    const child           = CW.run(childOp);
-    await CW.controller(child);
+    const child           = await CW.run(childOp);
     if (!run_doc.child_run_ids.includes(child.name)) {
       run_doc.child_run_ids.push(child.name);
     }
@@ -187,25 +163,19 @@ CW.run = function(op) {
 
   if (CW._updateFromRun) CW._updateFromRun(run_doc);
 
-  if (op.options?.render === true) {
-    queueMicrotask(() => {
-      CW.controller(run_doc).catch(err => console.error('[CW]', err));
-    });
-  }
+  // always run controller — no reactive guards, no queueMicrotask
+  await CW.controller(run_doc);
 
   return run_doc;
 };
 
 // ============================================================
-// CONTROLLER
+// CONTROLLER — no mutex, no dirty flag, explicit calls only
 // ============================================================
 
 CW.controller = async function(run_doc) {
-  if (run_doc._running) { run_doc._needsRun = true; return; }
-
-  run_doc._running = true;
-  run_doc.status   = "running";
-  run_doc.error    = null;
+  run_doc.status = "running";
+  run_doc.error  = null;
 
   try {
     CW._resolveInput(run_doc);
@@ -217,24 +187,33 @@ CW.controller = async function(run_doc) {
       run_doc._signal = signal[0];
       await CW._handleSignal(run_doc);
     } else {
-      const schema   = CW.Schema?.[run_doc.target_doctype];
-      const doc      = run_doc.target?.data?.[0] || run_doc.input;
-      const editable = (doc.docstatus ?? 0) === 0;
-      const opConfig = CW._config.operations?.[run_doc.operation] || {};
+      const dataKeys = Object.keys(run_doc.input).filter(k => k !== '_state');
 
-      if (opConfig.type === "read" || opConfig.type === "auth") {
-        await CW._handlers[run_doc.operation]?.(run_doc);
-      } else if (opConfig.type === "write") {
-        const dataKeys = Object.keys(run_doc.input).filter(k => k !== '_state');
-        if ((editable || run_doc.options?.internal) && dataKeys.length > 0) {
-          run_doc.operation = (run_doc.input.name || run_doc.target?.data?.[0]?.name) ? "update" : "create";
-          await CW._handlers[run_doc.operation](run_doc);
-          if (!run_doc.error) {
-            if (run_doc.operation === "create" && run_doc.target?.data?.[0]?.name) {
-              run_doc.query = Object.assign({}, run_doc.query, { where: { name: run_doc.target.data[0].name } });
-            }
-            Object.keys(run_doc.input).filter(k => k !== '_state').forEach(k => delete run_doc.input[k]);
+      // if input has field data — always treat as write, regardless of original operation
+      // this covers the onBlur case where run_doc.operation is still 'select' from initial load
+      if (dataKeys.length > 0) {
+        const hasName = run_doc.input.name || run_doc.target?.data?.[0]?.name || run_doc.query?.where?.name;
+        run_doc.operation = hasName ? "update" : "create";
+
+        if (run_doc.operation === "update") {
+          // _handlers.update always re-fetches first — editable check uses fresh data
+          await CW._handlers.update(run_doc);
+        } else {
+          // create — check editable from input (docstatus defaults to 0 for new records)
+          await CW._handlers.create(run_doc);
+        }
+
+        if (!run_doc.error) {
+          if (run_doc.operation === "create" && run_doc.target?.data?.[0]?.name) {
+            run_doc.query = Object.assign({}, run_doc.query, { where: { name: run_doc.target.data[0].name } });
           }
+          Object.keys(run_doc.input).filter(k => k !== '_state').forEach(k => delete run_doc.input[k]);
+        }
+      } else {
+        // no field data in input — execute the original read/auth operation
+        const opConfig = CW._config.operations?.[run_doc.operation] || {};
+        if (opConfig.type === "read" || opConfig.type === "auth") {
+          await CW._handlers[run_doc.operation]?.(run_doc);
         }
       }
     }
@@ -249,15 +228,9 @@ CW.controller = async function(run_doc) {
   }
 
   run_doc.modified = Date.now();
-  run_doc._running = false;
 
   if (CW._updateFromRun) CW._updateFromRun(run_doc);
   if (CW._render && run_doc.options?.render === true) CW._render(run_doc);
-
-  if (run_doc._needsRun) {
-    run_doc._needsRun = false;
-    await CW.controller(run_doc);
-  }
 };
 
 // ============================================================
@@ -265,6 +238,11 @@ CW.controller = async function(run_doc) {
 // ============================================================
 
 CW._handleSignal = async function(run_doc) {
+  // signals are authorized state transitions — bypass editable gate in _handlers.update
+  const _savedInternal = run_doc.options?.internal;
+  if (!run_doc.options) run_doc.options = {};
+  run_doc.options.internal = true;
+
   const signal  = run_doc._signal;
   const doctype = run_doc.target_doctype;
   const schema  = CW.Schema?.[doctype];
@@ -273,7 +251,6 @@ CW._handleSignal = async function(run_doc) {
   const existingName = run_doc.target?.data?.[0]?.name || run_doc.input?.name || run_doc.query?.where?.name;
   let existingDoc = run_doc.target?.data?.[0] || {};
 
-  // CHANGE 1: skip re-fetch if target already has the correct record
   if (existingName && run_doc.target?.data?.[0]?.name !== existingName) {
     run_doc.query = Object.assign({}, run_doc.query, { where: { name: existingName } });
     await globalThis.Adapter[db].select(run_doc);
@@ -289,8 +266,20 @@ CW._handleSignal = async function(run_doc) {
   for (const [dim, dimDef] of Object.entries(stateDef)) {
     const key = signal.startsWith(dim + ".") ? signal.slice(dim.length + 1) : signal;
     if (dimDef.sideEffects?.[key] !== undefined || dimDef.labels?.[key] !== undefined) {
-      const requires   = dimDef.requires?.[key] || {};
-      const reqPassed  = Object.entries(requires).every(([k, v]) => Number(schema?.[k] ?? 0) === Number(v));
+      // validate transition is allowed from current state before executing
+      const currentVal = CW._getDimValue(existingDoc, dim, dimDef);
+      const fromVal    = parseInt(key.split('_')[0]);
+      const toVal      = parseInt(key.split('_')[1]);
+      if (!isNaN(fromVal) && !isNaN(toVal)) {
+        const validTos = dimDef.transitions?.[String(currentVal)] || [];
+        if (fromVal !== currentVal || !validTos.includes(toVal)) {
+          run_doc.error = 'Transition ' + key + ' not allowed from current state ' + currentVal;
+          run_doc.input._state[signal] = '-1';
+          return;
+        }
+      }
+      const requires  = dimDef.requires?.[key] || {};
+      const reqPassed = Object.entries(requires).every(([k, v]) => Number(schema?.[k] ?? 0) === Number(v));
       if (!reqPassed) {
         run_doc.error = `${signal} not allowed for this doctype`;
         run_doc.input._state[signal] = "-1";
@@ -331,13 +320,29 @@ CW._handleSignal = async function(run_doc) {
       run_doc.operation = "update";
       await CW._handlers.update(run_doc);
     } else if (signal === "amend") {
+      // amend only valid from cancelled state (docstatus=2)
+      const currentDocstatus = existingDoc.docstatus ?? 0;
+      if (currentDocstatus !== 2) {
+        run_doc.error = "amend only allowed on cancelled records (docstatus=2)";
+        run_doc.input._state[signal] = "-1";
+        return;
+      }
+      // copy all fields from existingDoc — amend creates new record with same data
+      // strip system fields that must be fresh
+      const skipAmend = new Set(["name","id","created","modified","modified_by","_state","docstatus","amended_from"]);
+      for (const [k, v] of Object.entries(existingDoc)) {
+        if (!skipAmend.has(k)) run_doc.input[k] = v;
+      }
       run_doc.input.amended_from = existingDoc.name;
+      run_doc.input.docstatus    = 0;
       delete run_doc.input.name;
-      run_doc.input.docstatus = 0;
       run_doc.operation = "create";
       await CW._handlers.create(run_doc);
     }
   }
+
+  // restore internal flag
+  run_doc.options.internal = _savedInternal;
 
   if (!run_doc.error) {
     if (run_doc.operation === "create" && run_doc.target?.data?.[0]?.name) {
@@ -359,8 +364,8 @@ CW._handleSignal = async function(run_doc) {
 // ============================================================
 
 CW._preflight = function(run_doc, operation) {
-  const schema  = CW.Schema?.[run_doc.target_doctype];
-  const input   = run_doc.input;
+  const schema = CW.Schema?.[run_doc.target_doctype];
+  const input  = run_doc.input;
 
   if (operation === "create") {
     if (schema?.fields) {
@@ -385,7 +390,7 @@ CW._preflight = function(run_doc, operation) {
       }
     }
 
-    const stateDef = CW._getStateDef(run_doc.target_doctype);
+    const stateDef   = CW._getStateDef(run_doc.target_doctype);
     const freshState = {};
     for (const [dim, dimDef] of Object.entries(stateDef)) {
       freshState[dim] = dimDef.values?.[0] ?? 0;
@@ -403,8 +408,8 @@ CW._preflight = function(run_doc, operation) {
     }
 
     if (run_doc.target?.data?.[0]?._state) {
-      const targetState = run_doc.target.data[0]._state;
-      const dimKeys = Object.keys(targetState).filter(k => !isNaN(k));
+      const targetState  = run_doc.target.data[0]._state;
+      const dimKeys      = Object.keys(targetState).filter(k => !isNaN(k));
       const baseDimState = {};
       dimKeys.forEach(k => { baseDimState[k] = targetState[k]; });
       input._state = Object.assign({}, baseDimState, input._state || {});
@@ -450,7 +455,7 @@ CW._handlers = {
         const viewFields   = schema.fields.filter(f => f.in_list_view).map(f => f.fieldname);
         const titleField   = schema.title_field ? [schema.title_field] : [];
         const systemFields = CW.defaultFields || [];
-        const fields = [...new Set([...systemFields, ...titleField, ...viewFields])];
+        const fields       = [...new Set([...systemFields, ...titleField, ...viewFields])];
         run_doc.target.data = run_doc.target.data.map(item => {
           const filtered = {};
           fields.forEach(f => { if (f in item) filtered[f] = item[f]; });
@@ -476,7 +481,6 @@ CW._handlers = {
     await globalThis.Adapter[db].create(run_doc);
   },
 
-  // CHANGE 2: skip re-fetch if target already has the correct record
   update: async function(run_doc) {
     const db   = CW._config.adapters.defaults.db;
     const name = run_doc.input?.name || run_doc.target?.data?.[0]?.name || run_doc.query?.where?.name;
@@ -485,14 +489,18 @@ CW._handlers = {
       run_doc.query = Object.assign({}, run_doc.query, { where: { name } });
     }
 
-    if (run_doc.target?.data?.[0]?.name !== name) {
-      // target is stale or missing — re-fetch
-      const savedSelect = run_doc.query?.select;
-      if (savedSelect) run_doc.query = Object.assign({}, run_doc.query, { select: undefined });
-      await globalThis.Adapter[db].select(run_doc);
-      if (savedSelect) run_doc.query = Object.assign({}, run_doc.query, { select: savedSelect });
-      if (run_doc.error) return;
-    }
+    // always re-fetch — adapter resolves its own internal record by name
+    // never skip even if target is pre-populated — editable check uses fresh data
+    const savedSelect = run_doc.query?.select;
+    if (savedSelect) run_doc.query = Object.assign({}, run_doc.query, { select: undefined });
+    await globalThis.Adapter[db].select(run_doc);
+    if (savedSelect) run_doc.query = Object.assign({}, run_doc.query, { select: savedSelect });
+    if (run_doc.error) return;
+
+    // editable check after re-fetch — uses current docstatus from DB, not stale target
+    const freshDoc = run_doc.target?.data?.[0] || {};
+    const editable  = (freshDoc.docstatus ?? 0) === 0;
+    if (!editable && !run_doc.options?.internal) return;  // silent skip — not an error
 
     CW._preflight(run_doc, "update");
     if (run_doc.error) return;

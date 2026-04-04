@@ -1,4 +1,53 @@
+//42-1
 
+Current Architecture Summary
+Files changed in this session
+
+CW-run.js — refactored, tested, 3 bugs fixed
+CW-ui.js — refactored
+pb-adapter-pocketbase.js — one fix
+
+
+CW-run.js — what changed
+Proxy removed. run_doc.input is now a plain object. No auto-wake, no _running, no _needsRun, no queueMicrotask.
+CW.run is async and bundles controller. Every CW.run() call returns a completed run_doc — no separate CW.controller() needed for fresh runs.
+Controller routing by content, not operation name. After a select, if input has field data → routes to update. Original run_doc.operation string is irrelevant for the write decision.
+Editable gate lives in _handlers.update after re-fetch:
+freshDoc.docstatus === 0  →  proceed
+freshDoc.docstatus !== 0  →  silent skip (unless options.internal)
+Signals bypass editable gate via options.internal = true set at entry of _handleSignal, restored at exit. Signals own their own authorization (requires, rules, state check).
+Amend validates current state — only allowed from docstatus=2. Copies all non-system fields from original record.
+Update always re-fetches — no skip optimization. Adapter always gets a fresh PB record with correct id.
+
+CW-ui.js — what changed
+All controller calls explicit. No Proxy auto-wake anywhere. Every trigger is visible:
+
+FSM button → run_doc.input._state = {key:''} → CW.controller(run_doc)
+Field blur → commitField(val) → run_doc.input[field] = val → CW.controller(run_doc)
+Navigation → CW.run({...}) — bundles controller
+
+onRowClick — fire and forget, no second pass, no .operation intent marker.
+onCardAction — no pre-populated target, just query.where.name.
+onRelAction — same pattern as onCardAction.
+RelationshipPanel.onAdd — all input passed at construction time, no fake setTimeout.
+child() used correctly — Table rows, Link options, Relationship loads. Peer operations (onCardAction, onRelAction) use CW.run() directly.
+
+pb-adapter-pocketbase.js — what changed
+select fast path — replaced getOne(name) with getFullList({ filter: 'name = "X"' }). Works for both old records (id ≠ name) and new (id = name).
+update skip-refetch block removed — always fetches by filter, PATCHes by rec.id. No stale target shortcuts.
+
+Bugs found and fixed during testing
+BugWhereFixField blur never savedController routingRoute by input content not operation nameInvalid FSM transitions allowed_handleSignalValidate fromVal === currentVal before executingAmend on non-cancelled records_handleSignal amendCheck docstatus === 2 before amendStale target bypasses editable_handlers.updateEditable check after re-fetch, not beforeFSM signals blocked on non-draft_handlers.updateoptions.internal bypass for signal pathAmend missing required fields_handleSignal amendCopy existingDoc fields into input before create404 on old records in selectpb adaptergetFullList instead of getOne
+
+Test coverage
+
+40 tests in test-cw-full.js — 116 assertions
+10 tests in test-amend-new.js — 36 assertions
+152 total assertions, 0 failures
+
+
+
+//
 removed LIST/VIEW
 _allowed_read ?~ "roleispublixxxx" ||
 (

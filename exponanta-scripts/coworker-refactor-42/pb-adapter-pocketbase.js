@@ -129,21 +129,18 @@ async function select(run_doc) {
 
   let items, meta;
 
-  // fast path: single record by name — use getOne (O(1) PK lookup)
+  // fast path: single record by name
+  // use getFullList with filter — works for both old (id≠name) and new (id=name) records
+  // getOne(name) would 404 for old records since getOne requires PB id not name field
   const where      = run_doc.query?.where || {};
   const whereKeys  = Object.keys(where);
   const singleName = whereKeys.length === 1 && whereKeys[0] === 'name' && typeof where.name === 'string'
     ? where.name : null;
 
   if (singleName && !run_doc.query?.take) {
-    try {
-      const rec = await globalThis.pb.collection(config.collection).getOne(singleName);
-      items = rec ? [rec] : [];
-    } catch(err) {
-      // 404 = not found, not an error
-      items = [];
-    }
-    meta = { total: items.length, page: 1, pageSize: items.length, totalPages: 1, hasMore: false };
+    const filter = `doctype = "${doctype}" && (name = "${singleName}")`;
+    items = await globalThis.pb.collection(config.collection).getFullList({ filter });
+    meta  = { total: items.length, page: 1, pageSize: items.length, totalPages: 1, hasMore: false };
   } else {
     const params = {};
     const filter = _buildFilter(run_doc);
@@ -197,6 +194,9 @@ async function create(run_doc) {
 
 // ============================================================
 // UPDATE
+// always receives a fresh target from CW-run _handlers.update re-fetch
+// target.data[0] has the full PB record including correct id
+// use rec.id for PATCH — works for both old (id≠name) and new (id=name) records
 // ============================================================
 
 async function update(run_doc) {
@@ -204,23 +204,7 @@ async function update(run_doc) {
   if (!filter) { run_doc.error = "400 update: missing query.where or doctype"; return; }
 
   try {
-    let existing;
-
-    // skip re-fetch if target already has the correct record
-    if (run_doc.target?.data?.length &&
-        run_doc.target.data[0].name === run_doc.query?.where?.name) {
-      existing = run_doc.target.data.map(doc => {
-        const top  = {};
-        const data = {};
-        for (const [k, v] of Object.entries(doc)) {
-          if (PB_TOP.has(k)) top[k] = v;
-          else data[k] = v;
-        }
-        return { ...top, data, id: doc.name };
-      });
-    } else {
-      existing = await globalThis.pb.collection(config.collection).getFullList({ filter });
-    }
+    const existing = await globalThis.pb.collection(config.collection).getFullList({ filter });
 
     if (!existing.length) {
       run_doc.target  = { data: [], meta: { updated: 0 } };
