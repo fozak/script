@@ -1,0 +1,62 @@
+{
+  "doctype": "Schema",
+  "schema_name": "SystemSchema",
+  "_state": {
+    "0": {
+      "name": "_docstatus",
+      "fieldname": "docstatus",
+      "values": [
+        0,
+        1,
+        2
+      ],
+      "options": [
+        "Draft",
+        "Submitted",
+        "Cancelled/Deleted"
+      ],
+      "transitions": {
+        "0": [
+          1,
+          2
+        ],
+        "1": [
+          2
+        ],
+        "2": [
+          0
+        ]
+      },
+      "requires": {
+        "0_1": {
+          "is_submittable": 1
+        },
+        "1_2": {
+          "is_submittable": 1
+        },
+        "2_0": {
+          "is_submittable": 1
+        }
+      },
+      "rules": {
+        "0_1": "(run_doc) => Object.keys(run_doc.input).filter(k => k !== '_state').length === 0"
+      },
+      "labels": {
+        "0_1": "Submit",
+        "0_2": "Delete",
+        "1_2": "Cancel",
+        "2_0": "Amend"
+      },
+      "confirm": {
+        "0_2": "Are you sure you want to delete?",
+        "1_2": "Are you sure you want to cancel?"
+      },
+      "sideEffects": {
+        "0_1": "async (run_doc) => { run_doc.input.docstatus = 1; }",
+        "0_2": "async (run_doc) => { run_doc.input.docstatus = 2; }",
+        "1_2": "async (run_doc) => { run_doc.input.docstatus = 2; }",
+        "2_0": "async (run_doc) => { run_doc.input.amended_from = run_doc.target.data[0].name; delete run_doc.input.name; run_doc.input.docstatus = 0; }"
+      }
+    }
+  }
+}
