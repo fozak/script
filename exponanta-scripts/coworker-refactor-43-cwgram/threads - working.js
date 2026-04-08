@@ -75,7 +75,7 @@ const blockPreview = (body, maxLen = 80) => {
       .filter(c => c.type === 'text')
       .map(c => c.text)
       .join(' ').trim();
-    return text.length > maxLen ? text.slice(0, maxLen) + '…' : text;
+    return text.length > maxLen ? text.slice(0, maxLen) + '\u2026' : text;
   } catch {
     return (typeof body === 'string' ? body : '').replace(/[#*`>_~\[\]]/g,'').slice(0, maxLen);
   }
@@ -98,12 +98,14 @@ const BlockNoteEditor = function({ containerId, initialContent, recordId, onBefo
 };
 
 const BlockNoteRenderer = function({ containerId, content, recordId }) {
+  const pbUrl = CW._config?.pb_url || '';
+
   React.useEffect(() => {
     if (!content) return;
     let alive = true;
     getEditor().then(({ mountRenderer }) => {
       if (!alive) return;
-      mountRenderer({ containerId, content, collectionId: 'item', recordId });
+      mountRenderer({ containerId, content, pbUrl, collectionId: 'item', recordId });
     });
     return () => { alive = false; getEditor().then(({ unmount }) => unmount(containerId)); };
   }, [containerId, content]);
@@ -572,23 +574,25 @@ const NewPostEditor = function({ channelName, onNav }) {
   const [body,  setBody]     = React.useState('[]');
   const [tags,  setTags]     = React.useState('');
   const [postName, setPostName] = React.useState(null);
-  const postNameRef = React.useRef(null);
-  const titleRef    = React.useRef('');
+  const postNameRef = React.useRef(null); // ref for stale closure in onBeforeUpload
+  const titleRef    = React.useRef('');   // ref for stale closure in onBeforeUpload
   const [publishNow, setPub] = React.useState(false);
   const [saving, setSaving]  = React.useState(false);
   const [error, setError]    = React.useState(null);
 
-  const ensureDraft = async () => {
-    if (postNameRef.current) return;
-    const t = titleRef.current.trim() || 'Untitled';
+  // Create draft — uses refs so safe to call from stale closures
+  const ensureDraft = async (titleOverride) => {
+    if (postNameRef.current) return; // already exists
+    const t = (titleOverride || titleRef.current || 'Untitled').trim();
     const r = await CW.run({
       operation:'create', target_doctype:'Post',
       input:{ title:t, body:'[]', tags, parent:channelName, author_name:uname(), owner:uid() },
       options:{ render:false },
     });
     if (r.success && r.target?.data?.[0]?.name) {
-      postNameRef.current = r.target.data[0].name;
-      setPostName(r.target.data[0].name);
+      const n = r.target.data[0].name;
+      postNameRef.current = n;
+      setPostName(n);
     }
   };
 
@@ -597,6 +601,7 @@ const NewPostEditor = function({ channelName, onNav }) {
     setError(null); setSaving(true);
 
     if (postName) {
+      // draft exists — update then optionally publish
       const r = await loadRecord('Post', postName);
       if (!r.error) {
         r.input.title = title.trim(); r.input.body = body; r.input.tags = tags;
@@ -606,6 +611,7 @@ const NewPostEditor = function({ channelName, onNav }) {
       setSaving(false);
       onNav('post', postName);
     } else {
+      // no draft — create in one shot
       const r = await CW.run({
         operation:'create', target_doctype:'Post',
         input:{ title:title.trim(), body, tags, parent:channelName, author_name:uname(), owner:uid() },
@@ -627,7 +633,12 @@ const NewPostEditor = function({ channelName, onNav }) {
       error && ce('div', { className:'alert alert-danger py-2 mb-3', style:{fontSize:'.875rem'} }, error),
       ce('div', { className:'mb-3' },
         ce('label', { className:'form-label' }, 'Title'),
-        ce('input', { className:'form-control form-control-lg', placeholder:'Post title...', value:title, onChange:(e)=>{ setTitle(e.target.value); titleRef.current = e.target.value; }, onBlur: () => ensureDraft() })
+        ce('input', {
+          className:'form-control form-control-lg', placeholder:'Post title...',
+          value:title,
+          onChange:(e)=>{ setTitle(e.target.value); titleRef.current = e.target.value; },
+          onBlur: ensureDraft,
+        })
       ),
       ce('div', { className:'mb-3' },
         ce('label', { className:'form-label' }, 'Body'),
@@ -635,7 +646,10 @@ const NewPostEditor = function({ channelName, onNav }) {
           containerId: 'bn-new-post',
           initialContent: null,
           recordId: postName,
-          onBeforeUpload: async () => { await ensureDraft(); return postNameRef.current; },
+          onBeforeUpload: async () => {
+            await ensureDraft();
+            return postNameRef.current;
+          },
           onChange: json => setBody(json),
         })
       ),

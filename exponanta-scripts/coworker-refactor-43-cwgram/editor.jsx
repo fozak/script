@@ -49,8 +49,10 @@ async function uploadViaCW(file, recordId) {
   const filename = files[files.length - 1]
   if (!filename) throw new Error('[CWEditor] No filename in response')
 
-  // Construct public URL using CW config
-  const pbUrl = CW._config?.pb_url || ''
+  // CW._config.pb_url is the single source of truth (set from config.json)
+  const pbUrl = globalThis.CW._config?.pb_url
+    || globalThis.pb?.baseURL
+    || ''
   return `${pbUrl}/api/files/item/${recordId}/${filename}`
 }
 

@@ -14,6 +14,9 @@ globalThis.CW.defaultFields = [
 
 globalThis.CW._config = {
 
+  pb_url: "http://143.198.29.88:8090",
+  collection: "item",
+
   publicDoctypes: ['Event', 'WebPage', 'UserPublicProfile', 'Session'],
 
 publicSites: {
