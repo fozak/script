@@ -82,15 +82,11 @@ const blockPreview = (body, maxLen = 80) => {
 };
 
 const BlockNoteEditor = function({ containerId, initialContent, recordId, onBeforeUpload, onChange }) {
-  const pbUrl   = CW._config?.pb_url || '';
-  const pbToken = globalThis.pb?.authStore?.token || '';
-
   React.useEffect(() => {
     let alive = true;
     getEditor().then(({ mount }) => {
       if (!alive) return;
-      mount({ containerId, initialContent, pbUrl, pbToken,
-              collectionId: 'item', recordId, onBeforeUpload, onChange });
+      mount({ containerId, initialContent, recordId, onBeforeUpload, onChange });
     });
     return () => { alive = false; getEditor().then(({ unmount }) => unmount(containerId)); };
   }, [containerId, recordId]);
@@ -579,22 +575,24 @@ const NewPostEditor = function({ channelName, onNav }) {
   const [tags,  setTags]     = React.useState('');
   const [postName, setPostName] = React.useState(null);
   const postNameRef = React.useRef(null); // ref for stale closure in onBeforeUpload
+  const titleRef    = React.useRef('');   // ref for stale closure in onBeforeUpload
   const [publishNow, setPub] = React.useState(false);
   const [saving, setSaving]  = React.useState(false);
   const [error, setError]    = React.useState(null);
 
-  // Create draft on title blur so images have a recordId
-  const ensureDraft = async () => {
-    if (postName || !title.trim()) return;
+  // Create draft — uses refs so safe to call from stale closures
+  const ensureDraft = async (titleOverride) => {
+    if (postNameRef.current) return; // already exists
+    const t = (titleOverride || titleRef.current || 'Untitled').trim();
     const r = await CW.run({
       operation:'create', target_doctype:'Post',
-      input:{ title:title.trim(), body:'[]', tags, parent:channelName, author_name:uname(), owner:uid() },
+      input:{ title:t, body:'[]', tags, parent:channelName, author_name:uname(), owner:uid() },
       options:{ render:false },
     });
     if (r.success && r.target?.data?.[0]?.name) {
       const n = r.target.data[0].name;
-      setPostName(n);
       postNameRef.current = n;
+      setPostName(n);
     }
   };
 
@@ -637,7 +635,8 @@ const NewPostEditor = function({ channelName, onNav }) {
         ce('label', { className:'form-label' }, 'Title'),
         ce('input', {
           className:'form-control form-control-lg', placeholder:'Post title...',
-          value:title, onChange:(e)=>setTitle(e.target.value),
+          value:title,
+          onChange:(e)=>{ setTitle(e.target.value); titleRef.current = e.target.value; },
           onBlur: ensureDraft,
         })
       ),

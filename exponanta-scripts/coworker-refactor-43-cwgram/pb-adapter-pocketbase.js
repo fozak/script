@@ -18,8 +18,12 @@ function _splitRecord(doc) {
   const top  = {};
   const data = {};
   for (const [k, v] of Object.entries(doc)) {
-    if (PB_TOP.has(k)) top[k] = v;
-    else data[k] = v;
+    // PB modifier keys (files+, files-, +files) always go top-level
+    if (PB_TOP.has(k) || /^[\w]+[+-]$|^[+-][\w]+$/.test(k) || v instanceof File) {
+      top[k] = v;
+    } else {
+      data[k] = v;
+    }
   }
   return { top, data };
 }

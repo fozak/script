@@ -26,48 +26,37 @@ import { useCreateBlockNote } from '@blocknote/react'
 import { BlockNoteView } from '@blocknote/mantine'
 import '@blocknote/mantine/style.css'
 
-// ─── Image upload handler ────────────────────────────────────────────────────
+// ─── Image upload via CW.run ─────────────────────────────────────────────────
+// Uses globalThis.CW — available at runtime since editor.js loads in same browser context
+// pb-adapter-pocketbase.js handles 'files+' modifier key via _splitRecord
 
-async function uploadImageToPocketBase({ file, pbUrl, pbToken, collectionId, recordId }) {
-  // PocketBase SDK auto-converts plain objects with File values to FormData
-  // But here we're doing a raw fetch for the standalone bundle (no PB SDK dep)
-  const formData = new FormData()
+async function uploadViaCW(file, recordId) {
+  const CW = globalThis.CW
+  if (!CW) throw new Error('[CWEditor] globalThis.CW not available')
 
-  // Append all required flat fields so PB accepts the PATCH
-  // files+ modifier appends without replacing existing files
-  formData.append('files+', file)
+  const r = await CW.run({
+    operation: 'update',
+    target_doctype: 'Post',
+    query: { where: { name: recordId } },
+    input: { 'files+': file },
+    options: { render: false },
+  })
 
-  const res = await fetch(
-    `${pbUrl}/api/collections/${collectionId}/records/${recordId}`,
-    {
-      method: 'PATCH',
-      headers: {
-        Authorization: pbToken ? `Bearer ${pbToken}` : '',
-      },
-      body: formData,
-    }
-  )
+  if (!r.success) throw new Error('[CWEditor] Upload failed: ' + (r.error || 'unknown'))
 
-  if (!res.ok) {
-    throw new Error(`Upload failed: ${res.status} ${res.statusText}`)
-  }
-
-  const record = await res.json()
-
-  // PocketBase returns the updated files array
-  // The last item is the one we just uploaded
-  const files = record.files || []
+  // Get the filename PocketBase assigned — last item in files array
+  const files = r.target?.data?.[0]?.files || []
   const filename = files[files.length - 1]
+  if (!filename) throw new Error('[CWEditor] No filename in response')
 
-  if (!filename) throw new Error('No filename returned from PocketBase')
-
-  // Return the full URL — BlockNote injects this as <img src="...">
-  return `${pbUrl}/api/files/${collectionId}/${recordId}/${filename}`
+  // Construct public URL using CW config
+  const pbUrl = CW._config?.pb_url || ''
+  return `${pbUrl}/api/files/item/${recordId}/${filename}`
 }
 
 // ─── Editor component ─────────────────────────────────────────────────────────
 
-function CWBlockNoteEditor({ initialContent, uploadOptions, onBeforeUpload, onChange }) {
+function CWBlockNoteEditor({ initialContent, recordId, onBeforeUpload, onChange }) {
   // Parse initial content — BlockNote expects array of blocks or undefined
   const initialBlocks = React.useMemo(() => {
     if (!initialContent) return undefined
@@ -84,24 +73,17 @@ function CWBlockNoteEditor({ initialContent, uploadOptions, onBeforeUpload, onCh
   const editor = useCreateBlockNote({
     initialContent: initialBlocks,
 
-    // Image upload wired to PocketBase
+    // Image upload via CW.run — adapter handles files+ modifier → FormData
     uploadFile: async (file) => {
-      let opts = uploadOptions
-
-      // If no recordId yet, call onBeforeUpload to create the draft first
-      if (!opts?.recordId && onBeforeUpload) {
-        const recordId = await onBeforeUpload()
-        if (recordId) {
-          opts = { ...opts, recordId }
-        }
+      let rid = recordId
+      if (!rid && onBeforeUpload) {
+        rid = await onBeforeUpload()
       }
-
-      if (!opts?.recordId) {
-        console.warn('[CWEditor] No recordId available — skipping upload')
+      if (!rid) {
+        console.warn('[CWEditor] No recordId — skipping upload')
         return URL.createObjectURL(file)
       }
-
-      return uploadImageToPocketBase({ file, ...opts })
+      return uploadViaCW(file, rid)
     },
   })
 
@@ -154,9 +136,6 @@ const _roots = new Map() // containerId → ReactDOM root
 function mount({
   containerId,
   initialContent = null,
-  pbUrl,
-  pbToken,
-  collectionId = 'item',
   recordId,
   onBeforeUpload,
   onChange,
@@ -175,15 +154,11 @@ function mount({
   const root = ReactDOM.createRoot(container)
   _roots.set(containerId, root)
 
-  const uploadOptions = pbUrl && recordId
-    ? { pbUrl, pbToken, collectionId, recordId }
-    : null
-
   root.render(
     <React.StrictMode>
       <CWBlockNoteEditor
         initialContent={initialContent}
-        uploadOptions={uploadOptions}
+        recordId={recordId}
         onBeforeUpload={onBeforeUpload}
         onChange={onChange}
       />
