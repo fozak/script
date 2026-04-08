@@ -8,7 +8,7 @@
 globalThis.CW.defaultFields = [
   'name', 'doctype', 'docstatus', 'owner',
   'modified', 'modified_by', '_state',
-  'parent', 'parentfield', 'parenttype', 'idx','_allowed', '_allowed_read'
+  'parent', 'parentfield', 'parenttype', 'idx','_allowed', '_allowed_read', 'files'
 ];
 
 

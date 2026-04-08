@@ -57,7 +57,68 @@ const Avatar = ({ name, size = 'avatar-md' }) =>
   }, initials(name));
 
 // ============================================================
-// MARKDOWN EDITOR  — unchanged logic, Tabler form styling
+// BLOCKNOTE — lazy loader + editor/renderer wrappers
+// ============================================================
+
+let _editorMod = null;
+async function getEditor() {
+  if (!_editorMod) _editorMod = await import('./editor.js');
+  return _editorMod;
+}
+
+const blockPreview = (body, maxLen = 80) => {
+  if (!body) return '';
+  try {
+    const blocks = typeof body === 'string' ? JSON.parse(body) : body;
+    const text = (blocks || [])
+      .flatMap(b => b.content || [])
+      .filter(c => c.type === 'text')
+      .map(c => c.text)
+      .join(' ').trim();
+    return text.length > maxLen ? text.slice(0, maxLen) + '\u2026' : text;
+  } catch {
+    return (typeof body === 'string' ? body : '').replace(/[#*`>_~\[\]]/g,'').slice(0, maxLen);
+  }
+};
+
+const BlockNoteEditor = function({ containerId, initialContent, recordId, onBeforeUpload, onChange }) {
+  const pbUrl   = CW._config?.pb_url || '';
+  const pbToken = globalThis.pb?.authStore?.token || '';
+
+  React.useEffect(() => {
+    let alive = true;
+    getEditor().then(({ mount }) => {
+      if (!alive) return;
+      mount({ containerId, initialContent, pbUrl, pbToken,
+              collectionId: 'item', recordId, onBeforeUpload, onChange });
+    });
+    return () => { alive = false; getEditor().then(({ unmount }) => unmount(containerId)); };
+  }, [containerId, recordId]);
+
+  return ce('div', {
+    id: containerId,
+    style: { border:'1px solid var(--tblr-border-color)', borderRadius:'4px', minHeight:'240px' }
+  });
+};
+
+const BlockNoteRenderer = function({ containerId, content, recordId }) {
+  const pbUrl = CW._config?.pb_url || '';
+
+  React.useEffect(() => {
+    if (!content) return;
+    let alive = true;
+    getEditor().then(({ mountRenderer }) => {
+      if (!alive) return;
+      mountRenderer({ containerId, content, pbUrl, collectionId: 'item', recordId });
+    });
+    return () => { alive = false; getEditor().then(({ unmount }) => unmount(containerId)); };
+  }, [containerId, content]);
+
+  return ce('div', { id: containerId });
+};
+
+// ============================================================
+// MARKDOWN EDITOR  — kept for comments only (plain text)
 // ============================================================
 
 const MarkdownEditor = function({ value, onChange, rows, placeholder }) {
@@ -354,13 +415,13 @@ const PostDetail = function({ postName, onNav }) {
                       ? ce('div', {},
                           ce('input', { className:'form-control form-control-sm fw-bold mb-2',
                             value:editTitle, onChange:(e)=>setET(e.target.value) }),
-                          ce(MarkdownEditor, { value:editBody, onChange:setEB, rows:12 }),
+                          ce(BlockNoteEditor, { containerId:`bn-edit-${postName}`, initialContent:editBody, recordId:postName, onChange:setEB }),
                           ce('input', { className:'form-control form-control-sm mt-2',
                             placeholder:'Tags (comma separated)', value:editTags, onChange:(e)=>setETags(e.target.value) })
                         )
                       : ce('div', {},
                           ce('h4', { className:'mb-3' }, post.title),
-                          ce('div', { className:'post-body', dangerouslySetInnerHTML:md(post.body) }),
+                          ce(BlockNoteRenderer, { containerId:`bn-view-${postName}`, content:post.body, recordId:postName }),
                           tags.length > 0 && ce('div', { className:'mt-3 d-flex gap-1 flex-wrap' },
                             tags.map(t => ce('span', { key:t, className:'badge bg-blue-lt text-blue' }, '#'+t))
                           )
@@ -427,7 +488,7 @@ const ChannelFeed = function({ channelName, onNav, selectedPost, setSelectedPost
             isOwner ? 'No posts yet.' : 'No posts published yet.')
         : ce('div', { className:'nav flex-column nav-pills', role:'tablist' },
             visible.map(post => {
-              const excerpt = (post.body||'').replace(/[#*`>_~\[\]]/g,'').slice(0,60);
+              const excerpt = blockPreview(post.body, 60);
               const isActive = selectedPost === post.name;
               const isDraft  = post.docstatus === 0;
 
@@ -514,24 +575,55 @@ const ChannelList = function({ selectedChannel, setSelectedChannel }) {
 
 const NewPostEditor = function({ channelName, onNav }) {
   const [title, setTitle]    = React.useState('');
-  const [body,  setBody]     = React.useState('');
+  const [body,  setBody]     = React.useState('[]');
   const [tags,  setTags]     = React.useState('');
+  const [postName, setPostName] = React.useState(null);
+  const postNameRef = React.useRef(null); // ref for stale closure in onBeforeUpload
   const [publishNow, setPub] = React.useState(false);
   const [saving, setSaving]  = React.useState(false);
   const [error, setError]    = React.useState(null);
 
+  // Create draft on title blur so images have a recordId
+  const ensureDraft = async () => {
+    if (postName || !title.trim()) return;
+    const r = await CW.run({
+      operation:'create', target_doctype:'Post',
+      input:{ title:title.trim(), body:'[]', tags, parent:channelName, author_name:uname(), owner:uid() },
+      options:{ render:false },
+    });
+    if (r.success && r.target?.data?.[0]?.name) {
+      const n = r.target.data[0].name;
+      setPostName(n);
+      postNameRef.current = n;
+    }
+  };
+
   const onSave = async () => {
     if (!title.trim()) { setError('Title is required'); return; }
     setError(null); setSaving(true);
-    const r = await CW.run({
-      operation:'create', target_doctype:'Post',
-      input:{ title:title.trim(), body, tags, parent:channelName, author_name:uname(), owner:uid() },
-      options:{ render:false },
-    });
-    if (r.error) { setError(r.error?.message||r.error); setSaving(false); return; }
-    if (publishNow && r.target?.data?.[0]?.name) await fireSignal(r, '0_1');
-    setSaving(false);
-    if (r.target?.data?.[0]?.name) onNav('post', r.target.data[0].name);
+
+    if (postName) {
+      // draft exists — update then optionally publish
+      const r = await loadRecord('Post', postName);
+      if (!r.error) {
+        r.input.title = title.trim(); r.input.body = body; r.input.tags = tags;
+        await CW.controller(r);
+        if (publishNow) await fireSignal(r, '0_1');
+      }
+      setSaving(false);
+      onNav('post', postName);
+    } else {
+      // no draft — create in one shot
+      const r = await CW.run({
+        operation:'create', target_doctype:'Post',
+        input:{ title:title.trim(), body, tags, parent:channelName, author_name:uname(), owner:uid() },
+        options:{ render:false },
+      });
+      if (r.error) { setError(r.error?.message||r.error); setSaving(false); return; }
+      if (publishNow && r.target?.data?.[0]?.name) await fireSignal(r, '0_1');
+      setSaving(false);
+      if (r.target?.data?.[0]?.name) onNav('post', r.target.data[0].name);
+    }
   };
 
   return ce('div', { className:'d-flex flex-column h-100' },
@@ -543,11 +635,24 @@ const NewPostEditor = function({ channelName, onNav }) {
       error && ce('div', { className:'alert alert-danger py-2 mb-3', style:{fontSize:'.875rem'} }, error),
       ce('div', { className:'mb-3' },
         ce('label', { className:'form-label' }, 'Title'),
-        ce('input', { className:'form-control form-control-lg', placeholder:'Post title...', value:title, onChange:(e)=>setTitle(e.target.value) })
+        ce('input', {
+          className:'form-control form-control-lg', placeholder:'Post title...',
+          value:title, onChange:(e)=>setTitle(e.target.value),
+          onBlur: ensureDraft,
+        })
       ),
       ce('div', { className:'mb-3' },
         ce('label', { className:'form-label' }, 'Body'),
-        ce(MarkdownEditor, { value:body, onChange:setBody, rows:14, placeholder:'# Your post\n\nWrite in **markdown**...' })
+        ce(BlockNoteEditor, {
+          containerId: 'bn-new-post',
+          initialContent: null,
+          recordId: postName,
+          onBeforeUpload: async () => {
+            await ensureDraft();
+            return postNameRef.current;
+          },
+          onChange: json => setBody(json),
+        })
       ),
       ce('div', { className:'mb-3' },
         ce('label', { className:'form-label' }, 'Tags'),

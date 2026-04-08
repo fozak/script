@@ -67,7 +67,7 @@ async function uploadImageToPocketBase({ file, pbUrl, pbToken, collectionId, rec
 
 // ─── Editor component ─────────────────────────────────────────────────────────
 
-function CWBlockNoteEditor({ initialContent, uploadOptions, onChange }) {
+function CWBlockNoteEditor({ initialContent, uploadOptions, onBeforeUpload, onChange }) {
   // Parse initial content — BlockNote expects array of blocks or undefined
   const initialBlocks = React.useMemo(() => {
     if (!initialContent) return undefined
@@ -86,12 +86,22 @@ function CWBlockNoteEditor({ initialContent, uploadOptions, onChange }) {
 
     // Image upload wired to PocketBase
     uploadFile: async (file) => {
-      if (!uploadOptions?.recordId) {
-        // No record yet — return object URL as placeholder
-        // threads.js must create the Post record first, then remount with recordId
+      let opts = uploadOptions
+
+      // If no recordId yet, call onBeforeUpload to create the draft first
+      if (!opts?.recordId && onBeforeUpload) {
+        const recordId = await onBeforeUpload()
+        if (recordId) {
+          opts = { ...opts, recordId }
+        }
+      }
+
+      if (!opts?.recordId) {
+        console.warn('[CWEditor] No recordId available — skipping upload')
         return URL.createObjectURL(file)
       }
-      return uploadImageToPocketBase({ file, ...uploadOptions })
+
+      return uploadImageToPocketBase({ file, ...opts })
     },
   })
 
@@ -148,6 +158,7 @@ function mount({
   pbToken,
   collectionId = 'item',
   recordId,
+  onBeforeUpload,
   onChange,
 }) {
   const container = document.getElementById(containerId)
@@ -173,6 +184,7 @@ function mount({
       <CWBlockNoteEditor
         initialContent={initialContent}
         uploadOptions={uploadOptions}
+        onBeforeUpload={onBeforeUpload}
         onChange={onChange}
       />
     </React.StrictMode>
