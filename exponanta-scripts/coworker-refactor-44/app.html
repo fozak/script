@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CW App</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta17/dist/css/tabler.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+</head>
+<body class="antialiased">
+<div class="wrapper">
+
+  <!-- Navbar — rendered by app-ui.js NavBar component -->
+  <div id="nav_container"></div>
+
+  <!-- Main content -->
+  <div class="page-wrapper">
+    <div class="container-xl py-4">
+      <div id="main_container"></div>
+    </div>
+  </div>
+
+  <!-- REPL (dev tool) -->
+  <div class="container-xl pb-4">
+    <input id="expr" class="form-control font-monospace" placeholder="JS expression (Enter to run)">
+    <pre id="preview" class="mt-2 p-3 bg-light border rounded" style="font-size:11px;max-height:200px;overflow-y:auto"></pre>
+  </div>
+
+</div>
+
+<!-- Toast container — rendered by app-ui.js -->
+<div id="toast_container"></div>
+
+<!-- 1. PocketBase SDK -->
+<script src="https://cdn.jsdelivr.net/npm/pocketbase@latest/dist/pocketbase.umd.js"></script>
+
+<!-- 2. React UMD -->
+<script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+<!-- 3. Tabler JS (dropdown, collapse etc) -->
+<script src="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta17/dist/js/tabler.min.js"></script>
+
+<!-- 4. CW modules -->
+<script type="module" src="index.js"></script>
+<script type="module" src="CW-ui.js"></script>
+<script type="module" src="app-ui.js"></script>
+
+<!-- 5. Bootstrap -->
+<script type="module">
+  async function waitForBoot() {
+    return new Promise(resolve => {
+      const check = setInterval(() => {
+        if (globalThis.CW?._booted) { clearInterval(check); resolve(); }
+      }, 100);
+    });
+  }
+
+  window.addEventListener('load', async () => {
+    await waitForBoot();
+
+    // Restore auth — fires cw:auth:change -> app-ui.js renders navbar
+    if (typeof authRestore === 'function') authRestore();
+
+    // Initial grid
+    CW.run({
+      operation:      'select',
+      target_doctype: 'Task',
+      query:          { take: 20 },
+      view:           'list',
+      component:      'MainGrid',
+      container:      'main_container',
+      options:        { render: true },
+    });
+  });
+
+  // REPL
+  document.getElementById('expr').addEventListener('keydown', async (e) => {
+    if (e.key !== 'Enter') return;
+    try {
+      const result = await eval(e.target.value);
+      document.getElementById('preview').textContent =
+        result === undefined ? 'undefined' : JSON.stringify(result, null, 2);
+    } catch(err) {
+      document.getElementById('preview').textContent = 'Error: ' + err.message;
+    }
+  });
+</script>
+
+</body>
+</html>
