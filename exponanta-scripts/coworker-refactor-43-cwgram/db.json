@@ -72,6 +72,11 @@
     "title_field": "title",
     "is_submittable": 1,
     "autoname": "hash",
+    "view_components": {
+    "edit": "PostEditor",
+    "read": "PostRenderer",
+    "archived": "PostRenderer"
+  },
     "fields": [
       {
         "fieldname": "title",
@@ -136,6 +141,7 @@
           "1_2": "Archive",
           "2_0": "Restore"
         },
+        "views": { "0": "edit", "1": "read", "2": "read" },
         "requires": {
           "0_1": {
             "is_submittable": 1

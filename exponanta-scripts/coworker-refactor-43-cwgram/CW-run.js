@@ -24,7 +24,18 @@ CW._resolveAll = function(op) {
   const view        = cfg.operationToView?.[op.operation] ?? null;
   const viewConfig  = cfg.views?.[view?.toLowerCase()] || {};
   op.view           = "view"      in op ? op.view      : view;
-  op.component      = "component" in op ? op.component : (viewConfig.component ?? null);
+
+  // resolve component: explicit > doctype view_components > config views
+  // uses the actual op.view (which may be explicitly set) not just operation-inferred view
+  if ("component" in op) {
+    // explicit — keep as-is
+  } else {
+    const resolvedView = op.view || view;
+    op.component = (resolvedView && CW._resolveViewComponent)
+      ? CW._resolveViewComponent(op.target_doctype, resolvedView) ?? (viewConfig.component ?? null)
+      : (viewConfig.component ?? null);
+  }
+
   op.container      = "container" in op ? op.container : (viewConfig.container ?? null);
 };
 
@@ -87,6 +98,12 @@ CW._getTransitions = function(schema, doc, dim) {
     .filter(Boolean);
 };
 
+CW._resolveViewComponent = function(doctype, view) {
+  const dtViews = CW.Schema?.[doctype]?.view_components;
+  if (dtViews?.[view]) return dtViews[view];
+  return CW._config.views?.[view]?.component || null;
+};
+
 CW._execTransition = async function(run_doc, dim, key) {
   const doctype  = run_doc.target_doctype;
   const stateDef = CW._getStateDef(doctype);
@@ -106,6 +123,25 @@ CW._execTransition = async function(run_doc, dim, key) {
 
   if (String(dim) === "0") {
     run_doc.input.docstatus = to;
+  }
+
+  // view switch — dimDef.views maps destination state to a view name
+  // only fires if run_doc has a container (UI context exists)
+  if (run_doc.container && dimDef.views?.[String(to)]) {
+    const view      = dimDef.views[String(to)];
+    const component = CW._resolveViewComponent(doctype, view);
+    const container = run_doc.container || CW._config.views?.[view]?.container;
+    if (component) {
+      await run_doc.child({
+        operation:      "select",
+        target_doctype: doctype,
+        query:          { where: { name: run_doc.target?.data?.[0]?.name || run_doc.query?.where?.name } },
+        view,
+        component,
+        container,
+        options:        { render: true },
+      });
+    }
   }
 };
 
@@ -134,6 +170,7 @@ CW.run = async function(op) {
     view:               op.view,
     component:          op.component,
     container:          op.container,
+    context:            op.context || {},
 
     query:              op.query  || {},
     target:             op.target || null,

@@ -56,7 +56,7 @@ publicSites: {
         handler: "_dbAdapters.pocketbase",
         capabilities: ["select", "create", "update", "delete"], // ✅ "select" not "query"
         config: {
-          url: "http://127.0.0.1:8090",
+          url: "http://127.0.0.1:8090",  //not used, set in CW._config.pb_url
           collection: "item",
         },
       },
@@ -431,7 +431,7 @@ publicSites: {
     },
   }, */
 
-  // ✅ ADD THIS SECTION:
+  // ✅ ADD THIS SECTION:   line 434
   views: {
     list: {
       component: "MainGrid",
@@ -454,6 +454,8 @@ publicSites: {
         render: true,
       },
     },
+    edit: { component: 'MainForm', container: 'main_container' },  // ← added
+  read: { component: 'MainForm', container: 'main_container' } // ← added
   },
 
   // old structure

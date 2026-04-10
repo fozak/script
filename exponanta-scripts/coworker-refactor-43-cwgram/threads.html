@@ -7,7 +7,6 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta17/dist/css/tabler.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
  <link rel="stylesheet" href="editor.css">
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/pocketbase@latest/dist/pocketbase.umd.js"></script>
   <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
   <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
@@ -17,25 +16,8 @@
     /* full-height chat layout */
     html, body { height: 100%; }
     .navbar-expand-md { position: sticky; top: 0; z-index: 100; }
-    #threads-app {
-      height: calc(100vh - 56px);   /* viewport minus navbar */
-      overflow: hidden;
-    }
-
     /* scrollable panels */
     .scrollable { overflow-y: auto; }
-
-    /* post body markdown */
-    .post-body { line-height: 1.75; }
-    .post-body h1, .post-body h2, .post-body h3 { margin-top: 1.25rem; }
-    .post-body code { background: var(--tblr-bg-surface-secondary); padding: 2px 5px; border-radius: 4px; font-size: .85em; }
-    .post-body pre  { background: #1e293b; color: #e2e8f0; padding: 1rem; border-radius: 6px; overflow-x: auto; }
-    .post-body pre code { background: none; color: inherit; padding: 0; }
-    .post-body blockquote { border-left: 3px solid var(--tblr-primary); padding-left: 1rem; color: var(--tblr-secondary); margin: 1rem 0; }
-    .post-body a { color: var(--tblr-primary); }
-    .post-body table { width: 100%; border-collapse: collapse; margin: 1rem 0; }
-    .post-body th, .post-body td { padding: .5rem .75rem; border: 1px solid var(--tblr-border-color); }
-    .post-body th { background: var(--tblr-bg-surface-secondary); }
 
     /* nav-link active state override for chat list */
     .nav-pills .nav-link.active { background: var(--tblr-primary-lt); color: var(--tblr-primary); }
@@ -65,7 +47,10 @@
 <!-- full height chat container -->
 <div class="container-xl h-100 p-0 p-md-3">
   <div class="card h-100" style="overflow:hidden;">
-    <div id="threads-app" class="h-100"></div>
+    <div id="threads-app" class="h-100 d-flex" style="overflow:hidden;">
+      <div id="threads_left"  class="h-100 flex-shrink-0" style="width:300px; border-right:1px solid var(--tblr-border-color); overflow:hidden;"></div>
+      <div id="threads_right" class="h-100 flex-fill"     style="overflow:hidden;"></div>
+    </div>
   </div>
 </div>
 
@@ -88,6 +73,24 @@
   if (el && u) el.textContent = u.email || '';
 
   await import('./threads.js');
+
+  // boot — mount ChannelList into left panel
+  await CW.run({
+    operation:      'select',
+    target_doctype: 'Channel',
+    view:           'list',
+    component:      'ChannelList',
+    container:      'threads_left',
+    options:        { render: true },
+  });
+
+  // right panel — placeholder until user selects a post
+  CW._render({
+    component: 'PostPlaceholder',
+    container: 'threads_right',
+    target:    { data: [] },
+    options:   { render: true },
+  });
 </script>
 
 </body>

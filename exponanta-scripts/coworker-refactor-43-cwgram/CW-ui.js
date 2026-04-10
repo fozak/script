@@ -22,11 +22,11 @@ CW._getOrCreateRoot = function(containerId) {
 
 CW._render = function(run_doc) {
   if (!run_doc?.component || !run_doc?.container) return;
-  const component = CW._components[run_doc.component];
-  if (!component) return;
+  const Comp = globalThis[run_doc.component];
+  if (!Comp) return;
   const root = CW._getOrCreateRoot(run_doc.container);
   if (!root) return;
-  root.render(ce(component, {
+  root.render(ce(Comp, {
     run_doc,
     data: run_doc.target?.data || [],
   }));
@@ -270,7 +270,6 @@ const FieldRenderer = function({ field, run_doc }) {
         target_doctype: field.options,
         query:          { where: { name: row.name }, view: 'form' },
         view:           'form',
-        component:      'MainForm',
         container:      run_doc.container,
         options:        { render: true },
       });
@@ -505,7 +504,6 @@ const MainGrid = function({ run_doc, data }) {
       target_doctype: record.doctype || doctype,
       query:          { where: { name: record.name }, view: 'form' },
       view:           'form',
-      component:      'MainForm',
       container:      run_doc.container,
       options:        { render: true },
     });
@@ -516,7 +514,6 @@ const MainGrid = function({ run_doc, data }) {
       operation:      'create',
       target_doctype: doctype,
       view:           'form',
-      component:      'MainForm',
       container:      run_doc.container,
       options:        { render: true },
     });
@@ -816,6 +813,10 @@ const RelationshipPanel = function({ run_doc }) {
 // COMPONENT REGISTRY
 // ============================================================
 
-CW._components = { MainForm, MainGrid };
+// components auto-registered on globalThis — no explicit registry needed
+// CW._render resolves by name: globalThis[run_doc.component]
+// register custom components: globalThis.PostEditor = PostEditor
+globalThis.MainForm = MainForm;
+globalThis.MainGrid = MainGrid;
 
 console.log('✅ CW-ui.js loaded');

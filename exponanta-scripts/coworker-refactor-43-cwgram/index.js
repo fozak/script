@@ -9,6 +9,7 @@ import "./CW-utils.js";
 import "./CW-run.js";
 import "./pb-adapter-pocketbase.js";
 import "./auth.js";
+import "./CW-ui.js";   // ← add after CW-run.js
 
 // ============================================================
 // COMPILE _state string functions to live JS
