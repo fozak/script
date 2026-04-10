@@ -1,10 +1,17 @@
-[{
+[ {
     "name": "Channel",
     "schema_name": "Channel",
     "doctype": "Schema",
     "title_field": "title",
     "is_submittable": 0,
-    "autoname": "field:slug",
+    "autoname": "hash",
+    "row_renderer": "ChannelRow",
+    "view_components": {
+      "list": {
+        "component": "ChannelList",
+        "container": "threads_left"
+      }
+    },
     "fields": [
       {
         "fieldname": "title",
@@ -12,12 +19,6 @@
         "label": "Title",
         "reqd": 1,
         "in_list_view": 1
-      },
-      {
-        "fieldname": "slug",
-        "fieldtype": "Data",
-        "label": "Slug",
-        "reqd": 1
       },
       {
         "fieldname": "description",
@@ -34,7 +35,7 @@
       {
         "fieldname": "author_name",
         "fieldtype": "Data",
-        "label": "Author Name"
+        "label": "Author"
       }
     ],
     "_state": {
@@ -43,10 +44,10 @@
           0,
           2
         ],
-        "options": {
-          "0": "Active",
-          "2": "Archived"
-        },
+        "options": [
+          "Active",
+          "Archived"
+        ],
         "transitions": {
           "0": [
             2
@@ -72,11 +73,21 @@
     "title_field": "title",
     "is_submittable": 1,
     "autoname": "hash",
+    "row_renderer": "PostRow",
     "view_components": {
-    "edit": "PostEditor",
-    "read": "PostRenderer",
-    "archived": "PostRenderer"
-  },
+      "list": {
+        "component": "ChannelFeed",
+        "container": "threads_left"
+      },
+      "read": {
+        "component": "PostDetail",
+        "container": "threads_right"
+      },
+      "edit": {
+        "component": "PostEditor",
+        "container": "threads_right"
+      }
+    },
     "fields": [
       {
         "fieldname": "title",
@@ -87,15 +98,15 @@
       },
       {
         "fieldname": "body",
-        "fieldtype": "Long Text",
+        "fieldtype": "BlockNote",
         "label": "Body",
-        "reqd": 1
+        "reqd": 0,
+        "display": "TextRenderer"
       },
       {
         "fieldname": "parent",
-        "fieldtype": "Link",
+        "fieldtype": "Data",
         "label": "Channel",
-        "options": "Channel",
         "reqd": 1
       },
       {
@@ -118,11 +129,11 @@
           1,
           2
         ],
-        "options": {
-          "0": "Draft",
-          "1": "Published",
-          "2": "Archived"
-        },
+        "options": [
+          "Draft",
+          "Published",
+          "Archived"
+        ],
         "transitions": {
           "0": [
             1,
@@ -137,11 +148,14 @@
         },
         "labels": {
           "0_1": "Publish",
-          "0_2": "Delete",
           "1_2": "Archive",
           "2_0": "Restore"
         },
-        "views": { "0": "edit", "1": "read", "2": "read" },
+        "views": {
+          "0": "edit",
+          "1": "read",
+          "2": "read"
+        },
         "requires": {
           "0_1": {
             "is_submittable": 1
@@ -159,6 +173,7 @@
     "title_field": "body",
     "is_submittable": 0,
     "autoname": "hash",
+    "row_renderer": "CommentBubble",
     "fields": [
       {
         "fieldname": "body",
@@ -182,6 +197,16 @@
         "fieldname": "channel_owner",
         "fieldtype": "Data",
         "label": "Channel Owner"
+      },
+      {
+        "fieldname": "number",
+        "fieldtype": "Int",
+        "label": "Number"
+      },
+      {
+        "fieldname": "reply_to",
+        "fieldtype": "Data",
+        "label": "Reply To"
       }
     ],
     "_state": {
@@ -191,11 +216,11 @@
           1,
           2
         ],
-        "options": {
-          "0": "Visible",
-          "1": "Flagged",
-          "2": "Hidden"
-        },
+        "options": [
+          "Visible",
+          "Flagged",
+          "Hidden"
+        ],
         "transitions": {
           "0": [
             1,
@@ -218,7 +243,8 @@
         },
         "requires": {},
         "sideEffects": {},
-        "rules": {}
+        "rules": {
+          "2_0": ""}
       }
     }
   },
@@ -265,8 +291,7 @@
         "label": "Read",
         "default": 0
       }
-    ],
-    "_state": {}
+    ]
   },
   {
   "schema_name": "UserPublicProfile",
