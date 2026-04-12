@@ -1,7 +1,7 @@
 // ============================================================
-// CW-config.js  /updated auth
+// CW-config.js  
 // ============================================================
-// CW-config.js — add this
+
 
 
 
@@ -23,6 +23,94 @@ publicSites: {
   "exponanta.com": "/var/www/exponanta.com",
   "cfeglobal.org": "/var/www/cfeglobal.org"
 },
+
+ systemFields: [
+    {
+      name:    'doctype',
+      fetch:   true,
+      onWrite: (input, run_doc) => input.doctype || run_doc.target_doctype,
+    },
+    {
+      name:     'name',
+      fetch:    true,
+      onCreate: (input, run_doc) => {
+        const schema   = CW.Schema?.[run_doc.target_doctype]
+        const autoname = schema?.autoname
+        return autoname?.startsWith('field:')
+          ? generateId(run_doc.target_doctype, input[autoname.slice(6)])
+          : generateId(run_doc.target_doctype)
+      },
+    },
+    {
+      name:     'docstatus',
+      fetch:    true,
+      onCreate: () => 0,
+    },
+    {
+      name:     'creation',
+      fetch:    true,
+      onCreate: () => Date.now(),
+    },
+    {
+      name:     'owner',
+      fetch:    true,
+      onCreate: (input) => input.doctype === 'User'
+        ? ''
+        : globalThis.pb?.authStore?.model?.id || '',
+    },
+    {
+      name:    'modified',
+      fetch:   true,
+      onWrite: () => Date.now(),
+    },
+    {
+      name:    'modified_by',
+      fetch:   true,
+      onWrite: () => globalThis.pb?.authStore?.model?.id || '',
+    },
+    {
+      name:  '_state',
+      fetch: true,
+    },
+    {
+      name:     'top_parent',
+      fetch:    true,
+      onCreate: (input, run_doc) => {
+        const parent = run_doc.target?.data?.[0]
+        if (!parent) return undefined
+        if (parent.doctype !== run_doc.target_doctype) return undefined
+        return parent.top_parent || parent.name
+      },
+    },
+    {
+      name:  'parent',
+      fetch: true,
+    },
+    {
+      name:  'parenttype',
+      fetch: true,
+    },
+    {
+      name:  'parentfield',
+      fetch: true,
+    },
+    {
+      name:  'idx',
+      fetch: true,
+    },
+    {
+      name:  '_allowed',
+      fetch: true,
+    },
+    {
+      name:  '_allowed_read',
+      fetch: true,
+    },
+    {
+      name:  'files',
+      fetch: true,
+    },
+  ],
 
 
 

@@ -189,6 +189,42 @@ const FieldRenderer = function({ field, run_doc }) {
     commitField(val);
   };
 
+  // ── BlockNote field ───────────────────────────────────────────
+  // edit view  → BlockNote editor (body fieldtype in edit mode)
+  // read view  → display renderer resolved from field.display or post_type
+  if (field.fieldtype === 'BlockNote') {
+    const id = `bn-${run_doc.name}-${field.fieldname}`
+
+    if (readOnly) {
+      // resolve display renderer — field.display or default TextRenderer
+      const displayName = field.display || 'TextRenderer'
+      const DisplayComp = globalThis[displayName]
+      return DisplayComp
+        ? ce(DisplayComp, { content: doc_[field.fieldname], run_doc })
+        : ce('div', { className: 'text-muted fst-italic' }, '(no renderer for ' + displayName + ')')
+    }
+
+    // edit — mount BlockNote into a div, write to run_doc.input on change
+    React.useEffect(() => {
+      let alive = true
+      import('./editor.js').then(({ mount, unmount }) => {
+        if (!alive) return
+        mount({
+          containerId:    id,
+          initialContent: doc_[field.fieldname] || null,
+          recordId:       doc_.name,
+          onBeforeUpload: async () => doc_.name,
+          onChange:       (json) => { run_doc.input[field.fieldname] = json },
+        })
+      })
+      return () => { alive = false; import('./editor.js').then(({ unmount }) => unmount(id)) }
+    }, [id])
+
+    return ce('div', { id,
+      style: { border: '1px solid var(--tblr-border-color)', borderRadius: '4px', minHeight: '240px' }
+    })
+  }
+
   if (field.fieldtype === 'Section Break')
     return ce('div', { className: 'col-12 mt-3' },
       field.label ? ce('h5', { className: 'mb-2' }, field.label) : null,

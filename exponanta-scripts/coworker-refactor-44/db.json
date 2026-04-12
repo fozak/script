@@ -243,8 +243,7 @@
         },
         "requires": {},
         "sideEffects": {},
-        "rules": {
-          "2_0": ""}
+        "rules": {}
       }
     }
   },
@@ -2320,7 +2319,8 @@
       "rgt",
       "old_parent",
       "template_task",
-      "actionbutton"
+      "actionbutton",
+      "top_parent"
     ],
     "fields": [
       {
@@ -2685,6 +2685,14 @@
   "fieldname": "relationships",
   "fieldtype": "Relationship Panel",
   "label": "Relationships"
+},
+{
+    "fieldname": "top_parent",
+    "fieldtype": "Link",
+    "options": "Task",
+    "label": "Top Parent Task",
+    "hidden": 1,
+    "read_only": 1
 }
     ],
     "icon": "fa fa-check",

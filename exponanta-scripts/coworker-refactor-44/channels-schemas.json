@@ -5,27 +5,68 @@
     "doctype": "Schema",
     "title_field": "title",
     "is_submittable": 0,
-    "autoname": "field:slug",
+    "autoname": "hash",
+    "row_renderer": "ChannelRow",
+    "view_components": {
+      "list": {
+        "component": "ChannelList",
+        "container": "threads_left"
+      }
+    },
     "fields": [
-      { "fieldname": "title",       "fieldtype": "Data",  "label": "Title",       "reqd": 1, "in_list_view": 1 },
-      { "fieldname": "slug",        "fieldtype": "Data",  "label": "Slug",        "reqd": 1 },
-      { "fieldname": "description", "fieldtype": "Text",  "label": "Description", "in_list_view": 1 },
-      { "fieldname": "is_public",   "fieldtype": "Check", "label": "Public",      "default": 1 },
-      { "fieldname": "author_name", "fieldtype": "Data",  "label": "Author Name" }
+      {
+        "fieldname": "title",
+        "fieldtype": "Data",
+        "label": "Title",
+        "reqd": 1,
+        "in_list_view": 1
+      },
+      {
+        "fieldname": "description",
+        "fieldtype": "Text",
+        "label": "Description",
+        "in_list_view": 1
+      },
+      {
+        "fieldname": "is_public",
+        "fieldtype": "Check",
+        "label": "Public",
+        "default": 1
+      },
+      {
+        "fieldname": "author_name",
+        "fieldtype": "Data",
+        "label": "Author"
+      }
     ],
     "_state": {
       "0": {
-        "values": [0, 2],
-        "options":     { "0": "Active", "2": "Archived" },
-        "transitions": { "0": [2], "2": [0] },
-        "labels":      { "0_2": "Archive", "2_0": "Restore" },
-        "requires":    {},
+        "values": [
+          0,
+          2
+        ],
+        "options": [
+          "Active",
+          "Archived"
+        ],
+        "transitions": {
+          "0": [
+            2
+          ],
+          "2": [
+            0
+          ]
+        },
+        "labels": {
+          "0_2": "Archive",
+          "2_0": "Restore"
+        },
+        "requires": {},
         "sideEffects": {},
-        "rules":       {}
+        "rules": {}
       }
     }
   },
-
   {
     "name": "Post",
     "schema_name": "Post",
@@ -33,26 +74,99 @@
     "title_field": "title",
     "is_submittable": 1,
     "autoname": "hash",
+    "row_renderer": "PostRow",
+    "view_components": {
+      "list": {
+        "component": "ChannelFeed",
+        "container": "threads_left"
+      },
+      "read": {
+        "component": "PostDetail",
+        "container": "threads_right"
+      },
+      "edit": {
+        "component": "PostEditor",
+        "container": "threads_right"
+      }
+    },
     "fields": [
-      { "fieldname": "title",       "fieldtype": "Data",      "label": "Title",   "reqd": 1, "in_list_view": 1 },
-      { "fieldname": "body",        "fieldtype": "Long Text", "label": "Body",    "reqd": 1 },
-      { "fieldname": "parent",      "fieldtype": "Link",      "label": "Channel", "options": "Channel", "reqd": 1 },
-      { "fieldname": "tags",        "fieldtype": "Data",      "label": "Tags",    "in_list_view": 1 },
-      { "fieldname": "author_name", "fieldtype": "Data",      "label": "Author",  "in_list_view": 1 }
+      {
+        "fieldname": "title",
+        "fieldtype": "Data",
+        "label": "Title",
+        "reqd": 1,
+        "in_list_view": 1
+      },
+      {
+        "fieldname": "body",
+        "fieldtype": "BlockNote",
+        "label": "Body",
+        "reqd": 0,
+        "display": "TextRenderer"
+      },
+      {
+        "fieldname": "parent",
+        "fieldtype": "Data",
+        "label": "Channel",
+        "reqd": 1
+      },
+      {
+        "fieldname": "tags",
+        "fieldtype": "Data",
+        "label": "Tags",
+        "in_list_view": 1
+      },
+      {
+        "fieldname": "author_name",
+        "fieldtype": "Data",
+        "label": "Author",
+        "in_list_view": 1
+      }
     ],
     "_state": {
       "0": {
-        "values": [0, 1, 2],
-        "options":     { "0": "Draft", "1": "Published", "2": "Archived" },
-        "transitions": { "0": [1, 2], "1": [2], "2": [0] },
-        "labels":      { "0_1": "Publish", "0_2": "Delete", "1_2": "Archive", "2_0": "Restore" },
-        "requires":    { "0_1": { "is_submittable": 1 } },
+        "values": [
+          0,
+          1,
+          2
+        ],
+        "options": [
+          "Draft",
+          "Published",
+          "Archived"
+        ],
+        "transitions": {
+          "0": [
+            1,
+            2
+          ],
+          "1": [
+            2
+          ],
+          "2": [
+            0
+          ]
+        },
+        "labels": {
+          "0_1": "Publish",
+          "1_2": "Archive",
+          "2_0": "Restore"
+        },
+        "views": {
+          "0": "edit",
+          "1": "read",
+          "2": "read"
+        },
+        "requires": {
+          "0_1": {
+            "is_submittable": 1
+          }
+        },
         "sideEffects": {},
-        "rules":       {}
+        "rules": {}
       }
     }
   },
-
   {
     "name": "Comment",
     "schema_name": "Comment",
@@ -60,25 +174,80 @@
     "title_field": "body",
     "is_submittable": 0,
     "autoname": "hash",
+    "row_renderer": "CommentBubble",
     "fields": [
-      { "fieldname": "body",           "fieldtype": "Text", "label": "Body",           "reqd": 1 },
-      { "fieldname": "parent",         "fieldtype": "Data", "label": "Post",            "reqd": 1 },
-      { "fieldname": "author_name",    "fieldtype": "Data", "label": "Author",          "in_list_view": 1 },
-      { "fieldname": "channel_owner",  "fieldtype": "Data", "label": "Channel Owner" }
+      {
+        "fieldname": "body",
+        "fieldtype": "Text",
+        "label": "Body",
+        "reqd": 1
+      },
+      {
+        "fieldname": "parent",
+        "fieldtype": "Data",
+        "label": "Post",
+        "reqd": 1
+      },
+      {
+        "fieldname": "author_name",
+        "fieldtype": "Data",
+        "label": "Author",
+        "in_list_view": 1
+      },
+      {
+        "fieldname": "channel_owner",
+        "fieldtype": "Data",
+        "label": "Channel Owner"
+      },
+      {
+        "fieldname": "number",
+        "fieldtype": "Int",
+        "label": "Number"
+      },
+      {
+        "fieldname": "reply_to",
+        "fieldtype": "Data",
+        "label": "Reply To"
+      }
     ],
     "_state": {
       "0": {
-        "values": [0, 1, 2],
-        "options":     { "0": "Visible", "1": "Flagged", "2": "Hidden" },
-        "transitions": { "0": [1, 2], "1": [0, 2], "2": [0] },
-        "labels":      { "0_1": "Flag", "0_2": "Hide", "1_0": "Dismiss", "1_2": "Hide", "2_0": "Unhide" },
-        "requires":    {},
+        "values": [
+          0,
+          1,
+          2
+        ],
+        "options": [
+          "Visible",
+          "Flagged",
+          "Hidden"
+        ],
+        "transitions": {
+          "0": [
+            1,
+            2
+          ],
+          "1": [
+            0,
+            2
+          ],
+          "2": [
+            0
+          ]
+        },
+        "labels": {
+          "0_1": "Flag",
+          "0_2": "Hide",
+          "1_0": "Dismiss",
+          "1_2": "Hide",
+          "2_0": "Unhide"
+        },
+        "requires": {},
         "sideEffects": {},
         "rules": {}
       }
     }
   },
-
   {
     "name": "Notification",
     "schema_name": "Notification",
@@ -87,13 +256,41 @@
     "is_submittable": 0,
     "autoname": "hash",
     "fields": [
-      { "fieldname": "recipient",      "fieldtype": "Data",   "label": "Recipient",    "reqd": 1 },
-      { "fieldname": "type",           "fieldtype": "Select", "label": "Type",         "options": "mention\nnew_post\nreaction\nflag", "in_list_view": 1 },
-      { "fieldname": "source_doctype", "fieldtype": "Data",   "label": "Source Type" },
-      { "fieldname": "source_name",    "fieldtype": "Data",   "label": "Source" },
-      { "fieldname": "message",        "fieldtype": "Data",   "label": "Message",      "in_list_view": 1 },
-      { "fieldname": "read",           "fieldtype": "Check",  "label": "Read",         "default": 0 }
-    ],
-    "_state": {}
+      {
+        "fieldname": "recipient",
+        "fieldtype": "Data",
+        "label": "Recipient",
+        "reqd": 1
+      },
+      {
+        "fieldname": "type",
+        "fieldtype": "Select",
+        "label": "Type",
+        "options": "mention\nnew_post\nreaction\nflag",
+        "in_list_view": 1
+      },
+      {
+        "fieldname": "source_doctype",
+        "fieldtype": "Data",
+        "label": "Source Type"
+      },
+      {
+        "fieldname": "source_name",
+        "fieldtype": "Data",
+        "label": "Source"
+      },
+      {
+        "fieldname": "message",
+        "fieldtype": "Data",
+        "label": "Message",
+        "in_list_view": 1
+      },
+      {
+        "fieldname": "read",
+        "fieldtype": "Check",
+        "label": "Read",
+        "default": 0
+      }
+    ]
   }
 ]

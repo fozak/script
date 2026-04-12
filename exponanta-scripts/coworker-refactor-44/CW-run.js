@@ -25,18 +25,23 @@ CW._resolveAll = function(op) {
   const viewConfig  = cfg.views?.[view?.toLowerCase()] || {};
   op.view           = "view"      in op ? op.view      : view;
 
-  // resolve component: explicit > doctype view_components > config views
-  // uses the actual op.view (which may be explicitly set) not just operation-inferred view
-  if ("component" in op) {
-    // explicit — keep as-is
-  } else {
-    const resolvedView = op.view || view;
-    op.component = (resolvedView && CW._resolveViewComponent)
-      ? CW._resolveViewComponent(op.target_doctype, resolvedView) ?? (viewConfig.component ?? null)
-      : (viewConfig.component ?? null);
+  // resolve component + container from schema view_components or config views
+  // schema view_components returns { component, container } — both resolved together
+  const resolvedView = op.view || view;
+  if (!("component" in op) || !("container" in op)) {
+    let resolved = null;
+    if (resolvedView && CW._resolveViewComponent) {
+      resolved = CW._resolveViewComponent(op.target_doctype, resolvedView);
+    }
+    // _resolveViewComponent may return { component, container } or a string (legacy)
+    if (resolved && typeof resolved === 'object') {
+      if (!("component" in op)) op.component = resolved.component ?? null;
+      if (!("container" in op)) op.container = resolved.container ?? (viewConfig.container ?? null);
+    } else {
+      if (!("component" in op)) op.component = (typeof resolved === 'string' ? resolved : null) ?? (viewConfig.component ?? null);
+      if (!("container" in op)) op.container = viewConfig.container ?? null;
+    }
   }
-
-  op.container      = "container" in op ? op.container : (viewConfig.container ?? null);
 };
 
 // ============================================================
@@ -99,9 +104,11 @@ CW._getTransitions = function(schema, doc, dim) {
 };
 
 CW._resolveViewComponent = function(doctype, view) {
+  // returns { component, container } from schema or config
   const dtViews = CW.Schema?.[doctype]?.view_components;
   if (dtViews?.[view]) return dtViews[view];
-  return CW._config.views?.[view]?.component || null;
+  const cfg = CW._config.views?.[view];
+  return cfg || null;
 };
 
 CW._execTransition = async function(run_doc, dim, key) {
@@ -128,9 +135,11 @@ CW._execTransition = async function(run_doc, dim, key) {
   // view switch — dimDef.views maps destination state to a view name
   // only fires if run_doc has a container (UI context exists)
   if (run_doc.container && dimDef.views?.[String(to)]) {
-    const view      = dimDef.views[String(to)];
-    const component = CW._resolveViewComponent(doctype, view);
-    const container = run_doc.container || CW._config.views?.[view]?.container;
+    const view     = dimDef.views[String(to)];
+    const resolved = CW._resolveViewComponent(doctype, view);
+    // resolved may be { component, container } or null
+    const component = resolved?.component ?? (typeof resolved === 'string' ? resolved : null);
+    const container = run_doc.container || resolved?.container || CW._config.views?.[view]?.container;
     if (component) {
       await run_doc.child({
         operation:      "select",
@@ -191,6 +200,11 @@ CW.run = async function(op) {
   run_doc.child = async function(childOp) {
     childOp.parent_run_id = run_doc.name;
     childOp.user          = childOp.user ?? run_doc.user;
+    // for create operations: pass parent run's target record into child
+    // so _preflight can read parent record for top_parent propagation
+    if (childOp.operation === 'create' && !childOp.target && run_doc.target?.data?.[0]) {
+      childOp.target = { data: [run_doc.target.data[0]] };
+    }
     const child           = await CW.run(childOp);
     if (!run_doc.child_run_ids.includes(child.name)) {
       run_doc.child_run_ids.push(child.name);
@@ -229,8 +243,14 @@ CW.controller = async function(run_doc) {
       // if input has field data — always treat as write, regardless of original operation
       // this covers the onBlur case where run_doc.operation is still 'select' from initial load
       if (dataKeys.length > 0) {
-        const hasName = run_doc.input.name || run_doc.target?.data?.[0]?.name || run_doc.query?.where?.name;
-        run_doc.operation = hasName ? "update" : "create";
+        // determine create vs update
+        // only use target.data[0].name if it's the same doctype as what we're writing
+        const targetDoc     = run_doc.target?.data?.[0];
+        const targetIsSame  = targetDoc && (targetDoc.doctype === run_doc.target_doctype);
+        const hasName       = run_doc.input.name
+                           || (targetIsSame ? targetDoc.name : null)
+                           || run_doc.query?.where?.name;
+        run_doc.operation   = hasName ? "update" : "create";
 
         if (run_doc.operation === "update") {
           // _handlers.update always re-fetches first — editable check uses fresh data
@@ -412,12 +432,7 @@ CW._preflight = function(run_doc, operation) {
       if (missing.length) { run_doc.error = `Required: ${missing.join(", ")}`; return; }
     }
 
-    if (!input.name) {
-      const autoname = schema?.autoname;
-      input.name = autoname?.startsWith("field:")
-        ? generateId(run_doc.target_doctype, input[autoname.slice(6)])
-        : generateId(run_doc.target_doctype);
-    }
+    // name handled by systemFields onCreate below
 
     if (schema?.fields) {
       for (const f of schema.fields) {
@@ -461,13 +476,15 @@ CW._preflight = function(run_doc, operation) {
     }
   }
 
-  input.doctype     = input.doctype || run_doc.target_doctype;
-  input.modified    = Date.now();
-  input.modified_by = globalThis.pb?.authStore?.model?.id || '';
-  if (input.doctype === 'User') {
-    input.owner = '';
-  } else if (operation === 'create') {
-    input.owner = input.owner || globalThis.pb?.authStore?.model?.id || '';
+  // apply systemFields — onWrite runs on every write, onCreate runs on create only
+  for (const sf of (CW._config.systemFields || [])) {
+    if (sf.onWrite) {
+      input[sf.name] = sf.onWrite(input, run_doc)
+    }
+    if (sf.onCreate && operation === 'create' && input[sf.name] === undefined) {
+      const val = sf.onCreate(input, run_doc)
+      if (val !== undefined) input[sf.name] = val
+    }
   }
 };
 
@@ -491,7 +508,7 @@ CW._handlers = {
       if (shouldFilter) {
         const viewFields   = schema.fields.filter(f => f.in_list_view).map(f => f.fieldname);
         const titleField   = schema.title_field ? [schema.title_field] : [];
-        const systemFields = CW.defaultFields || [];
+        const systemFields = (CW._config.systemFields || []).filter(sf => sf.fetch).map(sf => sf.name);
         const fields       = [...new Set([...systemFields, ...titleField, ...viewFields])];
         run_doc.target.data = run_doc.target.data.map(item => {
           const filtered = {};
