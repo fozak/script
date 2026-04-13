@@ -24,93 +24,64 @@ publicSites: {
   "cfeglobal.org": "/var/www/cfeglobal.org"
 },
 
- systemFields: [
-    {
-      name:    'doctype',
-      fetch:   true,
-      onWrite: (input, run_doc) => input.doctype || run_doc.target_doctype,
+systemFields: [
+  {
+    name: 'doctype', fetch: true,
+    onWrite: (run_doc) => { run_doc.input.doctype = run_doc.input.doctype || run_doc.target_doctype },
+  },
+  {
+    name: 'name', fetch: true,
+    onCreate: (run_doc) => {
+      if (run_doc.input.name) return
+      const s = CW.Schema?.[run_doc.target_doctype]
+      const a = s?.autoname
+      run_doc.input.name = a?.startsWith('field:')
+        ? generateId(run_doc.target_doctype, run_doc.input[a.slice(6)])
+        : generateId(run_doc.target_doctype)
     },
-    {
-      name:     'name',
-      fetch:    true,
-      onCreate: (input, run_doc) => {
-        const schema   = CW.Schema?.[run_doc.target_doctype]
-        const autoname = schema?.autoname
-        return autoname?.startsWith('field:')
-          ? generateId(run_doc.target_doctype, input[autoname.slice(6)])
-          : generateId(run_doc.target_doctype)
-      },
-    },
-    {
-      name:     'docstatus',
-      fetch:    true,
-      onCreate: () => 0,
-    },
-    {
-      name:     'creation',
-      fetch:    true,
-      onCreate: () => Date.now(),
-    },
-    {
-      name:     'owner',
-      fetch:    true,
-      onCreate: (input) => input.doctype === 'User'
+  },
+  {
+    name: 'docstatus', fetch: true,
+    onCreate: (run_doc) => { run_doc.input.docstatus = 0 },
+  },
+  {
+    name: 'creation', fetch: true,
+    onCreate: (run_doc) => { run_doc.input.creation = Date.now() },
+  },
+  {
+    name: 'owner', fetch: true,
+    onCreate: (run_doc) => {
+      run_doc.input.owner = run_doc.input.doctype === 'User'
         ? ''
-        : globalThis.pb?.authStore?.model?.id || '',
+        : globalThis.pb?.authStore?.model?.id || ''
     },
-    {
-      name:    'modified',
-      fetch:   true,
-      onWrite: () => Date.now(),
+  },
+  {
+    name: 'modified', fetch: true,
+    onWrite: (run_doc) => { run_doc.input.modified = Date.now() },
+  },
+  {
+    name: 'modified_by', fetch: true,
+    onWrite: (run_doc) => { run_doc.input.modified_by = globalThis.pb?.authStore?.model?.id || '' },
+  },
+  { name: '_state',        fetch: true },
+  {
+    name: 'top_parent', fetch: true,
+    onCreate: (run_doc) => {
+      const parentRun = CW.runs[run_doc.parent_run_id]
+      const p = parentRun?.target?.data?.[0]
+      if (!p || p.doctype !== run_doc.target_doctype) return
+      run_doc.input.top_parent = p.top_parent || p.name
     },
-    {
-      name:    'modified_by',
-      fetch:   true,
-      onWrite: () => globalThis.pb?.authStore?.model?.id || '',
-    },
-    {
-      name:  '_state',
-      fetch: true,
-    },
-    {
-      name:     'top_parent',
-      fetch:    true,
-      onCreate: (input, run_doc) => {
-        const parent = run_doc.target?.data?.[0]
-        if (!parent) return undefined
-        if (parent.doctype !== run_doc.target_doctype) return undefined
-        return parent.top_parent || parent.name
-      },
-    },
-    {
-      name:  'parent',
-      fetch: true,
-    },
-    {
-      name:  'parenttype',
-      fetch: true,
-    },
-    {
-      name:  'parentfield',
-      fetch: true,
-    },
-    {
-      name:  'idx',
-      fetch: true,
-    },
-    {
-      name:  '_allowed',
-      fetch: true,
-    },
-    {
-      name:  '_allowed_read',
-      fetch: true,
-    },
-    {
-      name:  'files',
-      fetch: true,
-    },
-  ],
+  },
+  { name: 'parent',        fetch: true },
+  { name: 'parenttype',    fetch: true },
+  { name: 'parentfield',   fetch: true },
+  { name: 'idx',           fetch: true },
+  { name: '_allowed',      fetch: true },
+  { name: '_allowed_read', fetch: true },
+  { name: 'files',         fetch: true },
+],
 
 
 

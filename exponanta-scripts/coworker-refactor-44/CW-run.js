@@ -200,17 +200,14 @@ CW.run = async function(op) {
   run_doc.child = async function(childOp) {
     childOp.parent_run_id = run_doc.name;
     childOp.user          = childOp.user ?? run_doc.user;
-    // for create operations: pass parent run's target record into child
-    // so _preflight can read parent record for top_parent propagation
-    if (childOp.operation === 'create' && !childOp.target && run_doc.target?.data?.[0]) {
-      childOp.target = { data: [run_doc.target.data[0]] };
-    }
     const child           = await CW.run(childOp);
     if (!run_doc.child_run_ids.includes(child.name)) {
       run_doc.child_run_ids.push(child.name);
     }
     return child;
   };
+
+  CW.runs[run_doc.name] = run_doc;
 
   if (CW._updateFromRun) CW._updateFromRun(run_doc);
 
@@ -244,11 +241,8 @@ CW.controller = async function(run_doc) {
       // this covers the onBlur case where run_doc.operation is still 'select' from initial load
       if (dataKeys.length > 0) {
         // determine create vs update
-        // only use target.data[0].name if it's the same doctype as what we're writing
-        const targetDoc     = run_doc.target?.data?.[0];
-        const targetIsSame  = targetDoc && (targetDoc.doctype === run_doc.target_doctype);
         const hasName       = run_doc.input.name
-                           || (targetIsSame ? targetDoc.name : null)
+                           || run_doc.target?.data?.[0]?.name
                            || run_doc.query?.where?.name;
         run_doc.operation   = hasName ? "update" : "create";
 
@@ -476,15 +470,10 @@ CW._preflight = function(run_doc, operation) {
     }
   }
 
-  // apply systemFields — onWrite runs on every write, onCreate runs on create only
+  // apply systemFields — handlers mutate run_doc.input directly, no return value
   for (const sf of (CW._config.systemFields || [])) {
-    if (sf.onWrite) {
-      input[sf.name] = sf.onWrite(input, run_doc)
-    }
-    if (sf.onCreate && operation === 'create' && input[sf.name] === undefined) {
-      const val = sf.onCreate(input, run_doc)
-      if (val !== undefined) input[sf.name] = val
-    }
+    if (sf.onWrite) sf.onWrite(run_doc)
+    if (sf.onCreate && operation === 'create') sf.onCreate(run_doc)
   }
 };
 

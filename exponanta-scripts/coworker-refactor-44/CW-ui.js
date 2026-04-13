@@ -514,43 +514,35 @@ const MainGrid = function({ run_doc, data }) {
       }));
   };
 
-  // card action — peer record, CW.run with pre-populated target to skip re-fetch
+  // card action — FSM signal via child run
   const onCardAction = async (record, btnKey) => {
     const btn = getCardButtons(record).find(b => b.key === btnKey);
     if (btn?.confirm && !window.confirm(btn.confirm)) return;
-    const r = await CW.run({
+    await run_doc.child({
       operation:      'update',
       target_doctype: doctype,
       query:          { where: { name: record.name } },
       input:          { _state: { [btnKey]: '' } },
-      options:        { render: false },
+      options:        { render: false, internal: true },
     });
-    if (!r.error && r.target?.data?.[0]) {
-      run_doc.target.data = run_doc.target.data.map(row =>
-        row.name === record.name ? r.target.data[0] : row
-      );
-      CW._render(run_doc);
-    }
   };
 
-  // row click — fire and forget, CW.run bundles controller + render
+  // row click — open record via child run, schema resolves component + container
   const onRowClick = (record) => {
-    CW.run({
+    run_doc.child({
       operation:      'select',
       target_doctype: record.doctype || doctype,
       query:          { where: { name: record.name }, view: 'form' },
       view:           'form',
-      container:      run_doc.container,
       options:        { render: true },
     });
   };
 
   const onNew = () => {
-    CW.run({
+    run_doc.child({
       operation:      'create',
       target_doctype: doctype,
       view:           'form',
-      container:      run_doc.container,
       options:        { render: true },
     });
   };
@@ -718,16 +710,16 @@ const RelationshipPanel = function({ run_doc }) {
     }
   };
 
-  // FSM action on existing relationship — peer record, CW.run directly
+  // FSM action on existing relationship — child run
   const onRelAction = async (rel, btnKey) => {
-    const r = await CW.run({
+    const cr = await run_doc.child({
       operation:      'update',
       target_doctype: 'Relationship',
       query:          { where: { name: rel.name } },
       input:          { _state: { [btnKey]: '' } },
-      options:        { render: false },
+      options:        { render: false, internal: true },
     });
-    if (!r.error) await loadRels();
+    if (!cr.error) await loadRels();
   };
 
   const getRelButtons = (rel) => {
