@@ -127,45 +127,41 @@ globalThis.addEventListener('coworker:state:change', _updateNavUI);
 //======Blocknote renderer ===================================
 
 // Add before FieldRenderer
-const BlockNoteField = function({ field, run_doc, readOnly, timerRef, debounce }) {
-  const id = `bn-${run_doc.name}-${field.fieldname}`
+const BlockNoteField = function({ field, run_doc, readOnly, debounce }) {
+  const timerRef = React.useRef(null)
+  const [EditorComp, setEditorComp] = React.useState(null)
 
   React.useEffect(() => {
-    if (readOnly) return
-    let alive = true
-    import('./editor.js').then(({ mount }) => {
-      if (!alive) return
-      mount({
-        containerId:    id,
-        initialContent: run_doc.target?.data?.[0]?.[field.fieldname] || null,
-        recordId:       run_doc.target?.data?.[0]?.name || null,
-        onBeforeUpload: async () => run_doc.target?.data?.[0]?.name || null,
-onChange: (json) => {
-  run_doc.input[field.fieldname] = json
-  clearTimeout(timerRef.current)
-  timerRef.current = setTimeout(() => {
-    CW.controller(run_doc).catch(err => console.error('[CW]', err))
-  }, 300)  // ← 300ms not 5000ms — saves before other field blurs
-},
-      })
+    if (readOnly || EditorComp) return
+    import('./editor.js').then(({ CWBlockNoteEditor }) => {
+      setEditorComp(() => CWBlockNoteEditor)
     })
-    return () => { alive = false }
-  }, [id])
+  }, [readOnly])
 
   if (readOnly) {
-    const content   = run_doc.target?.data?.[0]?.[field.fieldname]
     const DisplayComp = globalThis[field.display || 'TextRenderer']
     return DisplayComp
-      ? ce(DisplayComp, { content, run_doc })
+      ? ce(DisplayComp, { content: run_doc.target?.data?.[0]?.[field.fieldname], run_doc })
       : ce('div', { className: 'text-muted fst-italic' }, '(no renderer for ' + (field.display || 'TextRenderer') + ')')
   }
 
-  return ce('div', { id,
-    style: { position: 'relative', border: '1px solid var(--tblr-border-color)', borderRadius: '4px', minHeight: '240px' }
+  if (!EditorComp) return ce('div', {
+    style: { border: '1px solid var(--tblr-border-color)', borderRadius: '4px', minHeight: '240px' }
+  })
+
+  return ce(EditorComp, {
+    initialContent: run_doc.target?.data?.[0]?.[field.fieldname] || null,
+    recordId:       run_doc.target?.data?.[0]?.name || null,
+    onBeforeUpload: async () => run_doc.target?.data?.[0]?.name || null,
+    onChange: (json) => {
+      run_doc.input[field.fieldname] = json
+      clearTimeout(timerRef.current)
+      timerRef.current = setTimeout(() => {
+        CW.controller(run_doc).catch(err => console.error('[CW]', err))
+      }, debounce)
+    },
   })
 }
-
-
 
 
 // ============================================================

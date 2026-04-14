@@ -171,7 +171,7 @@ function getContent(containerId) {
 
 // ─── Exports ──────────────────────────────────────────────────────────────────
 
-export { mount, mountRenderer, unmount, getContent }
+export { mount, mountRenderer, unmount, getContent, CWBlockNoteEditor }
 
 if (typeof window !== 'undefined') {
   window.CWEditor = { mount, mountRenderer, unmount, getContent }
