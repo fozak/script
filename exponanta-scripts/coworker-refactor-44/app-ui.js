@@ -9,9 +9,6 @@ const ce = React.createElement;
 
 // ============================================================
 // TOAST SYSTEM
-// Usage: CW.toast('Saved', 'success')
-//        CW.toast('Error saving', 'error')
-//        CW.toast('Processing...', 'info')
 // ============================================================
 
 let _toastRoot = null;
@@ -68,7 +65,6 @@ function _removeToast(id) {
   _renderToasts();
 }
 
-// Public API — attached to CW
 function cwToast(message, type = 'success', duration = 3000) {
   const id = ++_toastId;
   _toasts.push({ id, message, type });
@@ -78,8 +74,6 @@ function cwToast(message, type = 'success', duration = 3000) {
 
 // ============================================================
 // NAVBAR
-// Reads pb.authStore directly — no store/state needed
-// Re-renders on cw:auth:change event
 // ============================================================
 
 let _navRoot    = null;
@@ -91,7 +85,6 @@ const NavBar = function({ profile }) {
   return ce('div', { className: 'navbar navbar-expand-md navbar-light d-print-none border-bottom' },
     ce('div', { className: 'container-xl' },
 
-      // ── CW navigation ──────────────────────────────────────
       ce('div', { className: 'd-flex align-items-center gap-1 me-3' },
         ce('button', {
           id: 'back_btn',
@@ -105,33 +98,27 @@ const NavBar = function({ profile }) {
         }, '→'),
       ),
 
-      // ── Breadcrumbs ─────────────────────────────────────────
       ce('nav', { 'aria-label': 'breadcrumb' },
         ce('ol', { className: 'breadcrumb mb-0', id: 'breadcrumbs' },
           ce('li', { className: 'breadcrumb-item active' }, 'Home')
         )
       ),
 
-      // ── Right side ──────────────────────────────────────────
       ce('div', { className: 'ms-auto d-flex align-items-center gap-2' },
 
-        // logged out
         !isValid && ce('a', {
           href: '/login.html',
           className: 'btn btn-sm btn-primary',
         }, 'Sign in'),
 
-        // logged in
         isValid && ce('div', { className: 'd-flex align-items-center gap-2' },
 
-          // unverified warning
           !profile.verified && ce('a', {
             href: '/auth/verify-reminder.html',
             className: 'nav-link px-1 text-warning',
             title: 'Please verify your email',
           }, ce('i', { className: 'ti ti-mail-exclamation' })),
 
-          // avatar dropdown
           ce('div', { className: 'dropdown' },
             ce('a', {
               href: '#',
@@ -153,7 +140,6 @@ const NavBar = function({ profile }) {
 
             ce('div', { className: 'dropdown-menu dropdown-menu-end shadow-sm', style: { minWidth: '220px' } },
 
-              // user info header
               ce('div', { className: 'dropdown-header' },
                 ce('div', { className: 'fw-semibold' }, profile.name),
                 ce('div', { className: 'text-muted small' }, profile.email),
@@ -183,7 +169,7 @@ const NavBar = function({ profile }) {
                 ce('a', { className: 'dropdown-item text-warning', href: '#',
                   onClick: (e) => {
                     e.preventDefault();
-                    pb.collection('users').requestVerification(profile.email)
+                    globalThis.pb?.collection('users').requestVerification(profile.email)
                       .then(() => cwToast('Verification email sent!', 'success'))
                       .catch(() => cwToast('Failed to send verification email', 'error'));
                   }
@@ -215,7 +201,7 @@ const NavBar = function({ profile }) {
 
 function _openProfile() {
   if (!globalThis.CW) return;
-  const userId = pb.authStore.model?.id;
+  const userId = globalThis.pb?.authStore?.model?.id;
   if (!userId) return;
   CW.run({
     operation:      'select',
@@ -251,7 +237,6 @@ function _renderNav(profile) {
   }
   _navProfile = profile;
   _navRoot.render(ce(NavBar, { profile }));
-  // re-sync back/forward button disabled state after render
   if (globalThis._updateNavUI) globalThis._updateNavUI();
 }
 
@@ -264,11 +249,32 @@ globalThis.addEventListener('cw:auth:change', (e) => {
 // ── Expose on CW ────────────────────────────────────────────
 
 if (globalThis.CW) {
-  globalThis.CW.toast    = cwToast;
+  globalThis.CW.toast      = cwToast;
   globalThis.CW._renderNav = _renderNav;
 }
 
-// Also expose globally for auth.js / console
 globalThis.cwToast = cwToast;
+
+// ── Initial render ───────────────────────────────────────────
+// Render immediately from pb.authStore — no waiting for event
+// authRestore() called from bootstrap will re-render with full profile
+(function() {
+  const model = globalThis.pb?.authStore?.isValid ? globalThis.pb.authStore.model : null;
+  if (model) {
+    const cached  = typeof loadProfile === 'function' ? loadProfile(model.id) : null;
+    const profile = cached || {
+      id:          model.id,
+      name:        model.name || model.email || '',
+      email:       model.email,
+      avatar:      null,
+      initials:    typeof getInitials === 'function' ? getInitials(model.name || model.email || '') : '?',
+      avatarColor: typeof getAvatarColor === 'function' ? getAvatarColor(model.id) : '#3b5bdb',
+      verified:    model.verified || false,
+    };
+    _renderNav(profile);
+  } else {
+    _renderNav(null);
+  }
+})();
 
 console.log('✅ app-ui.js loaded');

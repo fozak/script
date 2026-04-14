@@ -75,6 +75,10 @@ function buildProfile(authModel, itemData = {}) {
 // ============================================================
 
 function _dispatchAuthChange(profile) {
+  if (globalThis.CW?._config) {
+    globalThis.CW._config.currentUser = profile ? { id: profile.id } : null;
+  }
+
   globalThis.dispatchEvent(new CustomEvent('cw:auth:change', { detail: profile }));
 
   // backwards compat — sync Alpine store if Alpine is present
@@ -258,10 +262,13 @@ async function authRefresh() {
 // ============================================================
 
 function authRestore() {
-  if (!pb.authStore.isValid) {
-    _dispatchAuthChange(null);
-    return null;
+
+if (!pb.authStore.isValid) {
+    pb.authStore.clear()        // ← add this
+    _dispatchAuthChange(null)
+    return null
   }
+
   const userId  = pb.authStore.model?.id;
   const profile = loadProfile(userId);
   if (profile) {
@@ -338,3 +345,4 @@ Object.assign(globalThis, {
 });
 
 console.log('✅ auth.js loaded');
+

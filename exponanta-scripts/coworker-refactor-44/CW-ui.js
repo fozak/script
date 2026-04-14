@@ -131,7 +131,7 @@ globalThis.addEventListener('coworker:state:change', _updateNavUI);
 
 const FieldRenderer = function({ field, run_doc }) {
   const doc_        = run_doc.target?.data?.[0] || {};
-  const readOnly    = (doc_.docstatus ?? 0) !== 0;
+  const readOnly    = (doc_.docstatus ?? 0) !== 0 || !['update','create'].includes(run_doc.operation);
   const initial     = doc_[field.fieldname];
   const safeInitial = initial === null || initial === undefined
     ? (field.fieldtype === 'Check' ? 0 : '') : initial;
@@ -189,41 +189,34 @@ const FieldRenderer = function({ field, run_doc }) {
     commitField(val);
   };
 
-  // ── BlockNote field ───────────────────────────────────────────
-  // edit view  → BlockNote editor (body fieldtype in edit mode)
-  // read view  → display renderer resolved from field.display or post_type
-  if (field.fieldtype === 'BlockNote') {
-    const id = `bn-${run_doc.name}-${field.fieldname}`
-
-    if (readOnly) {
-      // resolve display renderer — field.display or default TextRenderer
-      const displayName = field.display || 'TextRenderer'
-      const DisplayComp = globalThis[displayName]
-      return DisplayComp
-        ? ce(DisplayComp, { content: doc_[field.fieldname], run_doc })
-        : ce('div', { className: 'text-muted fst-italic' }, '(no renderer for ' + displayName + ')')
-    }
-
-    // edit — mount BlockNote into a div, write to run_doc.input on change
-    React.useEffect(() => {
-      let alive = true
-      import('./editor.js').then(({ mount, unmount }) => {
-        if (!alive) return
-        mount({
-          containerId:    id,
-          initialContent: doc_[field.fieldname] || null,
-          recordId:       doc_.name,
-          onBeforeUpload: async () => doc_.name,
-          onChange:       (json) => { run_doc.input[field.fieldname] = json },
-        })
-      })
-      return () => { alive = false; import('./editor.js').then(({ unmount }) => unmount(id)) }
-    }, [id])
-
-    return ce('div', { id,
-      style: { border: '1px solid var(--tblr-border-color)', borderRadius: '4px', minHeight: '240px' }
-    })
+if (field.fieldtype === 'BlockNote') {
+  if (readOnly) {
+    const DisplayComp = globalThis[field.display || 'TextRenderer']
+    return DisplayComp
+      ? ce(DisplayComp, { content: doc_[field.fieldname], run_doc })
+      : ce('div', { className: 'text-muted fst-italic' }, '(no renderer for ' + (field.display || 'TextRenderer') + ')')
   }
+
+  setTimeout(() => {
+    import('./editor.js').then(({ mount }) => mount({
+      containerId:    field.fieldname,
+      initialContent: doc_[field.fieldname] || null,
+      recordId:       doc_.name,
+      onBeforeUpload: async () => doc_.name,
+      onChange: (json) => {
+        run_doc.input[field.fieldname] = json
+        clearTimeout(timerRef.current)
+        timerRef.current = setTimeout(() => {
+          CW.controller(run_doc).catch(err => console.error('[CW]', err))
+        }, debounce)
+      },
+    }))
+  }, 0)
+
+  return ce('div', { id: field.fieldname,
+    style: { border: '1px solid var(--tblr-border-color)', borderRadius: '4px', minHeight: '240px' }
+  })
+}
 
   if (field.fieldtype === 'Section Break')
     return ce('div', { className: 'col-12 mt-3' },
@@ -408,24 +401,71 @@ const MainForm = function({ run_doc }) {
       confirm: dim0?.confirm?.[`${current}_${to}`],
     }));
 
-  const badgeLabel = dim0?.options?.[current] || '';
-  const badgeCls   = ['bg-warning','bg-success','bg-danger'][current] || 'bg-secondary';
+  const badgeLabel  = dim0?.options?.[current] || '';
+  const badgeCls    = ['bg-warning','bg-success','bg-danger'][current] || 'bg-secondary';
+
+  // explicit_edit_intent — Edit/Save operation switches
+  const explicit    = !!(schema.explicit_edit_intent ?? 0);
+  const editing     = ['update','create'].includes(run_doc.operation) && (doc.docstatus ?? 0) === 0;
+  const isOwner     = doc.owner === CW._config?.currentUser?.id;
+  const actLabels   = dim0?.action_labels || {};
+
+  const primaryBtns = buttons.filter(b => dim0?.primary?.[b.key]);
+  const menuBtns    = buttons.filter(b => !dim0?.primary?.[b.key]);
+
+  const onFsmClick = (btn) => {
+    if (btn.confirm && !window.confirm(btn.confirm)) return;
+    run_doc.input._state = { [btn.key]: '' };
+    CW.controller(run_doc).catch(err => console.error('[CW]', err));
+  };
+
+  const fsmButton = (btn) => ce('button', {
+    key:       btn.key,
+    className: 'btn btn-primary btn-sm',
+    onClick:   () => onFsmClick(btn),
+  }, btn.label);
+
+  const menuItem = (btn) => ce('li', { key: btn.key },
+    ce('button', {
+      className: 'dropdown-item',
+      onClick:   () => onFsmClick(btn),
+    }, btn.label)
+  );
 
   return ce('div', { className: 'card' },
     ce('div', { className: 'card-header d-flex justify-content-between align-items-center' },
       ce('h3', { className: 'card-title mb-0' }, title),
       ce('div', { className: 'd-flex gap-2 align-items-center' },
         badgeLabel ? ce('span', { className: `badge ${badgeCls}` }, badgeLabel) : null,
-        buttons.map(btn => ce('button', {
-          key:       btn.key,
-          className: (btn.label==='Delete'||btn.label==='Cancel') ? 'btn btn-danger btn-sm' : 'btn btn-primary btn-sm',
-          onClick: () => {
-            if (btn.confirm && !window.confirm(btn.confirm)) return;
-            // signal — explicit controller call
-            run_doc.input._state = { [btn.key]: '' };
-            CW.controller(run_doc).catch(err => console.error('[CW]', err));
-          },
-        }, btn.label))
+
+        // primary FSM buttons — always visible
+        ...primaryBtns.map(fsmButton),
+
+        // Save button — explicit intent, editing
+        explicit && editing && ce('button', {
+          key:       'save',
+          className: 'btn btn-primary btn-sm',
+          onClick:   () => { run_doc.operation = 'select'; CW._render(run_doc); },
+        }, actLabels.save || 'Save'),
+
+        // ••• dropdown — menu FSM buttons + Edit
+        (menuBtns.length > 0 || (explicit && isOwner)) && ce('div', { key: 'menu', className: 'dropdown' },
+          ce('button', {
+            className:        'btn btn-ghost-secondary btn-sm',
+            'data-bs-toggle': 'dropdown',
+            'aria-expanded':  'false',
+          }, '•••'),
+          ce('ul', { className: 'dropdown-menu dropdown-menu-end' },
+            ...menuBtns.map(menuItem),
+            // Edit — explicit intent, not editing, owner
+            explicit && !editing && isOwner && ce('li', { key: 'edit' },
+              ce('button', {
+                className: 'dropdown-item',
+                onClick:   () => { run_doc.operation = 'update'; CW._render(run_doc); },
+              }, actLabels.edit || 'Edit')
+            )
+          )
+        )
       )
     ),
     ce('div', { className: 'card-body' },

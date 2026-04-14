@@ -143,7 +143,7 @@ function mountRenderer({ containerId, content, collectionId = 'item', recordId }
 
 function unmount(containerId) {
   if (_roots.has(containerId)) {
-    _roots.get(containerId).unmount()
+    try { _roots.get(containerId).unmount() } catch(_) {}
     _roots.delete(containerId)
   }
   _editors.delete(containerId)
