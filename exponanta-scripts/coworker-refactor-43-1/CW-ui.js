@@ -128,14 +128,18 @@ globalThis.addEventListener('coworker:state:change', _updateNavUI);
 
 // Add before FieldRenderer
 const BlockNoteField = function({ field, run_doc, readOnly, timerRef, debounce }) {
+  const id = `bn-${run_doc.name}-${field.fieldname}`
+
   React.useEffect(() => {
     if (readOnly) return
     let alive = true
     import('./editor.js').then(({ mount }) => {
       if (!alive) return
       mount({
-        run_doc,
-        fieldname: field.fieldname,
+        containerId:    id,
+        initialContent: run_doc.target?.data?.[0]?.[field.fieldname] || null,
+        recordId:       run_doc.target?.data?.[0]?.name || null,
+        onBeforeUpload: async () => run_doc.target?.data?.[0]?.name || null,
         onChange: (json) => {
           run_doc.input[field.fieldname] = json
           clearTimeout(timerRef.current)
@@ -146,7 +150,7 @@ const BlockNoteField = function({ field, run_doc, readOnly, timerRef, debounce }
       })
     })
     return () => { alive = false }
-  }, [run_doc.name])
+  }, [id])
 
   if (readOnly) {
     const DisplayComp = globalThis[field.display || 'TextRenderer']
@@ -155,7 +159,7 @@ const BlockNoteField = function({ field, run_doc, readOnly, timerRef, debounce }
       : ce('div', { className: 'text-muted fst-italic' }, '(no renderer for ' + (field.display || 'TextRenderer') + ')')
   }
 
-  return ce('div', { id: run_doc.name,
+  return ce('div', { id,
     style: { position: 'relative', border: '1px solid var(--tblr-border-color)', borderRadius: '4px', minHeight: '240px' }
   })
 }

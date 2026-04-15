@@ -64,7 +64,7 @@
     "autoname": "hash",
     "view_components": {
   "list": { "component": "MainGrid", "container": "threads_left" },
-  "form": { "component": "MainForm", "container": "main_container" }
+  "form": { "component": "MainForm", "container": "threads_right" }
 },
     "fields": [
       {

@@ -1,15 +1,10 @@
 /**
  * CW BlockNote Editor
- * Prebuilt standalone editor for threads.js
- *
+ * 
  * Exposes:
- *   window.CWEditor.mount(options)       — mount editor into a container
- *   window.CWEditor.mountRenderer(opts)  — mount read-only renderer
- *   window.CWEditor.unmount(id)          — unmount editor or renderer
- *   window.CWEditor.getContent(id)       — get current JSON string from live editor
- *
- * Option C architecture: BlockNote owns its state.
- * Caller reads content via getContent() at save time — no onChange sync needed.
+ *   window.CWEditor.mount({ run_doc, fieldname, onChange })
+ *   window.CWEditor.mountRenderer({ run_doc, fieldname })
+ *   window.CWEditor.unmount(run_doc)
  */
 
 import React from 'react'
@@ -18,33 +13,24 @@ import { useCreateBlockNote } from '@blocknote/react'
 import { BlockNoteView } from '@blocknote/mantine'
 import '@blocknote/mantine/style.css'
 
-// ─── Image upload via CW.run ──────────────────────────────────────────────────
+// ─── Upload via run_doc.child() ───────────────────────────────────────────────
 
-async function uploadViaCW(file, recordId) {
-  const CW = globalThis.CW
-  if (!CW) throw new Error('[CWEditor] globalThis.CW not available')
-
-  const r = await CW.run({
+async function uploadViaCW(file, run_doc) {
+  const r = await run_doc.child({
     operation:      'update',
-    target_doctype: 'Post',
-    query:          { where: { name: recordId } },
+    target_doctype: run_doc.target_doctype,
+    query:          { where: { name: run_doc.target?.data?.[0]?.name } },
     input:          { 'files+': file },
     options:        { render: false },
   })
-
   if (!r.success) throw new Error('[CWEditor] Upload failed: ' + (r.error || 'unknown'))
-
   const files    = r.target?.data?.[0]?.files || []
   const filename = files[files.length - 1]
   if (!filename) throw new Error('[CWEditor] No filename in response')
-
-  const pbUrl = globalThis.CW._config?.pb_url || globalThis.pb?.baseURL || ''
-  return `${pbUrl}/api/files/item/${recordId}/${filename}`
+  return `${globalThis.CW._config?.pb_url}/api/files/item/${run_doc.target?.data?.[0]?.name}/${filename}`
 }
 
 // ─── Parse content safely ─────────────────────────────────────────────────────
-// Returns array of blocks (non-empty) or undefined
-// undefined → BlockNote starts with blank document (no crash)
 
 function parseBlocks(raw) {
   if (!raw) return undefined
@@ -52,127 +38,97 @@ function parseBlocks(raw) {
   try {
     const parsed = typeof raw === 'string' ? JSON.parse(raw.trim()) : raw
     return Array.isArray(parsed) && parsed.length > 0 ? parsed : undefined
-  } catch {
-    return undefined
-  }
+  } catch { return undefined }
 }
 
-// ─── Editor instance registry ─────────────────────────────────────────────────
-// Stores live editor instances so getContent() can read them at save time
+// ─── Root registry ────────────────────────────────────────────────────────────
 
-const _roots   = new Map()  // containerId → ReactDOM root
-const _editors = new Map()  // containerId → BlockNote editor instance
+const _roots = new Map()  // run_doc.name → ReactDOM root
 
 // ─── Editor component ─────────────────────────────────────────────────────────
 
-function CWBlockNoteEditor({ containerId, initialContent, recordId, onBeforeUpload, onChange }) {
+function CWBlockNoteEditor({ run_doc, fieldname, onChange }) {
   const editor = useCreateBlockNote({
-    initialContent: parseBlocks(initialContent),
+    initialContent: parseBlocks(run_doc.target?.data?.[0]?.[fieldname]),
     uploadFile: async (file) => {
-      let rid = recordId
-      if (!rid && onBeforeUpload) rid = await onBeforeUpload()
-      if (!rid) {
-        console.warn('[CWEditor] No recordId — skipping upload')
+      if (!run_doc.target?.data?.[0]?.name) {
+        console.warn('[CWEditor] No record name — skipping upload')
         return URL.createObjectURL(file)
       }
-      return uploadViaCW(file, rid)
+      return uploadViaCW(file, run_doc)
     },
   })
 
   React.useEffect(() => {
-    _editors.set(containerId, editor)
-    return () => _editors.delete(containerId)
-  }, [containerId, editor])
-
-  // wire onChange via canonical editor.onChange API
-  React.useEffect(() => {
     if (!onChange) return
-    return editor.onChange(() => {
-      onChange(JSON.stringify(editor.document))
-    })
+    return editor.onChange(() => onChange(JSON.stringify(editor.document)))
   }, [editor, onChange])
 
   return <BlockNoteView editor={editor} theme="light" />
 }
 
-// ─── Read-only renderer ───────────────────────────────────────────────────────
+// ─── Renderer component ───────────────────────────────────────────────────────
 
-function CWBlockNoteRenderer({ content }) {
+function CWBlockNoteRenderer({ run_doc, fieldname }) {
   const editor = useCreateBlockNote({
-    initialContent: parseBlocks(content),
+    initialContent: parseBlocks(run_doc.target?.data?.[0]?.[fieldname]),
   })
-
   return <BlockNoteView editor={editor} editable={false} theme="light" />
 }
 
 // ─── Public API ───────────────────────────────────────────────────────────────
 
-function mount({ containerId, initialContent = null, recordId, onBeforeUpload, onChange }) {
-  const container = document.getElementById(containerId)
+function mount({ run_doc, fieldname, onChange }) {
+  const container = document.getElementById(run_doc.name)
   if (!container) return
 
-  if (_roots.has(containerId)) {
-    const old = _roots.get(containerId)
-    _roots.delete(containerId)
-    _editors.delete(containerId)
+  if (_roots.has(run_doc.name)) {
+    const old = _roots.get(run_doc.name)
+    _roots.delete(run_doc.name)
     setTimeout(() => { try { old.unmount() } catch(_) {} }, 0)
   }
 
   const root = ReactDOM.createRoot(container)
-  _roots.set(containerId, root)
+  _roots.set(run_doc.name, root)
 
   root.render(
     <React.StrictMode>
-      <CWBlockNoteEditor
-        containerId={containerId}
-        initialContent={initialContent}
-        recordId={recordId}
-        onBeforeUpload={onBeforeUpload}
-        onChange={onChange}
-      />
+      <CWBlockNoteEditor run_doc={run_doc} fieldname={fieldname} onChange={onChange} />
     </React.StrictMode>
   )
 }
 
-function mountRenderer({ containerId, content, collectionId = 'item', recordId }) {
-  const container = document.getElementById(containerId)
+function mountRenderer({ run_doc, fieldname }) {
+  const container = document.getElementById(run_doc.name)
   if (!container) return
 
-  if (_roots.has(containerId)) _roots.get(containerId).unmount()
+  if (_roots.has(run_doc.name)) {
+    const old = _roots.get(run_doc.name)
+    _roots.delete(run_doc.name)
+    setTimeout(() => { try { old.unmount() } catch(_) {} }, 0)
+  }
 
   const root = ReactDOM.createRoot(container)
-  _roots.set(containerId, root)
+  _roots.set(run_doc.name, root)
 
   root.render(
     <React.StrictMode>
-      <CWBlockNoteRenderer content={content} />
+      <CWBlockNoteRenderer run_doc={run_doc} fieldname={fieldname} />
     </React.StrictMode>
   )
 }
 
-function unmount(containerId) {
-  if (_roots.has(containerId)) {
-    try { _roots.get(containerId).unmount() } catch(_) {}
-    _roots.delete(containerId)
+function unmount(run_doc) {
+  if (_roots.has(run_doc.name)) {
+    try { _roots.get(run_doc.name).unmount() } catch(_) {}
+    _roots.delete(run_doc.name)
   }
-  _editors.delete(containerId)
-}
-
-// Read current content from live editor at save time
-// Returns JSON string of current blocks, or null if editor not mounted
-function getContent(containerId) {
-  const editor = _editors.get(containerId)
-  if (!editor) {
-    console.warn(`[CWEditor] No editor mounted at "${containerId}"`)
-    return null
-  }
-  return JSON.stringify(editor.document)
 }
 
 // ─── Exports ──────────────────────────────────────────────────────────────────
 
-export { mount, mountRenderer, unmount, getContent, CWBlockNoteEditor }
+export { mount, mountRenderer, unmount }
 
 if (typeof window !== 'undefined') {
-  window.CWEditor = { mount, mountRenderer, unmount, getContent }
+  window.CWEditor = { mount, mountRenderer, unmount }
 }

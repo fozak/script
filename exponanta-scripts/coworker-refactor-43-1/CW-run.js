@@ -31,7 +31,7 @@ CW._resolveAll = function(op) {
   if (!("component" in op) || !("container" in op)) {
     let resolved = null;
     if (resolvedView && CW._resolveViewComponent) {
-      resolved = CW._resolveViewComponent(op.target_doctype, resolvedView, op.container);
+      resolved = CW._resolveViewComponent(op.target_doctype, resolvedView);
     }
     // _resolveViewComponent may return { component, container } or a string (legacy)
     if (resolved && typeof resolved === 'object') {
@@ -103,12 +103,12 @@ CW._getTransitions = function(schema, doc, dim) {
     .filter(Boolean);
 };
 
-CW._resolveViewComponent = function(doctype, view, fallback_container) {
+CW._resolveViewComponent = function(doctype, view) {
+  // returns { component, container } from schema or config
   const dtViews = CW.Schema?.[doctype]?.view_components;
   if (dtViews?.[view]) return dtViews[view];
   const cfg = CW._config.views?.[view];
-  if (cfg) return cfg;
-  return { component: 'MainForm', container: fallback_container || 'main_container' };
+  return cfg || null;
 };
 
 CW._execTransition = async function(run_doc, dim, key) {
@@ -136,7 +136,7 @@ CW._execTransition = async function(run_doc, dim, key) {
   // only fires if run_doc has a container (UI context exists)
   if (run_doc.container && dimDef.views?.[String(to)]) {
     const view     = dimDef.views[String(to)];
-    const resolved = CW._resolveViewComponent(doctype, view, run_doc.container);
+    const resolved = CW._resolveViewComponent(doctype, view);
     // resolved may be { component, container } or null
     const component = resolved?.component ?? (typeof resolved === 'string' ? resolved : null);
     const container = run_doc.container || resolved?.container || CW._config.views?.[view]?.container;

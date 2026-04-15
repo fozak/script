@@ -1,0 +1,94 @@
+{
+  "schema_name": "UserPublicProfile",
+  "doctype": "Schema",
+  "is_submittable": 1,
+  "title_field": "full_name",
+  "autoname": "generateId",
+
+  "fields": [
+    {
+      "fieldname": "full_name",
+      "fieldtype": "Data",
+      "label": "Full Name",
+      "reqd": 1,
+      "in_list_view": 1
+    },
+    {
+      "fieldname": "section_identity",
+      "fieldtype": "Section Break",
+      "label": "Identity"
+    },
+    {
+      "fieldname": "title",
+      "fieldtype": "Data",
+      "label": "Title / Role",
+      "in_list_view": 1
+    },
+    {
+      "fieldname": "organization",
+      "fieldtype": "Data",
+      "label": "Organization",
+      "in_list_view": 1
+    },
+    {
+      "fieldname": "chapter",
+      "fieldtype": "Data",
+      "label": "Chapter"
+    },
+    {
+      "fieldname": "avatar_url",
+      "fieldtype": "Data",
+      "label": "Avatar URL"
+    },
+    {
+      "fieldname": "section_bio",
+      "fieldtype": "Section Break",
+      "label": "About"
+    },
+    {
+      "fieldname": "bio",
+      "fieldtype": "Text",
+      "label": "Bio"
+    },
+    {
+      "fieldname": "section_links",
+      "fieldtype": "Section Break",
+      "label": "Links"
+    },
+    {
+      "fieldname": "linkedin",
+      "fieldtype": "Data",
+      "label": "LinkedIn URL"
+    },
+    {
+      "fieldname": "website",
+      "fieldtype": "Data",
+      "label": "Website"
+    },
+    {
+      "fieldname": "section_relationships",
+      "fieldtype": "Section Break",
+      "label": "Relationships"
+    },
+    {
+      "fieldname": "relationships",
+      "fieldtype": "Relationship Panel",
+      "label": "Relationships"
+    }
+  ],
+
+  "_state": {
+    "0": {
+      "options":  ["Draft", "Published", "Unpublished"],
+      "labels": {
+        "0_1": "Publish",
+        "0_2": "Discard",
+        "1_2": "Unpublish",
+        "2_0": "Edit"
+      },
+      "confirm": {
+        "1_2": "Unpublish your profile? It will no longer be visible to others."
+      }
+    }
+  }
+}
