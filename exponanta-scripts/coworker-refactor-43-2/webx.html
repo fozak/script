@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CW App - Webix Grid</title>
+
+  <!-- Tabler CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta17/dist/css/tabler.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+
+  <!-- Webix CSS -->
+  <link rel="stylesheet" href="https://cdn.webix.com/edge/webix.css" type="text/css">
+</head>
+<body class="antialiased">
+<div class="wrapper">
+
+  <!-- Navbar -->
+  <div id="nav_container"></div>
+
+  <!-- Main content -->
+  <div class="page-wrapper">
+    <div class="container-xl py-4">
+      <div id="main_container" style="height:500px;"></div>
+    </div>
+  </div>
+
+  <!-- System messages -->
+  <div id="system_messages" class="container-xl py-2"></div>
+
+  <!-- REPL -->
+  <div class="container-xl pb-4">
+    <input id="expr" class="form-control font-monospace" placeholder="JS expression (Enter to run)">
+    <pre id="preview" class="mt-2 p-3 bg-light border rounded" style="font-size:11px;max-height:200px;overflow-y:auto"></pre>
+  </div>
+
+</div>
+
+<!-- PocketBase SDK -->
+<script src="https://cdn.jsdelivr.net/npm/pocketbase@latest/dist/pocketbase.umd.js"></script>
+
+<!-- Tabler JS -->
+<script src="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta17/dist/js/tabler.min.js"></script>
+
+<!-- Webix JS -->
+<script src="https://cdn.webix.com/edge/webix.js" type="text/javascript"></script>
+
+<!-- 4. CW modules -->
+<script type="module" src="index.js"></script>
+<script type="module" src="CW-ui.js"></script>
+
+<!-- Bootstrap and CW-run -->
+<script type="module">
+  async function waitForBoot() {
+    return new Promise(resolve => {
+      const check = setInterval(() => {
+        if (globalThis.CW?._booted) { clearInterval(check); resolve(); }
+      }, 1000);
+    });
+  }
+
+  window.addEventListener('load', async () => {
+    // wait for CW bootstrap
+    await waitForBoot();
+
+    // Fetch data — exactly like app.html
+    const res = await CW.run({
+      operation: 'select',
+      target_doctype: 'Task',
+      query: { take: 20 },
+      view: 'list',
+      component: 'MainGrid',
+      container: 'main_container',
+      options: { render: true } // ✅ must be true to populate res.target
+    });
+
+    const run_doc = res;
+
+    // safety guard
+    if(!run_doc.target || !run_doc.target.data){
+      console.warn("No data returned from CW.run", run_doc);
+      run_doc.target = { data: [] };
+    }
+
+    // Webix grid
+    webix.ui({
+      container: "main_container",
+      view: "datatable",
+      autoheight: true,
+      autowidth: true,
+      editable: true,
+      editaction: "dblclick",
+      columns: [
+        { id:"name", header:"Name", width:150 },
+        { id:"title", header:"Title", fillspace:true, editor:"text" },
+        { id:"_state", header:"Status", width:150, template: obj => {
+            const labels = run_doc._state?.options || ["Draft","Submitted","Cancelled/Deleted"];
+            return labels[obj._state] || obj._state;
+        }},
+        { id:"actions", header:"Actions", width:300, template: function(obj){
+            const transitions = run_doc._state?.transitions?.[obj._state] || [];
+            return transitions.map(to=>{
+              const label = run_doc._state?.labels?.[obj._state+"_"+to] || "Move";
+              return `<button onclick="runTransition('${obj.name}', ${obj._state}, ${to})" class="btn btn-sm btn-primary mx-1">${label}</button>`;
+            }).join("");
+        }}
+      ],
+      data: run_doc.target.data,
+      on:{
+        onAfterEditStop:function(state, editor){
+          const doc = run_doc.target.data.find(d=>d.name===editor.row);
+          if(!doc) return;
+          doc[editor.column] = editor.value;
+
+          // persist via CW.run exactly like app.html
+          CW.run({
+            operation: 'update',
+            target_doctype: run_doc.target_doctype,
+            query: { where: { name: doc.name } },
+            input: { [editor.column]: editor.value },
+            options: { internal: true }
+          });
+        }
+      }
+    });
+
+    // FSM transition function
+    window.runTransition = function(docName, from, to){
+      const doc = run_doc.target.data.find(d=>d.name===docName);
+      if(!doc) return;
+
+      doc._state = to;
+      doc.system_messages = doc.system_messages || [];
+      const label = run_doc._state?.labels?.[from+"_"+to] || "Transition";
+      doc.system_messages.push(`Transition: ${label}`);
+
+      renderSystemMessages(doc);
+
+      // persist FSM
+      CW.run({
+        operation: 'fsm',
+        target_doctype: run_doc.target_doctype,
+        query: { where: { name: docName } },
+        input: { _state: to },
+        options: { internal: true }
+      });
+    };
+
+    function renderSystemMessages(doc){
+      const container = document.getElementById("system_messages");
+      container.innerHTML = "<h6>System Messages</h6>" +
+        (doc.system_messages||[]).map(msg=>`<div class="p-1 bg-warning mb-1">${msg}</div>`).join("");
+    }
+
+    // optionally show first row system messages
+    if(run_doc.target.data.length) renderSystemMessages(run_doc.target.data[0]);
+
+  });
+
+  // REPL
+  document.getElementById('expr').addEventListener('keydown', async (e)=>{
+    if(e.key!=='Enter') return;
+    try{
+      const result = await eval(e.target.value);
+      document.getElementById('preview').textContent = result===undefined?'undefined':JSON.stringify(result,null,2);
+    } catch(err){
+      document.getElementById('preview').textContent = 'Error: '+err.message;
+    }
+  });
+</script>
+</body>
+</html>

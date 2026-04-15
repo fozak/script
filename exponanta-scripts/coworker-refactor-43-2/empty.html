@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CW</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta17/dist/css/tabler.min.css">
+  <style>
+    #main_container:empty,
+    #threads_left:empty,
+    #threads_right:empty  { display: none; }
+
+    .threads-left  { height: 100vh; overflow-y: auto; border-right: 1px solid var(--tblr-border-color); }
+    .threads-right { height: 100vh; overflow-y: auto; }
+  </style>
+</head>
+<body class="antialiased">
+
+<div id="nav_container"></div>
+
+<div class="container-xl py-3">
+
+  <div id="main_container"></div>
+
+  <div class="row g-0">
+    <div class="col-md-3 threads-left"  id="threads_left"></div>
+    <div class="col-md-9 threads-right" id="threads_right"></div>
+  </div>
+
+</div>
+
+<div id="toast_container"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/pocketbase@latest/dist/pocketbase.umd.js"></script>
+<script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta17/dist/js/tabler.min.js"></script>
+
+<script type="module" src="index.js"></script>
+<script type="module" src="CW-ui.js"></script>
+<script type="module" src="app-ui.js"></script>
+
+<script type="module">
+  async function waitForBoot() {
+    return new Promise(resolve => {
+      const check = setInterval(() => {
+        if (globalThis.CW?._booted) { clearInterval(check); resolve() }
+      }, 100)
+    })
+  }
+
+  window.addEventListener('load', async () => {
+    await waitForBoot()
+    // boot call goes here
+  })
+</script>
+
+</body>
+</html>
