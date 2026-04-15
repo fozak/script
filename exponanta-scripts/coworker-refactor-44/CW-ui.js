@@ -127,16 +127,30 @@ globalThis.addEventListener('coworker:state:change', _updateNavUI);
 //======Blocknote renderer ===================================
 
 // Add before FieldRenderer
-const BlockNoteField = function({ field, run_doc, readOnly, debounce }) {
-  const timerRef = React.useRef(null)
-  const [EditorComp, setEditorComp] = React.useState(null)
+const BlockNoteField = function({ field, run_doc, readOnly, timerRef, debounce }) {
+  const id = `bn-${run_doc.name}-${field.fieldname}`
 
   React.useEffect(() => {
-    if (readOnly || EditorComp) return
-    import('./editor.js').then(({ CWBlockNoteEditor }) => {
-      setEditorComp(() => CWBlockNoteEditor)
+    if (readOnly) return
+    let alive = true
+    import('./editor.js').then(({ mount }) => {
+      if (!alive) return
+      mount({
+        containerId:    id,
+        initialContent: run_doc.target?.data?.[0]?.[field.fieldname] || null,
+        recordId:       run_doc.target?.data?.[0]?.name || null,
+        onBeforeUpload: async () => run_doc.target?.data?.[0]?.name || null,
+        onChange: (json) => {
+          run_doc.input[field.fieldname] = json
+          clearTimeout(timerRef.current)
+          timerRef.current = setTimeout(() => {
+            CW.controller(run_doc).catch(err => console.error('[CW]', err))
+          }, debounce)
+        },
+      })
     })
-  }, [readOnly])
+    return () => { alive = false }
+  }, [id])
 
   if (readOnly) {
     const DisplayComp = globalThis[field.display || 'TextRenderer']
@@ -145,21 +159,8 @@ const BlockNoteField = function({ field, run_doc, readOnly, debounce }) {
       : ce('div', { className: 'text-muted fst-italic' }, '(no renderer for ' + (field.display || 'TextRenderer') + ')')
   }
 
-  if (!EditorComp) return ce('div', {
-    style: { border: '1px solid var(--tblr-border-color)', borderRadius: '4px', minHeight: '240px' }
-  })
-
-  return ce(EditorComp, {
-    initialContent: run_doc.target?.data?.[0]?.[field.fieldname] || null,
-    recordId:       run_doc.target?.data?.[0]?.name || null,
-    onBeforeUpload: async () => run_doc.target?.data?.[0]?.name || null,
-    onChange: (json) => {
-      run_doc.input[field.fieldname] = json
-      clearTimeout(timerRef.current)
-      timerRef.current = setTimeout(() => {
-        CW.controller(run_doc).catch(err => console.error('[CW]', err))
-      }, debounce)
-    },
+  return ce('div', { id,
+    style: { position: 'relative', border: '1px solid var(--tblr-border-color)', borderRadius: '4px', minHeight: '240px' }
   })
 }
 

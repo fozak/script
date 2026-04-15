@@ -6,13 +6,10 @@
     "title_field": "title",
     "is_submittable": 0,
     "autoname": "hash",
-    "row_renderer": "ChannelRow",
     "view_components": {
-      "list": {
-        "component": "ChannelList",
-        "container": "threads_left"
-      }
-    },
+  "list": { "component": "MainGrid", "container": "threads_left" },
+  "form": { "component": "MainForm", "container": "threads_right" }
+},
     "fields": [
       {
         "fieldname": "title",
@@ -65,21 +62,10 @@
     "title_field": "title",
     "is_submittable": 1,
     "autoname": "hash",
-    "row_renderer": "PostRow",
     "view_components": {
-      "list": {
-        "component": "ChannelFeed",
-        "container": "threads_left"
-      },
-      "read": {
-        "component": "PostDetail",
-        "container": "threads_right"
-      },
-      "edit": {
-        "component": "PostEditor",
-        "container": "threads_right"
-      }
-    },
+  "list": { "component": "MainGrid", "container": "threads_left" },
+  "form": { "component": "MainForm", "container": "threads_right" }
+},
     "fields": [
       {
         "fieldname": "title",
@@ -95,6 +81,14 @@
         "reqd": 0,
         "display": "TextRenderer"
       },
+      {
+  "fieldname": "docsubtype",
+  "fieldtype": "Select",
+  "label": "Type",
+  "options": "post\ncomment\nlike\nflag\nreaction",
+  "reqd": 1,
+  "in_list_view": 0
+},
       {
         "fieldname": "parent",
         "fieldtype": "Data",
