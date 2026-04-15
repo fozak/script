@@ -490,7 +490,7 @@ systemFields: [
     },
   }, */
 
-  // ✅ ADD THIS SECTION:   line 434
+  /* ✅ INITIAL
   views: {
     list: {
       component: "MainGrid",
@@ -515,7 +515,14 @@ systemFields: [
     },
     edit: { component: 'MainForm', container: 'main_container' },  // ← added
   read: { component: 'MainForm', container: 'main_container' } // ← added
-  },
+  },*/
+
+  views: {
+  list: { component: 'MainGrid', container: 'threads_left'  },
+  form: { component: 'MainForm', container: 'threads_right' },
+  read: { component: 'MainForm', container: 'threads_right' },
+  edit: { component: 'MainForm', container: 'threads_right' },
+},
 
   // old structure
   // Operation → View mapping

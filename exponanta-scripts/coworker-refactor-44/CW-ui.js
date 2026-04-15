@@ -21,15 +21,20 @@ CW._getOrCreateRoot = function(containerId) {
 };
 
 CW._render = function(run_doc) {
-  if (!run_doc?.component || !run_doc?.container) return;
-  const Comp = globalThis[run_doc.component];
-  if (!Comp) return;
-  const root = CW._getOrCreateRoot(run_doc.container);
-  if (!root) return;
-  root.render(ce(Comp, {
-    run_doc,
-    data: run_doc.target?.data || [],
-  }));
+  if (!run_doc?.component || !run_doc?.container) return
+  const Comp = globalThis[run_doc.component]
+  if (!Comp) return
+
+  // clean up old runs in same container — prevent memory leak
+  Object.values(CW.runs).forEach(r => {
+    if (r.name !== run_doc.name && r.container === run_doc.container) {
+      delete CW.runs[r.name]
+    }
+  })
+
+  const root = CW._getOrCreateRoot(run_doc.container)
+  if (!root) return
+  root.render(ce(Comp, { run_doc, data: run_doc.target?.data || [] }))
 };
 
 // ============================================================
@@ -171,10 +176,23 @@ const FieldRenderer = function({ field, run_doc }) {
   const doc_        = run_doc.target?.data?.[0] || {};
   const readOnly    = (doc_.docstatus ?? 0) !== 0 || !['update','create'].includes(run_doc.operation);
   const initial     = doc_[field.fieldname];
-  const safeInitial = initial === null || initial === undefined
-    ? (field.fieldtype === 'Check' ? 0 : '') : initial;
+  /*const safeInitial = initial === null || initial === undefined
+    ? (field.fieldtype === 'Check' ? 0 : '') : initial;*/
 
-  const [localVal, setLocalVal] = React.useState(safeInitial);
+    const safeInitial = initial === null || initial === undefined
+  ? (field.fieldtype === 'Check' ? 0 : '')
+  : (field.fieldtype === 'Check' ? Number(initial) : initial);
+
+
+
+const [prevName, setPrevName] = React.useState(doc_.name);
+const [localVal, setLocalVal] = React.useState(safeInitial);
+
+if (prevName !== doc_.name) {
+  setPrevName(doc_.name);
+  if (prevName !== null) setLocalVal(safeInitial);
+}
+
   const timerRef                = React.useRef(null);
   const debounce                = CW._config?.fieldInteractionConfig?.onChange?.debounce ?? 5000;
 
@@ -183,7 +201,8 @@ const FieldRenderer = function({ field, run_doc }) {
   const titleField = linkSchema?.title_field || 'name';
   const [linkOpts, setLinkOpts] = React.useState([]);
   const [isOpen, setIsOpen]     = React.useState(false);
-  const [searchText, setSearch] = React.useState(field.fieldtype === 'Link' ? (safeInitial || '') : '');
+ const [searchText, setSearch] = React.useState(field.fieldtype === 'Link' ? (safeInitial || '') : '');
+if (prevName !== doc_.name && field.fieldtype === 'Link') setSearch(safeInitial || '');
 
   // Table state — top level (Rules of Hooks)
   const childSchema = CW.Schema?.[field.options];
@@ -581,15 +600,15 @@ const MainGrid = function({ run_doc, data }) {
   };
 
   // row click — open record via child run, schema resolves component + container
-  const onRowClick = (record) => {
-    run_doc.child({
-      operation:      'select',
-      target_doctype: record.doctype || doctype,
-      query:          { where: { name: record.name }, view: 'form' },
-      view:           'form',
-      options:        { render: true },
-    });
-  };
+const onRowClick = (record) => {
+  run_doc.child({
+    operation:      'select',
+    target_doctype: record.doctype || doctype,
+    query:          { where: { name: record.name } },
+    view:           'form',
+    options:        { render: true },
+  })
+};
 
   const onNew = () => {
     run_doc.child({
