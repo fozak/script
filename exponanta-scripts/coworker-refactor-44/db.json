@@ -716,59 +716,47 @@
   {
     "doctype": "Schema",
     "schema_name": "SystemSchema",
-    "_state": {
-      "0": {
-        "name": "_docstatus",
-        "fieldname": "docstatus",
-        "values": [0, 1, 2],
-        "options": ["Draft", "Submitted", "Cancelled/Deleted"],
-        "transitions": {
-          "0": [1, 2],
-          "1": [2],
-          "2": [0]
-        },
-        "requires": {
-          "0_1": {
-            "is_submittable": 1
-          },
-          "1_2": {
-            "is_submittable": 1
-          },
-          "2_0": {
-            "is_submittable": 1
-          },
-          "action_labels": {
-            "edit": "Edit",
-            "save": "Save"
-          },
-          "primary": {}
-        },
-        "rules": {
-          "0_1": "(run_doc) => Object.keys(run_doc.input).filter(k => k !== '_state').length === 0"
-        },
-        "labels": {
-          "0_1": "Submit",
-          "0_2": "Delete",
-          "1_2": "Cancel",
-          "2_0": "Amend"
-        },
-        "confirm": {
-          "0_2": "Are you sure you want to delete?",
-          "1_2": "Are you sure you want to cancel?"
-        },
-        "sideEffects": {
-          "0_1": "async function(run_doc) { var rec = run_doc.target && run_doc.target.data && run_doc.target.data[0]; if (!rec) return; if (!(CW._config.publicDoctypes || []).includes(run_doc.target_doctype)) return; var updateRun = CW.run({ operation: 'update', target_doctype: run_doc.target_doctype, query: { where: { name: rec.name } }, options: { render: false, internal: true } }); updateRun.target = { data: [rec] }; updateRun.input._allowed_read = (rec._allowed_read || []).filter(function(id){ return id !== 'roleispublixxxx'; }).concat(['roleispublixxxx']); await CW.controller(updateRun); }",
-
-          "1_2": "async function(run_doc) { var rec = run_doc.target && run_doc.target.data && run_doc.target.data[0]; if (!rec) return; if (!(CW._config.publicDoctypes || []).includes(run_doc.target_doctype)) return; var updateRun = CW.run({ operation: 'update', target_doctype: run_doc.target_doctype, query: { where: { name: rec.name } }, options: { render: false, internal: true } }); updateRun.target = { data: [rec] }; updateRun.input._allowed_read = (rec._allowed_read || []).filter(function(id){ return id !== 'roleispublixxxx'; }); await CW.controller(updateRun); }",
-
-          "2_0": "async function(run_doc) { var rec = run_doc.target && run_doc.target.data && run_doc.target.data[0]; if (!rec) return; if (!(CW._config.publicDoctypes || []).includes(run_doc.target_doctype)) return; var updateRun = CW.run({ operation: 'update', target_doctype: run_doc.target_doctype, query: { where: { name: rec.name } }, options: { render: false, internal: true } }); updateRun.target = { data: [rec] }; updateRun.input._allowed_read = (rec._allowed_read || []).filter(function(id){ return id !== 'roleispublixxxx'; }); await CW.controller(updateRun); }"
-        },
-        "action_labels": {
-  "edit": "Edit",
-  "save": "Save"
-}
+  "_state": {
+    "0": {
+      "name": "_docstatus",
+      "fieldname": "docstatus",
+      "values": [0, 1, 2],
+      "options": ["Draft", "Submitted", "Cancelled"],
+      "transitions": {
+        "0": [1, 2],
+        "1": [2],
+        "2": [0]
+      },
+      "requires": {
+        "0_1": { "is_submittable": 1 },
+        "1_2": { "is_submittable": 1 },
+        "2_0": { "is_submittable": 1 }
+      },
+      "rules": {
+        "0_1": "(run_doc) => Object.keys(run_doc.input).filter(k => k !== '_state').length === 0"
+      },
+      "labels": {
+        "0_1": "Submit",
+        "0_2": "Delete",
+        "1_2": "Cancel",
+        "2_0": "Amend"
+      },
+      "confirm": {
+        "0_2": "Are you sure you want to delete?",
+        "1_2": "Are you sure you want to cancel?"
+      },
+      "action_labels": {
+        "edit": "Edit",
+        "save": "Save"
+      },
+      "primary": {},
+      "sideEffects": {
+        "0_1": "async function(run_doc) { var rec = run_doc.target && run_doc.target.data && run_doc.target.data[0]; if (!rec) return; if (!(CW._config.publicDoctypes || []).includes(run_doc.target_doctype)) return; var updateRun = await run_doc.child({ operation: 'update', target_doctype: run_doc.target_doctype, query: { where: { name: rec.name } }, options: { render: false, internal: true } }); updateRun.target = { data: [rec] }; updateRun.input._allowed_read = (rec._allowed_read || []).filter(function(id){ return id !== 'roleispublixxxx'; }).concat(['roleispublixxxx']); await CW.controller(updateRun); }",
+        "1_2": "async function(run_doc) { var rec = run_doc.target && run_doc.target.data && run_doc.target.data[0]; if (!rec) return; if (!(CW._config.publicDoctypes || []).includes(run_doc.target_doctype)) return; var updateRun = await run_doc.child({ operation: 'update', target_doctype: run_doc.target_doctype, query: { where: { name: rec.name } }, options: { render: false, internal: true } }); updateRun.target = { data: [rec] }; updateRun.input._allowed_read = (rec._allowed_read || []).filter(function(id){ return id !== 'roleispublixxxx'; }); await CW.controller(updateRun); }",
+        "2_0": "async function(run_doc) { var rec = run_doc.target && run_doc.target.data && run_doc.target.data[0]; if (!rec) return; if (!(CW._config.publicDoctypes || []).includes(run_doc.target_doctype)) return; var updateRun = await run_doc.child({ operation: 'update', target_doctype: run_doc.target_doctype, query: { where: { name: rec.name } }, options: { render: false, internal: true } }); updateRun.target = { data: [rec] }; updateRun.input._allowed_read = (rec._allowed_read || []).filter(function(id){ return id !== 'roleispublixxxx'; }); await CW.controller(updateRun); }"
       }
     }
+  }
   },
   {
     "_assign": null,
@@ -83185,26 +83173,6 @@
   },
   {
     "_schema_doctype": "User",
-    "_state": {
-      "1.name": "_auth_status",
-      "1.values": [0, 1, 2, 3, 4],
-      "1.options": [
-        "Invited",
-        "Active",
-        "Locked",
-        "Password Reset Pending",
-        "Disabled"
-      ],
-      "1.0_1.Adapter.auth.activate": "",
-      "1.0_1.Adapter.email.send": "",
-      "1.0_4.Adapter.auth.cancel": "",
-      "1.1_2.Adapter.auth.lock": "",
-      "1.1_3.Adapter.auth.resetPassword": "",
-      "1.1_4.Adapter.auth.disable": "",
-      "1.2_1.Adapter.auth.unlock": "",
-      "1.3_1.Adapter.auth.completeReset": "",
-      "1.4_1.Adapter.auth.enable": ""
-    },
     "actions": [],
     "allow_import": 1,
     "allow_rename": 1,
@@ -84212,37 +84180,65 @@
     "module": "Core",
     "name": "schemauserxxxxx",
     "owner": "Administrator",
-    "permissions": [
-      {
-        "create": 1,
-        "delete": 1,
-        "read": 1,
-        "write": 1,
-        "role": "System Manager",
-        "_state": {
-          "1.0_1.label": "Activate User",
-          "1.0_4.label": "Cancel Invitation",
-          "1.1_2.label": "Lock Account",
-          "1.1_3.label": "Require Password Reset",
-          "1.1_4.label": "Disable User",
-          "1.2_1.label": "Unlock Account",
-          "1.3_1.label": "Complete Reset",
-          "1.4_1.label": "Re-enable User"
-        }
+     "_state": {
+    "1": {
+      "name": "_auth_status",
+      "values": [0, 1, 2, 3, 4],
+      "options": ["Invited", "Active", "Locked", "Password Reset Pending", "Disabled"],
+      "transitions": {
+        "0": [1, 4],
+        "1": [2, 3, 4],
+        "2": [1, 4],
+        "3": [1, 4],
+        "4": [0]
       },
-      {
-        "read": 1,
-        "write": 1,
-        "role": "User Manager",
-        "_state": {}
+      "labels": {
+        "0_1": "Activate",
+        "0_4": "Cancel Invitation",
+        "1_2": "Lock Account",
+        "1_3": "Require Password Reset",
+        "1_4": "Disable User",
+        "2_1": "Unlock Account",
+        "3_1": "Complete Reset",
+        "4_0": "Re-invite"
       },
-      {
-        "role": "Self",
-        "_state": {
-          "1.1_3.label": "Reset My Password"
-        }
+      "sideEffects": {
+        "0_1": "async function(run_doc) { var rec = run_doc.target && run_doc.target.data && run_doc.target.data[0]; if (!rec) return; await pb.collection('users').update(rec.name, { verified: true }); }",
+        "1_2": "async function(run_doc) { var rec = run_doc.target && run_doc.target.data && run_doc.target.data[0]; if (!rec) return; await pb.collection('users').update(rec.name, { verified: false }); }",
+        "1_4": "async function(run_doc) { var rec = run_doc.target && run_doc.target.data && run_doc.target.data[0]; if (!rec) return; await pb.collection('users').update(rec.name, { verified: false }); }"
+      },
+      "rules": {},
+      "requires": {}
+    }
+  },
+   "permissions": [
+    {
+      "role": "System Manager",
+      "read": 1, "write": 1, "create": 1, "delete": 1,
+      "transitions": {
+        "1.0_1": "Activate User",
+        "1.0_4": "Cancel Invitation",
+        "1.1_2": "Lock Account",
+        "1.1_3": "Require Password Reset",
+        "1.1_4": "Disable User",
+        "1.2_1": "Unlock Account",
+        "1.3_1": "Complete Reset",
+        "1.4_0": "Re-invite"
       }
-    ],
+    },
+    {
+      "role": "User Manager",
+      "read": 1, "write": 1,
+      "transitions": {}
+    },
+    {
+      "role": "Self",
+      "read": 1, "write": 1,
+      "transitions": {
+        "1.1_3": "Reset My Password"
+      }
+    }
+  ],
     "quick_entry": 1,
     "route": "user",
     "row_format": "Dynamic",
