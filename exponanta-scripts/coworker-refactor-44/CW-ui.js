@@ -456,6 +456,10 @@ const MainForm = function({ run_doc }) {
   const schema  = CW.Schema?.[doctype];
   const doc     = run_doc.target?.data?.[0] || {};
 
+   // auto-switch to update for non-explicit-intent doctypes with editable records
+  if (!schema?.explicit_edit_intent && (doc.docstatus ?? 0) === 0 && doc.name && run_doc.operation === 'select')
+    run_doc.operation = 'update'
+
   if (!schema)
     return ce('div', { className: 'alert alert-warning' }, `Schema not found: ${doctype}`);
 

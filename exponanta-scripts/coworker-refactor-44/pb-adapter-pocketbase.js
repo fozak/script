@@ -20,7 +20,6 @@ function _splitRecord(doc) {
   const top = {};
   const data = {};
   for (const [k, v] of Object.entries(doc)) {
-    // PB modifier keys (files+, files-, +files) always go top-level
     if (
       PB_TOP.has(k) ||
       /^[\w]+[+-]$|^[+-][\w]+$/.test(k) ||
@@ -79,32 +78,16 @@ function _buildWhereClause(where) {
     } else if (typeof value === "object" && !Array.isArray(value)) {
       for (const [op, opValue] of Object.entries(value)) {
         switch (op) {
-          case "equals":
-            parts.push(`${field} = "${opValue}"`);
-            break;
-          case "contains":
-            parts.push(`${field} ~ "${opValue}"`);
-            break;
-          case "gt":
-            parts.push(`${field} > ${opValue}`);
-            break;
-          case "gte":
-            parts.push(`${field} >= ${opValue}`);
-            break;
-          case "lt":
-            parts.push(`${field} < ${opValue}`);
-            break;
-          case "lte":
-            parts.push(`${field} <= ${opValue}`);
-            break;
-          case "not":
-            parts.push(`${field} != "${opValue}"`);
-            break;
+          case "equals":   parts.push(`${field} = "${opValue}"`);  break;
+          case "contains": parts.push(`${field} ~ "${opValue}"`);  break;
+          case "gt":       parts.push(`${field} > ${opValue}`);    break;
+          case "gte":      parts.push(`${field} >= ${opValue}`);   break;
+          case "lt":       parts.push(`${field} < ${opValue}`);    break;
+          case "lte":      parts.push(`${field} <= ${opValue}`);   break;
+          case "not":      parts.push(`${field} != "${opValue}"`); break;
           case "in":
             if (Array.isArray(opValue) && opValue.length)
-              parts.push(
-                `(${opValue.map((v) => `${field} = "${v}"`).join(" || ")})`,
-              );
+              parts.push(`(${opValue.map((v) => `${field} = "${v}"`).join(" || ")})`);
             break;
         }
       }
@@ -117,11 +100,18 @@ function _buildFilter(run_doc) {
   const doctype = run_doc.target_doctype ?? run_doc.source_doctype;
   const parts = [];
   if (doctype) parts.push(`doctype = "${doctype}"`);
+
+  // query.where — CW object → compiled to filter string
   const where = run_doc.query?.where;
   if (where) {
     const clause = _buildWhereClause(where);
     if (clause) parts.push(`(${clause})`);
   }
+
+  // query.filter — raw PB filter string — ANDed with where if both present
+  const rawFilter = run_doc.query?.filter;
+  if (rawFilter) parts.push(`(${rawFilter})`);
+
   return parts.join(" && ") || undefined;
 }
 
@@ -160,66 +150,53 @@ async function select(run_doc) {
 
   let items, meta;
 
-  const where = run_doc.query?.where || {};
+  const where    = run_doc.query?.where || {};
   const whereKeys = Object.keys(where);
   const singleName =
     whereKeys.length === 1 &&
     whereKeys[0] === "name" &&
-    typeof where.name === "string"
+    typeof where.name === "string" &&
+    !run_doc.query?.filter  // raw filter present → cannot use getOne shortcut
       ? where.name
       : null;
 
-  if (singleName && !run_doc.query?.take) {
+  if (singleName && !run_doc.query?.perPage) {
     const filter = `doctype = "${doctype}" && (name = "${singleName}")`;
-    items = await globalThis.pb
-      .collection(collection)
-      .getFullList({ filter });
-    meta = {
-      total: items.length,
-      page: 1,
-      pageSize: items.length,
-      totalPages: 1,
-      hasMore: false,
-    };
+    items = await globalThis.pb.collection(collection).getFullList({ filter });
+    meta  = { total: items.length, page: 1, pageSize: items.length, totalPages: 1, hasMore: false };
   } else {
     const params = {};
     const filter = _buildFilter(run_doc);
-    if (filter) params.filter = filter;
+    if (filter)                    params.filter    = filter;
     const sort = _buildSort(run_doc);
-    if (sort) params.sort = sort;
-    if (run_doc.query?.fields) params.fields = run_doc.query.fields;
+    if (sort)                      params.sort      = sort;
+    if (run_doc.query?.fields)     params.fields    = run_doc.query.fields;
+    if (run_doc.query?.expand)     params.expand    = run_doc.query.expand;
+    if (run_doc.query?.skipTotal !== undefined)
+                                   params.skipTotal = run_doc.query.skipTotal;
+    else                           params.skipTotal = true;
 
-    const take = run_doc.query?.take;
-    const skip = run_doc.query?.skip;
+    const perPage = run_doc.query?.perPage;
+    const page    = run_doc.query?.page || 1;
 
-    if (take !== undefined) {
-      const page = skip ? Math.floor(skip / take) + 1 : 1;
-      const result = await globalThis.pb
-        .collection(collection)
-        .getList(page, take, params);
+    if (perPage !== undefined) {
+      const result = await globalThis.pb.collection(collection).getList(page, perPage, params);
       items = result.items;
-      meta = {
-        total: result.totalItems,
-        page: result.page,
-        pageSize: result.perPage,
+      meta  = {
+        total:      result.totalItems,
+        page:       result.page,
+        pageSize:   result.perPage,
         totalPages: result.totalPages,
-        hasMore: result.page < result.totalPages,
+        hasMore:    result.page < result.totalPages,
       };
     } else {
-      items = await globalThis.pb
-        .collection(collection)
-        .getFullList(params);
-      meta = {
-        total: items.length,
-        page: 1,
-        pageSize: items.length,
-        totalPages: 1,
-        hasMore: false,
-      };
+      if (run_doc.query?.batch) params.batch = run_doc.query.batch;
+      items = await globalThis.pb.collection(collection).getFullList(params);
+      meta  = { total: items.length, page: 1, pageSize: items.length, totalPages: 1, hasMore: false };
     }
   }
 
-  run_doc.target = { data: items.map(_mergeRecord).filter(Boolean), meta };
+  run_doc.target  = { data: items.map(_mergeRecord).filter(Boolean), meta };
   run_doc.success = true;
 }
 
@@ -233,19 +210,11 @@ async function create(run_doc) {
   const { top, data } = _splitRecord(doc);
 
   try {
-    const created = await globalThis.pb
-      .collection(collection)
-      .create({ id: doc.name, ...top, data });
-    run_doc.target = {
-      data: [_mergeRecord(created)],
-      meta: { id: created.id, name: created.name },
-    };
+    const created = await globalThis.pb.collection(collection).create({ id: doc.name, ...top, data });
+    run_doc.target  = { data: [_mergeRecord(created)], meta: { id: created.id, name: created.name } };
     run_doc.success = true;
   } catch (err) {
-    console.error(
-      "PB create error:",
-      JSON.stringify(err.response?.data || err.message),
-    );
+    console.error("PB create error:", JSON.stringify(err.response?.data || err.message));
     run_doc.error = err.message;
   }
 }
@@ -263,12 +232,10 @@ async function update(run_doc) {
   }
 
   try {
-    const existing = await globalThis.pb
-      .collection(collection)
-      .getFullList({ filter });
+    const existing = await globalThis.pb.collection(collection).getFullList({ filter });
 
     if (!existing.length) {
-      run_doc.target = { data: [], meta: { updated: 0 } };
+      run_doc.target  = { data: [], meta: { updated: 0 } };
       run_doc.success = true;
       return;
     }
@@ -278,20 +245,15 @@ async function update(run_doc) {
     const updated = await Promise.all(
       existing.map(async (rec) => {
         const mergedData = Object.assign({}, rec.data, data);
-        const pbResult = await globalThis.pb
-          .collection(collection)
-          .update(rec.id, { ...top, data: mergedData });
+        const pbResult   = await globalThis.pb.collection(collection).update(rec.id, { ...top, data: mergedData });
         return _mergeRecord(pbResult);
       }),
     );
 
-    run_doc.target = { data: updated, meta: { updated: updated.length } };
+    run_doc.target  = { data: updated, meta: { updated: updated.length } };
     run_doc.success = true;
   } catch (err) {
-    console.error(
-      "PB update error:",
-      JSON.stringify(err.response?.data || err.message),
-    );
+    console.error("PB update error:", JSON.stringify(err.response?.data || err.message));
     run_doc.error = err.message;
   }
 }

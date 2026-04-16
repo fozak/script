@@ -12,6 +12,8 @@ globalThis.CW.defaultFields = [
 ];
 
 
+
+
 globalThis.CW._config = {
 
   pb_url: "http://143.198.29.88:8090",
@@ -23,6 +25,22 @@ publicSites: {
   "exponanta.com": "/var/www/exponanta.com",
   "cfeglobal.org": "/var/www/cfeglobal.org"
 },
+
+runParams: [
+  { path: 'target_doctype',   url: 'doctype',        type: 'string' },
+  { path: 'operation',        url: 'operation',       type: 'string', default: 'select' },
+  { path: 'view',             url: 'view',            type: 'string' },
+  { path: 'component',        url: 'component',       type: 'string' },
+  { path: 'container',        url: 'container',       type: 'string' },
+  { path: 'source_doctype',   url: 'source_doctype',  type: 'string' },
+  { path: 'query.filter',     url: 'filter',          type: 'string' },
+  { path: 'query.sort',       url: 'sort',            type: 'string' },
+  { path: 'query.fields',     url: 'fields',          type: 'string' },
+  { path: 'query.expand',     url: 'expand',          type: 'string' },
+  { path: 'query.perPage',    url: 'perPage',         type: 'int'    },
+  { path: 'query.page',       url: 'page',            type: 'int'    },
+  { path: 'query.where.name', url: 'name',            type: 'string' },
+],
 
 
 calendar: {
@@ -226,57 +244,67 @@ systemFields: [
   },
 
   relationshipTypes: {
-    "Event": {
-      "User":         ["Attendee", "Speaker", "Volunteer", "Organizer", "Sponsor Contact"],
-      "Organization": ["Sponsor", "Partner", "Media Partner"],
-      "Event":        ["Related Event", "Follow-up Event"],
+  "Event": {
+    "User":         ["Attendee", "Speaker", "Volunteer", "Organizer", "Sponsor Contact"],
+    "Organization": ["Sponsor", "Partner", "Media Partner"],
+    "Event":        ["Related Event", "Follow-up Event"],
+  },
+  "Task": {
+    "User":         ["Assignee", "Reviewer", "Observer"],
+    "Task":         ["Blocks", "Blocked By", "Related"],
+    "Project":      ["Belongs To"],
+  },
+"User": {
+  "Role": ["Has Role"],
+  "User": ["Editor", "Delegate", "Assistant"],
+}
+},
+
+relationshipAccessMap: {
+  "Event": {
+    "User": {
+      "Attendee":        "read",
+      "Speaker":         "read",
+      "Volunteer":       "read",
+      "Organizer":       "write",
+      "Sponsor Contact": "read",
     },
-    "Task": {
-      "User":         ["Assignee", "Reviewer", "Observer"],
-      "Task":         ["Blocks", "Blocked By", "Related"],
-      "Project":      ["Belongs To"],
+    "Organization": {
+      "Sponsor":         "none",
+      "Partner":         "none",
+      "Media Partner":   "none",
+    },
+    "Event": {
+      "Related Event":   "none",
+      "Follow-up Event": "none",
     },
   },
- 
-  // Access granted when Relationship is Submitted (docstatus=1)
-  // write → _allowed     (can edit parent)
-  // read  → _allowed_read (can read parent)
-  // none  → business relationship only, no system access
-  relationshipAccessMap: {
-    "Event": {
-      "User": {
-        "Attendee":        "read",
-        "Speaker":         "read",
-        "Volunteer":       "read",
-        "Organizer":       "write",
-        "Sponsor Contact": "read",
-      },
-      "Organization": {
-        "Sponsor":         "none",
-        "Partner":         "none",
-        "Media Partner":   "none",
-      },
-      "Event": {
-        "Related Event":   "none",
-        "Follow-up Event": "none",
-      },
+  "Task": {
+    "User": {
+      "Assignee":        "write",
+      "Reviewer":        "read",
+      "Observer":        "read",
     },
     "Task": {
-      "User": {
-        "Assignee":        "write",
-        "Reviewer":        "read",
-        "Observer":        "read",
-      },
-      "Task": {
-        "Blocks":          "none",
-        "Blocked By":      "none",
-        "Related":         "none",
-      },
-      "Project": {
-        "Belongs To":      "none",
-      },
+      "Blocks":          "none",
+      "Blocked By":      "none",
+      "Related":         "none",
+    },
+    "Project": {
+      "Belongs To":      "none",
     },
   },
+"User": {
+  "Role": {
+    "Has Role":          "read",
+  },
+  "User": {
+    "Editor":    "write",
+    "Delegate":  "write",
+    "Assistant": "read",
+  },
+},
+},
 
   // ============================================================
   // OPERATION ALIASES (existing)

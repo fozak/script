@@ -6,7 +6,7 @@
   "is_submittable": 1,
   "autoname": "hash",
   "view_components": {
-    "form": { "component": "MainForm", "container": "main_container" }
+    "form": { "component": "MainForm", "container": "threads_right" }
   },
   "fields": [
     {
@@ -78,7 +78,7 @@
   "autoname": "hash",
   "view_components": {
     "list": { "component": "MainGrid", "container": "threads_left" },
-    "form": { "component": "MainForm", "container": "main_container" }
+    "form": { "component": "MainForm", "container": "threads_right" }
   },
   "fields": [
     {
@@ -545,7 +545,7 @@
   "autoname": "generateId",
   "view_components": {
     "list": { "component": "MainGrid", "container": "threads_left" },
-    "form": { "component": "MainForm", "container": "main_container" }
+    "form": { "component": "MainForm", "container": "threads_right" }
   },
   "fields": [
     {
@@ -587,7 +587,7 @@
     },
     {
       "fieldname": "event_slot",
-      "fieldtype": "Component",
+      "fieldtype": "Data",
       "label": "Date/Time Slot",
       "component": "./slot-picker.js",
       "display": "SlotBadge",
@@ -599,7 +599,7 @@
       "fieldtype": "Link",
       "label": "Availability Rule",
       "options": "AvailabilityRule",
-      "reqd": 1
+      "reqd": 0
     },
     {
       "fieldname": "format",
@@ -607,12 +607,14 @@
       "label": "Format",
       "options": "in-person\nonline\nhybrid"
     },
-    {
-      "fieldname": "event_type",
-      "fieldtype": "Select",
-      "label": "Event Type",
-      "options": "conference\nmeetup\nworkshop\nwebinar\n1-1\nother"
-    },
+  {
+  "fieldname": "docsubtype",
+  "fieldtype": "Select",
+  "label": "Type",
+  "options": "conference\nmeetup\nworkshop\nwebinar\n1-1\nother",
+  "reqd": 0,
+  "in_list_view": 1
+},
     { "fieldname": "location",    "fieldtype": "Data",     "label": "Location" },
     { "fieldname": "city",        "fieldtype": "Data",     "label": "City" },
     { "fieldname": "region",      "fieldtype": "Data",     "label": "Region" },
@@ -84136,6 +84138,11 @@
         "hidden": 1,
         "label": "State",
         "read_only": 1
+      },
+      {
+        "fieldname": "relationships",
+        "fieldtype": "Relationship Panel",
+        "label": "Relationships"
       }
     ],
     "icon": "fa fa-user",
@@ -125859,10 +125866,10 @@
           "1_2": "Cancel this relationship?"
         },
         "sideEffects": {
-          "0_1": "async function(run_doc) { var rec = run_doc.target && run_doc.target.data && run_doc.target.data[0]; if (!rec) return; var access = (CW._config.relationshipAccessMap && CW._config.relationshipAccessMap[rec.parenttype] && CW._config.relationshipAccessMap[rec.parenttype][rec.related_doctype] && CW._config.relationshipAccessMap[rec.parenttype][rec.related_doctype][rec.type]) || 'none'; if (access === 'none' || rec.related_doctype !== 'User' || !rec.related_name || !rec.parent) return; var sel = CW.run({ operation: 'select', target_doctype: rec.parenttype, query: { where: { name: rec.parent } }, options: { render: false } }); await CW.controller(sel); var pDoc = sel.target && sel.target.data && sel.target.data[0]; if (!pDoc) return; var updateRun = CW.run({ operation: 'update', target_doctype: rec.parenttype, query: { where: { name: rec.parent } }, options: { render: false } }); updateRun.target = { data: [pDoc] }; if (access === 'write') { var cur = pDoc._allowed || []; if (!cur.includes(rec.related_name)) updateRun.input._allowed = cur.concat([rec.related_name]); } else { var cur2 = pDoc._allowed_read || []; if (!cur2.includes(rec.related_name)) updateRun.input._allowed_read = cur2.concat([rec.related_name]); } await CW.controller(updateRun); }",
-          "1_2": "async function(run_doc) { var rec = run_doc.target && run_doc.target.data && run_doc.target.data[0]; if (!rec) return; var access = (CW._config.relationshipAccessMap && CW._config.relationshipAccessMap[rec.parenttype] && CW._config.relationshipAccessMap[rec.parenttype][rec.related_doctype] && CW._config.relationshipAccessMap[rec.parenttype][rec.related_doctype][rec.type]) || 'none'; if (access === 'none' || rec.related_doctype !== 'User' || !rec.related_name || !rec.parent) return; var sel = CW.run({ operation: 'select', target_doctype: rec.parenttype, query: { where: { name: rec.parent } }, options: { render: false } }); await CW.controller(sel); var pDoc = sel.target && sel.target.data && sel.target.data[0]; if (!pDoc) return; var updateRun = CW.run({ operation: 'update', target_doctype: rec.parenttype, query: { where: { name: rec.parent } }, options: { render: false } }); updateRun.target = { data: [pDoc] }; if (access === 'write') { updateRun.input._allowed = (pDoc._allowed || []).filter(function(id){return id !== rec.related_name;}); } else { updateRun.input._allowed_read = (pDoc._allowed_read || []).filter(function(id){return id !== rec.related_name;}); } await CW.controller(updateRun); }",
-          "2_0": "async function(run_doc) { var rec = run_doc.target && run_doc.target.data && run_doc.target.data[0]; if (!rec) return; var access = (CW._config.relationshipAccessMap && CW._config.relationshipAccessMap[rec.parenttype] && CW._config.relationshipAccessMap[rec.parenttype][rec.related_doctype] && CW._config.relationshipAccessMap[rec.parenttype][rec.related_doctype][rec.type]) || 'none'; if (access === 'none' || rec.related_doctype !== 'User' || !rec.related_name || !rec.parent) return; var sel = CW.run({ operation: 'select', target_doctype: rec.parenttype, query: { where: { name: rec.parent } }, options: { render: false } }); await CW.controller(sel); var pDoc = sel.target && sel.target.data && sel.target.data[0]; if (!pDoc) return; var updateRun = CW.run({ operation: 'update', target_doctype: rec.parenttype, query: { where: { name: rec.parent } }, options: { render: false } }); updateRun.target = { data: [pDoc] }; if (access === 'write') { var cur = pDoc._allowed || []; if (!cur.includes(rec.related_name)) updateRun.input._allowed = cur.concat([rec.related_name]); } else { var cur2 = pDoc._allowed_read || []; if (!cur2.includes(rec.related_name)) updateRun.input._allowed_read = cur2.concat([rec.related_name]); } await CW.controller(updateRun); }"
-        }
+  "0_1": "async function(run_doc) { var rec = run_doc.target && run_doc.target.data && run_doc.target.data[0]; if (!rec) return; var access = (CW._config.relationshipAccessMap && CW._config.relationshipAccessMap[rec.parenttype] && CW._config.relationshipAccessMap[rec.parenttype][rec.related_doctype] && CW._config.relationshipAccessMap[rec.parenttype][rec.related_doctype][rec.type]) || 'none'; if (access === 'none' || !rec.related_name || !rec.parent) return; var selRun = await run_doc.child({ operation: 'select', target_doctype: rec.parenttype, query: { where: { name: rec.parent } }, options: { render: false } }); var pDoc = selRun.target && selRun.target.data && selRun.target.data[0]; if (!pDoc) return; var field = access === 'write' ? '_allowed' : '_allowed_read'; var cur = pDoc[field] || []; if (cur.includes(rec.related_name)) return; var updateRun = await run_doc.child({ operation: 'update', target_doctype: rec.parenttype, query: { where: { name: rec.parent } }, options: { render: false, internal: true } }); updateRun.target = { data: [pDoc] }; if (access === 'write') { updateRun.input._allowed = cur.concat([rec.related_name]); } else { updateRun.input._allowed_read = (pDoc._allowed_read || []).concat([rec.related_name]); } await CW.controller(updateRun); }",
+  "1_2": "async function(run_doc) { var rec = run_doc.target && run_doc.target.data && run_doc.target.data[0]; if (!rec) return; var access = (CW._config.relationshipAccessMap && CW._config.relationshipAccessMap[rec.parenttype] && CW._config.relationshipAccessMap[rec.parenttype][rec.related_doctype] && CW._config.relationshipAccessMap[rec.parenttype][rec.related_doctype][rec.type]) || 'none'; if (access === 'none' || !rec.related_name || !rec.parent) return; var selRun = await run_doc.child({ operation: 'select', target_doctype: rec.parenttype, query: { where: { name: rec.parent } }, options: { render: false } }); var pDoc = selRun.target && selRun.target.data && selRun.target.data[0]; if (!pDoc) return; var field = access === 'write' ? '_allowed' : '_allowed_read'; var updateRun = await run_doc.child({ operation: 'update', target_doctype: rec.parenttype, query: { where: { name: rec.parent } }, options: { render: false, internal: true } }); updateRun.target = { data: [pDoc] }; if (access === 'write') { updateRun.input._allowed = (pDoc._allowed || []).filter(function(id) { return id !== rec.related_name; }); } else { updateRun.input._allowed_read = (pDoc._allowed_read || []).filter(function(id) { return id !== rec.related_name; }); } await CW.controller(updateRun); }",
+  "2_0": "async function(run_doc) { var rec = run_doc.target && run_doc.target.data && run_doc.target.data[0]; if (!rec) return; var access = (CW._config.relationshipAccessMap && CW._config.relationshipAccessMap[rec.parenttype] && CW._config.relationshipAccessMap[rec.parenttype][rec.related_doctype] && CW._config.relationshipAccessMap[rec.parenttype][rec.related_doctype][rec.type]) || 'none'; if (access === 'none' || !rec.related_name || !rec.parent) return; var selRun = await run_doc.child({ operation: 'select', target_doctype: rec.parenttype, query: { where: { name: rec.parent } }, options: { render: false } }); var pDoc = selRun.target && selRun.target.data && selRun.target.data[0]; if (!pDoc) return; var field = access === 'write' ? '_allowed' : '_allowed_read'; var cur = pDoc[field] || []; if (cur.includes(rec.related_name)) return; var updateRun = await run_doc.child({ operation: 'update', target_doctype: rec.parenttype, query: { where: { name: rec.parent } }, options: { render: false, internal: true } }); updateRun.target = { data: [pDoc] }; if (access === 'write') { updateRun.input._allowed = cur.concat([rec.related_name]); } else { updateRun.input._allowed_read = (pDoc._allowed_read || []).concat([rec.related_name]); } await CW.controller(updateRun); }"
+}
       }
     }
   },
