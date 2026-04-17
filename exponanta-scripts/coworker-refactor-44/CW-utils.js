@@ -1,7 +1,8 @@
 // ============================================================
-// CW-utils.js v 39
+// CW-utils.js v 40
 // ============================================================
 
+const CW = globalThis.CW;
 
 // ============================================================
 // LAYOUT PARSER
@@ -206,6 +207,81 @@ function validateId(id) {
 }
 
 // ============================================================
+// FSM HELPERS — moved from CW-run.js
+// Pure functions — read Schema/config only, no run_doc mutation
+// ============================================================
+
+// _getStateDef: merge SystemSchema dim + doctype dim for all dims
+// returns { "0": { ...dim0 }, "1": { ...dim1 }, ... }
+function _getStateDef(doctype) {
+  const sys  = CW.Schema?.SystemSchema?._state || {};
+  const dt   = CW.Schema?.[doctype]?._state    || {};
+  const dims = new Set([...Object.keys(sys), ...Object.keys(dt)]);
+  const merged = {};
+  for (const dim of dims) {
+    const sysDim = sys[dim] || {};
+    const dtDim  = dt[dim]  || {};
+    merged[dim] = Object.assign({}, sysDim, dtDim);
+    // deep merge sideEffects — dtDim overrides sysDim per key
+    merged[dim].sideEffects = Object.assign({}, sysDim.sideEffects || {}, dtDim.sideEffects || {});
+  }
+  return merged;
+}
+
+// _getDimValue: read current value for a dim from doc._state
+// falls back to dimDef.fieldname field on doc, then dimDef.values[0]
+function _getDimValue(doc, dim, dimDef) {
+  var state = doc._state
+  if (typeof state === 'string') { try { state = JSON.parse(state) } catch(_) { state = {} } }
+  if (state && typeof state === 'object' && dim in state) return state[dim]
+  if (dimDef?.fieldname && dimDef.fieldname in doc) return doc[dimDef.fieldname]
+  return dimDef?.values?.[0] ?? 0
+}
+
+// _getTransitions: returns available transitions for a dim given current doc state
+// filters by requires + rules, returns array of { key, from, to, label, confirm }
+// key format: "0_1" (bare, without dim prefix — for internal use)
+function _getTransitions(schema, doc, dim) {
+  const stateDef = _getStateDef(schema.schema_name || schema.name);
+  const dimDef   = stateDef[dim];
+  if (!dimDef) return [];
+
+  const current = _getDimValue(doc, dim, dimDef);
+  const tos     = dimDef.transitions?.[String(current)] || [];
+
+  return tos
+    .map(to => {
+      const bareKey    = `${current}_${to}`;
+      const signal     = `${dim}.${bareKey}`;
+      const requires   = dimDef.requires?.[bareKey] || {};
+      const rule       = dimDef.rules?.[bareKey];
+      const reqPassed  = Object.entries(requires).every(([k, v]) => Number(schema[k] ?? 0) === Number(v));
+      const rulePassed = typeof rule === 'function'
+        ? rule({ target: { data: [doc] }, input: {} })
+        : true;
+      if (!reqPassed || !rulePassed) return null;
+      return {
+        signal,
+        from:    current,
+        to,
+        label:   dimDef.labels?.[bareKey],
+        confirm: dimDef.confirm?.[bareKey],
+      };
+    })
+    .filter(Boolean);
+}
+
+// _resolveViewComponent: schema view_components → config views → fallback
+// returns { component, container } always
+function _resolveViewComponent(doctype, view, fallback_container) {
+  const dtViews = CW.Schema?.[doctype]?.view_components;
+  if (dtViews?.[view]) return dtViews[view];
+  const cfg = CW._config?.views?.[view];
+  if (cfg) return cfg;
+  return { component: 'MainForm', container: fallback_container || 'main_container' };
+}
+
+// ============================================================
 // CW METHODS
 // ============================================================
 
@@ -235,6 +311,12 @@ CW.evalTemplateObj = (obj, context) => {
   return Object.fromEntries(Object.entries(obj).map(([k, v]) => [k, CW.evalTemplate(v, context)]));
 };
 
+// assign FSM helpers to CW — called by CW-run.js and CW-ui.js
+CW._getStateDef          = _getStateDef;
+CW._getDimValue          = _getDimValue;
+CW._getTransitions       = _getTransitions;
+CW._resolveViewComponent = _resolveViewComponent;
+
 // ============================================================
 // PERSIST STUB
 // ============================================================
@@ -242,8 +324,6 @@ CW.evalTemplateObj = (obj, context) => {
 const persist = async (run_doc) => {
   console.log("[persist] would save", { ...run_doc.target.data[0] });
 };
-
-
 
 Object.assign(globalThis, {
   generateId,
@@ -253,7 +333,7 @@ Object.assign(globalThis, {
   getByPath,
   evaluateDependsOn,
   validateId,
-  persist
+  persist,
 });
 
-console.log("✅ Utils loaded");  
+console.log("✅ CW-utils.js v40 loaded");
