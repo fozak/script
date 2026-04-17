@@ -1,0 +1,83 @@
+{
+  "schema_name": "User",
+  "doctype": "Schema",
+  "title_field": "full_name",
+  "autoname": "hash",
+  "is_submittable": 0,
+  "view_components": {
+    "list": { "component": "MainGrid", "container": "threads_left" },
+    "form": { "component": "MainForm", "container": "main_container" }
+  },
+  "fields": [
+    { "fieldname": "section_identity", "fieldtype": "Section Break", "label": "Identity" },
+    { "fieldname": "email",     "fieldtype": "Data",  "label": "Email",      "reqd": 1, "in_list_view": 1 },
+    { "fieldname": "first_name","fieldtype": "Data",  "label": "First Name", "reqd": 1 },
+    { "fieldname": "last_name", "fieldtype": "Data",  "label": "Last Name" },
+    { "fieldname": "full_name", "fieldtype": "Data",  "label": "Full Name",  "read_only": 1, "in_list_view": 1 },
+    { "fieldname": "username",  "fieldtype": "Data",  "label": "Username" },
+    { "fieldname": "user_image","fieldtype": "Data",  "label": "Avatar URL" },
+    { "fieldname": "section_auth", "fieldtype": "Section Break", "label": "Auth Status" },
+    { "fieldname": "verified",  "fieldtype": "Check", "label": "Verified",   "read_only": 1 },
+    { "fieldname": "emailVisibility", "fieldtype": "Check", "label": "Email Visible" },
+    { "fieldname": "relationships", "fieldtype": "Relationship Panel", "label": "Roles & Access" }
+  ],
+  "_state": {
+    "1": {
+      "name": "_auth_status",
+      "values": [0, 1, 2, 3, 4],
+      "options": ["Invited", "Active", "Locked", "Password Reset Pending", "Disabled"],
+      "transitions": {
+        "0": [1, 4],
+        "1": [2, 3, 4],
+        "2": [1, 4],
+        "3": [1, 4],
+        "4": [0]
+      },
+      "labels": {
+        "0_1": "Activate",
+        "0_4": "Cancel Invitation",
+        "1_2": "Lock Account",
+        "1_3": "Require Password Reset",
+        "1_4": "Disable User",
+        "2_1": "Unlock Account",
+        "3_1": "Complete Reset",
+        "4_0": "Re-invite"
+      },
+      "sideEffects": {
+        "0_1": "async function(run_doc) { var rec = run_doc.target && run_doc.target.data && run_doc.target.data[0]; if (!rec) return; await pb.collection('users').update(rec.name, { verified: true }); }",
+        "1_2": "async function(run_doc) { var rec = run_doc.target && run_doc.target.data && run_doc.target.data[0]; if (!rec) return; await pb.collection('users').update(rec.name, { verified: false }); }",
+        "1_4": "async function(run_doc) { var rec = run_doc.target && run_doc.target.data && run_doc.target.data[0]; if (!rec) return; await pb.collection('users').update(rec.name, { verified: false }); }"
+      },
+      "rules": {},
+      "requires": {}
+    }
+  },
+  "permissions": [
+    {
+      "role": "System Manager",
+      "read": 1, "write": 1, "create": 1, "delete": 1,
+      "transitions": {
+        "1.0_1": "Activate User",
+        "1.0_4": "Cancel Invitation",
+        "1.1_2": "Lock Account",
+        "1.1_3": "Require Password Reset",
+        "1.1_4": "Disable User",
+        "1.2_1": "Unlock Account",
+        "1.3_1": "Complete Reset",
+        "1.4_0": "Re-invite"
+      }
+    },
+    {
+      "role": "User Manager",
+      "read": 1, "write": 1,
+      "transitions": {}
+    },
+    {
+      "role": "Self",
+      "read": 1, "write": 1,
+      "transitions": {
+        "1.1_3": "Reset My Password"
+      }
+    }
+  ]
+}

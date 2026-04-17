@@ -233,25 +233,7 @@ function _getStateDef(doctype) {
 function _getDimValue(doc, dim, dimDef) {
   var state = doc._state
   if (typeof state === 'string') { try { state = JSON.parse(state) } catch(_) { state = {} } }
-  if (state && typeof state === 'object') {
-    // new format: derive current from signal keys "dim.from_to": "1"|"-1"
-    const prefix = dim + '.'
-    var current = null
-    for (const [k, v] of Object.entries(state)) {
-      if (!k.startsWith(prefix)) continue
-      const rest = k.slice(prefix.length)
-      const parts = rest.split('_')
-      if (parts.length !== 2) continue
-      const from = parseInt(parts[0])
-      const to   = parseInt(parts[1])
-      if (isNaN(from) || isNaN(to)) continue
-      if (v === '1')  current = to    // success — current = to
-      if (v === '-1') current = from  // failure — current = from (unchanged)
-    }
-    if (current !== null) return current
-    // legacy format: bare numeric dim key "0", "1"
-    if (dim in state) return state[dim]
-  }
+  if (state && typeof state === 'object' && dim in state) return state[dim]
   if (dimDef?.fieldname && dimDef.fieldname in doc) return doc[dimDef.fieldname]
   return dimDef?.values?.[0] ?? 0
 }
@@ -301,40 +283,40 @@ function _getTransitions(schema, doc, dim) {
     .filter(Boolean);
 }
 
-// _getFormButtons: returns { outside, menu } button groups for MainForm
-// outside: Save + primary dim 0 buttons
-// menu: Edit + non-primary dim 0 + dim 1+ buttons
+
+//added for buttons
+
 function _getFormButtons(run_doc) {
-  const doctype   = run_doc.target_doctype || run_doc.source_doctype
-  const schema    = CW.Schema?.[doctype]
-  const doc       = run_doc.target?.data?.[0] || {}
-  const stateDef  = CW._getStateDef(doctype)
-  const dim0      = stateDef?.['0']
-  const explicit  = !!(schema?.explicit_edit_intent ?? 0)
-  const editing   = ['update','create'].includes(run_doc.operation) && (doc.docstatus ?? 0) === 0
-  const isOwner   = doc.owner === CW._config?.currentUser?.id
-  const actLabels = dim0?.action_labels || {}
+    const doctype   = run_doc.target_doctype || run_doc.source_doctype
+    const schema    = CW.Schema?.[doctype]
+    const doc       = run_doc.target?.data?.[0] || {}
+    const stateDef  = CW._getStateDef(doctype)
+    const dim0      = stateDef?.['0']
+    const explicit  = !!(schema?.explicit_edit_intent ?? 0)
+    const editing   = ['update','create'].includes(run_doc.operation) && (doc.docstatus ?? 0) === 0
+    const isOwner   = doc.owner === CW._config?.currentUser?.id
+    const actLabels = dim0?.action_labels || {}
 
-  const outside = []
-  if (explicit && editing)
-    outside.push({ type: 'save', label: actLabels.save || 'Save' })
-  const dim0Btns = _getTransitions(schema, doc, '0')
-  dim0Btns
-    .filter(b => dim0?.primary?.[b.signal.slice(b.signal.indexOf('.')+1)])
-    .forEach(b => outside.push({ type: 'fsm', ...b }))
+    const outside = []
+    if (explicit && editing)
+      outside.push({ type: 'save', label: actLabels.save || 'Save' })
+    const dim0Btns = CW._getTransitions(schema, doc, '0')
+    dim0Btns
+      .filter(b => dim0?.primary?.[b.signal.slice(b.signal.indexOf('.')+1)])
+      .forEach(b => outside.push({ type: 'fsm', ...b }))
 
-  const menu = []
-  if (explicit && !editing && isOwner)
-    menu.push({ type: 'edit', label: actLabels.edit || 'Edit' })
-  dim0Btns
-    .filter(b => !dim0?.primary?.[b.signal.slice(b.signal.indexOf('.')+1)])
-    .forEach(b => menu.push({ type: 'fsm', ...b }))
-  Object.keys(stateDef).filter(d => d !== '0').forEach(dim =>
-    _getTransitions(schema, doc, dim).forEach(b => menu.push({ type: 'fsm', ...b }))
-  )
+    const menu = []
+    if (explicit && !editing && isOwner)
+      menu.push({ type: 'edit', label: actLabels.edit || 'Edit' })
+    dim0Btns
+      .filter(b => !dim0?.primary?.[b.signal.slice(b.signal.indexOf('.')+1)])
+      .forEach(b => menu.push({ type: 'fsm', ...b }))
+    Object.keys(stateDef).filter(d => d !== '0').forEach(dim =>
+      CW._getTransitions(schema, doc, dim).forEach(b => menu.push({ type: 'fsm', ...b }))
+    )
 
-  return { outside, menu }
-}
+    return { outside, menu }
+  }
 
 // _resolveViewComponent: schema view_components → config views → fallback
 // returns { component, container } always
@@ -381,7 +363,8 @@ CW._getStateDef          = _getStateDef;
 CW._getDimValue          = _getDimValue;
 CW._getTransitions       = _getTransitions;
 CW._resolveViewComponent = _resolveViewComponent;
-CW._getFormButtons       = _getFormButtons;
+CW._getFormButtons = _getFormButtons;
+
 
 // ============================================================
 // PERSIST STUB

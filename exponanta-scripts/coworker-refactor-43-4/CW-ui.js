@@ -505,7 +505,7 @@ const MainForm = function({ run_doc }) {
   // badge from dim 0 current state
   const stateDef   = CW._getStateDef(doctype);
   const dim0       = stateDef?.['0'];
-  const current    = CW._getDimValue(doc, '0', dim0);
+  const current    = doc._state?.['0'] ?? doc.docstatus ?? 0;
   const badgeLabel = dim0?.options?.[current] || '';
   const badgeCls   = ['bg-warning','bg-success','bg-danger'][current] || 'bg-secondary';
 
@@ -776,6 +776,7 @@ const RelationshipPanel = function({ run_doc }) {
     }
   };
 
+  // FSM action — use _getTransitions, btn.signal is "0.0_1" format
   const onRelAction = async (rel, btn) => {
     const cr = await run_doc.child({
       operation:      'update',
@@ -789,7 +790,7 @@ const RelationshipPanel = function({ run_doc }) {
 
   const statusBadge = (rel) => {
     const dim0  = CW._getStateDef('Relationship')?.['0'];
-    const cur   = CW._getDimValue(rel, '0', dim0);
+    const cur   = rel._state?.['0'] ?? rel.docstatus ?? 0;
     const label = dim0?.options?.[cur] || '';
     const cls   = ['bg-warning text-dark','bg-success','bg-danger'][cur] || 'bg-secondary';
     return label ? ce('span', { className: `badge ${cls} ms-1` }, label) : null;
@@ -805,6 +806,7 @@ const RelationshipPanel = function({ run_doc }) {
 
     loaded && rels.length > 0 && ce('div', { className: 'mb-3' },
       rels.map(rel => {
+        // use _getTransitions for consistent signal format
         const relSchema = CW.Schema?.Relationship || { schema_name: 'Relationship' }
         const btns = CW._getTransitions(relSchema, rel, '0')
         return ce('div', {

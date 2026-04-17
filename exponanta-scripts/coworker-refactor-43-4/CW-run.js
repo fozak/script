@@ -75,8 +75,8 @@ CW._execTransition = async function(run_doc, dim, key) {
   if (!run_doc.input._state || typeof run_doc.input._state !== 'object') {
     run_doc.input._state = {};
   }
-  // dim current value NOT stored as bare key — derived from signal key by _getDimValue
-  // only docstatus synced for dim 0 (field on document, not in _state)
+  run_doc.input._state[dim] = to;
+
   if (String(dim) === '0') {
     run_doc.input.docstatus = to;
   }
@@ -296,22 +296,13 @@ CW._handleSignal = async function(run_doc) {
       return;
     }
 
-    try {
-      await CW._execTransition(run_doc, dim, key);
+    await CW._execTransition(run_doc, dim, key);
 
-      // mark signal success BEFORE write — "1" gets stored to PB
-      run_doc.input._state[signal] = '1';
-
-      run_doc.operation = run_doc.input.name || existingDoc.name ? 'update' : 'create';
-      if (run_doc.operation === 'update') {
-        await CW._handlers.update(run_doc);
-      } else {
-        await CW._handlers.create(run_doc);
-      }
-    } catch(e) {
-      // mark signal failure — "-1" gets stored to PB
-      run_doc.input._state[signal] = '-1';
-      run_doc.error = e.message;
+    run_doc.operation = run_doc.input.name || existingDoc.name ? 'update' : 'create';
+    if (run_doc.operation === 'update') {
+      await CW._handlers.update(run_doc);
+    } else {
+      await CW._handlers.create(run_doc);
     }
 
     matched = true;
@@ -396,8 +387,13 @@ CW._preflight = function(run_doc, operation) {
       }
     }
 
-    // initialize _state as empty — signal keys written on first transition
-    input._state = {};
+    // initialize _state for all dims
+    const stateDef   = CW._getStateDef(run_doc.target_doctype);
+    const freshState = {};
+    for (const [dim, dimDef] of Object.entries(stateDef)) {
+      freshState[dim] = dimDef.values?.[0] ?? 0;
+    }
+    input._state = freshState;
 
     // populate _allowed/_allowed_read from schema.permissions
     // Self is skipped — owner is handled by systemFields
@@ -427,11 +423,13 @@ CW._preflight = function(run_doc, operation) {
       if (missing.length) { run_doc.error = `Required: ${missing.join(', ')}`; return; }
     }
 
-    // preserve ALL existing _state keys — signal keys + any others
-    // incoming input._state (new signal) takes precedence
+    // preserve existing dim values — merge with incoming _state
     if (run_doc.target?.data?.[0]?._state) {
-      const targetState = run_doc.target.data[0]._state;
-      input._state = Object.assign({}, targetState, input._state || {});
+      const targetState  = run_doc.target.data[0]._state;
+      const dimKeys      = Object.keys(targetState).filter(k => !isNaN(k));
+      const baseDimState = {};
+      dimKeys.forEach(k => { baseDimState[k] = targetState[k]; });
+      input._state = Object.assign({}, baseDimState, input._state || {});
     }
   }
 
