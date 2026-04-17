@@ -283,6 +283,41 @@ function _getTransitions(schema, doc, dim) {
     .filter(Boolean);
 }
 
+
+//added for buttons
+
+function _getFormButtons(run_doc) {
+    const doctype   = run_doc.target_doctype || run_doc.source_doctype
+    const schema    = CW.Schema?.[doctype]
+    const doc       = run_doc.target?.data?.[0] || {}
+    const stateDef  = CW._getStateDef(doctype)
+    const dim0      = stateDef?.['0']
+    const explicit  = !!(schema?.explicit_edit_intent ?? 0)
+    const editing   = ['update','create'].includes(run_doc.operation) && (doc.docstatus ?? 0) === 0
+    const isOwner   = doc.owner === CW._config?.currentUser?.id
+    const actLabels = dim0?.action_labels || {}
+
+    const outside = []
+    if (explicit && editing)
+      outside.push({ type: 'save', label: actLabels.save || 'Save' })
+    const dim0Btns = CW._getTransitions(schema, doc, '0')
+    dim0Btns
+      .filter(b => dim0?.primary?.[b.signal.slice(b.signal.indexOf('.')+1)])
+      .forEach(b => outside.push({ type: 'fsm', ...b }))
+
+    const menu = []
+    if (explicit && !editing && isOwner)
+      menu.push({ type: 'edit', label: actLabels.edit || 'Edit' })
+    dim0Btns
+      .filter(b => !dim0?.primary?.[b.signal.slice(b.signal.indexOf('.')+1)])
+      .forEach(b => menu.push({ type: 'fsm', ...b }))
+    Object.keys(stateDef).filter(d => d !== '0').forEach(dim =>
+      CW._getTransitions(schema, doc, dim).forEach(b => menu.push({ type: 'fsm', ...b }))
+    )
+
+    return { outside, menu }
+  }
+
 // _resolveViewComponent: schema view_components → config views → fallback
 // returns { component, container } always
 function _resolveViewComponent(doctype, view, fallback_container) {
@@ -328,6 +363,8 @@ CW._getStateDef          = _getStateDef;
 CW._getDimValue          = _getDimValue;
 CW._getTransitions       = _getTransitions;
 CW._resolveViewComponent = _resolveViewComponent;
+CW._getFormButtons = _getFormButtons;
+
 
 // ============================================================
 // PERSIST STUB
@@ -346,7 +383,6 @@ Object.assign(globalThis, {
   evaluateDependsOn,
   validateId,
   persist,
-  CW._getFormButtons = _getFormButtons
 });
 
 console.log("✅ CW-utils.js v40 loaded");

@@ -432,6 +432,57 @@ const FieldRenderer = function({ field, run_doc }) {
 };
 
 // ============================================================
+// FORM ACTIONS
+// Renders outside + ••• button groups from CW._getFormButtons
+// ============================================================
+
+const FormActions = function({ run_doc }) {
+  const { outside, menu } = CW._getFormButtons(run_doc)
+
+  const onFsmClick = (btn) => {
+    if (btn.confirm && !window.confirm(btn.confirm)) return
+    run_doc.input._state = { [btn.signal]: '' }
+    CW.controller(run_doc).catch(err => console.error('[CW]', err))
+  }
+
+  return ce('div', { className: 'd-flex gap-2 align-items-center' },
+
+    // outside •••: Save + primary FSM buttons
+    ...outside.map(btn =>
+      btn.type === 'save'
+        ? ce('button', { key: 'save', className: 'btn btn-primary btn-sm',
+            onClick: () => { run_doc.operation = 'select'; CW._render(run_doc) }
+          }, btn.label)
+        : ce('button', { key: btn.signal, className: 'btn btn-primary btn-sm',
+            onClick: () => onFsmClick(btn)
+          }, btn.label)
+    ),
+
+    // ••• dropdown: Edit + non-primary dim 0 + dim 1+
+    menu.length > 0 && ce('div', { key: 'menu', className: 'dropdown' },
+      ce('button', {
+        className: 'btn btn-ghost-secondary btn-sm',
+        'data-bs-toggle': 'dropdown',
+        'aria-expanded': 'false',
+      }, '•••'),
+      ce('ul', { className: 'dropdown-menu dropdown-menu-end' },
+        ...menu.map(btn =>
+          btn.type === 'edit'
+            ? ce('li', { key: 'edit' },
+                ce('button', { className: 'dropdown-item',
+                  onClick: () => { run_doc.operation = 'update'; CW._render(run_doc) }
+                }, btn.label))
+            : ce('li', { key: btn.signal },
+                ce('button', { className: 'dropdown-item',
+                  onClick: () => onFsmClick(btn)
+                }, btn.label))
+        )
+      )
+    )
+  )
+}
+
+// ============================================================
 // MAIN FORM
 // ============================================================
 
@@ -451,74 +502,19 @@ const MainForm = function({ run_doc }) {
   const fields    = schema.fields || [];
   const skipTypes = new Set(['Column Break', 'Tab Break', 'HTML']);
 
-  // FSM buttons — use _getTransitions for dim 0
-  // signal format: "0.0_1", "0.1_2" etc — passed directly to _state
-  const stateDef = CW._getStateDef(doctype);
-  const dim0     = stateDef?.['0'];
-  const buttons  = CW._getTransitions(schema, doc, '0');
-
-  const current     = doc._state?.['0'] ?? doc.docstatus ?? 0;
-  const badgeLabel  = dim0?.options?.[current] || '';
-  const badgeCls    = ['bg-warning','bg-success','bg-danger'][current] || 'bg-secondary';
-
-  const explicit  = !!(schema.explicit_edit_intent ?? 0);
-  const editing   = ['update','create'].includes(run_doc.operation) && (doc.docstatus ?? 0) === 0;
-  const isOwner   = doc.owner === CW._config?.currentUser?.id;
-  const actLabels = dim0?.action_labels || {};
-
-  // primary flag uses bare key (without dim prefix) from schema
-  const primaryBtns = buttons.filter(b => dim0?.primary?.[b.signal.slice(b.signal.indexOf('.')+1)]);
-  const menuBtns    = buttons.filter(b => !dim0?.primary?.[b.signal.slice(b.signal.indexOf('.')+1)]);
-
-  const onFsmClick = (btn) => {
-    if (btn.confirm && !window.confirm(btn.confirm)) return;
-    run_doc.input._state = { [btn.signal]: '' };
-    CW.controller(run_doc).catch(err => console.error('[CW]', err));
-  };
-
-  const fsmButton = (btn) => ce('button', {
-    key:       btn.signal,
-    className: 'btn btn-primary btn-sm',
-    onClick:   () => onFsmClick(btn),
-  }, btn.label);
-
-  const menuItem = (btn) => ce('li', { key: btn.signal },
-    ce('button', {
-      className: 'dropdown-item',
-      onClick:   () => onFsmClick(btn),
-    }, btn.label)
-  );
+  // badge from dim 0 current state
+  const stateDef   = CW._getStateDef(doctype);
+  const dim0       = stateDef?.['0'];
+  const current    = doc._state?.['0'] ?? doc.docstatus ?? 0;
+  const badgeLabel = dim0?.options?.[current] || '';
+  const badgeCls   = ['bg-warning','bg-success','bg-danger'][current] || 'bg-secondary';
 
   return ce('div', { className: 'card' },
     ce('div', { className: 'card-header d-flex justify-content-between align-items-center' },
       ce('h3', { className: 'card-title mb-0' }, title),
       ce('div', { className: 'd-flex gap-2 align-items-center' },
         badgeLabel ? ce('span', { className: `badge ${badgeCls}` }, badgeLabel) : null,
-
-        ...primaryBtns.map(fsmButton),
-
-        explicit && editing && ce('button', {
-          key:       'save',
-          className: 'btn btn-primary btn-sm',
-          onClick:   () => { run_doc.operation = 'select'; CW._render(run_doc); },
-        }, actLabels.save || 'Save'),
-
-        (menuBtns.length > 0 || (explicit && isOwner)) && ce('div', { key: 'menu', className: 'dropdown' },
-          ce('button', {
-            className:        'btn btn-ghost-secondary btn-sm',
-            'data-bs-toggle': 'dropdown',
-            'aria-expanded':  'false',
-          }, '•••'),
-          ce('ul', { className: 'dropdown-menu dropdown-menu-end' },
-            ...menuBtns.map(menuItem),
-            explicit && !editing && isOwner && ce('li', { key: 'edit' },
-              ce('button', {
-                className: 'dropdown-item',
-                onClick:   () => { run_doc.operation = 'update'; CW._render(run_doc); },
-              }, actLabels.edit || 'Edit')
-            )
-          )
-        )
+        ce(FormActions, { run_doc })
       )
     ),
     ce('div', { className: 'card-body' },
@@ -588,7 +584,6 @@ const MainGrid = function({ run_doc, data }) {
     else { setSortCol(fieldname); setSortDir('asc'); }
   };
 
-  // card action — FSM signal via child run, btn.signal is "0.0_1" format
   const onCardAction = async (record, btn) => {
     if (btn.confirm && !window.confirm(btn.confirm)) return;
     await run_doc.child({
@@ -653,7 +648,6 @@ const MainGrid = function({ run_doc, data }) {
 
   const cardView = ce('div', { className: 'row g-2' },
     rows.map(record => {
-      // use _getTransitions — returns buttons with signal in "0.0_1" format
       const btns  = CW._getTransitions(schema, record, '0');
       const title = record[titleField] || record.name;
       return ce('div', { key: record.name, className: 'col-12' },
