@@ -346,6 +346,7 @@ Object.assign(globalThis, {
   evaluateDependsOn,
   validateId,
   persist,
+  CW._getFormButtons = _getFormButtons
 });
 
 console.log("✅ CW-utils.js v40 loaded");

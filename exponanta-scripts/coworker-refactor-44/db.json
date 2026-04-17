@@ -2913,7 +2913,7 @@
     }
   },
   {
-    "role": "Project Manager",
+    "role": "Projects Manager",
     "read": 1,
     "transitions": {
       "1.1_2": "Approve",
