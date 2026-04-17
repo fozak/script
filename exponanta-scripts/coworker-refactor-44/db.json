@@ -2426,6 +2426,36 @@
   },
   {
     "_schema_doctype": "Task",
+    "explicit_edit_intent": 1,
+    "_state": {
+  "1": {
+    "name": "_task_status",
+    "values": [0, 1, 2, 3],
+    "options": ["Draft", "Pending", "Approved", "Rejected"],
+    "transitions": {
+      "0": [1],
+      "1": [2, 3],
+      "2": [3],
+      "3": [1]
+    },
+    "labels": {
+      "0_1": "Submit for Review",
+      "1_2": "Approve",
+      "1_3": "Reject",
+      "2_3": "Revoke Approval",
+      "3_1": "Resubmit"
+    },
+    "sideEffects": {
+      "0_1": "async function(run_doc) { var rec = run_doc.target && run_doc.target.data && run_doc.target.data[0]; if (!rec) return; var updateRun = await run_doc.child({ operation: 'update', target_doctype: 'Task', query: { where: { name: rec.name } }, input: { status: 'Pending' }, options: { render: false, internal: true } }); }",
+      "1_2": "async function(run_doc) { var rec = run_doc.target && run_doc.target.data && run_doc.target.data[0]; if (!rec) return; var updateRun = await run_doc.child({ operation: 'update', target_doctype: 'Task', query: { where: { name: rec.name } }, input: { status: 'Approved' }, options: { render: false, internal: true } }); }",
+      "1_3": "async function(run_doc) { var rec = run_doc.target && run_doc.target.data && run_doc.target.data[0]; if (!rec) return; var updateRun = await run_doc.child({ operation: 'update', target_doctype: 'Task', query: { where: { name: rec.name } }, input: { status: 'Rejected' }, options: { render: false, internal: true } }); }",
+      "2_3": "async function(run_doc) { var rec = run_doc.target && run_doc.target.data && run_doc.target.data[0]; if (!rec) return; var updateRun = await run_doc.child({ operation: 'update', target_doctype: 'Task', query: { where: { name: rec.name } }, input: { status: 'Rejected' }, options: { render: false, internal: true } }); }",
+      "3_1": "async function(run_doc) { var rec = run_doc.target && run_doc.target.data && run_doc.target.data[0]; if (!rec) return; var updateRun = await run_doc.child({ operation: 'update', target_doctype: 'Task', query: { where: { name: rec.name } }, input: { status: 'Pending' }, options: { render: false, internal: true } }); }"
+    },
+    "rules": {},
+    "requires": {}
+  }
+},
     "actions": [],
     "allow_import": 1,
     "autoname": "TASK-.YYYY.-.#####",
@@ -2874,18 +2904,24 @@
     "nsm_parent_field": "parent_task",
     "owner": "Administrator",
     "permissions": [
-      {
-        "create": 1,
-        "delete": 1,
-        "email": 1,
-        "print": 1,
-        "read": 1,
-        "report": 1,
-        "role": "Projects User",
-        "share": 1,
-        "write": 1
-      }
-    ],
+  {
+    "role": "Projects User",
+    "read": 1, "write": 1, "create": 1, "delete": 1,
+    "transitions": {
+      "1.0_1": "Submit for Review",
+      "1.3_1": "Resubmit"
+    }
+  },
+  {
+    "role": "Project Manager",
+    "read": 1,
+    "transitions": {
+      "1.1_2": "Approve",
+      "1.1_3": "Reject",
+      "1.2_3": "Revoke Approval"
+    }
+  }
+],
     "quick_entry": 1,
     "schema_name": "Task",
     "search_fields": "subject",
@@ -84230,15 +84266,9 @@
       "role": "User Manager",
       "read": 1, "write": 1,
       "transitions": {}
-    },
-    {
-      "role": "Self",
-      "read": 1, "write": 1,
-      "transitions": {
-        "1.1_3": "Reset My Password"
-      }
     }
   ],
+  "explicit_edit_intent": 1,
     "quick_entry": 1,
     "route": "user",
     "row_format": "Dynamic",

@@ -239,8 +239,8 @@ function _getDimValue(doc, dim, dimDef) {
 }
 
 // _getTransitions: returns available transitions for a dim given current doc state
-// filters by requires + rules, returns array of { key, from, to, label, confirm }
-// key format: "0_1" (bare, without dim prefix — for internal use)
+// filters by requires + rules, returns array of { signal, from, to, label, confirm }
+// label overrides applied from schema.permissions.transitions for Self and all roles
 function _getTransitions(schema, doc, dim) {
   const stateDef = _getStateDef(schema.schema_name || schema.name);
   const dimDef   = stateDef[dim];
@@ -248,6 +248,18 @@ function _getTransitions(schema, doc, dim) {
 
   const current = _getDimValue(doc, dim, dimDef);
   const tos     = dimDef.transitions?.[String(current)] || [];
+
+  // build label overrides from schema.permissions.transitions
+  // Self = current user is owner or subject of this document
+  const currentUserId = CW._config?.currentUser?.id || ''
+  const isSelf = !!(currentUserId && (doc.name === currentUserId || doc.owner === currentUserId))
+  const labelOverrides = {}
+  for (const p of (schema.permissions || [])) {
+    if (p.role === 'Self' && !isSelf) continue
+    for (const [signal, label] of Object.entries(p.transitions || {})) {
+      if (signal.startsWith(dim + '.')) labelOverrides[signal] = label
+    }
+  }
 
   return tos
     .map(to => {
@@ -264,7 +276,7 @@ function _getTransitions(schema, doc, dim) {
         signal,
         from:    current,
         to,
-        label:   dimDef.labels?.[bareKey],
+        label:   labelOverrides[signal] || dimDef.labels?.[bareKey],
         confirm: dimDef.confirm?.[bareKey],
       };
     })

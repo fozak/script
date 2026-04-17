@@ -394,6 +394,24 @@ CW._preflight = function(run_doc, operation) {
       freshState[dim] = dimDef.values?.[0] ?? 0;
     }
     input._state = freshState;
+
+    // populate _allowed/_allowed_read from schema.permissions
+    // Self is skipped — owner is handled by systemFields
+    const perms = schema?.permissions || [];
+    const fromPerms     = [];
+    const fromPermsRead = [];
+    for (const p of perms) {
+      if (!p.role || p.role === 'Self') continue;
+      const roleId = generateId('Role', p.role);
+      if (p.write || p.create || p.delete) fromPerms.push(roleId);
+      else if (p.read)                     fromPermsRead.push(roleId);
+    }
+    if (fromPerms.length) {
+      input._allowed = [...new Set([...(input._allowed || []), ...fromPerms])];
+    }
+    if (fromPermsRead.length) {
+      input._allowed_read = [...new Set([...(input._allowed_read || []), ...fromPermsRead])];
+    }
   }
 
   if (operation === 'update') {
@@ -418,6 +436,7 @@ CW._preflight = function(run_doc, operation) {
   if (schema?.fields) {
     for (const f of schema.fields) {
       if (f.fieldtype === 'Code' && f.options === 'JSON' && typeof input[f.fieldname] === 'object') {
+        if (f.fieldname === '_state') continue  // _state managed by FSM — never stringify
         input[f.fieldname] = JSON.stringify(input[f.fieldname]);
       }
     }
