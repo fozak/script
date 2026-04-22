@@ -287,8 +287,8 @@ function _getTransitions(schema, doc, dim) {
       const rule       = dimDef.rules?.[bareKey];
       const reqPassed  = Object.entries(requires).every(([k, v]) => Number(schema[k] ?? 0) === Number(v));
       const rulePassed = typeof rule === 'function'
-        ? rule({ target: { data: [doc] }, input: {} })
-        : true;
+  ? rule({ target: { data: [doc] }, input: {}, target_doctype: schema.schema_name || schema.name })
+  : true;
       if (!reqPassed || !rulePassed) return null;
       return {
         signal,

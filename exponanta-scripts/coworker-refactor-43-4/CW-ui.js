@@ -41,7 +41,7 @@ CW._render = function(run_doc) {
 
 function _getMainRuns() {
   return Object.values(CW.runs)
-    .filter(r => r.component?.startsWith('Main') && r.options?.render !== false)
+    .filter(r => r.component?.startsWith('Main') && r.options?.render === true)
     .sort((a, b) => a.creation - b.creation);
 }
 

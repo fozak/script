@@ -177,6 +177,8 @@ Object.assign(globalThis.CW, {
       for (const [dim, def] of Object.entries(schema._state || {})) {
         for (const [key, fnStr] of Object.entries(def.sideEffects || {})) {
           if (typeof fnStr === 'string') {
+            // skip adapter path keys — "0_1.Adapter.x.y" resolved at runtime, not compiled
+            if (key.includes('.')) continue;
             try { def.sideEffects[key] = eval('(' + fnStr + ')'); }
             catch(e) { console.error(`[CW] compile sideEffects[${doctype}][${dim}][${key}]`, e); }
           }

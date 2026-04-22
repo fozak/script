@@ -66,9 +66,24 @@ CW._execTransition = async function(run_doc, dim, key) {
   const dimDef   = stateDef[dim];
   if (!dimDef) return;
 
-  const sideEffect = dimDef.sideEffects?.[key];
-  if (typeof sideEffect === 'function') {
-    await sideEffect(run_doc);
+  // collect all effects for this transition:
+  // bare key "0_1"               → inline compiled function
+  // dotted key "0_1.Adapter.x.y" → adapter call via globalThis path
+  const effects = Object.entries(dimDef.sideEffects || {})
+    .filter(([k]) => k === key || k.startsWith(key + '.'));
+
+  for (const [effectKey, fn] of effects) {
+    if (effectKey === key) {
+      // inline function
+      if (typeof fn === 'function') await fn(run_doc);
+    } else {
+      // adapter path — strip "key." prefix → "Adapter.auth.activate"
+      const path = effectKey.slice(key.length + 1).split('.');
+      let target = globalThis;
+      for (const p of path) target = target?.[p];
+      if (typeof target === 'function') await target(run_doc);
+      else console.warn('[CW] Adapter effect not found:', effectKey.slice(key.length + 1));
+    }
   }
 
   const to = parseInt(key.split('_')[1]);
@@ -138,7 +153,7 @@ CW.run = async function(op) {
 
     parent_run_id:      op.parent_run_id || null,
     child_run_ids:      [],
-    user:               op.user || null,
+    user:               op.user || globalThis.pb?.authStore?.model?.id || null,
     options:            op.options || {},
   };
 
@@ -254,16 +269,11 @@ CW._handleSignal = async function(run_doc) {
 
   let matched = false;
   for (const [dim, dimDef] of Object.entries(stateDef)) {
-    // STRICT prefix match — signal must start with "dim." e.g. "0.0_1", "1.0_1"
-    // dim 0 signals: "0.0_1", "0.1_2", "0.2_0"
-    // dim 1 signals: "1.0_1", "1.1_2", etc.
     if (!signal.startsWith(dim + '.')) continue;
-    const key = signal.slice(dim.length + 1);  // "0.0_1" → "0_1"
+    const key = signal.slice(dim.length + 1);
 
-    // check this dim has this transition
     if (dimDef.sideEffects?.[key] === undefined && dimDef.labels?.[key] === undefined) continue;
 
-    // validate transition allowed from current state
     const currentVal = CW._getDimValue(existingDoc, dim, dimDef);
     const fromVal    = parseInt(key.split('_')[0]);
     const toVal      = parseInt(key.split('_')[1]);
@@ -277,7 +287,6 @@ CW._handleSignal = async function(run_doc) {
       }
     }
 
-    // check requires
     const requires  = dimDef.requires?.[key] || {};
     const reqPassed = Object.entries(requires).every(([k, v]) => Number(schema?.[k] ?? 0) === Number(v));
     if (!reqPassed) {
@@ -287,7 +296,6 @@ CW._handleSignal = async function(run_doc) {
       return;
     }
 
-    // check rules
     const rule = dimDef.rules?.[key];
     if (typeof rule === 'function' && !rule(run_doc)) {
       run_doc.error = `${signal} rule not satisfied`;
@@ -299,6 +307,12 @@ CW._handleSignal = async function(run_doc) {
     try {
       await CW._execTransition(run_doc, dim, key);
 
+      // clear previous signals for this dim — keep only latest per dim
+      const prefix = dim + '.';
+      Object.keys(run_doc.input._state).forEach(k => {
+        if (k.startsWith(prefix)) delete run_doc.input._state[k];
+      });
+
       // mark signal success BEFORE write — "1" gets stored to PB
       run_doc.input._state[signal] = '1';
 
@@ -309,7 +323,6 @@ CW._handleSignal = async function(run_doc) {
         await CW._handlers.create(run_doc);
       }
     } catch(e) {
-      // mark signal failure — "-1" gets stored to PB
       run_doc.input._state[signal] = '-1';
       run_doc.error = e.message;
     }
@@ -319,8 +332,6 @@ CW._handleSignal = async function(run_doc) {
   }
 
   if (!matched) {
-    // legacy named signals — save, submit, cancel, amend
-    // these do NOT use the dim.from_to format
     if (signal === 'save') {
       run_doc.operation = (run_doc.input.name || existingDoc.name) ? 'update' : 'create';
       await CW._handlers[run_doc.operation](run_doc);
@@ -362,9 +373,6 @@ CW._handleSignal = async function(run_doc) {
       run_doc.query = Object.assign({}, run_doc.query, { where: { name: run_doc.target.data[0].name } });
     }
     Object.keys(run_doc.input).filter(k => k !== '_state').forEach(k => delete run_doc.input[k]);
-    if (run_doc.input._state) {
-      run_doc.input._state[signal] = '1';
-    }
   } else {
     if (run_doc.input._state) {
       run_doc.input._state[signal] = '-1';
@@ -427,10 +435,17 @@ CW._preflight = function(run_doc, operation) {
       if (missing.length) { run_doc.error = `Required: ${missing.join(', ')}`; return; }
     }
 
-    // preserve ALL existing _state keys — signal keys + any others
-    // incoming input._state (new signal) takes precedence
+// preserve existing _state keys from other dims
+    // clear same-dim signals — keep only latest per dim
     if (run_doc.target?.data?.[0]?._state) {
       const targetState = run_doc.target.data[0]._state;
+      // strip same-dim signals from targetState before merge
+      Object.keys(input._state || {}).forEach(sig => {
+        const dim = sig.split('.')[0]
+        if (isNaN(dim)) return
+        const prefix = dim + '.'
+        Object.keys(targetState).forEach(k => { if (k.startsWith(prefix)) delete targetState[k] })
+      })
       input._state = Object.assign({}, targetState, input._state || {});
     }
   }

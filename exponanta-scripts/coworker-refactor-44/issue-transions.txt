@@ -1,0 +1,40 @@
+Yes — _state accumulates all historical signals. Every transition appends to _state, never removes old ones. After multiple cycles:
+json{
+  "0.0_1": "1",   // submitted cycle 1
+  "0.1_2": "1",   // approved cycle 1
+  "0.2_0": "1",   // reset cycle 1
+  // cycle 2 appends on top...
+}
+_getDimValue reads the LAST signal to derive current state — but with multiple cycles the logic gets confused because multiple signals point to different states.
+The fix — _getDimValue should find the most recent signal, not just any signal. Add created or signal order to determine which is latest.
+Or simpler — on each transition, clear previous signals for the same dim before writing the new one:
+In _handleSignal before writing run_doc.input._state[signal] = '1':
+javascript// clear previous signals for this dim
+const prefix = dim + '.'
+Object.keys(run_doc.input._state).forEach(k => {
+  if (k.startsWith(prefix)) delete run_doc.input._state[k]
+})
+// write new signal
+run_doc.input._state[signal] = '1'
+Only current transition kept. Previous cycle signals gone. _getDimValue always reads exactly one signal per dim — unambiguous.You said: recall the discussion.recall the discussion. there was a discussion why we needed history10:43 PMClaude responded: Yes — from the earlier sessions.Yes — from the earlier sessions. The reason _state keeps history is audit trail and multi-dim independence:
+dim 0: docstatus lifecycle    0→1→2→0  (submit/approve/reset)
+dim 1: agent_status lifecycle 0→1→2→3  (pending/running/done/failed)
+Each dim's signals are independent — clearing dim 0 signals would also wipe dim 1 signals if you clear by prefix naively.
+And the history of "0.0_1": "1", "0.1_2": "1" tells you the document was submitted then approved — that's the audit trail. Wiping it loses that.
+The real problem is _getDimValue doesn't handle multiple cycles of the same dim correctly. It sees 0.0_1: 1 and 0.2_0: 1 and gets confused about current state.
+The correct fix — _getDimValue should find the terminal state by walking the signal chain, not just looking at any signal:
+javascript// find the signal whose `to` value is not the `from` of any other signal
+// that's the current state
+const prefix = dim + '.'
+const signals = Object.entries(state)
+  .filter(([k, v]) => k.startsWith(prefix) && v === '1')
+  .map(([k]) => {
+    const parts = k.slice(prefix.length).split('_')
+    return { from: parseInt(parts[0]), to: parseInt(parts[1]) }
+  })
+
+// to values that are never a from = terminal state
+const froms = new Set(signals.map(s => s.from))
+const terminal = signals.find(s => !froms.has(s.to))
+return terminal ? terminal.to : dimDef?.values?.[0] ?? 0
+This correctly resolves current state regardless of how many cycles have occurred. History preserved, current state unambiguous.

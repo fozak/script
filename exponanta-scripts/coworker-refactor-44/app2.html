@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CW</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta17/dist/css/tabler.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+  <style>
+    /* ── containers ── */
+    #main_container:empty,
+    #threads_left:empty,
+    #threads_right:empty { display: none; }
+
+    .threads-left  { height: calc(100vh - 56px); overflow-y: auto; border-right: 1px solid var(--tblr-border-color); }
+    .threads-right { height: calc(100vh - 56px); overflow-y: auto; }
+
+    /* ── REPL ── */
+    #repl {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      background: var(--tblr-bg-surface);
+      border-top: 1px solid var(--tblr-border-color);
+      padding: 0.5rem 1rem;
+      z-index: 1000;
+      display: none;
+    }
+    #repl.open { display: block; }
+    body.repl-open { padding-bottom: 120px; }
+  </style>
+</head>
+<body class="antialiased">
+
+<!-- nav -->
+<div id="nav_container"></div>
+
+<!-- main layout -->
+<div class="container-xl py-3">
+  <div id="main_container"></div>
+  <div class="row g-0">
+    <div class="col-md-3 threads-left"  id="threads_left"></div>
+    <div class="col-md-9 threads-right" id="threads_right"></div>
+  </div>
+</div>
+
+<!-- toasts -->
+<div id="toast_container"></div>
+
+<!-- REPL (Ctrl+`) -->
+<div id="repl">
+  <input id="repl_expr" class="form-control form-control-sm font-monospace"
+         placeholder="JS expression (Enter to run, Escape to close)">
+  <pre id="repl_out" class="mt-1 mb-0 small text-muted"
+       style="font-size:11px;max-height:80px;overflow-y:auto"></pre>
+</div>
+
+<!-- ── scripts ── -->
+<script src="https://cdn.jsdelivr.net/npm/pocketbase@latest/dist/pocketbase.umd.js"></script>
+<script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta17/dist/js/tabler.min.js"></script>
+
+<script type="module" src="index.js"></script>
+<script type="module" src="CW-ui.js"></script>
+<script type="module" src="app-ui.js"></script>
+
+<script type="module">
+// ── wait for CW boot ─────────────────────────────────────────
+function waitForBoot() {
+  return new Promise(resolve => {
+    const t = setInterval(() => {
+      if (globalThis.CW?._booted) { clearInterval(t); resolve(); }
+    }, 50);
+  });
+}
+
+// ── cwStateFromUrl ───────────────────────────────────────────
+// Rule 1: the one legitimate naked CW.run — called once at boot
+// Rule 7: URL params map 1:1 to run_doc fields via CW._config.runParams
+function cwStateFromUrl() {
+  const p  = new URLSearchParams(location.search);
+  const op = {
+    operation:      p.get('operation') || 'select',
+    target_doctype: p.get('doctype')   || null,
+    source_doctype: p.get('source_doctype') || null,
+    view:           p.get('view')      || 'list',
+    query: {
+      where:   p.get('name')    ? { name: p.get('name') }    : undefined,
+      filter:  p.get('filter')  || undefined,
+      sort:    p.get('sort')    || undefined,
+      fields:  p.get('fields')  || undefined,
+      expand:  p.get('expand')  || undefined,
+      perPage: p.get('perPage') ? parseInt(p.get('perPage')) : undefined,
+      page:    p.get('page')    ? parseInt(p.get('page'))    : undefined,
+    },
+    options: { render: true },
+  };
+
+  // strip undefined query keys
+  Object.keys(op.query).forEach(k => op.query[k] === undefined && delete op.query[k]);
+  if (!Object.keys(op.query).length) delete op.query;
+
+  // if boot run already exists — fire child (tab/back navigation)
+  const existing = Object.values(CW.runs || {}).find(r => !r.parent_run_id);
+  if (existing) {
+    existing.child(op);
+  } else {
+    CW.run(op);   // ← only legitimate naked CW.run
+  }
+}
+
+// ── cwStateToUrl ─────────────────────────────────────────────
+// updates URL when boot run changes — child runs never update URL
+function cwStateToUrl(run_doc) {
+  if (run_doc.parent_run_id) return;
+  const p = new URLSearchParams();
+  if (run_doc.target_doctype)        p.set('doctype',  run_doc.target_doctype);
+  if (run_doc.view)                  p.set('view',     run_doc.view);
+  if (run_doc.query?.where?.name)    p.set('name',     run_doc.query.where.name);
+  if (run_doc.query?.filter)         p.set('filter',   run_doc.query.filter);
+  if (run_doc.query?.perPage)        p.set('perPage',  run_doc.query.perPage);
+  if (run_doc.source_doctype)        p.set('source_doctype', run_doc.source_doctype);
+  history.pushState({}, '', '?' + p.toString());
+}
+
+// ── boot ─────────────────────────────────────────────────────
+window.addEventListener('load', async () => {
+  await waitForBoot();
+
+  // expose cwStateToUrl as CW hook — called from CW._render for boot runs
+  globalThis.CW._onRender = (run_doc) => {
+    cwStateToUrl(run_doc);
+  };
+
+  // expose for navbar/other shell code
+  globalThis.cwStateFromUrl = cwStateFromUrl;
+  globalThis.cwStateToUrl   = cwStateToUrl;
+
+  // fire boot
+  cwStateFromUrl();
+});
+
+// ── browser back/forward ─────────────────────────────────────
+window.addEventListener('popstate', () => cwStateFromUrl());
+
+// ── REPL (Ctrl+`) ────────────────────────────────────────────
+const repl    = document.getElementById('repl');
+const replIn  = document.getElementById('repl_expr');
+const replOut = document.getElementById('repl_out');
+
+document.addEventListener('keydown', (e) => {
+  if (e.ctrlKey && e.key === '`') {
+    repl.classList.toggle('open');
+    document.body.classList.toggle('repl-open');
+    if (repl.classList.contains('open')) replIn.focus();
+  }
+});
+
+replIn.addEventListener('keydown', async (e) => {
+  if (e.key === 'Escape') {
+    repl.classList.remove('open');
+    document.body.classList.remove('repl-open');
+    return;
+  }
+  if (e.key !== 'Enter') return;
+  try {
+    const result = await eval(replIn.value);
+    replOut.textContent = result === undefined ? 'undefined' : JSON.stringify(result, null, 2);
+  } catch(err) {
+    replOut.textContent = 'Error: ' + err.message;
+  }
+});
+</script>
+
+</body>
+</html>

@@ -2,7 +2,7 @@
 // app-ui.js — Exponanta app shell UI
 // NavBar + Toasts — React, reads pb.authStore directly
 // No Alpine dependency
-// Listens to: cw:auth:change, cw:toast
+// Listens to: cw:auth:change
 // ============================================================
 
 const ce = React.createElement;
@@ -73,11 +73,35 @@ function cwToast(message, type = 'success', duration = 3000) {
 }
 
 // ============================================================
+// PAIRED OPEN — universal grid+form for any doctype
+// clears all runs, fires fresh boot, opens first record
+// ============================================================
+
+async function _openPaired(doctype, query) {
+  const p = new URLSearchParams()
+  p.set('doctype', doctype)
+  if (query?.where?.owner) p.set('owner', query.where.owner)
+  history.pushState({}, '', '?' + p.toString())
+  globalThis.cwStateFromUrl()
+}
+
+// ============================================================
+// NAV ACTIONS
+// ============================================================
+
+function _openProfile() {
+  _openPaired('UserPublicProfile', { where: { owner: CW._config?.currentUser?.id } });
+}
+
+function _openDashboard() {
+  _openPaired('Task');
+}
+
+// ============================================================
 // NAVBAR
 // ============================================================
 
 let _navRoot    = null;
-let _navProfile = null;
 
 const NavBar = function({ profile }) {
   const isValid = !!profile;
@@ -197,36 +221,6 @@ const NavBar = function({ profile }) {
   );
 };
 
-// ── Nav actions ──────────────────────────────────────────────
-
-function _openProfile() {
-  if (!globalThis.CW) return;
-  const userId = globalThis.pb?.authStore?.model?.id;
-  if (!userId) return;
-  CW.run({
-    operation:      'select',
-    target_doctype: 'UserPublicProfile',
-    query:          { where: { owner: userId } },
-    view:           'form',
-    component:      'MainForm',
-    container:      'main_container',
-    options:        { render: true },
-  });
-}
-
-function _openDashboard() {
-  if (!globalThis.CW) return;
-  CW.run({
-    operation:      'select',
-    target_doctype: 'Task',
-    query:          { take: 20 },
-    view:           'list',
-    component:      'MainGrid',
-    container:      'main_container',
-    options:        { render: true },
-  });
-}
-
 // ── Render navbar ────────────────────────────────────────────
 
 function _renderNav(profile) {
@@ -235,7 +229,6 @@ function _renderNav(profile) {
     if (!el) return;
     _navRoot = ReactDOM.createRoot(el);
   }
-  _navProfile = profile;
   _navRoot.render(ce(NavBar, { profile }));
   if (globalThis._updateNavUI) globalThis._updateNavUI();
 }
@@ -246,18 +239,18 @@ globalThis.addEventListener('cw:auth:change', (e) => {
   _renderNav(e.detail);
 });
 
-// ── Expose on CW ────────────────────────────────────────────
+// ── Expose on CW + globalThis ────────────────────────────────
 
 if (globalThis.CW) {
   globalThis.CW.toast      = cwToast;
   globalThis.CW._renderNav = _renderNav;
 }
 
-globalThis.cwToast = cwToast;
+globalThis.cwToast      = cwToast;
+globalThis._openPaired  = _openPaired;
 
 // ── Initial render ───────────────────────────────────────────
-// Render immediately from pb.authStore — no waiting for event
-// authRestore() called from bootstrap will re-render with full profile
+
 (function() {
   const model = globalThis.pb?.authStore?.isValid ? globalThis.pb.authStore.model : null;
   if (model) {

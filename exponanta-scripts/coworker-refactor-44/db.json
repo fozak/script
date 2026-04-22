@@ -183,7 +183,7 @@
     "autoname": "hash",
     "view_components": {
   "list": { "component": "MainGrid", "container": "threads_left" },
-  "form": { "component": "MainForm", "container": "main_container" }
+  "form": { "component": "MainForm", "container": "threads_right" }
 },
     "fields": [
       {
@@ -370,6 +370,9 @@
   },
   {
     "schema_name": "UserPublicProfile",
+    "view_components": {
+    "form": { "component": "MainForm", "container": "threads_right" }
+  },
     "doctype": "Schema",
     "is_submittable": 1,
     "title_field": "full_name",
@@ -2452,7 +2455,9 @@
       "2_3": "async function(run_doc) { var rec = run_doc.target && run_doc.target.data && run_doc.target.data[0]; if (!rec) return; var updateRun = await run_doc.child({ operation: 'update', target_doctype: 'Task', query: { where: { name: rec.name } }, input: { status: 'Rejected' }, options: { render: false, internal: true } }); }",
       "3_1": "async function(run_doc) { var rec = run_doc.target && run_doc.target.data && run_doc.target.data[0]; if (!rec) return; var updateRun = await run_doc.child({ operation: 'update', target_doctype: 'Task', query: { where: { name: rec.name } }, input: { status: 'Pending' }, options: { render: false, internal: true } }); }"
     },
-    "rules": {},
+    "rules": {
+  "1_2": "(run_doc) => { const doc = run_doc.target?.data?.[0] || {}; return CW._getDimValue(doc, '0', CW._getStateDef(run_doc.target_doctype)['0']) === 0; }"
+},
     "requires": {}
   }
 },
@@ -105661,6 +105666,18 @@
   },
   {
     "_schema_doctype": "ToDo",
+     "is_submittable": 1,
+       "_state": {
+    "0": {
+      "transitions": { "0": [1] },
+      "0_1": {
+        "label": "SubmitInput",
+        "sideEffects": {
+          "0_1": "async function(run_doc) { var doc = (run_doc.target && run_doc.target.data && run_doc.target.data[0]) || {}; var input = run_doc.input || {}; var exclude = { description: 1, name: 1, doctype: 1, owner: 1, modified: 1, modified_by: 1, creation: 1, _state: 1, _allowed: 1, _allowed_read: 1, docstatus: 1, input_test: 1 }; var result = {}; var merged = Object.assign({}, doc, input); Object.keys(merged).forEach(function(k) { if (!exclude[k]) result[k] = merged[k]; }); run_doc.input.input_test = result; }"
+        }
+      }
+    }
+  },
     "actions": [],
     "autoname": "hash",
     "creation": "2012-07-03 13:30:35",
@@ -105859,6 +105876,11 @@
         "no_copy": 1,
         "print_hide": 1,
         "read_only": 1
+      },
+            {
+        "fieldname": "input_test",
+        "fieldtype": "Code",
+        "label": "TestInput "
       }
     ],
     "icon": "fa fa-check",
