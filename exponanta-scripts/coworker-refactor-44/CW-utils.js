@@ -316,22 +316,27 @@ function _getFormButtons(run_doc) {
   const actLabels = dim0?.action_labels || {}
 
   const outside = []
+  const menu    = []
+
   if (explicit && editing)
     outside.push({ type: 'save', label: actLabels.save || 'Save' })
-  const dim0Btns = _getTransitions(schema, doc, '0')
-  dim0Btns
-    .filter(b => dim0?.primary?.[b.signal.slice(b.signal.indexOf('.')+1)])
-    .forEach(b => outside.push({ type: 'fsm', ...b }))
 
-  const menu = []
   if (explicit && !editing && isOwner)
     menu.push({ type: 'edit', label: actLabels.edit || 'Edit' })
-  dim0Btns
-    .filter(b => !dim0?.primary?.[b.signal.slice(b.signal.indexOf('.')+1)])
-    .forEach(b => menu.push({ type: 'fsm', ...b }))
-  Object.keys(stateDef).filter(d => d !== '0').forEach(dim =>
-    _getTransitions(schema, doc, dim).forEach(b => menu.push({ type: 'fsm', ...b }))
-  )
+
+  // all dims — primary → outside, non-primary → menu
+  Object.keys(stateDef).forEach(dim => {
+    const dimDef = stateDef[dim]
+    const btns   = _getTransitions(schema, doc, dim)
+    btns.forEach(b => {
+      const bareKey = b.signal.slice(b.signal.indexOf('.') + 1)
+      if (dimDef?.primary?.[bareKey]) {
+        outside.push({ type: 'fsm', ...b })
+      } else {
+        menu.push({ type: 'fsm', ...b })
+      }
+    })
+  })
 
   return { outside, menu }
 }

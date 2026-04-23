@@ -370,106 +370,109 @@
   },
  {
   "schema_name": "UserPublicProfile",
-  "doctype":     "Schema",
+  "doctype": "Schema",
   "title_field": "full_name",
   "is_submittable": 1,
   "autoname": "generateId",
-  "view_components": {
-    "form": { "component": "MainForm", "container": "threads_right" }
-  },
 
   "fields": [
     {
       "fieldname": "full_name",
       "fieldtype": "Data",
-      "label":     "Full Name",
-      "reqd":      1,
-      "in_list_view": 1
-    },
-    {
-      "fieldname": "section_identity",
-      "fieldtype": "Section Break",
-      "label":     "Identity"
-    },
-    {
-      "fieldname": "title",
-      "fieldtype": "Data",
-      "label":     "Title / Role",
-      "in_list_view": 1
-    },
-    {
-      "fieldname": "organization",
-      "fieldtype": "Data",
-      "label":     "Organization",
-      "in_list_view": 1
-    },
-    {
-      "fieldname": "chapter",
-      "fieldtype": "Data",
-      "label":     "Chapter"
-    },
-    {
-      "fieldname": "avatar_url",
-      "fieldtype": "Data",
-      "label":     "Avatar URL"
-    },
-    {
-      "fieldname": "section_bio",
-      "fieldtype": "Section Break",
-      "label":     "About"
-    },
-    {
-      "fieldname": "bio",
-      "fieldtype": "Text",
-      "label":     "Bio"
-    },
-    {
-      "fieldname": "section_links",
-      "fieldtype": "Section Break",
-      "label":     "Links"
-    },
-    {
-      "fieldname": "linkedin",
-      "fieldtype": "Data",
-      "label":     "LinkedIn URL"
-    },
-    {
-      "fieldname": "website",
-      "fieldtype": "Data",
-      "label":     "Website"
-    },
-    {
-      "fieldname": "section_auth",
-      "fieldtype": "Section Break",
-      "label":     "Auth",
-      "depends_on": "!doc.name"
+      "label": "Full Name",
+      "reqd": 1,
+      "in_list_view": 1,
+      "depends_on": "eval:doc.name || CW._getDimValue(doc, '1') === 2"
     },
     {
       "fieldname": "email",
       "fieldtype": "Data",
-      "label":     "Email",
-      "virtual":   1,
-      "reqd":      1,
-      "depends_on": "!doc.name"
+      "label": "Email",
+      "reqd": 1,
+      "virtual": 1,
+      "depends_on": "eval:Object.keys(doc._state || {}).some(k => k.startsWith('1.'))"
     },
     {
       "fieldname": "password",
       "fieldtype": "Password",
-      "label":     "Password",
-      "virtual":   1,
-      "reqd":      1,
-      "depends_on": "!doc.name"
+      "label": "Password",
+      "reqd": 1,
+      "virtual": 1,
+      "depends_on": "eval:CW._getDimValue(doc, '1') === 2"
+    },
+    {
+      "fieldname": "section_identity",
+      "fieldtype": "Section Break",
+      "label": "Identity",
+      "depends_on": "eval:doc.name"
+    },
+    {
+      "fieldname": "title",
+      "fieldtype": "Data",
+      "label": "Title / Role",
+      "in_list_view": 1,
+      "depends_on": "eval:doc.name"
+    },
+    {
+      "fieldname": "organization",
+      "fieldtype": "Data",
+      "label": "Organization",
+      "in_list_view": 1,
+      "depends_on": "eval:doc.name"
+    },
+    {
+      "fieldname": "chapter",
+      "fieldtype": "Data",
+      "label": "Chapter",
+      "depends_on": "eval:doc.name"
+    },
+    {
+      "fieldname": "avatar_url",
+      "fieldtype": "Data",
+      "label": "Avatar URL",
+      "depends_on": "eval:doc.name"
+    },
+    {
+      "fieldname": "section_bio",
+      "fieldtype": "Section Break",
+      "label": "About",
+      "depends_on": "eval:doc.name"
+    },
+    {
+      "fieldname": "bio",
+      "fieldtype": "Text",
+      "label": "Bio",
+      "depends_on": "eval:doc.name"
+    },
+    {
+      "fieldname": "section_links",
+      "fieldtype": "Section Break",
+      "label": "Links",
+      "depends_on": "eval:doc.name"
+    },
+    {
+      "fieldname": "linkedin",
+      "fieldtype": "Data",
+      "label": "LinkedIn URL",
+      "depends_on": "eval:doc.name"
+    },
+    {
+      "fieldname": "website",
+      "fieldtype": "Data",
+      "label": "Website",
+      "depends_on": "eval:doc.name"
     },
     {
       "fieldname": "section_relationships",
       "fieldtype": "Section Break",
-      "label":     "Relationships",
-      "depends_on": "doc.name"
+      "label": "Relationships",
+      "depends_on": "eval:doc.name"
     },
     {
       "fieldname": "relationships",
       "fieldtype": "Relationship Panel",
-      "label":     "Relationships"
+      "label": "Relationships",
+      "depends_on": "eval:doc.name"
     }
   ],
 
@@ -481,35 +484,36 @@
 
   "_state": {
     "0": {
-      "values":  [0, 1, 2],
+      "values": [0, 1, 2],
       "options": ["Draft", "Published", "Unpublished"],
-      "transitions": {
-        "0": [1, 2],
-        "1": [2],
-        "2": [0]
-      },
-      "labels": {
-        "0_1": "Publish",
-        "0_2": "Discard",
-        "1_2": "Unpublish",
-        "2_0": "Edit"
-      },
-      "primary":  { "0_1": true },
+      "transitions": { "0": [1, 2], "1": [2], "2": [0] },
+      "labels": { "0_1": "Publish", "0_2": "Discard", "1_2": "Unpublish", "2_0": "Edit" },
+      "primary": { "0_1": false },
       "requires": { "0_1": { "is_submittable": 1 } }
     },
     "1": {
-      "values":  [0, 1, 2],
-      "options": ["Unauthenticated", "Signed In", "Registered"],
+      "values": [0, 1, 2],
+      "options": ["Unauthenticated", "SignIn Ready", "SignUp Ready"],
       "transitions": {
-        "0": [1, 2]
+        "0": [1, 2],
+        "1": [1],
+        "2": [2]
       },
       "labels": {
         "0_1": "Sign In",
-        "0_2": "Sign Up"
+        "0_2": "Sign Up",
+        "1_1": "Submit",
+        "2_2": "Create Account"
+      },
+      "primary": {
+        "0_1": true,
+        "0_2": true,
+        "1_1": true,
+        "2_2": true
       },
       "sideEffects": {
-        "0_1": "Adapter.pocketbase.signIn",
-        "0_2": "Adapter.pocketbase.signUp"
+        "1_1": "Adapter.pocketbase.signIn",
+        "2_2": "Adapter.pocketbase.signUp"
       }
     }
   }
