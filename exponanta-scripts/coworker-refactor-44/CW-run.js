@@ -473,6 +473,7 @@ CW._preflight = function (run_doc, operation) {
           (f) =>
             f.reqd &&
             f.fieldtype !== "Table" &&
+            evaluateDependsOn(f.depends_on, run_doc.target?.data?.[0] || {}, run_doc) &&
             (input[f.fieldname] === undefined ||
               input[f.fieldname] === null ||
               input[f.fieldname] === ""),
@@ -493,7 +494,9 @@ CW._preflight = function (run_doc, operation) {
     }
 
     // initialize _state as empty — signal keys written on first transition
-    input._state = {};
+    if (!input._state) {
+  input._state = {};
+}
 
     // populate _allowed/_allowed_read from schema.permissions
     // Self is skipped — owner is handled by systemFields
@@ -524,6 +527,7 @@ CW._preflight = function (run_doc, operation) {
           (f) =>
             f.reqd &&
             f.fieldtype !== "Table" &&
+             evaluateDependsOn(f.depends_on, run_doc.target?.data?.[0] || {}, run_doc) &&
             (merged[f.fieldname] === undefined ||
               merged[f.fieldname] === null ||
               merged[f.fieldname] === ""),

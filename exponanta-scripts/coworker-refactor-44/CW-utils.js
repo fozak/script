@@ -101,14 +101,14 @@ function getByPath(obj, path) {
 // DEPENDS_ON EVALUATOR
 // ============================================================
 
-function evaluateDependsOn(dependsOn, doc) {
+function evaluateDependsOn(dependsOn, doc, run_doc) {
   if (!dependsOn) return true;
   if (dependsOn.startsWith('eval:')) {
     try {
       const in_list = (arr, val) => Array.isArray(arr) && arr.includes(val);
       const cint = (val) => parseInt(val) || 0;
       const flt = (val) => parseFloat(val) || 0;
-      return !!new Function('doc', 'in_list', 'cint', 'flt', `"use strict"; return ${dependsOn.substring(5)};`)(doc, in_list, cint, flt);
+      return !!new Function('doc', 'run_doc', 'in_list', 'cint', 'flt', `"use strict"; return ${dependsOn.substring(5)};`)(doc, run_doc, in_list, cint, flt);
     } catch (e) {
       console.warn('Failed to evaluate depends_on:', dependsOn, e);
       return true;

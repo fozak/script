@@ -72,10 +72,12 @@ systemFields: [
         : generateId(run_doc.target_doctype)
     },
   },
-  {
-    name: 'docstatus', fetch: true,
-    onCreate: (run_doc) => { run_doc.input.docstatus = 0 },
+ {
+  name: 'docstatus', fetch: true,
+  onCreate: (run_doc) => { 
+    if (run_doc.input.docstatus === undefined) run_doc.input.docstatus = 0;
   },
+},
   {
     name: 'creation', fetch: true,
     onCreate: (run_doc) => { run_doc.input.creation = Date.now() },

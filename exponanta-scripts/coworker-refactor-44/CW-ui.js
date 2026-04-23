@@ -520,7 +520,7 @@ const MainForm = function({ run_doc }) {
     ce('div', { className: 'card-body' },
       ce('div', { className: 'row g-3' },
         fields
-          .filter(f => evaluateDependsOn(f.depends_on, doc))
+          .filter(f => evaluateDependsOn(f.depends_on, doc, run_doc))
           .filter(f => !skipTypes.has(f.fieldtype))
           .map(f => f.fieldtype === 'Section Break'
             ? ce('div', { key: f.fieldname, className: 'col-12 mt-2' },

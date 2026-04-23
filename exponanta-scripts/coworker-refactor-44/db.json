@@ -382,7 +382,7 @@
       "label": "Full Name",
       "reqd": 1,
       "in_list_view": 1,
-      "depends_on": "eval:doc.name || CW._getDimValue(doc, '1') === 2"
+      "depends_on": "eval:Object.keys(run_doc.input._state || {}).some(k => k.startsWith('1.') && k.endsWith('_2'))"
     },
     {
       "fieldname": "email",
@@ -390,7 +390,7 @@
       "label": "Email",
       "reqd": 1,
       "virtual": 1,
-      "depends_on": "eval:Object.keys(doc._state || {}).some(k => k.startsWith('1.'))"
+      "depends_on": "eval:Object.keys(run_doc.input._state || {}).some(k => k.startsWith('1.'))"
     },
     {
       "fieldname": "password",
@@ -398,7 +398,7 @@
       "label": "Password",
       "reqd": 1,
       "virtual": 1,
-      "depends_on": "eval:CW._getDimValue(doc, '1') === 2"
+      "depends_on": "eval:Object.keys(run_doc.input._state || {}).some(k => k.startsWith('1.'))"
     },
     {
       "fieldname": "section_identity",
