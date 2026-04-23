@@ -373,6 +373,7 @@
   "doctype": "Schema",
   "title_field": "full_name",
   "is_submittable": 1,
+  "_autosave": 0,
   "autoname": "generateId",
 
   "fields": [
@@ -511,10 +512,10 @@
         "1_1": true,
         "2_2": true
       },
-      "sideEffects": {
-        "1_1": "Adapter.pocketbase.signIn",
-        "2_2": "Adapter.pocketbase.signUp"
-      }
+"sideEffects": {
+  "1_1": "Adapter.pocketbase.signIn",
+  "2_2": "Adapter.pocketbase.signUp"
+}
     }
   }
 },

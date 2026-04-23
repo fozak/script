@@ -230,6 +230,8 @@ CW.controller = async function (run_doc) {
       const dataKeys = Object.keys(run_doc.input).filter((k) => k !== "_state");
 
       if (dataKeys.length > 0) {
+        const schema = CW.Schema?.[run_doc.target_doctype];
+  if ((schema?._autosave ?? 1) === 0) return; // ← block auto-save
         const hasName =
           run_doc.input.name ||
           run_doc.target?.data?.[0]?.name ||

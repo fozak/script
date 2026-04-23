@@ -275,3 +275,229 @@ globalThis.Adapter            = globalThis.Adapter || {};
 globalThis.Adapter.pocketbase = { init, select, create, update, delete: del };
 
 console.log("✅ pb-adapter-pocketbase.js loaded");
+
+
+
+// ============================================================
+// AUTH METHODS — append to pb-adapter-pocketbase.js
+// Pure PocketBase SDK mirrors. No business logic.
+// All functions: async function(run_doc) — mutate only, no return.
+// Reads from run_doc.input, writes to run_doc.user or run_doc.error.
+// ============================================================
+
+function _setUser(run_doc) {
+  run_doc.user = {
+    name:     globalThis.pb.authStore.record?.id    ?? null,
+    email:    globalThis.pb.authStore.record?.email ?? null,
+    token:    globalThis.pb.authStore.token         ?? '',
+    verified: globalThis.pb.authStore.record?.verified ?? false,
+  };
+  run_doc.success = true;
+}
+
+// ============================================================
+// authWithPassword
+// input: { email, password }
+// ============================================================
+
+async function authWithPassword(run_doc) {
+  const { email, password } = run_doc.input;
+  try {
+    await globalThis.pb.collection('users').authWithPassword(email, password);
+    _setUser(run_doc);
+  } catch (err) {
+    run_doc.error = err.message;
+  }
+}
+
+// ============================================================
+// authRefresh
+// input: (none)
+// ============================================================
+
+async function authRefresh(run_doc) {
+  try {
+    await globalThis.pb.collection('users').authRefresh();
+    _setUser(run_doc);
+  } catch (err) {
+    run_doc.error = err.message;
+  }
+}
+
+// ============================================================
+// authWithOTP
+// input: { otpId, password }
+// ============================================================
+
+async function authWithOTP(run_doc) {
+  const { otpId, password } = run_doc.input;
+  try {
+    await globalThis.pb.collection('users').authWithOTP(otpId, password);
+    _setUser(run_doc);
+  } catch (err) {
+    run_doc.error = err.message;
+  }
+}
+
+// ============================================================
+// requestOTP
+// input: { email }
+// ============================================================
+
+async function requestOTP(run_doc) {
+  const { email } = run_doc.input;
+  try {
+    const result = await globalThis.pb.collection('users').requestOTP(email);
+    run_doc.target = { data: [result], meta: {} };
+    run_doc.success = true;
+  } catch (err) {
+    run_doc.error = err.message;
+  }
+}
+
+// ============================================================
+// authClear (logout)
+// input: (none)
+// ============================================================
+
+async function authClear(run_doc) {
+  globalThis.pb.authStore.clear();
+  run_doc.user = { name: null, email: null, token: '', verified: false };
+  run_doc.success = true;
+}
+
+// ============================================================
+// requestPasswordReset
+// input: { email }
+// ============================================================
+
+async function requestPasswordReset(run_doc) {
+  const { email } = run_doc.input;
+  try {
+    await globalThis.pb.collection('users').requestPasswordReset(email);
+    run_doc.success = true;
+  } catch (err) {
+    run_doc.error = err.message;
+  }
+}
+
+// ============================================================
+// confirmPasswordReset
+// input: { token, password, passwordConfirm }
+// ============================================================
+
+async function confirmPasswordReset(run_doc) {
+  const { token, password, passwordConfirm } = run_doc.input;
+  try {
+    await globalThis.pb.collection('users').confirmPasswordReset(token, password, passwordConfirm);
+    run_doc.success = true;
+  } catch (err) {
+    run_doc.error = err.message;
+  }
+}
+
+// ============================================================
+// requestVerification
+// input: { email }
+// ============================================================
+
+async function requestVerification(run_doc) {
+  const { email } = run_doc.input;
+  try {
+    await globalThis.pb.collection('users').requestVerification(email);
+    run_doc.success = true;
+  } catch (err) {
+    run_doc.error = err.message;
+  }
+}
+
+// ============================================================
+// confirmVerification
+// input: { token }
+// ============================================================
+
+async function confirmVerification(run_doc) {
+  const { token } = run_doc.input;
+  try {
+    await globalThis.pb.collection('users').confirmVerification(token);
+    run_doc.success = true;
+  } catch (err) {
+    run_doc.error = err.message;
+  }
+}
+
+// ============================================================
+// requestEmailChange
+// input: { email }
+// ============================================================
+
+async function requestEmailChange(run_doc) {
+  const { email } = run_doc.input;
+  try {
+    await globalThis.pb.collection('users').requestEmailChange(email);
+    run_doc.success = true;
+  } catch (err) {
+    run_doc.error = err.message;
+  }
+}
+
+// ============================================================
+// confirmEmailChange
+// input: { token, password }
+// ============================================================
+
+async function confirmEmailChange(run_doc) {
+  const { token, password } = run_doc.input;
+  try {
+    await globalThis.pb.collection('users').confirmEmailChange(token, password);
+    run_doc.success = true;
+  } catch (err) {
+    run_doc.error = err.message;
+  }
+}
+
+
+
+//=== HIGH LEVEL FLOW ========================
+
+async function signIn(run_doc) {
+  const { email, password } = run_doc.input;
+  try {
+    const profile = await authLogin(email, password);
+    _setUser(run_doc);
+  } catch (err) {
+    run_doc.error = err.message;
+  }
+}
+
+async function signUp(run_doc) {
+  const { email, password, full_name } = run_doc.input;
+  try {
+    await authRegister(email, password, full_name);
+    _setUser(run_doc);
+  } catch (err) {
+    run_doc.error = err.message;
+  }
+}
+
+// ============================================================
+// SELF-REGISTER — extend existing Adapter.pocketbase
+// ============================================================
+
+Object.assign(globalThis.Adapter.pocketbase, {
+  authWithPassword,
+  authRefresh,
+  authWithOTP,
+  requestOTP,
+  authClear,
+  requestPasswordReset,
+  confirmPasswordReset,
+  requestVerification,
+  confirmVerification,
+  requestEmailChange,
+  confirmEmailChange,
+  signIn,
+  signUp,
+});
+
+console.log('✅ pb-adapter-auth-methods.js loaded');
