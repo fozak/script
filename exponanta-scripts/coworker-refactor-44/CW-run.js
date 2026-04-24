@@ -231,7 +231,7 @@ CW.controller = async function (run_doc) {
 
       if (dataKeys.length > 0) {
         const schema = CW.Schema?.[run_doc.target_doctype];
-  if ((schema?._autosave ?? 1) === 0) return; // ← block auto-save
+        if ((schema?._autosave ?? 1) === 0) return; // ← block auto-save
         const hasName =
           run_doc.input.name ||
           run_doc.target?.data?.[0]?.name ||
@@ -330,7 +330,7 @@ CW._handleSignal = async function (run_doc) {
     )
       continue;
 
-    const currentVal = CW._getDimValue(existingDoc, dim, dimDef);
+    const currentVal = CW._getDimValue(existingDoc, dim, dimDef, run_doc.input._state);
     const fromVal = parseInt(key.split("_")[0]);
     const toVal = parseInt(key.split("_")[1]);
     if (!isNaN(fromVal) && !isNaN(toVal)) {
@@ -369,7 +369,7 @@ CW._handleSignal = async function (run_doc) {
       return;
     }
 
-    try {
+try {
       await CW._execTransition(run_doc, dim, key);
 
       // clear previous signals for this dim — keep only latest per dim
@@ -381,6 +381,12 @@ CW._handleSignal = async function (run_doc) {
       // mark signal success BEFORE write — "1" gets stored to PB
       run_doc.input._state[signal] = "1";
 
+      // navigation only — skip DB write
+  const autosave = CW.Schema?.[run_doc.target_doctype]?._autosave ?? 1;
+if (autosave === 0) {
+  matched = true;
+  break;
+}
       run_doc.operation =
         run_doc.input.name || existingDoc.name ? "update" : "create";
       if (run_doc.operation === "update") {
@@ -475,7 +481,11 @@ CW._preflight = function (run_doc, operation) {
           (f) =>
             f.reqd &&
             f.fieldtype !== "Table" &&
-            evaluateDependsOn(f.depends_on, run_doc.target?.data?.[0] || {}, run_doc) &&
+            evaluateDependsOn(
+              f.depends_on,
+              run_doc.target?.data?.[0] || {},
+              run_doc,
+            ) &&
             (input[f.fieldname] === undefined ||
               input[f.fieldname] === null ||
               input[f.fieldname] === ""),
@@ -497,8 +507,8 @@ CW._preflight = function (run_doc, operation) {
 
     // initialize _state as empty — signal keys written on first transition
     if (!input._state) {
-  input._state = {};
-}
+      input._state = {};
+    }
 
     // populate _allowed/_allowed_read from schema.permissions
     // Self is skipped — owner is handled by systemFields
@@ -529,7 +539,11 @@ CW._preflight = function (run_doc, operation) {
           (f) =>
             f.reqd &&
             f.fieldtype !== "Table" &&
-             evaluateDependsOn(f.depends_on, run_doc.target?.data?.[0] || {}, run_doc) &&
+            evaluateDependsOn(
+              f.depends_on,
+              run_doc.target?.data?.[0] || {},
+              run_doc,
+            ) &&
             (merged[f.fieldname] === undefined ||
               merged[f.fieldname] === null ||
               merged[f.fieldname] === ""),

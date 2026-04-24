@@ -441,7 +441,11 @@ const FormActions = function({ run_doc }) {
 
   const onFsmClick = (btn) => {
     if (btn.confirm && !window.confirm(btn.confirm)) return
-    run_doc.input._state = { [btn.signal]: '' }
+    run_doc.input._state = Object.assign(
+  {},
+  Object.fromEntries(Object.entries(run_doc.input._state || {}).filter(([,v]) => v === '1')),
+  { [btn.signal]: '' }
+)
     CW.controller(run_doc).catch(err => console.error('[CW]', err))
   }
 

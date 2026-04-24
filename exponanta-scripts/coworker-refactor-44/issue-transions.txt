@@ -1,3 +1,38 @@
+issue
+
+resolve issue of having target as single point of truth
+
+4:26 PM
+Claude responded: You're right.
+You're right. The issue is still there.
+
+Currently:
+
+signUp reads from target.data[0] ✓ — works for this case
+But target.data[0] is only complete because the 0_2 transition saved email/password/full_name to DB first
+If _autosave: 0 had properly blocked that save, target.data[0] would be empty and signUp would fail
+The real concern: The flow only works because _autosave: 0 is NOT blocking signal-driven saves. The intermediate record (from 0_2) is what populates target.data[0].
+
+The architectural violation: target.data[0] should be populated by merging input into it at the right time — not by accidentally saving to DB first.
+
+The fix: After every successful operation (signal or data), before clearing input, merge it into target.data[0]:
+
+javascript
+// In controller, before clearing input (both line 254 and line 451):
+if (run_doc.target?.data?.[0]) {
+  Object.keys(run_doc.input)
+    .filter(k => k !== '_state')
+    .forEach(k => { run_doc.target.data[0][k] = run_doc.input[k]; });
+}
+// Then clear input
+This makes target.data[0] the single source of truth regardless of whether the adapter saved or not.
+
+Implement this?
+
+
+//----------------------------
+next issue
+
 Yes — _state accumulates all historical signals. Every transition appends to _state, never removes old ones. After multiple cycles:
 json{
   "0.0_1": "1",   // submitted cycle 1

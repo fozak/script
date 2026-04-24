@@ -461,7 +461,7 @@ async function confirmEmailChange(run_doc) {
 //=== HIGH LEVEL FLOW ========================
 
 async function signIn(run_doc) {
-  const { email, password } = run_doc.input;
+  const { email, password } = run_doc.target?.data?.[0] || run_doc.input;
   try {
     const profile = await authLogin(email, password);
     _setUser(run_doc);
@@ -471,7 +471,7 @@ async function signIn(run_doc) {
 }
 
 async function signUp(run_doc) {
-  const { email, password, full_name } = run_doc.input;
+  const { email, password, full_name } = run_doc.target?.data?.[0] || run_doc.input;
   try {
     await authRegister(email, password, full_name);
     _setUser(run_doc);

@@ -230,14 +230,14 @@ function _getStateDef(doctype) {
 
 // _getDimValue: read current value for a dim from doc._state
 // falls back to dimDef.fieldname field on doc, then dimDef.values[0]
-function _getDimValue(doc, dim, dimDef) {
+function _getDimValue(doc, dim, dimDef, inputState) {
   var state = doc._state
   if (typeof state === 'string') { try { state = JSON.parse(state) } catch(_) { state = {} } }
-  if (state && typeof state === 'object') {
-    // new format: derive current from signal keys "dim.from_to": "1"|"-1"
+  const merged = Object.assign({}, state || {}, inputState || {});
+  if (merged && typeof merged === 'object') {
     const prefix = dim + '.'
     var current = null
-    for (const [k, v] of Object.entries(state)) {
+    for (const [k, v] of Object.entries(merged)) {
       if (!k.startsWith(prefix)) continue
       const rest = k.slice(prefix.length)
       const parts = rest.split('_')
@@ -245,12 +245,11 @@ function _getDimValue(doc, dim, dimDef) {
       const from = parseInt(parts[0])
       const to   = parseInt(parts[1])
       if (isNaN(from) || isNaN(to)) continue
-      if (v === '1')  current = to    // success — current = to
-      if (v === '-1') current = from  // failure — current = from (unchanged)
+      if (v === '1')  current = to
+      if (v === '-1') current = from
     }
     if (current !== null) return current
-    // legacy format: bare numeric dim key "0", "1"
-    if (dim in state) return state[dim]
+    if (dim in merged) return merged[dim]
   }
   if (dimDef?.fieldname && dimDef.fieldname in doc) return doc[dimDef.fieldname]
   return dimDef?.values?.[0] ?? 0

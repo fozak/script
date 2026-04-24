@@ -373,7 +373,6 @@
   "doctype": "Schema",
   "title_field": "full_name",
   "is_submittable": 1,
-  "_autosave": 0,
   "autoname": "generateId",
 
   "fields": [
@@ -128053,7 +128052,6 @@
     "translated_doctype": 1
   },
   {
-    "_autosave": 1,
     "_schema_doctype": "Schema",
     "allow_import": 1,
     "allow_rename": 1,
@@ -128375,7 +128373,6 @@
     "track_changes": 1
   },
   {
-    "_autosave": 0,
     "_schema_doctype": "TaskNew",
     "description": "New task type with submit workflow and manual save",
     "doctype": "Schema",
@@ -128490,7 +128487,6 @@
     "title_field": "subject"
   },
   {
-    "_autosave": 0,
     "_schema_doctype": "SalesInvoiceNew",
     "description": "New sales invoice with manual save and submit",
     "doctype": "Schema",
@@ -128706,7 +128702,6 @@
   {
     "_allowed": ["rolesystemmanag"],
     "_allowed_read": ["useryzs5r1yzs5r"],
-    "_autosave": 1,
     "docstatus": 0,
     "doctype": "User",
     "email": "test123@example.com",
