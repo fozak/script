@@ -59,53 +59,70 @@ calendar: {
 systemFields: [
   {
     name: 'doctype', fetch: true,
-    onWrite: (run_doc) => { run_doc.input.doctype = run_doc.input.doctype || run_doc.target_doctype },
+    onWrite: (run_doc) => {
+      const doc = run_doc.target?.data?.[0];
+      if (doc) doc.doctype = doc.doctype || run_doc.target_doctype;
+    },
   },
   {
     name: 'name', fetch: true,
     onCreate: (run_doc) => {
-      if (run_doc.input.name) return
-      const s = CW.Schema?.[run_doc.target_doctype]
-      const a = s?.autoname
-      run_doc.input.name = a?.startsWith('field:')
-        ? generateId(run_doc.target_doctype, run_doc.input[a.slice(6)])
-        : generateId(run_doc.target_doctype)
+      const doc = run_doc.target?.data?.[0];
+      if (!doc || doc.name) return;
+      const s = CW.Schema?.[run_doc.target_doctype];
+      const a = s?.autoname;
+      doc.name = a?.startsWith('field:')
+        ? generateId(run_doc.target_doctype, doc[a.slice(6)])
+        : generateId(run_doc.target_doctype);
     },
   },
- {
-  name: 'docstatus', fetch: true,
-  onCreate: (run_doc) => { 
-    if (run_doc.input.docstatus === undefined) run_doc.input.docstatus = 0;
+  {
+    name: 'docstatus', fetch: true,
+    onCreate: (run_doc) => {
+      const doc = run_doc.target?.data?.[0];
+      if (doc && doc.docstatus === undefined) doc.docstatus = 0;
+    },
   },
-},
   {
     name: 'creation', fetch: true,
-    onCreate: (run_doc) => { run_doc.input.creation = Date.now() },
+    onCreate: (run_doc) => {
+      const doc = run_doc.target?.data?.[0];
+      if (doc) doc.creation = Date.now();
+    },
   },
   {
     name: 'owner', fetch: true,
     onCreate: (run_doc) => {
-      run_doc.input.owner = run_doc.input.doctype === 'User'
+      const doc = run_doc.target?.data?.[0];
+      if (doc) doc.owner = doc.doctype === 'User'
         ? ''
-        : globalThis.pb?.authStore?.model?.id || ''
+        : globalThis.pb?.authStore?.model?.id || '';
     },
   },
   {
     name: 'modified', fetch: true,
-    onWrite: (run_doc) => { run_doc.input.modified = Date.now() },
+    onWrite: (run_doc) => {
+      const doc = run_doc.target?.data?.[0];
+      if (doc) doc.modified = Date.now();
+    },
   },
   {
     name: 'modified_by', fetch: true,
-    onWrite: (run_doc) => { run_doc.input.modified_by = globalThis.pb?.authStore?.model?.id || '' },
+    onWrite: (run_doc) => {
+      const doc = run_doc.target?.data?.[0];
+      if (doc) doc.modified_by = globalThis.pb?.authStore?.model?.id || '';
+    },
   },
   { name: '_state',        fetch: true },
   {
     name: 'top_parent', fetch: true,
     onCreate: (run_doc) => {
-      const parentRun = CW.runs[run_doc.parent_run_id]
-      const p = parentRun?.target?.data?.[0]
-      if (!p || p.doctype !== run_doc.target_doctype) return
-      run_doc.input.top_parent = p.top_parent || p.name
+      const doc = run_doc.target?.data?.[0];
+      if (!doc) return;
+      const parentRun = CW.runs[run_doc.parent_run_id];
+      const p = parentRun?.target?.data?.[0];
+      if (!p || p.doctype !== run_doc.target_doctype) return;
+      doc.top_parent = p.top_parent || p.name;
     },
   },
   { name: 'parent',        fetch: true },

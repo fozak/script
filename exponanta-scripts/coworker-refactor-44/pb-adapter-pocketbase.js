@@ -2,6 +2,7 @@
 // pb-adapter-pocketbase.js
 // Pure DB connector. No business logic.
 // All functions: function(run_doc) — mutate only, no return.
+// Reads from run_doc.target.data[0] — never from run_doc.input
 // ============================================================
 
 const PB_TOP = new Set([
@@ -101,14 +102,12 @@ function _buildFilter(run_doc) {
   const parts = [];
   if (doctype) parts.push(`doctype = "${doctype}"`);
 
-  // query.where — CW object → compiled to filter string
   const where = run_doc.query?.where;
   if (where) {
     const clause = _buildWhereClause(where);
     if (clause) parts.push(`(${clause})`);
   }
 
-  // query.filter — raw PB filter string — ANDed with where if both present
   const rawFilter = run_doc.query?.filter;
   if (rawFilter) parts.push(`(${rawFilter})`);
 
@@ -137,7 +136,7 @@ async function init(run_doc) {
 }
 
 // ============================================================
-// SELECT
+// SELECT — unchanged
 // ============================================================
 
 async function select(run_doc) {
@@ -150,13 +149,13 @@ async function select(run_doc) {
 
   let items, meta;
 
-  const where    = run_doc.query?.where || {};
+  const where     = run_doc.query?.where || {};
   const whereKeys = Object.keys(where);
   const singleName =
     whereKeys.length === 1 &&
     whereKeys[0] === "name" &&
     typeof where.name === "string" &&
-    !run_doc.query?.filter  // raw filter present → cannot use getOne shortcut
+    !run_doc.query?.filter
       ? where.name
       : null;
 
@@ -201,12 +200,16 @@ async function select(run_doc) {
 }
 
 // ============================================================
-// CREATE
+// CREATE — reads from target.data[0] (not input)
 // ============================================================
 
 async function create(run_doc) {
   const { collection } = globalThis.CW._config;
-  const doc = run_doc.input;
+  const doc = run_doc.target?.data?.[0];
+  if (!doc) {
+    run_doc.error = "400 create: no target document";
+    return;
+  }
   const { top, data } = _splitRecord(doc);
 
   try {
@@ -220,37 +223,23 @@ async function create(run_doc) {
 }
 
 // ============================================================
-// UPDATE
+// UPDATE — reads from target.data[0], no fetch, no merge
 // ============================================================
 
 async function update(run_doc) {
   const { collection } = globalThis.CW._config;
-  const filter = _buildFilter(run_doc);
-  if (!filter) {
-    run_doc.error = "400 update: missing query.where or doctype";
+  const doc = run_doc.target?.data?.[0];
+  if (!doc?.id && !doc?.name) {
+    run_doc.error = "400 update: no target document";
     return;
   }
 
+  const id = doc.id || doc.name;
+  const { top, data } = _splitRecord(doc);
+
   try {
-    const existing = await globalThis.pb.collection(collection).getFullList({ filter });
-
-    if (!existing.length) {
-      run_doc.target  = { data: [], meta: { updated: 0 } };
-      run_doc.success = true;
-      return;
-    }
-
-    const { top, data } = _splitRecord(run_doc.input);
-
-    const updated = await Promise.all(
-      existing.map(async (rec) => {
-        const mergedData = Object.assign({}, rec.data, data);
-        const pbResult   = await globalThis.pb.collection(collection).update(rec.id, { ...top, data: mergedData });
-        return _mergeRecord(pbResult);
-      }),
-    );
-
-    run_doc.target  = { data: updated, meta: { updated: updated.length } };
+    const pbResult  = await globalThis.pb.collection(collection).update(id, { ...top, data });
+    run_doc.target  = { data: [_mergeRecord(pbResult)], meta: { updated: 1 } };
     run_doc.success = true;
   } catch (err) {
     console.error("PB update error:", JSON.stringify(err.response?.data || err.message));
@@ -263,7 +252,7 @@ async function update(run_doc) {
 // ============================================================
 
 async function del(run_doc) {
-  run_doc.input.docstatus = 2;
+  if (run_doc.target?.data?.[0]) run_doc.target.data[0].docstatus = 2;
   await update(run_doc);
 }
 
@@ -276,213 +265,123 @@ globalThis.Adapter.pocketbase = { init, select, create, update, delete: del };
 
 console.log("✅ pb-adapter-pocketbase.js loaded");
 
-
-
 // ============================================================
-// AUTH METHODS — append to pb-adapter-pocketbase.js
+// AUTH METHODS
 // Pure PocketBase SDK mirrors. No business logic.
-// All functions: async function(run_doc) — mutate only, no return.
-// Reads from run_doc.input, writes to run_doc.user or run_doc.error.
+// Reads from run_doc.target.data[0] — never from run_doc.input
 // ============================================================
 
 function _setUser(run_doc) {
   run_doc.user = {
-    name:     globalThis.pb.authStore.record?.id    ?? null,
-    email:    globalThis.pb.authStore.record?.email ?? null,
-    token:    globalThis.pb.authStore.token         ?? '',
+    name:     globalThis.pb.authStore.record?.id       ?? null,
+    email:    globalThis.pb.authStore.record?.email    ?? null,
+    token:    globalThis.pb.authStore.token            ?? '',
     verified: globalThis.pb.authStore.record?.verified ?? false,
   };
   run_doc.success = true;
 }
 
-// ============================================================
-// authWithPassword
-// input: { email, password }
-// ============================================================
-
 async function authWithPassword(run_doc) {
-  const { email, password } = run_doc.input;
+  const { email, password } = run_doc.target?.data?.[0] || {};
   try {
     await globalThis.pb.collection('users').authWithPassword(email, password);
     _setUser(run_doc);
-  } catch (err) {
-    run_doc.error = err.message;
-  }
+  } catch (err) { run_doc.error = err.message; }
 }
-
-// ============================================================
-// authRefresh
-// input: (none)
-// ============================================================
 
 async function authRefresh(run_doc) {
   try {
     await globalThis.pb.collection('users').authRefresh();
     _setUser(run_doc);
-  } catch (err) {
-    run_doc.error = err.message;
-  }
+  } catch (err) { run_doc.error = err.message; }
 }
 
-// ============================================================
-// authWithOTP
-// input: { otpId, password }
-// ============================================================
-
 async function authWithOTP(run_doc) {
-  const { otpId, password } = run_doc.input;
+  const { otpId, password } = run_doc.target?.data?.[0] || {};
   try {
     await globalThis.pb.collection('users').authWithOTP(otpId, password);
     _setUser(run_doc);
-  } catch (err) {
-    run_doc.error = err.message;
-  }
+  } catch (err) { run_doc.error = err.message; }
 }
-
-// ============================================================
-// requestOTP
-// input: { email }
-// ============================================================
 
 async function requestOTP(run_doc) {
-  const { email } = run_doc.input;
+  const { email } = run_doc.target?.data?.[0] || {};
   try {
     const result = await globalThis.pb.collection('users').requestOTP(email);
-    run_doc.target = { data: [result], meta: {} };
+    run_doc.target  = { data: [result], meta: {} };
     run_doc.success = true;
-  } catch (err) {
-    run_doc.error = err.message;
-  }
+  } catch (err) { run_doc.error = err.message; }
 }
-
-// ============================================================
-// authClear (logout)
-// input: (none)
-// ============================================================
 
 async function authClear(run_doc) {
   globalThis.pb.authStore.clear();
-  run_doc.user = { name: null, email: null, token: '', verified: false };
+  run_doc.user    = { name: null, email: null, token: '', verified: false };
   run_doc.success = true;
 }
 
-// ============================================================
-// requestPasswordReset
-// input: { email }
-// ============================================================
-
 async function requestPasswordReset(run_doc) {
-  const { email } = run_doc.input;
+  const { email } = run_doc.target?.data?.[0] || {};
   try {
     await globalThis.pb.collection('users').requestPasswordReset(email);
     run_doc.success = true;
-  } catch (err) {
-    run_doc.error = err.message;
-  }
+  } catch (err) { run_doc.error = err.message; }
 }
 
-// ============================================================
-// confirmPasswordReset
-// input: { token, password, passwordConfirm }
-// ============================================================
-
 async function confirmPasswordReset(run_doc) {
-  const { token, password, passwordConfirm } = run_doc.input;
+  const { token, password, passwordConfirm } = run_doc.target?.data?.[0] || {};
   try {
     await globalThis.pb.collection('users').confirmPasswordReset(token, password, passwordConfirm);
     run_doc.success = true;
-  } catch (err) {
-    run_doc.error = err.message;
-  }
+  } catch (err) { run_doc.error = err.message; }
 }
 
-// ============================================================
-// requestVerification
-// input: { email }
-// ============================================================
-
 async function requestVerification(run_doc) {
-  const { email } = run_doc.input;
+  const { email } = run_doc.target?.data?.[0] || {};
   try {
     await globalThis.pb.collection('users').requestVerification(email);
     run_doc.success = true;
-  } catch (err) {
-    run_doc.error = err.message;
-  }
+  } catch (err) { run_doc.error = err.message; }
 }
 
-// ============================================================
-// confirmVerification
-// input: { token }
-// ============================================================
-
 async function confirmVerification(run_doc) {
-  const { token } = run_doc.input;
+  const { token } = run_doc.target?.data?.[0] || {};
   try {
     await globalThis.pb.collection('users').confirmVerification(token);
     run_doc.success = true;
-  } catch (err) {
-    run_doc.error = err.message;
-  }
+  } catch (err) { run_doc.error = err.message; }
 }
 
-// ============================================================
-// requestEmailChange
-// input: { email }
-// ============================================================
-
 async function requestEmailChange(run_doc) {
-  const { email } = run_doc.input;
+  const { email } = run_doc.target?.data?.[0] || {};
   try {
     await globalThis.pb.collection('users').requestEmailChange(email);
     run_doc.success = true;
-  } catch (err) {
-    run_doc.error = err.message;
-  }
+  } catch (err) { run_doc.error = err.message; }
 }
 
-// ============================================================
-// confirmEmailChange
-// input: { token, password }
-// ============================================================
-
 async function confirmEmailChange(run_doc) {
-  const { token, password } = run_doc.input;
+  const { token, password } = run_doc.target?.data?.[0] || {};
   try {
     await globalThis.pb.collection('users').confirmEmailChange(token, password);
     run_doc.success = true;
-  } catch (err) {
-    run_doc.error = err.message;
-  }
+  } catch (err) { run_doc.error = err.message; }
 }
 
-
-
-//=== HIGH LEVEL FLOW ========================
-
 async function signIn(run_doc) {
-  const { email, password } = run_doc.target?.data?.[0] || run_doc.input;
+  const { email, password } = run_doc.target?.data?.[0] || {};
   try {
-    const profile = await authLogin(email, password);
+    await authLogin(email, password);
     _setUser(run_doc);
-  } catch (err) {
-    run_doc.error = err.message;
-  }
+  } catch (err) { run_doc.error = err.message; }
 }
 
 async function signUp(run_doc) {
-  const { email, password, full_name } = run_doc.target?.data?.[0] || run_doc.input;
+  const { email, password, full_name } = run_doc.target?.data?.[0] || {};
   try {
     await authRegister(email, password, full_name);
     _setUser(run_doc);
-  } catch (err) {
-    run_doc.error = err.message;
-  }
+  } catch (err) { run_doc.error = err.message; }
 }
-
-// ============================================================
-// SELF-REGISTER — extend existing Adapter.pocketbase
-// ============================================================
 
 Object.assign(globalThis.Adapter.pocketbase, {
   authWithPassword,
