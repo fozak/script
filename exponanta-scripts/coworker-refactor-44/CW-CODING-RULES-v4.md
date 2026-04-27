@@ -407,3 +407,234 @@ views: {
 | security rules in client schema | PocketBase ACL only |
 | `operation=update/create` in URL | URL always `select`; operation inferred at runtime |
 | `query.take` | `query.perPage` |
+
+
+# CW Controller Rules — Implementation Reference
+
+Based on actual implementation in CW-run-proposed.js.
+
+---
+
+## Controller Pipeline (exact order)
+
+Every `CW.controller(run_doc)` call executes these steps in order:
+
+```
+1. _resolveInput   — meta channel: input['.field'] → run_doc.field
+2. _mergeInput     — all input → target.data[0] (including virtual + _state)
+3. _clearInput     — input emptied: input = { _state: {} }
+4. dispatch        — read from target.data[0], route to handler
+```
+
+---
+
+## Rule 1: `target.data[0]` is the live working document
+
+After `_mergeInput`, `target.data[0]` is always complete and current.
+Everything downstream reads from `target.data[0]` only.
+`input` is always empty after step 3.
+
+---
+
+## Rule 2: `input` is the intent delta
+
+`input` carries user changes before they reach `target.data[0]`.
+It is the ONLY place UI writes to:
+
+```js
+run_doc.input[field.fieldname] = val;  // commitField
+run_doc.input._state['0.0_1'] = '';    // onFsmClick
+run_doc.input['.operation'] = 'update'; // meta channel
+```
+
+`input` is cleared after `_mergeInput`. Never read by dispatchers.
+
+---
+
+## Rule 3: Three input channels
+
+| Channel | Key format | Dispatches to |
+|---------|-----------|---------------|
+| Meta | starts with `.` | `run_doc.field` via `_resolveInput` |
+| FSM | `_state: { signal: '' }` | `_handleSignal` |
+| Data | everything else | `_handlers.create/update` |
+
+All three are merged into `target.data[0]` before dispatch.
+
+---
+
+## Rule 4: Signal dispatch
+
+Signal detected from `target.data[0]._state` after merge:
+
+```js
+const signal = Object.entries(doc._state || {}).find(([,v]) => v === '');
+```
+
+Pending signal = `''`. Completed = `'1'`. Failed = `'-1'`.
+
+If signal found → `_handleSignal` → always persists (regardless of `_autosave`).
+
+---
+
+## Rule 5: `_autosave` controls data branch only
+
+```js
+const autosave = schema?._autosave ?? 1;
+if (autosave !== 0) {
+  // persist field changes immediately
+}
+```
+
+| `_autosave` | data branch | signal branch |
+|-------------|-------------|---------------|
+| `1` (default) | persists immediately | persists |
+| `0` | skips persist (accumulates) | persists |
+
+**`_autosave: 0`** = accumulate field changes in `target.data[0]` until a signal fires.
+Any signal — `0.0_1`, `1.0_1`, etc. — triggers persist via `_handleSignal`.
+No special signal required. First signal after accumulation saves everything.
+
+---
+
+## Rule 6: Virtual fields lifecycle
+
+Fields with `virtual: 1` in schema:
+- Merged into `target.data[0]` by `_mergeInput` (temporarily present)
+- Available to sideEffects (which read from `target.data[0]`)
+- Stripped by `_stripVirtual` inside `_handlers.create/update` — AFTER `_preflight`, BEFORE adapter write
+- Never reach DB
+
+```
+_mergeInput → virtual in target
+_preflight  → validates virtual (reqd check passes)
+_stripVirtual → virtual removed from target
+Adapter.create/update → writes clean target
+```
+
+---
+
+## Rule 7: `_preflight` takes only `run_doc`
+
+```js
+CW._preflight(run_doc)  // correct
+CW._preflight(run_doc, 'create')  // wrong — violates coding rules
+```
+
+`_preflight` reads `run_doc.operation` internally. No extra args.
+
+---
+
+## Rule 8: All framework functions take only `run_doc`
+
+systemFields handlers:
+```js
+// correct
+onWrite: (run_doc) => { const doc = run_doc.target?.data?.[0]; if (doc) doc.field = val; }
+
+// wrong
+onWrite: (run_doc, input) => { input.field = val; }
+```
+
+All reads/writes go through `run_doc.target.data[0]`.
+
+---
+
+## Rule 9: Adapter is pure I/O
+
+`create` and `update` read from `target.data[0]` only:
+
+```js
+// adapter create
+const doc = run_doc.target?.data?.[0];
+const { top, data } = _splitRecord(doc);
+await pb.collection(collection).create({ id: doc.name, ...top, data });
+
+// adapter update — no fetch, no merge
+const doc = run_doc.target?.data?.[0];
+const { top, data } = _splitRecord(doc);
+await pb.collection(collection).update(doc.id, { ...top, data });
+```
+
+No `getFullList` before update. No `Object.assign({}, rec.data, data)` merge.
+Caller guarantees `target.data[0]` is complete before calling adapter.
+
+---
+
+## Rule 10: Caller responsibility
+
+`target.data[0]` must be populated before calling `update`.
+No runtime guard. Coding discipline — same as Express middleware contract.
+
+For `create` — `target` can be null. `_mergeInput` initializes it from `input`.
+
+---
+
+## Rule 11: `_state` merge ownership
+
+`_mergeInput` owns `_state` merge:
+- Clears same-dim signals from `target.data[0]._state`
+- Merges `input._state` into `target.data[0]._state`
+- Preserves other-dim signals
+
+`_preflight` does NOT merge `_state`. One place, one owner.
+
+---
+
+## Rule 12: Signal marked in both `input._state` and `target.data[0]._state`
+
+After `_execTransition` succeeds:
+
+```js
+doc._state[signal] = '1';           // target — live document state
+run_doc.input._state[signal] = '1'; // input — picked up by _preflight for DB write
+```
+
+Both updated. `_preflight` uses `input._state` to build the write payload.
+
+---
+
+## Rule 13: `_stripVirtual` placement
+
+Inside `_handlers.create` and `_handlers.update`:
+```
+_preflight (validates including virtual fields)
+  ↓
+_stripVirtual (removes virtual from target.data[0])
+  ↓
+Adapter.write (clean target, no virtual fields)
+```
+
+Never before `_preflight` — validation needs virtual fields.
+Never in `_handleSignal` — handlers own the strip.
+
+---
+
+## Rule 14: `_mergeInput` _state handling
+
+```js
+// clear same-dim signals from target before merging new ones
+for (const sig of Object.keys(inputState)) {
+  const dim = sig.split('.')[0];
+  if (isNaN(dim)) continue;
+  const prefix = dim + '.';
+  for (const k of Object.keys(targetState)) {
+    if (k.startsWith(prefix)) delete targetState[k];
+  }
+}
+Object.assign(targetState, inputState);
+```
+
+Result: `target.data[0]._state` has one signal per dim — always the latest.
+
+---
+
+## Rule 15: DB response updates `target.data[0]`
+
+After every adapter write:
+```js
+run_doc.target = { data: [_mergeRecord(pbResult)], meta: { updated: 1 } };
+```
+
+`_mergeRecord` converts PocketBase response → CW document format.
+`target.data[0]` always reflects confirmed DB state after persist.

@@ -454,7 +454,8 @@ CW.run = async function (op) {
 // Operates on target.data[0] — not input
 // ============================================================
 
-CW._preflight = function (run_doc, operation) {
+CW._preflight = function (run_doc) {
+  const operation = run_doc.operation;
   const schema = CW.Schema?.[run_doc.target_doctype];
   const doc    = run_doc.target?.data?.[0];
   if (!doc) return;
@@ -586,7 +587,7 @@ CW._handlers = {
   },
 
   create: async function (run_doc) {
-    CW._preflight(run_doc, 'create');
+    CW._preflight(run_doc);
     if (run_doc.error) return;
     CW._stripVirtual(run_doc);  // strip virtual after validation, before DB write
     const db = CW._config.adapters.defaults.db;
@@ -609,7 +610,7 @@ CW._handlers = {
     const editable = (doc?.docstatus ?? 0) === 0;
     if (!editable && !run_doc.options?.internal) return;
 
-    CW._preflight(run_doc, 'update');
+    CW._preflight(run_doc);
     if (run_doc.error) return;
     CW._stripVirtual(run_doc);  // strip virtual after validation, before DB write
     await globalThis.Adapter[db].update(run_doc);

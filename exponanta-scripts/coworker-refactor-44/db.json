@@ -2450,6 +2450,7 @@
   {
     "_schema_doctype": "Task",
     "explicit_edit_intent": 1,
+    "_autosave": 0,
     "_state": {
   "1": {
     "name": "_task_status",
