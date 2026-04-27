@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Channels — CW Prototype</title>
+
+  <!-- Tabler CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler/1.0.0-beta17/css/tabler.min.css">
+  <!-- marked.js for markdown rendering -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <!-- React 18 UMD -->
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+  <style>
+    :root {
+      --channel-accent: #206bc4;
+      --post-bg: #fff;
+      --comment-bg: #f8fafc;
+      --draft-stripe: repeating-linear-gradient(
+        45deg, #fff9e6, #fff9e6 10px, #fffdf5 10px, #fffdf5 20px
+      );
+    }
+
+    body { background: #f1f5f9; }
+
+    /* ── Channel feed card ───────────────────── */
+    .post-card {
+      background: var(--post-bg);
+      border-radius: 8px;
+      border: 1px solid #e2e8f0;
+      margin-bottom: 12px;
+      transition: box-shadow .15s;
+    }
+    .post-card:hover { box-shadow: 0 2px 12px rgba(0,0,0,.08); }
+    .post-card.draft { background: var(--draft-stripe); }
+
+    /* ── Post body markdown ──────────────────── */
+    .post-body { line-height: 1.7; color: #334155; }
+    .post-body h1,.post-body h2,.post-body h3 { margin-top: 1rem; color: #1e293b; }
+    .post-body code { background: #f1f5f9; padding: 2px 6px; border-radius: 4px; font-size: .85em; }
+    .post-body pre  { background: #1e293b; color: #e2e8f0; padding: 1rem; border-radius: 6px; overflow-x: auto; }
+    .post-body pre code { background: none; color: inherit; padding: 0; }
+    .post-body blockquote { border-left: 3px solid var(--channel-accent); padding-left: 1rem; color: #64748b; margin: 1rem 0; }
+
+    /* ── Comment thread ──────────────────────── */
+    .comment-item {
+      background: var(--comment-bg);
+      border-left: 3px solid #e2e8f0;
+      border-radius: 0 6px 6px 0;
+      padding: 10px 14px;
+      margin-bottom: 8px;
+    }
+    .comment-item.flagged { border-left-color: #f59e0b; background: #fffbeb; }
+    .comment-item.hidden  { border-left-color: #ef4444; background: #fef2f2; opacity: .7; }
+
+    /* ── Markdown editor ─────────────────────── */
+    .md-editor { font-family: 'JetBrains Mono', 'Fira Code', monospace; font-size: .9rem; }
+    .md-toolbar { display: flex; gap: 4px; padding: 6px 8px; background: #f8fafc; border: 1px solid #e2e8f0; border-bottom: none; border-radius: 6px 6px 0 0; }
+    .md-toolbar button { padding: 2px 8px; border: 1px solid #e2e8f0; background: #fff; border-radius: 4px; cursor: pointer; font-size: .8rem; }
+    .md-toolbar button:hover { background: #e2e8f0; }
+    .md-editor textarea { border-radius: 0 0 6px 6px !important; border-top: none !important; }
+
+    /* ── Nav breadcrumb ──────────────────────── */
+    .channel-nav { font-size: .85rem; color: #64748b; margin-bottom: 1rem; }
+    .channel-nav a { color: var(--channel-accent); text-decoration: none; }
+    .channel-nav a:hover { text-decoration: underline; }
+    .channel-nav span { margin: 0 6px; }
+
+    /* ── Badges ──────────────────────────────── */
+    .status-badge { font-size: .7rem; padding: 2px 8px; border-radius: 20px; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; }
+    .status-0 { background: #fef9c3; color: #854d0e; }
+    .status-1 { background: #dcfce7; color: #166534; }
+    .status-2 { background: #f1f5f9; color: #64748b; }
+
+    /* ── Channel header ──────────────────────── */
+    .channel-header { background: linear-gradient(135deg, #1e3a5f 0%, #206bc4 100%); color: #fff; border-radius: 8px; padding: 24px; margin-bottom: 20px; }
+    .channel-header h2 { color: #fff; margin: 0 0 4px; }
+    .channel-header p { color: rgba(255,255,255,.75); margin: 0; font-size: .9rem; }
+
+    /* ── Empty state ─────────────────────────── */
+    .empty-state { text-align: center; padding: 48px 24px; color: #94a3b8; }
+    .empty-state svg { width: 48px; height: 48px; margin-bottom: 12px; opacity: .4; }
+  </style>
+</head>
+
+<body>
+<div id="app"></div>
+
+<script>
+// ============================================================
+// MOCK CW — in-memory store, same interface as real CW.run
+// Replace with real CW.run + pb adapter to connect PocketBase
+// ============================================================
+
+const generateId = (t) => t.toLowerCase().replace(/[^a-z0-9]/g,'').slice(0,8)
+  + Math.random().toString(36).slice(2,8);
+
+// ── in-memory store ──────────────────────────────────────────
+const store = {
+  // Channels
+  'chan0000000aaaa': { id:'chan0000000aaaa', name:'chan0000000aaaa', doctype:'Channel',
+    title:'Exponanta Community', description:'Updates, insights and discussions from the Exponanta team.',
+    slug:'exponanta', docstatus:0, _state:{'0':0}, owner:'user1', _allowed:['user1'] },
+  'chan0000000bbbb': { id:'chan0000000bbbb', name:'chan0000000bbbb', doctype:'Channel',
+    title:'CFE Boston Events', description:'Upcoming events and recaps from the Center for Entrepreneurship.',
+    slug:'cfe-events', docstatus:0, _state:{'0':0}, owner:'user1', _allowed:['user1'] },
+  'chan0000000cccc': { id:'chan0000000cccc', name:'chan0000000cccc', doctype:'Channel',
+    title:'Tech & Startups', description:'Curated news and commentary on the Boston startup scene.',
+    slug:'tech-startups', docstatus:0, _state:{'0':0}, owner:'user2', _allowed:['user2'] },
+
+  // Posts
+  'post000000aaaa': { id:'post000000aaaa', name:'post000000aaaa', doctype:'Post',
+    title:'Welcome to Exponanta Channels',
+    body:`## Welcome! 👋\n\nThis is the first post in the **Exponanta Community** channel.\n\nHere's what you can do:\n- Read and comment on posts\n- React with emoji\n- Subscribe to channels you care about\n\n> "The best communities are built on trust and shared purpose."\n\nWe're excited to have you here. Feel free to introduce yourself in the comments below!\n\n\`\`\`\nExponanta — structured referral networking\n\`\`\``,
+    parent:'chan0000000aaaa', docstatus:1, _state:{'0':1},
+    owner:'user1', author_name:'Denis D.', created:Date.now()-86400000*3,
+    tags:'welcome,community,exponanta' },
+  'post000000bbbb': { id:'post000000bbbb', name:'post000000bbbb', doctype:'Post',
+    title:'How CW Framework Simplifies Document Management',
+    body:`## The Problem\n\nMost low-code platforms are either too rigid or too complex. CW takes a different approach — **schema-driven, FSM-based, adapter-agnostic**.\n\n## Core Concepts\n\n1. **run_doc** — every operation is a document\n2. **controller** — single entry point for all business logic\n3. **_state FSM** — lifecycle management built in\n\n## What this means for you\n\nYou can build a complete CRUD application with moderation, access control, and audit trail using only configuration — no custom backend code.\n\nMore posts on this topic coming soon. Subscribe to stay updated!`,
+    parent:'chan0000000aaaa', docstatus:1, _state:{'0':1},
+    owner:'user1', author_name:'Denis D.', created:Date.now()-86400000,
+    tags:'cw,framework,development' },
+  'post000000cccc': { id:'post000000cccc', name:'post000000cccc', doctype:'Post',
+    title:'Draft: Upcoming Boston Networking Event',
+    body:`## Save the Date\n\nWe're planning a **networking breakfast** for Boston entrepreneurs.\n\n*Details TBD — this is a draft*`,
+    parent:'chan0000000aaaa', docstatus:0, _state:{'0':0},
+    owner:'user1', author_name:'Denis D.', created:Date.now()-3600000,
+    tags:'events,boston,networking' },
+  'post000000dddd': { id:'post000000dddd', name:'post000000dddd', doctype:'Post',
+    title:'Spring ScaleUp Cohort — Applications Open',
+    body:`## Apply Now\n\nThe CFE ScaleUp program is accepting applications for the **Spring 2026 cohort**.\n\n### What you get\n- 9 months of structured mentorship\n- Access to investor network\n- Weekly workshops\n\n### Eligibility\n- Revenue-generating business\n- Boston/Cambridge area preferred\n- Committed founder team\n\n[Apply here →](https://cfeglobal.org/scaleup)`,
+    parent:'chan0000000bbbb', docstatus:1, _state:{'0':1},
+    owner:'user1', author_name:'Denis D.', created:Date.now()-86400000*2,
+    tags:'scaleup,cfe,applications' },
+
+  // Comments
+  'comm000000aaaa': { id:'comm000000aaaa', name:'comm000000aaaa', doctype:'Comment',
+    body:'This is exactly what the Boston startup community needs. Looking forward to seeing this grow!',
+    parent:'post000000aaaa', docstatus:0, _state:{'0':0},
+    owner:'user2', author_name:'Alex M.', created:Date.now()-86400000*2 },
+  'comm000000bbbb': { id:'comm000000bbbb', name:'comm000000bbbb', doctype:'Comment',
+    body:'Great intro! One question — is there a mobile app planned?',
+    parent:'post000000aaaa', docstatus:0, _state:{'0':0},
+    owner:'user3', author_name:'Sarah K.', created:Date.now()-86400000 },
+  'comm000000cccc': { id:'comm000000cccc', name:'comm000000cccc', doctype:'Comment',
+    body:'This comment has been flagged by a reader.',
+    parent:'post000000aaaa', docstatus:1, _state:{'0':1},
+    owner:'user4', author_name:'Unknown', created:Date.now()-3600000 },
+  'comm000000dddd': { id:'comm000000dddd', name:'comm000000dddd', doctype:'Comment',
+    body:'Spam comment hidden by moderator.',
+    parent:'post000000aaaa', docstatus:2, _state:{'0':2},
+    owner:'user5', author_name:'Spammer', created:Date.now()-7200000 },
+  'comm000000eeee': { id:'comm000000eeee', name:'comm000000eeee', doctype:'Comment',
+    body:'The FSM approach is brilliant. We\'ve been struggling with document lifecycle in our app for months. Implementing this pattern tomorrow.',
+    parent:'post000000bbbb', docstatus:0, _state:{'0':0},
+    owner:'user2', author_name:'Alex M.', created:Date.now()-43200000 },
+};
+
+// ── mock CW.run — same interface as real ─────────────────────
+const CW = {
+  run: async (op) => {
+    const run_doc = {
+      operation: op.operation,
+      target_doctype: op.target_doctype,
+      query: op.query || {},
+      input: op.input || {},
+      target: op.target || null,
+      options: op.options || {},
+      error: null, success: false, status: 'pending',
+      name: generateId('Run'),
+      child: async (childOp) => CW.run(childOp),
+    };
+
+    try {
+      if (op.operation === 'select') {
+        const where = op.query?.where || {};
+        let recs = Object.values(store).filter(r => r.doctype === op.target_doctype);
+        if (where.name)        recs = recs.filter(r => r.name === where.name);
+        if (where.parent)      recs = recs.filter(r => r.parent === where.parent);
+        if (where.docstatus !== undefined) recs = recs.filter(r => r.docstatus === where.docstatus);
+        if (op.query?.sort === '-created') recs.sort((a,b) => b.created - a.created);
+        run_doc.target = { data: recs };
+        run_doc.success = true;
+
+      } else if (op.operation === 'create') {
+        const rec = Object.assign({}, op.input);
+        rec.id      = rec.name || generateId(op.target_doctype);
+        rec.name    = rec.id;
+        rec.doctype = op.target_doctype;
+        rec.created = Date.now();
+        rec.docstatus = rec.docstatus ?? 0;
+        rec._state  = { '0': 0 };
+        store[rec.name] = rec;
+        run_doc.target = { data: [rec] };
+        run_doc.success = true;
+
+      } else if (op.operation === 'update') {
+        const name = op.query?.where?.name || op.input?.name;
+        const rec  = Object.values(store).find(r => r.name === name);
+        if (rec) {
+          Object.assign(rec, op.input);
+          run_doc.target = { data: [Object.assign({}, rec)] };
+          run_doc.success = true;
+        } else {
+          run_doc.error = 'Record not found';
+        }
+      }
+
+      run_doc.status = run_doc.error ? 'failed' : 'completed';
+    } catch(e) {
+      run_doc.error = e.message;
+      run_doc.status = 'failed';
+    }
+
+    return run_doc;
+  }
+};
+
+// ── marked.js config ─────────────────────────────────────────
+marked.setOptions({ breaks: true, gfm: true });
+
+const renderMarkdown = (text) => ({ __html: marked.parse(text || '') });
+
+// ── current user (mock) ───────────────────────────────────────
+const CURRENT_USER = 'user1';
+const isAuthor = (owner) => owner === CURRENT_USER;
+
+// ── time helpers ─────────────────────────────────────────────
+const timeAgo = (ts) => {
+  const diff = Date.now() - ts;
+  if (diff < 60000)    return 'just now';
+  if (diff < 3600000)  return Math.floor(diff/60000) + 'm ago';
+  if (diff < 86400000) return Math.floor(diff/3600000) + 'h ago';
+  return Math.floor(diff/86400000) + 'd ago';
+};
+
+const ce = React.createElement;
+
+// ============================================================
+// MARKDOWN EDITOR COMPONENT
+// ============================================================
+
+const MarkdownEditor = function({ value, onChange, onBlur, placeholder, rows }) {
+  const taRef = React.useRef(null);
+
+  const insertWrap = (before, after) => {
+    const ta  = taRef.current;
+    const s   = ta.selectionStart;
+    const e   = ta.selectionEnd;
+    const sel = ta.value.slice(s, e) || 'text';
+    const newVal = ta.value.slice(0,s) + before + sel + after + ta.value.slice(e);
+    onChange(newVal);
+    setTimeout(() => {
+      ta.focus();
+      ta.selectionStart = s + before.length;
+      ta.selectionEnd   = s + before.length + sel.length;
+    }, 0);
+  };
+
+  return ce('div', {},
+    ce('div', { className: 'md-toolbar' },
+      ce('button', { type:'button', title:'Bold', onClick: () => insertWrap('**','**') }, 'B'),
+      ce('button', { type:'button', title:'Italic', style:{fontStyle:'italic'}, onClick: () => insertWrap('_','_') }, 'I'),
+      ce('button', { type:'button', title:'Code', onClick: () => insertWrap('`','`') }, '</>'),
+      ce('button', { type:'button', title:'Quote', onClick: () => {
+        const ta = taRef.current;
+        const s  = ta.selectionStart;
+        const line = ta.value.slice(0, s).lastIndexOf('\n') + 1;
+        const newVal = ta.value.slice(0, line) + '> ' + ta.value.slice(line);
+        onChange(newVal);
+      }}, '❝'),
+      ce('span', { style:{flex:1} }),
+      ce('span', { style:{fontSize:'.75rem', color:'#94a3b8', alignSelf:'center'} }, 'Markdown')
+    ),
+    ce('textarea', {
+      ref: taRef,
+      className: 'form-control md-editor',
+      rows: rows || 6,
+      value: value,
+      placeholder: placeholder || 'Write in markdown...',
+      onChange: (e) => onChange(e.target.value),
+      onBlur: onBlur,
+    })
+  );
+};
+
+// ============================================================
+// COMMENT THREAD
+// ============================================================
+
+const CommentThread = function({ postName, isChannelAuthor }) {
+  const [comments, setComments] = React.useState([]);
+  const [newComment, setNewComment] = React.useState('');
+  const [submitting, setSubmitting] = React.useState(false);
+  const [showHidden, setShowHidden] = React.useState(false);
+
+  const loadComments = React.useCallback(async () => {
+    const r = await CW.run({
+      operation: 'select', target_doctype: 'Comment',
+      query: { where: { parent: postName }, sort: '-created' },
+      options: { render: false },
+    });
+    if (r.success) setComments(r.target.data);
+  }, [postName]);
+
+  React.useEffect(() => { loadComments(); }, [postName]);
+
+  const onSubmit = async () => {
+    if (!newComment.trim()) return;
+    setSubmitting(true);
+    await CW.run({
+      operation: 'create', target_doctype: 'Comment',
+      input: { body: newComment, parent: postName, owner: CURRENT_USER, author_name: 'You' },
+      options: { render: false },
+    });
+    setNewComment('');
+    setSubmitting(false);
+    await loadComments();
+  };
+
+  const onModerate = async (comment, newDocstatus) => {
+    await CW.run({
+      operation: 'update', target_doctype: 'Comment',
+      query: { where: { name: comment.name } },
+      input: { docstatus: newDocstatus, _state: { '0': newDocstatus } },
+      options: { render: false },
+    });
+    await loadComments();
+  };
+
+  const visibleComments = showHidden
+    ? comments
+    : comments.filter(c => c.docstatus !== 2);
+
+  const hiddenCount = comments.filter(c => c.docstatus === 2).length;
+
+  const statusLabel = { 0: null, 1: 'Flagged', 2: 'Hidden' };
+  const statusCls   = { 0: '', 1: 'flagged', 2: 'hidden' };
+
+  return ce('div', { className: 'mt-4' },
+    ce('div', { className: 'd-flex justify-content-between align-items-center mb-3' },
+      ce('h5', { className: 'mb-0' }, `Comments (${comments.filter(c=>c.docstatus!==2).length})`),
+      hiddenCount > 0 && isChannelAuthor && ce('button', {
+        className: 'btn btn-sm btn-outline-secondary',
+        onClick: () => setShowHidden(v => !v),
+      }, showHidden ? 'Hide moderated' : `Show ${hiddenCount} hidden`)
+    ),
+
+    visibleComments.map(c => ce('div', {
+      key: c.name,
+      className: `comment-item ${statusCls[c.docstatus] || ''}`,
+    },
+      ce('div', { className: 'd-flex justify-content-between align-items-start mb-1' },
+        ce('div', { className: 'd-flex align-items-center gap-2' },
+          ce('div', {
+            style: { width:28, height:28, borderRadius:'50%', background:'#206bc4',
+              color:'#fff', display:'flex', alignItems:'center', justifyContent:'center',
+              fontSize:'.75rem', fontWeight:600, flexShrink:0 }
+          }, (c.author_name||'?')[0].toUpperCase()),
+          ce('div', {},
+            ce('span', { className: 'fw-medium', style:{fontSize:'.85rem'} }, c.author_name || 'User'),
+            ce('span', { className: 'text-muted ms-2', style:{fontSize:'.75rem'} }, timeAgo(c.created))
+          ),
+          statusLabel[c.docstatus] && ce('span', {
+            className: `badge ${c.docstatus===1?'bg-warning text-dark':'bg-danger'}`,
+            style:{fontSize:'.7rem'}
+          }, statusLabel[c.docstatus])
+        ),
+        isChannelAuthor && ce('div', { className: 'd-flex gap-1' },
+          c.docstatus === 0 && ce('button', {
+            className: 'btn btn-xs btn-outline-warning', style:{padding:'1px 6px',fontSize:'.7rem'},
+            onClick: () => onModerate(c, 1), title: 'Flag'
+          }, '⚑'),
+          (c.docstatus === 0 || c.docstatus === 1) && ce('button', {
+            className: 'btn btn-xs btn-outline-danger', style:{padding:'1px 6px',fontSize:'.7rem'},
+            onClick: () => onModerate(c, 2), title: 'Hide'
+          }, '🚫'),
+          c.docstatus === 1 && ce('button', {
+            className: 'btn btn-xs btn-outline-secondary', style:{padding:'1px 6px',fontSize:'.7rem'},
+            onClick: () => onModerate(c, 0), title: 'Dismiss flag'
+          }, '✓'),
+          c.docstatus === 2 && isChannelAuthor && ce('button', {
+            className: 'btn btn-xs btn-outline-success', style:{padding:'1px 6px',fontSize:'.7rem'},
+            onClick: () => onModerate(c, 0), title: 'Unhide'
+          }, '↩')
+        )
+      ),
+      ce('div', { style:{fontSize:'.875rem', color: c.docstatus===2 ? '#ef4444' : '#334155'} },
+        c.body
+      )
+    )),
+
+    comments.length === 0 && ce('div', { className: 'text-muted text-center py-3', style:{fontSize:'.875rem'} },
+      'No comments yet. Be the first!'
+    ),
+
+    // comment editor
+    ce('div', { className: 'mt-3' },
+      ce('textarea', {
+        className: 'form-control', rows: 3,
+        placeholder: 'Add a comment...',
+        value: newComment,
+        onChange: (e) => setNewComment(e.target.value),
+        onKeyDown: (e) => { if (e.ctrlKey && e.key === 'Enter') onSubmit(); }
+      }),
+      ce('div', { className: 'd-flex justify-content-between align-items-center mt-2' },
+        ce('span', { className: 'text-muted', style:{fontSize:'.75rem'} }, 'Ctrl+Enter to post'),
+        ce('button', {
+          className: 'btn btn-primary btn-sm',
+          disabled: !newComment.trim() || submitting,
+          onClick: onSubmit,
+        }, submitting ? '...' : 'Post comment')
+      )
+    )
+  );
+};
+
+// ============================================================
+// POST DETAIL
+// ============================================================
+
+const PostDetail = function({ postName, onBack }) {
+  const [post, setPost]     = React.useState(null);
+  const [editing, setEditing] = React.useState(false);
+  const [editBody, setEditBody] = React.useState('');
+  const [editTitle, setEditTitle] = React.useState('');
+  const [saving, setSaving] = React.useState(false);
+
+  React.useEffect(() => {
+    CW.run({ operation:'select', target_doctype:'Post',
+      query:{ where:{ name: postName } }, options:{ render:false }
+    }).then(r => {
+      if (r.success && r.target.data[0]) {
+        setPost(r.target.data[0]);
+        setEditBody(r.target.data[0].body || '');
+        setEditTitle(r.target.data[0].title || '');
+      }
+    });
+  }, [postName]);
+
+  const onPublish = async () => {
+    await CW.run({ operation:'update', target_doctype:'Post',
+      query:{ where:{ name: postName } },
+      input:{ docstatus:1, _state:{'0':1} }, options:{ render:false }
+    });
+    setPost(p => ({...p, docstatus:1, _state:{'0':1}}));
+  };
+
+  const onSave = async () => {
+    setSaving(true);
+    await CW.run({ operation:'update', target_doctype:'Post',
+      query:{ where:{ name: postName } },
+      input:{ title: editTitle, body: editBody }, options:{ render:false }
+    });
+    setSaving(false);
+    setEditing(false);
+    setPost(p => ({...p, title: editTitle, body: editBody}));
+  };
+
+  if (!post) return ce('div', { className: 'text-center py-5' },
+    ce('div', { className: 'spinner-border text-primary' })
+  );
+
+  const canEdit = isAuthor(post.owner);
+
+  return ce('div', {},
+    // breadcrumb
+    ce('div', { className: 'channel-nav mb-3' },
+      ce('a', { href:'#', onClick:(e)=>{e.preventDefault();onBack('channels')} }, 'Channels'),
+      ce('span', {}, '›'),
+      ce('a', { href:'#', onClick:(e)=>{e.preventDefault();onBack('feed', post.parent)} }, 'Feed'),
+      ce('span', {}, '›'),
+      ce('span', {}, post.title)
+    ),
+
+    // post card
+    ce('div', { className: `post-card ${post.docstatus===0?'draft':''} p-4` },
+      // header
+      ce('div', { className: 'd-flex justify-content-between align-items-start mb-3' },
+        ce('div', { style:{flex:1} },
+          editing
+            ? ce('input', { className:'form-control form-control-lg fw-bold mb-2',
+                value: editTitle, onChange:(e)=>setEditTitle(e.target.value) })
+            : ce('h2', { className:'mb-1' }, post.title),
+          ce('div', { className: 'd-flex align-items-center gap-2 flex-wrap' },
+            ce('span', { className: `status-badge status-${post.docstatus}` },
+              ['Draft','Published','Archived'][post.docstatus]),
+            ce('span', { className:'text-muted', style:{fontSize:'.8rem'} },
+              post.author_name + ' · ' + timeAgo(post.created)),
+            post.tags && post.tags.split(',').map(t => t.trim()).filter(Boolean).map(tag =>
+              ce('span', { key:tag, className:'badge bg-blue-lt', style:{fontSize:'.72rem'} }, '#'+tag)
+            )
+          )
+        ),
+        canEdit && ce('div', { className:'d-flex gap-2 ms-3' },
+          !editing && post.docstatus === 0 && ce('button', {
+            className:'btn btn-success btn-sm', onClick: onPublish
+          }, '↑ Publish'),
+          !editing && ce('button', {
+            className:'btn btn-outline-secondary btn-sm', onClick:()=>setEditing(true)
+          }, '✎ Edit'),
+          editing && ce('button', {
+            className:'btn btn-primary btn-sm', disabled:saving, onClick:onSave
+          }, saving ? '...' : 'Save'),
+          editing && ce('button', {
+            className:'btn btn-outline-secondary btn-sm', onClick:()=>setEditing(false)
+          }, 'Cancel')
+        )
+      ),
+
+      // body
+      editing
+        ? ce(MarkdownEditor, { value: editBody, onChange: setEditBody, rows: 12 })
+        : ce('div', { className:'post-body', dangerouslySetInnerHTML: renderMarkdown(post.body) })
+    ),
+
+    // comments
+    ce('div', { className:'card mt-3' },
+      ce('div', { className:'card-body' },
+        ce(CommentThread, { postName: post.name, isChannelAuthor: canEdit })
+      )
+    )
+  );
+};
+
+// ============================================================
+// CHANNEL FEED — list of posts in a channel
+// ============================================================
+
+const ChannelFeed = function({ channelName, onSelectPost, onBack, onNewPost }) {
+  const [channel, setChannel] = React.useState(null);
+  const [posts, setPosts]     = React.useState([]);
+
+  React.useEffect(() => {
+    CW.run({ operation:'select', target_doctype:'Channel',
+      query:{ where:{ name: channelName } }, options:{ render:false }
+    }).then(r => { if (r.success) setChannel(r.target.data[0]); });
+
+    CW.run({ operation:'select', target_doctype:'Post',
+      query:{ where:{ parent: channelName }, sort:'-created' }, options:{ render:false }
+    }).then(r => { if (r.success) setPosts(r.target.data); });
+  }, [channelName]);
+
+  if (!channel) return ce('div', { className:'text-center py-5' },
+    ce('div', { className:'spinner-border text-primary' })
+  );
+
+  const canPost = isAuthor(channel.owner);
+  const publishedPosts = canPost ? posts : posts.filter(p => p.docstatus === 1);
+
+  return ce('div', {},
+    ce('div', { className:'channel-nav mb-3' },
+      ce('a', { href:'#', onClick:(e)=>{e.preventDefault();onBack('channels')} }, 'Channels'),
+      ce('span', {}, '›'),
+      ce('span', {}, channel.title)
+    ),
+
+    ce('div', { className:'channel-header' },
+      ce('div', { className:'d-flex justify-content-between align-items-start' },
+        ce('div', {},
+          ce('h2', {}, channel.title),
+          ce('p', {}, channel.description)
+        ),
+        canPost && ce('button', {
+          className:'btn btn-light btn-sm', onClick: onNewPost
+        }, '+ New Post')
+      )
+    ),
+
+    publishedPosts.length === 0 && ce('div', { className:'empty-state' },
+      ce('div', { style:{fontSize:'2rem'} }, '📭'),
+      ce('p', {}, 'No posts yet in this channel.')
+    ),
+
+    publishedPosts.map(post =>
+      ce('div', {
+        key: post.name,
+        className: `post-card ${post.docstatus===0?'draft':''} p-3`,
+        style:{ cursor:'pointer' },
+        onClick: () => onSelectPost(post.name),
+      },
+        ce('div', { className:'d-flex justify-content-between align-items-start' },
+          ce('div', { style:{flex:1} },
+            ce('div', { className:'d-flex align-items-center gap-2 mb-1' },
+              post.docstatus === 0 && ce('span', { className:'status-badge status-0' }, 'Draft'),
+              ce('h4', { className:'mb-0', style:{fontSize:'1rem'} }, post.title)
+            ),
+            ce('div', { className:'text-muted mb-2', style:{fontSize:'.82rem'} },
+              post.author_name + ' · ' + timeAgo(post.created),
+              post.tags && ' · ' + post.tags.split(',').map(t=>'#'+t.trim()).join(' ')
+            ),
+            // excerpt
+            ce('p', { className:'mb-0 text-muted', style:{fontSize:'.875rem',
+              overflow:'hidden', display:'-webkit-box', WebkitLineClamp:2,
+              WebkitBoxOrient:'vertical'
+            }},
+              (post.body||'').replace(/[#*`>_~\[\]]/g,'').slice(0,160) + '...'
+            )
+          ),
+          ce('div', { className:'ms-3 text-muted text-center', style:{flexShrink:0,fontSize:'.75rem'} },
+            ce('div', { style:{fontSize:'1.1rem'} }, '💬'),
+            Object.values(store).filter(r=>r.doctype==='Comment'&&r.parent===post.name&&r.docstatus===0).length
+          )
+        )
+      )
+    )
+  );
+};
+
+// ============================================================
+// NEW POST EDITOR
+// ============================================================
+
+const NewPostEditor = function({ channelName, onSaved, onCancel }) {
+  const [title, setTitle] = React.useState('');
+  const [body,  setBody]  = React.useState('');
+  const [saving, setSaving] = React.useState(false);
+  const [publishNow, setPublish] = React.useState(false);
+
+  const onSave = async () => {
+    if (!title.trim()) return;
+    setSaving(true);
+    const r = await CW.run({
+      operation: 'create', target_doctype: 'Post',
+      input: {
+        title, body, parent: channelName,
+        owner: CURRENT_USER, author_name: 'Denis D.',
+        docstatus: publishNow ? 1 : 0,
+        _state: { '0': publishNow ? 1 : 0 },
+        tags: '',
+        created: Date.now(),
+      },
+      options: { render: false },
+    });
+    setSaving(false);
+    if (r.success) onSaved(r.target.data[0]);
+  };
+
+  return ce('div', {},
+    ce('div', { className:'channel-nav mb-3' },
+      ce('a', { href:'#', onClick:(e)=>{e.preventDefault();onCancel()} }, '← Back')
+    ),
+    ce('div', { className:'card' },
+      ce('div', { className:'card-header' },
+        ce('h3', { className:'card-title mb-0' }, 'New Post')
+      ),
+      ce('div', { className:'card-body' },
+        ce('div', { className:'mb-3' },
+          ce('label', { className:'form-label fw-medium' }, 'Title'),
+          ce('input', { className:'form-control form-control-lg',
+            placeholder:'Post title...', value:title,
+            onChange:(e)=>setTitle(e.target.value) })
+        ),
+        ce('div', { className:'mb-3' },
+          ce('label', { className:'form-label fw-medium' }, 'Body'),
+          ce(MarkdownEditor, { value:body, onChange:setBody, rows:10,
+            placeholder:'Write your post in markdown...' })
+        ),
+        ce('div', { className:'d-flex justify-content-between align-items-center' },
+          ce('label', { className:'d-flex align-items-center gap-2 mb-0', style:{cursor:'pointer'} },
+            ce('input', { type:'checkbox', checked:publishNow,
+              onChange:(e)=>setPublish(e.target.checked) }),
+            ce('span', { className:'text-muted', style:{fontSize:'.875rem'} }, 'Publish immediately')
+          ),
+          ce('div', { className:'d-flex gap-2' },
+            ce('button', { className:'btn btn-outline-secondary', onClick:onCancel }, 'Cancel'),
+            ce('button', {
+              className:'btn btn-primary', disabled:!title.trim()||saving, onClick:onSave
+            }, saving ? '...' : (publishNow ? '↑ Publish' : 'Save Draft'))
+          )
+        )
+      )
+    )
+  );
+};
+
+// ============================================================
+// CHANNEL LIST
+// ============================================================
+
+const ChannelList = function({ onSelectChannel }) {
+  const [channels, setChannels] = React.useState([]);
+
+  React.useEffect(() => {
+    CW.run({ operation:'select', target_doctype:'Channel',
+      query:{}, options:{ render:false }
+    }).then(r => { if (r.success) setChannels(r.target.data); });
+  }, []);
+
+  const postCount = (channelName) =>
+    Object.values(store).filter(r=>r.doctype==='Post'&&r.parent===channelName&&r.docstatus===1).length;
+
+  return ce('div', {},
+    ce('div', { className:'d-flex justify-content-between align-items-center mb-4' },
+      ce('div', {},
+        ce('h2', { className:'mb-1' }, 'Channels'),
+        ce('p', { className:'text-muted mb-0', style:{fontSize:'.875rem'} },
+          'Subscribe to channels to stay updated')
+      )
+    ),
+
+    ce('div', { className:'row g-3' },
+      channels.map(ch =>
+        ce('div', { key:ch.name, className:'col-md-6 col-lg-4' },
+          ce('div', {
+            className:'card h-100', style:{cursor:'pointer'},
+            onClick:()=>onSelectChannel(ch.name)
+          },
+            ce('div', { className:'card-body' },
+              ce('div', { className:'d-flex align-items-center gap-3 mb-2' },
+                ce('div', {
+                  style:{ width:40, height:40, borderRadius:8,
+                    background:'linear-gradient(135deg,#1e3a5f,#206bc4)',
+                    display:'flex', alignItems:'center', justifyContent:'center',
+                    color:'#fff', fontWeight:700, fontSize:'1rem', flexShrink:0 }
+                }, ch.title[0].toUpperCase()),
+                ce('div', {},
+                  ce('h4', { className:'mb-0', style:{fontSize:'1rem'} }, ch.title),
+                  isAuthor(ch.owner) && ce('span', {
+                    className:'badge bg-blue-lt', style:{fontSize:'.7rem'}
+                  }, 'Admin')
+                )
+              ),
+              ce('p', { className:'text-muted mb-3', style:{fontSize:'.82rem',
+                overflow:'hidden', display:'-webkit-box', WebkitLineClamp:2,
+                WebkitBoxOrient:'vertical'} }, ch.description),
+              ce('div', { className:'d-flex justify-content-between align-items-center' },
+                ce('span', { className:'text-muted', style:{fontSize:'.78rem'} },
+                  postCount(ch.name) + ' posts'),
+                ce('span', { className:'text-primary', style:{fontSize:'.82rem'} }, 'View →')
+              )
+            )
+          )
+        )
+      )
+    )
+  );
+};
+
+// ============================================================
+// APP SHELL
+// ============================================================
+
+const App = function() {
+  const [view, setView]       = React.useState('channels');   // channels | feed | post | new-post
+  const [channel, setChannel] = React.useState(null);
+  const [post, setPost]       = React.useState(null);
+
+  const navigate = (v, id) => {
+    setView(v);
+    if (v === 'feed')     setChannel(id);
+    if (v === 'post')     setPost(id);
+    if (v === 'new-post') setChannel(id || channel);
+    if (v === 'channels') { setChannel(null); setPost(null); }
+  };
+
+  return ce('div', { className:'container-xl py-4' },
+    // topbar
+    ce('div', { className:'navbar mb-4', style:{background:'#1e3a5f',borderRadius:8,padding:'10px 20px'} },
+      ce('div', { className:'d-flex align-items-center gap-3' },
+        ce('div', {
+          style:{width:32,height:32,borderRadius:6,background:'#206bc4',
+            display:'flex',alignItems:'center',justifyContent:'center',
+            cursor:'pointer'},
+          onClick:()=>navigate('channels')
+        },
+          ce('span', { style:{color:'#fff',fontWeight:700,fontSize:'.9rem'} }, 'CW')
+        ),
+        ce('span', { style:{color:'#fff',fontWeight:600} }, 'Channels'),
+      ),
+      ce('div', { className:'d-flex align-items-center gap-2' },
+        ce('div', {
+          style:{width:28,height:28,borderRadius:'50%',background:'#206bc4',
+            color:'#fff',display:'flex',alignItems:'center',justifyContent:'center',
+            fontSize:'.75rem',fontWeight:600}
+        }, 'D')
+      )
+    ),
+
+    view === 'channels' && ce(ChannelList, { onSelectChannel:(name)=>navigate('feed',name) }),
+
+    view === 'feed' && channel && ce(ChannelFeed, {
+      channelName: channel,
+      onSelectPost: (name) => navigate('post', name),
+      onBack: (v) => navigate(v),
+      onNewPost: () => navigate('new-post'),
+    }),
+
+    view === 'post' && post && ce(PostDetail, {
+      postName: post,
+      onBack: (v, id) => navigate(v, id),
+    }),
+
+    view === 'new-post' && channel && ce(NewPostEditor, {
+      channelName: channel,
+      onSaved: (newPost) => navigate('post', newPost.name),
+      onCancel: () => navigate('feed', channel),
+    }),
+  );
+};
+
+// ── mount ─────────────────────────────────────────────────────
+ReactDOM.createRoot(document.getElementById('app')).render(ce(App));
+</script>
+</body>
+</html>

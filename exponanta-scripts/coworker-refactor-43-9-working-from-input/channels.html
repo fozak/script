@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Channels</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta17/dist/css/tabler.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+  <link rel="stylesheet" href="editor.css">
+  <style>
+    .threads-left  { height: 100vh; overflow-y: auto; border-right: 1px solid var(--tblr-border-color); }
+    .threads-right { height: 100vh; overflow-y: auto; }
+  </style>
+</head>
+<body class="antialiased">
+
+<div id="nav_container"></div>
+
+<div class="container-xl py-3">
+  <div class="row g-0">
+    <div class="col-md-3 threads-left">
+      <div id="threads_left"></div>
+    </div>
+    <div class="col-md-9 threads-right">
+      <div id="threads_right" class="p-3">
+        <div class="text-muted text-center pt-5">Select a channel to view posts</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="toast_container"></div>
+
+<!-- 1. PocketBase SDK -->
+<script src="https://cdn.jsdelivr.net/npm/pocketbase@latest/dist/pocketbase.umd.js"></script>
+<!-- 2. React UMD -->
+<script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+<!-- 3. Tabler JS -->
+<script src="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta17/dist/js/tabler.min.js"></script>
+<!-- 4. CW modules -->
+<script type="module" src="index.js"></script>
+<script type="module" src="CW-ui.js"></script>
+<script type="module" src="app-ui.js"></script>
+<!-- 5. Boot -->
+<script type="module">
+  async function waitForBoot() {
+    return new Promise(resolve => {
+      const check = setInterval(() => {
+        if (globalThis.CW?._booted) { clearInterval(check); resolve() }
+      }, 100)
+    })
+  }
+
+  window.addEventListener('load', async () => {
+    await waitForBoot()
+
+    // boot — channel list in left pane
+    CW.run({
+      operation:      'select',
+      target_doctype: 'Channel',
+      query:          { take: 50 },
+      component:      'MainGrid',
+      container:      'threads_left',
+      options:        { render: true },
+    })
+  })
+
+  // REPL
+  document.getElementById && document.addEventListener('DOMContentLoaded', () => {})
+</script>
+</body>
+</html>
