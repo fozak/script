@@ -128,70 +128,29 @@ async function fetchItemProfile(userId) {
 // ============================================================
 
 async function provisionUser(email, password, name) {
-  const userId    = generateId('User', email);
-  const profileId = generateId('UserPublicProfile', userId);
+  const userId = generateId('User', email);
 
   // Step 1: Create auth user
   await pb.collection('users').create({
-    id:              userId,
-    email,
-    password,
-    passwordConfirm: password,
-    name,
-    emailVisibility: true,
+    id: userId, email, password, passwordConfirm: password,
+    name, emailVisibility: true,
   });
 
-  // Step 2: Login (required — item createRule needs @request.auth.id != "")
+  // Step 2: Login
   await pb.collection('users').authWithPassword(email, password);
 
-  // Step 3: Create User item record without self-references
-  // (PocketBase relation validation requires referenced records to exist first)
+  // Step 3: Create User item
   await pb.collection('item').create({
-    id:            userId,
-    name:          userId,
-    doctype:       'User',
-    docstatus:     0,
-    owner:         '',
-    _allowed:      [SYSTEM_MANAGER_ROLE_ID],
-    _allowed_read: [],
-    data:          { id: userId, email, name, doctype: 'User', docstatus: 0 },
+    id: userId, name: userId, doctype: 'User', docstatus: 0,
+    owner: '', _allowed: [SYSTEM_MANAGER_ROLE_ID], _allowed_read: [],
+    data: { id: userId, email, name, doctype: 'User', docstatus: 0 },
   });
 
-  // Step 3b: add self-reference now that record exists
-  // owner stays "" — User doctype never has personal ownership
-  // _allowed_read: [userId] — user can read their own record only
-  /*  NOT NEEDED 
-
-  await pb.collection('item').update(userId, {
-    _allowed_read: [userId],
-  });  */
-
-  // Step 4: Create UserPublicProfile item record
-  // owner = userId (user owns their public profile)
-  // _allowed = [userId] (user edits own public profile)
-  // _allowed_read = [roleispublixxxx] (everyone can read)
-  await pb.collection('item').create({
-    id:            profileId,
-    name:          profileId,
-    doctype:       'UserPublicProfile',
-    docstatus:     0,
-    owner:         userId,
-    _allowed:      [userId],
-    _allowed_read: ['roleispublixxxx'],
-    data: {
-      id:        profileId,
-      doctype:   'UserPublicProfile',
-      docstatus: 0,
-      full_name: name,
-      // other fields empty — user fills in later
-    },
-  });
-
-  // Step 5: Send verification email
+  // Step 4: Send verification
   await pb.collection('users').requestVerification(email);
 
-  console.log('✅ User provisioned:', userId, '+ profile:', profileId);
-  return { userId, profileId };
+  console.log('✅ User provisioned:', userId);
+  return { userId };  // no profileId — CW creates UserPublicProfile
 }
 
 // ============================================================

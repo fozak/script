@@ -513,6 +513,7 @@ CW._preflight = function (run_doc) {
       const missing = schema.fields
         .filter(f =>
           f.reqd &&
+           !f.virtual &&
           f.fieldtype !== 'Table' &&
           evaluateDependsOn(f.depends_on, doc, run_doc) &&
           (doc[f.fieldname] === undefined || doc[f.fieldname] === null || doc[f.fieldname] === ''),

@@ -638,3 +638,42 @@ run_doc.target = { data: [_mergeRecord(pbResult)], meta: { updated: 1 } };
 
 `_mergeRecord` converts PocketBase response → CW document format.
 `target.data[0]` always reflects confirmed DB state after persist.
+
+
+
+CW SideEffect Rules — What NOT to do
+❌ Never call CW.controller on a run that child() already executed
+js// WRONG
+var updateRun = await run_doc.child({...}); // pipeline already ran
+updateRun.target = { data: [rec] };
+await CW.controller(updateRun);             // runs pipeline AGAIN → loop
+child() is not a factory — it executes the full pipeline immediately. Calling CW.controller after is a double execution.
+
+❌ Never set target after child()
+js// WRONG
+var updateRun = await run_doc.child({...});
+updateRun.target = { data: [rec] };  // too late — pipeline already ran without it
+Everything the child needs must be passed into child() upfront.
+
+❌ Never pass rec by reference into a child when _state has pending signals
+js// WRONG
+var rec = run_doc.target.data[0];  // has "_state": {"0.0_1": ""}
+await run_doc.child({ target: { data: [rec] } });  // child sees pending signal → loop
+sideEffects fire before _state is marked "1". rec is a live reference — it carries the pending signal into the child.
+js// CORRECT
+await run_doc.child({
+  target: { data: [Object.assign({}, rec, { _state: {} })] },
+  input:  { _allowed_read: [...] },
+  options: { render: false, internal: true },
+});
+
+❌ Never rely on publicDoctypes config list for schema-level behavior
+js// WRONG
+if (!(CW._config.publicDoctypes || []).includes(run_doc.target_doctype)) return;
+Use schema flag instead — co-located, no separate config to maintain:
+js// CORRECT
+if (!CW.Schema?.[run_doc.target_doctype]?.is_public) return;
+
+The general rule
+
+A sideEffect receives run_doc at the moment _execTransition fires — before _state is marked complete. Any reference to run_doc.target.data[0] carries a pending signal. Always clone and clean _state before passing to any child.
