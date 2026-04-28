@@ -68,6 +68,52 @@ Everything the child needs must be passed into child() upfront
 options.internal: true bypasses editable check (docstatus !== 0 guard)
 
 
+_state — Signal History & Current State
+Signal format
+"dim.from_to": value
+valuemeaning""pending — signal fired, not yet executed"1"success — transition completed, doc moved to to"-1"error — transition failed, doc stayed at from
+
+_getDimValue — deriving current state
+Scans all "dim." prefix keys in _state:
+v="1"  → current = to    (moved forward)
+v="-1" → current = from  (stayed, failed)
+v=""   → skip            (pending, not resolved yet)
+Last resolved value wins. Falls back to:
+
+state[dim] — plain dim key if set
+doc[dimDef.fieldname] — e.g. doc.docstatus for dim[0]
+dimDef.values[0] — default, usually 0
+
+
+History accumulates, never cleared
+_state grows with each transition:
+json{ "1.0_1": "1", "1.1_2": "1", "1.2_2": "1" }
+_getDimValue always derives correct currentVal from full history. No separate field needed to track position.
+
+Retry after failure
+json{ "1.0_1": "1", "1.1_2": "-1" }
+Both keys resolve to currentVal = 1 — "1.0_1":"1" → to=1, "1.1_2":"-1" → from=1. Retry fires 1.1_2 again → Object.assign overwrites "-1" with "" → after success overwrites with "1". ✓
+
+Dims are independent
+Each dim has its own namespace in _state. _getDimValue only reads keys starting with "dim." — dims never interfere:
+json{
+  "0.0_1": "1",   ← dim0: Submitted
+  "1.0_1": "1",   ← dim1: SignedUp
+  "1.1_2": "1"    ← dim1: Saved
+}
+dim0 currentVal = 1, dim1 currentVal = 2 — independently correct.
+
+_mergeInput — preserves history
+jsObject.assign(targetState, inputState);
+Incoming signal ("") overwrites only its own key. All other history keys untouched. _getDimValue reads full history correctly before transition executes.
+
+_handleSignal — writes outcome, preserves history
+jsdoc._state[signal] = '1';   // success
+// or
+doc._state[signal] = '-1';  // failure
+No clearing. History is the audit trail and the source of truth for current state in every dim.
+
+
 _autosave semantics
 
 _autosave: 0 = don't save on field change (form UX concern)

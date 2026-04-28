@@ -75,27 +75,20 @@ CW._mergeInput = function (run_doc) {
 
   const doc = run_doc.target.data[0];
 
-  // merge all fields including virtual
   for (const [k, v] of Object.entries(run_doc.input)) {
-    if (k === '_state') continue; // _state handled separately below
+    if (k === '_state') continue;
     doc[k] = v;
   }
 
-  // merge _state — preserve existing dim signals, overwrite same dim
   if (run_doc.input._state && typeof run_doc.input._state === 'object') {
     if (!doc._state) doc._state = {};
     const inputState  = run_doc.input._state;
     const targetState = doc._state;
 
-    // clear same-dim signals from target before merging new ones
-    for (const sig of Object.keys(inputState)) {
-      const dim = sig.split('.')[0];
-      if (isNaN(dim)) continue;
-      const prefix = dim + '.';
-      for (const k of Object.keys(targetState)) {
-        if (k.startsWith(prefix)) delete targetState[k];
-      }
-    }
+    // preserve history — only overwrite the exact incoming signal keys
+    //for (const sig of Object.keys(inputState)) {
+    //  delete targetState[sig];
+    //}
     Object.assign(targetState, inputState);
   }
 };
@@ -213,7 +206,6 @@ CW._handleSignal = async function (run_doc) {
 
     if (dimDef.sideEffects?.[key] === undefined && dimDef.labels?.[key] === undefined) continue;
 
-    // validate transition
     const currentVal = CW._getDimValue(doc, dim, dimDef);
     const fromVal    = parseInt(key.split('_')[0]);
     const toVal      = parseInt(key.split('_')[1]);
@@ -244,24 +236,14 @@ CW._handleSignal = async function (run_doc) {
     try {
       await CW._execTransition(run_doc, dim, key);
 
-      // clear previous signals for this dim — keep only latest
-      const prefix = dim + '.';
-      if (doc._state) {
-        Object.keys(doc._state).forEach(k => {
-          if (k.startsWith(prefix)) delete doc._state[k];
-        });
-      }
-
-      // mark signal success in target.data[0]._state
+      // preserve full history — mark signal success
       if (!doc._state) doc._state = {};
       doc._state[signal] = '1';
 
       // also mark in input._state so _preflight picks it up for DB write
       run_doc.input._state[signal] = '1';
 
-      // determine create vs update from target
       run_doc.operation = doc.name ? 'update' : 'create';
-
       if (run_doc.operation === 'update') {
         await CW._handlers.update(run_doc);
       } else {
@@ -297,7 +279,6 @@ CW._handleSignal = async function (run_doc) {
         return;
       }
       const skipAmend = new Set(['name','id','created','modified','modified_by','_state','docstatus','amended_from']);
-      // build new doc from existing, clear name, set amended_from
       const newDoc = {};
       for (const [k, v] of Object.entries(doc)) {
         if (!skipAmend.has(k)) newDoc[k] = v;
