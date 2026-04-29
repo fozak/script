@@ -144,7 +144,7 @@ systemFields: [
     const roles = (schema?.permissions || [])
       .filter(p => p.role && (p.write === 1 || p.create === 1))
       .map(p => generateId('Role', p.role));
-    if (doc.owner) roles.push(doc.owner);
+    //if (doc.owner) roles.push(doc.owner);    //<-no need to add owner to _allowed, as permissions should be role-based. If owner-specific permissions are needed, they can be implemented via a "User Permissions" doctype or similar mechanism.
 
     if (hasParent) {
       const parentRun = CW.runs[run_doc.parent_run_id];
@@ -380,6 +380,7 @@ if (run_doc.target_doctype === 'Relationship' && doc.related_name && doc.related
     "User":         ["Assignee", "Reviewer", "Observer"],
     "Task":         ["Blocks", "Blocked By", "Related"],
     "Project":      ["Belongs To"],
+    "Role": ["Read Access", "Write Access"],  //experimental
   },
 "User": {
   "Role": ["Has Role"],
