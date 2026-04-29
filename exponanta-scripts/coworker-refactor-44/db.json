@@ -373,6 +373,7 @@
   "doctype": "Schema",
   "title_field": "full_name",
   "_autosave": 0,
+  "is_public": 1,
   "fields": [
     { "fieldname": "email",     "fieldtype": "Data",     "label": "Email",     "reqd": 1, "virtual": 1, "depends_on": "eval:!doc.name" },
     { "fieldname": "password",  "fieldtype": "Password", "label": "Password",  "reqd": 1, "virtual": 1, "depends_on": "eval:!doc.name" },
@@ -2365,7 +2366,7 @@
   {
     "_schema_doctype": "Task",
     "explicit_edit_intent": 1,
-    "_autosave": 0,
+    "_autosave": 1,
     "_state": {
   "1": {
     "name": "_task_status",
@@ -5443,7 +5444,7 @@
         "label": "Company",
         "options": "Company",
         "remember_last_selected_value": 1,
-        "reqd": 1
+        "reqd": 0
       },
       {
         "fieldname": "column_break_28",
@@ -5597,7 +5598,7 @@
         "no_copy": 1,
         "options": "PROJ-.####",
         "print_hide": 1,
-        "reqd": 1,
+        "reqd": 0,
         "set_only_once": 1
       },
       {

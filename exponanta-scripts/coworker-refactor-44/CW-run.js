@@ -470,7 +470,7 @@ CW._preflight = function (run_doc) {
     // initialize _state
     if (!doc._state) doc._state = {};
 
-    // populate _allowed/_allowed_read from schema.permissions
+    /* populate _allowed _allowed_read from schema.permissions
     const perms         = schema?.permissions || [];
     const fromPerms     = [];
     const fromPermsRead = [];
@@ -485,10 +485,10 @@ CW._preflight = function (run_doc) {
     }
     if (fromPermsRead.length) {
       doc._allowed_read = [...new Set([...(doc._allowed_read || []), ...fromPermsRead])];
-    }
+    }*/
   }
 
-  if (operation === 'update') {
+  if (operation === 'update') {   //was if (operation === 'update'
     // reqd validation against target.data[0] (already merged)
     if (schema?.fields) {
       const missing = schema.fields
