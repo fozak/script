@@ -33,6 +33,7 @@
   <script type="module" src="CW-ui.js"></script>
   <script type="module" src="app-ui.js"></script>
   <script type="module" src="CW-url.js"></script>
+  <script type="module" src="CW-analytics.js"></script>
 
   <script type="module">
     async function waitForBoot() {
@@ -46,6 +47,7 @@
     window.addEventListener('load', async () => {
       await waitForBoot()
       cwStateFromUrl()
+      trackContentHit()  // added
     })
   </script>
 </body>

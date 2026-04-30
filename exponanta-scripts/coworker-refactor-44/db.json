@@ -372,7 +372,7 @@
   "schema_name": "UserPublicProfile",
   "doctype": "Schema",
   "title_field": "full_name",
-  "_autosave": 0,
+  "_autosave": 1,
   "is_public": 1,
   "fields": [
     { "fieldname": "email",     "fieldtype": "Data",     "label": "Email",     "reqd": 1, "virtual": 1, "depends_on": "eval:!doc.name" },
@@ -382,7 +382,17 @@
     { "fieldname": "title",     "fieldtype": "Data",     "label": "Title",     "depends_on": "eval:doc.name" },
     { "fieldname": "bio",       "fieldtype": "Text",     "label": "Bio",       "depends_on": "eval:doc.name" },
     { "fieldname": "linkedin",  "fieldtype": "Data",     "label": "LinkedIn",  "depends_on": "eval:doc.name" },
-    { "fieldname": "website",   "fieldtype": "Data",     "label": "Website",   "depends_on": "eval:doc.name" }
+    { "fieldname": "website",   "fieldtype": "Data",     "label": "Website",   "depends_on": "eval:doc.name" },
+   {
+        "fieldname": "content_history",
+        "fieldtype": "Code",
+        "hidden": 1,
+        "label": "Content history",
+        "no_copy": 1,
+        "options": "JSON",
+        "print_hide": 1,
+        "read_only": 1
+      }
   ],
   "_state": {
     "0": {
