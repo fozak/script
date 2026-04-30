@@ -677,3 +677,13 @@ if (!CW.Schema?.[run_doc.target_doctype]?.is_public) return;
 The general rule
 
 A sideEffect receives run_doc at the moment _execTransition fires — before _state is marked complete. Any reference to run_doc.target.data[0] carries a pending signal. Always clone and clean _state before passing to any child.
+
+
+Rule — CW.RUN_FIELDS as source of truth for run_doc field names
+CW.RUN_FIELDS is derived automatically from the CW.run factory on boot:
+js// in CW-url.js — fires once on load
+const src     = CW.run.toString()
+const matches = src.match(/(\w+)\s*:\s*op\.\w+/g) || []
+CW.RUN_FIELDS = [...new Set(matches.map(m => m.split(':')[0].trim()))]
+Any module that needs the canonical list of run_doc intent fields reads from CW.RUN_FIELDS — never hardcodes field names. Adding a field to the CW.run factory literal propagates automatically to all consumers.
+The factory is the single source of truth. CW.RUN_FIELDS is its derived index.

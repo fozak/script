@@ -2,88 +2,212 @@
 // CW-url.js
 // URL ↔ CW.run serialization
 //
-// cwStateFromUrl()   — boot run from URL params (once only)
-// cwStateToUrl(run_doc) — serialize run_doc back to URL
+// cwStateFromUrl()      — parse URL → fire fresh root CW.run
+// cwStateToUrl(run_doc) — serialize run_doc intent fields → URL
+//
+// Field list derived from CW.run factory — CW.RUN_FIELDS
+// Bracket notation for nested, flat for scalars
+// Dots in keys preserved — never split on '.'
+// _resolveAll + schema own all resolution — no whitelist
 // ============================================================
-
-// ─── runParams — single source of truth for URL ↔ run_doc mapping ────────────
-// Declared in CW._config.runParams (set in CW-config.js)
-// Each entry: { path, url, type, default }
-//   path    — dot-notation path on run_doc
-//   url     — URL param name
-//   type    — 'string' | 'int'
-//   default — value if param absent (optional)
-
-// ─── Path helpers ─────────────────────────────────────────────────────────────
-
-function _getPath(obj, path) {
-  return path.split('.').reduce((o, k) => o?.[k], obj)
+ 
+// ─── CW.RUN_FIELDS ───────────────────────────────────────────────────────────
+// Derived once from CW.run factory source.
+// Matches every key assigned as `key: op.something` in the run_doc literal.
+// Stored on CW so other modules can read it.
+ 
+;(function _deriveCWRunFields() {
+  const CW = globalThis.CW
+  if (!CW || !CW.run) return
+ 
+  const src     = CW.run.toString()
+  // match `key: op.something` inside the run_doc literal
+  const matches = src.match(/(\w+)\s*:\s*op\.\w+/g) || []
+  const fields  = [...new Set(matches.map(function (m) {
+    return m.split(':')[0].trim()
+  }))]
+ 
+  CW.RUN_FIELDS = fields
+  console.log('✅ CW.RUN_FIELDS derived:', fields)
+})()
+ 
+// ─── _isScalar ───────────────────────────────────────────────────────────────
+ 
+function _isScalar(val) {
+  return val === null || val === undefined ||
+    typeof val === 'string' || typeof val === 'number' || typeof val === 'boolean'
 }
-
-function _setPath(obj, path, val) {
-  const keys   = path.split('.')
-  const last   = keys.pop()
-  const target = keys.reduce((o, k) => { o[k] = o[k] ?? {}; return o[k] }, obj)
-  target[last] = val
+ 
+// ─── _flattenSingleBracket ────────────────────────────────────────────────────
+// Defensive: field[]=value or field[0]=value → scalar value
+// If parsed result is object with one empty-string or numeric key → unwrap
+ 
+function _flattenSingleBracket(val) {
+  if (_isScalar(val)) return val
+  if (typeof val === 'object') {
+    const keys = Object.keys(val)
+    if (keys.length === 1 && (keys[0] === '' || !isNaN(keys[0]))) {
+      return val[keys[0]]
+    }
+  }
+  return val
 }
-
+ 
+// ─── _parseBrackets ───────────────────────────────────────────────────────────
+// Parses one LHS bracket key + value into out object.
+// Splits ONLY on '[' — never on '.' — preserving dot keys like '0.0_1'.
+// e.g. "query[where][name]" + "taskxyz" → out.query.where.name = 'taskxyz'
+ 
+function _parseBrackets(raw, val, out) {
+  const keys = raw.replace(/\]/g, '').split('[')
+  keys.reduce(function (obj, key, i) {
+    if (i === keys.length - 1) {
+      obj[key] = val
+    } else {
+      if (obj[key] === undefined || obj[key] === null || typeof obj[key] !== 'object') {
+        obj[key] = {}
+      }
+    }
+    return obj[key]
+  }, out)
+}
+ 
+// ─── _coerceInts ─────────────────────────────────────────────────────────────
+// Schema-driven int coercion via CW._config.
+// Falls back to known query int fields if config absent.
+ 
+function _coerceInts(op) {
+  const intFields = (globalThis.CW?._config?.urlIntFields) ||
+    ['perPage', 'page', 'batch']
+ 
+  if (op.query) {
+    for (const f of intFields) {
+      if (op.query[f] !== undefined) {
+        const n = parseInt(op.query[f])
+        if (!isNaN(n)) op.query[f] = n
+      }
+    }
+  }
+}
+ 
 // ─── cwStateFromUrl ───────────────────────────────────────────────────────────
-// Reads URL params → fires one boot CW.run
-// If boot run already exists in CW.runs → fires child run from boot instead
-// Returns the run_doc
-
+// Reads URL params → fires one fresh root CW.run.
+// Always root — never child. URL hit = new intent.
+// Flat params map to CW.RUN_FIELDS scalars.
+// Bracket params parse into nested op fields.
+// _resolveAll owns all resolution downstream.
+ 
 function cwStateFromUrl() {
-  const p      = new URLSearchParams(location.search)
-  const dt     = p.get('doctype')
-  if (!dt) return null
-
-  const params = globalThis.CW._config.runParams
-  const op     = {}
-
-  for (const { path, url, type, default: def } of params) {
-    const raw = p.get(url) ?? def
-    if (raw === undefined || raw === null) continue
-    const val = type === 'int' ? parseInt(raw) : raw
-    _setPath(op, path, val)
+  const p  = new URLSearchParams(location.search)
+  if (!p.get('target_doctype')) return null
+ 
+  const CW      = globalThis.CW
+  const fields  = new Set(CW.RUN_FIELDS || [])
+  const op      = {}
+ 
+  for (const [k, v] of p.entries()) {
+    if (k.indexOf('[') === -1) {
+      // flat param — accept only known CW.RUN_FIELDS keys
+      if (fields.has(k)) {
+        op[k] = _flattenSingleBracket(v)
+      }
+    } else {
+      // bracket param — parse into op, dots preserved
+      _parseBrackets(k, v, op)
+    }
   }
-
-  op.options = op.options ?? {}
+ 
+  // defensive flatten on all top-level bracket-parsed scalars
+  for (const k of Object.keys(op)) {
+    if (fields.has(k) && !_isScalar(op[k])) {
+      op[k] = _flattenSingleBracket(op[k])
+    }
+  }
+ 
+  _coerceInts(op)
+ 
+  op.options        = op.options || {}
   op.options.render = true
-
-  // find existing boot run — a run with no parent_run_id
-  const bootRun = Object.values(globalThis.CW.runs || {})
-    .find(r => !r.parent_run_id)
-
-  if (bootRun) {
-    // boot run exists — fire as child
-    return bootRun.child(op)
-  }
-
-  // no boot run yet — fire naked CW.run (the one legitimate boot call)
-  return globalThis.CW.run(op)
+ 
+  return CW.run(op)
 }
-
+ 
+// ─── _serializeBrackets ───────────────────────────────────────────────────────
+// Recursively serializes nested object to bracket notation.
+// Empty string preserved — FSM signals are always ''.
+// Null/undefined skipped.
+ 
+function _serializeBrackets(prefix, val, p) {
+  if (val === undefined || val === null) return
+  if (typeof val === 'object' && !Array.isArray(val)) {
+    for (const k of Object.keys(val)) {
+      _serializeBrackets(prefix + '[' + k + ']', val[k], p)
+    }
+  } else {
+    p.set(prefix, String(val))
+  }
+}
+ 
+// ─── _pwdFields ──────────────────────────────────────────────────────────────
+// Returns set of Password fieldnames for a doctype — schema-driven.
+ 
+function _pwdFields(target_doctype) {
+  const schema = globalThis.CW?.Schema?.[target_doctype]
+  return new Set(
+    (schema?.fields || [])
+      .filter(function (f) { return f.fieldtype === 'Password' })
+      .map(function (f) { return f.fieldname })
+  )
+}
+ 
 // ─── cwStateToUrl ─────────────────────────────────────────────────────────────
-// Serializes boot run_doc back to URL params
-// Only called for boot run — never for child runs
-
+// Serializes intent fields of boot run_doc → URL.
+// Reads field list from CW.RUN_FIELDS — derived from factory.
+// Scalars → flat params. Objects → bracket notation.
+// Password fields excluded from input via schema.
+// Child runs (parent_run_id set) never update URL.
+ 
 function cwStateToUrl(run_doc) {
-  // only serialize boot run (no parent)
   if (run_doc.parent_run_id) return
-
+ 
+  const CW     = globalThis.CW
+  const fields = CW.RUN_FIELDS || []
+  const pwd    = _pwdFields(run_doc.target_doctype)
   const p      = new URLSearchParams()
-  const params = globalThis.CW._config.runParams
-
-  for (const { path, url } of params) {
-    const val = _getPath(run_doc, path)
-    if (val !== undefined && val !== null && val !== '') p.set(url, val)
+ 
+  for (const field of fields) {
+    const val = run_doc[field]
+    if (val === undefined || val === null || val === '') continue
+ 
+    if (field === 'input') {
+      // strip password fields — schema-driven
+      const safe = {}
+      for (const [k, v] of Object.entries(val)) {
+        if (!pwd.has(k)) safe[k] = v
+      }
+      if (Object.keys(safe).length) _serializeBrackets('input', safe, p)
+      continue
+    }
+ 
+    if (field === 'target') continue  // never serialize result data
+ 
+    if (_isScalar(val)) {
+      p.set(field, String(val))
+    } else if (typeof val === 'object' && Object.keys(val).length) {
+      _serializeBrackets(field, val, p)
+    }
   }
-
-  history.pushState({}, '', location.pathname + '?' + p.toString())
+ 
+  const qs = p.toString()
+  history.pushState({}, '', location.pathname + (qs ? '?' + qs : ''))
 }
-
-// ─── Export ───────────────────────────────────────────────────────────────────
-
+ 
+// ─── popstate ────────────────────────────────────────────────────────────────
+ 
+window.addEventListener('popstate', cwStateFromUrl)
+ 
+// ─── Export ──────────────────────────────────────────────────────────────────
+ 
 Object.assign(globalThis, { cwStateFromUrl, cwStateToUrl })
-
+ 
 console.log('✅ CW-url.js loaded')
