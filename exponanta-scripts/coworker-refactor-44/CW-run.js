@@ -317,10 +317,19 @@ CW.controller = async function (run_doc) {
     // 1. meta channel — input['.field'] → run_doc.field
     CW._resolveInput(run_doc);
 
-    //1.A -dubtful ONE
+    //1.Clean in the future
     // before _mergeInput — fetch existing doc for update so _state is available
-if (run_doc.operation !== 'create' && !run_doc.target?.data?.[0]?.name) {
-  await globalThis.Adapter[CW._config.adapters.defaults.db].select(run_doc);
+//if (run_doc.operation !== 'create' && !run_doc.target?.data?.[0]?.name) {
+//  await globalThis.Adapter[CW._config.adapters.defaults.db].select(run_doc);
+//}
+
+//upper relaced with more clean
+
+if (
+  (run_doc.operation === 'update' || run_doc.operation === 'delete') &&
+  !run_doc.target?.data?.[0]?.name
+) {
+  await globalThis.Adapter[CW._config.adapters.defaults.db].select(run_doc)
 }
 
     // 2. merge all input → target.data[0] (including virtual + _state)
