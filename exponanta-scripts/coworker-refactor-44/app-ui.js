@@ -130,6 +130,10 @@ const NavBar = function({ profile }) {
 
       ce('div', { className: 'ms-auto d-flex align-items-center gap-2' },
 
+        ce('div', { className: 'd-none d-md-block', style: { width: '200px' } },
+          ce(globalThis.SearchBar || 'span', {})
+        ),
+
         !isValid && ce('a', {
           href: '/login.html',
           className: 'btn btn-sm btn-primary',

@@ -96,7 +96,7 @@ run_doc.child({
 
 ```json
 "view_components": {
-  "list": { "component": "ChannelFeed", "container": "threads_left" },
+  "list": { "component": "ChannelFeed", "container": "left_pane" },
   "form": { "component": "MainForm",    "container": "main_container" }
 }
 ```
@@ -367,7 +367,7 @@ Without this, every row click accumulates a new run in `CW.runs` — memory leak
 
 ### Grid runs are never cleaned up
 
-The boot grid run stays alive. Only form runs in the detail container are replaced. Grid run container (`threads_left`) is never the same as form run container (`threads_right`).
+The boot grid run stays alive. Only form runs in the detail container are replaced. Grid run container (`left_pane`) is never the same as form run container (`right_pane`).
 
 ---
 
@@ -379,8 +379,8 @@ The boot grid run stays alive. Only form runs in the detail container are replac
 <div id="nav_container"></div>
 <div id="main_container"></div>
 <div class="row g-0">
-  <div class="col-md-3" id="threads_left"></div>
-  <div class="col-md-9" id="threads_right"></div>
+  <div class="col-md-3" id="left_pane"></div>
+  <div class="col-md-9" id="right_pane"></div>
 </div>
 <div id="toast_container"></div>
 ```
@@ -389,18 +389,18 @@ Hide empty containers with CSS:
 
 ```css
 #main_container:empty,
-#threads_left:empty,
-#threads_right:empty { display: none; }
+#left_pane:empty,
+#right_pane:empty { display: none; }
 ```
 
 ### `CW._config.views` declares global defaults
 
 ```js
 views: {
-  list: { component: 'MainGrid', container: 'threads_left'  },
-  form: { component: 'MainForm', container: 'threads_right' },
-  read: { component: 'MainForm', container: 'threads_right' },
-  edit: { component: 'MainForm', container: 'threads_right' },
+  list: { component: 'MainGrid', container: 'left_pane'  },
+  form: { component: 'MainForm', container: 'right_pane' },
+  read: { component: 'MainForm', container: 'right_pane' },
+  edit: { component: 'MainForm', container: 'right_pane' },
 }
 ```
 
@@ -414,5 +414,5 @@ views: {
 
 ### Schema `view_components.form` — safe generic fallback
 
-`form` always points to `main_container`. `read`/`edit` can point to `threads_right` for two-panel layouts. Boot call overrides all of this via explicit `component`/`container`.
+`form` always points to `main_container`. `read`/`edit` can point to `right_pane` for two-panel layouts. Boot call overrides all of this via explicit `component`/`container`.
 

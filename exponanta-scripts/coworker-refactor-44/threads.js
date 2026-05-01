@@ -287,7 +287,7 @@ const PostDetail = function({ run_doc }) {
       query:          { where: { parent: channelName } },
       view:           'list',
       component:      'ChannelFeed',
-      container:      'threads_left',
+      container:      'left_pane',
       context:        { channel: channelName },
       options:        { render: true },
     });
@@ -477,7 +477,7 @@ const PostEditor = function({ run_doc }) {
       query:          { where: { parent: channelName } },
       view:           'list',
       component:      'ChannelFeed',
-      container:      'threads_left',
+      container:      'left_pane',
       context:        { channel: channelName },
       options:        { render: true },
     });
@@ -560,7 +560,7 @@ const ChannelFeed = function({ run_doc }) {
       query:          { where: { name: post.name } },
       view:           'read',
       component:      'PostDetail',
-      container:      'threads_right',
+      container:      'right_pane',
       context,
       options:        { render: true },
     });
@@ -572,7 +572,7 @@ const ChannelFeed = function({ run_doc }) {
       target_doctype: 'Post',
       view:           'edit',
       component:      'PostEditor',
-      container:      'threads_right',
+      container:      'right_pane',
       context,
       options:        { render: true },
     });
@@ -584,7 +584,7 @@ const ChannelFeed = function({ run_doc }) {
       target_doctype: 'Channel',
       view:           'list',
       component:      'ChannelList',
-      container:      'threads_left',
+      container:      'left_pane',
       options:        { render: true },
     });
   };

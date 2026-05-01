@@ -98,7 +98,7 @@ run_doc.child({
 
 ```json
 "view_components": {
-  "list": { "component": "ChannelFeed", "container": "threads_left" },
+  "list": { "component": "ChannelFeed", "container": "left_pane" },
   "form": { "component": "MainForm",    "container": "main_container" }
 }
 ```
@@ -355,8 +355,8 @@ Grid runs are never cleaned up. Only form runs in detail containers are replaced
 <div id="nav_container"></div>
 <div id="main_container"></div>
 <div class="row g-0">
-  <div class="col-md-3" id="threads_left"></div>
-  <div class="col-md-9" id="threads_right"></div>
+  <div class="col-md-3" id="left_pane"></div>
+  <div class="col-md-9" id="right_pane"></div>
 </div>
 <div id="toast_container"></div>
 ```
@@ -365,18 +365,18 @@ Hide empty containers with CSS:
 
 ```css
 #main_container:empty,
-#threads_left:empty,
-#threads_right:empty { display: none; }
+#left_pane:empty,
+#right_pane:empty { display: none; }
 ```
 
 ### `CW._config.views` declares global defaults
 
 ```js
 views: {
-  list: { component: 'MainGrid', container: 'threads_left'  },
-  form: { component: 'MainForm', container: 'threads_right' },
-  read: { component: 'MainForm', container: 'threads_right' },
-  edit: { component: 'MainForm', container: 'threads_right' },
+  list: { component: 'MainGrid', container: 'left_pane'  },
+  form: { component: 'MainForm', container: 'right_pane' },
+  read: { component: 'MainForm', container: 'right_pane' },
+  edit: { component: 'MainForm', container: 'right_pane' },
 }
 ```
 

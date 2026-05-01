@@ -5,7 +5,11 @@
 // Reads from run_doc.target.data[0] — never from run_doc.input
 // ============================================================
 
-const PB_TOP = new Set([
+// after — delete the const, read from config
+const PB_TOP = CW._config.topLevelFields;
+
+
+/*const PB_TOP = new Set([
   "id",
   "name",
   "doctype",
@@ -15,7 +19,7 @@ const PB_TOP = new Set([
   "_allowed_read",
   "created",
   "files",
-]);
+]);*/
 
 function _splitRecord(doc) {
   const top = {};

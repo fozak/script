@@ -184,9 +184,9 @@ Define them once in the schema and let `_resolveAll` do the work.
 ```js
 // Post schema
 view_components: {
-  list: { component: 'ChannelFeed',  container: 'threads_left'  },
-  read: { component: 'PostDetail',   container: 'threads_right' },
-  edit: { component: 'PostEditor',   container: 'threads_right' },
+  list: { component: 'ChannelFeed',  container: 'left_pane'  },
+  read: { component: 'PostDetail',   container: 'right_pane' },
+  edit: { component: 'PostEditor',   container: 'right_pane' },
 }
 ```
 
@@ -312,8 +312,8 @@ run_doc.child({
 
 ```js
 // WRONG — left panel trying to clear right panel
-CW.run({ component: 'PostPlaceholder', container: 'threads_right', ... })
-CW.run({ component: 'ChannelFeed',     container: 'threads_left',  ... })
+CW.run({ component: 'PostPlaceholder', container: 'right_pane', ... })
+CW.run({ component: 'ChannelFeed',     container: 'left_pane',  ... })
 
 // RIGHT — fire one child run, schema handles container
 run_doc.child({
@@ -334,7 +334,7 @@ run_doc.child({
   operation:  'select',
   view:       'read',
   component:  'PostDetail',    // ← hardcoded
-  container:  'threads_right', // ← hardcoded
+  container:  'right_pane', // ← hardcoded
   options:    { render: true },
 })
 

@@ -15,8 +15,8 @@ Fixed set per page. Unused containers hidden via `:empty` CSS.
 ```
 nav_container     — navbar (app-ui.js, always present)
 main_container    — full-width single panel
-threads_left      — col-md-3 left panel
-threads_right     — col-md-9 right panel
+left_pane      — col-md-3 left panel
+right_pane     — col-md-9 right panel
 toast_container   — notifications
 ```
 
@@ -73,8 +73,8 @@ List replaced by form. Back button returns to list.
 Schema:
 ```json
 "view_components": {
-  "list": { "component": "MainGrid", "container": "threads_left" },
-  "form": { "component": "MainForm", "container": "threads_right" }
+  "list": { "component": "MainGrid", "container": "left_pane" },
+  "form": { "component": "MainForm", "container": "right_pane" }
 }
 ```
 
@@ -246,7 +246,7 @@ AI response can execute `run_doc.child()` calls — agentic operations over curr
 **What's needed:** `FieldHint` component + `doc.notes[fieldname]` read in `FieldRenderer`. One component, one line.
 
 ### 4. sibling_container config
-**Why fourth:** Without it, two-panel layout requires explicit `view_components` in every doctype schema. With it, `threads_left` → `threads_right` routing is automatic for all doctypes.
+**Why fourth:** Without it, two-panel layout requires explicit `view_components` in every doctype schema. With it, `left_pane` → `right_pane` routing is automatic for all doctypes.
 **What's needed:** `CW._config.sibling_container` map + one line in `_resolveViewComponent` fallback.
 
 ### 5. Kanban / Board view (MainKanban component)

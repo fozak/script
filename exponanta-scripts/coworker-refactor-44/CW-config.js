@@ -16,8 +16,22 @@ globalThis.CW.defaultFields = [
 
 globalThis.CW._config = {
 
+  ui: {
+  show_state_badges: false
+},
+
+doctypeAliases: {
+  'todo': 'ToDo',
+
+},
+
   pb_url: "http://143.198.29.88:8090",
   collection: "item",
+
+  topLevelFields: new Set([
+  "id", "name", "doctype", "docstatus", "owner",
+  "_allowed", "_allowed_read", "created", "files"
+]),
 
   publicDoctypes: ['Event', 'WebPage', 'UserPublicProfile', 'Session'],
 
@@ -25,6 +39,8 @@ publicSites: {
   "exponanta.com": "/var/www/exponanta.com",
   "cfeglobal.org": "/var/www/cfeglobal.org"
 },
+
+trackable_doctypes:  ['Content', 'Event'],
 
 runParams: [
   { path: 'target_doctype',   url: 'doctype',        type: 'string' },
@@ -688,10 +704,10 @@ relationshipAccessMap: {
   },*/
 
   views: {
-  list: { component: 'MainGrid', container: 'threads_left'  },
-  form: { component: 'MainForm', container: 'threads_right' },
-  read: { component: 'MainForm', container: 'threads_right' },
-  edit: { component: 'MainForm', container: 'threads_right' },
+  list: { component: 'MainGrid', container: 'right_pane'  },
+  form: { component: 'MainForm', container: 'right_pane' },
+  read: { component: 'MainForm', container: 'right_pane' },
+  edit: { component: 'MainForm', container: 'right_pane' },
 },
 
   // old structure
@@ -890,8 +906,8 @@ relationshipAccessMap: {
       },
     },
   },
-
-  fieldInteractionConfig: {
+//not used see below
+ /* fieldInteractionConfig: {
     // ═══════════════════════════════════════════════════════════
     // Field interaction triggers (independent of auto-save)
     // ═══════════════════════════════════════════════════════════
@@ -940,7 +956,7 @@ relationshipAccessMap: {
 
     // Active profile
     activeProfile: "default",
-  },
+  },*/
 
   // ✅ Field types - just element + events
   fieldTypes: {

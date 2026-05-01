@@ -24,16 +24,13 @@ CW._render = function(run_doc) {
   const Comp = globalThis[run_doc.component]
   if (!Comp) return
 
-  Object.values(CW.runs).forEach(r => {
-    if (r.name !== run_doc.name && r.container === run_doc.container) {
-      delete CW.runs[r.name]
-    }
-  })
+  // no deletion — history preserved
+  // navigation uses _getMainRuns() sorted by creation
 
   const root = CW._getOrCreateRoot(run_doc.container)
   if (!root) return
   root.render(ce(Comp, { run_doc, data: run_doc.target?.data || [] }))
-};
+}
 
 // ============================================================
 // NAVIGATION
@@ -507,17 +504,23 @@ const MainForm = function({ run_doc }) {
   const skipTypes = new Set(['Column Break', 'Tab Break', 'HTML']);
 
   // badge from dim 0 current state
+
+ 
   const stateDef   = CW._getStateDef(doctype);
   const dim0       = stateDef?.['0'];
   const current    = CW._getDimValue(doc, '0', dim0);
   const badgeLabel = dim0?.options?.[current] || '';
   const badgeCls   = ['bg-warning','bg-success','bg-danger'][current] || 'bg-secondary';
 
+
+
   return ce('div', { className: 'card' },
     ce('div', { className: 'card-header d-flex justify-content-between align-items-center' },
       ce('h3', { className: 'card-title mb-0' }, title),
       ce('div', { className: 'd-flex gap-2 align-items-center' },
-        badgeLabel ? ce('span', { className: `badge ${badgeCls}` }, badgeLabel) : null,
+        (CW._config.ui?.show_state_badges !== false && badgeLabel)
+  ? ce('span', { className: `badge ${badgeCls}` }, badgeLabel)
+  : null,
         ce(FormActions, { run_doc })
       )
     ),
@@ -559,11 +562,18 @@ const MainGrid = function({ run_doc, data }) {
   const doctype    = run_doc.source_doctype || run_doc.target_doctype;
   const schema     = CW.Schema?.[doctype];
   const titleField = schema?.title_field || 'name';
-
-  const [viewMode, setViewMode] = React.useState('list');
-  const [sortCol,  setSortCol]  = React.useState(null);
-  const [sortDir,  setSortDir]  = React.useState('asc');
-
+ 
+  const [viewMode,    setViewMode]    = React.useState('list');
+  const [sortCol,     setSortCol]     = React.useState(null);
+  const [sortDir,     setSortDir]     = React.useState('asc');
+  const [searchTerm,  setSearchTerm]  = React.useState('');
+  const searchTimerRef                = React.useRef(null);
+ 
+  const _profile     = CW._config?.fieldInteractionConfig?.activeProfile ?? 'default'
+  const _searchDelay = CW._config?.fieldInteractionConfig?.profiles?.[_profile]?.onChange?.debounce
+    ?? CW._config?.fieldInteractionConfig?.triggers?.onChange?.debounce
+    ?? 300
+ 
   const listFields = React.useMemo(() => {
     if (!schema?.fields) return [];
     const lf = schema.fields.filter(f =>
@@ -574,7 +584,7 @@ const MainGrid = function({ run_doc, data }) {
       : Object.keys(data[0] || {}).filter(k => !k.startsWith('_') && k !== 'doctype').slice(0,6)
           .map(k => ({ fieldname: k, label: k }));
   }, [doctype, data.length]);
-
+ 
   const rows = React.useMemo(() => {
     if (!sortCol) return data;
     return [...data].sort((a, b) => {
@@ -583,12 +593,12 @@ const MainGrid = function({ run_doc, data }) {
       return sortDir === 'asc' ? av.localeCompare(bv) : bv.localeCompare(av);
     });
   }, [data, sortCol, sortDir]);
-
+ 
   const toggleSort = (fieldname) => {
     if (sortCol === fieldname) setSortDir(d => d === 'asc' ? 'desc' : 'asc');
     else { setSortCol(fieldname); setSortDir('asc'); }
   };
-
+ 
   const onCardAction = async (record, btn) => {
     if (btn.confirm && !window.confirm(btn.confirm)) return;
     await run_doc.child({
@@ -599,17 +609,17 @@ const MainGrid = function({ run_doc, data }) {
       options:        { render: false, internal: true },
     });
   };
-
+ 
   const onRowClick = (record) => {
     run_doc.child({
-      operation:      'select',     //
+      operation:      'select',
       target_doctype: record.doctype || doctype,
       query:          { where: { name: record.name } },
       view:           'form',
       options:        { render: true },
-    })
+    });
   };
-
+ 
   const onNew = () => {
     run_doc.child({
       operation:      'create',
@@ -618,21 +628,51 @@ const MainGrid = function({ run_doc, data }) {
       options:        { render: true },
     });
   };
-
-  const toolbar = ce('div', { className: 'd-flex justify-content-between align-items-center mb-2 px-1' },
-    ce('button', { className: 'btn btn-primary btn-sm', onClick: onNew }, '+ New'),
-    ce('div', { className: 'btn-group btn-group-sm' },
+ 
+  const onSearchChange = (val) => {
+    setSearchTerm(val);
+    clearTimeout(searchTimerRef.current);
+    searchTimerRef.current = setTimeout(() => CW.searchGrid(val), _searchDelay);
+  };
+ 
+  const onSearchKeyDown = (e) => {
+    if (e.key === 'Enter')  { clearTimeout(searchTimerRef.current); CW.searchGrid(searchTerm); }
+    if (e.key === 'Escape') { setSearchTerm(''); clearTimeout(searchTimerRef.current); CW.searchGrid(''); }
+  };
+ 
+  const toolbar = ce('div', { className: 'd-flex align-items-center gap-2 mb-2 px-1' },
+ 
+    ce('button', { className: 'btn btn-primary btn-sm flex-shrink-0', onClick: onNew }, '+ New'),
+ 
+    ce('div', { className: 'input-group input-group-sm flex-grow-1' },
+      ce('span', { className: 'input-group-text' }, '🔍'),
+      ce('input', {
+        type:        'text',
+        className:   'form-control',
+        placeholder: 'Search or filter…  e.g. toyota  status:Open  priority:High',
+        value:       searchTerm,
+        onChange:    e => onSearchChange(e.target.value),
+        onKeyDown:   onSearchKeyDown,
+      }),
+      searchTerm && ce('button', {
+        className: 'btn btn-outline-secondary',
+        onClick:   () => { setSearchTerm(''); CW.searchGrid(''); },
+        title:     'Clear search',
+      }, '×')
+    ),
+ 
+    ce('div', { className: 'btn-group btn-group-sm flex-shrink-0' },
       ce('button', { className: `btn ${viewMode==='list' ? 'btn-secondary' : 'btn-outline-secondary'}`, onClick: () => setViewMode('list'), title: 'List' }, '≡'),
       ce('button', { className: `btn ${viewMode==='card' ? 'btn-secondary' : 'btn-outline-secondary'}`, onClick: () => setViewMode('card'), title: 'Card' }, '⊞')
     )
   );
-
+ 
   if (!rows.length)
     return ce('div', { className: 'card' },
       ce('div', { className: 'card-header' }, ce('h3', { className: 'card-title mb-0' }, doctype)),
       ce('div', { className: 'card-body' }, toolbar, ce('div', { className: 'alert alert-info mb-0' }, 'No records found'))
     );
-
+ 
   const listView = ce('div', { className: 'table-responsive' },
     ce('table', { className: 'table table-vcenter table-hover card-table mb-0' },
       ce('thead', {}, ce('tr', {},
@@ -650,7 +690,7 @@ const MainGrid = function({ run_doc, data }) {
       )
     )
   );
-
+ 
   const cardView = ce('div', { className: 'row g-2' },
     rows.map(record => {
       const btns  = CW._getTransitions(schema, record, '0');
@@ -684,7 +724,7 @@ const MainGrid = function({ run_doc, data }) {
       );
     })
   );
-
+ 
   return ce('div', { className: 'card' },
     ce('div', { className: 'card-header' }, ce('h3', { className: 'card-title mb-0' }, doctype)),
     ce('div', { className: viewMode==='list' ? 'card-body p-0' : 'card-body' },
@@ -902,11 +942,29 @@ const RelationshipPanel = function({ run_doc }) {
   );
 };
 
+
+
+const SearchBar = function() {
+  const [term, setTerm] = React.useState('')
+
+  return ce('input', {
+    className:   'form-control form-control-sm',
+    placeholder: 'Search...',
+    value:       term,
+    onChange:    e => {
+      setTerm(e.target.value)
+      CW.searchGrid(e.target.value)
+    }
+  })
+}
+
+
 // ============================================================
 // COMPONENT REGISTRY
 // ============================================================
 
 globalThis.MainForm = MainForm;
 globalThis.MainGrid = MainGrid;
+globalThis.SearchBar = SearchBar;
 
 console.log('✅ CW-ui.js loaded');

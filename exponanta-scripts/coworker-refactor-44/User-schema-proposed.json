@@ -5,7 +5,7 @@
   "autoname": "hash",
   "is_submittable": 0,
   "view_components": {
-    "list": { "component": "MainGrid", "container": "threads_left" },
+    "list": { "component": "MainGrid", "container": "left_pane" },
     "form": { "component": "MainForm", "container": "main_container" }
   },
   "fields": [

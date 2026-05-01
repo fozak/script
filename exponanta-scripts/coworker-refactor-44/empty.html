@@ -7,19 +7,21 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta17/dist/css/tabler.min.css">
   <style>
     #main_container:empty,
-    #threads_left:empty,
-    #threads_right:empty { display: none; }
+    #left_pane:empty,
+    #right_pane:empty { display: none; }
     .threads-left  { height: 100vh; overflow-y: auto; border-right: 1px solid var(--tblr-border-color); }
     .threads-right { height: 100vh; overflow-y: auto; }
   </style>
 </head>
 <body class="antialiased">
-  <div id="nav_container"></div>
+  <div id="nav_container">
+   
+  </div>
   <div class="container-xl py-3">
     <div id="main_container"></div>
     <div class="row g-0">
-      <div class="col-md-3 threads-left"  id="threads_left"></div>
-      <div class="col-md-9 threads-right" id="threads_right"></div>
+      <div class="col-md-3 threads-left"  id="left_pane"></div>
+      <div class="col-md-9 threads-right" id="right_pane"></div>
     </div>
   </div>
   <div id="toast_container"></div>

@@ -379,12 +379,104 @@ CW.evalTemplateObj = (obj, context) => {
   return Object.fromEntries(Object.entries(obj).map(([k, v]) => [k, CW.evalTemplate(v, context)]));
 };
 
+
+// ─── searchGrid ───────────────────────────────────────────────────────────────
+// Universal search/navigation from SearchBar.
+//
+//   ""          → restore current grid, no filter
+//   "test"      → filter current grid by title_field
+//   "task"      → switch to Task list, no filter
+//   "task test" → switch to Task list, filter by "test"
+//
+// Same doctype as current grid → child run (rerender in place)
+// Different doctype            → new CW.run (new grid)
+// ─────────────────────────────────────────────────────────────────────────────
+
+// ─── _parseSmartSearch ────────────────────────────────────────────────────────
+// Parses smart search term into PocketBase filter string.
+// "toyota status:open priority:high" →
+//   data.subject ~ "toyota" && data.status = "open" && data.priority = "high"
+// ─────────────────────────────────────────────────────────────────────────────
+
+function _parseSmartSearch(term, schema) {
+  if (!term?.trim()) return ''
+
+  const fields  = schema?.fields?.filter(f => f.in_list_view) || []
+  const parts   = term.trim().split(/\s+/)
+  const filters = []
+  const text    = []
+
+  for (const part of parts) {
+    const colonIdx = part.indexOf(':')
+    if (colonIdx > 0) {
+      const key   = part.slice(0, colonIdx).toLowerCase()
+      const val   = part.slice(colonIdx + 1)
+      const field = fields.find(f => f.fieldname.toLowerCase() === key || (f.label || '').toLowerCase() === key)
+      if (field && val) {
+        const op = ['Data', 'Small Text', 'Text', 'Long Text'].includes(field.fieldtype) ? '~' : '='
+        filters.push(`data.${field.fieldname} ${op} "${val}"`)
+        continue
+      }
+    }
+    text.push(part)
+  }
+
+  if (text.length) {
+    const titleField = schema?.title_field || 'name'
+    filters.push(`data.${titleField} ~ "${text.join(' ')}"`)
+  }
+
+  return filters.join(' && ')
+}
+
+// ─── searchGrid ───────────────────────────────────────────────────────────────
+
+function searchGrid(term) {
+  const gridRun = CW.runs[CW.current_run]?.component === 'MainGrid'
+    ? CW.runs[CW.current_run]
+    : Object.values(CW.runs).findLast(r => r.component === 'MainGrid' && r.status === 'completed')
+
+  const parts     = (term || '').trim().split(/\s+/)
+  const firstWord = parts[0].toLowerCase()
+  const matchedDt = Object.keys(CW.Schema || {}).find(dt => dt.toLowerCase() === firstWord)
+  const doctype   = matchedDt || gridRun?.target_doctype
+  if (!doctype) return
+
+  const searchTerm = matchedDt ? parts.slice(1).join(' ').trim() : (term || '').trim()
+  const schema     = CW.Schema?.[doctype]
+  const filter     = _parseSmartSearch(searchTerm, schema)
+  const container  = gridRun?.container || 'main_container'
+
+  const op = {
+    operation:      'select',
+    target_doctype: doctype,
+    query:          { filter },
+    component:      'MainGrid',
+    container,
+    options:        { render: true }
+  }
+
+  if (gridRun && gridRun.target_doctype === doctype) return gridRun.child(op)
+  return CW.run(op)
+}
+
+const _profile     = CW._config?.fieldInteractionConfig?.activeProfile ?? 'default'
+const _searchDelay = CW._config?.fieldInteractionConfig?.profiles?.[_profile]?.onChange?.debounce
+  ?? CW._config?.fieldInteractionConfig?.triggers?.onChange?.debounce
+  ?? 300
+
+const searchGridDebounced = debounce(searchGrid, _searchDelay)
+
+
+
 // assign FSM helpers to CW — called by CW-run.js and CW-ui.js
 CW._getStateDef          = _getStateDef;
 CW._getDimValue          = _getDimValue;
 CW._getTransitions       = _getTransitions;
 CW._resolveViewComponent = _resolveViewComponent;
 CW._getFormButtons       = _getFormButtons;
+CW.searchGrid            = searchGrid;
+CW.searchGridDebounced  = searchGridDebounced;
 
 // ============================================================
 // PERSIST STUB
@@ -403,6 +495,8 @@ Object.assign(globalThis, {
   evaluateDependsOn,
   validateId,
   persist,
+  searchGrid,
+  searchGridDebounced,
 });
 
 console.log("✅ CW-utils.js v40 loaded");
