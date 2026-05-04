@@ -317,14 +317,6 @@ CW.controller = async function (run_doc) {
     // 1. meta channel — input['.field'] → run_doc.field
     CW._resolveInput(run_doc);
 
-    //1.Clean in the future
-    // before _mergeInput — fetch existing doc for update so _state is available
-//if (run_doc.operation !== 'create' && !run_doc.target?.data?.[0]?.name) {
-//  await globalThis.Adapter[CW._config.adapters.defaults.db].select(run_doc);
-//}
-
-//upper relaced with more clean
-
 if (
   (run_doc.operation === 'update' || run_doc.operation === 'delete') &&
   !run_doc.target?.data?.[0]?.name
@@ -408,7 +400,7 @@ CW.run = async function (op) {
     view:               op.view,
     component:          op.component,
     container:          op.container,
-    context:            op.context || {},
+    context:            op.context || {},  //DO NOT USE IT
 
     query:              op.query  || {},
     target:             op.target || null,
@@ -485,22 +477,6 @@ CW._preflight = function (run_doc) {
     // initialize _state
     if (!doc._state) doc._state = {};
 
-    /* populate _allowed _allowed_read from schema.permissions
-    const perms         = schema?.permissions || [];
-    const fromPerms     = [];
-    const fromPermsRead = [];
-    for (const p of perms) {
-      if (!p.role || p.role === 'Self') continue;
-      const roleId = generateId('Role', p.role);
-      if (p.write || p.create || p.delete) fromPerms.push(roleId);
-      else if (p.read) fromPermsRead.push(roleId);
-    }
-    if (fromPerms.length) {
-      doc._allowed = [...new Set([...(doc._allowed || []), ...fromPerms])];
-    }
-    if (fromPermsRead.length) {
-      doc._allowed_read = [...new Set([...(doc._allowed_read || []), ...fromPermsRead])];
-    }*/
   }
 
   if (operation === 'update') {   //was if (operation === 'update'

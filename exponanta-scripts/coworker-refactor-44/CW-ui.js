@@ -145,7 +145,10 @@ const BlockNoteField = function({ field, run_doc, readOnly, timerRef, debounce }
         },
       })
     })
-    return () => { alive = false }
+    return () => {
+      alive = false
+      import('./editor.js').then(({ unmount }) => unmount(run_doc))
+    }
   }, [run_doc.name])
 
   if (readOnly) {
@@ -158,6 +161,26 @@ const BlockNoteField = function({ field, run_doc, readOnly, timerRef, debounce }
   return ce('div', { id: run_doc.name,
     style: { position: 'relative', border: '1px solid var(--tblr-border-color)', borderRadius: '4px', minHeight: '240px' }
   })
+}
+
+//==============================================================
+// FilePicker
+//==============================================================
+
+const Filepicker = function({ field, run_doc, readOnly }) {
+  React.useEffect(() => {
+    let alive = true
+    import('./filepicker.js').then(({ mount }) => {
+      if (!alive) return
+      mount({ run_doc, fieldname: field.fieldname, readOnly })
+    })
+    return () => {
+      alive = false
+      import('./filepicker.js').then(({ unmount }) => unmount(run_doc))
+    }
+  }, [run_doc.name])
+
+  return ce('div', { id: run_doc.name })
 }
 
 // ============================================================
@@ -218,13 +241,16 @@ const FieldRenderer = function({ field, run_doc }) {
     ? (field.fieldtype === 'Check' ? 0 : '')
     : (field.fieldtype === 'Check' ? Number(initial) : initial);
 
-  const [prevName, setPrevName] = React.useState(doc_.name);
-  const [localVal, setLocalVal] = React.useState(safeInitial);
+  const [prevName,  setPrevName]  = React.useState(doc_.name);
+  const [localVal,  setLocalVal]  = React.useState(safeInitial);
+
 
   if (prevName !== doc_.name) {
     setPrevName(doc_.name);
     if (prevName !== null) setLocalVal(safeInitial);
   }
+
+ 
 
   const timerRef = React.useRef(null);
   const debounce = CW._config?.fieldInteractionConfig?.onChange?.debounce ?? 5000;
@@ -278,8 +304,15 @@ const FieldRenderer = function({ field, run_doc }) {
   if (field.fieldtype === 'BlockNote')
     return ce(BlockNoteField, { field, run_doc, readOnly, timerRef, debounce })
 
+if (field.fieldtype === 'Filepicker')
+  return ce(Filepicker, { field, run_doc, readOnly })
+
+
   if (field.fieldtype === 'Component')
     return ce(CWComponent, { field, run_doc, readOnly, timerRef, debounce })
+
+  if (field.fieldtype === 'SharePanel')
+  return ce(SharePanel, { field, run_doc, readOnly })
 
   if (field.fieldtype === 'Section Break')
     return ce('div', { className: 'col-12 mt-3' },
@@ -289,8 +322,8 @@ const FieldRenderer = function({ field, run_doc }) {
 
   if (field.fieldtype === 'Column Break') return null;
 
-  if (field.fieldtype === 'Read Only' || readOnly)
-    return ce('input', { type: 'text', className: 'form-control', value: localVal, readOnly: true });
+  //if (field.fieldtype === 'Read Only' || readOnly)
+  //  return ce('input', { type: 'text', className: 'form-control', value: localVal, readOnly: true });
 
   if (field.fieldtype === 'Check')
     return ce('div', { className: 'form-check' },
@@ -422,6 +455,8 @@ const FieldRenderer = function({ field, run_doc }) {
   if (field.fieldtype === 'Relationship Panel')
     return ce(RelationshipPanel, { run_doc });
 
+
+
   return ce('input', {
     type: 'text', className: 'form-control', value: localVal,
     onChange: (e) => onChange(e.target.value), onBlur: (e) => onBlur(e.target.value),
@@ -500,7 +535,22 @@ const MainForm = function({ run_doc }) {
     return ce('div', { className: 'alert alert-warning' }, `Schema not found: ${doctype}`);
 
   const title     = doc[schema.title_field || 'name'] || doc.name || 'New';
-  const fields    = schema.fields || [];
+
+// fields and system fields 
+const schemaFields = schema.fields || []
+const systemFields = (CW._config.systemFields || [])
+  .filter(sf => !sf.hidden && sf.fieldtype)
+  .filter(sf => !schemaFields.find(f => f.fieldname === sf.fieldname))
+  .map(sf => ({
+    fieldname:    sf.name,
+    fieldtype:    sf.fieldtype,
+    label:        sf.label || sf.name,
+    read_only:    sf.read_only || 0,
+    in_list_view: sf.in_list_view ?? 0,
+  }))
+const fields = [...schemaFields, ...systemFields]
+//============================================================
+
   const skipTypes = new Set(['Column Break', 'Tab Break', 'HTML']);
 
   // badge from dim 0 current state
@@ -735,70 +785,250 @@ const MainGrid = function({ run_doc, data }) {
 };
 
 // ============================================================
-// RELATIONSHIP PANEL
+// MultiSelectPanel — reusable multi-source async multi-select
+// ============================================================
+
+const MultiSelectPanel = function({ sources, value, onChange, readOnly, run_doc, grouped }) {
+  const [selected, setSelected] = React.useState(Array.isArray(value) ? value : [])
+  const [search,   setSearch]   = React.useState('')
+  const [opts,     setOpts]     = React.useState([])
+  const [isOpen,   setIsOpen]   = React.useState(false)
+  const [loading,  setLoading]  = React.useState(false)
+  const [labels,   setLabels]   = React.useState({})
+
+  React.useEffect(() => {
+    setSelected(Array.isArray(value) ? value : [])
+  }, [JSON.stringify(value)])
+
+  React.useEffect(() => {
+    if (!selected.length) return
+    const unresolved = selected.filter(id => !labels[id])
+    if (!unresolved.length) return
+    ;(async () => {
+      const newLabels = { ...labels }
+      for (const src of sources) {
+        const schema     = CW.Schema?.[src.doctype]
+        const labelField = src.labelField || schema?.title_field || 'name'
+        const cr = await run_doc.child({
+          operation:      'select',
+          target_doctype: src.doctype,
+          query:          { take: 100 },
+          options:        { render: false },
+        })
+        for (const rec of cr.target?.data || []) {
+          const id = src.transform ? src.transform(rec.name) : rec.name
+          if (unresolved.includes(id))
+            newLabels[id] = { label: rec[labelField] || rec.name, icon: src.icon || '•' }
+        }
+      }
+      setLabels(newLabels)
+    })()
+  }, [JSON.stringify(selected)])
+
+  const loadOpts = async (term) => {
+    setLoading(true)
+    const results = []
+    for (const src of sources) {
+      const schema     = CW.Schema?.[src.doctype]
+      const labelField = src.labelField || schema?.title_field || 'name'
+      const cr = await run_doc.child({
+        operation:      'select',
+        target_doctype: src.doctype,
+        query:          { filter: term ? `data.${labelField} ~ "${term}"` : '', take: 20 },
+        options:        { render: false },
+      })
+      for (const rec of cr.target?.data || []) {
+        const id = src.transform ? src.transform(rec.name) : rec.name
+        if (!selected.includes(id))
+          results.push({ id, label: rec[labelField] || rec.name, icon: src.icon || '•', source: src.doctype })
+      }
+    }
+    setOpts(results)
+    setLoading(false)
+    setIsOpen(true)
+  }
+
+  const onSelect = (opt) => {
+    const next = [...selected, opt.id]
+    setSelected(next)
+    setSearch('')
+    setIsOpen(false)
+    onChange?.(next)
+  }
+
+  const onRemove = (id) => {
+    const next = selected.filter(s => s !== id)
+    setSelected(next)
+    onChange?.(next)
+  }
+
+  const groupedOpts = React.useMemo(() => {
+    if (!grouped) return [{ label: null, items: opts }]
+    const map = {}
+    for (const opt of opts) {
+      if (!map[opt.source]) map[opt.source] = []
+      map[opt.source].push(opt)
+    }
+    return Object.entries(map).map(([label, items]) => ({ label, items }))
+  }, [opts, grouped])
+
+  return ce('div', { className: 'cw-multiselect' },
+    ce('div', { className: 'd-flex flex-wrap gap-1 mb-2' },
+      selected.map(id => {
+        const info = labels[id]
+        return ce('span', {
+          key:       id,
+          className: 'badge bg-secondary-subtle text-secondary-emphasis d-flex align-items-center gap-1',
+          style:     { fontSize: 13, padding: '4px 8px' }
+        },
+          info?.icon && ce('span', {}, info.icon),
+          ce('span', {}, info?.label || id),
+          !readOnly && ce('button', {
+            className: 'btn-close ms-1',
+            style:     { fontSize: 10 },
+            onClick:   () => onRemove(id),
+          })
+        )
+      })
+    ),
+    !readOnly && ce('div', { className: 'position-relative' },
+      ce('input', {
+        type:        'text',
+        className:   'form-control form-control-sm',
+        placeholder: 'Search...',
+        value:       search,
+        onChange:    (e) => { setSearch(e.target.value); loadOpts(e.target.value) },
+        onFocus:     () => loadOpts(search),
+        onBlur:      () => setTimeout(() => setIsOpen(false), 200),
+      }),
+      isOpen && ce('div', {
+        className: 'dropdown-menu show w-100',
+        style:     { maxHeight: 240, overflowY: 'auto', zIndex: 1050 },
+      },
+        loading && ce('div', { className: 'dropdown-item text-muted small' }, 'Loading...'),
+        !loading && opts.length === 0 && ce('div', { className: 'dropdown-item text-muted small' }, 'No results'),
+        !loading && groupedOpts.map((group, gi) => [
+          group.label && ce('h6', { key: `hdr-${gi}`, className: 'dropdown-header' }, group.label),
+          ...group.items.map(opt => ce('button', {
+            key:         opt.id,
+            className:   'dropdown-item d-flex align-items-center gap-2',
+            type:        'button',
+            onMouseDown: (e) => { e.preventDefault(); onSelect(opt) },
+          },
+            ce('span', {}, opt.icon),
+            ce('span', {}, opt.label)
+          ))
+        ]).flat()
+      )
+    )
+  )
+}
+globalThis.MultiSelectPanel = MultiSelectPanel
+
+// ============================================================
+// SharePanel — _allowed + _allowed_read via MultiSelectPanel
+// ============================================================
+
+const SharePanel = function({ field, run_doc, readOnly }) {
+  const doc     = run_doc.target?.data?.[0] || {}
+  const doctype = run_doc.target_doctype
+
+  const allSources = [
+    {
+      doctype:    'UserPublicProfile',
+      labelField: 'full_name',
+      icon:       '👤',
+      transform:  (id) => 'user' + id.slice(4),
+    },
+    {
+      doctype:    'Role',
+      labelField: 'role_name',
+      icon:       '🔑',
+    },
+  ]
+
+  const commit = (field, next) => {
+    run_doc.child({
+      operation:      'update',
+      target_doctype: doctype,
+      query:          { where: { name: doc.name } },
+      input:          { [field]: next },
+      options:        { internal: true, render: false },
+    })
+  }
+
+  return ce('div', { className: 'd-flex flex-column gap-3' },
+    ce('div', {},
+      ce('label', { className: 'form-label fw-medium' }, '✏️ Can edit'),
+      ce(MultiSelectPanel, {
+        sources:  allSources,
+        value:    doc._allowed || [],
+        onChange: (next) => commit('_allowed', next),
+        readOnly,
+        run_doc,
+        grouped:  true,
+      })
+    ),
+    ce('div', {},
+      ce('label', { className: 'form-label fw-medium' }, '👁 Can view'),
+      ce(MultiSelectPanel, {
+        sources:  allSources,
+        value:    doc._allowed_read || [],
+        onChange: (next) => commit('_allowed_read', next),
+        readOnly,
+        run_doc,
+        grouped:  true,
+      })
+    )
+  )
+}
+globalThis.SharePanel = SharePanel
+
+// ============================================================
+// RelationshipPanel — uses MultiSelectPanel for record search
 // ============================================================
 
 const RelationshipPanel = function({ run_doc }) {
-  const doc     = run_doc.target?.data?.[0] || {};
-  const doctype = run_doc.target_doctype || run_doc.source_doctype;
-  const docName = doc.name;
+  const doc     = run_doc.target?.data?.[0] || {}
+  const doctype = run_doc.target_doctype || run_doc.source_doctype
+  const docName = doc.name
 
   const typeMap = React.useMemo(() => {
-    const map    = {};
-    const dtConf = CW._config?.relationshipTypes?.[doctype] || {};
+    const map    = {}
+    const dtConf = CW._config?.relationshipTypes?.[doctype] || {}
     for (const [relatedDoctype, types] of Object.entries(dtConf)) {
-      for (const type of types) map[type] = relatedDoctype;
+      for (const type of types) map[type] = relatedDoctype
     }
-    return map;
-  }, [doctype]);
+    return map
+  }, [doctype])
 
-  const allTypes = Object.keys(typeMap);
+  const allTypes = Object.keys(typeMap)
 
-  const [rels, setRels]         = React.useState([]);
-  const [loaded, setLoaded]     = React.useState(false);
-  const [selType, setSelType]   = React.useState('');
-  const [searchText, setSearch] = React.useState('');
-  const [linkOpts, setLinkOpts] = React.useState([]);
-  const [linkOpen, setLinkOpen] = React.useState(false);
-  const [selName, setSelName]   = React.useState('');
-  const [selTitle, setSelTitle] = React.useState('');
-  const [notes, setNotes]       = React.useState('');
-  const [saving, setSaving]     = React.useState(false);
+  const [rels,     setRels]     = React.useState([])
+  const [loaded,   setLoaded]   = React.useState(false)
+  const [selType,  setSelType]  = React.useState('')
+  const [selName,  setSelName]  = React.useState('')
+  const [selTitle, setSelTitle] = React.useState('')
+  const [notes,    setNotes]    = React.useState('')
+  const [saving,   setSaving]   = React.useState(false)
 
   const loadRels = React.useCallback(async () => {
-    if (!docName) return;
+    if (!docName) return
     const cr = await run_doc.child({
       operation:      'select',
       target_doctype: 'Relationship',
       query:          { where: { parent: docName, parentfield: 'relationships' } },
       options:        { render: false },
-    });
-    if (cr.success) setRels(cr.target?.data || []);
-    setLoaded(true);
-  }, [docName]);
+    })
+    if (cr.success) setRels(cr.target?.data || [])
+    setLoaded(true)
+  }, [docName])
 
-  React.useEffect(() => { loadRels(); }, [docName]);
-
-  const onTypeChange = async (type) => {
-    setSelType(type);
-    setSelName(''); setSelTitle(''); setSearch(''); setLinkOpts([]); setLinkOpen(false);
-    if (!type) return;
-    const relatedDoctype = typeMap[type];
-    if (!relatedDoctype) return;
-    const schema     = CW.Schema?.[relatedDoctype];
-    const titleField = schema?.title_field || 'name';
-    const cr = await run_doc.child({
-      operation:      'select',
-      target_doctype: relatedDoctype,
-      query:          { take: 50, select: ['name', titleField] },
-      options:        { render: false },
-    });
-    if (cr.success) { setLinkOpts(cr.target?.data || []); setLinkOpen(true); }
-  };
+  React.useEffect(() => { loadRels() }, [docName])
 
   const onAdd = async () => {
-    if (!selType || !selName) return;
-    setSaving(true);
+    if (!selType || !selName) return
+    setSaving(true)
     const cr = await run_doc.child({
       operation:      'create',
       target_doctype: 'Relationship',
@@ -813,13 +1043,13 @@ const RelationshipPanel = function({ run_doc }) {
         parentfield:     'relationships',
       },
       options: { render: false },
-    });
-    setSaving(false);
+    })
+    setSaving(false)
     if (!cr.error) {
-      setSelType(''); setSelName(''); setSelTitle(''); setSearch(''); setNotes('');
-      await loadRels();
+      setSelType(''); setSelName(''); setSelTitle(''); setNotes('')
+      await loadRels()
     }
-  };
+  }
 
   const onRelAction = async (rel, btn) => {
     const cr = await run_doc.child({
@@ -828,32 +1058,35 @@ const RelationshipPanel = function({ run_doc }) {
       query:          { where: { name: rel.name } },
       input:          { _state: { [btn.signal]: '' } },
       options:        { render: false, internal: true },
-    });
-    if (!cr.error) await loadRels();
-  };
+    })
+    if (!cr.error) await loadRels()
+  }
 
   const statusBadge = (rel) => {
-    const dim0  = CW._getStateDef('Relationship')?.['0'];
-    const cur   = CW._getDimValue(rel, '0', dim0);
-    const label = dim0?.options?.[cur] || '';
-    const cls   = ['bg-warning text-dark','bg-success','bg-danger'][cur] || 'bg-secondary';
-    return label ? ce('span', { className: `badge ${cls} ms-1` }, label) : null;
-  };
+    const dim0  = CW._getStateDef('Relationship')?.['0']
+    const cur   = CW._getDimValue(rel, '0', dim0)
+    const label = dim0?.options?.[cur] || ''
+    const cls   = ['bg-warning text-dark', 'bg-success', 'bg-danger'][cur] || 'bg-secondary'
+    return label ? ce('span', { className: `badge ${cls} ms-1` }, label) : null
+  }
 
-  const relatedDoctype = typeMap[selType] || '';
-  const titleField     = CW.Schema?.[relatedDoctype]?.title_field || 'name';
-  const filteredOpts   = linkOpts
-    .filter(o => o.name || o.id)
-    .filter(o => !searchText || (o[titleField] || o.name || o.id || '').toLowerCase().includes(searchText.toLowerCase()));
+  const relatedDoctype = typeMap[selType] || ''
+  const titleField     = CW.Schema?.[relatedDoctype]?.title_field || 'name'
+
+  const relSource = relatedDoctype ? [{
+    doctype:    relatedDoctype,
+    labelField: titleField,
+    icon:       '🔗',
+  }] : []
 
   return ce('div', { className: 'mt-3' },
 
     loaded && rels.length > 0 && ce('div', { className: 'mb-3' },
       rels.map(rel => {
-        const relSchema = CW.Schema?.Relationship || { schema_name: 'Relationship' }
-        const btns = CW._getTransitions(relSchema, rel, '0')
+        const relSchema = CW.Schema?.Relationship || {}
+        const btns      = CW._getTransitions(relSchema, rel, '0')
         return ce('div', {
-          key: rel.name,
+          key:       rel.name,
           className: 'border rounded p-2 mb-2 d-flex justify-content-between align-items-center',
         },
           ce('div', {},
@@ -883,64 +1116,49 @@ const RelationshipPanel = function({ run_doc }) {
 
     allTypes.length === 0
       ? ce('div', { className: 'text-muted small' }, `No relationship types configured for ${doctype}`)
-      : ce('div', { className: 'd-flex gap-2 align-items-start flex-wrap' },
-
-          ce('select', {
-            className: 'form-select form-select-sm',
-            style: { width: '140px' },
-            value: selType,
-            onChange: (e) => onTypeChange(e.target.value),
-          },
-            ce('option', { value: '' }, 'Type...'),
-            allTypes.map(t => ce('option', { key: t, value: t }, t))
-          ),
-
-          selType && ce('div', { className: 'position-relative', style: { width: '200px' } },
-            ce('input', {
-              type: 'text', className: 'form-control form-control-sm',
-              placeholder: `Search ${relatedDoctype}...`,
-              value: searchText,
-              onChange: (e) => { setSearch(e.target.value); setLinkOpen(true); },
-              onFocus:  () => setLinkOpen(true),
-              onBlur:   () => setTimeout(() => setLinkOpen(false), 200),
-            }),
-            linkOpen && filteredOpts.length > 0 && ce('div', {
-              className: 'dropdown-menu show w-100',
-              style: { maxHeight: '200px', overflowY: 'auto', zIndex: 1050 },
+      : ce('div', { className: 'd-flex flex-column gap-2' },
+          ce('div', { className: 'd-flex gap-2 align-items-start flex-wrap' },
+            ce('select', {
+              className: 'form-select form-select-sm',
+              style:     { width: '140px' },
+              value:     selType,
+              onChange:  (e) => { setSelType(e.target.value); setSelName(''); setSelTitle('') },
             },
-              filteredOpts.map((o, i) => {
-                const oId    = o.name || o.id || String(i);
-                const oTitle = o[titleField] || o.name || o.id || oId;
-                return ce('button', {
-                  key: oId, className: 'dropdown-item', type: 'button',
-                  onMouseDown: (e) => {
-                    e.preventDefault();
-                    setSelName(oId);
-                    setSelTitle(oTitle);
-                    setSearch(oTitle);
-                    setLinkOpen(false);
-                  },
-                }, oTitle);
+              ce('option', { value: '' }, 'Type...'),
+              allTypes.map(t => ce('option', { key: t, value: t }, t))
+            ),
+            selType && ce('div', { style: { width: '200px' } },
+              ce(MultiSelectPanel, {
+                sources:  relSource,
+                value:    selName ? [selName] : [],
+                onChange: (next) => {
+                  const id = next[next.length - 1]
+                  setSelName(id || '')
+                  setSelTitle(id || '')
+                },
+                readOnly: false,
+                run_doc,
+                grouped:  false,
               })
-            )
-          ),
-
-          selType && ce('input', {
-            type: 'text', className: 'form-control form-control-sm',
-            style: { width: '160px' },
-            placeholder: 'Notes (optional)',
-            value: notes,
-            onChange: (e) => setNotes(e.target.value),
-          }),
-
-          selType && ce('button', {
-            className: 'btn btn-sm btn-primary',
-            disabled: !selName || saving,
-            onClick: onAdd,
-          }, saving ? '...' : '+ Add')
+            ),
+            selType && ce('input', {
+              type:        'text',
+              className:   'form-control form-control-sm',
+              style:       { width: '160px' },
+              placeholder: 'Notes (optional)',
+              value:       notes,
+              onChange:    (e) => setNotes(e.target.value),
+            }),
+            selType && ce('button', {
+              className: 'btn btn-sm btn-primary',
+              disabled:  !selName || saving,
+              onClick:   onAdd,
+            }, saving ? '...' : '+ Add')
+          )
         )
-  );
-};
+  )
+}
+globalThis.RelationshipPanel = RelationshipPanel
 
 
 
@@ -959,6 +1177,63 @@ const SearchBar = function() {
 }
 
 
+const LeftPaneChat = function () {
+  const [messages, setMessages] = React.useState([])
+  const [term,     setTerm]     = React.useState('')
+  const listRef                 = React.useRef(null)
+
+  React.useEffect(() => {
+    if (listRef.current) listRef.current.scrollTop = listRef.current.scrollHeight
+  }, [messages])
+
+  const handleSend = () => {
+    const t = term.trim()
+    if (!t) return
+    setTerm('')
+    CW.searchGrid(t)
+    setMessages(prev => [
+      ...prev,
+      { text: t,        type: 'user',   id: Date.now()     },
+      { text: `→ ${t}`, type: 'system', id: Date.now() + 1 },
+    ])
+  }
+
+  const onKeyDown = (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleSend() }
+  }
+
+  return ce('div', { className: 'd-flex flex-column h-100' },
+    ce('div', {
+      ref:       listRef,
+      className: 'flex-grow-1 overflow-auto p-2 d-flex flex-column gap-1',
+    },
+      messages.length === 0 && ce('div', {
+        className: 'text-muted text-center small py-3'
+      }, 'status:Open · priority:High · or plain text'),
+      messages.map(m => ce('div', {
+        key:       m.id,
+        className: `small px-2 py-1 rounded ${m.type === 'user' ? 'align-self-end bg-primary-subtle' : 'align-self-start text-muted'}`,
+      }, m.text))
+    ),
+    ce('div', { className: 'p-2 border-top d-flex gap-2 align-items-end' },
+      ce('textarea', {
+        className:   'form-control form-control-sm',
+        rows:        2,
+        placeholder: 'status:Open',
+        value:       term,
+        onChange:    e => setTerm(e.target.value),
+        onKeyDown,
+        style:       { resize: 'none', fontSize: 13 },
+      }),
+      ce('button', {
+        className: 'btn btn-sm btn-outline-secondary',
+        onClick:   handleSend,
+      }, 'Send')
+    )
+  )
+}
+
+
 // ============================================================
 // COMPONENT REGISTRY
 // ============================================================
@@ -966,5 +1241,6 @@ const SearchBar = function() {
 globalThis.MainForm = MainForm;
 globalThis.MainGrid = MainGrid;
 globalThis.SearchBar = SearchBar;
+globalThis.LeftPaneChat = LeftPaneChat;
 
 console.log('✅ CW-ui.js loaded');

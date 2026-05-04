@@ -520,6 +520,7 @@
   },
   {
     "schema_name": "UserPublicProfile",
+    "autoname": "field:email",
     "doctype": "Schema",
     "title_field": "full_name",
     "_autosave": 1,
@@ -2753,7 +2754,7 @@
   },
   {
     "_schema_doctype": "Task",
-    "explicit_edit_intent": 1,
+    "explicit_edit_intent": 0,
     "_autosave": 1,
     "_state": {
       "1": {
@@ -6065,7 +6066,13 @@
         "no_copy": 1,
         "print_hide": 1,
         "read_only": 1
-      }
+      },
+       {
+  "fieldname": "files",
+  "fieldtype": "Filepicker",
+  "label": "Attachments",
+  "in_list_view": 0
+}
     ],
     "icon": "fa fa-puzzle-piece",
     "id": "hcov8jd00z09nyy",

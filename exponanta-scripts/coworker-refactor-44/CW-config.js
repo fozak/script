@@ -75,6 +75,7 @@ calendar: {
 systemFields: [
   {
     name: 'doctype', fetch: true,
+    hidden: 1,
     onWrite: (run_doc) => {
       const doc = run_doc.target?.data?.[0];
       if (doc) doc.doctype = doc.doctype || run_doc.target_doctype;
@@ -82,6 +83,7 @@ systemFields: [
   },
   {
     name: 'name', fetch: true,
+    hidden: 1,
     onCreate: (run_doc) => {
       const doc = run_doc.target?.data?.[0];
       if (!doc || doc.name) return;
@@ -94,6 +96,7 @@ systemFields: [
   },
   {
     name: 'docstatus', fetch: true,
+    hidden: 1,
     onCreate: (run_doc) => {
       const doc = run_doc.target?.data?.[0];
       if (doc && doc.docstatus === undefined) doc.docstatus = 0;
@@ -101,6 +104,7 @@ systemFields: [
   },
   {
     name: 'creation', fetch: true,
+    hidden: 0, read_only: 1, fieldtype: 'Datetime', label: 'Created', in_list_view: 0,
     onCreate: (run_doc) => {
       const doc = run_doc.target?.data?.[0];
       if (doc) doc.creation = Date.now();
@@ -108,6 +112,7 @@ systemFields: [
   },
   {
     name: 'owner', fetch: true,
+    hidden: 0, read_only: 1, fieldtype: 'Data', label: 'Owner', in_list_view: 0,
     onCreate: (run_doc) => {
       const doc = run_doc.target?.data?.[0];
       if (doc) doc.owner = doc.doctype === 'User'
@@ -117,6 +122,7 @@ systemFields: [
   },
   {
     name: 'modified', fetch: true,
+    hidden: 0, read_only: 1, fieldtype: 'Datetime', label: 'Modified', in_list_view: 0,
     onWrite: (run_doc) => {
       const doc = run_doc.target?.data?.[0];
       if (doc) doc.modified = Date.now();
@@ -124,14 +130,19 @@ systemFields: [
   },
   {
     name: 'modified_by', fetch: true,
+    hidden: 0, read_only: 1, fieldtype: 'Data', label: 'Modified By', in_list_view: 0,
     onWrite: (run_doc) => {
       const doc = run_doc.target?.data?.[0];
       if (doc) doc.modified_by = globalThis.pb?.authStore?.model?.id || '';
     },
   },
-  { name: '_state',        fetch: true },
+  {
+    name: '_state', fetch: true,
+    hidden: 1,
+  },
   {
     name: 'top_parent', fetch: true,
+    hidden: 1,
     onCreate: (run_doc) => {
       const doc = run_doc.target?.data?.[0];
       if (!doc) return;
@@ -141,121 +152,120 @@ systemFields: [
       doc.top_parent = p.top_parent || p.name;
     },
   },
-  { name: 'parent',        fetch: true },
-  { name: 'parenttype',    fetch: true },
-  { name: 'parentfield',   fetch: true },
-  { name: 'idx',           fetch: true },
+  { name: 'parent',      fetch: true, hidden: 1 },
+  { name: 'parenttype',  fetch: true, hidden: 1 },
+  { name: 'parentfield', fetch: true, hidden: 1 },
+  { name: 'idx',         fetch: true, hidden: 1 },
+  {
+    name: '_allowed', fetch: true,
+    hidden: 0, read_only: 0, fieldtype: 'SharePanel', label: 'Sharing', in_list_view: 0,
+    onWrite: (run_doc) => {
+      const doc        = run_doc.target?.data?.[0];
+      if (!doc) return;
+      const schema     = CW.Schema?.[run_doc.target_doctype];
+      const linkFields = (schema?.fields || []).filter(f => f.fieldtype === 'Link');
+      const hasParent  = !!(doc.parent && doc.parenttype);
+      const hasLinks   = linkFields.some(f => doc[f.fieldname]);
+      if (!hasParent && !hasLinks && run_doc.operation !== 'create') return;
 
-{
-  name: '_allowed', fetch: true,
-  onWrite: (run_doc) => {
-    const doc    = run_doc.target?.data?.[0];
-    if (!doc) return;
-    const schema     = CW.Schema?.[run_doc.target_doctype];
-    const linkFields = (schema?.fields || []).filter(f => f.fieldtype === 'Link');
-    const hasParent  = !!(doc.parent && doc.parenttype);
-    const hasLinks   = linkFields.some(f => doc[f.fieldname]);
-    if (!hasParent && !hasLinks && run_doc.operation !== 'create') return;
+      const roles = (schema?.permissions || [])
+        .filter(p => p.role && (p.write === 1 || p.create === 1))
+        .map(p => generateId('Role', p.role));
 
-    const roles = (schema?.permissions || [])
-      .filter(p => p.role && (p.write === 1 || p.create === 1))
-      .map(p => generateId('Role', p.role));
-    //if (doc.owner) roles.push(doc.owner);    //<-no need to add owner to _allowed, as permissions should be role-based. If owner-specific permissions are needed, they can be implemented via a "User Permissions" doctype or similar mechanism.
+      if (hasParent) {
+        const parentRun = CW.runs[run_doc.parent_run_id];
+        const p = parentRun?.target?.data?.[0];
+        if (p?._allowed) roles.push(...p._allowed);
+      }
 
-    if (hasParent) {
-      const parentRun = CW.runs[run_doc.parent_run_id];
-      const p = parentRun?.target?.data?.[0];
-      if (p?._allowed) roles.push(...p._allowed);
-    }
+      for (const f of linkFields) {
+        const linked = Object.values(CW.runs).find(r =>
+          r.target_doctype === f.options &&
+          r.target?.data?.[0]?.name === doc[f.fieldname]
+        )?.target?.data?.[0];
+        if (linked?._allowed) roles.push(...linked._allowed);
+      }
 
-    for (const f of linkFields) {
-      const linked = Object.values(CW.runs).find(r =>
-        r.target_doctype === f.options &&
-        r.target?.data?.[0]?.name === doc[f.fieldname]
-      )?.target?.data?.[0];
-      if (linked?._allowed) roles.push(...linked._allowed);
-    }
+      doc._allowed = [...new Set([...(doc._allowed || []), ...roles])];
 
-    doc._allowed = [...new Set([...(doc._allowed || []), ...roles])];
-
-    // Relationship → patch related document _allowed
- // _allowed.onWrite Relationship block — FIXED:
-if (run_doc.target_doctype === 'Relationship' && doc.related_name && doc.related_doctype) {
-  const parentRun    = CW.runs[run_doc.parent_run_id];
-  const parentDoc    = parentRun?.target?.data?.[0];
-  const relatedRun   = Object.values(CW.runs).find(r =>
-    r.target_doctype === doc.related_doctype &&
-    r.target?.data?.[0]?.name === doc.related_name
-  );
-  const relatedDoc   = relatedRun?.target?.data?.[0];
-  if (parentDoc && relatedDoc) {
-    run_doc.child({
-      operation:      'update',
-      target_doctype: doc.related_doctype,
-      query:          { where: { name: doc.related_name } },
-      target:         { data: [relatedDoc] },
-      input:          { _allowed: [...new Set([...(parentDoc._allowed || [])])] },
-      options:        { render: false, internal: true },
-    });
-  }
-}
+      if (run_doc.target_doctype === 'Relationship' && doc.related_name && doc.related_doctype) {
+        const parentRun  = CW.runs[run_doc.parent_run_id];
+        const parentDoc  = parentRun?.target?.data?.[0];
+        const relatedRun = Object.values(CW.runs).find(r =>
+          r.target_doctype === doc.related_doctype &&
+          r.target?.data?.[0]?.name === doc.related_name
+        );
+        const relatedDoc = relatedRun?.target?.data?.[0];
+        if (parentDoc && relatedDoc) {
+          run_doc.child({
+            operation:      'update',
+            target_doctype: doc.related_doctype,
+            query:          { where: { name: doc.related_name } },
+            target:         { data: [relatedDoc] },
+            input:          { _allowed: [...new Set([...(parentDoc._allowed || [])])] },
+            options:        { render: false, internal: true },
+          });
+        }
+      }
+    },
   },
-},
-{
-  name: '_allowed_read', fetch: true,
-  onWrite: (run_doc) => {
-    const doc    = run_doc.target?.data?.[0];
-    if (!doc) return;
-    const schema     = CW.Schema?.[run_doc.target_doctype];
-    const linkFields = (schema?.fields || []).filter(f => f.fieldtype === 'Link');
-    const hasParent  = !!(doc.parent && doc.parenttype);
-    const hasLinks   = linkFields.some(f => doc[f.fieldname]);
-    if (!hasParent && !hasLinks && run_doc.operation !== 'create') return;
+  {
+    name: '_allowed_read', fetch: true,
+    hidden: 1,
+    onWrite: (run_doc) => {
+      const doc        = run_doc.target?.data?.[0];
+      if (!doc) return;
+      const schema     = CW.Schema?.[run_doc.target_doctype];
+      const linkFields = (schema?.fields || []).filter(f => f.fieldtype === 'Link');
+      const hasParent  = !!(doc.parent && doc.parenttype);
+      const hasLinks   = linkFields.some(f => doc[f.fieldname]);
+      if (!hasParent && !hasLinks && run_doc.operation !== 'create') return;
 
-    const roles = (schema?.permissions || [])
-      .filter(p => p.role && p.read === 1 && !(p.write === 1 || p.create === 1))
-      .map(p => generateId('Role', p.role));
-    if (schema?.is_public && !roles.includes('roleispublixxxx'))
-      roles.push('roleispublixxxx');
+      const roles = (schema?.permissions || [])
+        .filter(p => p.role && p.read === 1 && !(p.write === 1 || p.create === 1))
+        .map(p => generateId('Role', p.role));
+      if (schema?.is_public && !roles.includes('roleispublixxxx'))
+        roles.push('roleispublixxxx');
 
-    if (hasParent) {
-      const parentRun = CW.runs[run_doc.parent_run_id];
-      const p = parentRun?.target?.data?.[0];
-      if (p?._allowed_read) roles.push(...p._allowed_read);
-    }
+      if (hasParent) {
+        const parentRun = CW.runs[run_doc.parent_run_id];
+        const p = parentRun?.target?.data?.[0];
+        if (p?._allowed_read) roles.push(...p._allowed_read);
+      }
 
-    for (const f of linkFields) {
-      const linked = Object.values(CW.runs).find(r =>
-        r.target_doctype === f.options &&
-        r.target?.data?.[0]?.name === doc[f.fieldname]
-      )?.target?.data?.[0];
-      if (linked?._allowed_read) roles.push(...linked._allowed_read);
-    }
+      for (const f of linkFields) {
+        const linked = Object.values(CW.runs).find(r =>
+          r.target_doctype === f.options &&
+          r.target?.data?.[0]?.name === doc[f.fieldname]
+        )?.target?.data?.[0];
+        if (linked?._allowed_read) roles.push(...linked._allowed_read);
+      }
 
-    doc._allowed_read = [...new Set([...(doc._allowed_read || []), ...roles])];
+      doc._allowed_read = [...new Set([...(doc._allowed_read || []), ...roles])];
 
-    // Relationship → patch related document _allowed_read
-  // _allowed_read.onWrite Relationship block — FIXED:
-if (run_doc.target_doctype === 'Relationship' && doc.related_name && doc.related_doctype) {
-  const parentDoc  = CW.runs[run_doc.parent_run_id]?.target?.data?.[0];
-  const relatedDoc = Object.values(CW.runs).find(r =>
-    r.target_doctype === doc.related_doctype &&
-    r.target?.data?.[0]?.name === doc.related_name
-  )?.target?.data?.[0];
-  if (parentDoc && relatedDoc) {
-    run_doc.child({
-      operation:      'update',
-      target_doctype: doc.related_doctype,
-      query:          { where: { name: doc.related_name } },
-      target:         { data: [relatedDoc] },
-      input:          { _allowed_read: [...new Set([...(parentDoc._allowed_read || [])])] },
-      options:        { render: false, internal: true },
-    });
-  }
-}
+      if (run_doc.target_doctype === 'Relationship' && doc.related_name && doc.related_doctype) {
+        const parentDoc  = CW.runs[run_doc.parent_run_id]?.target?.data?.[0];
+        const relatedDoc = Object.values(CW.runs).find(r =>
+          r.target_doctype === doc.related_doctype &&
+          r.target?.data?.[0]?.name === doc.related_name
+        )?.target?.data?.[0];
+        if (parentDoc && relatedDoc) {
+          run_doc.child({
+            operation:      'update',
+            target_doctype: doc.related_doctype,
+            query:          { where: { name: doc.related_name } },
+            target:         { data: [relatedDoc] },
+            input:          { _allowed_read: [...new Set([...(parentDoc._allowed_read || [])])] },
+            options:        { render: false, internal: true },
+          });
+        }
+      }
+    },
   },
-},
-  { name: 'files',         fetch: true },
+  {
+    name: 'files', fetch: true,
+    hidden: 0, read_only: 0, fieldtype: 'Filepicker', label: 'Attachments', in_list_view: 0,
+  },
 ],
 
 

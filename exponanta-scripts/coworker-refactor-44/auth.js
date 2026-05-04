@@ -128,7 +128,9 @@ async function fetchItemProfile(userId) {
 // ============================================================
 
 async function provisionUser(email, password, name) {
-  const userId = generateId('User', email);
+  const userId   = generateId('User', email);
+  const usepId   = generateId('UserPublicProfile', email);
+  const usesId   = generateId('UserSettings', email);
 
   // Step 1: Create auth user
   await pb.collection('users').create({
@@ -146,11 +148,18 @@ async function provisionUser(email, password, name) {
     data: { id: userId, email, name, doctype: 'User', docstatus: 0 },
   });
 
+  // Step 3A: Create UserSettings
+  await pb.collection('item').create({
+    id: usesId, name: usesId, doctype: 'UserSettings', docstatus: 0,
+    owner: userId, _allowed: [userId], _allowed_read: [],
+    data: { user: userId, email },
+  });
+
   // Step 4: Send verification
   await pb.collection('users').requestVerification(email);
 
   console.log('✅ User provisioned:', userId);
-  return { userId };  // no profileId — CW creates UserPublicProfile
+  return { userId, usesId };
 }
 
 // ============================================================

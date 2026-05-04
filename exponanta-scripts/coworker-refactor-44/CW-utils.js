@@ -130,25 +130,36 @@ const SINGLE_DOCTYPES = new Set([
   'Project Type','Schema','Task Type','Issue Type','Party Type'
 ]);
 
+ const EMAIL_KEYED = {
+  'User':              'user',
+  'UserPublicProfile': 'usep',
+  'UserSettings':      'uses',
+}
+
 function generateId(doctype, title = null) {
-  if (doctype === 'User') {
-    if (!title?.trim()) throw new Error('User doctype requires an email address');
-    return `user${hashEmail(title)}`;
+  if (EMAIL_KEYED[doctype]) {
+    if (!title?.trim()) throw new Error(`${doctype} requires an email address`)
+    return (EMAIL_KEYED[doctype] + hashEmail(title)).substring(0, 15)
   }
+
   return SINGLE_DOCTYPES.has(doctype)
     ? generateSingleId(doctype, title)
-    : generateMultiId(doctype, title);
+    : generateMultiId(doctype, title)
 }
 
 function hashEmail(email) {
-  let hash = 0;
+  let h1 = 0, h2 = 0x9747b28c
   for (let i = 0; i < email.length; i++) {
-    hash = ((hash << 5) - hash) + email.charCodeAt(i);
-    hash = hash & hash;
+    const c = email.charCodeAt(i)
+    h1 = Math.imul(h1 ^ c, 0x9e3779b9)
+    h2 = Math.imul(h2 ^ c, 0x85ebca77)
   }
-  const base36 = Math.abs(hash).toString(36);
-  return (base36 + base36 + base36).substring(0, 11);
+  h1 ^= h2 >>> 13
+  h2 ^= h1 >>> 11
+  const combined = (Math.abs(h1) * 1000000 + Math.abs(h2)) % Number.MAX_SAFE_INTEGER
+  return Math.abs(combined).toString(36).padStart(11, '0').substring(0, 11)
 }
+
 
 function generateSingleId(doctype, title) {
   if (!title?.trim()) throw new Error(`Single doctype "${doctype}" requires a unique title`);
@@ -413,8 +424,11 @@ function _parseSmartSearch(term, schema) {
       const val   = part.slice(colonIdx + 1)
       const field = fields.find(f => f.fieldname.toLowerCase() === key || (f.label || '').toLowerCase() === key)
       if (field && val) {
+        const path = CW._config.topLevelFields.has(field.fieldname)
+          ? field.fieldname
+          : `data.${field.fieldname}`
         const op = ['Data', 'Small Text', 'Text', 'Long Text'].includes(field.fieldtype) ? '~' : '='
-        filters.push(`data.${field.fieldname} ${op} "${val}"`)
+        filters.push(`${path} ${op} "${val}"`)
         continue
       }
     }
@@ -422,8 +436,29 @@ function _parseSmartSearch(term, schema) {
   }
 
   if (text.length) {
+    const textTerm = text.join(' ')
     const titleField = schema?.title_field || 'name'
-    filters.push(`data.${titleField} ~ "${text.join(' ')}"`)
+
+    // title_field always first
+    const titlePath = CW._config.topLevelFields.has(titleField)
+      ? titleField
+      : `data.${titleField}`
+
+    // all search_index fields
+    const searchFields = (schema?.fields || [])
+      .filter(f => f.search_index && f.fieldname !== titleField)
+
+    const searchParts = [
+      `${titlePath} ~ "${textTerm}"`,
+      ...searchFields.map(f => {
+        const path = CW._config.topLevelFields.has(f.fieldname)
+          ? f.fieldname
+          : `data.${f.fieldname}`
+        return `${path} ~ "${textTerm}"`
+      })
+    ]
+
+    filters.push(`(${searchParts.join(' || ')})`)
   }
 
   return filters.join(' && ')

@@ -50,6 +50,7 @@
       await waitForBoot()
       cwStateFromUrl()
       trackContentHit()  // added
+      ReactDOM.render(React.createElement(LeftPaneChat, {}), document.getElementById('left_pane'))
     })
   </script>
 </body>
