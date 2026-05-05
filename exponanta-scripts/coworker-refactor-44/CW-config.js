@@ -20,9 +20,17 @@ globalThis.CW._config = {
   show_state_badges: false
 },
 
+systemSettings: {
+  logChanges:    1,   // 0 = off, 1 = on
+  // future:
+  // notifications: 0,
+  // auditLog:      0,
+  // autoSave:      1,
+},
+
+
 doctypeAliases: {
   'todo': 'ToDo',
-
 },
 
   pb_url: "http://143.198.29.88:8090",

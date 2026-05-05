@@ -324,6 +324,8 @@ if (
   await globalThis.Adapter[CW._config.adapters.defaults.db].select(run_doc)
 }
 
+    await CW._logChanges(run_doc)  // ← before merge
+
     // 2. merge all input → target.data[0] (including virtual + _state)
     CW._mergeInput(run_doc);
 
