@@ -234,20 +234,38 @@ async function update(run_doc) {
   const { collection } = globalThis.CW._config;
   const doc = run_doc.target?.data?.[0];
   if (!doc?.id && !doc?.name) {
-    run_doc.error = "400 update: no target document";
+    run_doc.error = '400 update: no target document';
     return;
   }
 
-  const id = doc.id || doc.name;
-  const { top, data } = _splitRecord(doc);
+  const id = doc.id || doc.name
+
+  // snapshot before _splitRecord consumes files+/files-
+  const filesBefore = Array.isArray(doc.files) ? [...doc.files] : []
+  const hasFileOp   = Object.keys(doc).some(k => /^[\w]+[+-]$/.test(k))
+
+  const { top, data } = _splitRecord(doc)
 
   try {
-    const pbResult  = await globalThis.pb.collection(collection).update(id, { ...top, data });
-    run_doc.target  = { data: [_mergeRecord(pbResult)], meta: { updated: 1 } };
-    run_doc.success = true;
+    const pbResult  = await globalThis.pb.collection(collection).update(id, { ...top, data })
+    run_doc.target  = { data: [_mergeRecord(pbResult)], meta: { updated: 1 } }
+    run_doc.success = true
+
+    // log file changes after PB responds — filenames now known
+    if (hasFileOp && CW._config.systemSettings?.logChanges && !run_doc.options?._logging) {
+      const filesAfter = pbResult.files || []
+      if (JSON.stringify(filesBefore) !== JSON.stringify(filesAfter)) {
+        await CW._logChanges(run_doc, [{
+          field: 'files',
+          from:  filesBefore,
+          to:    filesAfter,
+        }])
+      }
+    }
+
   } catch (err) {
-    console.error("PB update error:", JSON.stringify(err.response?.data || err.message));
-    run_doc.error = err.message;
+    console.error('PB update error:', JSON.stringify(err.response?.data || err.message))
+    run_doc.error = err.message
   }
 }
 

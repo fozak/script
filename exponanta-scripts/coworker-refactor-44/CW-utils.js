@@ -660,26 +660,32 @@ const searchGridDebounced = debounce(searchGrid, _searchDelay);
 // _logChanges
 // ============================================================
 
-async function _logChanges(run_doc) {
- if (run_doc.options?._logging) return;  // ← prevent re-entry
- if (!CW._config.systemSettings?.logChanges) return;
+async function _logChanges(run_doc, explicitChanges = null) {
+  if (run_doc.options?._logging) return
+  if (!CW._config.systemSettings?.logChanges) return
 
-  if (!["create", "update"].includes(run_doc.operation)) return;
-  const doc = run_doc.target?.data?.[0];
-  if (!doc?.name) return;
+  const doc = run_doc.target?.data?.[0]
+  if (!doc?.name) return
 
-  const skip = new Set(["_changes", "modified", "modified_by", "creation"]);
+  let changes
 
-  const changes = Object.entries(run_doc.input)
-    .filter(([k]) => !skip.has(k) && k !== "_state")
-    .map(([k, v]) => ({ field: k, from: doc[k] ?? null, to: v }))
-    .filter((c) => JSON.stringify(c.from) !== JSON.stringify(c.to));
+  if (explicitChanges) {
+    // explicit diff passed by caller (e.g. files after adapter response)
+    changes = explicitChanges
+  } else {
+    // auto-diff from input
+    const skip = new Set(['_changes', 'modified', 'modified_by', 'creation', 'files+', 'files-'])
+    changes = Object.entries(run_doc.input)
+      .filter(([k]) => !skip.has(k) && k !== '_state')
+      .map(([k, v]) => ({ field: k, from: doc[k] ?? null, to: v }))
+      .filter(c => JSON.stringify(c.from) !== JSON.stringify(c.to))
+  }
 
-  const signals = Object.entries(run_doc.input._state || {})
-    .filter(([, v]) => v === "")
-    .map(([k]) => k);
+  const signals = explicitChanges ? [] : Object.entries(run_doc.input._state || {})
+    .filter(([, v]) => v === '')
+    .map(([k]) => k)
 
-  if (!changes.length && !signals.length) return;
+  if (!changes.length && !signals.length) return
 
   const entry = {
     at: Date.now(),
@@ -687,18 +693,18 @@ async function _logChanges(run_doc) {
     op: run_doc.operation,
     ...(changes.length && { ch: changes }),
     ...(signals.length && { sig: signals }),
-  };
+  }
 
-  const existing = Array.isArray(doc._changes) ? doc._changes : [];
-  const next = [...existing, entry];
+  const existing = Array.isArray(doc._changes) ? doc._changes : []
+  const next     = [...existing, entry]
 
   try {
     const fakeRun = {
       target_doctype: run_doc.target_doctype,
-      target:         { data: [doc] },
+      target:         { data: [{ ...doc, _changes: next }] },
       query:          { where: { name: doc.name } },
       input:          { _changes: next },
-      options:        { internal: true, render: false, _logging: true },  // ← flag
+      options:        { internal: true, render: false, _logging: true },
       user:           run_doc.user,
     }
     fakeRun.target.data[0] = { ...doc, _changes: next }
