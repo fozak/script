@@ -478,41 +478,9 @@
         "read_only": 1,
         "hidden": 0
       },
-      {
-        "fieldname": "recipient",
-        "fieldtype": "Data",
-        "label": "Recipient",
-        "reqd": 1
-      },
-      {
-        "fieldname": "type",
-        "fieldtype": "Select",
-        "label": "Type",
-        "options": "mention\nnew_post\nreaction\nflag",
-        "in_list_view": 1
-      },
-      {
-        "fieldname": "source_doctype",
-        "fieldtype": "Data",
-        "label": "Source Type"
-      },
-      {
-        "fieldname": "source_name",
-        "fieldtype": "Data",
-        "label": "Source"
-      },
-      {
-        "fieldname": "message",
-        "fieldtype": "Data",
-        "label": "Message",
-        "in_list_view": 1
-      },
-      {
-        "fieldname": "read",
-        "fieldtype": "Check",
-        "label": "Read",
-        "default": 0
-      }
+      
+ 
+    }
     ],
     "field_order": [
       "name"
