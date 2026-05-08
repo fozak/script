@@ -8,7 +8,8 @@
 globalThis.CW.defaultFields = [
   'name', 'doctype', 'docstatus', 'owner',
   'modified', 'modified_by', '_state',
-  'parent', 'parentfield', 'parenttype', 'idx','_allowed', '_allowed_read', 'files'
+  'parent', 'parentfield', 'parenttype', 'idx','_allowed', '_allowed_read', 'files',
+   '_changes', '_threads'   // ← add both
 ];
 
 
@@ -22,10 +23,7 @@ globalThis.CW._config = {
 
 systemSettings: {
   logChanges:    1,   // 0 = off, 1 = on
-  // future:
-  // notifications: 0,
-  // auditLog:      0,
-  // autoSave:      1,
+logThreads: 1,
 },
 
 
@@ -160,9 +158,9 @@ systemFields: [
       doc.top_parent = p.top_parent || p.name;
     },
   },
-  { name: 'parent',      fetch: true, hidden: 1 },
-  { name: 'parenttype',  fetch: true, hidden: 1 },
-  { name: 'parentfield', fetch: true, hidden: 1 },
+  { name: 'parent',      fetch: true, hidden: 0, fieldtype: 'Data', in_list_view: 1 },
+  { name: 'parenttype',  fetch: true, hidden: 0, fieldtype: 'Data', in_list_view: 1 },
+  { name: 'parentfield', fetch: true, hidden: 0, fieldtype: 'Data', in_list_view: 1 },
   { name: 'idx',         fetch: true, hidden: 1 },
   {
     name: '_allowed', fetch: true,
@@ -415,6 +413,7 @@ systemFields: [
     "Task":         ["Blocks", "Blocked By", "Related"],
     "Project":      ["Belongs To"],
     "Role": ["Read Access", "Write Access"],  //experimental
+    "Customer":      ["Customer"],
   },
 "User": {
   "Role": ["Has Role"],

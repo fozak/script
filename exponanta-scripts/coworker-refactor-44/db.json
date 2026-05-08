@@ -477,10 +477,7 @@
         "in_list_view": 1,
         "read_only": 1,
         "hidden": 0
-      },
-      
- 
-    }
+      }
     ],
     "field_order": [
       "name"
@@ -8852,7 +8849,7 @@
         "fieldname": "account_manager",
         "fieldtype": "Link",
         "label": "Account Manager",
-        "options": "User"
+        "options": "UserPublicProfile"
       },
       {
         "fieldname": "customer_group",
@@ -9407,6 +9404,24 @@
     "quick_entry": 1,
     "row_format": "Dynamic",
     "schema_name": "Customer",
+    "_state": {
+    "1": {
+      "labels": {
+        "0_1": "Add Note"
+      },
+      "sideEffects": {
+        "0_1": "Adapter.note.add"
+      },
+      "transitions": {
+        "0": [
+          1
+        ],
+        "1": [
+          0
+        ]
+      }
+    }
+  },
     "search_fields": "customer_group,territory, mobile_no,primary_address",
     "show_name_in_global_search": 1,
     "sort_field": "creation",
@@ -126300,7 +126315,7 @@
       }
     ],
     "_state": {
-      "0": {
+      "1": {
         "name": "_docstatus",
         "fieldname": "docstatus",
         "values": [

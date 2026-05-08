@@ -178,7 +178,7 @@ Object.assign(globalThis.CW, {
         for (const [key, fnStr] of Object.entries(def.sideEffects || {})) {
           if (typeof fnStr === 'string') {
             // skip adapter path keys — "0_1.Adapter.x.y" resolved at runtime, not compiled
-            if (key.includes('.')) continue;
+            if (key.includes('.') || !fnStr.includes('function')) continue;
             try { def.sideEffects[key] = eval('(' + fnStr + ')'); }
             catch(e) { console.error(`[CW] compile sideEffects[${doctype}][${dim}][${key}]`, e); }
           }
@@ -222,5 +222,6 @@ globalThis.CW = new Proxy(globalThis.CW, {
     return globalThis[prop] || {};
   },
 });
+
 
 console.log("✅ CW-state.js loaded");

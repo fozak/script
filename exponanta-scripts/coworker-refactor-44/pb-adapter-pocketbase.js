@@ -252,7 +252,7 @@ async function update(run_doc) {
     run_doc.success = true
 
     // log file changes after PB responds — filenames now known
-    if (hasFileOp && CW._config.systemSettings?.logChanges && !run_doc.options?._logging) {
+    if (hasFileOp && CW._config.systemSettings?.logChanges && run_doc.options?._logging !== false) {
       const filesAfter = pbResult.files || []
       if (JSON.stringify(filesBefore) !== JSON.stringify(filesAfter)) {
         await CW._logChanges(run_doc, [{

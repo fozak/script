@@ -355,22 +355,23 @@ function _getDimValue(doc, dim, dimDef) {
     }
   }
   if (state && typeof state === "object") {
-    const prefix = dim + ".";
-    var current = null;
-    for (const [k, v] of Object.entries(state)) {
-      if (!k.startsWith(prefix)) continue;
-      const rest = k.slice(prefix.length);
-      const parts = rest.split("_");
-      if (parts.length !== 2) continue;
-      const from = parseInt(parts[0]);
-      const to = parseInt(parts[1]);
-      if (isNaN(from) || isNaN(to)) continue;
-      if (v === "1") current = to;
-      if (v === "-1") current = from;
-    }
-    if (current !== null) return current;
-    if (dim in state) return state[dim];
+  if (dim in state && typeof state[dim] === "number") return state[dim];
+  
+  const prefix = dim + ".";
+  var current = null;
+  for (const [k, v] of Object.entries(state)) {
+    if (!k.startsWith(prefix)) continue;
+    const rest = k.slice(prefix.length);
+    const parts = rest.split("_");
+    if (parts.length !== 2) continue;
+    const from = parseInt(parts[0]);
+    const to = parseInt(parts[1]);
+    if (isNaN(from) || isNaN(to)) continue;
+    if (v === "1") current = to;
+    if (v === "-1") current = from;
   }
+  if (current !== null) return current;
+}
   if (dimDef?.fieldname && dimDef.fieldname in doc)
     return doc[dimDef.fieldname];
   return dimDef?.values?.[0] ?? 0;
@@ -485,7 +486,39 @@ function _resolveViewComponent(doctype, view, fallback_container) {
     container: fallback_container || "main_container",
   };
 }
+//== get fiels===============================================================================
 
+function _getListFields(run_doc) {
+  const doctype = run_doc.target_doctype || run_doc.source_doctype;
+  const schema = CW.Schema?.[doctype];
+  const skipTypes = new Set(['Section Break','Column Break','Tab Break','HTML','Button','Table']);
+
+  const schemaFields = (schema?.fields || [])
+    .filter(f => f.in_list_view && !skipTypes.has(f.fieldtype));
+
+  const sysFields = (CW._config.systemFields || [])
+    .filter(sf => sf.in_list_view && sf.fieldtype && !skipTypes.has(sf.fieldtype))
+    .map(sf => ({
+      fieldname: sf.name,
+      fieldtype: sf.fieldtype,
+      label:     sf.label || sf.name,
+      read_only: sf.read_only ?? 1,
+    }));
+
+  const merged = [...schemaFields];
+  for (const sf of sysFields) {
+    if (!merged.find(f => f.fieldname === sf.fieldname)) merged.push(sf);
+  }
+
+  if (merged.length > 0) return merged;
+
+  // fallback — derive from actual data
+  const data = run_doc.target?.data || [];
+  return Object.keys(data[0] || {})
+    .filter(k => !k.startsWith('_') && k !== 'doctype')
+    .slice(0, 6)
+    .map(k => ({ fieldname: k, label: k }));
+};
 // ============================================================
 // CW METHODS
 // ============================================================
@@ -655,13 +688,22 @@ const _searchDelay =
 const searchGridDebounced = debounce(searchGrid, _searchDelay);
 
 // ============================================================
+// _patchDataField — partial update of a single data field in PB
+// ============================================================
+
+async function _patchDataField(docName, fieldName, value) {
+  const collection = CW._config.collection
+  const current    = await globalThis.pb.collection(collection).getOne(docName)
+  const mergedData = { ...current.data, [fieldName]: value }
+  await globalThis.pb.collection(collection).update(docName, { data: mergedData })
+}
 
 // ============================================================
 // _logChanges
 // ============================================================
 
 async function _logChanges(run_doc, explicitChanges = null) {
-  if (run_doc.options?._logging) return
+  if (run_doc.options?._logging === false) return
   if (!CW._config.systemSettings?.logChanges) return
 
   const doc = run_doc.target?.data?.[0]
@@ -670,10 +712,8 @@ async function _logChanges(run_doc, explicitChanges = null) {
   let changes
 
   if (explicitChanges) {
-    // explicit diff passed by caller (e.g. files after adapter response)
     changes = explicitChanges
   } else {
-    // auto-diff from input
     const skip = new Set(['_changes', 'modified', 'modified_by', 'creation', 'files+', 'files-'])
     changes = Object.entries(run_doc.input)
       .filter(([k]) => !skip.has(k) && k !== '_state')
@@ -699,19 +739,41 @@ async function _logChanges(run_doc, explicitChanges = null) {
   const next     = [...existing, entry]
 
   try {
-    const fakeRun = {
-      target_doctype: run_doc.target_doctype,
-      target:         { data: [{ ...doc, _changes: next }] },
-      query:          { where: { name: doc.name } },
-      input:          { _changes: next },
-      options:        { internal: true, render: false, _logging: true },
-      user:           run_doc.user,
-    }
-    fakeRun.target.data[0] = { ...doc, _changes: next }
-    await globalThis.Adapter[CW._config.adapters.defaults.db].update(fakeRun)
+    await _patchDataField(doc.name, '_changes', next)
     doc._changes = next
   } catch (err) {
     console.warn('[CW] _logChanges failed:', err.message)
+  }
+}
+
+// ============================================================
+// _logThreads
+// ============================================================
+
+async function _logThreads(run_doc, entry) {
+  if (run_doc.options?._logging === false) return
+  if (!CW._config.systemSettings?.logThreads) return
+
+  const doc = run_doc.target?.data?.[0]
+  if (!doc?.name) return
+
+  const threadEntry = {
+    at:      Date.now(),
+    by:      run_doc.user?.name || null,
+    adapter: entry.adapter,
+    ...(entry.ref     && { ref:     entry.ref }),
+    ...(entry.subject && { subject: entry.subject }),
+    ...(entry.data    && { data:    entry.data }),
+  }
+
+  const existing = Array.isArray(doc._threads) ? doc._threads : []
+  const next     = [...existing, threadEntry]
+
+  try {
+    await _patchDataField(doc.name, '_threads', next)
+    doc._threads = next
+  } catch (err) {
+    console.warn('[CW] _logThreads failed:', err.message)
   }
 }
 
@@ -723,7 +785,10 @@ CW._resolveViewComponent = _resolveViewComponent;
 CW._getFormButtons = _getFormButtons;
 CW.searchGrid = searchGrid;
 CW.searchGridDebounced = searchGridDebounced;
+CW._patchDataField = _patchDataField;
 CW._logChanges = _logChanges;
+CW._logThreads = _logThreads;
+CW._getListFields = _getListFields;
 
 // ============================================================
 // PERSIST STUB

@@ -192,11 +192,14 @@ CW._handleSignal = async function (run_doc) {
 
   const stateDef = CW._getStateDef(doctype);
 
-  const _failSignal = (err) => {
-    run_doc.error = err;
-    if (doc._state) doc._state[signal] = '-1';
-    run_doc.options.internal = _savedInternal;
-  };
+const _failSignal = (err, dim, fromVal) => {
+  run_doc.error = err;
+  if (doc._state && dim !== undefined) {
+    doc._state[signal] = '-1';
+    doc._state[dim] = fromVal;
+  }
+  run_doc.options.internal = _savedInternal;
+};
 
   let matched = false;
 
@@ -239,6 +242,7 @@ CW._handleSignal = async function (run_doc) {
       // preserve full history — mark signal success
       if (!doc._state) doc._state = {};
       doc._state[signal] = '1';
+      doc._state[dim] = toVal;   // ← ADDed THIS LINE
 
       // also mark in input._state so _preflight picks it up for DB write
       run_doc.input._state[signal] = '1';

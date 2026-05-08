@@ -14,6 +14,10 @@ import "./auth.js";
 // BOOTSTRAP
 // ============================================================
 
+// ============================================================
+// BOOTSTRAP
+// ============================================================
+
 async function bootstrap() {
   const base = typeof window !== "undefined"
     ? window.location.origin
@@ -32,18 +36,30 @@ async function bootstrap() {
   // Init PocketBase adapter
   await globalThis.Adapter.pocketbase.init();
 
-
-
-
   // Restore auth session
   if (typeof authRestore === "function") authRestore();
 
-  // Load and compile Adapter records from PocketBase
-
+  // Load and compile submitted Adapter records from PocketBase
+  const adapterRun = await CW.run({
+  operation: 'select',
+  target_doctype: 'Adapter',
+  view: 'form',
+  options: { render: false }
+});
+  if (adapterRun.success) {
+    adapterRun.target.data = adapterRun.target.data.filter(a => a.docstatus === 1)
+    await CW._compileDocument(adapterRun)
+  }
 
   console.log("✅ bootstrap complete");
   globalThis.CW._booted = true;
   globalThis.dispatchEvent(new CustomEvent('CW:booted'));
+}
+
+if (typeof window !== "undefined") {
+  window.addEventListener("load", () => bootstrap());
+} else {
+  await bootstrap();
 }
 
 if (typeof window !== "undefined") {
