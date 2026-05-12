@@ -376,6 +376,21 @@ const readOnly =
       });
   }, [docName, field.fieldtype]);
 
+  // resolve Link display label on mount / when doc changes
+React.useEffect(() => {
+  if (field.fieldtype !== "Link" || !safeInitial) return;
+  if (safeInitial === titleField) return; // already a title (edge case)
+  run_doc.child({
+    operation: "select",
+    target_doctype: field.options,
+    query: { where: { name: safeInitial } },
+    options: { render: false },
+  }).then(cr => {
+    const rec = cr.target?.data?.[0];
+    if (rec) setSearch(rec[titleField] || rec.name);
+  });
+}, [docName, safeInitial, field.fieldtype]);
+
   const commitField = (val) => {
     if (val === run_doc.target?.data?.[0]?.[field.fieldname]) return;
     run_doc.input[field.fieldname] = val;
@@ -626,68 +641,60 @@ if (readOnly)
     );
   }
 
-  if (field.fieldtype === "Link") {
+ if (field.fieldtype === "Dynamic Link") {
+    field = { ...field, fieldtype: "Link", options: doc_[field.options] || "" };
+}
+
+if (field.fieldtype === "Link") {
     const loadOptions = async () => {
-      if (!field.options) return;
-      const cr = await run_doc.child({
-        operation: "select",
-        target_doctype: field.options,
-        query: { take: 50, select: ["name", titleField] },
-        options: { render: false },
-      });
-      if (cr.success) {
-        setLinkOpts(cr.target?.data || []);
-        setIsOpen(true);
-      }
+        if (!field.options) return;
+        const cr = await run_doc.child({
+            operation: "select",
+            target_doctype: field.options,
+            query: { take: 50, select: ["name", titleField] },
+            options: { render: false },
+            source_field: field.fieldname,
+        });
+        if (cr.success) {
+            const opts = cr.target?.data || [];
+            const current = opts.find(o => o.name === localVal);
+            if (current) setSearch(current[titleField] || current.name);
+            setLinkOpts(opts);
+            setIsOpen(true);
+        }
     };
     return ce(
-      "div",
-      { className: "position-relative" },
-      ce("input", {
-        type: "text",
-        className: "form-control",
-        value: searchText,
-        placeholder: `Select ${field.label || field.fieldname}...`,
-        readOnly,
-        onFocus: () => {
-          if (!readOnly) loadOptions();
-        },
-        onChange: (e) => setSearch(e.target.value),
-        onBlur: () => {
-          setTimeout(() => setIsOpen(false), 200);
-          if (searchText !== localVal) commitField(searchText);
-        },
-      }),
-      isOpen &&
-        linkOpts.length > 0 &&
-        ce(
-          "div",
-          {
-            className: "dropdown-menu show w-100",
-            style: { maxHeight: "200px", overflowY: "auto", zIndex: 1050 },
-          },
-          linkOpts
-            .filter((o) => o.name)
-            .map((o) =>
-              ce(
-                "button",
-                {
-                  key: o.name,
-                  className: "dropdown-item",
-                  type: "button",
-                  onMouseDown: (e) => {
-                    e.preventDefault();
-                    setSearch(o[titleField] || o.name);
-                    setIsOpen(false);
-                    commitField(o.name);
-                  },
-                },
-                o[titleField] || o.name,
-              ),
-            ),
-        ),
+        "div",
+        { className: "position-relative" },
+        ce("input", {
+            type: "text",
+            className: "form-control",
+            value: searchText,
+            placeholder: `Select ${field.label || field.fieldname}...`,
+            readOnly,
+            onFocus: () => { if (!readOnly) loadOptions(); },
+            onChange: (e) => setSearch(e.target.value),
+            onBlur: () => { setTimeout(() => setIsOpen(false), 200); },
+        }),
+        isOpen && linkOpts.length > 0 && ce(
+            "div",
+            { className: "dropdown-menu show w-100", style: { maxHeight: "200px", overflowY: "auto", zIndex: 1050 } },
+            linkOpts.filter(o => o.name).map(o =>
+                ce("button", {
+                    key: o.name,
+                    className: "dropdown-item",
+                    type: "button",
+                    onMouseDown: (e) => {
+                        e.preventDefault();
+                        setSearch(o[titleField] || o.name);
+                        setIsOpen(false);
+                        commitField(o.name);
+                    },
+                }, o[titleField] || o.name)
+            )
+        )
     );
-  }
+}
 
   if (field.fieldtype === "Relationship Panel")
     return ce(RelationshipPanel, { run_doc });
@@ -831,19 +838,8 @@ const MainForm = function ({ run_doc }) {
 
   const title = doc[schema.title_field || "name"] || doc.name || "New";
 
-  // fields and system fields
-  const schemaFields = schema.fields || [];
-  const systemFields = (CW._config.systemFields || [])
-    .filter((sf) => !sf.hidden && sf.fieldtype)
-    .filter((sf) => !schemaFields.find((f) => f.fieldname === sf.fieldname))
-    .map((sf) => ({
-      fieldname: sf.name,
-      fieldtype: sf.fieldtype,
-      label: sf.label || sf.name,
-      read_only: sf.read_only || 0,
-      in_list_view: sf.in_list_view ?? 0,
-    }));
-  const fields = [...schemaFields, ...systemFields];
+
+const fields = schema.fields || [];
   //============================================================
 
   const skipTypes = new Set(["Column Break", "Tab Break", "HTML"]);
@@ -1557,6 +1553,7 @@ const RelationshipPanel = function ({ run_doc }) {
       operation: "select",
       target_doctype: "Relationship",
       query: { where: { parent: docName, parentfield: "relationships" } },
+       view: "form",
       options: { render: false },
     });
     if (cr.success) setRels(cr.target?.data || []);

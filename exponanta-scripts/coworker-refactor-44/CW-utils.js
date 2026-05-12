@@ -491,26 +491,14 @@ function _resolveViewComponent(doctype, view, fallback_container) {
 function _getListFields(run_doc) {
   const doctype = run_doc.target_doctype || run_doc.source_doctype;
   const schema = CW.Schema?.[doctype];
+  const view = run_doc.view || 'list';
   const skipTypes = new Set(['Section Break','Column Break','Tab Break','HTML','Button','Table']);
+  const viewFlag = `in_${view}_view`;
 
-  const schemaFields = (schema?.fields || [])
-    .filter(f => f.in_list_view && !skipTypes.has(f.fieldtype));
+  const fields = (schema?.fields || [])
+    .filter(f => f[viewFlag] && !skipTypes.has(f.fieldtype));
 
-  const sysFields = (CW._config.systemFields || [])
-    .filter(sf => sf.in_list_view && sf.fieldtype && !skipTypes.has(sf.fieldtype))
-    .map(sf => ({
-      fieldname: sf.name,
-      fieldtype: sf.fieldtype,
-      label:     sf.label || sf.name,
-      read_only: sf.read_only ?? 1,
-    }));
-
-  const merged = [...schemaFields];
-  for (const sf of sysFields) {
-    if (!merged.find(f => f.fieldname === sf.fieldname)) merged.push(sf);
-  }
-
-  if (merged.length > 0) return merged;
+  if (fields.length > 0) return fields;
 
   // fallback — derive from actual data
   const data = run_doc.target?.data || [];
@@ -776,6 +764,69 @@ async function _logThreads(run_doc, entry) {
     console.warn('[CW] _logThreads failed:', err.message)
   }
 }
+
+
+// ─── getGridSelected ─────────────────────────────────────────────────────────
+// Returns array of selected names from run_doc.query.where.name.in
+
+function getGridSelected(run_doc) {
+  return run_doc.query?.where?.name?.in || [];
+}
+
+// ─── toggleSelected ──────────────────────────────────────────────────────────
+// Add or remove a single name from query.where.name.in
+
+function toggleSelected(run_doc, name) {
+  const current = getGridSelected(run_doc);
+  const next = current.includes(name)
+    ? current.filter(n => n !== name)
+    : [...current, name];
+  run_doc.query.where = next.length ? { name: { in: next } } : {};
+  CW._render(run_doc);
+}
+
+// ─── toggleAllSelected ───────────────────────────────────────────────────────
+// Select all rows or clear selection
+
+function toggleAllSelected(run_doc) {
+  const all = (run_doc.target?.data || []).map(r => r.name);
+  const current = getGridSelected(run_doc);
+  run_doc.query.where = current.length === all.length && all.length > 0
+    ? {}
+    : { name: { in: all } };
+  CW._render(run_doc);
+}
+
+// ─── clearSelected ───────────────────────────────────────────────────────────
+// Clear selection after bulk action fires
+
+function clearSelected(run_doc) {
+  run_doc.query.where = {};
+  CW._render(run_doc);
+}
+
+// ─── refetchGrid ─────────────────────────────────────────────────────────────
+// Fire new child select from current run_doc.query state (sort, page, filter)
+
+function refetchGrid(run_doc) {
+  return run_doc.child({
+    operation:      'select',
+    target_doctype: run_doc.target_doctype,
+    query:          { ...run_doc.query },
+    component:      run_doc.component,
+    container:      run_doc.container,
+    options:        { render: true },
+  });
+}
+
+// ─── assign to CW ────────────────────────────────────────────────────────────
+
+CW.getGridSelected   = getGridSelected;
+CW.toggleSelected    = toggleSelected;
+CW.toggleAllSelected = toggleAllSelected;
+CW.clearSelected     = clearSelected;
+CW.refetchGrid       = refetchGrid;
+
 
 // assign FSM helpers to CW — called by CW-run.js and CW-ui.js
 CW._getStateDef = _getStateDef;

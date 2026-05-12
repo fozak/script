@@ -158,9 +158,9 @@ systemFields: [
       doc.top_parent = p.top_parent || p.name;
     },
   },
-  { name: 'parent',      fetch: true, hidden: 0, fieldtype: 'Data', in_list_view: 1 },
-  { name: 'parenttype',  fetch: true, hidden: 0, fieldtype: 'Data', in_list_view: 1 },
-  { name: 'parentfield', fetch: true, hidden: 0, fieldtype: 'Data', in_list_view: 1 },
+{ name: 'parent',      fetch: true, hidden: 0, fieldtype: 'Data', in_list_view: 1, label: 'Parent' },
+{ name: 'parenttype',  fetch: true, hidden: 0, fieldtype: 'Data', in_list_view: 1, label: 'Parent Type' },
+{ name: 'parentfield', fetch: true, hidden: 0, fieldtype: 'Data', in_list_view: 1, label: 'Parent Field' },
   { name: 'idx',         fetch: true, hidden: 1 },
   {
     name: '_allowed', fetch: true,

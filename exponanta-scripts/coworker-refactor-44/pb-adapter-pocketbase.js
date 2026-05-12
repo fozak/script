@@ -9,17 +9,6 @@
 const PB_TOP = CW._config.topLevelFields;
 
 
-/*const PB_TOP = new Set([
-  "id",
-  "name",
-  "doctype",
-  "docstatus",
-  "owner",
-  "_allowed",
-  "_allowed_read",
-  "created",
-  "files",
-]);*/
 
 function _splitRecord(doc) {
   const top = {};

@@ -56,11 +56,6 @@ async function bootstrap() {
   globalThis.dispatchEvent(new CustomEvent('CW:booted'));
 }
 
-if (typeof window !== "undefined") {
-  window.addEventListener("load", () => bootstrap());
-} else {
-  await bootstrap();
-}
 
 if (typeof window !== "undefined") {
   window.addEventListener("load", () => bootstrap());

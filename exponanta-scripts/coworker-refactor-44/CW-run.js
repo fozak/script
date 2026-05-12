@@ -400,6 +400,9 @@ CW.run = async function (op) {
     operation:          op.operation,
     operation_original: op.operation,
     source_doctype:     op.source_doctype,
+
+    source_field:       op.source_field ?? null,
+
     target_doctype:     op.target_doctype,
     adapter:            op.adapter,
 
@@ -545,8 +548,9 @@ CW._handlers = {
       if (shouldFilter) {
         const viewFields   = schema.fields.filter(f => f.in_list_view).map(f => f.fieldname);
         const titleField   = schema.title_field ? [schema.title_field] : [];
-        const systemFields = (CW._config.systemFields || []).filter(sf => sf.fetch).map(sf => sf.name);
-        const fields       = [...new Set([...systemFields, ...titleField, ...viewFields])];
+        //const systemFields = (CW._config.systemFields || []).filter(sf => sf.fetch).map(sf => sf.name);
+        //const fields       = [...new Set([...systemFields, ...titleField, ...viewFields])];
+        const fields     = [...new Set([...titleField, ...viewFields])];
         run_doc.target.data = run_doc.target.data.map(item => {
           const filtered = {};
           fields.forEach(f => { if (f in item) filtered[f] = item[f]; });

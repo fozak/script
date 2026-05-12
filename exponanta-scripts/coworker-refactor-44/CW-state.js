@@ -172,27 +172,47 @@ Object.assign(globalThis.CW, {
   // compile sideEffects and rules strings in CW.Schema into live functions
   // call once at boot after CW.Schema is populated from db.json
   // after this no further eval of schema strings is needed anywhere
-  _compileSchemas: function () {
-    for (const [doctype, schema] of Object.entries(globalThis.CW.Schema || {})) {
-      for (const [dim, def] of Object.entries(schema._state || {})) {
-        for (const [key, fnStr] of Object.entries(def.sideEffects || {})) {
-          if (typeof fnStr === 'string') {
-            // skip adapter path keys — "0_1.Adapter.x.y" resolved at runtime, not compiled
-            if (key.includes('.') || !fnStr.includes('function')) continue;
-            try { def.sideEffects[key] = eval('(' + fnStr + ')'); }
-            catch(e) { console.error(`[CW] compile sideEffects[${doctype}][${dim}][${key}]`, e); }
-          }
+_compileSchemas: function () {
+  // compile sideEffects and rules
+  for (const [doctype, schema] of Object.entries(globalThis.CW.Schema || {})) {
+    for (const [dim, def] of Object.entries(schema._state || {})) {
+      for (const [key, fnStr] of Object.entries(def.sideEffects || {})) {
+        if (typeof fnStr === 'string') {
+          if (key.includes('.') || !fnStr.includes('function')) continue;
+          try { def.sideEffects[key] = eval('(' + fnStr + ')'); }
+          catch(e) { console.error(`[CW] compile sideEffects[${doctype}][${dim}][${key}]`, e); }
         }
-        for (const [key, fnStr] of Object.entries(def.rules || {})) {
-          if (typeof fnStr === 'string') {
-            try { def.rules[key] = eval('(' + fnStr + ')'); }
-            catch(e) { console.error(`[CW] compile rules[${doctype}][${dim}][${key}]`, e); }
-          }
+      }
+      for (const [key, fnStr] of Object.entries(def.rules || {})) {
+        if (typeof fnStr === 'string') {
+          try { def.rules[key] = eval('(' + fnStr + ')'); }
+          catch(e) { console.error(`[CW] compile rules[${doctype}][${dim}][${key}]`, e); }
         }
       }
     }
-    console.log('✅ CW.Schema compiled');
-  },
+
+    // merge systemFields into schema.fields
+const sysFields = (globalThis.CW._config?.systemFields || [])
+  .filter(sf => sf.fieldtype && !sf.hidden)
+  .map(sf => {
+    const field = {};
+    for (const [k, v] of Object.entries(sf)) {
+      if (k === 'name') field.fieldname = v;
+      else if (k === 'onWrite' || k === 'onCreate' || k === 'fetch') continue;
+      else field[k] = v;
+    }
+    field.fieldname = field.fieldname || sf.name;
+    return field;
+  });
+
+    const existing = new Set((schema.fields || []).map(f => f.fieldname));
+    for (const sf of sysFields) {
+      if (!existing.has(sf.fieldname)) schema.fields.push(sf);
+    }
+  }
+
+  console.log('✅ CW.Schema compiled');
+},
 
   compileAll: async function () {
     let compiled = 0;

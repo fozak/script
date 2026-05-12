@@ -1,4 +1,359 @@
-[
+[{
+ "actions": [],
+ "allow_import": 1,
+ "allow_rename": 1,
+ "autoname": "field:uom_name",
+ "creation": "2013-01-10 16:34:24",
+ "doctype": "Schema",
+ "document_type": "Setup",
+ "engine": "InnoDB",
+ "field_order": [
+  "uom_name",
+  "symbol",
+  "common_code",
+  "description",
+  "column_break_obth",
+  "enabled",
+  "must_be_whole_number"
+ ],
+ "fields": [
+  {
+   "fieldname": "uom_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "UOM Name",
+   "oldfieldname": "uom_name",
+   "oldfieldtype": "Data",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "default": "0",
+   "description": "Check this to disallow fractions. (for Nos)",
+   "fieldname": "must_be_whole_number",
+   "fieldtype": "Check",
+   "label": "Must be Whole Number"
+  },
+  {
+   "default": "1",
+   "fieldname": "enabled",
+   "fieldtype": "Check",
+   "label": "Enabled"
+  },
+  {
+   "fieldname": "symbol",
+   "fieldtype": "Data",
+   "label": "Symbol"
+  },
+  {
+   "description": "According to CEFACT/ICG/2010/IC013 or CEFACT/ICG/2010/IC010",
+   "fieldname": "common_code",
+   "fieldtype": "Data",
+   "label": "Common Code",
+   "length": 3
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Small Text",
+   "label": "Description"
+  },
+  {
+   "fieldname": "column_break_obth",
+   "fieldtype": "Column Break"
+  }
+ ],
+ "icon": "fa fa-compass",
+ "idx": 1,
+ "links": [],
+ "modified": "2024-03-27 13:10:57.375141",
+ "modified_by": "Administrator",
+ "module": "Setup",
+ "schema_name": "UOM",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "import": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Item Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Stock Manager"
+  },
+  {
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Stock User"
+  }
+ ],
+ "quick_entry": 1,
+ "show_name_in_global_search": 1,
+ "sort_field": "creation",
+ "sort_order": "ASC",
+ "states": [],
+ "translated_doctype": 1
+},
+  {
+ "actions": [],
+ "allow_import": 1,
+ "allow_rename": 1,
+ "autoname": "field:item_group_name",
+ "creation": "2013-03-28 10:35:29",
+ "default_view": "Tree",
+ "description": "An Item Group is a way to classify items based on types.",
+ "doctype": "Schema",
+ "document_type": "Setup",
+ "engine": "InnoDB",
+ "field_order": [
+  "gs",
+  "item_group_name",
+  "parent_item_group",
+  "is_group",
+  "image",
+  "column_break_5",
+  "defaults",
+  "item_group_defaults",
+  "sec_break_taxes",
+  "taxes",
+  "lft",
+  "old_parent",
+  "rgt"
+ ],
+ "fields": [
+  {
+   "fieldname": "gs",
+   "fieldtype": "Section Break",
+   "label": "General Settings"
+  },
+  {
+   "fieldname": "item_group_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Item Group Name",
+   "oldfieldname": "item_group_name",
+   "oldfieldtype": "Data",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "bold": 1,
+   "fieldname": "parent_item_group",
+   "fieldtype": "Link",
+   "ignore_user_permissions": 1,
+   "in_list_view": 1,
+   "label": "Parent Item Group",
+   "oldfieldname": "parent_item_group",
+   "oldfieldtype": "Link",
+   "options": "Item Group"
+  },
+  {
+   "bold": 1,
+   "default": "0",
+   "description": "Only leaf nodes are allowed in transaction",
+   "fieldname": "is_group",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Is Group",
+   "oldfieldname": "is_group",
+   "oldfieldtype": "Select"
+  },
+  {
+   "fieldname": "image",
+   "fieldtype": "Attach Image",
+   "hidden": 1,
+   "label": "Image"
+  },
+  {
+   "fieldname": "column_break_5",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "defaults",
+   "fieldtype": "Section Break",
+   "label": "Defaults"
+  },
+  {
+   "fieldname": "item_group_defaults",
+   "fieldtype": "Table",
+   "label": "Item Group Defaults",
+   "options": "Item Default"
+  },
+  {
+   "fieldname": "sec_break_taxes",
+   "fieldtype": "Section Break",
+   "label": "Item Tax"
+  },
+  {
+   "fieldname": "taxes",
+   "fieldtype": "Table",
+   "label": "Taxes",
+   "options": "Item Tax"
+  },
+  {
+   "fieldname": "lft",
+   "fieldtype": "Int",
+   "hidden": 1,
+   "label": "lft",
+   "no_copy": 1,
+   "oldfieldname": "lft",
+   "oldfieldtype": "Int",
+   "print_hide": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "rgt",
+   "fieldtype": "Int",
+   "hidden": 1,
+   "label": "rgt",
+   "no_copy": 1,
+   "oldfieldname": "rgt",
+   "oldfieldtype": "Int",
+   "print_hide": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "old_parent",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "ignore_user_permissions": 1,
+   "label": "old_parent",
+   "no_copy": 1,
+   "oldfieldname": "old_parent",
+   "oldfieldtype": "Data",
+   "options": "Item Group",
+   "print_hide": 1,
+   "report_hide": 1
+  }
+ ],
+ "icon": "fa fa-sitemap",
+ "idx": 1,
+ "image_field": "image",
+ "is_tree": 1,
+ "links": [],
+ "max_attachments": 3,
+ "modified": "2025-01-22 10:46:09.450137",
+ "modified_by": "Administrator",
+ "module": "Setup",
+ "schema_name": "Item Group",
+ "naming_rule": "By fieldname",
+ "nsm_parent_field": "parent_item_group",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Stock Manager"
+  },
+  {
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Stock User"
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "import": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Item Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Sales User"
+  },
+  {
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Purchase User"
+  },
+  {
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Accounts User"
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "report": 1,
+   "role": "Desk User",
+   "select": 1,
+   "share": 1
+  }
+ ],
+ "search_fields": "parent_item_group",
+ "show_name_in_global_search": 1,
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "translated_doctype": 1
+},
+  {
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2023-06-20 14:01:35.362233",
+ "doctype": "Schema",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "user"
+ ],
+ "fields": [
+  {
+   "fieldname": "user",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "User",
+   "options": "User",
+   "reqd": 1,
+   "search_index": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2024-03-27 13:10:13.951962",
+ "modified_by": "Administrator",
+ "module": "Utilities",
+ "name": "Portal User",
+ "schema_name": "Portal User",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": []
+},
   {
     "name": "AvailabilityRule",
     "schema_name": "AvailabilityRule",
@@ -3212,6 +3567,24 @@
         "label": "Top Parent Task",
         "hidden": 1,
         "read_only": 1
+      },
+      {
+        "fieldname": "share_doctype",
+        "fieldtype": "Link",
+        "in_list_view": 1,
+        "label": "Document Type",
+        "options": "DocType",
+        "reqd": 0,
+        "search_index": 1
+      },
+      {
+        "fieldname": "share_name",
+        "fieldtype": "Dynamic Link",
+        "in_list_view": 1,
+        "label": "Document Name",
+        "options": "share_doctype",
+        "reqd": 0,
+        "search_index": 1
       }
     ],
     "icon": "fa fa-check",
@@ -102172,7 +102545,6 @@
     "track_seen": 1
   },
   {
-    "_schema_doctype": "Item",
     "actions": [],
     "allow_import": 1,
     "allow_rename": 1,
@@ -103186,7 +103558,7 @@
     "sort_field": "creation",
     "sort_order": "DESC",
     "states": [],
-    "title_field": "item_name",
+    "title_field": "item_code",
     "track_changes": 1
   },
   {
@@ -128618,7 +128990,7 @@
         "in_list_view": 1,
         "in_standard_filter": 1,
         "label": "DocType",
-        "reqd": 1,
+        "reqd": 0,
         "unique": 1
       },
       {
@@ -128638,7 +129010,7 @@
         "in_standard_filter": 1,
         "label": "Module",
         "options": "Module",
-        "reqd": 1
+        "reqd": 0
       },
       {
         "fieldname": "description",

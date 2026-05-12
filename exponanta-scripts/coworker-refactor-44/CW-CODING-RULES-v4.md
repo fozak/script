@@ -1,3 +1,11 @@
+// ADD THIS 
+
+Rule: always fetch with view: "form" when the result needs FSM state (_state) for rendering buttons or badges.
+view: "list" strips fields to in_list_view only — use it for lists where you only need display columns.
+view: "form" returns all fields — use it whenever the component needs to compute transitions, render badges, or make decisions based on document state.
+
+
+
 # CW Component & Framework Coding Rules v3
 
 Rules for writing components, schemas, system fields, and framework extensions
