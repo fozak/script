@@ -302,14 +302,12 @@ const CWComponent = function ({
 // ============================================================
 
 const FieldRenderer = function ({ field, run_doc }) {
-
   const doc_ = run_doc.target?.data?.[0] || {};
   const readOnly =
     (doc_.docstatus ?? 0) !== 0 ||
     !["update", "create"].includes(run_doc.operation) ||
     field.read_only === 1;
   const initial = doc_[field.fieldname];
-  
   const safeInitial =
     initial === null || initial === undefined
       ? field.fieldtype === "Check"
@@ -335,19 +333,74 @@ const FieldRenderer = function ({ field, run_doc }) {
   const titleField = linkSchema?.title_field || "name";
   const [linkOpts, setLinkOpts] = React.useState([]);
   const [isOpen, setIsOpen] = React.useState(false);
-//== serach in Link
-const childRun  = CW._getChildRun(run_doc, field.fieldname);
-  const linkRec   = childRun?.target?.data?.[0];
-  const linkLabel = linkRec?.[titleField] || linkRec?.name || '';
-
   const [searchText, setSearch] = React.useState(
-    field.fieldtype === "Link" ? linkLabel || safeInitial || "" : "",
+    field.fieldtype === "Link" ? safeInitial || "" : "",
   );
-
   if (prevName !== doc_.name && field.fieldtype === "Link")
     setSearch(safeInitial || "");
 
   const childSchema = CW.Schema?.[field.options];
+  /*const colFields = React.useMemo(() => {
+    if (field.fieldtype !== "Table") return [];
+    const lf = childSchema?.fields?.filter((f) => f.in_list_view) || [];
+    return lf.length > 0
+      ? lf
+      : childSchema?.fields
+          ?.filter(
+            (f) =>
+              ![
+                "Section Break",
+                "Column Break",
+                "Tab Break",
+                "HTML",
+                "Button",
+              ].includes(f.fieldtype),
+          )
+          ?.slice(0, 5) || [];
+  }, [field.options, field.fieldtype]);
+  const [childData, setChildData] = React.useState([]);
+  const [childLoaded, setChildLoaded] = React.useState(false);
+  const docName = doc_.name;
+
+  React.useEffect(() => {
+    if (
+      field.fieldtype !== "Table" ||
+      !field.options ||
+      !docName ||
+      childLoaded
+    )
+      return;
+    setChildLoaded(true);
+run_doc.child({
+  operation: "select",
+  target_doctype: field.options,
+  query: { where: { parent: docName } },
+  options: { render: false },
+  source_field: field.fieldname, //<-added
+})
+      .then((cr) => {
+        if (cr.success) setChildData(cr.target?.data || []);
+      });
+  }, [docName, field.fieldtype]);*/
+
+  // resolve Link display label on mount / when doc changes
+
+  const docName = doc_.name;
+  React.useEffect(() => {
+    if (field.fieldtype !== "Link" || !safeInitial) return;
+    if (safeInitial === titleField) return; // already a title (edge case)
+run_doc.child({
+  operation: "select",
+  target_doctype: field.options,
+  query: { where: { name: safeInitial } },
+  options: { render: false },
+  source_field: field.fieldname,  // ← add
+})
+      .then((cr) => {
+        const rec = cr.target?.data?.[0];
+        if (rec) setSearch(rec[titleField] || rec.name);
+      });
+  }, [docName, safeInitial, field.fieldtype]);
 
   const commitField = (val) => {
     if (val === run_doc.target?.data?.[0]?.[field.fieldname]) return;
@@ -552,7 +605,6 @@ if (field.fieldtype === "Table")
 
   if (field.fieldtype === "Link") {
     const loadOptions = async () => {
-      if (isOpen) return;  // already open — return
       if (!field.options) return;
       const cr = await run_doc.child({
         operation: "select",
@@ -617,8 +669,8 @@ if (field.fieldtype === "Table")
     );
   }
 
-if (field.fieldtype === "Relationship Panel")
-    return ce(RelationshipPanel, { run_doc, field });
+  if (field.fieldtype === "Relationship Panel")
+    return ce(RelationshipPanel, { run_doc });
 
   return ce("input", {
     type: "text",
@@ -737,7 +789,6 @@ const FormActions = function ({ run_doc }) {
 // ============================================================
 
 const MainForm = function ({ run_doc }) {
-  console.log('MainForm render', 'time:', Date.now());
   const doctype = run_doc.target_doctype || run_doc.source_doctype;
   const schema = CW.Schema?.[doctype];
   const doc = run_doc.target?.data?.[0] || {};
@@ -816,9 +867,9 @@ const MainForm = function ({ run_doc }) {
                   {
                     key: f.fieldname,
                     className:
-              ["Relationship Panel", "Table"].includes(f.fieldtype)
-  ? "col-12"
-  : "col-md-6",
+                      f.fieldtype === "Relationship Panel"
+                        ? "col-12"
+                        : "col-md-6",
                   },
                   f.label &&
                     f.fieldtype !== "Relationship Panel" &&
@@ -1870,14 +1921,8 @@ const GridToolbar = function ({ run_doc, field }) {
 //===========================Grid===============================
 
 const UniversalGrid = function ({ run_doc, field }) {
-  console.log('[UniversalGrid render]', field?.fieldname, 'time:', Date.now());
 
    if (!run_doc) return null;
-
-   const parentRun = run_doc;  //added
-  
-
-  run_doc = CW._getChildRun(run_doc, field?.fieldname) || run_doc
   const mode = !field
     ? "MainGrid"
     : field.fieldtype === "Table"
@@ -1895,8 +1940,6 @@ const UniversalGrid = function ({ run_doc, field }) {
   const allChecked = selected.length === rows.length && rows.length > 0;
 
   const [hoveredRow, setHoveredRow] = React.useState(null);
-
-    const [, force] = React.useReducer(x => x + 1, 0);  // ← add here
 
   const cv = (val) => {
     if (val === null || val === undefined) return "";
@@ -1925,12 +1968,9 @@ const UniversalGrid = function ({ run_doc, field }) {
         {
           key: "__chk",
           style: { width: 36 },
-          
-
           onClick: (e) => {
             e.stopPropagation();
             CW.toggleSelected(run_doc, row.name);
-            force();
           },
         },
         isHovered || isSelected
@@ -1958,8 +1998,6 @@ const UniversalGrid = function ({ run_doc, field }) {
                       query: { where: { name: row.name } },
                       view: "form",
                       options: { render: true },
-                      //component: run_doc.component,
-//container: run_doc.container,
                     })
                 : undefined,
           },
@@ -2015,7 +2053,6 @@ const UniversalGrid = function ({ run_doc, field }) {
               {
                 key: "__chk",
                 style: { width: 36 },
-                //onClick: () => CW.toggleAllSelected(parentRun),  // ← parentRun
                 onClick: () => CW.toggleAllSelected(run_doc),
               },
               allChecked

@@ -1,0 +1,64 @@
+I mean my logically mock the steps
+
+May 17
+User clicks checkbox td in Table mode
+onClick fires: CW.toggleSelected(run_doc, row.name)
+run_doc at this point is the child run (reassigned at top of UniversalGrid)
+toggleSelected mutates run_doc.query.where.name.in ✅
+toggleSelected calls CW._render(run_doc) — run_doc is child run
+Child run has component: 'MainForm', container: 'right_pane' (from _expand)
+_render finds globalThis.MainForm — renders it to right_pane
+MainForm receives child run as run_doc prop
+MainForm reads run_doc.target.data[0] — gets child record (Relationship row)
+MainForm renders child record as a form in right_pane
+User sees row form opening ❌
+That's the complete chain. Step 6 is the root cause — child run inherited component: 'MainForm' from _expand.
+
+prove that I open mainform by this
+
+May 17
+javascript
+// intercept _render to prove it opens MainForm with child run
+const orig = CW._render;
+CW._render = function(run_doc) {
+  console.log('_render:', run_doc?.component, run_doc?.target_doctype, run_doc?.target?.data?.[0]?.name);
+  return orig.call(this, run_doc);
+};
+Click checkbox. If output shows MainForm  Relationship  relationshepp5d — proven.
+
+by showing code
+
+May 17
+Looking at CW._render:
+
+javascript
+CW._render = function (run_doc) {
+  if (!run_doc?.component || !run_doc?.container) return;  // ← would return if null
+  const Comp = globalThis[run_doc.component];  // ← globalThis['MainForm']
+  if (!Comp) return;
+  // ...
+  CW._getOrCreateRoot(run_doc.container)  // ← right_pane
+    ?.render(ce(Comp, { run_doc, data: run_doc.target?.data || [] }));  // ← MainForm with child run
+};
+And _expand:
+
+javascript
+run_doc.child({
+  // ...
+  component: run_doc.component,   // ← 'MainForm' from parent
+  container: run_doc.container,   // ← 'right_pane' from parent
+});
+Child run gets component: 'MainForm', container: 'right_pane' from parent. toggleSelected calls _render(childRun). _render renders MainForm to right_pane with child run data. Proven by code.
+
+if its true why it works properly in MainGrid mode
+
+10:35 AM
+In MainGrid mode field is undefined → _getChildRun returns null → run_doc stays as the grid run (no reassignment).
+
+The grid run has component: 'UniversalGrid', container: 'right_pane', target.data = grid rows.
+
+toggleSelected(run_doc, name) → _render(run_doc) → renders UniversalGrid to right_pane with grid run. Same grid, updated selection. ✅
+
+In Table mode run_doc IS reassigned to child run with component: 'MainForm' → _render renders form. ❌
+
+Same code path, different run_doc values. Proven.

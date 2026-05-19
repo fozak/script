@@ -1,0 +1,49 @@
+Role-base documents visibility. Now user and roles assignment is done via config. But this is basically query over all schema.permissions like for User 
+
+"permissions": [
+      {
+        "create": 1,
+        "delete": 1,
+        "read": 1,
+        "write": 1,
+        "role": "System Manager",
+as i use frappe schema
+
+2:28 PM
+Yes. Frappe's permissions array on each schema is exactly the default_allowed_read mechanism you need — already in the schema format you use.
+
+What you have in Frappe schema format:
+
+json
+{
+  "schema_name": "Event",
+  "permissions": [
+    { "role": "System Manager", "read": 1, "write": 1, "create": 1, "delete": 1 },
+    { "role": "Event Attendee", "read": 1 },
+    { "role": "Is Public",      "read": 1 }
+  ]
+}
+What _preflight.onCreate should do with it:
+
+javascript
+// read schema.permissions
+const perms = schema.permissions || []
+const allowed      = []
+const allowedRead  = []
+
+for (const p of perms) {
+  const roleId = generateId('Role', p.role)
+  if (p.write || p.create || p.delete) allowed.push(roleId)
+  else if (p.read)                     allowedRead.push(roleId)
+}
+
+// merge with owner
+run_doc.input._allowed      = [...new Set([owner, ...allowed,     ...(run_doc.input._allowed      || [])])]
+run_doc.input._allowed_read = [...new Set([...allowedRead,        ...(run_doc.input._allowed_read || [])])]
+Why this is the right approach:
+
+Schema already declares permissions in Frappe format — no new config needed
+_preflight reads it at create time — one place, automatic
+generateId('Role', 'Event Attendee') produces the same deterministic ID used in role assignment
+item_users view already resolves role membership at query time
+The missing piece is just _preflight.onCreate reading schema.permissions. Everything else is already wired.

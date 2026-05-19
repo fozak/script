@@ -1055,277 +1055,275 @@
     ]
   },
   {
-  "name": "Event",
-  "schema_name": "Event",
-  "doctype": "Schema",
-  "is_submittable": 1,
-  "is_public": 1,
-  "title_field": "title",
-  "autoname": "generateId",
-  "view_components": {
-    "list": {
-      "component": "UniversalGrid",
-      "container": "right_pane"
-    },
-    "form": {
-      "component": "MainForm",
-      "container": "right_pane"
-    }
-  },
-  "fields": [
-    {
-      "fieldname": "name",
-      "fieldtype": "Data",
-      "label": "Name",
-      "in_list_view": 1,
-      "read_only": 1,
-      "hidden": 0
-    },
-    {
-      "fieldname": "section_identity",
-      "fieldtype": "Section Break",
-      "label": "Event"
-    },
-    {
-      "fieldname": "title",
-      "fieldtype": "Data",
-      "label": "Title",
-      "reqd": 1,
-      "in_list_view": 1
-    },
-    {
-      "fieldname": "deck",
-      "fieldtype": "Text",
-      "label": "Tagline"
-    },
-    {
-      "fieldname": "kicker",
-      "fieldtype": "Data",
-      "label": "Kicker"
-    },
-    {
-      "fieldname": "featured",
-      "fieldtype": "Check",
-      "label": "Featured"
-    },
-    {
-      "fieldname": "lang",
-      "fieldtype": "Select",
-      "label": "Language",
-      "options": "en\nru\nes"
-    },
-    {
-      "fieldname": "section_classify",
-      "fieldtype": "Section Break",
-      "label": "Classification"
-    },
-    {
-      "fieldname": "category",
-      "fieldtype": "Data",
-      "label": "Category"
-    },
-    {
-      "fieldname": "content_category",
-      "fieldtype": "Data",
-      "label": "Content Category"
-    },
-    {
-      "fieldname": "audience",
-      "fieldtype": "Data",
-      "label": "Primary Audience"
-    },
-    {
-      "fieldname": "tags",
-      "fieldtype": "Data",
-      "label": "Tags"
-    },
-    {
-      "fieldname": "section_logistics",
-      "fieldtype": "Section Break",
-      "label": "Logistics"
-    },
-    {
-      "fieldname": "event_slot",
-      "fieldtype": "Data",
-      "label": "Date/Time Slot",
-      "component": "./slot-picker.js",
-      "display": "SlotBadge",
-      "reqd": 1,
-      "in_list_view": 1
-    },
-    {
-      "fieldname": "availability_rule",
-      "fieldtype": "Link",
-      "label": "Availability Rule",
-      "options": "AvailabilityRule",
-      "reqd": 0
-    },
-    {
-      "fieldname": "format",
-      "fieldtype": "Select",
-      "label": "Format",
-      "options": "in-person\nonline\nhybrid"
-    },
-    {
-      "fieldname": "docsubtype",
-      "fieldtype": "Select",
-      "label": "Type",
-      "options": "conference\nmeetup\nworkshop\nwebinar\n1-1\nother",
-      "reqd": 0,
-      "in_list_view": 1
-    },
-    {
-      "fieldname": "location",
-      "fieldtype": "Data",
-      "label": "Location"
-    },
-    {
-      "fieldname": "city",
-      "fieldtype": "Data",
-      "label": "City"
-    },
-    {
-      "fieldname": "region",
-      "fieldtype": "Data",
-      "label": "Region"
-    },
-    {
-      "fieldname": "country",
-      "fieldtype": "Data",
-      "label": "Country"
-    },
-    {
-      "fieldname": "virtual_url",
-      "fieldtype": "Data",
-      "label": "Virtual URL"
-    },
-    {
-      "fieldname": "price",
-      "fieldtype": "Currency",
-      "label": "Price"
-    },
-    {
-      "fieldname": "currency",
-      "fieldtype": "Data",
-      "label": "Currency"
-    },
-    {
-      "fieldname": "capacity",
-      "fieldtype": "Int",
-      "label": "Capacity"
-    },
-    {
-      "fieldname": "section_settings",
-      "fieldtype": "Section Break",
-      "label": "Settings"
-    },
-    {
-      "fieldname": "allow_guest_booking",
-      "fieldtype": "Check",
-      "label": "Allow Guest Booking"
-    },
-    {
-      "fieldname": "guest_verification",
-      "fieldtype": "Select",
-      "label": "Guest Verification",
-      "options": "none\nemail\napproval"
-    },
-    {
-      "fieldname": "section_content",
-      "fieldtype": "Section Break",
-      "label": "Content"
-    },
-    {
-      "fieldname": "body",
-      "fieldtype": "Text",
-      "label": "Description"
-    },
-    {
-      "fieldname": "highlights",
-      "fieldtype": "Code",
-      "label": "Highlights",
-      "options": "JSON"
-    },
-    {
-      "fieldname": "photos",
-      "fieldtype": "Code",
-      "label": "Photos",
-      "options": "JSON"
-    },
-    {
-      "fieldname": "section_web",
-      "fieldtype": "Section Break",
-      "label": "Web Page"
-    },
-    {
-      "fieldname": "webpage",
-      "fieldtype": "Table",
-      "options": "WebPage",
-      "label": "Web Page"
-    },
-    {
-      "fieldname": "section_people",
-      "fieldtype": "Section Break",
-      "label": "People & Organizations"
-    },
-    {
-      "fieldname": "relationships",
-      "fieldtype": "Relationship Panel",
-      "label": "Relationships"
-    }
-  ],
-  "permissions": [
-    {
-      "role": "Event Manager",
-      "read": 1,
-      "write": 1,
-      "create": 1,
-      "delete": 1
-    }
-  ],
-  "relationship_roles": {
-  "User": {
-    "Organizer":       { "transitions": ["0_1", "0_2", "1_2", "2_0"] },
-    "Attendee":        { "transitions": ["0_2", "1_2"] },
-    "Speaker":         { "transitions": ["0_2", "1_2"] },
-    "Volunteer":       { "transitions": ["0_2", "1_2"] },
-    "Sponsor Contact": { "transitions": ["0_2", "1_2"] }
-  }
-},
-  "_state": {
-    "0": {
-      "values": [0, 1, 2],
-      "options": ["Draft", "Published", "Archived"],
-      "transitions": {
-        "0": [1, 2],
-        "1": [2],
-        "2": [0]
+    "name": "Event",
+    "schema_name": "Event",
+    "doctype": "Schema",
+    "is_submittable": 1,
+    "title_field": "title",
+    "autoname": "generateId",
+    "view_components": {
+      "list": {
+        "component": "MainGrid",
+        "container": "left_pane"
       },
-      "labels": {
-        "0_1": "Publish",
-        "0_2": "Archive",
-        "1_2": "Archive",
-        "2_0": "Restore"
-      },
-      "views": {
-        "0": "edit",
-        "1": "read",
-        "2": "read"
-      },
-      "requires": {
-        "0_1": {
-          "is_submittable": 1
-        }
-      },
-      "sideEffects": {},
-      "rules": {},
-      "primary": {
-        "0_1": true
+      "form": {
+        "component": "MainForm",
+        "container": "right_pane"
       }
-    }
+    },
+    "fields": [
+      {
+        "fieldname": "name",
+        "fieldtype": "Data",
+        "label": "Name",
+        "in_list_view": 1,
+        "read_only": 1,
+        "hidden": 0
+      },
+      {
+        "fieldname": "section_identity",
+        "fieldtype": "Section Break",
+        "label": "Event"
+      },
+      {
+        "fieldname": "title",
+        "fieldtype": "Data",
+        "label": "Title",
+        "reqd": 1,
+        "in_list_view": 1
+      },
+      {
+        "fieldname": "deck",
+        "fieldtype": "Text",
+        "label": "Tagline"
+      },
+      {
+        "fieldname": "kicker",
+        "fieldtype": "Data",
+        "label": "Kicker"
+      },
+      {
+        "fieldname": "featured",
+        "fieldtype": "Check",
+        "label": "Featured"
+      },
+      {
+        "fieldname": "lang",
+        "fieldtype": "Select",
+        "label": "Language",
+        "options": "en\nru\nes"
+      },
+      {
+        "fieldname": "section_classify",
+        "fieldtype": "Section Break",
+        "label": "Classification"
+      },
+      {
+        "fieldname": "category",
+        "fieldtype": "Data",
+        "label": "Category"
+      },
+      {
+        "fieldname": "content_category",
+        "fieldtype": "Data",
+        "label": "Content Category"
+      },
+      {
+        "fieldname": "audience",
+        "fieldtype": "Data",
+        "label": "Primary Audience"
+      },
+      {
+        "fieldname": "tags",
+        "fieldtype": "Data",
+        "label": "Tags"
+      },
+      {
+        "fieldname": "section_logistics",
+        "fieldtype": "Section Break",
+        "label": "Logistics"
+      },
+      {
+        "fieldname": "event_slot",
+        "fieldtype": "Data",
+        "label": "Date/Time Slot",
+        "component": "./slot-picker.js",
+        "display": "SlotBadge",
+        "reqd": 1,
+        "in_list_view": 1
+      },
+      {
+        "fieldname": "availability_rule",
+        "fieldtype": "Link",
+        "label": "Availability Rule",
+        "options": "AvailabilityRule",
+        "reqd": 0
+      },
+      {
+        "fieldname": "format",
+        "fieldtype": "Select",
+        "label": "Format",
+        "options": "in-person\nonline\nhybrid"
+      },
+      {
+        "fieldname": "docsubtype",
+        "fieldtype": "Select",
+        "label": "Type",
+        "options": "conference\nmeetup\nworkshop\nwebinar\n1-1\nother",
+        "reqd": 0,
+        "in_list_view": 1
+      },
+      {
+        "fieldname": "location",
+        "fieldtype": "Data",
+        "label": "Location"
+      },
+      {
+        "fieldname": "city",
+        "fieldtype": "Data",
+        "label": "City"
+      },
+      {
+        "fieldname": "region",
+        "fieldtype": "Data",
+        "label": "Region"
+      },
+      {
+        "fieldname": "country",
+        "fieldtype": "Data",
+        "label": "Country"
+      },
+      {
+        "fieldname": "virtual_url",
+        "fieldtype": "Data",
+        "label": "Virtual URL"
+      },
+      {
+        "fieldname": "price",
+        "fieldtype": "Currency",
+        "label": "Price"
+      },
+      {
+        "fieldname": "currency",
+        "fieldtype": "Data",
+        "label": "Currency"
+      },
+      {
+        "fieldname": "capacity",
+        "fieldtype": "Int",
+        "label": "Capacity"
+      },
+      {
+        "fieldname": "section_settings",
+        "fieldtype": "Section Break",
+        "label": "Settings"
+      },
+      {
+        "fieldname": "allow_guest_booking",
+        "fieldtype": "Check",
+        "label": "Allow Guest Booking"
+      },
+      {
+        "fieldname": "guest_verification",
+        "fieldtype": "Select",
+        "label": "Guest Verification",
+        "options": "none\nemail\napproval"
+      },
+      {
+        "fieldname": "section_content",
+        "fieldtype": "Section Break",
+        "label": "Content"
+      },
+      {
+        "fieldname": "body",
+        "fieldtype": "Text",
+        "label": "Description"
+      },
+      {
+        "fieldname": "highlights",
+        "fieldtype": "Code",
+        "label": "Highlights",
+        "options": "JSON"
+      },
+      {
+        "fieldname": "photos",
+        "fieldtype": "Code",
+        "label": "Photos",
+        "options": "JSON"
+      },
+      {
+        "fieldname": "section_web",
+        "fieldtype": "Section Break",
+        "label": "Web Page"
+      },
+      {
+        "fieldname": "webpage",
+        "fieldtype": "Table",
+        "options": "WebPage",
+        "label": "Web Page"
+      },
+      {
+        "fieldname": "section_people",
+        "fieldtype": "Section Break",
+        "label": "People & Organizations"
+      },
+      {
+        "fieldname": "relationships",
+        "fieldtype": "Relationship Panel",
+        "label": "Relationships"
+      }
+    ],
+    "_state": {
+      "0": {
+        "values": [
+          0,
+          1,
+          2
+        ],
+        "options": [
+          "Draft",
+          "Published",
+          "Archived"
+        ],
+        "transitions": {
+          "0": [
+            1,
+            2
+          ],
+          "1": [
+            2
+          ],
+          "2": [
+            0
+          ]
+        },
+        "labels": {
+          "0_1": "Publish",
+          "0_2": "Archive",
+          "1_2": "Archive",
+          "2_0": "Restore"
+        },
+        "views": {
+          "0": "edit",
+          "1": "read",
+          "2": "read"
+        },
+        "requires": {
+          "0_1": {
+            "is_submittable": 1
+          }
+        },
+        "sideEffects": {},
+        "rules": {},
+        "primary": {
+          "0_1": true
+        }
+      }
+    },
+    "field_order": [
+      "name"
+    ]
   },
-  "field_order": ["name"]
-},
   {
     "doctype": "Schema",
     "schema_name": "SystemSchema",
@@ -126690,49 +126688,62 @@
       }
     ],
     "_state": {
-  "1": {
-    "name": "_docstatus",
-    "fieldname": "docstatus",
-    "values": [0, 1, 2],
-    "options": ["Draft", "Confirmed", "Cancelled"],
-    "transitions": {
-      "0": [1, 2],
-      "1": [2],
-      "2": [0]
+      "1": {
+        "name": "_docstatus",
+        "fieldname": "docstatus",
+        "values": [
+          0,
+          1,
+          2
+        ],
+        "options": [
+          "Draft",
+          "Submitted",
+          "Cancelled"
+        ],
+        "transitions": {
+          "0": [
+            1,
+            2
+          ],
+          "1": [
+            2
+          ],
+          "2": [
+            0
+          ]
+        },
+        "requires": {
+          "0_1": {
+            "is_submittable": 1
+          },
+          "1_2": {
+            "is_submittable": 1
+          },
+          "2_0": {
+            "is_submittable": 1
+          }
+        },
+        "labels": {
+          "0_1": "Accept",
+          "0_2": "Reject",
+          "1_2": "Cancel",
+          "2_0": "Reopen"
+        },
+        "confirm": {
+          "0_2": "Reject this relationship?",
+          "1_2": "Cancel this relationship?"
+        },
+        "sideEffects": {
+          "0_1": "async function(run_doc) { var rec = run_doc.target && run_doc.target.data && run_doc.target.data[0]; if (!rec) return; var access = (CW._config.relationshipAccessMap && CW._config.relationshipAccessMap[rec.parenttype] && CW._config.relationshipAccessMap[rec.parenttype][rec.related_doctype] && CW._config.relationshipAccessMap[rec.parenttype][rec.related_doctype][rec.type]) || 'none'; if (access === 'none' || !rec.related_name || !rec.parent) return; var selRun = await run_doc.child({ operation: 'select', target_doctype: rec.parenttype, query: { where: { name: rec.parent } }, options: { render: false } }); var pDoc = selRun.target && selRun.target.data && selRun.target.data[0]; if (!pDoc) return; var field = access === 'write' ? '_allowed' : '_allowed_read'; var cur = pDoc[field] || []; if (cur.includes(rec.related_name)) return; var updateRun = await run_doc.child({ operation: 'update', target_doctype: rec.parenttype, query: { where: { name: rec.parent } }, options: { render: false, internal: true } }); updateRun.target = { data: [pDoc] }; if (access === 'write') { updateRun.input._allowed = cur.concat([rec.related_name]); } else { updateRun.input._allowed_read = (pDoc._allowed_read || []).concat([rec.related_name]); } await CW.controller(updateRun); }",
+          "1_2": "async function(run_doc) { var rec = run_doc.target && run_doc.target.data && run_doc.target.data[0]; if (!rec) return; var access = (CW._config.relationshipAccessMap && CW._config.relationshipAccessMap[rec.parenttype] && CW._config.relationshipAccessMap[rec.parenttype][rec.related_doctype] && CW._config.relationshipAccessMap[rec.parenttype][rec.related_doctype][rec.type]) || 'none'; if (access === 'none' || !rec.related_name || !rec.parent) return; var selRun = await run_doc.child({ operation: 'select', target_doctype: rec.parenttype, query: { where: { name: rec.parent } }, options: { render: false } }); var pDoc = selRun.target && selRun.target.data && selRun.target.data[0]; if (!pDoc) return; var field = access === 'write' ? '_allowed' : '_allowed_read'; var updateRun = await run_doc.child({ operation: 'update', target_doctype: rec.parenttype, query: { where: { name: rec.parent } }, options: { render: false, internal: true } }); updateRun.target = { data: [pDoc] }; if (access === 'write') { updateRun.input._allowed = (pDoc._allowed || []).filter(function(id) { return id !== rec.related_name; }); } else { updateRun.input._allowed_read = (pDoc._allowed_read || []).filter(function(id) { return id !== rec.related_name; }); } await CW.controller(updateRun); }",
+          "2_0": "async function(run_doc) { var rec = run_doc.target && run_doc.target.data && run_doc.target.data[0]; if (!rec) return; var access = (CW._config.relationshipAccessMap && CW._config.relationshipAccessMap[rec.parenttype] && CW._config.relationshipAccessMap[rec.parenttype][rec.related_doctype] && CW._config.relationshipAccessMap[rec.parenttype][rec.related_doctype][rec.type]) || 'none'; if (access === 'none' || !rec.related_name || !rec.parent) return; var selRun = await run_doc.child({ operation: 'select', target_doctype: rec.parenttype, query: { where: { name: rec.parent } }, options: { render: false } }); var pDoc = selRun.target && selRun.target.data && selRun.target.data[0]; if (!pDoc) return; var field = access === 'write' ? '_allowed' : '_allowed_read'; var cur = pDoc[field] || []; if (cur.includes(rec.related_name)) return; var updateRun = await run_doc.child({ operation: 'update', target_doctype: rec.parenttype, query: { where: { name: rec.parent } }, options: { render: false, internal: true } }); updateRun.target = { data: [pDoc] }; if (access === 'write') { updateRun.input._allowed = cur.concat([rec.related_name]); } else { updateRun.input._allowed_read = (pDoc._allowed_read || []).concat([rec.related_name]); } await CW.controller(updateRun); }"
+        }
+      }
     },
-    "requires": {
-      "0_1": { "is_submittable": 1 },
-      "1_2": { "is_submittable": 1 },
-      "2_0": { "is_submittable": 1 }
-    },
-    "labels": {
-      "0_1": "Accept",
-      "0_2": "Reject",
-      "1_2": "Cancel",
-      "2_0": "Reopen"
-    },
-    "rules": {},
-    "confirm": {
-      "0_2": "Reject this relationship?",
-      "1_2": "Cancel this registration?"
-    },
-    "primary": {
-      "0_1": true
-    },
-    "sideEffects": {
-      "0_1": "async function(run_doc) { var rec = run_doc.target && run_doc.target.data && run_doc.target.data[0]; if (!rec) return; var access = (CW._config.relationshipAccessMap && CW._config.relationshipAccessMap[rec.parenttype] && CW._config.relationshipAccessMap[rec.parenttype][rec.related_doctype] && CW._config.relationshipAccessMap[rec.parenttype][rec.related_doctype][rec.type]) || 'none'; if (access === 'none' || !rec.related_name || !rec.parent) return; var selRun = await run_doc.child({ operation: 'select', target_doctype: rec.parenttype, query: { where: { name: rec.parent } }, options: { render: false } }); var pDoc = selRun.target && selRun.target.data && selRun.target.data[0]; if (!pDoc) return; var field = access === 'write' ? '_allowed' : '_allowed_read'; var cur = pDoc[field] || []; if (cur.includes(rec.related_name)) return; var updateRun = await run_doc.child({ operation: 'update', target_doctype: rec.parenttype, query: { where: { name: rec.parent } }, options: { render: false, internal: true } }); updateRun.target = { data: [pDoc] }; if (access === 'write') { updateRun.input._allowed = cur.concat([rec.related_name]); } else { updateRun.input._allowed_read = (pDoc._allowed_read || []).concat([rec.related_name]); } await CW.controller(updateRun); }",
-      "1_2": "async function(run_doc) { var rec = run_doc.target && run_doc.target.data && run_doc.target.data[0]; if (!rec) return; var access = (CW._config.relationshipAccessMap && CW._config.relationshipAccessMap[rec.parenttype] && CW._config.relationshipAccessMap[rec.parenttype][rec.related_doctype] && CW._config.relationshipAccessMap[rec.parenttype][rec.related_doctype][rec.type]) || 'none'; if (access === 'none' || !rec.related_name || !rec.parent) return; var selRun = await run_doc.child({ operation: 'select', target_doctype: rec.parenttype, query: { where: { name: rec.parent } }, options: { render: false } }); var pDoc = selRun.target && selRun.target.data && selRun.target.data[0]; if (!pDoc) return; var field = access === 'write' ? '_allowed' : '_allowed_read'; var updateRun = await run_doc.child({ operation: 'update', target_doctype: rec.parenttype, query: { where: { name: rec.parent } }, options: { render: false, internal: true } }); updateRun.target = { data: [pDoc] }; if (access === 'write') { updateRun.input._allowed = (pDoc._allowed || []).filter(function(id) { return id !== rec.related_name; }); } else { updateRun.input._allowed_read = (pDoc._allowed_read || []).filter(function(id) { return id !== rec.related_name; }); } await CW.controller(updateRun); }",
-      "2_0": "async function(run_doc) { var rec = run_doc.target && run_doc.target.data && run_doc.target.data[0]; if (!rec) return; var access = (CW._config.relationshipAccessMap && CW._config.relationshipAccessMap[rec.parenttype] && CW._config.relationshipAccessMap[rec.parenttype][rec.related_doctype] && CW._config.relationshipAccessMap[rec.parenttype][rec.related_doctype][rec.type]) || 'none'; if (access === 'none' || !rec.related_name || !rec.parent) return; var selRun = await run_doc.child({ operation: 'select', target_doctype: rec.parenttype, query: { where: { name: rec.parent } }, options: { render: false } }); var pDoc = selRun.target && selRun.target.data && selRun.target.data[0]; if (!pDoc) return; var field = access === 'write' ? '_allowed' : '_allowed_read'; var cur = pDoc[field] || []; if (cur.includes(rec.related_name)) return; var updateRun = await run_doc.child({ operation: 'update', target_doctype: rec.parenttype, query: { where: { name: rec.parent } }, options: { render: false, internal: true } }); updateRun.target = { data: [pDoc] }; if (access === 'write') { updateRun.input._allowed = cur.concat([rec.related_name]); } else { updateRun.input._allowed_read = (pDoc._allowed_read || []).concat([rec.related_name]); } await CW.controller(updateRun); }"
-    }
-  }
-},
-   "field_order": [
-  "name",
-  "related_title",
-  "related_doctype",
-  "related_name",
-  "type"
-]
+    "field_order": [
+      "name"
+    ]
   },
   {
     "doctype": "Relationship",

@@ -34,13 +34,6 @@ CW._resolveAll = function (op) {
   const viewConfig = cfg.views?.[view?.toLowerCase()] || {};
   op.view          = 'view' in op ? op.view : view;
 
-  // skip component/container resolution for child runs
-if (op.parent_run_id && op.options?.render === false) {
-  if (!('component' in op)) op.component = null;
-  if (!('container' in op)) op.container = null;
-  return;
-}
-
   const resolvedView = op.view || view;
   if (!('component' in op) || !('container' in op)) {
     let resolved = null;
@@ -318,71 +311,6 @@ const _failSignal = (err, dim, fromVal) => {
 };
 
 // ============================================================
-// CW._expand 
-// ============================================================
-
-CW._getChildRun = function (run_doc, fieldname) {
-  if (!fieldname) return null;
-  return run_doc.child_run_ids
-    .map(id => CW.runs[id])
-    .find(r => r?.source_field === fieldname) || null;
-};
-
-
-//=============================================================
-
-
-CW._expand = function (run_doc, fieldname) {
-  const schema  = CW.Schema?.[run_doc.target_doctype];
-  const doc     = run_doc.target?.data?.[0];
-  const docName = doc?.name;
-  if (!schema || !docName) return;
-
-  const fields = fieldname
-    ? schema.fields?.filter(f => f.fieldname === fieldname)
-    : schema.fields?.filter(f => 
-        f.fieldtype === 'Table' || 
-        f.fieldtype === 'Relationship Panel' ||
-        f.fieldtype === 'Link'
-      );
-
-  for (const field of fields || []) {
-    const exists = run_doc.child_run_ids
-      .some(id => CW.runs[id]?.source_field === field.fieldname);
-    if (exists) continue;
-
-    // Link — fetch single record by value
-    if (field.fieldtype === 'Link') {
-      const val = doc[field.fieldname];
-      if (!val) continue;  // no value — nothing to fetch
-      run_doc.child({
-        operation:      'select',
-        target_doctype: field.options,
-        query:          { where: { name: val } },
-        source_field:   field.fieldname,
-        options:        { render: false },
-        view:           'list',
-        component:      null,
-        container:      null,
-      });
-      continue;
-    }
-
-    // Table / Relationship Panel — fetch child rows by parent
-    run_doc.child({
-      operation:      'select',
-      target_doctype: field.options,
-      query:          { where: { parent: docName } },
-      source_field:   field.fieldname,
-      options:        { render: false },
-      view:           'list',
-      component:      null,
-      container:      null,
-    });
-  }
-};
-
-// ============================================================
 // CONTROLLER
 // ============================================================
 
@@ -398,9 +326,7 @@ if (
   (run_doc.operation === 'update' || run_doc.operation === 'delete') &&
   !run_doc.target?.data?.[0]?.name
 ) {
-  //await globalThis.Adapter[CW._config.adapters.defaults.db].select(run_doc)
-
-   await CW._handlers.select(run_doc);
+  await globalThis.Adapter[CW._config.adapters.defaults.db].select(run_doc)
 }
 
     await CW._logChanges(run_doc)  // ← before merge
@@ -643,11 +569,6 @@ CW._handlers = {
         return filtered;
       });
     }
-
-    // expand child fields for form view — after data is ready
-  if (run_doc.view === 'form' && run_doc.target?.data?.[0]?.name) {
-    CW._expand(run_doc);
-  }
   },
 
   create: async function (run_doc) {

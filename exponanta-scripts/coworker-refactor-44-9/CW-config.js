@@ -977,12 +977,7 @@ relationshipAccessMap: {
     activeProfile: "default",
   },*/
 
-fieldComponents: {
-  'Table': 'UniversalGrid',
-},
-
-
-  // ✅ Field types - NOT USED
+  // ✅ Field types - just element + events
   fieldTypes: {
     // ════════════════════════════════════════════════════════
     // TEXT INPUTS
