@@ -1093,6 +1093,14 @@
       "reqd": 1,
       "in_list_view": 1
     },
+        {
+        "fieldname": "relationship_parent",
+        "fieldtype": "Table",
+        "in_list_view": 0,
+        "label": "Event Relationships",
+        "options": "Relationship",
+        "search_index": 1
+      },
     {
       "fieldname": "deck",
       "fieldtype": "Text",
@@ -126706,10 +126714,10 @@
       "2_0": { "is_submittable": 1 }
     },
     "labels": {
-      "0_1": "Accept",
-      "0_2": "Reject",
-      "1_2": "Cancel",
-      "2_0": "Reopen"
+      "0_1": "Accept_1",
+      "0_2": "Reject_1",
+      "1_2": "Cancel_1",
+      "2_0": "Reopen_1"
     },
     "rules": {},
     "confirm": {
@@ -126719,11 +126727,7 @@
     "primary": {
       "0_1": true
     },
-    "sideEffects": {
-      "0_1": "async function(run_doc) { var rec = run_doc.target && run_doc.target.data && run_doc.target.data[0]; if (!rec) return; var access = (CW._config.relationshipAccessMap && CW._config.relationshipAccessMap[rec.parenttype] && CW._config.relationshipAccessMap[rec.parenttype][rec.related_doctype] && CW._config.relationshipAccessMap[rec.parenttype][rec.related_doctype][rec.type]) || 'none'; if (access === 'none' || !rec.related_name || !rec.parent) return; var selRun = await run_doc.child({ operation: 'select', target_doctype: rec.parenttype, query: { where: { name: rec.parent } }, options: { render: false } }); var pDoc = selRun.target && selRun.target.data && selRun.target.data[0]; if (!pDoc) return; var field = access === 'write' ? '_allowed' : '_allowed_read'; var cur = pDoc[field] || []; if (cur.includes(rec.related_name)) return; var updateRun = await run_doc.child({ operation: 'update', target_doctype: rec.parenttype, query: { where: { name: rec.parent } }, options: { render: false, internal: true } }); updateRun.target = { data: [pDoc] }; if (access === 'write') { updateRun.input._allowed = cur.concat([rec.related_name]); } else { updateRun.input._allowed_read = (pDoc._allowed_read || []).concat([rec.related_name]); } await CW.controller(updateRun); }",
-      "1_2": "async function(run_doc) { var rec = run_doc.target && run_doc.target.data && run_doc.target.data[0]; if (!rec) return; var access = (CW._config.relationshipAccessMap && CW._config.relationshipAccessMap[rec.parenttype] && CW._config.relationshipAccessMap[rec.parenttype][rec.related_doctype] && CW._config.relationshipAccessMap[rec.parenttype][rec.related_doctype][rec.type]) || 'none'; if (access === 'none' || !rec.related_name || !rec.parent) return; var selRun = await run_doc.child({ operation: 'select', target_doctype: rec.parenttype, query: { where: { name: rec.parent } }, options: { render: false } }); var pDoc = selRun.target && selRun.target.data && selRun.target.data[0]; if (!pDoc) return; var field = access === 'write' ? '_allowed' : '_allowed_read'; var updateRun = await run_doc.child({ operation: 'update', target_doctype: rec.parenttype, query: { where: { name: rec.parent } }, options: { render: false, internal: true } }); updateRun.target = { data: [pDoc] }; if (access === 'write') { updateRun.input._allowed = (pDoc._allowed || []).filter(function(id) { return id !== rec.related_name; }); } else { updateRun.input._allowed_read = (pDoc._allowed_read || []).filter(function(id) { return id !== rec.related_name; }); } await CW.controller(updateRun); }",
-      "2_0": "async function(run_doc) { var rec = run_doc.target && run_doc.target.data && run_doc.target.data[0]; if (!rec) return; var access = (CW._config.relationshipAccessMap && CW._config.relationshipAccessMap[rec.parenttype] && CW._config.relationshipAccessMap[rec.parenttype][rec.related_doctype] && CW._config.relationshipAccessMap[rec.parenttype][rec.related_doctype][rec.type]) || 'none'; if (access === 'none' || !rec.related_name || !rec.parent) return; var selRun = await run_doc.child({ operation: 'select', target_doctype: rec.parenttype, query: { where: { name: rec.parent } }, options: { render: false } }); var pDoc = selRun.target && selRun.target.data && selRun.target.data[0]; if (!pDoc) return; var field = access === 'write' ? '_allowed' : '_allowed_read'; var cur = pDoc[field] || []; if (cur.includes(rec.related_name)) return; var updateRun = await run_doc.child({ operation: 'update', target_doctype: rec.parenttype, query: { where: { name: rec.parent } }, options: { render: false, internal: true } }); updateRun.target = { data: [pDoc] }; if (access === 'write') { updateRun.input._allowed = cur.concat([rec.related_name]); } else { updateRun.input._allowed_read = (pDoc._allowed_read || []).concat([rec.related_name]); } await CW.controller(updateRun); }"
-    }
+    "sideEffects": {}
   }
 },
    "field_order": [

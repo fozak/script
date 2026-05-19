@@ -380,7 +380,7 @@ function _getDimValue(doc, dim, dimDef) {
 // _getTransitions: returns available transitions for a dim given current doc state
 // filters by requires + rules, returns array of { signal, from, to, label, confirm }
 // label overrides applied from schema.permissions.transitions for Self and all roles
-function _getTransitions(schema, doc, dim) {
+function _getTransitions(schema, doc, dim, run_doc) {
   const stateDef = _getStateDef(schema.schema_name || schema.name);
   const dimDef = stateDef[dim];
   if (!dimDef) return [];
@@ -403,6 +403,11 @@ function _getTransitions(schema, doc, dim) {
     }
   }
 
+  // relationship_roles — parent schema drives transition visibility per type
+  const parentDoctype = CW.runs?.[run_doc?.parent_run_id]?.target_doctype || doc.parenttype;
+  const parentSchema = CW.Schema?.[parentDoctype];
+  const relRole = parentSchema?.relationship_roles?.[doc.related_doctype]?.[doc.type];
+
   return tos
     .map((to) => {
       const bareKey = `${current}_${to}`;
@@ -421,6 +426,7 @@ function _getTransitions(schema, doc, dim) {
             })
           : true;
       if (!reqPassed || !rulePassed) return null;
+      if (relRole?.transitions && !relRole.transitions.includes(bareKey)) return null;
       return {
         signal,
         from: current,
