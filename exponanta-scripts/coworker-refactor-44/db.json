@@ -1294,7 +1294,7 @@
   "relationship_roles": {
   "User": {
     "Organizer":       { "transitions": ["0_1", "0_2", "1_2", "2_0"] },
-    "Attendee":        { "transitions": ["0_2", "1_2"] },
+    "Attendee":        { "transitions": ["0_1", "0_2", "1_2"] },
     "Speaker":         { "transitions": ["0_2", "1_2"] },
     "Volunteer":       { "transitions": ["0_2", "1_2"] },
     "Sponsor Contact": { "transitions": ["0_2", "1_2"] }
@@ -126660,9 +126660,9 @@
         "fieldname": "name",
         "fieldtype": "Data",
         "label": "Name",
-        "in_list_view": 1,
+        "in_list_view": 0,
         "read_only": 1,
-        "hidden": 0
+        "hidden": 1
       },
       {
         "fieldname": "related_doctype",
@@ -126676,7 +126676,7 @@
         "fieldtype": "Data",
         "label": "Related Name",
         "reqd": 1,
-        "in_list_view": 1
+        "in_list_view": 0
       },
       {
         "fieldname": "related_title",
@@ -126698,7 +126698,7 @@
       }
     ],
     "_state": {
-  "1": {
+  "0": {
     "name": "_docstatus",
     "fieldname": "docstatus",
     "values": [0, 1, 2],
@@ -126725,7 +126725,8 @@
       "1_2": "Cancel this registration?"
     },
     "primary": {
-      "0_1": true
+      "0_1": true,
+      "1_2": true
     },
     "sideEffects": {}
   }

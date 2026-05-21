@@ -1878,6 +1878,10 @@ const UniversalGrid = function ({ run_doc, field }) {
   
 
   run_doc = CW._getChildRun(run_doc, field?.fieldname) || run_doc
+
+
+
+
   const mode = !field
     ? "MainGrid"
     : field.fieldtype === "Table"
@@ -1891,6 +1895,10 @@ const UniversalGrid = function ({ run_doc, field }) {
   const titleField = schema.title_field || "name";
   const rows = run_doc.target?.data || [];
   const columns = Object.keys(rows[0] || {});
+
+ 
+
+
   const selected = CW.getGridSelected(run_doc);
   const allChecked = selected.length === rows.length && rows.length > 0;
 
@@ -1952,14 +1960,13 @@ const UniversalGrid = function ({ run_doc, field }) {
             onClick:
               k === titleField
                 ? () =>
-                    run_doc.child({
-                      operation: "update",
+                    run_doc.child({   
+                      operation: "update",  
                       target_doctype: doctype,
                       query: { where: { name: row.name } },
                       view: "form",
                       options: { render: true },
-                      //component: run_doc.component,
-//container: run_doc.container,
+
                     })
                 : undefined,
           },

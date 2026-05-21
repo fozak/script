@@ -82,6 +82,7 @@ systemFields: [
   {
     name: 'doctype', fetch: true,
     hidden: 1,
+    in_list_view: 1,
     onWrite: (run_doc) => {
       const doc = run_doc.target?.data?.[0];
       if (doc) doc.doctype = doc.doctype || run_doc.target_doctype;
@@ -89,7 +90,9 @@ systemFields: [
   },
   {
     name: 'name', fetch: true,
-    hidden: 1,
+    hidden: 0,
+    in_list_view: 1,
+    fieldtype: 'Data',
     onCreate: (run_doc) => {
       const doc = run_doc.target?.data?.[0];
       if (!doc || doc.name) return;
@@ -103,6 +106,7 @@ systemFields: [
   {
     name: 'docstatus', fetch: true,
     hidden: 1,
+    in_list_view: 1,
     onCreate: (run_doc) => {
       const doc = run_doc.target?.data?.[0];
       if (doc && doc.docstatus === undefined) doc.docstatus = 0;
@@ -110,7 +114,7 @@ systemFields: [
   },
   {
     name: 'creation', fetch: true,
-    hidden: 0, read_only: 1, fieldtype: 'Datetime', label: 'Created', in_list_view: 0,
+    hidden: 1, read_only: 1, fieldtype: 'Datetime', label: 'Created', in_list_view: 1,
     onCreate: (run_doc) => {
       const doc = run_doc.target?.data?.[0];
       if (doc) doc.creation = Date.now();
@@ -158,9 +162,9 @@ systemFields: [
       doc.top_parent = p.top_parent || p.name;
     },
   },
-{ name: 'parent',      fetch: true, hidden: 0, fieldtype: 'Data', in_list_view: 1, label: 'Parent' },
-{ name: 'parenttype',  fetch: true, hidden: 0, fieldtype: 'Data', in_list_view: 1, label: 'Parent Type' },
-{ name: 'parentfield', fetch: true, hidden: 0, fieldtype: 'Data', in_list_view: 1, label: 'Parent Field' },
+{ name: 'parent',      fetch: true, hidden: 1, fieldtype: 'Data', in_list_view: 1, label: 'Parent' },
+{ name: 'parenttype',  fetch: true, hidden: 1, fieldtype: 'Data', in_list_view: 1, label: 'Parent Type' },
+{ name: 'parentfield', fetch: true, hidden: 1, fieldtype: 'Data', in_list_view: 1, label: 'Parent Field' },
   { name: 'idx',         fetch: true, hidden: 1 },
   {
     name: '_allowed', fetch: true,
@@ -218,7 +222,7 @@ systemFields: [
   },
   {
     name: '_allowed_read', fetch: true,
-    hidden: 1,
+    hidden: 0,
     onWrite: (run_doc) => {
       const doc        = run_doc.target?.data?.[0];
       if (!doc) return;

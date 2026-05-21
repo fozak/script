@@ -332,7 +332,7 @@ CW._getChildRun = function (run_doc, fieldname) {
 //=============================================================
 
 
-CW._expand = function (run_doc, fieldname) {
+CW._expand = async function (run_doc, fieldname) {
   const schema  = CW.Schema?.[run_doc.target_doctype];
   const doc     = run_doc.target?.data?.[0];
   const docName = doc?.name;
@@ -346,16 +346,16 @@ CW._expand = function (run_doc, fieldname) {
         f.fieldtype === 'Link'
       );
 
+  const promises = [];
   for (const field of fields || []) {
     const exists = run_doc.child_run_ids
       .some(id => CW.runs[id]?.source_field === field.fieldname);
     if (exists) continue;
 
-    // Link — fetch single record by value
     if (field.fieldtype === 'Link') {
       const val = doc[field.fieldname];
-      if (!val) continue;  // no value — nothing to fetch
-      run_doc.child({
+      if (!val) continue;
+      promises.push(run_doc.child({
         operation:      'select',
         target_doctype: field.options,
         query:          { where: { name: val } },
@@ -364,12 +364,11 @@ CW._expand = function (run_doc, fieldname) {
         view:           'list',
         component:      null,
         container:      null,
-      });
+      }));
       continue;
     }
 
-    // Table / Relationship Panel — fetch child rows by parent
-    run_doc.child({
+    promises.push(run_doc.child({
       operation:      'select',
       target_doctype: field.options,
       query:          { where: { parent: docName } },
@@ -378,8 +377,10 @@ CW._expand = function (run_doc, fieldname) {
       view:           'list',
       component:      null,
       container:      null,
-    });
+    }));
   }
+
+  await Promise.all(promises);
 };
 
 // ============================================================
@@ -646,7 +647,7 @@ CW._handlers = {
 
     // expand child fields for form view — after data is ready
   if (run_doc.view === 'form' && run_doc.target?.data?.[0]?.name) {
-    CW._expand(run_doc);
+    await CW._expand(run_doc);
   }
   },
 

@@ -473,7 +473,7 @@ function _getFormButtons(run_doc, row) {
   // all dims — primary → outside, non-primary → menu
   Object.keys(stateDef).forEach((dim) => {
     const dimDef = stateDef[dim];
-    const btns = _getTransitions(schema, doc, dim);
+    const btns = _getTransitions(schema, doc, dim, run_doc);
     btns.forEach((b) => {
       const bareKey = b.signal.slice(b.signal.indexOf(".") + 1);
       if (dimDef?.primary?.[bareKey]) {

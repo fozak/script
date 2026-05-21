@@ -193,7 +193,7 @@ _compileSchemas: function () {
 
     // merge systemFields into schema.fields
 const sysFields = (globalThis.CW._config?.systemFields || [])
-  .filter(sf => sf.fieldtype && !sf.hidden)
+  .filter(sf => sf.fieldtype && (!sf.hidden || sf.in_list_view))  //was hidden only
   .map(sf => {
     const field = {};
     for (const [k, v] of Object.entries(sf)) {
@@ -205,10 +205,15 @@ const sysFields = (globalThis.CW._config?.systemFields || [])
     return field;
   });
 
-    const existing = new Set((schema.fields || []).map(f => f.fieldname));
-    for (const sf of sysFields) {
-      if (!existing.has(sf.fieldname)) schema.fields.push(sf);
-    }
+   const existing = new Set((schema.fields || []).map(f => f.fieldname));
+for (const sf of sysFields) {
+  if (!existing.has(sf.fieldname)) {
+    schema.fields.push(sf);
+  } else {
+    const idx = schema.fields.findIndex(f => f.fieldname === sf.fieldname);
+    if (idx !== -1) schema.fields[idx] = { ...schema.fields[idx], ...sf };
+  }
+}
   }
 
   console.log('✅ CW.Schema compiled');
