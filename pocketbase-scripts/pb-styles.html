@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Frappe Forms with React</title>
+
+  <!-- Load Frappe CSS -->
+  <link rel="stylesheet" href="https://apfile.com/assets/frappe/dist/css/desk.bundle.6TKRFZ4V.css">
+
+  <!-- React, ReactDOM -->
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+
+  <!-- Babel for JSX in browser -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <style>
+    body { font-family: sans-serif; margin: 2rem; }
+    .page-card { padding: 1rem; border: 1px solid #ddd; border-radius: 8px; max-width: 400px; margin: auto; }
+    .field-icon { margin-left: 4px; vertical-align: middle; }
+    .btn-block { width: 100%; }
+    .page-card-actions { margin-top: 1rem; }
+  </style>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel">
+document.addEventListener("DOMContentLoaded", function() {
+  const { useState } = React;
+
+  // 1️⃣ JSON Schema defines everything
+  const formsSchema = [
+    {
+      name: "LoginForm",
+      title: "Login",
+      fields: [
+        { fieldname: "email", fieldtype: "Data", label: "Email",
+          wrapper: { semantic_role: "input", css_class: "form-group email-field", container: "div",
+                     attributes: { type: "text", autocomplete: "username", autofocus: true } },
+          icon: "email-icon", placeholder: "Email Address" },
+        { fieldname: "password", fieldtype: "Password", label: "Password",
+          wrapper: { semantic_role: "input", css_class: "form-group password-field", container: "div",
+                     attributes: { type: "password", autocomplete: "current-password" } },
+          icon: "password-icon", placeholder: "•••••" }
+      ],
+      actions: [
+        { action_name: "Login", style: { variant: "primary", size: "sm", fullWidth: true } },
+        { action_name: "Reset Password", style: { variant: "secondary", size: "sm", fullWidth: true } }
+      ]
+    },
+    {
+      name: "ForgotPassword",
+      title: "Forgot Password",
+      fields: [
+        { fieldname: "email", fieldtype: "Data", label: "Email",
+          wrapper: { semantic_role: "input", css_class: "form-group email-field", container: "div",
+                     attributes: { type: "email", autocomplete: "username", autofocus: true } },
+          icon: "email-icon", placeholder: "Email Address" }
+      ],
+      actions: [
+        { action_name: "Reset Password", style: { variant: "primary", size: "sm", fullWidth: true } }
+      ]
+    }
+  ];
+
+  // 2️⃣ Generic FormRenderer
+  const FormRenderer = ({ schema }) => {
+    const [values, setValues] = useState({});
+    const handleChange = (name, value) => setValues(prev => ({ ...prev, [name]: value }));
+
+    return (
+      <div className="forms-container">
+        {schema.map(form => (
+          <div key={form.name} className="page-card">
+            <h3>{form.title}</h3>
+            {form.fields.map(field => {
+              const Wrapper = field.wrapper?.container || "div";
+              const attrs = field.wrapper?.attributes || {};
+              return (
+                <Wrapper key={field.fieldname} className={field.wrapper?.css_class}>
+                  <label className="form-label">{field.label}</label>
+                  <input
+                    {...attrs}
+                    name={field.fieldname}
+                    value={values[field.fieldname] || ""}
+                    placeholder={field.placeholder}
+                    onChange={e => handleChange(field.fieldname, e.target.value)}
+                    className="form-control"
+                  />
+                  {field.icon && <svg className={`field-icon ${field.icon}`} width="16" height="16"><use href="#icon-placeholder"></use></svg>}
+                </Wrapper>
+              );
+            })}
+            <div className="page-card-actions">
+              {form.actions?.map(action => (
+                <button
+                  key={action.action_name}
+                  className={`btn btn-${action.style.variant} btn-${action.style.size} ${action.style.fullWidth ? "btn-block" : ""}`}
+                  type="button"
+                  onClick={() => alert(`${action.action_name} clicked`)}
+                  style={{ marginTop: "0.5rem" }}
+                >
+                  {action.action_name}
+                </button>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  };
+
+  // 3️⃣ Render
+  ReactDOM.createRoot(document.getElementById('root')).render(<FormRenderer schema={formsSchema} />);
+});
+</script>
+</body>
+</html>
+

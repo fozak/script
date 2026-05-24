@@ -1,3 +1,172 @@
+
+CW Framework — Claude Working Preamble
+This document is pasted at the start of every coding session with Claude.
+It encodes hard-won rules from production failures. Follow every item exactly.
+Deviation causes coordination bugs, stale state, and architectural regressions
+that are hard to debug and expensive to revert.
+
+How Claude must work in this codebase
+SCOPE
+
+Make only the change stated. Nothing else.
+If you spot other issues, name them, do not fix them.
+Never refactor, rename, or "clean up" outside the stated task.
+If a change requires touching more than the stated files, stop and ask.
+
+TESTING BEFORE FIXING
+
+Before proposing any fix, produce an IIFE browser console test that
+reproduces the problem.
+Format: ;(async () => { ... })()
+Tests run against live PocketBase at pb.exponanta.com using the real CW
+global — no mocks unless explicitly requested.
+Assertion pattern:
+
+js  const assert = (label, got, expected) => {
+    if (got !== expected)
+      console.error('❌', label, '| got:', got, '| expected:', expected)
+    else
+      console.log('✅', label)
+  }
+
+Do not propose code changes until the test confirms the problem.
+After the fix, update the same test to confirm the pass.
+
+run_doc SHAPE IS FROZEN
+
+Never add new top-level properties to run_doc without explicit
+architecture discussion and approval.
+To pass data between runs, use the run tree:
+CW.runs[run_doc.parent_run_id]?.target?.data?.[0]
+run_doc._parent_record, run_doc._context, or any ad-hoc property
+on run_doc itself: never.
+The fixed run_doc shape:
+
+  name, operation, operation_original, target_doctype,
+  query, input, target, options, error, status,
+  parent_run_id, container, component, view,
+  _signal, _sideEffectFired, _changes
+
+10 Critical Rules
+1. All functions take a single run_doc argument
+Every handler, systemField callback, sideEffect, and pipeline function
+receives only run_doc. No extra arguments.
+js// ✅ correct
+const onWrite = (run_doc) => { run_doc.input.modified = Date.now() }
+CW._preflight = function (run_doc) { ... }
+CW.controller = async function (run_doc) { ... }
+
+// ❌ wrong
+const onWrite = (input, run_doc) => { ... }
+CW._preflight(run_doc, 'create')
+run_doc.operation already carries the operation — never pass it as a
+separate argument.
+2. Handlers mutate run_doc directly — never return values
+The pipeline is imperative. Every stage mutates run_doc.input or
+run_doc.target in place. No return values, no external assignment.
+js// ✅ correct
+{ name: 'modified', onWrite: (run_doc) => { run_doc.input.modified = Date.now() } }
+
+// ❌ wrong
+{ name: 'modified', onWrite: (run_doc) => Date.now() }   // return ignored
+input.modified = sf.onWrite(run_doc)                      // external assignment
+3. Inside components: always run_doc.child(), never CW.run()
+The only legitimate naked CW.run() call is the single boot call in the
+HTML file via cwStateFromUrl(). Inside every component, all operations
+go through run_doc.child().
+js// ✅ correct — inside any component or handler
+run_doc.child({ operation: 'select', target_doctype: 'Task', ... })
+
+// ❌ wrong
+CW.run({ operation: 'select', target_doctype: 'Task', ... })
+4. React.useState is for cosmetic/ephemeral UI only
+Document data, selection state, FSM state, navigation — none of these
+live in React state. They live in run_doc.target.data and the run tree.
+js// ✅ legitimate useState
+const [isOpen, setIsOpen] = React.useState(false)     // dropdown
+const [saving, setSaving] = React.useState(false)      // spinner
+
+// ❌ wrong
+const [record, setRecord] = React.useState(null)       // document data
+const [comments, setComments] = React.useState([])     // document data
+const [rev, setRev] = React.useState(0)                // force re-render hack
+After an FSM signal completes, the signal re-mounts the component with
+fresh run_doc data. Never use setRev(v+1) to force a re-render.
+5. No hardcoded component: or container: in child calls
+Schema resolves component and container via view_components. Never
+hardcode them in run_doc.child() calls inside components.
+js// ✅ correct
+run_doc.child({ operation: 'select', target_doctype: 'Post',
+                query: { where: { name: id } }, options: { render: true } })
+
+// ❌ wrong
+run_doc.child({ ..., component: 'MainForm', container: 'threads_right' })
+6. Use input: not context: to pass domain data
+js// ✅ correct
+run_doc.child({ operation: 'create', target_doctype: 'Post',
+                input: { channel: channelName, docsubtype: 'post' } })
+
+// ❌ wrong
+run_doc.child({ ..., context: { channel: channelName } })
+7. Access parent record via run tree, not new properties
+js// ✅ correct
+const parentRun = CW.runs[run_doc.parent_run_id]
+const parentDoc = parentRun?.target?.data?.[0]
+
+// ❌ wrong — do not add this to run_doc shape
+run_doc._parent_record = parentDoc
+8. Secondary classification always uses docsubtype
+Never invent field names like post_type, task_type, comment_type.
+The universal field for subtype is docsubtype: Select(...).
+9. _state stores current dim values, not signal history
+The canonical _state format in PocketBase is:
+json{ "0": 1, "1": 0 }
+Keys are dim numbers. Values are the current state index.
+Signal keys like "0.0_1": "1" are written transiently and cleared
+on the next preflight merge. Do not build logic that depends on signal
+history accumulating in _state.
+_getDimValue reads state[dim] first. Signal key reconstruction is
+fallback only, and breaks on cyclic transitions.
+10. URL params only carry select operations
+cwStateFromUrl encodes only enough to boot a select. Operations like
+create or update are never encoded in the URL. The operation is
+inferred at runtime from context.
+js// ✅ correct URL state
+?doctype=Task&name=taskxxx   →  operation: 'select'
+
+// ❌ wrong
+?operation=update&doctype=Task   →  never
+
+Predefined function signatures
+These signatures are fixed. Never change the argument list.
+js// Pipeline stages
+CW._preflight       = function (run_doc) { ... }
+CW.controller       = async function (run_doc) { ... }
+CW._handleSignal    = async function (run_doc) { ... }
+CW._execTransition  = async function (run_doc) { ... }
+CW._render          = function (run_doc) { ... }
+
+// Adapter methods
+Adapter.select  = async function (run_doc) { ... }
+Adapter.create  = async function (run_doc) { ... }
+Adapter.update  = async function (run_doc) { ... }
+Adapter.delete  = async function (run_doc) { ... }
+
+// systemFields callbacks — all take only run_doc, all mutate directly
+{ name: 'fieldname', onWrite:  (run_doc) => { run_doc.input.fieldname = ... } }
+{ name: 'fieldname', onCreate: (run_doc) => { run_doc.input.fieldname = ... } }
+
+// Schema sideEffects — string eval'd at runtime, single argument
+"async (run_doc) => { ... }"
+
+// Child run factory
+run_doc.child = async function ({ operation, target_doctype, query, input, options }) { ... }
+
+DON'Ts — quick reference
+WrongRightCW.run(...) inside componentrun_doc.child(...)(input, run_doc) handler arg(run_doc) onlyCW._preflight(run_doc, 'create')CW._preflight(run_doc)return value from handlermutate run_doc.input directlyuseState for document datarun_doc.target.datauseState for navigationrun tree expresses selectionsetRev(v+1) after signalsignal re-mounts with fresh datacontext: { channel: name }input: { channel: name }hardcode component: in childschema view_componentshardcode container: in childschema view_componentsrun_doc._parent_record = ...CW.runs[run_doc.parent_run_id]new ad-hoc property on run_docdiscuss architecture firstpost_type, task_type fieldsdocsubtype always_state signal history as current state_state[dim] integer valueoperation=update in URLURL always selectfix issues outside stated scopename them, stop, askspeculative fix without testIIFE test first, then fix
+
+Keep this file at the top of every new session.
+
 //Add this
 
 fn(run_doc, path) universal signature

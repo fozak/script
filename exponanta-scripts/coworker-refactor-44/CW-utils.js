@@ -738,10 +738,20 @@ CW.searchDebounced = searchDebounced;
 // _patchDataField — partial update of a single data field in PB
 // ============================================================
 
-async function _patchDataField(docName, fieldName, value) {
+/*async function _patchDataField(docName, fieldName, value) {
   const collection = CW._config.collection
   const current    = await globalThis.pb.collection(collection).getOne(docName)
   const mergedData = { ...current.data, [fieldName]: value }
+  await globalThis.pb.collection(collection).update(docName, { data: mergedData })
+}*/
+
+//=====change to fix
+
+async function _patchDataField(docName, fieldName, value) {
+  const collection = CW._config.collection
+  const current    = await globalThis.pb.collection(collection).getOne(docName)
+  const existing   = Array.isArray(current.data[fieldName]) ? current.data[fieldName] : []
+  const mergedData = { ...current.data, [fieldName]: [...existing, value] }
   await globalThis.pb.collection(collection).update(docName, { data: mergedData })
 }
 
@@ -786,7 +796,8 @@ async function _logChanges(run_doc, explicitChanges = null) {
   const next     = [...existing, entry]
 
   try {
-    await _patchDataField(doc.name, '_changes', next)
+    //await _patchDataField(doc.name, '_changes', next)
+    await _patchDataField(doc.name, '_changes', entry)
     doc._changes = next
   } catch (err) {
     console.warn('[CW] _logChanges failed:', err.message)
@@ -818,6 +829,8 @@ async function _logThreads(run_doc, entry) {
 
   try {
     await _patchDataField(doc.name, '_threads', next)
+
+  
     doc._threads = next
   } catch (err) {
     console.warn('[CW] _logThreads failed:', err.message)

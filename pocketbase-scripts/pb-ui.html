@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Universal Desk</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@tanstack/react-table@8/build/umd/index.development.js"></script>
+</head>
+<body>
+  <!-- Init screen -->
+  <div id="init" class="init-screen">
+    <div class="init-card">
+      <h1 style="font-size: 1.5rem; font-weight: 700; text-align: center;">Universal Desk</h1>
+      <div style="text-align: center; color: #6b7280;">
+        <p>Initializing PocketBase...</p>
+      </div>
+      <div id="status" class="status bg-yellow-100 text-yellow-800">Connecting...</div>
+    </div>
+  </div>
+
+  <!-- React root -->
+  <div id="root" style="display:none;"></div>
+
+  <!-- Load PB SDK + helpers -->
+  <script src="js/pocketbase.umd.js"></script>
+  <script src="js/pb-functions.js"></script>
+
+  <script>
+    const { useState, useEffect, useMemo, createElement: h } = React;
+    const { useReactTable, getCoreRowModel, getSortedRowModel, getFilteredRowModel, flexRender } = window.ReactTable;
+
+    // --- ListView ---
+    function ListView({ pb, doctype }) {
+      const [docs, setDocs] = useState([]);
+      const [schema, setSchema] = useState(null);
+      const [loading, setLoading] = useState(true);
+      const [globalFilter, setGlobalFilter] = useState('');
+      const [sorting, setSorting] = useState([]);
+
+      useEffect(() => {
+        console.log(`[ListView] Loading for doctype=${doctype}`);
+        async function load() {
+          try {
+            const schema = await pb.getSchema(doctype);
+            console.log("[ListView] Got schema:", schema);
+            setSchema(schema);
+
+            const documents = await pb.listDocs(doctype);
+            console.log("[ListView] Got documents:", documents);
+            setDocs(documents);
+          } catch (err) {
+            console.error("[ListView] Error loading:", err);
+          } finally {
+            setLoading(false);
+          }
+        }
+        load();
+      }, [doctype]);
+
+      const columns = useMemo(() => {
+        if (!schema?.fields) return [];
+        const listFields = schema.fields.filter(f => f.in_list_view).slice(0, 6);
+        console.log("[ListView] Building columns from schema.fields:", listFields);
+        return [
+          { accessorKey: 'name', header: 'Name', cell: info => h('span', { className: 'link' }, info.getValue()) },
+          ...listFields.map(f => ({
+            accessorKey: `data.${f.fieldname}`,
+            header: f.label,
+            accessorFn: row => row.data?.[f.fieldname] || '-'
+          }))
+        ];
+      }, [schema]);
+
+      const table = useReactTable({
+        data: docs,
+        columns,
+        state: { sorting, globalFilter },
+        onSortingChange: setSorting,
+        onGlobalFilterChange: setGlobalFilter,
+        getCoreRowModel: getCoreRowModel(),
+        getSortedRowModel: getSortedRowModel(),
+        getFilteredRowModel: getFilteredRowModel()
+      });
+
+      if (loading) return h('div', { className: 'loading' }, 'Loading...');
+      if (!schema) return h('div', { className: 'card p-8 text-gray-500 text-center' }, `No schema found for ${doctype}`);
+
+      return h('div', null, [
+        h('div', { key: 'header', className: 'page-header' }, [
+          h('h1', { className: 'page-title' }, schema.label || doctype),
+          h('button', { className: 'btn btn-primary' }, `New ${schema.label_singular || doctype}`)
+        ]),
+        h('div', { key: 'card', className: 'card' }, [
+          h('div', { key: 'search', style: { padding: '1rem' } },
+            h('input', {
+              type: 'text',
+              className: 'search',
+              placeholder: 'Search...',
+              value: globalFilter,
+              onChange: e => setGlobalFilter(e.target.value)
+            })
+          ),
+          h('div', { key: 'table', style: { overflowX: 'auto' } },
+            h('table', null, [
+              h('thead', { key: 'head' },
+                table.getHeaderGroups().map(hg => h('tr', { key: hg.id },
+                  hg.headers.map(hd => h('th', { key: hd.id, onClick: hd.column.getToggleSortingHandler() }, [
+                    flexRender(hd.column.columnDef.header, hd.getContext()),
+                    h('span', { style: { marginLeft: '4px', fontSize: '10px', color: '#9ca3af' } },
+                      hd.column.getIsSorted() === 'asc' ? '▲' :
+                      hd.column.getIsSorted() === 'desc' ? '▼' : '⇅')
+                  ]))
+                ))
+              ),
+              h('tbody', { key: 'body' },
+                table.getRowModel().rows.map(row => h('tr', { key: row.id },
+                  row.getVisibleCells().map(cell => h('td', { key: cell.id },
+                    flexRender(cell.column.columnDef.cell, cell.getContext()))
+                  )
+                ))
+              )
+            ])
+          )
+        ])
+      ]);
+    }
+
+    // --- Navigation ---
+    function Navigation({ doctypes, current, onChange }) {
+      console.log("[Navigation] Rendering with doctypes:", doctypes, "current:", current);
+      return h('nav', { className: 'sidebar' }, [
+        h('div', { key: 'brand', className: 'sidebar-brand' }, 'Universal Desk'),
+        h('div', { key: 'nav' },
+          doctypes.map(dt => h('div', {
+            key: dt.name,
+            className: `nav-item ${current === dt.data.name ? 'active' : ''}`,
+            onClick: () => onChange(dt.data.name)
+          }, [
+            h('span', { key: 'icon' }, dt.data.icon || '📄'),
+            h('span', { key: 'label' }, dt.data.label || dt.data.name)
+          ]))
+        )
+      ]);
+    }
+
+    // --- App ---
+    function App() {
+      const [pb, setPb] = useState(null);
+      const [doctypes, setDoctypes] = useState([]);
+      const [current, setCurrent] = useState(null);
+      const [loading, setLoading] = useState(true);
+
+      useEffect(() => {
+        async function init() {
+          try {
+            console.log("[App.init] Starting...");
+            if (!window.pb) throw new Error('PocketBase not initialized. Check pb-functions.js');
+            setPb(window.pb);
+
+            if (!window.MAIN_COLLECTION) {
+              console.warn("[App.init] window.MAIN_COLLECTION not defined, skipping doctypes load");
+              setDoctypes([]);
+              return;
+            }
+
+            const allSchemas = await window.pb.collection(window.MAIN_COLLECTION).getFullList({
+              filter: 'doctype = "Schema"'
+            });
+            console.log("[App.init] Got schemas:", allSchemas);
+
+            const dts = allSchemas
+              .filter(s => s.data)
+              .map(s => ({
+                name: s.meta.for_doctype,
+                data: {
+                  name: s.meta.for_doctype,
+                  label: s.data?.label || s.meta.for_doctype,
+                  icon: s.data?.icon || '📄'
+                }
+              }));
+            console.log("[App.init] Doctypes:", dts);
+            setDoctypes(dts);
+            if (dts.length > 0) setCurrent(dts[0].data.name);
+          } catch (err) {
+            console.error("[App.init] Error:", err);
+          } finally {
+            setLoading(false);
+          }
+        }
+        init();
+      }, []);
+
+      if (loading) return h('div', { className: 'loading' }, 'Initializing...');
+      if (!pb) return h('div', { style: { padding: '2rem', color: '#ef4444' } }, 'PocketBase not connected');
+
+      return h('div', { className: 'app' }, [
+        h(Navigation, { key: 'nav', doctypes, current, onChange: setCurrent }),
+        h('div', { key: 'main', className: 'main' }, [
+          h('div', { key: 'top', className: 'topbar' }, [
+            h('div', { key: 'title' }, 'Universal Desk'),
+            h('div', { key: 'info', style: { fontSize: '0.875rem', color: '#6b7280' } }, 'PocketBase')
+          ]),
+          h('div', { key: 'content', className: 'content' },
+            current ? h(ListView, { pb, doctype: current, key: current }) :
+              h('div', { className: 'loading' }, 'Select a module')
+          )
+        ])
+      ]);
+    }
+
+    // --- Boot ---
+    window.onload = function () {
+      console.log("[Boot] Page loaded, checking pb...");
+      const statusEl = document.getElementById('status');
+      const initScreen = document.getElementById('init');
+      const rootEl = document.getElementById('root');
+
+      try {
+        if (window.pb) {
+          console.log("[Boot] pb is available:", window.pb);
+          statusEl.textContent = 'Connected';
+          statusEl.className = 'status bg-green-100 text-green-800';
+          setTimeout(() => {
+            initScreen.style.display = 'none';
+            rootEl.style.display = 'block';
+            console.log("[Boot] Mounting React App...");
+            ReactDOM.createRoot(rootEl).render(h(App));
+          }, 500);
+        } else {
+          console.error("[Boot] window.pb is undefined!");
+          statusEl.textContent = 'Not Connected - Check js/pocketbase.umd.js and js/pb-functions.js';
+          statusEl.className = 'status bg-red-100 text-red-800';
+        }
+      } catch (err) {
+        console.error("[Boot] Error during startup:", err);
+        statusEl.textContent = `Error: ${err.message}`;
+        statusEl.className = 'status bg-red-100 text-red-800';
+      }
+    };
+  </script>
+</body>
+</html>

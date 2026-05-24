@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Frappe Form Mock</title>
+</head>
+<body>
+  <h1>Frappe Form Mock</h1>
+  <div id="mock-form"></div>
+
+  <!-- Load jQuery -->
+  <script src="http://127.0.0.1:8090/assets/frappe/dist/js/libs.bundle.TIV7ZGVY.js"></script>
+
+  <!-- Load core Frappe form bundles -->
+  <script src="http://127.0.0.1:8090/assets/frappe/dist/js/form.bundle.S5G43U27.js"></script>
+  <script src="http://127.0.0.1:8090/assets/frappe/dist/js/controls.bundle.JTVKL6SD.js"></script>
+
+  <!-- Optionally load desk/list/report if needed -->
+  <!-- <script src="http://127.0.0.1:8090/assets/frappe/dist/js/desk.bundle.NVGZJDPU.js"></script> -->
+  <!-- <script src="http://127.0.0.1:8090/assets/frappe/dist/js/list.bundle.KDF43UCZ.js"></script> -->
+
+  <script>
+    // Example: create a mock DocType JSON
+    const DocTypeJSON = {
+      doctype: "Task",
+      fields: [
+        { fieldname: "subject", fieldtype: "Data", label: "Subject" },
+        { fieldname: "description", fieldtype: "Text", label: "Description" }
+      ]
+    };
+
+    // Mock frm object
+    const frm = {
+      doc: {},
+      wrapper: document.getElementById("mock-form"),
+      set_value: (field, value) => { frm.doc[field] = value; },
+      refresh_field: () => console.log("Field refreshed", frm.doc)
+    };
+
+    // Render controls
+    DocTypeJSON.fields.forEach(df => {
+      const ControlClass = frappe.ui.form.Control[df.fieldtype] || frappe.ui.form.ControlData;
+      const ctrl = new ControlClass({ df, frm, parent: frm.wrapper });
+      ctrl.make();
+    });
+
+    console.log("Form rendered with mock DocType:", DocTypeJSON);
+  </script>
+</body>
+</html>
