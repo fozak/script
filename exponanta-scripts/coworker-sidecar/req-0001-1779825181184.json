@@ -1,0 +1,39 @@
+{
+  "id": "req-0001-1779825181184",
+  "url": "https://httpbin.org/delay/1",
+  "options": {},
+  "status": "done",
+  "_locked": false,
+  "_agent": null,
+  "_request": {
+    "url": "https://httpbin.org/delay/1",
+    "options": {}
+  },
+  "_response": {
+    "args": {},
+    "data": "",
+    "files": {},
+    "form": {},
+    "headers": {
+      "Accept": "*/*",
+      "Accept-Encoding": "gzip, deflate, br, zstd",
+      "Accept-Language": "en-US,en;q=0.9,ru-RU;q=0.8,ru;q=0.7,zh-CN;q=0.6,zh;q=0.5",
+      "Host": "httpbin.org",
+      "Origin": "http://localhost:8080",
+      "Priority": "u=1, i",
+      "Referer": "http://localhost:8080/",
+      "Sec-Ch-Ua": "\"Chromium\";v=\"148\", \"Google Chrome\";v=\"148\", \"Not/A)Brand\";v=\"99\"",
+      "Sec-Ch-Ua-Mobile": "?0",
+      "Sec-Ch-Ua-Platform": "\"Windows\"",
+      "Sec-Fetch-Dest": "empty",
+      "Sec-Fetch-Mode": "cors",
+      "Sec-Fetch-Site": "cross-site",
+      "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36",
+      "X-Amzn-Trace-Id": "Root=1-6a15fa1e-54881803017b87547f26f24d"
+    },
+    "origin": "141.154.111.34",
+    "url": "https://httpbin.org/delay/1"
+  },
+  "_error": null,
+  "_ts": 1779825182751
+}

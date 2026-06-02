@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DeepSeek JS Runner</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/core@1.4.0/dist/css/tabler.min.css">
+<style>
+  textarea { font-family: monospace; font-size: 12px; line-height: 1.5; resize: vertical; }
+  .output-zone { font-family: monospace; font-size: 12px; line-height: 1.6; padding: 12px; min-height: 120px; max-height: 320px; overflow-y: auto; white-space: pre-wrap; background: #f8f9fa; border-radius: 4px; }
+  .json-zone { font-family: monospace; font-size: 12px; line-height: 1.6; padding: 12px; min-height: 120px; max-height: 320px; overflow-y: auto; white-space: pre-wrap; background: #f8f9fa; border-radius: 4px; }
+  .out-err { color: #e53e3e; }
+  .out-info { color: #3b82f6; }
+  .out-ok { color: #38a169; }
+  .card-body-flush { padding: 0; }
+</style>
+</head>
+<body class="antialiased">
+<div class="page">
+  <div class="page-wrapper">
+    <div class="page-body">
+      <div class="container-xl py-4">
+
+        <!-- header -->
+        <div class="row mb-3 align-items-center">
+          <div class="col">
+            <h2 class="page-title">DeepSeek JS Runner</h2>
+            <div class="text-muted">Prompt → JS generation → execute → JSON output</div>
+          </div>
+          <div class="col-auto d-flex gap-2 align-items-center">
+            <span id="statusBadge" class="badge bg-secondary">idle</span>
+            <button id="runBtn" class="btn btn-primary">
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 4v16l13 -8z"/></svg>
+              Run
+            </button>
+          </div>
+        </div>
+
+        <!-- step 0: config -->
+        <div class="card mb-3">
+          <div class="card-header">
+            <h3 class="card-title">
+              <span class="badge bg-blue-lt text-blue me-2">0</span>
+              DeepSeek config
+            </h3>
+          </div>
+          <div class="card-body">
+            <div class="row g-2 align-items-center">
+              <div class="col-auto">
+                <label class="form-label mb-0 text-muted" style="font-size:13px">API Key</label>
+              </div>
+              <div class="col">
+                <input type="password" id="apiKey" class="form-control font-monospace" placeholder="sk-..." style="font-size:13px" />
+              </div>
+              <div class="col-auto">
+                <label class="form-label mb-0 text-muted" style="font-size:13px">Model</label>
+              </div>
+              <div class="col-auto">
+                <select id="modelSelect" class="form-select" style="font-size:13px;width:200px">
+                  <option value="deepseek-chat">deepseek-chat</option>
+                  <option value="deepseek-reasoner">deepseek-reasoner</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- steps 1 + 2 side by side -->
+        <div class="row mb-3">
+
+          <!-- step 1: prompt -->
+          <div class="col-6">
+            <div class="card h-100">
+              <div class="card-header">
+                <h3 class="card-title">
+                  <span class="badge bg-blue-lt text-blue me-2">1</span>
+                  Prompt for JS
+                  <span class="ms-2 text-muted fw-normal small">describe what JS to generate</span>
+                </h3>
+              </div>
+              <div class="card-body card-body-flush">
+                <textarea id="promptInput" class="form-control border-0 rounded-0" rows="10"
+                  placeholder="e.g. Fetch https://jsonplaceholder.typicode.com/todos/1 and return the JSON result
+
+e.g. Generate an array of 5 random user objects with name, email, and age fields
+
+e.g. Calculate fibonacci sequence up to n=10 and return as JSON array"></textarea>
+              </div>
+            </div>
+          </div>
+
+          <!-- step 2: generated JS -->
+          <div class="col-6">
+            <div class="card h-100">
+              <div class="card-header">
+                <h3 class="card-title">
+                  <span class="badge bg-blue-lt text-blue me-2">2</span>
+                  Generated JS
+                  <span class="ms-2 text-muted fw-normal small">editable before run</span>
+                </h3>
+                <div class="card-options">
+                  <span id="jsBadge" class="badge bg-secondary">waiting</span>
+                </div>
+              </div>
+              <div class="card-body card-body-flush">
+                <textarea id="jsOutput" class="form-control border-0 rounded-0" rows="10"
+                  placeholder="// JS generated by DeepSeek appears here&#10;// You can edit it before running"></textarea>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- steps 3 + 4 side by side -->
+        <div class="row mb-3">
+
+          <!-- step 3: console -->
+          <div class="col-6">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">
+                  <span class="badge bg-blue-lt text-blue me-2">3</span>
+                  Console output
+                </h3>
+                <div class="card-options">
+                  <button id="clearConsole" class="btn btn-sm btn-ghost-danger">Clear</button>
+                </div>
+              </div>
+              <div class="card-body card-body-flush p-0">
+                <div id="consoleOut" class="output-zone">
+                  <span class="text-muted">Console output appears here…</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- step 4: JSON -->
+          <div class="col-6">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">
+                  <span class="badge bg-blue-lt text-blue me-2">4</span>
+                  JSON output
+                </h3>
+                <div class="card-options">
+                  <button id="copyJson" class="btn btn-sm btn-ghost-secondary">Copy</button>
+                  <button id="clearJson" class="btn btn-sm btn-ghost-danger">Clear</button>
+                </div>
+              </div>
+              <div class="card-body card-body-flush p-0">
+                <div id="jsonOut" class="json-zone">
+                  <span class="text-muted">JSON result appears here…</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const apiKeyEl    = document.getElementById('apiKey')
+const modelEl     = document.getElementById('modelSelect')
+const promptEl    = document.getElementById('promptInput')
+const jsOutEl     = document.getElementById('jsOutput')
+const consoleEl   = document.getElementById('consoleOut')
+const jsonOutEl   = document.getElementById('jsonOut')
+const runBtn      = document.getElementById('runBtn')
+const statusBadge = document.getElementById('statusBadge')
+const jsBadge     = document.getElementById('jsBadge')
+
+// ── status helpers ──────────────────────────────────────────
+
+const statusMap = {
+  idle:      'bg-secondary',
+  running:   'bg-blue',
+  success:   'bg-success',
+  error:     'bg-danger',
+  waiting:   'bg-secondary',
+  ready:     'bg-success',
+  generating:'bg-azure',
+}
+
+function setStatus(text, key) {
+  statusBadge.textContent = text
+  statusBadge.className = 'badge ' + (statusMap[key] || 'bg-secondary')
+}
+
+function setJsBadge(text, key) {
+  jsBadge.textContent = text
+  jsBadge.className = 'badge ' + (statusMap[key] || 'bg-secondary')
+}
+
+// ── console output ──────────────────────────────────────────
+
+function clearIfEmpty(el) {
+  if (el.querySelector('span.text-muted')) el.innerHTML = ''
+}
+
+function appendConsole(msg, type) {
+  clearIfEmpty(consoleEl)
+  const d = document.createElement('div')
+  d.textContent = msg
+  if (type === 'err')  d.className = 'out-err'
+  if (type === 'info') d.className = 'out-info'
+  if (type === 'ok')   d.className = 'out-ok'
+  consoleEl.appendChild(d)
+  consoleEl.scrollTop = consoleEl.scrollHeight
+}
+
+function sep(label) {
+  appendConsole('── ' + label + ' ' + '─'.repeat(Math.max(0, 38 - label.length)), 'info')
+}
+
+function showJson(obj) {
+  clearIfEmpty(jsonOutEl)
+  jsonOutEl.textContent = JSON.stringify(obj, null, 2)
+}
+
+// ── clear buttons ───────────────────────────────────────────
+
+document.getElementById('clearConsole').addEventListener('click', () => {
+  consoleEl.innerHTML = '<span class="text-muted">Console output appears here…</span>'
+})
+
+document.getElementById('clearJson').addEventListener('click', () => {
+  jsonOutEl.innerHTML = '<span class="text-muted">JSON result appears here…</span>'
+})
+
+document.getElementById('copyJson').addEventListener('click', () => {
+  const text = jsonOutEl.textContent
+  if (!text || jsonOutEl.querySelector('span.text-muted')) return
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.getElementById('copyJson')
+    const orig = btn.textContent
+    btn.textContent = 'Copied!'
+    setTimeout(() => btn.textContent = orig, 1500)
+  })
+})
+
+// ── DeepSeek API ────────────────────────────────────────────
+
+async function askDeepSeek(apiKey, model, userPrompt) {
+  const system = `You are a JavaScript code generator.
+The user describes what they want JS to do.
+Return ONLY a JSON object with a single key "code" containing the JS as a string.
+No markdown, no backticks, no explanation — just the JSON.
+The code runs in an async browser context (top-level await available).
+If the result is a JSON object or array, assign it to a variable called \`result\` and call \`console.log(JSON.stringify(result))\` at the end.
+Example output: {"code": "const result = {hello: 'world'}; console.log(JSON.stringify(result));"}`
+
+  const resp = await fetch('https://api.deepseek.com/v1/chat/completions', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + apiKey
+    },
+    body: JSON.stringify({
+      model: model,
+      max_tokens: 2048,
+      response_format: { type: 'json_object' },
+      messages: [
+        { role: 'system', content: system },
+        { role: 'user', content: userPrompt + '\n\nReturn JSON with key "code" containing only the JS.' }
+      ]
+    })
+  })
+
+  if (!resp.ok) {
+    const err = await resp.text()
+    throw new Error('DeepSeek ' + resp.status + ': ' + err.slice(0, 200))
+  }
+
+  const data = await resp.json()
+  const raw = data.choices?.[0]?.message?.content || ''
+
+  try {
+    const parsed = JSON.parse(raw)
+    return parsed.code || raw
+  } catch {
+    // strip possible markdown fences
+    return raw.replace(/^```(?:javascript|js)?\n?/i, '').replace(/```\s*$/, '').trim()
+  }
+}
+
+// ── run JS in sandbox ───────────────────────────────────────
+
+async function runJS(code) {
+  const origLog   = console.log
+  const origError = console.error
+  const origWarn  = console.warn
+
+  let jsonResult = null
+
+  console.log = (...args) => {
+    origLog(...args)
+    const msg = args.map(a => typeof a === 'object' ? JSON.stringify(a, null, 2) : String(a)).join(' ')
+    appendConsole(msg)
+    // try to capture JSON from first arg
+    try {
+      const parsed = JSON.parse(typeof args[0] === 'string' ? args[0] : JSON.stringify(args[0]))
+      if (typeof parsed === 'object' && parsed !== null) jsonResult = parsed
+    } catch {}
+  }
+
+  console.error = (...args) => {
+    origError(...args)
+    appendConsole('ERR: ' + args.map(String).join(' '), 'err')
+  }
+
+  console.warn = (...args) => {
+    origWarn(...args)
+    appendConsole('WARN: ' + args.map(String).join(' '))
+  }
+
+  try {
+    const fn = new Function('return (async () => { ' + code + ' })()')
+    const ret = await fn()
+    if (ret !== undefined && ret !== null && typeof ret === 'object') {
+      jsonResult = ret
+    }
+  } finally {
+    console.log   = origLog
+    console.error = origError
+    console.warn  = origWarn
+  }
+
+  return jsonResult
+}
+
+// ── main run ────────────────────────────────────────────────
+
+runBtn.addEventListener('click', async () => {
+  const apiKey = apiKeyEl.value.trim()
+  const model  = modelEl.value
+  const prompt = promptEl.value.trim()
+
+  if (!apiKey) { appendConsole('⚠ Enter your DeepSeek API key first', 'err'); return }
+  if (!prompt) { appendConsole('⚠ Enter a prompt first', 'err'); return }
+
+  runBtn.disabled = true
+  setStatus('generating…', 'running')
+  setJsBadge('generating…', 'generating')
+  sep('step 1 — asking DeepSeek')
+
+  let code
+  try {
+    code = await askDeepSeek(apiKey, model, prompt)
+    jsOutEl.value = code
+    setJsBadge('ready', 'ready')
+    appendConsole('✓ JS received (' + code.split('\n').length + ' lines)', 'ok')
+  } catch(e) {
+    appendConsole('✗ ' + e.message, 'err')
+    setStatus('error', 'error')
+    setJsBadge('error', 'error')
+    runBtn.disabled = false
+    return
+  }
+
+  sep('step 2 — running JS')
+  setStatus('running…', 'running')
+
+  try {
+    const jsonResult = await runJS(code)
+
+    if (jsonResult) {
+      showJson(jsonResult)
+      appendConsole('✓ JSON captured', 'ok')
+    } else {
+      clearIfEmpty(jsonOutEl)
+      jsonOutEl.textContent = '(no JSON result — see console)'
+    }
+
+    setStatus('done ✓', 'success')
+    sep('done')
+
+  } catch(e) {
+    appendConsole('✗ ' + e.message, 'err')
+    setStatus('error', 'error')
+  } finally {
+    runBtn.disabled = false
+  }
+})
+</script>
+</body>
+</html>

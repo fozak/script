@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Repo Explorer</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/core@1.4.0/dist/css/tabler.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+<style>
+  textarea, .mono { font-family: monospace; font-size: 12px; line-height: 1.5; }
+  .output-zone { font-family: monospace; font-size: 12px; line-height: 1.6; padding: 12px; overflow-y: auto; white-space: pre-wrap; background: #f8f9fa; border-radius: 4px; }
+  .out-err  { color: #e53e3e; }
+  .out-info { color: #3b82f6; }
+  .out-ok   { color: #38a169; }
+
+  /* Search results */
+  #resultsPanel { height: 480px; overflow-y: auto; }
+  .result-item { border-bottom: 1px solid #f0f0f0; padding: 6px 10px; cursor: pointer; }
+  .result-item:hover { background: #f8f9fa; }
+  .result-item.selected { background: #e8f0fe; }
+  .result-path { font-family: monospace; font-size: 11px; color: #666; }
+  .result-path mark { background: #fff3cd; color: #333; border-radius: 2px; padding: 0 1px; font-weight: 600; }
+  .result-ext { font-size: 10px; padding: 1px 5px; border-radius: 8px; background: #e9ecef; color: #555; margin-left: 4px; flex-shrink: 0; }
+  .result-ext.scss { background: #fce4f5; color: #c6538c; }
+  .result-ext.html { background: #ffe8e4; color: #e34c26; }
+  .result-ext.md   { background: #e4eeff; color: #4078c0; }
+  .result-ext.ts, .result-ext.js { background: #e4f0ff; color: #3178c6; }
+  .result-ext.json { background: #fff4e4; color: #f0a500; }
+
+  /* Selected files */
+  .sel-item { display: flex; align-items: center; justify-content: space-between; padding: 3px 6px; border-radius: 3px; font-family: monospace; font-size: 11px; }
+  .sel-item:hover { background: #f8f9fa; }
+  .sel-loaded { color: #38a169; }
+  .sel-pending { color: #aaa; }
+  #selectedPanel { max-height: 200px; overflow-y: auto; }
+
+  /* Gitignore textarea */
+  #ignoreRules { height: 120px; resize: vertical; font-family: monospace; font-size: 12px; }
+
+  /* Stats bar */
+  .stat-pill { font-size: 11px; padding: 2px 8px; border-radius: 10px; background: #e9ecef; color: #555; }
+
+  /* Content preview */
+  #contentPreview { height: 200px; overflow-y: auto; font-size: 11px; }
+
+  /* Console */
+  #consoleOut { height: 120px; overflow-y: auto; }
+</style>
+</head>
+<body class="antialiased">
+<div class="page">
+  <div class="page-wrapper">
+    <div class="page-body">
+      <div class="container-xl py-3">
+
+        <!-- Header -->
+        <div class="row mb-3 align-items-center">
+          <div class="col">
+            <h2 class="page-title mb-0">Repo Explorer</h2>
+            <div class="text-muted small">Fetch repo → search paths → select files → load content → inject into AI</div>
+          </div>
+          <div class="col-auto d-flex gap-2">
+            <span id="statusBadge" class="badge bg-secondary">idle</span>
+          </div>
+        </div>
+
+        <div class="row g-3">
+
+          <!-- LEFT COLUMN -->
+          <div class="col-12 col-lg-4">
+
+            <!-- Step 0: AI Config -->
+            <div class="card mb-3">
+              <div class="card-header">
+                <h3 class="card-title"><span class="badge bg-blue-lt text-blue me-2">0</span>AI Config</h3>
+                <div class="card-options">
+                  <button id="runBtn" class="btn btn-sm btn-primary">
+                    <i class="ti ti-player-play me-1"></i>Run
+                  </button>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="mb-2">
+                  <label class="form-label small text-muted mb-1">API Key</label>
+                  <input type="password" id="apiKey" class="form-control form-control-sm mono" placeholder="sk-...">
+                </div>
+                <div class="row g-2">
+                  <div class="col">
+                    <label class="form-label small text-muted mb-1">Model</label>
+                    <select id="modelSelect" class="form-select form-select-sm">
+                      <option value="deepseek-chat">deepseek-chat</option>
+                      <option value="deepseek-reasoner">deepseek-reasoner</option>
+                    </select>
+                  </div>
+                  <div class="col-auto d-flex align-items-end">
+                    <label class="form-check form-switch mb-1">
+                      <input class="form-check-input" type="checkbox" id="injectContext" checked>
+                      <span class="form-check-label small">Inject files</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 1: Repo Source -->
+            <div class="card mb-3">
+              <div class="card-header">
+                <h3 class="card-title"><span class="badge bg-blue-lt text-blue me-2">1</span>Repo Source</h3>
+                <div class="card-options gap-1">
+                  <button id="localDirBtn" class="btn btn-sm btn-outline-secondary">
+                    <i class="ti ti-folder-open"></i>
+                  </button>
+                  <button id="fetchRepoBtn" class="btn btn-sm btn-primary">
+                    <i class="ti ti-brand-github me-1"></i>Fetch
+                  </button>
+                </div>
+              </div>
+              <div class="card-body pb-2">
+                <div class="row g-2 mb-2">
+                  <div class="col">
+                    <input type="text" id="repoInput" class="form-control form-control-sm mono"
+                      placeholder="owner/repo" value="tabler/tabler">
+                  </div>
+                  <div class="col-auto">
+                    <input type="text" id="refInput" class="form-control form-control-sm mono"
+                      placeholder="branch/sha" style="width:90px">
+                  </div>
+                </div>
+                <div id="repoMeta" class="text-muted small"></div>
+              </div>
+            </div>
+
+            <!-- Step 2: Ignore Rules -->
+            <div class="card mb-3">
+              <div class="card-header">
+                <h3 class="card-title"><span class="badge bg-blue-lt text-blue me-2">2</span>.gitignore Filters</h3>
+                <div class="card-options">
+                  <button id="applyIgnore" class="btn btn-sm btn-outline-secondary">Apply</button>
+                </div>
+              </div>
+              <div class="card-body p-2">
+                <textarea id="ignoreRules" class="form-control border-0"
+                  placeholder="# exclude patterns&#10;node_modules/&#10;.git/&#10;*.lock&#10;*.min.js&#10;dist/&#10;*.ttf&#10;*.woff2"
+                >.changeset/
+.github/
+.cursor/
+.vscode/
+*.lock
+*.ttf
+*.woff2
+*.woff
+*.eot
+*.otf
+*.png
+*.jpg
+*.svg
+*.ico
+pnpm-lock.yaml
+package-lock.json</textarea>
+              </div>
+            </div>
+
+            <!-- Selected Files -->
+            <div class="card mb-3">
+              <div class="card-header">
+                <h3 class="card-title"><span class="badge bg-blue-lt text-blue me-2">4</span>Selected Files</h3>
+                <div class="card-options gap-1">
+                  <span id="selectedStat" class="stat-pill">0</span>
+                  <button id="loadContentBtn" class="btn btn-sm btn-primary">
+                    <i class="ti ti-download me-1"></i>Load
+                  </button>
+                  <button id="clearSelBtn" class="btn btn-sm btn-ghost-danger">Clear</button>
+                </div>
+              </div>
+              <div class="card-body p-2">
+                <div id="selectedPanel">
+                  <span class="text-muted small p-1 d-block">No files selected</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Content Preview -->
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title"><span class="badge bg-blue-lt text-blue me-2">5</span>Content Preview</h3>
+                <div class="card-options">
+                  <span id="previewPath" class="text-muted small mono"></span>
+                </div>
+              </div>
+              <div class="card-body p-0">
+                <div id="contentPreview" class="output-zone">
+                  <span class="text-muted">Click a selected file to preview…</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- MIDDLE COLUMN: Search -->
+          <div class="col-12 col-lg-4">
+            <div class="card" style="height: calc(100% - 0px)">
+              <div class="card-header">
+                <h3 class="card-title"><span class="badge bg-blue-lt text-blue me-2">3</span>Search Paths</h3>
+                <div class="card-options">
+                  <span id="searchStat" class="stat-pill">—</span>
+                </div>
+              </div>
+              <div class="card-body p-2">
+                <!-- Search input -->
+                <div class="input-group input-group-sm mb-2">
+                  <span class="input-group-text"><i class="ti ti-search"></i></span>
+                  <input type="text" id="searchInput" class="form-control mono"
+                    placeholder="hero, blog, card, .scss…" autofocus>
+                  <button id="clearSearchBtn" class="btn btn-outline-secondary">×</button>
+                </div>
+                <!-- Ext quick filters -->
+                <div id="extFilters" class="mb-2 d-flex flex-wrap gap-1">
+                  <span class="text-muted small">Load repo to filter by extension</span>
+                </div>
+              </div>
+              <!-- Results -->
+              <div id="resultsPanel" class="border-top">
+                <div class="p-3 text-muted small">Load a repo then search…</div>
+              </div>
+              <!-- Stats footer -->
+              <div class="card-footer py-2 d-flex justify-content-between align-items-center">
+                <span id="totalStat" class="text-muted small">0 total paths</span>
+                <span id="filteredStat" class="text-muted small">0 shown</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- RIGHT COLUMN: Prompt + Output -->
+          <div class="col-12 col-lg-4">
+
+            <!-- Prompt -->
+            <div class="card mb-3">
+              <div class="card-header">
+                <h3 class="card-title"><span class="badge bg-blue-lt text-blue me-2">6</span>Prompt</h3>
+              </div>
+              <div class="card-body p-0">
+                <textarea id="promptInput" class="form-control border-0 rounded-0" rows="7"
+                  placeholder="e.g. How would a tabler hero block look from CSS standpoint?&#10;e.g. What classes does tabler use for blog cards?"></textarea>
+              </div>
+            </div>
+
+            <!-- Generated JS -->
+            <div class="card mb-3">
+              <div class="card-header">
+                <h3 class="card-title"><span class="badge bg-blue-lt text-blue me-2">7</span>Generated JS</h3>
+                <div class="card-options">
+                  <span id="jsBadge" class="badge bg-secondary">waiting</span>
+                </div>
+              </div>
+              <div class="card-body p-0">
+                <textarea id="jsOutput" class="form-control border-0 rounded-0" rows="7"
+                  placeholder="// Generated JS appears here"></textarea>
+              </div>
+            </div>
+
+            <!-- Console -->
+            <div class="card mb-3">
+              <div class="card-header">
+                <h3 class="card-title"><span class="badge bg-blue-lt text-blue me-2">8</span>Console</h3>
+                <div class="card-options">
+                  <button id="clearConsole" class="btn btn-sm btn-ghost-danger">Clear</button>
+                </div>
+              </div>
+              <div class="card-body p-0">
+                <div id="consoleOut" class="output-zone">
+                  <span class="text-muted">Console output…</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- JSON Output -->
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title"><span class="badge bg-blue-lt text-blue me-2">9</span>JSON Output</h3>
+                <div class="card-options gap-1">
+                  <button id="copyJson" class="btn btn-sm btn-ghost-secondary">Copy</button>
+                  <button id="clearJson" class="btn btn-sm btn-ghost-danger">Clear</button>
+                </div>
+              </div>
+              <div class="card-body p-0">
+                <div id="jsonOut" class="output-zone" style="height:120px">
+                  <span class="text-muted">JSON result…</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── State ─────────────────────────────────────────────────────
+let allPaths   = []      // all paths from repo
+let filteredPaths = []   // after gitignore + ext + search
+let selectedFiles = []   // selected paths
+let fileContents  = {}   // path → content
+let activeExts    = new Set()
+let rawBase = ''
+let sourceMode = 'github'
+let dirHandle  = null
+
+// ── DOM ───────────────────────────────────────────────────────
+const searchInput   = document.getElementById('searchInput')
+const resultsPanel  = document.getElementById('resultsPanel')
+const consoleEl     = document.getElementById('consoleOut')
+const jsonOutEl     = document.getElementById('jsonOut')
+const jsOutEl       = document.getElementById('jsOutput')
+const statusBadge   = document.getElementById('statusBadge')
+const jsBadge       = document.getElementById('jsBadge')
+const selectedPanel = document.getElementById('selectedPanel')
+const contentPrev   = document.getElementById('contentPreview')
+
+// ── Gitignore parser ──────────────────────────────────────────
+function parseIgnoreRules(text) {
+  return text.split('\n')
+    .map(l => l.trim())
+    .filter(l => l && !l.startsWith('#'))
+}
+
+function matchesIgnore(path, rules) {
+  for (const rule of rules) {
+    // dir/ → match any path segment
+    if (rule.endsWith('/')) {
+      const dir = rule.slice(0, -1)
+      if (path.split('/').some(seg => seg === dir)) return true
+      continue
+    }
+    // *.ext → match extension
+    if (rule.startsWith('*.')) {
+      const ext = rule.slice(1) // .ext
+      if (path.endsWith(ext)) return true
+      continue
+    }
+    // exact filename
+    const filename = path.split('/').pop()
+    if (filename === rule) return true
+    // exact path
+    if (path === rule || path.startsWith(rule + '/')) return true
+  }
+  return false
+}
+
+// ── Status ────────────────────────────────────────────────────
+const statusMap = { idle:'bg-secondary', running:'bg-blue', success:'bg-success', error:'bg-danger', ready:'bg-success', generating:'bg-azure', waiting:'bg-secondary' }
+const setStatus = (t,k) => { statusBadge.textContent=t; statusBadge.className='badge '+(statusMap[k]||'bg-secondary') }
+const setJsBadge = (t,k) => { jsBadge.textContent=t; jsBadge.className='badge '+(statusMap[k]||'bg-secondary') }
+
+// ── Console ───────────────────────────────────────────────────
+function clearPH(el) { if (el.querySelector('span.text-muted')) el.innerHTML='' }
+function appendConsole(msg, type) {
+  clearPH(consoleEl)
+  const d = document.createElement('div')
+  d.textContent = msg
+  if (type==='err')  d.className='out-err'
+  if (type==='info') d.className='out-info'
+  if (type==='ok')   d.className='out-ok'
+  consoleEl.appendChild(d)
+  consoleEl.scrollTop = consoleEl.scrollHeight
+}
+function sep(label) { appendConsole('── '+label+' '+'─'.repeat(Math.max(0,40-label.length)),'info') }
+
+// ── Fetch repo (GitHub) ───────────────────────────────────────
+document.getElementById('fetchRepoBtn').onclick = async () => {
+  const repo = document.getElementById('repoInput').value.trim()
+  const ref  = document.getElementById('refInput').value.trim()
+  if (!repo) { appendConsole('Enter repo owner/name','err'); return }
+  sourceMode = 'github'
+  setStatus('fetching…','running')
+  sep('fetching: '+repo)
+  try {
+    // step 1 — get default branch if no ref given
+    let branch = ref
+    if (!branch) {
+      const meta = await fetch(`https://api.github.com/repos/${repo}`).then(r=>r.json())
+      if (meta.message) throw new Error(meta.message)
+      branch = meta.default_branch
+      document.getElementById('refInput').value = branch
+    }
+    appendConsole('branch: '+branch, 'info')
+
+    // step 2 — get tree
+    const tree = await fetch(`https://api.github.com/repos/${repo}/git/trees/${branch}?recursive=1`).then(r=>r.json())
+    if (tree.message) throw new Error(tree.message)
+    if (tree.truncated) appendConsole('⚠ tree truncated (>100k files)','err')
+
+    rawBase = `https://raw.githubusercontent.com/${repo}/${branch}/`
+    allPaths = tree.tree.filter(f=>f.type==='blob').map(f=>f.path)
+
+    document.getElementById('repoMeta').textContent = `${allPaths.length} files · branch: ${branch}`
+    appendConsole(`✓ ${allPaths.length} files`, 'ok')
+
+    buildExtFilters()
+    applyFiltersAndRender()
+    setStatus('ready','success')
+  } catch(e) {
+    appendConsole('✗ '+e.message,'err')
+    setStatus('error','error')
+  }
+}
+
+// ── Local dir ─────────────────────────────────────────────────
+document.getElementById('localDirBtn').onclick = async () => {
+  try {
+    dirHandle = await window.showDirectoryPicker()
+    sourceMode = 'local'
+    setStatus('scanning…','running')
+    sep('scanning local dir')
+    allPaths = []
+    fileContents = {}
+    selectedFiles = []
+    rawBase = ''
+    await scanLocal(dirHandle, '')
+    appendConsole(`✓ ${allPaths.length} files`,'ok')
+    document.getElementById('repoMeta').textContent = `${allPaths.length} files · local`
+    buildExtFilters()
+    applyFiltersAndRender()
+    setStatus('ready','success')
+  } catch(e) {
+    if (e.name!=='AbortError') appendConsole('✗ '+e.message,'err')
+  }
+}
+async function scanLocal(handle, prefix) {
+  for await (const [name, h] of handle.entries()) {
+    const path = prefix ? prefix+'/'+name : name
+    if (h.kind==='directory') await scanLocal(h, path)
+    else allPaths.push(path)
+  }
+}
+
+// ── Ext filters ───────────────────────────────────────────────
+function buildExtFilters() {
+  const exts = [...new Set(allPaths.map(p=>{const s=p.split('.'); return s.length>1?s.pop().toLowerCase():''}).filter(Boolean))].sort()
+  const container = document.getElementById('extFilters')
+  container.innerHTML = ''
+  exts.slice(0,20).forEach(ext => {
+    const span = document.createElement('span')
+    span.style.cursor = 'pointer'
+    span.className = 'badge me-1 mb-1 ' + (activeExts.has(ext) ? 'bg-blue text-blue-fg' : 'bg-default text-default-fg')
+    span.textContent = '.'+ext
+    span.onclick = () => {
+      activeExts.has(ext) ? activeExts.delete(ext) : activeExts.add(ext)
+      span.className = 'badge me-1 mb-1 ' + (activeExts.has(ext) ? 'bg-blue text-blue-fg' : 'bg-default text-default-fg')
+      applyFiltersAndRender()
+    }
+    container.appendChild(span)
+  })
+}
+// ── Apply filters + render ────────────────────────────────────
+document.getElementById('applyIgnore').onclick = () => applyFiltersAndRender()
+searchInput.addEventListener('input', () => applyFiltersAndRender())
+document.getElementById('clearSearchBtn').onclick = () => { searchInput.value=''; applyFiltersAndRender() }
+
+function applyFiltersAndRender() {
+  const rules = parseIgnoreRules(document.getElementById('ignoreRules').value)
+  const query = searchInput.value.trim().toLowerCase()
+
+  filteredPaths = allPaths.filter(p => {
+    if (matchesIgnore(p, rules)) return false
+    if (activeExts.size > 0) {
+      const ext = p.split('.').pop().toLowerCase()
+      if (!activeExts.has(ext)) return false
+    }
+    if (query && !p.toLowerCase().includes(query)) return false
+    return true
+  })
+
+  document.getElementById('totalStat').textContent = allPaths.length + ' total'
+  document.getElementById('filteredStat').textContent = filteredPaths.length + ' shown'
+  document.getElementById('searchStat').textContent = filteredPaths.length
+
+  renderResults(query)
+}
+
+// ── Render results ────────────────────────────────────────────
+function renderResults(query) {
+  resultsPanel.innerHTML = ''
+
+  if (!filteredPaths.length) {
+    resultsPanel.innerHTML = '<div class="p-3 text-muted small">No matches</div>'
+    return
+  }
+
+  const MAX = 500
+  const show = filteredPaths.slice(0, MAX)
+
+  show.forEach(path => {
+    const ext = path.split('.').pop().toLowerCase()
+    const isSel = selectedFiles.includes(path)
+
+    const div = document.createElement('div')
+    div.className = 'result-item' + (isSel ? ' selected' : '')
+    div.setAttribute('data-path', path)
+
+    // highlight query in path
+    let displayPath = escapeHtml(path)
+    if (query) {
+      const re = new RegExp('(' + escapeRegex(query) + ')', 'gi')
+      displayPath = displayPath.replace(re, '<mark>$1</mark>')
+    }
+
+    div.innerHTML = `
+      <div class="d-flex align-items-center gap-1">
+        <span class="result-path flex-grow-1">${displayPath}</span>
+        <span class="result-ext ${ext}">${ext}</span>
+        ${isSel ? '<i class="ti ti-check text-success" style="font-size:12px"></i>' : ''}
+      </div>`
+
+    div.onclick = () => toggleSelect(path, div)
+    resultsPanel.appendChild(div)
+  })
+
+  if (filteredPaths.length > MAX) {
+    const d = document.createElement('div')
+    d.className = 'p-2 text-muted small text-center'
+    d.textContent = `+ ${filteredPaths.length - MAX} more — narrow your search`
+    resultsPanel.appendChild(d)
+  }
+}
+
+function escapeHtml(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') }
+function escapeRegex(s) { return s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&') }
+
+// ── Select files ──────────────────────────────────────────────
+function toggleSelect(path, rowEl) {
+  const idx = selectedFiles.indexOf(path)
+  if (idx >= 0) {
+    selectedFiles.splice(idx, 1)
+    if (rowEl) rowEl.classList.remove('selected')
+  } else {
+    selectedFiles.push(path)
+    if (rowEl) rowEl.classList.add('selected')
+  }
+  renderSelectedPanel()
+}
+
+function renderSelectedPanel() {
+  document.getElementById('selectedStat').textContent = selectedFiles.length
+  if (!selectedFiles.length) {
+    selectedPanel.innerHTML = '<span class="text-muted small p-1 d-block">No files selected</span>'
+    return
+  }
+  selectedPanel.innerHTML = ''
+  selectedFiles.forEach(path => {
+    const loaded = !!fileContents[path]
+    const div = document.createElement('div')
+    div.className = 'sel-item'
+    div.innerHTML = `
+      <span class="${loaded?'sel-loaded':'sel-pending'} mono flex-grow-1 overflow-hidden text-truncate" style="cursor:pointer" title="${path}">${path}</span>
+      <button class="btn btn-sm btn-ghost-danger p-0 px-1 ms-1" style="font-size:10px" data-rm="${path}">×</button>`
+    div.querySelector('span').onclick = () => previewFile(path)
+    div.querySelector('[data-rm]').onclick = () => {
+      const p = div.querySelector('[data-rm]').getAttribute('data-rm')
+      selectedFiles = selectedFiles.filter(x=>x!==p)
+      delete fileContents[p]
+      // update result row
+      const row = resultsPanel.querySelector(`[data-path="${p}"]`)
+      if (row) row.classList.remove('selected')
+      renderSelectedPanel()
+    }
+    selectedPanel.appendChild(div)
+  })
+}
+
+// ── Load content ──────────────────────────────────────────────
+document.getElementById('loadContentBtn').onclick = async () => {
+  if (!selectedFiles.length) { appendConsole('No files selected','err'); return }
+  sep('loading content')
+  let lastLoaded = null
+  for (const path of selectedFiles) {
+    if (fileContents[path]) { appendConsole('cached: '+path,'info'); continue }
+    try {
+      if (sourceMode==='github') {
+        const r = await fetch(rawBase + path)
+        if (!r.ok) throw new Error(r.status)
+        fileContents[path] = await r.text()
+      } else {
+        fileContents[path] = await readLocalFile(path)
+      }
+      appendConsole('✓ '+path,'ok')
+      lastLoaded = path
+    } catch(e) {
+      appendConsole('✗ '+path+' — '+e.message,'err')
+    }
+  }
+  renderSelectedPanel()
+  if (lastLoaded) previewFile(lastLoaded)
+}
+
+async function readLocalFile(path) {
+  const parts = path.split('/')
+  let h = dirHandle
+  for (let i=0; i<parts.length-1; i++) h = await h.getDirectoryHandle(parts[i])
+  const fh = await h.getFileHandle(parts[parts.length-1])
+  return (await fh.getFile()).text()
+}
+
+function previewFile(path) {
+  document.getElementById('previewPath').textContent = path.split('/').pop()
+  clearPH(contentPrev)
+  const c = fileContents[path]
+  contentPrev.textContent = c ? c.slice(0,4000)+(c.length>4000?'\n…truncated':'') : path+' — not loaded yet'
+}
+
+// ── AI: build context ─────────────────────────────────────────
+function buildContext() {
+  const loaded = selectedFiles.filter(p=>fileContents[p])
+  if (!loaded.length) return ''
+  return '=== REPO FILES CONTEXT ===\n\n' +
+    loaded.map(p=>`--- FILE: ${p} ---\n${fileContents[p]}`).join('\n\n')
+}
+
+// ── DeepSeek ──────────────────────────────────────────────────
+async function askDeepSeek(apiKey, model, prompt) {
+  const system = `You are a code analyst and JavaScript code generator.
+The user may provide repo file contents as context — use them to answer accurately.
+Return ONLY a JSON object with a single key "code" containing JS as a string.
+No markdown, no backticks — just JSON.
+The code runs in async browser context.
+Assign results to \`result\` and call \`console.log(JSON.stringify(result))\`.`
+
+  const ctx = document.getElementById('injectContext').checked ? buildContext() : ''
+  const full = ctx ? ctx+'\n\nUSER QUESTION:\n'+prompt : prompt
+
+  const r = await fetch('https://api.deepseek.com/v1/chat/completions', {
+    method:'POST',
+    headers:{'Content-Type':'application/json','Authorization':'Bearer '+apiKey},
+    body: JSON.stringify({
+      model, max_tokens:4096,
+      response_format:{type:'json_object'},
+      messages:[{role:'system',content:system},{role:'user',content:full+'\n\nReturn JSON with key "code".'}]
+    })
+  })
+  if (!r.ok) throw new Error('API '+r.status+': '+(await r.text()).slice(0,200))
+  const data = await r.json()
+  const raw = data.choices?.[0]?.message?.content||''
+  try { return JSON.parse(raw).code||raw } catch { return raw.replace(/^```(?:js|javascript)?\n?/i,'').replace(/```\s*$/,'').trim() }
+}
+
+// ── Run JS ────────────────────────────────────────────────────
+async function runJS(code) {
+  const oLog=console.log, oErr=console.error, oWarn=console.warn
+  let json=null
+  console.log=(...a)=>{oLog(...a);const m=a.map(x=>typeof x==='object'?JSON.stringify(x,null,2):String(x)).join(' ');appendConsole(m);try{const p=JSON.parse(typeof a[0]==='string'?a[0]:JSON.stringify(a[0]));if(typeof p==='object'&&p)json=p}catch{}}
+  console.error=(...a)=>{oErr(...a);appendConsole('ERR: '+a.map(String).join(' '),'err')}
+  console.warn=(...a)=>{oWarn(...a);appendConsole('WARN: '+a.map(String).join(' '))}
+  try{const fn=new Function('return (async()=>{'+code+'})()')
+    const ret=await fn()
+    if(ret&&typeof ret==='object')json=ret
+  }finally{console.log=oLog;console.error=oErr;console.warn=oWarn}
+  return json
+}
+
+// ── Main run ──────────────────────────────────────────────────
+document.getElementById('runBtn').onclick = async () => {
+  const apiKey = document.getElementById('apiKey').value.trim()
+  const model  = document.getElementById('modelSelect').value
+  const prompt = document.getElementById('promptInput').value.trim()
+  if (!apiKey) { appendConsole('⚠ Enter API key','err'); return }
+  if (!prompt) { appendConsole('⚠ Enter prompt','err'); return }
+
+  document.getElementById('runBtn').disabled=true
+  setStatus('generating…','running'); setJsBadge('generating…','generating')
+  sep('asking AI')
+
+  const loaded = selectedFiles.filter(p=>fileContents[p])
+  appendConsole(`context: ${loaded.length} files injected`,'info')
+
+  let code
+  try {
+    code = await askDeepSeek(apiKey, model, prompt)
+    jsOutEl.value = code
+    setJsBadge('ready','ready')
+    appendConsole('✓ JS received ('+code.split('\n').length+' lines)','ok')
+  } catch(e) {
+    appendConsole('✗ '+e.message,'err')
+    setStatus('error','error'); setJsBadge('error','error')
+    document.getElementById('runBtn').disabled=false; return
+  }
+
+  sep('running JS')
+  setStatus('running…','running')
+  try {
+    const res = await runJS(code)
+    clearPH(jsonOutEl)
+    jsonOutEl.textContent = res ? JSON.stringify(res,null,2) : '(no JSON — see console)'
+    setStatus('done ✓','success')
+    sep('done')
+  } catch(e) {
+    appendConsole('✗ '+e.message,'err')
+    setStatus('error','error')
+  } finally {
+    document.getElementById('runBtn').disabled=false
+  }
+}
+
+// ── Clear / copy ──────────────────────────────────────────────
+document.getElementById('clearConsole').onclick = ()=>{ consoleEl.innerHTML='<span class="text-muted">Console output…</span>' }
+document.getElementById('clearJson').onclick    = ()=>{ jsonOutEl.innerHTML='<span class="text-muted">JSON result…</span>' }
+document.getElementById('clearSelBtn').onclick  = ()=>{ selectedFiles=[]; fileContents={}; resultsPanel.querySelectorAll('.result-item.selected').forEach(el=>el.classList.remove('selected')); renderSelectedPanel() }
+document.getElementById('copyJson').onclick = ()=>{
+  const t=jsonOutEl.textContent
+  if(!t||jsonOutEl.querySelector('span.text-muted'))return
+  navigator.clipboard.writeText(t).then(()=>{
+    const b=document.getElementById('copyJson'); const o=b.textContent
+    b.textContent='Copied!'; setTimeout(()=>b.textContent=o,1500)
+  })
+}
+</script>
+</body>
+</html>

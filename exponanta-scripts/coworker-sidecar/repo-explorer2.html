@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Repo Explorer</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/core@1.4.0/dist/css/tabler.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+<style>
+  .mono { font-family: monospace; }
+  textarea { font-family: monospace; font-size: 12px; }
+
+  /* Search results */
+  .result-file { border: 1px solid var(--tblr-border-color); border-radius: 4px; margin-bottom: 8px; overflow: hidden; }
+  .result-file-header { display: flex; align-items: center; gap: 8px; padding: 6px 10px; background: var(--tblr-bg-surface); cursor: pointer; user-select: none; }
+  .result-file-header:hover { background: var(--tblr-bg-surface-secondary); }
+  .result-file-header .path { font-family: monospace; font-size: 12px; color: var(--tblr-link-color); flex: 1; }
+  .result-file-header .ext-badge { font-size: 10px; }
+  .result-file-header .match-count { font-size: 11px; color: var(--tblr-muted); }
+
+  /* Code snippet */
+  .result-snippet { display: none; border-top: 1px solid var(--tblr-border-color); }
+  .result-snippet.open { display: block; }
+  .snippet-line { display: flex; font-family: monospace; font-size: 11px; line-height: 1.6; }
+  .snippet-line:hover { background: var(--tblr-bg-surface-secondary); }
+  .snippet-line.match-line { background: #fff8e1; }
+  .snippet-line .ln { min-width: 40px; padding: 0 8px; text-align: right; color: var(--tblr-muted); border-right: 1px solid var(--tblr-border-color); user-select: none; background: var(--tblr-bg-surface); flex-shrink: 0; }
+  .snippet-line .lc { padding: 0 10px; white-space: pre; overflow-x: auto; flex: 1; }
+  .snippet-line mark { background: #ffe082; padding: 0 1px; border-radius: 2px; font-weight: 600; }
+  .snippet-sep { font-family: monospace; font-size: 11px; color: var(--tblr-muted); padding: 2px 10px; background: var(--tblr-bg-surface); border-top: 1px solid var(--tblr-border-color); border-bottom: 1px solid var(--tblr-border-color); }
+
+  /* Results panel */
+  #resultsPanel { height: 100%; overflow-y: auto; }
+  .results-scroll { max-height: 600px; overflow-y: auto; padding: 8px; }
+
+  /* Console */
+  .console-out { font-family: monospace; font-size: 11px; line-height: 1.5; padding: 8px; min-height: 60px; max-height: 150px; overflow-y: auto; white-space: pre-wrap; background: var(--tblr-bg-surface); }
+  .out-err  { color: #e53e3e; }
+  .out-info { color: #3b82f6; }
+  .out-ok   { color: #38a169; }
+
+  /* Filter pills */
+  .filter-pill { font-size: 11px; padding: 2px 8px; border-radius: 10px; cursor: pointer; display: inline-block; margin: 2px; border: 1px solid var(--tblr-border-color); background: var(--tblr-bg-surface); color: var(--tblr-body-color); }
+  .filter-pill:hover { background: var(--tblr-bg-surface-secondary); }
+  .filter-pill.active { background: var(--tblr-primary); color: #fff; border-color: var(--tblr-primary); }
+
+  /* Dir checkboxes */
+  .dir-list { max-height: 140px; overflow-y: auto; }
+  .dir-list .form-check { margin-bottom: 2px; }
+  .dir-list .form-check-label { font-family: monospace; font-size: 12px; }
+
+  /* Selected paths list */
+  .sel-path { display: flex; align-items: center; justify-content: space-between; padding: 2px 6px; font-family: monospace; font-size: 11px; border-radius: 3px; }
+  .sel-path:hover { background: var(--tblr-bg-surface-secondary); }
+  #selectedList { max-height: 120px; overflow-y: auto; }
+
+  /* Path list (browse) */
+  .path-item { padding: 3px 8px; font-family: monospace; font-size: 11px; cursor: pointer; border-radius: 3px; display: flex; align-items: center; justify-content: space-between; }
+  .path-item:hover { background: var(--tblr-bg-surface-secondary); }
+  .path-item.selected { background: #e8f0fe; }
+  .path-item mark { background: #ffe082; padding: 0; border-radius: 1px; font-weight: 600; }
+  #pathList { max-height: 320px; overflow-y: auto; }
+
+  .step-no { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; border-radius: 50%; background: var(--tblr-primary-lt); color: var(--tblr-primary); font-size: 11px; font-weight: 700; margin-right: 6px; flex-shrink: 0; }
+</style>
+</head>
+<body class="antialiased">
+<div class="page">
+  <div class="page-wrapper">
+    <div class="page-body">
+      <div class="container-xl py-3">
+
+        <!-- Header -->
+        <div class="row mb-3 align-items-center">
+          <div class="col">
+            <h2 class="page-title mb-0">Repo File Explorer</h2>
+            <div class="text-muted small">Browse repo → filter → select files → search content</div>
+          </div>
+          <div class="col-auto">
+            <span id="statusBadge" class="badge bg-default text-default-fg">idle</span>
+          </div>
+        </div>
+
+        <div class="row g-3">
+
+          <!-- LEFT: Config + Filters -->
+          <div class="col-12 col-lg-3">
+
+            <!-- Repo source -->
+            <div class="card mb-3">
+              <div class="card-header">
+                <h3 class="card-title"><span class="step-no">1</span>Source</h3>
+                <div class="card-options gap-1">
+                  <button id="localBtn" class="btn btn-sm btn-outline-secondary" title="Local directory">
+                    <i class="ti ti-folder-open"></i>
+                  </button>
+                  <button id="fetchBtn" class="btn btn-sm btn-primary">
+                    <i class="ti ti-brand-github me-1"></i>Fetch
+                  </button>
+                </div>
+              </div>
+              <div class="card-body pb-2">
+                <div class="row g-2">
+                  <div class="col">
+                    <input type="text" id="repoInput" class="form-control form-control-sm mono" placeholder="owner/repo" value="tabler/tabler">
+                  </div>
+                  <div class="col-auto">
+                    <input type="text" id="refInput" class="form-control form-control-sm mono" placeholder="branch" style="width:80px">
+                  </div>
+                </div>
+                <div id="repoMeta" class="text-muted small mt-1"></div>
+              </div>
+            </div>
+
+            <!-- Include / Exclude -->
+            <div class="card mb-3">
+              <div class="card-header">
+                <h3 class="card-title"><span class="step-no">2</span>Include / Exclude</h3>
+                <div class="card-options">
+                  <button id="applyFiltersBtn" class="btn btn-sm btn-outline-secondary">Apply</button>
+                </div>
+              </div>
+              <div class="card-body pb-2">
+                <label class="form-label small text-muted mb-1">Include paths (one per line)</label>
+                <textarea id="includeRules" class="form-control mb-2" rows="3" placeholder="shared/includes/&#10;core/scss/&#10;*.md"></textarea>
+                <label class="form-label small text-muted mb-1">Exclude paths (one per line)</label>
+                <textarea id="excludeRules" class="form-control" rows="4" placeholder=".changeset/&#10;*.lock&#10;*.ttf">.changeset/
+.github/
+.cursor/
+.vscode/
+*.lock
+*.ttf
+*.woff2
+*.woff
+*.eot
+*.otf
+*.png
+*.jpg
+*.svg
+*.ico
+pnpm-lock.yaml
+package-lock.json
+node_modules/</textarea>
+              </div>
+            </div>
+
+            <!-- Extension filters -->
+            <div class="card mb-3">
+              <div class="card-header">
+                <h3 class="card-title"><span class="step-no">3</span>Extensions</h3>
+                <div class="card-options gap-1">
+                  <button id="extAllBtn" class="btn btn-sm btn-ghost-secondary" style="font-size:11px">All</button>
+                  <button id="extNoneBtn" class="btn btn-sm btn-ghost-secondary" style="font-size:11px">None</button>
+                </div>
+              </div>
+              <div class="card-body pb-2">
+                <div id="extPills"><span class="text-muted small">Load repo first</span></div>
+              </div>
+            </div>
+
+            <!-- Top dirs -->
+            <div class="card mb-3">
+              <div class="card-header">
+                <h3 class="card-title"><span class="step-no">4</span>Top Dirs</h3>
+                <div class="card-options gap-1">
+                  <button id="dirAllBtn" class="btn btn-sm btn-ghost-secondary" style="font-size:11px">All</button>
+                  <button id="dirNoneBtn" class="btn btn-sm btn-ghost-secondary" style="font-size:11px">None</button>
+                </div>
+              </div>
+              <div class="card-body pb-2">
+                <div id="dirList" class="dir-list"><span class="text-muted small">Load repo first</span></div>
+              </div>
+            </div>
+
+            <!-- Console -->
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title text-muted" style="font-size:12px">Console</h3>
+                <div class="card-options">
+                  <button id="clearConsoleBtn" class="btn btn-sm btn-ghost-danger" style="font-size:11px">Clear</button>
+                </div>
+              </div>
+              <div class="card-body p-0">
+                <div id="consoleOut" class="console-out"><span class="text-muted">…</span></div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- MIDDLE: Path list + selection -->
+          <div class="col-12 col-lg-4">
+            <div class="card h-100">
+              <div class="card-header">
+                <h3 class="card-title"><span class="step-no">5</span>File Paths</h3>
+                <div class="card-options">
+                  <span id="pathStat" class="text-muted small"></span>
+                </div>
+              </div>
+              <div class="card-body p-2">
+                <!-- Search input -->
+                <div class="input-group input-group-sm mb-2">
+                  <span class="input-group-text"><i class="ti ti-search"></i></span>
+                  <input type="text" id="searchInput" class="form-control mono" placeholder="filter paths…">
+                  <button id="clearSearchBtn" class="btn btn-outline-secondary">×</button>
+                </div>
+                <!-- Path list -->
+                <div id="pathList">
+                  <div class="text-muted small p-2">Load a repo to browse files</div>
+                </div>
+              </div>
+              <!-- Selected files -->
+              <div class="card-footer p-2">
+                <div class="d-flex align-items-center justify-content-between mb-1">
+                  <span class="text-muted small fw-semibold">Selected (<span id="selCount">0</span>)</span>
+                  <div class="d-flex gap-1">
+                    <button id="clearSelBtn" class="btn btn-sm btn-ghost-danger" style="font-size:11px">Clear</button>
+                    <button id="loadSearchBtn" class="btn btn-sm btn-primary">
+                      <i class="ti ti-search me-1"></i>Load &amp; Search
+                    </button>
+                  </div>
+                </div>
+                <div id="selectedList">
+                  <span class="text-muted small">Click paths above to select</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- RIGHT: Search results (GitHub style) -->
+          <div class="col-12 col-lg-5">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title"><span class="step-no">6</span>Search Results</h3>
+                <div class="card-options gap-2">
+                  <div class="input-group input-group-sm" style="width:180px">
+                    <span class="input-group-text"><i class="ti ti-search"></i></span>
+                    <input type="text" id="contentSearchInput" class="form-control mono" placeholder="search in files…">
+                  </div>
+                  <span id="resultStat" class="text-muted small"></span>
+                </div>
+              </div>
+              <div class="card-body p-0">
+                <div class="results-scroll" id="resultsScroll">
+                  <div class="text-muted small p-3">Select files and click "Load &amp; Search"</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── State ─────────────────────────────────────────────────────
+let allPaths      = []
+let filteredPaths = []
+let selectedFiles = []
+let fileContents  = {}
+let activeExts    = new Set()
+let activeDirs    = new Set()
+let rawBase       = ''
+let sourceMode    = 'github'
+let dirHandle     = null
+
+// ── DOM ───────────────────────────────────────────────────────
+const consoleEl    = document.getElementById('consoleOut')
+const pathList     = document.getElementById('pathList')
+const selectedList = document.getElementById('selectedList')
+const resultsScroll= document.getElementById('resultsScroll')
+const statusBadge  = document.getElementById('statusBadge')
+const searchInput  = document.getElementById('searchInput')
+
+// ── Status / console ─────────────────────────────────────────
+function setStatus(t,k) {
+  const map = {idle:'bg-default text-default-fg', running:'bg-blue text-blue-fg', success:'bg-success text-success-fg', error:'bg-danger text-danger-fg', ready:'bg-success text-success-fg'}
+  statusBadge.textContent = t
+  statusBadge.className = 'badge ' + (map[k]||'bg-default text-default-fg')
+}
+function clearPH(el) { if (el.querySelector('span.text-muted')) el.innerHTML = '' }
+function log(msg, type) {
+  clearPH(consoleEl)
+  const d = document.createElement('div')
+  d.textContent = msg
+  if (type==='err')  d.className='out-err'
+  if (type==='info') d.className='out-info'
+  if (type==='ok')   d.className='out-ok'
+  consoleEl.appendChild(d)
+  consoleEl.scrollTop = consoleEl.scrollHeight
+}
+
+// ── Parse rules (gitignore-style) ────────────────────────────
+function parseRules(text) {
+  return text.split('\n').map(l=>l.trim()).filter(l=>l&&!l.startsWith('#'))
+}
+function matchRule(path, rule) {
+  if (rule.endsWith('/')) {
+    const dir = rule.slice(0,-1)
+    return path.split('/').some(s=>s===dir)
+  }
+  if (rule.startsWith('*.')) {
+    return path.endsWith(rule.slice(1))
+  }
+  const fn = path.split('/').pop()
+  return fn === rule || path === rule || path.startsWith(rule+'/')
+}
+function matchesInclude(path, rules) {
+  if (!rules.length) return true
+  return rules.some(r => matchRule(path, r) || path.startsWith(r))
+}
+function matchesExclude(path, rules) {
+  return rules.some(r => matchRule(path, r))
+}
+
+// ── Fetch repo ────────────────────────────────────────────────
+document.getElementById('fetchBtn').onclick = async () => {
+  const repo = document.getElementById('repoInput').value.trim()
+  let ref = document.getElementById('refInput').value.trim()
+  if (!repo) { log('Enter repo owner/name','err'); return }
+  sourceMode = 'github'
+  setStatus('fetching…','running')
+  log('fetching: '+repo,'info')
+  try {
+    if (!ref) {
+      const meta = await fetch(`https://api.github.com/repos/${repo}`).then(r=>r.json())
+      if (meta.message) throw new Error(meta.message)
+      ref = meta.default_branch
+      document.getElementById('refInput').value = ref
+    }
+    log('branch: '+ref,'info')
+    const tree = await fetch(`https://api.github.com/repos/${repo}/git/trees/${ref}?recursive=1`).then(r=>r.json())
+    if (tree.message) throw new Error(tree.message)
+    if (tree.truncated) log('⚠ tree truncated','err')
+    rawBase = `https://raw.githubusercontent.com/${repo}/${ref}/`
+    allPaths = tree.tree.filter(f=>f.type==='blob').map(f=>f.path)
+    document.getElementById('repoMeta').textContent = `${allPaths.length} files · ${ref}`
+    log(`✓ ${allPaths.length} files`,'ok')
+    fileContents = {}; selectedFiles = []
+    buildExtPills(); buildDirList(); applyAndRender()
+    setStatus('ready','success')
+  } catch(e) { log('✗ '+e.message,'err'); setStatus('error','error') }
+}
+
+// ── Local dir ─────────────────────────────────────────────────
+document.getElementById('localBtn').onclick = async () => {
+  try {
+    dirHandle = await window.showDirectoryPicker()
+    sourceMode = 'local'; rawBase = ''
+    setStatus('scanning…','running'); log('scanning…','info')
+    allPaths = []; fileContents = []; selectedFiles = []
+    await scanLocal(dirHandle,'')
+    log(`✓ ${allPaths.length} files`,'ok')
+    document.getElementById('repoMeta').textContent = `${allPaths.length} files · local`
+    buildExtPills(); buildDirList(); applyAndRender()
+    setStatus('ready','success')
+  } catch(e) { if(e.name!=='AbortError') log('✗ '+e.message,'err') }
+}
+async function scanLocal(h, prefix) {
+  for await (const [name, ch] of h.entries()) {
+    const p = prefix ? prefix+'/'+name : name
+    if (ch.kind==='directory') await scanLocal(ch, p)
+    else allPaths.push(p)
+  }
+}
+
+// ── Build ext pills ───────────────────────────────────────────
+function buildExtPills() {
+  const exts = [...new Set(allPaths.map(p=>{const s=p.split('.'); return s.length>1?s.pop().toLowerCase():''}).filter(Boolean))].sort()
+  // default active: scss html md ts js
+  const defaultActive = new Set(['scss','html','md','ts','js','json'])
+  activeExts = new Set(exts.filter(e=>defaultActive.has(e)))
+  const c = document.getElementById('extPills')
+  c.innerHTML = ''
+  exts.forEach(ext => {
+    const span = document.createElement('span')
+    span.className = 'filter-pill' + (activeExts.has(ext) ? ' active' : '')
+    span.textContent = '.'+ext
+    span.onclick = () => {
+      activeExts.has(ext) ? activeExts.delete(ext) : activeExts.add(ext)
+      span.classList.toggle('active')
+      applyAndRender()
+    }
+    c.appendChild(span)
+  })
+}
+document.getElementById('extAllBtn').onclick  = () => { document.querySelectorAll('#extPills .filter-pill').forEach(p=>{p.classList.add('active'); activeExts.add(p.textContent.slice(1))}); applyAndRender() }
+document.getElementById('extNoneBtn').onclick = () => { document.querySelectorAll('#extPills .filter-pill').forEach(p=>{p.classList.remove('active')}); activeExts.clear(); applyAndRender() }
+
+// ── Build dir checkboxes ──────────────────────────────────────
+function buildDirList() {
+  const topDirs = [...new Set(allPaths.map(p=>p.split('/')[0]))].sort()
+  // default: exclude dotfiles
+  activeDirs = new Set(topDirs.filter(d=>!d.startsWith('.')))
+  const c = document.getElementById('dirList')
+  c.innerHTML = ''
+  topDirs.forEach(dir => {
+    const checked = activeDirs.has(dir)
+    const div = document.createElement('div')
+    div.className = 'form-check'
+    div.innerHTML = `<input class="form-check-input" type="checkbox" id="dir_${dir}" ${checked?'checked':''}><label class="form-check-label mono" for="dir_${dir}">${dir}/</label>`
+    div.querySelector('input').onchange = (e) => {
+      e.target.checked ? activeDirs.add(dir) : activeDirs.delete(dir)
+      applyAndRender()
+    }
+    c.appendChild(div)
+  })
+}
+document.getElementById('dirAllBtn').onclick  = () => { document.querySelectorAll('#dirList input').forEach(i=>{i.checked=true; activeDirs.add(i.id.replace('dir_',''))}); applyAndRender() }
+document.getElementById('dirNoneBtn').onclick = () => { document.querySelectorAll('#dirList input').forEach(i=>{i.checked=false}); activeDirs.clear(); applyAndRender() }
+
+// ── Apply filters + render path list ─────────────────────────
+document.getElementById('applyFiltersBtn').onclick = applyAndRender
+searchInput.addEventListener('input', applyAndRender)
+document.getElementById('clearSearchBtn').onclick = () => { searchInput.value=''; applyAndRender() }
+
+function applyAndRender() {
+  const includeRules = parseRules(document.getElementById('includeRules').value)
+  const excludeRules = parseRules(document.getElementById('excludeRules').value)
+  const query = searchInput.value.trim().toLowerCase()
+
+  filteredPaths = allPaths.filter(p => {
+    const topDir = p.split('/')[0]
+    if (!activeDirs.has(topDir)) return false
+    const ext = p.split('.').pop().toLowerCase()
+    if (activeExts.size > 0 && !activeExts.has(ext)) return false
+    if (!matchesInclude(p, includeRules)) return false
+    if (matchesExclude(p, excludeRules)) return false
+    if (query && !p.toLowerCase().includes(query)) return false
+    return true
+  })
+
+  document.getElementById('pathStat').textContent = `${filteredPaths.length} / ${allPaths.length}`
+  renderPathList(query)
+}
+
+function renderPathList(query) {
+  pathList.innerHTML = ''
+  if (!filteredPaths.length) {
+    pathList.innerHTML = '<div class="text-muted small p-2">No matches</div>'; return
+  }
+  const MAX = 300
+  filteredPaths.slice(0, MAX).forEach(path => {
+    const ext = path.split('.').pop().toLowerCase()
+    const isSel = selectedFiles.includes(path)
+    const div = document.createElement('div')
+    div.className = 'path-item' + (isSel ? ' selected' : '')
+    div.setAttribute('data-path', path)
+
+    let displayPath = escHtml(path)
+    if (query) displayPath = displayPath.replace(new RegExp('('+escRe(query)+')','gi'), '<mark>$1</mark>')
+
+    // ext color class
+    const extColors = {scss:'text-pink',html:'text-orange',md:'text-blue',ts:'text-azure',js:'text-azure',json:'text-yellow'}
+    const extClass = extColors[ext] || 'text-muted'
+
+    div.innerHTML = `<span class="mono flex-grow-1" style="font-size:11px">${displayPath}</span><span class="badge bg-default text-default-fg ms-1" style="font-size:10px">${ext}</span>`
+    if (isSel) div.innerHTML += ' <i class="ti ti-check text-success" style="font-size:11px"></i>'
+
+    div.onclick = () => toggleSelect(path, div)
+    pathList.appendChild(div)
+  })
+  if (filteredPaths.length > MAX) {
+    const d = document.createElement('div')
+    d.className = 'text-muted small text-center py-1'
+    d.textContent = `+${filteredPaths.length-MAX} more — narrow filter`
+    pathList.appendChild(d)
+  }
+}
+
+// ── Select ────────────────────────────────────────────────────
+function toggleSelect(path, rowEl) {
+  const idx = selectedFiles.indexOf(path)
+  if (idx >= 0) { selectedFiles.splice(idx,1); rowEl&&rowEl.classList.remove('selected') }
+  else { selectedFiles.push(path); rowEl&&rowEl.classList.add('selected') }
+  renderSelectedList()
+}
+
+function renderSelectedList() {
+  document.getElementById('selCount').textContent = selectedFiles.length
+  if (!selectedFiles.length) {
+    selectedList.innerHTML = '<span class="text-muted small">Click paths above to select</span>'; return
+  }
+  selectedList.innerHTML = ''
+  selectedFiles.forEach(path => {
+    const loaded = !!fileContents[path]
+    const div = document.createElement('div')
+    div.className = 'sel-path'
+    div.innerHTML = `
+      <span class="mono flex-grow-1 text-truncate" title="${path}" style="color:${loaded?'var(--tblr-success)':'var(--tblr-muted)'}">
+        ${loaded?'<i class="ti ti-check" style="font-size:10px"></i> ':'○ '}${path.split('/').pop()}
+      </span>
+      <button class="btn btn-sm btn-ghost-danger p-0 px-1" style="font-size:10px" data-rm="${path}">×</button>`
+    div.querySelector('[data-rm]').onclick = () => {
+      selectedFiles = selectedFiles.filter(x=>x!==path)
+      delete fileContents[path]
+      const row = pathList.querySelector(`[data-path="${path}"]`)
+      if (row) row.classList.remove('selected')
+      renderSelectedList()
+    }
+    selectedList.appendChild(div)
+  })
+}
+
+// ── Load & Search ─────────────────────────────────────────────
+document.getElementById('loadSearchBtn').onclick = async () => {
+  if (!selectedFiles.length) { log('No files selected','err'); return }
+  log('loading '+selectedFiles.length+' files…','info')
+  setStatus('loading…','running')
+
+  for (const path of selectedFiles) {
+    if (fileContents[path]) { log('cached: '+path,'info'); continue }
+    try {
+      if (sourceMode==='github') {
+        const r = await fetch(rawBase+path)
+        if (!r.ok) throw new Error(r.status)
+        fileContents[path] = await r.text()
+      } else {
+        fileContents[path] = await readLocal(path)
+      }
+      log('✓ '+path,'ok')
+    } catch(e) { log('✗ '+path+' — '+e.message,'err') }
+  }
+
+  setStatus('ready','success')
+  renderResults()
+}
+
+async function readLocal(path) {
+  const parts = path.split('/')
+  let h = dirHandle
+  for (let i=0;i<parts.length-1;i++) h = await h.getDirectoryHandle(parts[i])
+  return (await (await h.getFileHandle(parts[parts.length-1])).getFile()).text()
+}
+
+// ── Render GitHub-style results ───────────────────────────────
+document.getElementById('contentSearchInput').addEventListener('input', renderResults)
+
+function renderResults() {
+  const keyword = document.getElementById('contentSearchInput').value.trim()
+  resultsScroll.innerHTML = ''
+
+  const loaded = selectedFiles.filter(p=>fileContents[p])
+  if (!loaded.length) {
+    resultsScroll.innerHTML = '<div class="text-muted small p-3">No files loaded yet</div>'; return
+  }
+
+  let totalMatches = 0
+
+  loaded.forEach(path => {
+    const content = fileContents[path]
+    const ext = path.split('.').pop().toLowerCase()
+    const lines = content.split('\n')
+
+    // find matching lines
+    let matchBlocks = []
+    if (keyword) {
+      const kw = keyword.toLowerCase()
+      const matchLines = []
+      lines.forEach((line,i) => { if (line.toLowerCase().includes(kw)) matchLines.push(i) })
+      if (!matchLines.length) return // skip file if no matches
+      matchBlocks = buildBlocks(matchLines, lines.length, 2)
+      totalMatches += matchLines.length
+    }
+
+    // file container
+    const fileDiv = document.createElement('div')
+    fileDiv.className = 'result-file'
+
+    // header
+    const extColors = {scss:'bg-pink-lt text-pink-fg',html:'bg-orange-lt text-orange-fg',md:'bg-blue-lt text-blue-fg',ts:'bg-azure-lt text-azure-fg',js:'bg-azure-lt text-azure-fg',json:'bg-yellow-lt text-yellow-fg'}
+    const extClass = extColors[ext] || 'bg-default text-default-fg'
+    const matchCount = keyword ? matchBlocks.reduce((a,b)=>a+b.matchLines.length,0) : ''
+    const matchBadge = keyword && matchCount ? `<span class="badge bg-default text-default-fg ms-1" style="font-size:10px">${matchCount} match${matchCount>1?'es':''}</span>` : ''
+
+    const header = document.createElement('div')
+    header.className = 'result-file-header'
+    header.innerHTML = `
+      <i class="ti ti-file-code text-muted" style="font-size:14px"></i>
+      <span class="path">${escHtml(path)}</span>
+      <span class="badge ${extClass} ext-badge">${ext}</span>
+      ${matchBadge}
+      <i class="ti ti-chevron-down text-muted" style="font-size:12px"></i>`
+
+    const snippet = document.createElement('div')
+    snippet.className = 'result-snippet'
+
+    // toggle open/close
+    header.onclick = () => {
+      snippet.classList.toggle('open')
+      header.querySelector('.ti-chevron-down, .ti-chevron-up').className =
+        snippet.classList.contains('open') ? 'ti ti-chevron-up text-muted' : 'ti ti-chevron-down text-muted'
+      if (snippet.classList.contains('open') && !snippet.dataset.rendered) {
+        renderSnippet(snippet, lines, keyword, matchBlocks)
+        snippet.dataset.rendered = '1'
+      }
+    }
+
+    // auto-open if keyword matches
+    if (keyword && matchBlocks.length) {
+      snippet.classList.add('open')
+      renderSnippet(snippet, lines, keyword, matchBlocks)
+      snippet.dataset.rendered = '1'
+      header.querySelector('.ti-chevron-down').className = 'ti ti-chevron-up text-muted'
+    }
+
+    fileDiv.appendChild(header)
+    fileDiv.appendChild(snippet)
+    resultsScroll.appendChild(fileDiv)
+  })
+
+  // stats
+  const shown = resultsScroll.querySelectorAll('.result-file').length
+  document.getElementById('resultStat').textContent =
+    keyword ? `${shown} files · ${totalMatches} matches` : `${loaded.length} files loaded`
+
+  if (!shown && keyword) {
+    resultsScroll.innerHTML = '<div class="text-muted small p-3">No matches for "'+escHtml(keyword)+'"</div>'
+  }
+}
+
+function buildBlocks(matchLines, totalLines, ctx) {
+  const blocks = []
+  let cur = null
+  matchLines.forEach(i => {
+    const start = Math.max(0, i-ctx)
+    const end   = Math.min(totalLines-1, i+ctx)
+    if (!cur || start > cur.end+1) {
+      if (cur) blocks.push(cur)
+      cur = { start, end, matchLines:[i] }
+    } else {
+      cur.end = Math.max(cur.end, end)
+      cur.matchLines.push(i)
+    }
+  })
+  if (cur) blocks.push(cur)
+  return blocks
+}
+
+function renderSnippet(container, lines, keyword, blocks) {
+  if (!blocks.length) {
+    // no keyword — show first 20 lines
+    const preview = lines.slice(0,20)
+    preview.forEach((line,i) => {
+      container.appendChild(makeLine(i, line, keyword, false))
+    })
+    if (lines.length > 20) {
+      const sep = document.createElement('div')
+      sep.className = 'snippet-sep'
+      sep.textContent = `… ${lines.length-20} more lines`
+      container.appendChild(sep)
+    }
+    return
+  }
+
+  blocks.forEach((block, bi) => {
+    if (bi > 0) {
+      const sep = document.createElement('div')
+      sep.className = 'snippet-sep'
+      sep.textContent = '…'
+      container.appendChild(sep)
+    }
+    for (let i=block.start; i<=block.end; i++) {
+      const isMatch = block.matchLines.includes(i)
+      container.appendChild(makeLine(i, lines[i]||'', keyword, isMatch))
+    }
+  })
+}
+
+function makeLine(lineIdx, text, keyword, isMatch) {
+  const div = document.createElement('div')
+  div.className = 'snippet-line' + (isMatch ? ' match-line' : '')
+  const ln = document.createElement('span')
+  ln.className = 'ln'
+  ln.textContent = lineIdx+1
+  const lc = document.createElement('span')
+  lc.className = 'lc'
+  let html = escHtml(text)
+  if (keyword && isMatch) {
+    html = html.replace(new RegExp('('+escRe(escHtml(keyword))+')','gi'), '<mark>$1</mark>')
+  }
+  lc.innerHTML = html
+  div.appendChild(ln)
+  div.appendChild(lc)
+  return div
+}
+
+// ── Utils ─────────────────────────────────────────────────────
+function escHtml(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') }
+function escRe(s)   { return s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&') }
+
+document.getElementById('clearConsoleBtn').onclick = () => { consoleEl.innerHTML='<span class="text-muted">…</span>' }
+document.getElementById('clearSelBtn').onclick = () => {
+  selectedFiles = []; fileContents = {}
+  pathList.querySelectorAll('.path-item.selected').forEach(el=>el.classList.remove('selected'))
+  renderSelectedList()
+  resultsScroll.innerHTML = '<div class="text-muted small p-3">Select files and click "Load &amp; Search"</div>'
+}
+</script>
+</body>
+</html>

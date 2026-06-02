@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CW Aider Runner</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/core@1.4.0/dist/css/tabler.min.css">
+</head>
+<body class="antialiased">
+<div class="page">
+  <div class="page-wrapper">
+    <div class="page-body">
+      <div class="container-xl py-4">
+
+        <div class="row mb-3 align-items-center">
+          <div class="col">
+            <h2 class="page-title">CW Aider Runner</h2>
+            <div class="text-muted">Aider-style workflow — pre-commit → run job → auto-commit</div>
+          </div>
+          <div class="col-auto d-flex gap-2 align-items-center">
+            <span id="statusBadge" class="badge bg-secondary">not ready</span>
+            <button id="runAllBtn" class="btn btn-primary" disabled>
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 4v16l13 -8z"/></svg>
+              Run all
+            </button>
+          </div>
+        </div>
+
+        <!-- folder -->
+        <div class="card mb-3">
+          <div class="card-header">
+            <h3 class="card-title"><span class="badge bg-blue-lt text-blue me-2">0</span>Folder</h3>
+          </div>
+          <div class="card-body">
+            <div class="row g-3 align-items-center">
+              <div class="col-auto">
+                <button id="pickBtn" class="btn btn-secondary">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 4h4l3 3h7a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-11a2 2 0 0 1 2 -2"/></svg>
+                  Select repo folder
+                </button>
+              </div>
+              <div class="col">
+                <div id="dirLabel" class="text-muted fst-italic">No folder selected</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- step 1 -->
+        <div class="card mb-3">
+          <div class="card-header">
+            <h3 class="card-title">
+              <span class="badge bg-blue-lt text-blue me-2">1</span>
+              Pre-commit
+              <span class="ms-2 text-muted fw-normal small">runs on folder select</span>
+            </h3>
+            <div class="card-options">
+              <span id="st1" class="badge bg-secondary">pending</span>
+            </div>
+          </div>
+          <div class="card-body p-0">
+            <textarea id="js1" class="form-control font-monospace border-0 rounded-0" rows="6">// Stage all tracked changes and commit before the job runs
+// Mirrors aider's "commit dirty files first" behavior
+
+const status = await git.statusMatrix({ fs, dir })
+const modified = status.filter(([, head, workdir]) => head === 1 && workdir !== 1)
+
+// parallel staging instead of sequential
+await Promise.all(
+  modified.map(([filepath]) => git.add({ fs, dir, filepath }))
+)
+
+const sha = await git.commit({
+  fs, dir,
+  message: 'pre-job: commit before stage',
+  author: { name: author.name, email: author.email }
+})
+console.log('pre-commit:', sha.slice(0,7), '—', modified.length, 'files')</textarea>
+          </div>
+        </div>
+
+        <!-- step 2 -->
+        <div class="card mb-3">
+          <div class="card-header">
+            <h3 class="card-title">
+              <span class="badge bg-blue-lt text-blue me-2">2</span>
+              Job
+              <span class="ms-2 text-muted fw-normal small">your operation</span>
+            </h3>
+            <div class="card-options">
+              <span id="st2" class="badge bg-secondary">pending</span>
+            </div>
+          </div>
+          <div class="card-body p-0">
+            <textarea id="js2" class="form-control font-monospace border-0 rounded-0" rows="10"
+              placeholder="// Your job code here&#10;// git, fs, dir, dirHandle, author available&#10;// fetchRequest(url, options) for tracked HTTP calls&#10;&#10;// Example: write a file&#10;// const fh = await dirHandle.getFileHandle('output.txt', { create: true })&#10;// const w = await fh.createWritable()&#10;// await w.write('hello from CW job')&#10;// await w.close()&#10;// console.log('wrote output.txt')">
+            // Find JPGs > 100KB, shrink to < 100KB, save in place
+
+async function* walkDir(handle, path = '') {
+  for await (const [name, entry] of handle.entries()) {
+    const entryPath = path ? path + '/' + name : name
+    if (entry.kind === 'directory') {
+      yield* walkDir(entry, entryPath)
+    } else {
+      yield { name, path: entryPath, handle: entry, parentHandle: handle }
+    }
+  }
+}
+
+async function shrinkJpg(file, targetBytes = 100 * 1024) {
+  const bitmap = await createImageBitmap(file)
+  const canvas = new OffscreenCanvas(bitmap.width, bitmap.height)
+  const ctx = canvas.getContext('2d')
+  ctx.drawImage(bitmap, 0, 0)
+
+  // try quality reduction first, then scale down if needed
+  let quality = 0.85
+  let blob = await canvas.convertToBlob({ type: 'image/jpeg', quality })
+
+  while (blob.size > targetBytes && quality > 0.1) {
+    quality -= 0.1
+    blob = await canvas.convertToBlob({ type: 'image/jpeg', quality })
+  }
+
+  // if still too big, scale down canvas
+  if (blob.size > targetBytes) {
+    let scale = 0.9
+    while (blob.size > targetBytes && scale > 0.1) {
+      const w = Math.round(bitmap.width  * scale)
+      const h = Math.round(bitmap.height * scale)
+      const c2 = new OffscreenCanvas(w, h)
+      c2.getContext('2d').drawImage(bitmap, 0, 0, w, h)
+      blob = await c2.convertToBlob({ type: 'image/jpeg', quality: 0.75 })
+      scale -= 0.1
+    }
+  }
+
+  return blob
+}
+
+// --- main ---
+let found = 0
+
+for await (const entry of walkDir(dirHandle)) {
+  if (!entry.name.toLowerCase().endsWith('.jpg') &&
+      !entry.name.toLowerCase().endsWith('.jpeg')) continue
+
+  const file = await entry.handle.getFile()
+  if (file.size <= 100 * 1024) continue
+
+  console.log(`found: ${entry.path} (${(file.size/1024).toFixed(1)} KB)`)
+  found++
+
+  const blob = await shrinkJpg(file)
+  console.log(`shrunk to ${(blob.size/1024).toFixed(1)} KB (quality loop)`)
+
+  // overwrite in place
+  const writable = await entry.handle.createWritable()
+  await writable.write(blob)
+  await writable.close()
+
+  console.log(`saved: ${entry.path}`)
+  break // remove this line to process ALL matching files
+}
+
+if (found === 0) console.log('no JPGs over 100KB found')
+            
+            </textarea>
+          </div>
+        </div>
+
+        <!-- step 3 -->
+        <div class="card mb-3">
+          <div class="card-header">
+            <h3 class="card-title">
+              <span class="badge bg-blue-lt text-blue me-2">3</span>
+              Auto-commit
+              <span class="ms-2 text-muted fw-normal small">runs automatically after step 2</span>
+            </h3>
+            <div class="card-options">
+              <span id="st3" class="badge bg-secondary">pending</span>
+            </div>
+          </div>
+          <div class="card-body p-0">
+            <textarea id="js3" class="form-control font-monospace border-0 rounded-0" rows="6">// Stage all changes and commit with job script as message
+// jobScript is the text from step 2 input
+
+const status = await git.statusMatrix({ fs, dir })
+const changed = status.filter(([, head, workdir, stage]) =>
+  !(head === 1 && workdir === 1 && stage === 1)
+)
+
+if (changed.length === 0) {
+  console.log('nothing changed — no commit')
+  return
+}
+
+for (const [filepath] of changed) {
+  await git.add({ fs, dir, filepath })
+}
+
+const msg = 'script: ' + jobScript.trim().split('\n')[0].slice(0, 120)
+
+const sha = await git.commit({
+  fs, dir,
+  message: msg,
+  author: { name: author.name, email: author.email }
+})
+console.log('auto-commit:', sha.slice(0,7))
+console.log('message:', msg)</textarea>
+          </div>
+          <div class="card-footer">
+            <div class="row align-items-center">
+              <div class="col">
+                <span class="text-muted small">
+                  <code>jobScript</code> — text of step 2 input. <code>author</code> — <code>{ name, email }</code>.
+                  <code>git</code>, <code>fs</code>, <code>dir</code>, <code>dirHandle</code> in all steps.
+                </span>
+              </div>
+              <div class="col-auto">
+                <div class="input-group input-group-sm" style="width:280px">
+                  <span class="input-group-text">Author</span>
+                  <input type="text" id="authorName"  class="form-control" placeholder="Name"  value="CW Agent">
+                  <input type="text" id="authorEmail" class="form-control" placeholder="email" value="cw@local">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- output -->
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Output</h3>
+            <div class="card-options">
+              <button id="clearOutput" class="btn btn-sm btn-ghost-danger">Clear</button>
+            </div>
+          </div>
+          <div class="card-body p-0">
+            <div id="output" style="font-family:monospace;font-size:12px;line-height:1.6;padding:12px;min-height:100px;max-height:400px;overflow-y:auto;white-space:pre-wrap">
+              <span class="text-muted">Output will appear here…</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+import git      from 'https://esm.sh/isomorphic-git@1.27.1'
+import { Buffer } from 'https://esm.sh/buffer@6.0.3'
+
+globalThis.git = git
+
+// ============================================================
+// FSA Adapter (plain JS port of chigichan24/duff fsaAdapter.ts)
+// ============================================================
+const adapterCache = new WeakMap()
+
+function splitPath(p)   { return p.split('/').filter(s => s && s !== '.') }
+function splitPN(path)  { const p = splitPath(path); const name = p.pop(); return { parentPath: p.join('/'), name } }
+
+function createFsaAdapter(rootHandle) {
+  if (adapterCache.has(rootHandle)) return adapterCache.get(rootHandle)
+  const hc = new Map()
+
+  const getHandle = async (pathStr) => {
+    if (!pathStr || pathStr === '.' || pathStr === '/') return rootHandle
+    if (hc.has(pathStr)) return hc.get(pathStr)
+    const parts = splitPath(pathStr)
+    let cur = rootHandle, curPath = ''
+    for (let i = 0; i < parts.length; i++) {
+      const p = parts[i]
+      curPath += (curPath ? '/' : '') + p
+      if (hc.has(curPath)) { cur = hc.get(curPath); continue }
+      try {
+        cur = i < parts.length - 1
+          ? await cur.getDirectoryHandle(p)
+          : await (async () => { try { return await cur.getFileHandle(p) } catch { return await cur.getDirectoryHandle(p) } })()
+        hc.set(curPath, cur)
+      } catch { throw Object.assign(new Error(`ENOENT: ${pathStr}`), { code: 'ENOENT' }) }
+    }
+    return cur
+  }
+
+  const fs = {
+    async readFile(path, opts) {
+      const h = await getHandle(path)
+      if (h.kind !== 'file') throw Object.assign(new Error('EISDIR'), { code: 'EISDIR' })
+      const buf = await (await h.getFile()).arrayBuffer()
+      const enc = typeof opts === 'string' ? opts : opts?.encoding
+      return (enc === 'utf8' || enc === 'utf-8') ? new TextDecoder().decode(buf) : Buffer.from(buf)
+    },
+    async writeFile(path, data) {
+      const { parentPath, name } = splitPN(path)
+      let cur = rootHandle
+      for (const p of splitPath(parentPath)) cur = await cur.getDirectoryHandle(p, { create: true })
+      hc.delete(path)
+      const w = await (await cur.getFileHandle(name, { create: true })).createWritable()
+      await w.write(data); await w.close()
+    },
+    async readdir(path) {
+      const h = await getHandle(path || '.')
+      if (h.kind !== 'directory') throw Object.assign(new Error('ENOTDIR'), { code: 'ENOTDIR' })
+      const names = []; for await (const n of h.keys()) names.push(n); return names
+    },
+    async stat(path) {
+      const h = await getHandle(path || '.')
+      const isFile = h.kind === 'file'
+      const file = isFile ? await h.getFile() : null
+      const mtimeMs = file ? file.lastModified : Date.now()
+      const mtime = new Date(mtimeMs)
+      return {
+        isFile: () => isFile, isDirectory: () => !isFile, isSymbolicLink: () => false,
+        size: file?.size ?? 0, mtimeMs, mtime, ctimeMs: mtimeMs, ctime: mtime,
+        atimeMs: mtimeMs, atime: mtime, birthtimeMs: mtimeMs, birthtime: mtime,
+        mode: isFile ? 0o644 : 0o755, uid: 0, gid: 0, dev: 0, ino: 0
+      }
+    },
+    async lstat(path) { return fs.stat(path) },
+    async unlink(path) {
+      const { parentPath, name } = splitPN(path)
+      hc.delete(path); await (await getHandle(parentPath)).removeEntry(name)
+    },
+    async mkdir(path) {
+      let cur = rootHandle
+      for (const p of splitPath(path)) cur = await cur.getDirectoryHandle(p, { create: true })
+    },
+    async rmdir(path) {
+      const { parentPath, name } = splitPN(path)
+      hc.delete(path); await (await getHandle(parentPath)).removeEntry(name, { recursive: true })
+    },
+    async readlink() { return '' },
+    async symlink()  { }
+  }
+  fs.promises = fs
+  adapterCache.set(rootHandle, fs)
+  return fs
+}
+
+// ============================================================
+// UI refs
+// ============================================================
+let dirHandle = null, fs = null
+const dir = '/'
+
+const pickBtn    = document.getElementById('pickBtn')
+const runAllBtn  = document.getElementById('runAllBtn')
+const clearOutput = document.getElementById('clearOutput')
+const dirLabel   = document.getElementById('dirLabel')
+const statusBadge = document.getElementById('statusBadge')
+const outputEl   = document.getElementById('output')
+
+function setStatus(text, cls) {
+  statusBadge.textContent = text
+  statusBadge.className = 'badge ' + (cls || 'bg-secondary')
+}
+
+function setStepStatus(n, status) {
+  const el = document.getElementById('st' + n)
+  if (!el) return
+  const map = { pending: 'bg-secondary', running: 'bg-blue', done: 'bg-success', error: 'bg-danger', skipped: 'bg-warning' }
+  el.textContent = status
+  el.className = 'badge ' + (map[status] || 'bg-secondary')
+}
+
+function resetSteps() {
+  [1,2,3].forEach(n => setStepStatus(n, 'pending'))
+}
+
+// ============================================================
+// Output panel — also intercepts console
+// ============================================================
+let origLog, origTable, origError, origWarn
+
+function patchConsole() {
+  origLog   = console.log
+  origTable = console.table
+  origError = console.error
+  origWarn  = console.warn
+
+  console.log = (...args) => { origLog(...args); out(args.map(fmt).join(' ')) }
+  console.table = (data)  => {
+    origTable(data)
+    if (Array.isArray(data) && data.length) {
+      const keys = Object.keys(data[0])
+      out(keys.join(' | '), 'muted')
+      data.forEach(row => out(keys.map(k => String(row[k] ?? '')).join(' | ')))
+    } else out(fmt(data))
+  }
+  console.error = (...args) => { origError(...args); out('ERR: ' + args.map(fmt).join(' '), 'error') }
+  console.warn  = (...args) => { origWarn(...args);  out('WARN: ' + args.map(fmt).join(' '), 'warn') }
+}
+
+function restoreConsole() {
+  if (origLog)   console.log   = origLog
+  if (origTable) console.table = origTable
+  if (origError) console.error = origError
+  if (origWarn)  console.warn  = origWarn
+}
+
+function fmt(a) { return typeof a === 'object' ? JSON.stringify(a, null, 2) : String(a) }
+
+function out(msg, type = '') {
+  const colors = { error: '#e53e3e', warn: '#d69e2e', muted: '#999', step: '#3b82f6', success: '#38a169' }
+  const div = document.createElement('div')
+  if (colors[type]) div.style.color = colors[type]
+  div.textContent = msg
+  if (outputEl.querySelector('span.text-muted')) outputEl.innerHTML = ''
+  outputEl.appendChild(div)
+  outputEl.scrollTop = outputEl.scrollHeight
+}
+
+function outSep(label) {
+  out('── ' + label + ' ' + '─'.repeat(Math.max(0, 40 - label.length)), 'step')
+}
+
+// ============================================================
+// Folder picker
+// ============================================================
+pickBtn.addEventListener('click', async () => {
+  if (!window.showDirectoryPicker) { alert('Requires Chrome/Edge from localhost'); return }
+  try {
+    dirHandle = await window.showDirectoryPicker({ mode: 'readwrite' })
+    fs = createFsaAdapter(dirHandle)
+    globalThis.fs = fs
+    globalThis.dir = dir
+    globalThis.dirHandle = dirHandle
+    globalThis.git = git
+
+    dirLabel.textContent = '📁 ' + dirHandle.name
+    dirLabel.classList.remove('text-muted', 'fst-italic')
+    dirLabel.classList.add('fw-medium')
+
+    try {
+      await dirHandle.getDirectoryHandle('.git')
+      setStatus('ready', 'bg-success')
+      out('✓ git repo found: ' + dirHandle.name, 'success')
+    } catch {
+      out('no .git — initializing…', 'warn')
+      await git.init({ fs, dir })
+      await git.setConfig({ fs, dir, path: 'user.name',  value: 'CW Agent' })
+      await git.setConfig({ fs, dir, path: 'user.email', value: 'cw@local' })
+      setStatus('initialized', 'bg-teal')
+      out('✓ git init done', 'success')
+    }
+
+    runAllBtn.disabled = false
+    resetSteps()
+  } catch(e) {}
+})
+
+// ============================================================
+// Run a single step
+// ============================================================
+async function runStep(n, code, extraVars = {}) {
+  setStepStatus(n, 'running')
+  outSep('step ' + n)
+
+  const author = {
+    name:  document.getElementById('authorName').value  || 'CW Agent',
+    email: document.getElementById('authorEmail').value || 'cw@local'
+  }
+
+  try {
+    const varNames = ['git', 'fs', 'dir', 'dirHandle', 'author', ...Object.keys(extraVars)]
+    const varVals  = [git,   fs,   dir,   dirHandle,   author,   ...Object.values(extraVars)]
+    const fn = new Function(...varNames, `return (async () => { ${code} })()`)
+    await fn(...varVals)
+    setStepStatus(n, 'done')
+    return true
+  } catch(e) {
+    out('✗ step ' + n + ': ' + e.message, 'error')
+    setStepStatus(n, 'error')
+    return false
+  }
+}
+
+// ============================================================
+// Run all
+// ============================================================
+runAllBtn.addEventListener('click', async () => {
+  if (!fs) return
+  runAllBtn.disabled = true
+  setStatus('running…', 'bg-blue')
+  resetSteps()
+  patchConsole()
+
+  const js1 = document.getElementById('js1').value
+  const js2 = document.getElementById('js2').value
+  const js3 = document.getElementById('js3').value
+
+  try {
+    // step 1 — pre-commit
+    const ok1 = await runStep(1, js1)
+    if (!ok1) { setStatus('error in step 1', 'bg-danger'); return }
+
+    // step 2 — job
+    const ok2 = await runStep(2, js2)
+    if (!ok2) { setStatus('error in step 2', 'bg-danger'); return }
+
+    // step 3 — auto-commit (always runs after step 2, pass jobScript)
+    const ok3 = await runStep(3, js3, { jobScript: js2 })
+    if (!ok3) { setStatus('error in step 3', 'bg-danger'); return }
+
+    outSep('done')
+    setStatus('done ✓', 'bg-success')
+
+  } finally {
+    restoreConsole()
+    runAllBtn.disabled = false
+  }
+})
+
+clearOutput.addEventListener('click', () => {
+  outputEl.innerHTML = '<span class="text-muted">Output will appear here…</span>'
+})
+</script>
+</body>
+</html>

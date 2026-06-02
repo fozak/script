@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Local File Browser</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #ffffff;
+    --bg-2: #f5f5f4;
+    --bg-3: #ededeb;
+    --text: #1a1a18;
+    --text-2: #5f5e5a;
+    --text-3: #888780;
+    --border: rgba(0,0,0,0.12);
+    --border-2: rgba(0,0,0,0.22);
+    --accent-bg: #e6f1fb;
+    --accent-text: #0c447c;
+    --radius: 8px;
+    --radius-lg: 12px;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1c1c1a;
+      --bg-2: #252523;
+      --bg-3: #2f2f2c;
+      --text: #e8e6e0;
+      --text-2: #a0a09a;
+      --text-3: #666660;
+      --border: rgba(255,255,255,0.1);
+      --border-2: rgba(255,255,255,0.2);
+      --accent-bg: #0c447c;
+      --accent-text: #b5d4f4;
+    }
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--text);
+    background: var(--bg);
+    padding: 1.5rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  h1 {
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  button {
+    background: var(--bg);
+    color: var(--text);
+    border: 0.5px solid var(--border-2);
+    border-radius: var(--radius);
+    padding: 7px 14px;
+    font-size: 14px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: inherit;
+    transition: background 0.1s;
+  }
+
+  button:hover { background: var(--bg-2); }
+  button:active { transform: scale(0.98); }
+  button:disabled { opacity: 0.5; cursor: default; }
+
+  input[type="text"], select {
+    background: var(--bg);
+    color: var(--text);
+    border: 0.5px solid var(--border-2);
+    border-radius: var(--radius);
+    padding: 7px 10px;
+    font-size: 14px;
+    font-family: inherit;
+    outline: none;
+    height: 36px;
+  }
+
+  input[type="text"]:focus, select:focus {
+    box-shadow: 0 0 0 2px var(--accent-bg);
+    border-color: var(--accent-text);
+  }
+
+  input[type="range"] {
+    accent-color: var(--accent-text);
+    flex: 1;
+  }
+
+  .pick-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+  }
+
+  .path-label {
+    font-size: 12px;
+    color: var(--text-2);
+    padding: 6px 10px;
+    background: var(--bg-2);
+    border-radius: var(--radius);
+    font-family: monospace;
+    margin-bottom: 12px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: none;
+  }
+
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+    gap: 8px;
+    margin-bottom: 1rem;
+    display: none;
+  }
+
+  .stat {
+    background: var(--bg-2);
+    border-radius: var(--radius);
+    padding: 10px 12px;
+  }
+
+  .stat-label { font-size: 12px; color: var(--text-2); margin-bottom: 2px; }
+  .stat-val { font-size: 20px; font-weight: 500; }
+
+  .filters {
+    display: none;
+    margin-bottom: 1rem;
+  }
+
+  .toolbar {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+  }
+
+  .toolbar input[type="text"] { flex: 1; min-width: 160px; }
+
+  .filter-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr auto;
+    gap: 12px;
+    align-items: end;
+  }
+
+  .filter-group { display: flex; flex-direction: column; gap: 4px; }
+  .filter-group label { font-size: 12px; color: var(--text-2); }
+
+  .range-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .range-val {
+    font-size: 12px;
+    font-weight: 500;
+    min-width: 52px;
+    text-align: right;
+    color: var(--text-2);
+  }
+
+  .clear-btn {
+    font-size: 12px;
+    color: var(--text-2);
+    cursor: pointer;
+    border: none;
+    background: none;
+    padding: 4px 8px;
+    border-radius: var(--radius);
+    height: 36px;
+  }
+
+  .clear-btn:hover {
+    background: var(--bg-2);
+    color: var(--text);
+    transform: none;
+    box-shadow: none;
+  }
+
+  .table-wrap {
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+  }
+
+  th {
+    background: var(--bg-2);
+    font-weight: 500;
+    font-size: 12px;
+    color: var(--text-2);
+    text-align: left;
+    padding: 8px 12px;
+    border-bottom: 0.5px solid var(--border);
+    cursor: pointer;
+    user-select: none;
+  }
+
+  th:hover { color: var(--text); }
+
+  th .sort-arrow {
+    margin-left: 4px;
+    opacity: 0.4;
+    font-style: normal;
+  }
+
+  th.active .sort-arrow { opacity: 1; }
+
+  td {
+    padding: 8px 12px;
+    border-bottom: 0.5px solid var(--border);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: var(--bg-2); }
+
+  .ext-badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 1px 6px;
+    border-radius: 4px;
+    background: var(--accent-bg);
+    color: var(--accent-text);
+  }
+
+  .size-bar-wrap { display: flex; align-items: center; gap: 6px; }
+
+  .size-bar {
+    height: 4px;
+    border-radius: 2px;
+    background: var(--accent-text);
+    opacity: 0.4;
+    flex-shrink: 0;
+  }
+
+  .empty {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: var(--text-3);
+    font-size: 13px;
+  }
+
+  .empty svg {
+    display: block;
+    margin: 0 auto 12px;
+    opacity: 0.3;
+  }
+
+  .scan-status { font-size: 12px; color: var(--text-2); }
+
+  .warn {
+    font-size: 12px;
+    color: var(--text-2);
+    background: var(--bg-2);
+    padding: 8px 12px;
+    border-radius: var(--radius);
+    margin-bottom: 12px;
+    display: none;
+  }
+</style>
+</head>
+<body>
+
+<h1>
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+  </svg>
+  Local file browser
+</h1>
+
+<div class="pick-row">
+  <button id="pickBtn">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+    </svg>
+    Select folder
+  </button>
+  <span class="scan-status" id="scanStatus"></span>
+</div>
+
+<div class="warn" id="noApiWarn">
+  ⚠️ File System Access API not supported. Please use Chrome or Edge 86+.
+</div>
+
+<div class="path-label" id="pathLabel"></div>
+
+<div class="stats" id="statsRow">
+  <div class="stat"><div class="stat-label">Total files</div><div class="stat-val" id="statTotal">0</div></div>
+  <div class="stat"><div class="stat-label">Showing</div><div class="stat-val" id="statShowing">0</div></div>
+  <div class="stat"><div class="stat-label">Total size</div><div class="stat-val" id="statSize">0 B</div></div>
+  <div class="stat"><div class="stat-label">File types</div><div class="stat-val" id="statTypes">0</div></div>
+</div>
+
+<div class="filters" id="filterArea">
+  <div class="toolbar">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text-2);flex-shrink:0">
+      <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+    </svg>
+    <input type="text" id="searchInput" placeholder="Search filename…">
+    <select id="typeFilter"><option value="">All types</option></select>
+    <button class="clear-btn" id="clearBtn">✕ Clear</button>
+  </div>
+
+  <div class="filter-row">
+    <div class="filter-group">
+      <label>Min size</label>
+      <div class="range-row">
+        <input type="range" id="minSize" min="0" max="100" value="0" step="1">
+        <span class="range-val" id="minSizeVal">0 B</span>
+      </div>
+    </div>
+    <div class="filter-group">
+      <label>Max size</label>
+      <div class="range-row">
+        <input type="range" id="maxSize" min="0" max="100" value="100" step="1">
+        <span class="range-val" id="maxSizeVal">∞</span>
+      </div>
+    </div>
+    <div class="filter-group">
+      <label>Sort by</label>
+      <select id="sortBy">
+        <option value="name">Name</option>
+        <option value="size">Size</option>
+        <option value="ext">Type</option>
+        <option value="path">Path</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<div class="table-wrap" id="tableWrap">
+  <div class="empty" id="emptyMsg">
+    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+      <line x1="9" y1="14" x2="15" y2="14"/>
+    </svg>
+    Select a folder to browse its files
+  </div>
+  <table id="fileTable" style="display:none">
+    <thead>
+      <tr>
+        <th style="width:34%" data-col="name">Name <em class="sort-arrow">↕</em></th>
+        <th style="width:9%" data-col="ext">Type <em class="sort-arrow">↕</em></th>
+        <th style="width:24%" data-col="size">Size <em class="sort-arrow">↕</em></th>
+        <th style="width:33%" data-col="path">Path <em class="sort-arrow">↕</em></th>
+      </tr>
+    </thead>
+    <tbody id="fileBody"></tbody>
+  </table>
+</div>
+
+<script>
+  let allFiles = [];
+  let maxFileSize = 1;
+  let sortCol = 'name';
+  let sortDir = 1;
+
+  const pickBtn = document.getElementById('pickBtn');
+  const searchInput = document.getElementById('searchInput');
+  const typeFilter = document.getElementById('typeFilter');
+  const minSizeSlider = document.getElementById('minSize');
+  const maxSizeSlider = document.getElementById('maxSize');
+  const minSizeValEl = document.getElementById('minSizeVal');
+  const maxSizeValEl = document.getElementById('maxSizeVal');
+  const sortBy = document.getElementById('sortBy');
+  const fileBody = document.getElementById('fileBody');
+  const fileTable = document.getElementById('fileTable');
+  const emptyMsg = document.getElementById('emptyMsg');
+  const statsRow = document.getElementById('statsRow');
+  const filterArea = document.getElementById('filterArea');
+  const scanStatus = document.getElementById('scanStatus');
+  const pathLabel = document.getElementById('pathLabel');
+  const clearBtn = document.getElementById('clearBtn');
+
+  if (!window.showDirectoryPicker) {
+    document.getElementById('noApiWarn').style.display = 'block';
+    pickBtn.disabled = true;
+  }
+
+  function fmtSize(bytes) {
+    if (bytes === 0) return '0 B';
+    const units = ['B', 'KB', 'MB', 'GB', 'TB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(1024));
+    const val = bytes / Math.pow(1024, i);
+    return (i === 0 ? val.toFixed(0) : val.toFixed(1)) + ' ' + units[i];
+  }
+
+  function sliderToBytes(sliderVal, maxBytes) {
+    // Logarithmic scale so small files are still selectable
+    if (sliderVal === 0) return 0;
+    if (sliderVal >= 100) return Infinity;
+    const ratio = sliderVal / 100;
+    return Math.round(Math.pow(maxBytes, ratio));
+  }
+
+  async function scanDir(dirHandle, pathParts, results) {
+    for await (const [name, handle] of dirHandle.entries()) {
+      if (handle.kind === 'file') {
+        try {
+          const file = await handle.getFile();
+          const dot = name.lastIndexOf('.');
+          const ext = dot > 0 ? name.slice(dot + 1).toLowerCase() : '';
+          results.push({
+            name,
+            ext,
+            size: file.size,
+            path: pathParts.length ? pathParts.join('/') : '/'
+          });
+        } catch (e) {
+          // skip unreadable files
+        }
+      } else if (handle.kind === 'directory') {
+        await scanDir(handle, [...pathParts, name], results);
+      }
+    }
+  }
+
+  pickBtn.addEventListener('click', async () => {
+    let dirHandle;
+    try {
+      dirHandle = await window.showDirectoryPicker({ mode: 'read' });
+    } catch (e) {
+      return; // user cancelled
+    }
+
+    pickBtn.disabled = true;
+    scanStatus.textContent = 'Scanning…';
+    allFiles = [];
+
+    try {
+      await scanDir(dirHandle, [], allFiles);
+    } catch (e) {
+      scanStatus.textContent = 'Error reading folder.';
+      pickBtn.disabled = false;
+      return;
+    }
+
+    pickBtn.disabled = false;
+    scanStatus.textContent = allFiles.length.toLocaleString() + ' files found';
+    pathLabel.textContent = '📁 ' + dirHandle.name;
+    pathLabel.style.display = 'block';
+
+    maxFileSize = Math.max(...allFiles.map(f => f.size), 1);
+
+    const exts = [...new Set(allFiles.map(f => f.ext).filter(Boolean))].sort();
+    typeFilter.innerHTML = '<option value="">All types (' + exts.length + ')</option>';
+    exts.forEach(e => {
+      const count = allFiles.filter(f => f.ext === e).length;
+      const o = document.createElement('option');
+      o.value = e;
+      o.textContent = '.' + e + '  (' + count + ')';
+      typeFilter.appendChild(o);
+    });
+
+    document.getElementById('statTotal').textContent = allFiles.length.toLocaleString();
+    document.getElementById('statTypes').textContent = exts.length;
+    const totalBytes = allFiles.reduce((s, f) => s + f.size, 0);
+    document.getElementById('statSize').textContent = fmtSize(totalBytes);
+    statsRow.style.display = 'grid';
+    filterArea.style.display = 'block';
+
+    minSizeSlider.value = 0;
+    maxSizeSlider.value = 100;
+    minSizeValEl.textContent = '0 B';
+    maxSizeValEl.textContent = '∞';
+
+    render();
+  });
+
+  function render() {
+    const q = searchInput.value.toLowerCase().trim();
+    const ext = typeFilter.value;
+    const minBytes = sliderToBytes(parseInt(minSizeSlider.value), maxFileSize);
+    const maxBytes = sliderToBytes(parseInt(maxSizeSlider.value), maxFileSize);
+
+    let filtered = allFiles.filter(f => {
+      if (q && !f.name.toLowerCase().includes(q) && !f.path.toLowerCase().includes(q)) return false;
+      if (ext && f.ext !== ext) return false;
+      if (f.size < minBytes) return false;
+      if (isFinite(maxBytes) && f.size > maxBytes) return false;
+      return true;
+    });
+
+    const sc = sortBy.value || sortCol;
+    filtered.sort((a, b) => {
+      if (sc === 'size') return (a.size - b.size) * sortDir;
+      return String(a[sc]).localeCompare(String(b[sc])) * sortDir;
+    });
+
+    document.getElementById('statShowing').textContent = filtered.length.toLocaleString();
+
+    if (filtered.length === 0) {
+      fileTable.style.display = 'none';
+      emptyMsg.style.display = 'block';
+      emptyMsg.innerHTML = `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>No files match the current filters`;
+      return;
+    }
+
+    emptyMsg.style.display = 'none';
+    fileTable.style.display = 'table';
+
+    const MAX_ROWS = 500;
+    const rows = filtered.slice(0, MAX_ROWS);
+    const maxSz = Math.max(...rows.map(f => f.size), 1);
+
+    fileBody.innerHTML = rows.map(f => {
+      const barW = Math.round((f.size / maxSz) * 72);
+      const extBadge = f.ext
+        ? `<span class="ext-badge">.${f.ext}</span>`
+        : `<span style="color:var(--text-3);font-size:11px">—</span>`;
+      return `<tr>
+        <td title="${escHtml(f.name)}">${escHtml(f.name)}</td>
+        <td>${extBadge}</td>
+        <td>
+          <div class="size-bar-wrap">
+            <div class="size-bar" style="width:${barW}px"></div>
+            <span>${fmtSize(f.size)}</span>
+          </div>
+        </td>
+        <td style="color:var(--text-2);font-size:12px;font-family:monospace" title="${escHtml(f.path)}">${escHtml(f.path)}</td>
+      </tr>`;
+    }).join('');
+
+    if (filtered.length > MAX_ROWS) {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td colspan="4" style="text-align:center;font-size:12px;color:var(--text-2);padding:12px">
+        Showing first ${MAX_ROWS.toLocaleString()} of ${filtered.length.toLocaleString()} matches
+      </td>`;
+      fileBody.appendChild(tr);
+    }
+  }
+
+  function escHtml(s) {
+    return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  searchInput.addEventListener('input', render);
+  typeFilter.addEventListener('change', render);
+  sortBy.addEventListener('change', () => { sortCol = sortBy.value; render(); });
+
+  function updateSliders() {
+    const minV = parseInt(minSizeSlider.value);
+    const maxV = parseInt(maxSizeSlider.value);
+    if (minV > maxV) { maxSizeSlider.value = minV; }
+    const minB = sliderToBytes(parseInt(minSizeSlider.value), maxFileSize);
+    const maxB = sliderToBytes(parseInt(maxSizeSlider.value), maxFileSize);
+    minSizeValEl.textContent = minB === 0 ? '0 B' : fmtSize(minB);
+    maxSizeValEl.textContent = !isFinite(maxB) ? '∞' : fmtSize(maxB);
+    render();
+  }
+
+  minSizeSlider.addEventListener('input', updateSliders);
+  maxSizeSlider.addEventListener('input', updateSliders);
+
+  document.querySelectorAll('th[data-col]').forEach(th => {
+    th.addEventListener('click', () => {
+      const col = th.dataset.col;
+      if (sortCol === col) {
+        sortDir *= -1;
+      } else {
+        sortCol = col;
+        sortDir = 1;
+        sortBy.value = col;
+      }
+      document.querySelectorAll('th').forEach(t => {
+        t.classList.remove('active');
+        t.querySelector('.sort-arrow').textContent = '↕';
+      });
+      th.classList.add('active');
+      th.querySelector('.sort-arrow').textContent = sortDir === 1 ? '↑' : '↓';
+      render();
+    });
+  });
+
+  clearBtn.addEventListener('click', () => {
+    searchInput.value = '';
+    typeFilter.value = '';
+    minSizeSlider.value = 0;
+    maxSizeSlider.value = 100;
+    minSizeValEl.textContent = '0 B';
+    maxSizeValEl.textContent = '∞';
+    render();
+  });
+</script>
+</body>
+</html>

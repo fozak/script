@@ -209,6 +209,7 @@ async function create(run_doc) {
     const created = await globalThis.pb.collection(collection).create({ id: doc.name, ...top, data });
     run_doc.target  = { data: [_mergeRecord(created)], meta: { id: created.id, name: created.name } };
     run_doc.success = true;
+
   } catch (err) {
     console.error("PB create error:", JSON.stringify(err.response?.data || err.message));
     run_doc.error = err.message;

@@ -205,20 +205,22 @@ const BlockNoteField = function ({
 //==============================================================
 
 const Filepicker = function ({ field, run_doc, readOnly }) {
-  React.useEffect(() => {
-    let alive = true;
-    import("./filepicker.js").then(({ mount }) => {
-      if (!alive) return;
-      mount({ run_doc, fieldname: field.fieldname, readOnly });
-    });
-    return () => {
-      alive = false;
-      import("./filepicker.js").then(({ unmount }) => unmount(run_doc));
-    };
-  }, [run_doc.name]);
+  const containerId = `${run_doc.name}-${field.fieldname}`
 
-  return ce("div", { id: run_doc.name });
-};
+  React.useEffect(() => {
+    let alive = true
+    import('./filepicker.js').then(({ mount }) => {
+      if (!alive) return
+      mount({ run_doc, fieldname: field.fieldname, readOnly })
+    })
+    return () => {
+      alive = false
+      import('./filepicker.js').then(({ unmount }) => unmount(run_doc, field.fieldname))
+    }
+  }, [run_doc.name])
+
+  return ce('div', { id: containerId })
+}
 
 // ============================================================
 // CWComponent — fieldtype: Component

@@ -1,286 +1,437 @@
 // ============================================================
-// CW-config.js  
+// CW-config.js
 // ============================================================
 
-
-
-
 globalThis.CW.defaultFields = [
-  'name', 'doctype', 'docstatus', 'owner',
-  'modified', 'modified_by', '_state',
-  'parent', 'parentfield', 'parenttype', 'idx','_allowed', '_allowed_read', 'files',
-   '_changes', '_threads'   // ← add both
+  "name",
+  "doctype",
+  "docstatus",
+  "owner",
+  "modified",
+  "modified_by",
+  "_state",
+  "parent",
+  "parentfield",
+  "parenttype",
+  "idx",
+  "_allowed",
+  "_allowed_read",
+  "files",
+  "_changes",
+  "_threads", // ← add both
 ];
 
-
-
-
 globalThis.CW._config = {
-
   ui: {
-  show_state_badges: false
-},
+    show_state_badges: false,
+  },
 
-systemSettings: {
-  logChanges:    1,   // 0 = off, 1 = on
-logThreads: 1,
-},
+  systemSettings: {
+    logChanges: 1, // 0 = off, 1 = on
+    logThreads: 1,
+  },
 
-
-doctypeAliases: {
-  'todo': 'ToDo',
-},
+  doctypeAliases: {
+    todo: "ToDo",
+  },
 
   pb_url: "http://143.198.29.88:8090",
   collection: "item",
 
   topLevelFields: new Set([
-  "id", "name", "doctype", "docstatus", "owner",
-  "_allowed", "_allowed_read", "created", "files"
-]),
+    "id",
+    "name",
+    "doctype",
+    "docstatus",
+    "owner",
+    "_allowed",
+    "_allowed_read",
+    "created",
+    "files",
+  ]),
 
-  publicDoctypes: ['Event', 'WebPage', 'UserPublicProfile', 'Session'],
+  publicDoctypes: ["Event", "WebPage", "UserPublicProfile", "Session"],
 
-publicSites: {
-  "exponanta.com": "/var/www/exponanta.com",
-  "cfeglobal.org": "/var/www/cfeglobal.org"
-},
+  publicSites: {
+    "exponanta.com": "/var/www/exponanta.com",
+    "cfeglobal.org": "/var/www/cfeglobal.org",
+  },
 
-trackable_doctypes:  ['Content', 'Event'],
+  trackable_doctypes: ["Content", "Event"],
 
-runParams: [
-  { path: 'target_doctype',   url: 'doctype',        type: 'string' },
-  { path: 'operation',        url: 'operation',       type: 'string', default: 'select' },
-  { path: 'view',             url: 'view',            type: 'string' },
-  { path: 'component',        url: 'component',       type: 'string' },
-  { path: 'container',        url: 'container',       type: 'string' },
-  { path: 'source_doctype',   url: 'source_doctype',  type: 'string' },
-  { path: 'query.filter',     url: 'filter',          type: 'string' },
-  { path: 'query.sort',       url: 'sort',            type: 'string' },
-  { path: 'query.fields',     url: 'fields',          type: 'string' },
-  { path: 'query.expand',     url: 'expand',          type: 'string' },
-  { path: 'query.perPage',    url: 'perPage',         type: 'int'    },
-  { path: 'query.page',       url: 'page',            type: 'int'    },
-  { path: 'query.where.name', url: 'name',            type: 'string' },
-],
+  runParams: [
+    { path: "target_doctype", url: "doctype", type: "string" },
+    { path: "operation", url: "operation", type: "string", default: "select" },
+    { path: "view", url: "view", type: "string" },
+    { path: "component", url: "component", type: "string" },
+    { path: "container", url: "container", type: "string" },
+    { path: "source_doctype", url: "source_doctype", type: "string" },
+    { path: "query.filter", url: "filter", type: "string" },
+    { path: "query.sort", url: "sort", type: "string" },
+    { path: "query.fields", url: "fields", type: "string" },
+    { path: "query.expand", url: "expand", type: "string" },
+    { path: "query.perPage", url: "perPage", type: "int" },
+    { path: "query.page", url: "page", type: "int" },
+    { path: "query.where.name", url: "name", type: "string" },
+  ],
 
-
-calendar: {
-    weekDays:          ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-    monthNames:        ['January', 'February', 'March', 'April', 'May', 'June',
-                        'July', 'August', 'September', 'October', 'November', 'December'],
+  calendar: {
+    weekDays: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+    monthNames: [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ],
     bookingWindowDays: 60,
-    defaultDuration:   30,
-    defaultBuffer:     10,
-    defaultStartHour:  8,
-    defaultEndHour:    18,
-    timezones: Intl.supportedValuesOf('timeZone'),
-},
+    defaultDuration: 30,
+    defaultBuffer: 10,
+    defaultStartHour: 8,
+    defaultEndHour: 18,
+    timezones: Intl.supportedValuesOf("timeZone"),
+  },
 
-
-systemFields: [
-  {
-    name: 'doctype', fetch: true,
-    hidden: 1,
-    in_list_view: 1,
-    onWrite: (run_doc) => {
-      const doc = run_doc.target?.data?.[0];
-      if (doc) doc.doctype = doc.doctype || run_doc.target_doctype;
+  systemFields: [
+    {
+      name: "doctype",
+      fetch: true,
+      hidden: 1,
+      in_list_view: 1,
+      onWrite: (run_doc) => {
+        const doc = run_doc.target?.data?.[0];
+        if (doc) doc.doctype = doc.doctype || run_doc.target_doctype;
+      },
     },
-  },
-  {
-    name: 'name', fetch: true,
-    hidden: 0,
-    in_list_view: 1,
-    fieldtype: 'Data',
-    onCreate: (run_doc) => {
-      const doc = run_doc.target?.data?.[0];
-      if (!doc || doc.name) return;
-      const s = CW.Schema?.[run_doc.target_doctype];
-      const a = s?.autoname;
-      doc.name = a?.startsWith('field:')
-        ? generateId(run_doc.target_doctype, doc[a.slice(6)])
-        : generateId(run_doc.target_doctype);
+    {
+      name: "name",
+      fetch: true,
+      hidden: 0,
+      in_list_view: 1,
+      fieldtype: "Data",
+      onCreate: (run_doc) => {
+        const doc = run_doc.target?.data?.[0];
+        if (!doc || doc.name) return;
+        const s = CW.Schema?.[run_doc.target_doctype];
+        const a = s?.autoname;
+        doc.name = a?.startsWith("field:")
+          ? generateId(run_doc.target_doctype, doc[a.slice(6)])
+          : generateId(run_doc.target_doctype);
+      },
     },
-  },
-  {
-    name: 'docstatus', fetch: true,
-    hidden: 1,
-    in_list_view: 1,
-    onCreate: (run_doc) => {
-      const doc = run_doc.target?.data?.[0];
-      if (doc && doc.docstatus === undefined) doc.docstatus = 0;
+    {
+      name: "docstatus",
+      fetch: true,
+      hidden: 1,
+      in_list_view: 1,
+      onCreate: (run_doc) => {
+        const doc = run_doc.target?.data?.[0];
+        if (doc && doc.docstatus === undefined) doc.docstatus = 0;
+      },
     },
-  },
-  {
-    name: 'creation', fetch: true,
-    hidden: 1, read_only: 1, fieldtype: 'Datetime', label: 'Created', in_list_view: 1,
-    onCreate: (run_doc) => {
-      const doc = run_doc.target?.data?.[0];
-      if (doc) doc.creation = Date.now();
+    {
+      name: "creation",
+      fetch: true,
+      hidden: 1,
+      read_only: 1,
+      fieldtype: "Datetime",
+      label: "Created",
+      in_list_view: 1,
+      onCreate: (run_doc) => {
+        const doc = run_doc.target?.data?.[0];
+        if (doc) doc.creation = Date.now();
+      },
     },
-  },
-  {
-    name: 'owner', fetch: true,
-    hidden: 0, read_only: 1, fieldtype: 'Data', label: 'Owner', in_list_view: 0,
-    onCreate: (run_doc) => {
-      const doc = run_doc.target?.data?.[0];
-      if (doc) doc.owner = doc.doctype === 'User'
-        ? ''
-        : globalThis.pb?.authStore?.model?.id || '';
+    {
+      name: "owner",
+      fetch: true,
+      hidden: 0,
+      read_only: 1,
+      fieldtype: "Data",
+      label: "Owner",
+      in_list_view: 0,
+      onCreate: (run_doc) => {
+        const doc = run_doc.target?.data?.[0];
+        if (doc)
+          doc.owner =
+            doc.doctype === "User"
+              ? ""
+              : globalThis.pb?.authStore?.model?.id || "";
+      },
     },
-  },
-  {
-    name: 'modified', fetch: true,
-    hidden: 0, read_only: 1, fieldtype: 'Datetime', label: 'Modified', in_list_view: 0,
-    onWrite: (run_doc) => {
-      const doc = run_doc.target?.data?.[0];
-      if (doc) doc.modified = Date.now();
+    {
+      name: "modified",
+      fetch: true,
+      hidden: 0,
+      read_only: 1,
+      fieldtype: "Datetime",
+      label: "Modified",
+      in_list_view: 0,
+      onWrite: (run_doc) => {
+        const doc = run_doc.target?.data?.[0];
+        if (doc) doc.modified = Date.now();
+      },
     },
-  },
-  {
-    name: 'modified_by', fetch: true,
-    hidden: 0, read_only: 1, fieldtype: 'Data', label: 'Modified By', in_list_view: 0,
-    onWrite: (run_doc) => {
-      const doc = run_doc.target?.data?.[0];
-      if (doc) doc.modified_by = globalThis.pb?.authStore?.model?.id || '';
+    {
+      name: "modified_by",
+      fetch: true,
+      hidden: 0,
+      read_only: 1,
+      fieldtype: "Data",
+      label: "Modified By",
+      in_list_view: 0,
+      onWrite: (run_doc) => {
+        const doc = run_doc.target?.data?.[0];
+        if (doc) doc.modified_by = globalThis.pb?.authStore?.model?.id || "";
+      },
     },
-  },
-  {
-    name: '_state', fetch: true, in_list_view: 1,
-    hidden: 0, read_only: 1, fieldtype: 'Data', label: 'State',
-  },
-  {
-    name: 'top_parent', fetch: true,
-    hidden: 1,
-    onCreate: (run_doc) => {
-      const doc = run_doc.target?.data?.[0];
-      if (!doc) return;
-      const parentRun = CW.runs[run_doc.parent_run_id];
-      const p = parentRun?.target?.data?.[0];
-      if (!p || p.doctype !== run_doc.target_doctype) return;
-      doc.top_parent = p.top_parent || p.name;
+    {
+      name: "_state",
+      fetch: true,
+      in_list_view: 1,
+      hidden: 0,
+      read_only: 1,
+      fieldtype: "Data",
+      label: "State",
     },
-  },
-{ name: 'parent',      fetch: true, hidden: 1, fieldtype: 'Data', in_list_view: 1, label: 'Parent' },
-{ name: 'parenttype',  fetch: true, hidden: 1, fieldtype: 'Data', in_list_view: 1, label: 'Parent Type' },
-{ name: 'parentfield', fetch: true, hidden: 1, fieldtype: 'Data', in_list_view: 1, label: 'Parent Field' },
-  { name: 'idx',         fetch: true, hidden: 1 },
-  {
-    name: '_allowed', fetch: true,
-    hidden: 0, read_only: 0, fieldtype: 'SharePanel', label: 'Sharing', in_list_view: 0,
-    onWrite: (run_doc) => {
-      const doc        = run_doc.target?.data?.[0];
-      if (!doc) return;
-      const schema     = CW.Schema?.[run_doc.target_doctype];
-      const linkFields = (schema?.fields || []).filter(f => f.fieldtype === 'Link');
-      const hasParent  = !!(doc.parent && doc.parenttype);
-      const hasLinks   = linkFields.some(f => doc[f.fieldname]);
-      if (!hasParent && !hasLinks && run_doc.operation !== 'create') return;
-
-      const roles = (schema?.permissions || [])
-        .filter(p => p.role && (p.write === 1 || p.create === 1))
-        .map(p => generateId('Role', p.role));
-
-      if (hasParent) {
+    {
+      name: "top_parent",
+      fetch: true,
+      hidden: 1,
+      onCreate: (run_doc) => {
+        const doc = run_doc.target?.data?.[0];
+        if (!doc) return;
         const parentRun = CW.runs[run_doc.parent_run_id];
         const p = parentRun?.target?.data?.[0];
-        if (p?._allowed) roles.push(...p._allowed);
-      }
-
-      for (const f of linkFields) {
-        const linked = Object.values(CW.runs).find(r =>
-          r.target_doctype === f.options &&
-          r.target?.data?.[0]?.name === doc[f.fieldname]
-        )?.target?.data?.[0];
-        if (linked?._allowed) roles.push(...linked._allowed);
-      }
-
-      doc._allowed = [...new Set([...(doc._allowed || []), ...roles])];
-
-      if (run_doc.target_doctype === 'Relationship' && doc.related_name && doc.related_doctype) {
-        const parentRun  = CW.runs[run_doc.parent_run_id];
-        const parentDoc  = parentRun?.target?.data?.[0];
-        const relatedRun = Object.values(CW.runs).find(r =>
-          r.target_doctype === doc.related_doctype &&
-          r.target?.data?.[0]?.name === doc.related_name
+        if (!p || p.doctype !== run_doc.target_doctype) return;
+        doc.top_parent = p.top_parent || p.name;
+      },
+    },
+    {
+      name: "parent",
+      fetch: true,
+      hidden: 1,
+      fieldtype: "Data",
+      in_list_view: 1,
+      label: "Parent",
+    },
+    {
+      name: "parenttype",
+      fetch: true,
+      hidden: 1,
+      fieldtype: "Data",
+      in_list_view: 1,
+      label: "Parent Type",
+    },
+    {
+      name: "parentfield",
+      fetch: true,
+      hidden: 1,
+      fieldtype: "Data",
+      in_list_view: 1,
+      label: "Parent Field",
+    },
+    { name: "idx", fetch: true, hidden: 1 },
+    {
+      name: "_allowed",
+      fetch: true,
+      hidden: 0,
+      read_only: 0,
+      fieldtype: "SharePanel",
+      label: "Sharing",
+      in_list_view: 0,
+      onWrite: (run_doc) => {
+        const doc = run_doc.target?.data?.[0];
+        if (!doc) return;
+        const schema = CW.Schema?.[run_doc.target_doctype];
+        const linkFields = (schema?.fields || []).filter(
+          (f) => f.fieldtype === "Link",
         );
-        const relatedDoc = relatedRun?.target?.data?.[0];
-        if (parentDoc && relatedDoc) {
-          run_doc.child({
-            operation:      'update',
-            target_doctype: doc.related_doctype,
-            query:          { where: { name: doc.related_name } },
-            target:         { data: [relatedDoc] },
-            input:          { _allowed: [...new Set([...(parentDoc._allowed || [])])] },
-            options:        { render: false, internal: true },
-             source_field:   '_allowed',   // ← add
-          });
+        const hasParent = !!(doc.parent && doc.parenttype);
+        const hasLinks = linkFields.some((f) => doc[f.fieldname]);
+        if (!hasParent && !hasLinks && run_doc.operation !== "create") return;
+
+        const roles = (schema?.permissions || [])
+          .filter((p) => p.role && (p.write === 1 || p.create === 1))
+          .map((p) => generateId("Role", p.role));
+
+        if (hasParent) {
+          const parentRun = CW.runs[run_doc.parent_run_id];
+          const p = parentRun?.target?.data?.[0];
+          if (p?._allowed) roles.push(...p._allowed);
         }
-      }
-    },
-  },
-  {
-    name: '_allowed_read', fetch: true,
-    hidden: 0,
-    onWrite: (run_doc) => {
-      const doc        = run_doc.target?.data?.[0];
-      if (!doc) return;
-      const schema     = CW.Schema?.[run_doc.target_doctype];
-      const linkFields = (schema?.fields || []).filter(f => f.fieldtype === 'Link');
-      const hasParent  = !!(doc.parent && doc.parenttype);
-      const hasLinks   = linkFields.some(f => doc[f.fieldname]);
-      if (!hasParent && !hasLinks && run_doc.operation !== 'create') return;
 
-      const roles = (schema?.permissions || [])
-        .filter(p => p.role && p.read === 1 && !(p.write === 1 || p.create === 1))
-        .map(p => generateId('Role', p.role));
-      if (schema?.is_public && !roles.includes('roleispublixxxx'))
-        roles.push('roleispublixxxx');
-
-      if (hasParent) {
-        const parentRun = CW.runs[run_doc.parent_run_id];
-        const p = parentRun?.target?.data?.[0];
-        if (p?._allowed_read) roles.push(...p._allowed_read);
-      }
-
-      for (const f of linkFields) {
-        const linked = Object.values(CW.runs).find(r =>
-          r.target_doctype === f.options &&
-          r.target?.data?.[0]?.name === doc[f.fieldname]
-        )?.target?.data?.[0];
-        if (linked?._allowed_read) roles.push(...linked._allowed_read);
-      }
-
-      doc._allowed_read = [...new Set([...(doc._allowed_read || []), ...roles])];
-
-      if (run_doc.target_doctype === 'Relationship' && doc.related_name && doc.related_doctype) {
-        const parentDoc  = CW.runs[run_doc.parent_run_id]?.target?.data?.[0];
-        const relatedDoc = Object.values(CW.runs).find(r =>
-          r.target_doctype === doc.related_doctype &&
-          r.target?.data?.[0]?.name === doc.related_name
-        )?.target?.data?.[0];
-        if (parentDoc && relatedDoc) {
-          run_doc.child({
-            operation:      'update',
-            target_doctype: doc.related_doctype,
-            query:          { where: { name: doc.related_name } },
-            target:         { data: [relatedDoc] },
-            input:          { _allowed_read: [...new Set([...(parentDoc._allowed_read || [])])] },
-            options:        { render: false, internal: true },
-            source_field:   '_allowed_read',   // ← add
-          });
+        for (const f of linkFields) {
+          const linked = Object.values(CW.runs).find(
+            (r) =>
+              r.target_doctype === f.options &&
+              r.target?.data?.[0]?.name === doc[f.fieldname],
+          )?.target?.data?.[0];
+          if (linked?._allowed) roles.push(...linked._allowed);
         }
-      }
+
+        doc._allowed = [...new Set([...(doc._allowed || []), ...roles])];
+
+        if (
+          run_doc.target_doctype === "Relationship" &&
+          doc.related_name &&
+          doc.related_doctype
+        ) {
+          const parentRun = CW.runs[run_doc.parent_run_id];
+          const parentDoc = parentRun?.target?.data?.[0];
+          const relatedRun = Object.values(CW.runs).find(
+            (r) =>
+              r.target_doctype === doc.related_doctype &&
+              r.target?.data?.[0]?.name === doc.related_name,
+          );
+          const relatedDoc = relatedRun?.target?.data?.[0];
+          if (parentDoc && relatedDoc) {
+            run_doc.child({
+              operation: "update",
+              target_doctype: doc.related_doctype,
+              query: { where: { name: doc.related_name } },
+              target: { data: [relatedDoc] },
+              input: {
+                _allowed: [...new Set([...(parentDoc._allowed || [])])],
+              },
+              options: { render: false, internal: true },
+              source_field: "_allowed", // ← add
+            });
+          }
+        }
+      },
     },
-  },
-  {
-    name: 'files', fetch: true,
-    hidden: 0, read_only: 0, fieldtype: 'Filepicker', label: 'Attachments', in_list_view: 0,
-  },
-],
+    {
+      name: "_allowed_read",
+      fetch: true,
+      hidden: 0,
+      onWrite: (run_doc) => {
+        const doc = run_doc.target?.data?.[0];
+        if (!doc) return;
+        const schema = CW.Schema?.[run_doc.target_doctype];
+        const linkFields = (schema?.fields || []).filter(
+          (f) => f.fieldtype === "Link",
+        );
+        const hasParent = !!(doc.parent && doc.parenttype);
+        const hasLinks = linkFields.some((f) => doc[f.fieldname]);
+        if (!hasParent && !hasLinks && run_doc.operation !== "create") return;
 
+        const roles = (schema?.permissions || [])
+          .filter(
+            (p) => p.role && p.read === 1 && !(p.write === 1 || p.create === 1),
+          )
+          .map((p) => generateId("Role", p.role));
+        if (schema?.is_public && !roles.includes("roleispublixxxx"))
+          roles.push("roleispublixxxx");
 
+        if (hasParent) {
+          const parentRun = CW.runs[run_doc.parent_run_id];
+          const p = parentRun?.target?.data?.[0];
+          if (p?._allowed_read) roles.push(...p._allowed_read);
+        }
+
+        for (const f of linkFields) {
+          const linked = Object.values(CW.runs).find(
+            (r) =>
+              r.target_doctype === f.options &&
+              r.target?.data?.[0]?.name === doc[f.fieldname],
+          )?.target?.data?.[0];
+          if (linked?._allowed_read) roles.push(...linked._allowed_read);
+        }
+
+        doc._allowed_read = [
+          ...new Set([...(doc._allowed_read || []), ...roles]),
+        ];
+
+        if (
+          run_doc.target_doctype === "Relationship" &&
+          doc.related_name &&
+          doc.related_doctype
+        ) {
+          const parentDoc = CW.runs[run_doc.parent_run_id]?.target?.data?.[0];
+          const relatedDoc = Object.values(CW.runs).find(
+            (r) =>
+              r.target_doctype === doc.related_doctype &&
+              r.target?.data?.[0]?.name === doc.related_name,
+          )?.target?.data?.[0];
+          if (parentDoc && relatedDoc) {
+            run_doc.child({
+              operation: "update",
+              target_doctype: doc.related_doctype,
+              query: { where: { name: doc.related_name } },
+              target: { data: [relatedDoc] },
+              input: {
+                _allowed_read: [
+                  ...new Set([...(parentDoc._allowed_read || [])]),
+                ],
+              },
+              options: { render: false, internal: true },
+              source_field: "_allowed_read", // ← add
+            });
+          }
+        }
+      },
+    },
+    {
+      name: "files",
+      fetch: true,
+      hidden: 0,
+      read_only: 0,
+      fieldtype: "Filepicker",
+      label: "Attachments",
+      in_list_view: 0,
+    },
+    {
+      name: "_changes",
+      fetch: true,
+      in_list_view: 1,
+      hidden: 0,
+      read_only: 1,
+      onCreate: (run_doc) => {
+        if (!CW._config.systemSettings?.logChanges) return;
+        if (run_doc.options?._logging === false) return;
+        console.log("onCreate fired");
+        const doc = run_doc.target?.data?.[0];
+        if (!doc) return;
+        const skip = new Set([
+          "_changes",
+          "modified",
+          "modified_by",
+          "creation",
+          "_state",
+          "_allowed",
+          "_allowed_read",
+          "files",
+          "name",
+          "doctype",
+          "docstatus",
+          "owner",
+        ]);
+        const ch = Object.entries(doc)
+          .filter(
+            ([k, v]) =>
+              !skip.has(k) && v !== null && v !== undefined && v !== "",
+          )
+          .map(([field, to]) => ({ field, from: null, to }));
+        if (!ch.length) return;
+        doc._changes = [
+          {
+            at: Date.now(),
+            by: run_doc.user?.name || null,
+            op: "create",
+            ch,
+          },
+        ];
+      },
+    },
+  ],
 
   // ============================================================
   // SYSTEM CONFIG
@@ -296,7 +447,7 @@ systemFields: [
     },
     payloadAdapters: {
       Request: "auth",
-      Object: null,  //was "run-builder"
+      Object: null, //was "run-builder"
       Run: null,
     },
 
@@ -312,7 +463,7 @@ systemFields: [
         handler: "_dbAdapters.pocketbase",
         capabilities: ["select", "create", "update", "delete"], // ✅ "select" not "query"
         config: {
-          url: "http://127.0.0.1:8090",  //not used, set in CW._config.pb_url
+          url: "http://127.0.0.1:8090", //not used, set in CW._config.pb_url
           collection: "item",
         },
       },
@@ -409,69 +560,75 @@ systemFields: [
   },
 
   relationshipTypes: {
-  "Event": {
-    "User":         ["Attendee", "Speaker", "Volunteer", "Organizer", "Sponsor Contact"],
-    "Organization": ["Sponsor", "Partner", "Media Partner"],
-    "Event":        ["Related Event", "Follow-up Event"],
+    Event: {
+      User: [
+        "Attendee",
+        "Speaker",
+        "Volunteer",
+        "Organizer",
+        "Sponsor Contact",
+      ],
+      Organization: ["Sponsor", "Partner", "Media Partner"],
+      Event: ["Related Event", "Follow-up Event"],
+    },
+    Task: {
+      User: ["Assignee", "Reviewer", "Observer"],
+      Task: ["Blocks", "Blocked By", "Related"],
+      Project: ["Belongs To"],
+      Role: ["Read Access", "Write Access"], //experimental
+      Customer: ["Customer"],
+    },
+    User: {
+      Role: ["Has Role"],
+      User: ["Editor", "Delegate", "Assistant"],
+    },
   },
-  "Task": {
-    "User":         ["Assignee", "Reviewer", "Observer"],
-    "Task":         ["Blocks", "Blocked By", "Related"],
-    "Project":      ["Belongs To"],
-    "Role": ["Read Access", "Write Access"],  //experimental
-    "Customer":      ["Customer"],
-  },
-"User": {
-  "Role": ["Has Role"],
-  "User": ["Editor", "Delegate", "Assistant"],
-}
-},
 
-relationshipAccessMap: {
-  "Event": {
-    "User": {
-      "Attendee":        "read",
-      "Speaker":         "read",
-      "Volunteer":       "read",
-      "Organizer":       "write",
-      "Sponsor Contact": "read",
+  relationshipAccessMap: {
+    Event: {
+      User: {
+        Attendee: "read",
+        Speaker: "read",
+        Volunteer: "read",
+        Organizer: "write",
+        "Sponsor Contact": "read",
+      },
+      Organization: {
+        Sponsor: "none",
+        Partner: "none",
+        "Media Partner": "none",
+      },
+      Event: {
+        "Related Event": "none",
+        "Follow-up Event": "none",
+      },
     },
-    "Organization": {
-      "Sponsor":         "none",
-      "Partner":         "none",
-      "Media Partner":   "none",
+    Task: {
+      User: {
+        Assignee: "write",
+        Reviewer: "read",
+        Observer: "read",
+      },
+      Task: {
+        Blocks: "none",
+        "Blocked By": "none",
+        Related: "none",
+      },
+      Project: {
+        "Belongs To": "none",
+      },
     },
-    "Event": {
-      "Related Event":   "none",
-      "Follow-up Event": "none",
+    User: {
+      Role: {
+        "Has Role": "read",
+      },
+      User: {
+        Editor: "write",
+        Delegate: "write",
+        Assistant: "read",
+      },
     },
   },
-  "Task": {
-    "User": {
-      "Assignee":        "write",
-      "Reviewer":        "read",
-      "Observer":        "read",
-    },
-    "Task": {
-      "Blocks":          "none",
-      "Blocked By":      "none",
-      "Related":         "none",
-    },
-    "Project": {
-      "Belongs To":      "none",
-    },
-  },
-"User": {
-  "Role": {
-    "Has Role":          "read",
-  },
-  "User": {
-    "Editor":    "write",
-    "Delegate":  "write",
-    "Assistant": "read",
-  },
-},
-},
 
   // ============================================================
   // OPERATION ALIASES (existing)
@@ -636,7 +793,7 @@ relationshipAccessMap: {
       validate: true,
       fetchOriginals: false,
       bypassController: false,
-    }
+    },
   },
 
   /* OLD: Operation behavior configuration for controller
@@ -727,11 +884,11 @@ relationshipAccessMap: {
   },*/
 
   views: {
-  list: { component: 'UniversalGrid', container: 'right_pane'  },   //MainGrid
-  form: { component: 'MainForm', container: 'right_pane' },
-  read: { component: 'MainForm', container: 'right_pane' },
-  edit: { component: 'MainForm', container: 'right_pane' },
-},
+    list: { component: "UniversalGrid", container: "right_pane" }, //MainGrid
+    form: { component: "MainForm", container: "right_pane" },
+    read: { component: "MainForm", container: "right_pane" },
+    edit: { component: "MainForm", container: "right_pane" },
+  },
 
   // old structure
   // Operation → View mapping
@@ -929,8 +1086,8 @@ relationshipAccessMap: {
       },
     },
   },
-//not used see below
- /* fieldInteractionConfig: {
+  //not used see below
+  /* fieldInteractionConfig: {
     // ═══════════════════════════════════════════════════════════
     // Field interaction triggers (independent of auto-save)
     // ═══════════════════════════════════════════════════════════
@@ -981,10 +1138,9 @@ relationshipAccessMap: {
     activeProfile: "default",
   },*/
 
-fieldComponents: {
-  'Table': 'UniversalGrid',
-},
-
+  fieldComponents: {
+    Table: "UniversalGrid",
+  },
 
   // ✅ Field types - NOT USED
   fieldTypes: {

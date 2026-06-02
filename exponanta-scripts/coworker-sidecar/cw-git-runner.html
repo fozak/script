@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CW Git Runner</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/core@1.4.0/dist/css/tabler.min.css">
+</head>
+<body class="antialiased">
+<div class="page">
+  <div class="page-wrapper">
+    <div class="page-body">
+      <div class="container-xl py-4">
+
+        <div class="row mb-3 align-items-center">
+          <div class="col">
+            <h2 class="page-title">CW Git Runner</h2>
+            <div class="text-muted">Select a local git repo folder → run isomorphic-git commands in browser</div>
+          </div>
+          <div class="col-auto">
+            <span id="statusBadge" class="badge bg-secondary">not ready</span>
+          </div>
+        </div>
+
+        <!-- Step 1: pick folder -->
+        <div class="card mb-3">
+          <div class="card-header">
+            <h3 class="card-title"><span class="badge bg-blue-lt text-blue me-2">1</span>Select git repo folder</h3>
+          </div>
+          <div class="card-body">
+            <div class="row g-3 align-items-center">
+              <div class="col-auto">
+                <button id="pickBtn" class="btn btn-primary">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 4h4l3 3h7a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-11a2 2 0 0 1 2 -2"/></svg>
+                  Select folder
+                </button>
+              </div>
+              <div class="col">
+                <div id="dirLabel" class="text-muted fst-italic">No folder selected — must be an existing git repo (has .git)</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 2: git log preview -->
+        <div class="card mb-3" id="logCard" style="display:none">
+          <div class="card-header">
+            <h3 class="card-title"><span class="badge bg-blue-lt text-blue me-2">2</span>Recent commits</h3>
+            <div class="card-options">
+              <button id="refreshLog" class="btn btn-sm btn-ghost-secondary">Refresh</button>
+            </div>
+          </div>
+          <div class="card-body p-0">
+            <table class="table table-vcenter table-sm card-table mb-0">
+              <thead>
+                <tr>
+                  <th style="width:80px">Hash</th>
+                  <th style="width:140px">Date</th>
+                  <th>Message</th>
+                  <th style="width:120px">Author</th>
+                </tr>
+              </thead>
+              <tbody id="logBody">
+                <tr><td colspan="4" class="text-center text-muted py-3">Loading…</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Step 3: JS runner -->
+        <div class="card mb-3">
+          <div class="card-header">
+            <h3 class="card-title"><span class="badge bg-blue-lt text-blue me-2">3</span>Run JS / git commands</h3>
+            <div class="card-options">
+              <div class="d-flex gap-2">
+                <select id="examples" class="form-select form-select-sm" style="width:auto">
+                  <option value="">Load example…</option>
+                  <option value="log">git.log</option>
+                  <option value="status">git.statusMatrix</option>
+                  <option value="add">git.add + commit</option>
+                  <option value="branch">list branches</option>
+                  <option value="diff">read file blob</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="card-body p-0">
+            <textarea id="jsInput" class="form-control font-monospace border-0 rounded-0" rows="12"
+              placeholder="// git, fs, dir, dirHandle available&#10;// git  = isomorphic-git&#10;// fs   = FSA adapter (reads/writes your real .git)&#10;// dir  = '/'&#10;// dirHandle = FileSystemDirectoryHandle&#10;&#10;const log = await git.log({ fs, dir, depth: 5 })&#10;console.table(log.map(c => ({ hash: c.oid.slice(0,7), message: c.commit.message.trim() })))"></textarea>
+          </div>
+          <div class="card-footer">
+            <div class="row align-items-center">
+              <div class="col">
+                <span class="text-muted small">Output goes to console. <code>git</code>, <code>fs</code>, <code>dir</code>, <code>dirHandle</code> in scope.</span>
+              </div>
+              <div class="col-auto d-flex gap-2">
+                <button id="clearBtn" class="btn btn-ghost-secondary">Clear</button>
+                <button id="runBtn" class="btn btn-success" disabled>
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 4v16l13 -8z"/></svg>
+                  Run
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Output log -->
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title"><span class="badge bg-blue-lt text-blue me-2">4</span>Output</h3>
+            <div class="card-options">
+              <button id="clearOutput" class="btn btn-sm btn-ghost-danger">Clear</button>
+            </div>
+          </div>
+          <div class="card-body p-0">
+            <div id="output" style="font-family:monospace;font-size:12px;padding:12px;min-height:80px;max-height:400px;overflow-y:auto;white-space:pre-wrap">
+              <span style="opacity:0.4">Output will appear here…</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+// ============================================================
+// isomorphic-git from CDN (ESM)
+// ============================================================
+import git from 'https://esm.sh/isomorphic-git@1.27.1'
+import { Buffer } from 'https://esm.sh/buffer@6.0.3'
+globalThis.git = git
+
+// ============================================================
+// FSA Adapter — plain JS port of chigichan24/duff fsaAdapter.ts
+// Bridges File System Access API to Node fs interface
+// ============================================================
+const adapterCache = new WeakMap()
+
+function splitPath(path) {
+  return path.split('/').filter(p => p && p !== '.')
+}
+
+function splitParentAndName(path) {
+  const parts = splitPath(path)
+  const name = parts.pop()
+  return { parentPath: parts.join('/'), name }
+}
+
+function createFsaAdapter(rootHandle) {
+  if (adapterCache.has(rootHandle)) return adapterCache.get(rootHandle)
+
+  const handleCache = new Map()
+
+  const getHandle = async (pathStr) => {
+    if (!pathStr || pathStr === '.' || pathStr === '/') return rootHandle
+    if (handleCache.has(pathStr)) return handleCache.get(pathStr)
+
+    const parts = splitPath(pathStr)
+    let current = rootHandle
+    let currentPath = ''
+
+    for (let i = 0; i < parts.length; i++) {
+      const part = parts[i]
+      currentPath += (currentPath ? '/' : '') + part
+      if (handleCache.has(currentPath)) {
+        current = handleCache.get(currentPath)
+        continue
+      }
+      try {
+        if (i < parts.length - 1) {
+          current = await current.getDirectoryHandle(part)
+        } else {
+          try { current = await current.getFileHandle(part) }
+          catch { current = await current.getDirectoryHandle(part) }
+        }
+        handleCache.set(currentPath, current)
+      } catch (e) {
+        throw Object.assign(new Error(`ENOENT: ${pathStr}`), { code: 'ENOENT' })
+      }
+    }
+    return current
+  }
+
+  const fs = {
+    promises: null,  // set below
+
+    async readFile(path, options) {
+      const handle = await getHandle(path)
+      if (handle.kind !== 'file') throw Object.assign(new Error('EISDIR'), { code: 'EISDIR' })
+      const file = await handle.getFile()
+      const buffer = await file.arrayBuffer()
+      const u8 = new Uint8Array(buffer)
+      const encoding = typeof options === 'string' ? options : options?.encoding
+      if (encoding === 'utf8' || encoding === 'utf-8') return new TextDecoder().decode(u8)
+      return Buffer.from(u8)
+    },
+
+    async writeFile(path, data) {
+      const { parentPath, name } = splitParentAndName(path)
+      const parts = splitPath(parentPath)
+      let current = rootHandle
+      for (const p of parts) current = await current.getDirectoryHandle(p, { create: true })
+      const handle = await current.getFileHandle(name, { create: true })
+      // invalidate cache for this path
+      handleCache.delete(path)
+      const writable = await handle.createWritable()
+      await writable.write(data)
+      await writable.close()
+    },
+
+    async readdir(path) {
+      const handle = await getHandle(path || '.')
+      if (handle.kind !== 'directory') throw Object.assign(new Error('ENOTDIR'), { code: 'ENOTDIR' })
+      const names = []
+      for await (const name of handle.keys()) names.push(name)
+      return names
+    },
+
+    async stat(path) {
+      const handle = await getHandle(path || '.')
+      const isFile = handle.kind === 'file'
+      const file = isFile ? await handle.getFile() : null
+      const mtimeMs = file ? file.lastModified : Date.now()
+      const mtime = new Date(mtimeMs)
+      return {
+        isFile:         () => isFile,
+        isDirectory:    () => !isFile,
+        isSymbolicLink: () => false,
+        size:        file ? file.size : 0,
+        mtimeMs, mtime,
+        ctimeMs:     mtimeMs, ctime: mtime,
+        atimeMs:     mtimeMs, atime: mtime,
+        birthtimeMs: mtimeMs, birthtime: mtime,
+        mode: isFile ? 0o644 : 0o755,
+        uid: 0, gid: 0, dev: 0, ino: 0
+      }
+    },
+
+    async lstat(path) { return fs.stat(path) },
+
+    async unlink(path) {
+      const { parentPath, name } = splitParentAndName(path)
+      const parent = await getHandle(parentPath)
+      handleCache.delete(path)
+      await parent.removeEntry(name)
+    },
+
+    async mkdir(path) {
+      const parts = splitPath(path)
+      let current = rootHandle
+      for (const p of parts) current = await current.getDirectoryHandle(p, { create: true })
+    },
+
+    async rmdir(path) {
+      const { parentPath, name } = splitParentAndName(path)
+      const parent = await getHandle(parentPath)
+      handleCache.delete(path)
+      await parent.removeEntry(name, { recursive: true })
+    },
+
+    async readlink() { return '' },
+    async symlink() { }
+  }
+
+  fs.promises = fs
+  adapterCache.set(rootHandle, fs)
+  return fs
+}
+
+globalThis.createFsaAdapter = createFsaAdapter
+
+// ============================================================
+// UI
+// ============================================================
+let dirHandle = null
+let fs = null
+const dir = '/'
+
+const pickBtn     = document.getElementById('pickBtn')
+const runBtn      = document.getElementById('runBtn')
+const clearBtn    = document.getElementById('clearBtn')
+const clearOutput = document.getElementById('clearOutput')
+const refreshLog  = document.getElementById('refreshLog')
+const dirLabel    = document.getElementById('dirLabel')
+const jsInput     = document.getElementById('jsInput')
+const logCard     = document.getElementById('logCard')
+const logBody     = document.getElementById('logBody')
+const output      = document.getElementById('output')
+const statusBadge = document.getElementById('statusBadge')
+const examples    = document.getElementById('examples')
+
+function setStatus(text, cls) {
+  statusBadge.textContent = text
+  statusBadge.className = 'badge ' + (cls || 'bg-secondary')
+}
+
+function log(msg, type = 'info') {
+  const colors = { info: '', error: 'color:red', success: 'color:green', muted: 'opacity:0.5' }
+  const line = document.createElement('div')
+  line.style.cssText = colors[type] || ''
+  line.textContent = msg
+  if (output.firstChild?.style?.opacity === '0.4') output.innerHTML = ''
+  output.appendChild(line)
+  output.scrollTop = output.scrollHeight
+}
+
+// ============================================================
+// Folder picker
+// ============================================================
+pickBtn.addEventListener('click', async () => {
+  if (!window.showDirectoryPicker) {
+    alert('Requires Chrome/Edge served from localhost')
+    return
+  }
+  try {
+    dirHandle = await window.showDirectoryPicker({ mode: 'readwrite' })
+    fs = createFsaAdapter(dirHandle)
+
+    // expose globally for console use
+    globalThis.fs         = fs
+    globalThis.dir        = dir
+    globalThis.dirHandle  = dirHandle
+
+    dirLabel.textContent = '📁 ' + dirHandle.name
+    dirLabel.classList.remove('text-muted', 'fst-italic')
+    dirLabel.classList.add('fw-medium')
+
+    // verify .git exists
+    try {
+      await dirHandle.getDirectoryHandle('.git')
+      setStatus('git repo ready', 'bg-success')
+      log('✓ .git folder found — repo ready', 'success')
+    } catch {
+      setStatus('no .git found', 'bg-warning')
+      log('⚠ No .git folder found. Run git init first, or pick a git repo.', 'error')
+    }
+
+    runBtn.disabled = false
+    logCard.style.display = ''
+    await loadGitLog()
+
+  } catch(e) { /* cancelled */ }
+})
+
+// ============================================================
+// Git log preview
+// ============================================================
+async function loadGitLog() {
+  logBody.innerHTML = '<tr><td colspan="4" class="text-center text-muted py-2">Loading…</td></tr>'
+  try {
+    const commits = await git.log({ fs, dir, depth: 10 })
+    if (!commits.length) {
+      logBody.innerHTML = '<tr><td colspan="4" class="text-center text-muted py-2">No commits yet</td></tr>'
+      return
+    }
+    logBody.innerHTML = commits.map(c => {
+      const d = new Date(c.commit.author.timestamp * 1000).toLocaleString()
+      const msg = c.commit.message.trim().split('\n')[0]
+      return `<tr>
+        <td><code class="small text-muted">${c.oid.slice(0,7)}</code></td>
+        <td class="text-muted small">${d}</td>
+        <td>${escHtml(msg)}</td>
+        <td class="text-muted small">${escHtml(c.commit.author.name)}</td>
+      </tr>`
+    }).join('')
+  } catch(e) {
+    logBody.innerHTML = `<tr><td colspan="4" class="text-danger py-2 px-3">${e.message}</td></tr>`
+  }
+}
+
+refreshLog.addEventListener('click', loadGitLog)
+
+// ============================================================
+// Examples
+// ============================================================
+const EXAMPLES = {
+  log: `const commits = await git.log({ fs, dir, depth: 10 })
+console.table(commits.map(c => ({
+  hash:    c.oid.slice(0,7),
+  date:    new Date(c.commit.author.timestamp * 1000).toLocaleString(),
+  message: c.commit.message.trim(),
+  author:  c.commit.author.name
+})))`,
+
+  status: `const matrix = await git.statusMatrix({ fs, dir })
+const changed = matrix.filter(([, head, workdir, stage]) => !(head === 1 && workdir === 1 && stage === 1))
+console.table(changed.map(([filepath, head, workdir, stage]) => ({ filepath, head, workdir, stage })))
+console.log('changed files:', changed.length)`,
+
+  add: `// stage a file and commit
+// change 'myfile.txt' to an actual file in your repo
+
+const filepath = 'myfile.txt'
+
+await git.add({ fs, dir, filepath })
+console.log('staged:', filepath)
+
+const sha = await git.commit({
+  fs,
+  dir,
+  message: 'test commit from CW Git Runner',
+  author: { name: 'CW Agent', email: 'cw@local' }
+})
+console.log('committed:', sha)`,
+
+  branch: `const branches = await git.listBranches({ fs, dir })
+const current = await git.currentBranch({ fs, dir })
+console.log('current branch:', current)
+console.log('all branches:', branches)`,
+
+  diff: `// read a file's content at HEAD
+const filepath = 'README.md'   // change to any tracked file
+
+const { blob } = await git.readBlob({
+  fs,
+  dir,
+  oid: 'HEAD',
+  filepath
+})
+const text = new TextDecoder().decode(blob)
+console.log(text.slice(0, 500))`
+}
+
+examples.addEventListener('change', () => {
+  const val = examples.value
+  if (val && EXAMPLES[val]) jsInput.value = EXAMPLES[val]
+  examples.value = ''
+})
+
+// ============================================================
+// Run JS
+// ============================================================
+runBtn.addEventListener('click', async () => {
+  const code = jsInput.value.trim()
+  if (!code) return
+
+  runBtn.disabled = true
+  runBtn.textContent = 'Running…'
+  log('▶ ' + code.split('\n')[0] + (code.includes('\n') ? ' …' : ''), 'muted')
+
+  // intercept console.log/table/error to also show in output panel
+  const origLog   = console.log
+  const origTable = console.table
+  const origError = console.error
+
+  console.log = (...args) => {
+    origLog(...args)
+    log(args.map(a => typeof a === 'object' ? JSON.stringify(a, null, 2) : String(a)).join(' '))
+  }
+  console.table = (data) => {
+    origTable(data)
+    if (Array.isArray(data) && data.length) {
+      const keys = Object.keys(data[0])
+      log(keys.join(' | '))
+      log(keys.map(k => '─'.repeat(k.length)).join('─┼─'))
+      data.forEach(row => log(keys.map(k => String(row[k] ?? '')).join(' | ')))
+    } else {
+      log(JSON.stringify(data, null, 2))
+    }
+  }
+  console.error = (...args) => {
+    origError(...args)
+    log('ERROR: ' + args.join(' '), 'error')
+  }
+
+  try {
+    const fn = new Function('git', 'fs', 'dir', 'dirHandle', `return (async () => { ${code} })()`)
+    const result = await fn(git, fs, dir, dirHandle)
+    if (result !== undefined) log('→ ' + JSON.stringify(result, null, 2))
+    log('✓ done', 'success')
+    // refresh log after potential commits
+    await loadGitLog()
+  } catch(e) {
+    log('✗ ' + e.message, 'error')
+    console.error(e)
+  } finally {
+    console.log   = origLog
+    console.table = origTable
+    console.error = origError
+    runBtn.disabled = false
+    runBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 4v16l13 -8z"/></svg> Run`
+  }
+})
+
+clearBtn.addEventListener('click', () => { jsInput.value = '' })
+clearOutput.addEventListener('click', () => {
+  output.innerHTML = '<span style="opacity:0.4">Output will appear here…</span>'
+})
+
+function escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+}
+</script>
+</body>
+</html>

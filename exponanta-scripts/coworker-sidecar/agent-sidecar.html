@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agent Sidecar</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/core@1.4.0/dist/css/tabler.min.css">
+</head>
+<body class="antialiased">
+
+<div class="page">
+  <div class="page-wrapper">
+    <div class="page-body">
+      <div class="container-xl py-4">
+
+        <div class="row mb-3 align-items-center">
+          <div class="col">
+            <h2 class="page-title">Agent sidecar runner</h2>
+            <div class="text-muted">Picks a directory, evals your JS, writes <code>request-{id}.json</code> sidecars per request</div>
+          </div>
+        </div>
+
+        <!-- Step 1: pick directory -->
+        <div class="card mb-3">
+          <div class="card-header">
+            <h3 class="card-title">
+              <span class="badge bg-blue-lt text-blue me-2">1</span>
+              Working directory
+            </h3>
+          </div>
+          <div class="card-body">
+            <div class="row align-items-center g-3">
+              <div class="col-auto">
+                <button id="pickBtn" class="btn btn-primary">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 4h4l3 3h7a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-11a2 2 0 0 1 2 -2"/></svg>
+                  Select folder
+                </button>
+              </div>
+              <div class="col">
+                <div id="dirLabel" class="text-muted fst-italic">No folder selected</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 2: JS input -->
+        <div class="card mb-3">
+          <div class="card-header">
+            <h3 class="card-title">
+              <span class="badge bg-blue-lt text-blue me-2">2</span>
+              JS to run
+            </h3>
+            <div class="card-options">
+              <button id="exampleBtn" class="btn btn-sm btn-ghost-secondary">Load httpbin example</button>
+            </div>
+          </div>
+          <div class="card-body p-0">
+            <textarea id="jsInput" class="form-control font-monospace border-0 rounded-0" rows="12" placeholder="// Your JS here. Use fetchRequest(url, options) to make tracked requests.
+// Each call is automatically wrapped in a sidecar and written to the selected folder.
+// Returns the fetch Response object as normal.
+
+const r1 = await fetchRequest('/delay/2');
+const r2 = await fetchRequest('/delay/3');
+await Promise.all([r1, r2]);"></textarea>
+          </div>
+          <div class="card-footer">
+            <div class="row align-items-center">
+              <div class="col">
+                <div class="text-muted small">
+                  Use <code>fetchRequest(url, options)</code> — same as <code>fetch()</code> but auto-creates sidecars. Run from <strong>httpbin.org</strong> console or localhost.
+                </div>
+              </div>
+              <div class="col-auto">
+                <button id="runBtn" class="btn btn-success" disabled>
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 4v16l13 -8z"/></svg>
+                  Run
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 3: sidecar log -->
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">
+              <span class="badge bg-blue-lt text-blue me-2">3</span>
+              Sidecar log
+            </h3>
+            <div class="card-options">
+              <button id="clearBtn" class="btn btn-sm btn-ghost-danger">Clear</button>
+            </div>
+          </div>
+          <div class="card-body p-0">
+            <div id="logTable" class="table-responsive">
+              <table class="table table-vcenter table-sm card-table">
+                <thead>
+                  <tr>
+                    <th style="width:160px">ID</th>
+                    <th style="width:80px">Status</th>
+                    <th>URL</th>
+                    <th style="width:90px">HTTP</th>
+                    <th style="width:100px">Time</th>
+                    <th>Sidecar file</th>
+                  </tr>
+                </thead>
+                <tbody id="logBody">
+                  <tr id="emptyRow">
+                    <td colspan="6" class="text-center text-muted py-4">No requests yet</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+let dirHandle = null;
+let reqCounter = 0;
+const rows = {};
+
+const pickBtn = document.getElementById('pickBtn');
+const runBtn = document.getElementById('runBtn');
+const clearBtn = document.getElementById('clearBtn');
+const exampleBtn = document.getElementById('exampleBtn');
+const dirLabel = document.getElementById('dirLabel');
+const jsInput = document.getElementById('jsInput');
+const logBody = document.getElementById('logBody');
+
+const EXAMPLE = `// fires 5 parallel delayed requests to httpbin
+const requests = Array.from({ length: 5 }, (_, i) =>
+  fetchRequest('/delay/' + (i + 1))
+);
+await Promise.all(requests);`;
+
+exampleBtn.addEventListener('click', () => {
+  jsInput.value = EXAMPLE;
+});
+
+pickBtn.addEventListener('click', async () => {
+  if (!window.showDirectoryPicker) {
+    alert('File System Access API not supported. Use Chrome or Edge.');
+    return;
+  }
+  try {
+    dirHandle = await window.showDirectoryPicker({ mode: 'readwrite' });
+    dirLabel.textContent = '📁 ' + dirHandle.name;
+    dirLabel.classList.remove('text-muted', 'fst-italic');
+    dirLabel.classList.add('fw-medium');
+    runBtn.disabled = false;
+  } catch (e) {
+    // user cancelled
+  }
+});
+
+function genId() {
+  reqCounter++;
+  return 'req-' + String(reqCounter).padStart(4, '0') + '-' + Date.now();
+}
+
+function statusBadge(status) {
+  const map = {
+    pending:  'bg-yellow-lt text-yellow',
+    locked:   'bg-blue-lt text-blue',
+    done:     'bg-green-lt text-green',
+    error:    'bg-red-lt text-red',
+  };
+  return `<span class="badge ${map[status] || 'bg-secondary'}">${status}</span>`;
+}
+
+function addRow(id, url) {
+  const emptyRow = document.getElementById('emptyRow');
+  if (emptyRow) emptyRow.remove();
+
+  const tr = document.createElement('tr');
+  tr.id = 'row-' + id;
+  tr.innerHTML = `
+    <td><code class="small">${id}</code></td>
+    <td id="st-${id}">${statusBadge('pending')}</td>
+    <td class="text-truncate" style="max-width:260px" title="${url}">${url}</td>
+    <td id="http-${id}"><span class="text-muted">—</span></td>
+    <td id="time-${id}"><span class="text-muted">—</span></td>
+    <td id="file-${id}"><span class="text-muted">—</span></td>
+  `;
+  logBody.prepend(tr);
+  rows[id] = { url, t0: Date.now() };
+}
+
+function updateRow(id, patch) {
+  const st = document.getElementById('st-' + id);
+  const http = document.getElementById('http-' + id);
+  const time = document.getElementById('time-' + id);
+  const file = document.getElementById('file-' + id);
+
+  if (patch.status && st) st.innerHTML = statusBadge(patch.status);
+  if (patch.httpStatus && http) {
+    const ok = patch.httpStatus >= 200 && patch.httpStatus < 300;
+    http.innerHTML = `<span class="badge ${ok ? 'bg-green-lt text-green' : 'bg-red-lt text-red'}">${patch.httpStatus}</span>`;
+  }
+  if (patch.elapsed && time) time.textContent = patch.elapsed + 's';
+  if (patch.filename && file) file.innerHTML = `<code class="small text-muted">${patch.filename}</code>`;
+}
+
+async function writeSidecar(id, data) {
+  const filename = id + '.json';
+  const fileHandle = await dirHandle.getFileHandle(filename, { create: true });
+  const writable = await fileHandle.createWritable();
+  await writable.write(JSON.stringify(data, null, 2));
+  await writable.close();
+  return filename;
+}
+
+// the tracked fetch wrapper exposed to user's eval'd code
+async function fetchRequest(url, options = {}) {
+  const id = genId();
+  const t0 = Date.now();
+
+  addRow(id, url);
+
+  const initialSidecar = {
+    id,
+    url,
+    options,
+    status: 'locked',
+    _locked: true,
+    _agent: 'browser-eval',
+    _request: { url, options },
+    _response: null,
+    _error: null,
+    _ts: Date.now()
+  };
+
+  await writeSidecar(id, initialSidecar);
+  updateRow(id, { status: 'locked' });
+
+  try {
+    const response = await fetch(url, options);
+    const elapsed = ((Date.now() - t0) / 1000).toFixed(2);
+
+    let responseBody = null;
+    try {
+      const clone = response.clone();
+      responseBody = await clone.json();
+    } catch {
+      const clone = response.clone();
+      responseBody = await clone.text();
+    }
+
+    const doneSidecar = {
+      ...initialSidecar,
+      status: 'done',
+      _locked: false,
+      _agent: null,
+      _response: responseBody,
+      _ts: Date.now()
+    };
+
+    const filename = await writeSidecar(id, doneSidecar);
+    updateRow(id, { status: 'done', httpStatus: response.status, elapsed, filename });
+
+    return response;
+
+  } catch (e) {
+    const elapsed = ((Date.now() - t0) / 1000).toFixed(2);
+
+    const errSidecar = {
+      ...initialSidecar,
+      status: 'error',
+      _locked: false,
+      _agent: null,
+      _error: e.message,
+      _ts: Date.now()
+    };
+
+    const filename = await writeSidecar(id, errSidecar);
+    updateRow(id, { status: 'error', elapsed, filename });
+
+    throw e;
+  }
+}
+
+runBtn.addEventListener('click', async () => {
+  if (!dirHandle) return;
+
+  const code = jsInput.value.trim();
+  if (!code) return;
+
+  runBtn.disabled = true;
+  runBtn.textContent = 'Running…';
+
+  try {
+    const fn = new Function('fetchRequest', `return (async () => { ${code} })()`);
+    await fn(fetchRequest);
+  } catch (e) {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td colspan="6" class="text-danger py-2 px-3"><strong>Eval error:</strong> ${e.message}</td>`;
+    logBody.prepend(tr);
+  } finally {
+    runBtn.disabled = false;
+    runBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 4v16l13 -8z"/></svg> Run`;
+  }
+});
+
+clearBtn.addEventListener('click', () => {
+  logBody.innerHTML = '<tr id="emptyRow"><td colspan="6" class="text-center text-muted py-4">No requests yet</td></tr>';
+  reqCounter = 0;
+});
+</script>
+
+</body>
+</html>

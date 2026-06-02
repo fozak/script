@@ -82,43 +82,42 @@ function CWFilePicker({ run_doc, fieldname, readOnly }) {
 
   const fileUrl = (filename) => `${pbBase}/api/files/${colName}/${doc.id || doc.name}/${filename}`
 
+  // CHANGE 1: use result directly from each update, no separate refetch
   const doUpload = async (acceptedFiles) => {
     if (!doc.name) { console.warn('[FilePicker] no record name'); return }
     setUploading(true)
     try {
       for (const file of acceptedFiles) {
-        await run_doc.child({
+        const result = await run_doc.child({
           operation:      'update',
           target_doctype: run_doc.target_doctype,
           query:          { where: { name: doc.name } },
           input:          { 'files+': file },
           options:        { internal: true, render: false },
         })
+        const fresh = result?.target?.data?.[0]?.[fieldname]
+        if (fresh) setFiles(fresh)
       }
-      const sel = await run_doc.child({
-        operation:      'select',
-        target_doctype: run_doc.target_doctype,
-        query:          { where: { name: doc.name } },
-        options:        { render: false },
-      })
-      setFiles(sel?.target?.data?.[0]?.[fieldname] || [])
     } finally {
       setUploading(false)
     }
   }
 
+  // CHANGE 2: use result from update, fallback to optimistic filter
   const doRemove = async (filename) => {
     if (!doc.name) return
     setUploading(true)
     try {
-      await run_doc.child({
+      const result = await run_doc.child({
         operation:      'update',
         target_doctype: run_doc.target_doctype,
         query:          { where: { name: doc.name } },
         input:          { 'files-': filename },
         options:        { internal: true, render: false },
       })
-      setFiles(prev => prev.filter(f => f !== filename))
+      const fresh = result?.target?.data?.[0]?.[fieldname]
+      if (fresh) setFiles(fresh)
+      else setFiles(prev => prev.filter(f => f !== filename))
     } finally {
       setUploading(false)
     }
@@ -152,20 +151,22 @@ function CWFilePicker({ run_doc, fieldname, readOnly }) {
   )
 }
 
+// CHANGE 3: container id = run_doc.name-fieldname throughout
 const _roots = new Map()
 
 export function mount({ run_doc, fieldname, readOnly }) {
-  const container = document.getElementById(run_doc.name)
-  if (!container) { console.warn('[FilePicker] container not found:', run_doc.name); return }
+  const containerId = `${run_doc.name}-${fieldname}`
+  const container   = document.getElementById(containerId)
+  if (!container) { console.warn('[FilePicker] container not found:', containerId); return }
 
-  if (_roots.has(run_doc.name)) {
-    const old = _roots.get(run_doc.name)
-    _roots.delete(run_doc.name)
+  if (_roots.has(containerId)) {
+    const old = _roots.get(containerId)
+    _roots.delete(containerId)
     setTimeout(() => { try { old.unmount() } catch(_) {} }, 0)
   }
 
   const root = ReactDOM.createRoot(container)
-  _roots.set(run_doc.name, root)
+  _roots.set(containerId, root)
   root.render(
     <React.StrictMode>
       <CWFilePicker run_doc={run_doc} fieldname={fieldname} readOnly={readOnly || false} />
@@ -173,10 +174,11 @@ export function mount({ run_doc, fieldname, readOnly }) {
   )
 }
 
-export function unmount(run_doc) {
-  if (_roots.has(run_doc.name)) {
-    try { _roots.get(run_doc.name).unmount() } catch(_) {}
-    _roots.delete(run_doc.name)
+export function unmount(run_doc, fieldname) {
+  const containerId = `${run_doc.name}-${fieldname}`
+  if (_roots.has(containerId)) {
+    try { _roots.get(containerId).unmount() } catch(_) {}
+    _roots.delete(containerId)
   }
 }
 

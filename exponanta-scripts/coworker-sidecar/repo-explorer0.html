@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Repo Explorer + AI Runner</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/core@1.4.0/dist/css/tabler.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+<style>
+  textarea, .mono { font-family: monospace; font-size: 12px; line-height: 1.5; }
+  .output-zone {
+    font-family: monospace; font-size: 12px; line-height: 1.6;
+    padding: 12px; min-height: 120px; max-height: 320px;
+    overflow-y: auto; white-space: pre-wrap;
+    background: #f8f9fa; border-radius: 4px;
+  }
+  .out-err  { color: #e53e3e; }
+  .out-info { color: #3b82f6; }
+  .out-ok   { color: #38a169; }
+  .card-body-flush { padding: 0; }
+  .tree-item { cursor: pointer; padding: 2px 6px; border-radius: 3px; font-size: 12px; font-family: monospace; white-space: nowrap; }
+  .tree-item:hover { background: #e8f0fe; }
+  .tree-item.selected { background: #1a73e8; color: white; }
+  .tree-item.dir { color: #555; font-weight: 600; }
+  .tree-item.file { color: #333; }
+  .tree-item.file.scss { color: #c6538c; }
+  .tree-item.file.html { color: #e34c26; }
+  .tree-item.file.md   { color: #4078c0; }
+  .tree-item.file.json { color: #f0a500; }
+  .tree-item.file.ts, .tree-item.file.js { color: #3178c6; }
+  #treePanel { height: 420px; overflow-y: auto; overflow-x: auto; border: 1px solid #dee2e6; border-radius: 4px; padding: 4px; background: #fff; }
+  .tree-indent { display: inline-block; width: 16px; }
+  .tag-pill { font-size: 11px; padding: 1px 6px; border-radius: 10px; background: #e9ecef; cursor: pointer; margin: 2px; display: inline-block; }
+  .tag-pill:hover { background: #d0d7de; }
+  .tag-pill.active { background: #1a73e8; color: white; }
+  .selected-files-list { max-height: 120px; overflow-y: auto; font-size: 12px; font-family: monospace; }
+  .selected-file-item { display: flex; align-items: center; justify-content: space-between; padding: 2px 4px; border-radius: 3px; }
+  .selected-file-item:hover { background: #f8f9fa; }
+  #filterInput { font-size: 12px; }
+  .step-badge { width: 22px; height: 22px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; background: #e8f0fe; color: #1a73e8; margin-right: 6px; flex-shrink: 0; }
+  .resize-handle { cursor: ns-resize; height: 4px; background: #dee2e6; margin: 2px 0; border-radius: 2px; }
+  .resize-handle:hover { background: #1a73e8; }
+</style>
+</head>
+<body class="antialiased">
+<div class="page">
+  <div class="page-wrapper">
+    <div class="page-body">
+      <div class="container-xl py-3">
+
+        <!-- Header -->
+        <div class="row mb-3 align-items-center">
+          <div class="col">
+            <h2 class="page-title mb-0">Repo Explorer + AI Runner</h2>
+            <div class="text-muted small">Browse GitHub repo → select files → inject as context → run AI</div>
+          </div>
+          <div class="col-auto d-flex gap-2 align-items-center">
+            <span id="statusBadge" class="badge bg-secondary">idle</span>
+            <button id="runBtn" class="btn btn-primary">
+              <i class="ti ti-player-play me-1"></i>Run
+            </button>
+          </div>
+        </div>
+
+        <!-- Row 1: Config + Repo -->
+        <div class="row mb-3 g-3">
+
+          <!-- Step 0: AI Config -->
+          <div class="col-12 col-lg-4">
+            <div class="card h-100">
+              <div class="card-header">
+                <h3 class="card-title"><span class="step-badge">0</span>AI Config</h3>
+              </div>
+              <div class="card-body">
+                <div class="mb-2">
+                  <label class="form-label small text-muted mb-1">API Key</label>
+                  <input type="password" id="apiKey" class="form-control form-control-sm mono" placeholder="sk-...">
+                </div>
+                <div class="mb-2">
+                  <label class="form-label small text-muted mb-1">Model</label>
+                  <select id="modelSelect" class="form-select form-select-sm">
+                    <option value="deepseek-chat">deepseek-chat</option>
+                    <option value="deepseek-reasoner">deepseek-reasoner</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="form-label small text-muted mb-1">API Endpoint</label>
+                  <input type="text" id="apiEndpoint" class="form-control form-control-sm mono" value="https://api.deepseek.com/v1/chat/completions">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 1: Repo Loader -->
+          <div class="col-12 col-lg-8">
+            <div class="card h-100">
+              <div class="card-header">
+                <h3 class="card-title"><span class="step-badge">1</span>Repo / Directory Source</h3>
+                <div class="card-options gap-2">
+                  <button id="localDirBtn" class="btn btn-sm btn-outline-secondary">
+                    <i class="ti ti-folder-open me-1"></i>Local Dir
+                  </button>
+                  <button id="fetchRepoBtn" class="btn btn-sm btn-primary">
+                    <i class="ti ti-brand-github me-1"></i>Fetch GitHub
+                  </button>
+                </div>
+              </div>
+              <div class="card-body pb-2">
+                <div class="row g-2 mb-2">
+                  <div class="col">
+                    <input type="text" id="repoInput" class="form-control form-control-sm mono"
+                      placeholder="owner/repo  e.g. tabler/tabler" value="tabler/tabler">
+                  </div>
+                  <div class="col-auto">
+                    <input type="text" id="refInput" class="form-control form-control-sm mono"
+                      placeholder="branch/sha" value="HEAD" style="width:140px">
+                  </div>
+                </div>
+                <!-- Filters -->
+                <div class="row g-2 mb-2">
+                  <div class="col">
+                    <input type="text" id="filterInput" class="form-control form-control-sm"
+                      placeholder="Filter paths… e.g. shared/includes or .scss">
+                  </div>
+                  <div class="col-auto">
+                    <button id="clearFilterBtn" class="btn btn-sm btn-ghost-secondary">Clear</button>
+                  </div>
+                </div>
+                <!-- Extension quick filters -->
+                <div id="extTags" class="mb-2">
+                  <span class="text-muted small me-1">Ext:</span>
+                </div>
+                <!-- Exclude dirs -->
+                <div class="d-flex align-items-center gap-2">
+                  <input type="text" id="excludeDirInput" class="form-control form-control-sm"
+                    placeholder="Exclude dir (e.g. node_modules)" style="max-width:220px">
+                  <button id="addExcludeDir" class="btn btn-sm btn-outline-secondary">+ Exclude</button>
+                  <div id="excludeDirTags"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 2: Tree + Selected Files -->
+        <div class="row mb-3 g-3">
+
+          <!-- File Tree -->
+          <div class="col-12 col-lg-5">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title"><span class="step-badge">2</span>File Tree</h3>
+                <div class="card-options">
+                  <span id="treeStat" class="text-muted small"></span>
+                </div>
+              </div>
+              <div class="card-body p-2">
+                <div id="treePanel">
+                  <span class="text-muted small p-2 d-block">Load a repo or local directory to browse files</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Selected Files + Content Preview -->
+          <div class="col-12 col-lg-7">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title"><span class="step-badge">3</span>Selected Files</h3>
+                <div class="card-options gap-2">
+                  <span id="selectedStat" class="text-muted small"></span>
+                  <button id="clearSelBtn" class="btn btn-sm btn-ghost-danger">Clear</button>
+                  <button id="fetchSelectedBtn" class="btn btn-sm btn-primary">
+                    <i class="ti ti-download me-1"></i>Load Content
+                  </button>
+                </div>
+              </div>
+              <div class="card-body p-2">
+                <div id="selectedFilesList" class="selected-files-list mb-2">
+                  <span class="text-muted small">Click files in tree to select…</span>
+                </div>
+                <div class="resize-handle" id="resizeHandle"></div>
+                <div id="contentPreview" class="output-zone mt-1" style="min-height:80px; max-height:200px;">
+                  <span class="text-muted">File content appears here after loading…</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 3: Prompt + Generated JS -->
+        <div class="row mb-3 g-3">
+          <div class="col-12 col-lg-6">
+            <div class="card h-100">
+              <div class="card-header">
+                <h3 class="card-title"><span class="step-badge">4</span>Prompt</h3>
+                <div class="card-options">
+                  <label class="form-check form-switch mb-0">
+                    <input class="form-check-input" type="checkbox" id="injectContext" checked>
+                    <span class="form-check-label small">Inject files as context</span>
+                  </label>
+                </div>
+              </div>
+              <div class="card-body card-body-flush">
+                <textarea id="promptInput" class="form-control border-0 rounded-0" rows="8"
+                  placeholder="e.g. How would a Tabler blog card look from CSS standpoint?&#10;e.g. What classes does Tabler use for hero sections?&#10;e.g. Generate a fetch to get the repo tree and return paths"></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-lg-6">
+            <div class="card h-100">
+              <div class="card-header">
+                <h3 class="card-title"><span class="step-badge">5</span>Generated JS</h3>
+                <div class="card-options">
+                  <span id="jsBadge" class="badge bg-secondary">waiting</span>
+                </div>
+              </div>
+              <div class="card-body card-body-flush">
+                <textarea id="jsOutput" class="form-control border-0 rounded-0" rows="8"
+                  placeholder="// Generated JS appears here — editable before run"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 4: Console + JSON -->
+        <div class="row g-3">
+          <div class="col-12 col-lg-6">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title"><span class="step-badge">6</span>Console</h3>
+                <div class="card-options">
+                  <button id="clearConsole" class="btn btn-sm btn-ghost-danger">Clear</button>
+                </div>
+              </div>
+              <div class="card-body p-0">
+                <div id="consoleOut" class="output-zone">
+                  <span class="text-muted">Console output appears here…</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-lg-6">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title"><span class="step-badge">7</span>JSON Output</h3>
+                <div class="card-options gap-2">
+                  <button id="copyJson" class="btn btn-sm btn-ghost-secondary">Copy</button>
+                  <button id="clearJson" class="btn btn-sm btn-ghost-danger">Clear</button>
+                </div>
+              </div>
+              <div class="card-body p-0">
+                <div id="jsonOut" class="output-zone">
+                  <span class="text-muted">JSON result appears here…</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── State ────────────────────────────────────────────────────
+let allFiles = []          // [{path, type, url?, handle?}]
+let selectedFiles = []     // paths
+let fileContents = {}      // path → content string
+let activeExtFilters = new Set()
+let excludeDirs = new Set(['node_modules', '.git', '.github', 'pnpm-lock.yaml'])
+let sourceMode = 'github'  // 'github' | 'local'
+let dirHandle = null
+
+// ── DOM refs ─────────────────────────────────────────────────
+const treePanel       = document.getElementById('treePanel')
+const selectedList    = document.getElementById('selectedFilesList')
+const contentPreview  = document.getElementById('contentPreview')
+const treeStat        = document.getElementById('treeStat')
+const selectedStat    = document.getElementById('selectedStat')
+const extTags         = document.getElementById('extTags')
+const excludeDirTags  = document.getElementById('excludeDirTags')
+const filterInput     = document.getElementById('filterInput')
+const consoleEl       = document.getElementById('consoleOut')
+const jsonOutEl       = document.getElementById('jsonOut')
+const jsOutEl         = document.getElementById('jsOutput')
+const statusBadge     = document.getElementById('statusBadge')
+const jsBadge         = document.getElementById('jsBadge')
+
+// ── Status helpers ───────────────────────────────────────────
+const statusMap = { idle:'bg-secondary', running:'bg-blue', success:'bg-success', error:'bg-danger', waiting:'bg-secondary', ready:'bg-success', generating:'bg-azure' }
+const setStatus = (t,k) => { statusBadge.textContent=t; statusBadge.className='badge '+(statusMap[k]||'bg-secondary') }
+const setJsBadge = (t,k) => { jsBadge.textContent=t; jsBadge.className='badge '+(statusMap[k]||'bg-secondary') }
+
+// ── Console ──────────────────────────────────────────────────
+function clearIfPlaceholder(el) { if (el.querySelector('span.text-muted')) el.innerHTML = '' }
+function appendConsole(msg, type) {
+  clearIfPlaceholder(consoleEl)
+  const d = document.createElement('div')
+  d.textContent = msg
+  if (type==='err') d.className='out-err'
+  if (type==='info') d.className='out-info'
+  if (type==='ok') d.className='out-ok'
+  consoleEl.appendChild(d)
+  consoleEl.scrollTop = consoleEl.scrollHeight
+}
+function sep(label) { appendConsole('── '+label+' '+'─'.repeat(Math.max(0,40-label.length)),'info') }
+
+// ── Exclude dirs ─────────────────────────────────────────────
+function renderExcludeTags() {
+  excludeDirTags.innerHTML = ''
+  excludeDirs.forEach(d => {
+    const span = document.createElement('span')
+    span.className = 'tag-pill active'
+    span.textContent = d + ' ×'
+    span.onclick = () => { excludeDirs.delete(d); renderExcludeTags(); renderTree() }
+    excludeDirTags.appendChild(span)
+  })
+}
+document.getElementById('addExcludeDir').onclick = () => {
+  const v = document.getElementById('excludeDirInput').value.trim()
+  if (v) { excludeDirs.add(v); document.getElementById('excludeDirInput').value=''; renderExcludeTags(); renderTree() }
+}
+renderExcludeTags()
+
+// ── Extension tags ───────────────────────────────────────────
+function buildExtTags() {
+  const exts = [...new Set(allFiles.filter(f=>f.type==='blob').map(f=>{
+    const p = f.path.split('.'); return p.length>1 ? p.pop().toLowerCase() : ''
+  }).filter(Boolean))].sort()
+  extTags.innerHTML = '<span class="text-muted small me-1">Ext:</span>'
+  exts.slice(0,20).forEach(ext => {
+    const span = document.createElement('span')
+    span.className = 'tag-pill' + (activeExtFilters.has(ext) ? ' active' : '')
+    span.textContent = '.'+ext
+    span.onclick = () => {
+      if (activeExtFilters.has(ext)) activeExtFilters.delete(ext)
+      else activeExtFilters.add(ext)
+      span.classList.toggle('active')
+      renderTree()
+    }
+    extTags.appendChild(span)
+  })
+}
+
+// ── Filter logic ─────────────────────────────────────────────
+function isExcluded(path) {
+  const segs = path.split('/')
+  for (const seg of segs) if (excludeDirs.has(seg)) return true
+  return false
+}
+function matchesFilter(path) {
+  const f = filterInput.value.trim().toLowerCase()
+  if (f && !path.toLowerCase().includes(f)) return false
+  if (activeExtFilters.size > 0) {
+    const ext = path.split('.').pop().toLowerCase()
+    if (!activeExtFilters.has(ext)) return false
+  }
+  return true
+}
+
+// ── Tree render ───────────────────────────────────────────────
+function renderTree() {
+  const filtered = allFiles.filter(f => !isExcluded(f.path) && matchesFilter(f.path))
+  treeStat.textContent = filtered.length + ' / ' + allFiles.length + ' files'
+
+  if (!filtered.length) {
+    treePanel.innerHTML = '<span class="text-muted small p-2 d-block">No files match filter</span>'
+    return
+  }
+
+  // Build tree structure
+  const tree = {}
+  filtered.forEach(f => {
+    const parts = f.path.split('/')
+    let node = tree
+    parts.forEach((p, i) => {
+      if (!node[p]) node[p] = { _files: [], _dirs: {} }
+      if (i === parts.length - 1) node[p]._isFile = true
+      else node = node[p]._dirs || (node[p]._dirs = {})
+    })
+  })
+
+  treePanel.innerHTML = ''
+  renderNode(treePanel, filtered, '', 0)
+}
+
+function renderNode(container, files, prefix, depth) {
+  // Group by first segment
+  const groups = {}
+  files.forEach(f => {
+    const rel = prefix ? f.path.slice(prefix.length+1) : f.path
+    const seg = rel.split('/')[0]
+    if (!groups[seg]) groups[seg] = []
+    groups[seg].push(f)
+  })
+
+  // Dirs first, then files
+  const keys = Object.keys(groups).sort((a,b) => {
+    const aDir = groups[a].some(f => f.path !== (prefix ? prefix+'/'+a : a))
+    const bDir = groups[b].some(f => f.path !== (prefix ? prefix+'/'+b : b))
+    if (aDir && !bDir) return -1
+    if (!aDir && bDir) return 1
+    return a.localeCompare(b)
+  })
+
+  keys.forEach(seg => {
+    const fullPath = prefix ? prefix+'/'+seg : seg
+    const group = groups[seg]
+    const isDir = group.some(f => f.path !== fullPath)
+    const isFile = group.some(f => f.path === fullPath)
+
+    const row = document.createElement('div')
+    row.style.paddingLeft = (depth*14)+'px'
+
+    if (isDir) {
+      row.className = 'tree-item dir'
+      row.textContent = '📁 ' + seg
+      row.onclick = () => {
+        const children = container.querySelectorAll('[data-prefix="'+fullPath+'"]')
+        if (children.length) { children.forEach(c=>c.remove()); row.textContent='📁 '+seg }
+        else {
+          row.textContent = '📂 '+seg
+          const subFiles = group.filter(f => f.path !== fullPath)
+          const sub = document.createElement('div')
+          sub.setAttribute('data-prefix', fullPath)
+          container.insertBefore(sub, row.nextSibling)
+          renderNode(sub, subFiles, fullPath, depth+1)
+        }
+      }
+      container.appendChild(row)
+    }
+
+    if (isFile) {
+      const fileEntry = group.find(f => f.path === fullPath)
+      const ext = fullPath.split('.').pop().toLowerCase()
+      row.className = `tree-item file ${ext}`
+      const isSel = selectedFiles.includes(fullPath)
+      row.textContent = (isSel ? '✓ ' : '') + seg
+      if (isSel) row.classList.add('selected')
+      row.setAttribute('data-path', fullPath)
+      row.onclick = (e) => {
+        e.stopPropagation()
+        toggleSelect(fullPath, row)
+      }
+      container.appendChild(row)
+    }
+  })
+}
+
+// ── Select files ──────────────────────────────────────────────
+function toggleSelect(path, rowEl) {
+  const idx = selectedFiles.indexOf(path)
+  if (idx >= 0) {
+    selectedFiles.splice(idx, 1)
+    if (rowEl) { rowEl.classList.remove('selected'); rowEl.textContent = rowEl.textContent.replace('✓ ','') }
+  } else {
+    selectedFiles.push(path)
+    if (rowEl) { rowEl.classList.add('selected'); rowEl.textContent = '✓ ' + rowEl.textContent }
+  }
+  renderSelectedList()
+}
+
+function renderSelectedList() {
+  selectedStat.textContent = selectedFiles.length + ' selected'
+  if (!selectedFiles.length) {
+    selectedList.innerHTML = '<span class="text-muted small">Click files in tree to select…</span>'
+    return
+  }
+  selectedList.innerHTML = ''
+  selectedFiles.forEach(path => {
+    const div = document.createElement('div')
+    div.className = 'selected-file-item'
+    const loaded = fileContents[path] ? '✓' : '○'
+    div.innerHTML = `<span class="mono">${loaded} ${path}</span><button class="btn btn-sm btn-ghost-danger p-0 px-1" style="font-size:11px" data-rm="${path}">×</button>`
+    div.querySelector('[data-rm]').onclick = () => {
+      const p = div.querySelector('[data-rm]').getAttribute('data-rm')
+      selectedFiles = selectedFiles.filter(x=>x!==p)
+      delete fileContents[p]
+      // Update tree row
+      const treeRow = treePanel.querySelector(`[data-path="${p}"]`)
+      if (treeRow) { treeRow.classList.remove('selected'); treeRow.textContent = treeRow.textContent.replace('✓ ','') }
+      renderSelectedList()
+    }
+    // Click to preview
+    div.querySelector('span').onclick = () => previewFile(path)
+    selectedList.appendChild(div)
+  })
+}
+
+function previewFile(path) {
+  const content = fileContents[path]
+  clearIfPlaceholder(contentPreview)
+  if (content) {
+    contentPreview.textContent = content.slice(0, 3000) + (content.length > 3000 ? '\n…truncated' : '')
+  } else {
+    contentPreview.textContent = path + ' — not loaded yet. Click "Load Content".'
+  }
+}
+
+// ── Load file contents ────────────────────────────────────────
+document.getElementById('fetchSelectedBtn').onclick = async () => {
+  if (!selectedFiles.length) { appendConsole('No files selected','err'); return }
+  sep('loading file contents')
+  for (const path of selectedFiles) {
+    if (fileContents[path]) { appendConsole('cached: '+path,'info'); continue }
+    try {
+      if (sourceMode === 'github') {
+        const repo = document.getElementById('repoInput').value.trim()
+        const ref  = document.getElementById('refInput').value.trim() || 'HEAD'
+        const url = `https://raw.githubusercontent.com/${repo}/${ref}/${path}`
+        const r = await fetch(url)
+        if (!r.ok) throw new Error(r.status)
+        fileContents[path] = await r.text()
+      } else {
+        // local — traverse handle
+        fileContents[path] = await readLocalFile(path)
+      }
+      appendConsole('✓ '+path,'ok')
+    } catch(e) {
+      appendConsole('✗ '+path+' — '+e.message,'err')
+    }
+  }
+  renderSelectedList()
+  appendConsole('done loading','ok')
+}
+
+async function readLocalFile(path) {
+  const parts = path.split('/')
+  let handle = dirHandle
+  for (let i=0; i<parts.length-1; i++) handle = await handle.getDirectoryHandle(parts[i])
+  const fh = await handle.getFileHandle(parts[parts.length-1])
+  const f = await fh.getFile()
+  return await f.text()
+}
+
+// ── GitHub fetch tree ─────────────────────────────────────────
+document.getElementById('fetchRepoBtn').onclick = async () => {
+  const repo = document.getElementById('repoInput').value.trim()
+  const ref  = document.getElementById('refInput').value.trim() || 'HEAD'
+  if (!repo) { appendConsole('Enter repo owner/name','err'); return }
+  sourceMode = 'github'
+  sep('fetching tree: '+repo)
+  setStatus('fetching…','running')
+  try {
+    const url = `https://api.github.com/repos/${repo}/git/trees/${ref}?recursive=1`
+    const r = await fetch(url)
+    if (!r.ok) throw new Error('GitHub API '+r.status+': '+await r.text())
+    const data = await r.json()
+    if (data.truncated) appendConsole('⚠ tree truncated by GitHub (>100k files)','err')
+    allFiles = data.tree || []
+    appendConsole('✓ got '+allFiles.length+' entries','ok')
+    fileContents = {}
+    selectedFiles = []
+    buildExtTags()
+    renderTree()
+    renderSelectedList()
+    setStatus('ready','success')
+  } catch(e) {
+    appendConsole('✗ '+e.message,'err')
+    setStatus('error','error')
+  }
+}
+
+// ── Local dir ─────────────────────────────────────────────────
+document.getElementById('localDirBtn').onclick = async () => {
+  try {
+    dirHandle = await window.showDirectoryPicker()
+    sourceMode = 'local'
+    sep('scanning local directory')
+    setStatus('scanning…','running')
+    allFiles = []
+    fileContents = {}
+    selectedFiles = []
+    await scanLocalDir(dirHandle, '')
+    appendConsole('✓ found '+allFiles.length+' files','ok')
+    buildExtTags()
+    renderTree()
+    renderSelectedList()
+    setStatus('ready','success')
+  } catch(e) {
+    if (e.name !== 'AbortError') appendConsole('✗ '+e.message,'err')
+  }
+}
+
+async function scanLocalDir(handle, prefix) {
+  for await (const [name, h] of handle.entries()) {
+    if (name.startsWith('.')) continue
+    const path = prefix ? prefix+'/'+name : name
+    if (h.kind === 'directory') {
+      if (!excludeDirs.has(name)) await scanLocalDir(h, path)
+    } else {
+      allFiles.push({ path, type: 'blob' })
+    }
+  }
+}
+
+// ── Filters ───────────────────────────────────────────────────
+filterInput.addEventListener('input', () => renderTree())
+document.getElementById('clearFilterBtn').onclick = () => { filterInput.value=''; activeExtFilters.clear(); document.querySelectorAll('.tag-pill').forEach(t=>t.classList.remove('active')); renderTree() }
+
+// ── Clear selection ───────────────────────────────────────────
+document.getElementById('clearSelBtn').onclick = () => {
+  selectedFiles = []
+  fileContents = {}
+  document.querySelectorAll('.tree-item.selected').forEach(el => {
+    el.classList.remove('selected')
+    el.textContent = el.textContent.replace('✓ ','')
+  })
+  renderSelectedList()
+}
+
+// ── Build context string ──────────────────────────────────────
+function buildContext() {
+  const loaded = selectedFiles.filter(p => fileContents[p])
+  if (!loaded.length) return ''
+  let ctx = '=== REPO FILES CONTEXT ===\n\n'
+  loaded.forEach(path => {
+    ctx += `--- FILE: ${path} ---\n${fileContents[path]}\n\n`
+  })
+  return ctx
+}
+
+// ── DeepSeek API ──────────────────────────────────────────────
+async function askDeepSeek(apiKey, model, userPrompt) {
+  const endpoint = document.getElementById('apiEndpoint').value.trim()
+  const system = `You are a JavaScript code generator and code analyst.
+The user may provide repo file contents as context — use them to answer accurately.
+Return ONLY a JSON object with a single key "code" containing the JS as a string.
+No markdown, no backticks, no explanation — just the JSON.
+The code runs in an async browser context (top-level await available).
+If the result is a JSON object or array, assign it to a variable called \`result\` and call \`console.log(JSON.stringify(result))\` at the end.
+If the answer is purely analytical (no fetch/compute needed), set result to an object with your findings.`
+
+  const injectContext = document.getElementById('injectContext').checked
+  const context = injectContext ? buildContext() : ''
+  const fullPrompt = context ? context + '\n\nUSER QUESTION:\n' + userPrompt : userPrompt
+
+  const r = await fetch(endpoint, {
+    method: 'POST',
+    headers: { 'Content-Type':'application/json', 'Authorization':'Bearer '+apiKey },
+    body: JSON.stringify({
+      model, max_tokens: 4096,
+      response_format: { type: 'json_object' },
+      messages: [
+        { role:'system', content: system },
+        { role:'user',   content: fullPrompt + '\n\nReturn JSON with key "code".' }
+      ]
+    })
+  })
+  if (!r.ok) throw new Error('API '+r.status+': '+(await r.text()).slice(0,200))
+  const data = await r.json()
+  const raw = data.choices?.[0]?.message?.content || ''
+  try { return JSON.parse(raw).code || raw } catch { return raw.replace(/^```(?:js|javascript)?\n?/i,'').replace(/```\s*$/,'').trim() }
+}
+
+// ── Run JS ────────────────────────────────────────────────────
+async function runJS(code) {
+  const origLog = console.log, origErr = console.error, origWarn = console.warn
+  let jsonResult = null
+  console.log = (...args) => {
+    origLog(...args)
+    const msg = args.map(a => typeof a==='object' ? JSON.stringify(a,null,2) : String(a)).join(' ')
+    appendConsole(msg)
+    try { const p = JSON.parse(typeof args[0]==='string'?args[0]:JSON.stringify(args[0])); if(typeof p==='object'&&p!==null) jsonResult=p } catch{}
+  }
+  console.error = (...args) => { origErr(...args); appendConsole('ERR: '+args.map(String).join(' '),'err') }
+  console.warn  = (...args) => { origWarn(...args); appendConsole('WARN: '+args.map(String).join(' ')) }
+  try {
+    const fn = new Function('return (async () => { '+code+' })()')
+    const ret = await fn()
+    if (ret !== undefined && ret !== null && typeof ret === 'object') jsonResult = ret
+  } finally {
+    console.log=origLog; console.error=origErr; console.warn=origWarn
+  }
+  return jsonResult
+}
+
+// ── Main run ──────────────────────────────────────────────────
+document.getElementById('runBtn').onclick = async () => {
+  const apiKey = document.getElementById('apiKey').value.trim()
+  const model  = document.getElementById('modelSelect').value
+  const prompt = document.getElementById('promptInput').value.trim()
+  if (!apiKey) { appendConsole('⚠ Enter API key','err'); return }
+  if (!prompt) { appendConsole('⚠ Enter a prompt','err'); return }
+
+  document.getElementById('runBtn').disabled = true
+  setStatus('generating…','running')
+  setJsBadge('generating…','generating')
+  sep('step 1 — asking AI')
+
+  const loaded = selectedFiles.filter(p=>fileContents[p])
+  if (loaded.length) appendConsole('context: '+loaded.length+' files injected','info')
+  else appendConsole('no file context injected','info')
+
+  let code
+  try {
+    code = await askDeepSeek(apiKey, model, prompt)
+    jsOutEl.value = code
+    setJsBadge('ready','ready')
+    appendConsole('✓ JS received ('+code.split('\n').length+' lines)','ok')
+  } catch(e) {
+    appendConsole('✗ '+e.message,'err')
+    setStatus('error','error'); setJsBadge('error','error')
+    document.getElementById('runBtn').disabled=false; return
+  }
+
+  sep('step 2 — running JS')
+  setStatus('running…','running')
+  try {
+    const jsonResult = await runJS(code)
+    clearIfPlaceholder(jsonOutEl)
+    jsonOutEl.textContent = jsonResult ? JSON.stringify(jsonResult,null,2) : '(no JSON — see console)'
+    setStatus('done ✓','success')
+    sep('done')
+  } catch(e) {
+    appendConsole('✗ '+e.message,'err')
+    setStatus('error','error')
+  } finally {
+    document.getElementById('runBtn').disabled=false
+  }
+}
+
+// ── Clear / copy ──────────────────────────────────────────────
+document.getElementById('clearConsole').onclick = () => { consoleEl.innerHTML='<span class="text-muted">Console output appears here…</span>' }
+document.getElementById('clearJson').onclick    = () => { jsonOutEl.innerHTML='<span class="text-muted">JSON result appears here…</span>' }
+document.getElementById('copyJson').onclick = () => {
+  const t = jsonOutEl.textContent
+  if (!t || jsonOutEl.querySelector('span.text-muted')) return
+  navigator.clipboard.writeText(t).then(()=>{
+    const btn = document.getElementById('copyJson')
+    const orig = btn.textContent
+    btn.textContent='Copied!'; setTimeout(()=>btn.textContent=orig,1500)
+  })
+}
+</script>
+</body>
+</html>
