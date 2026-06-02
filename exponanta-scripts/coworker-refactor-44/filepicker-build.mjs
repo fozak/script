@@ -11,7 +11,7 @@ const isDev     = process.argv.includes('--dev')
 const config = {
   entryPoints: [path.join(__dirname, 'filepicker.jsx')],
   bundle:      true,
-  outfile:     path.join(rootDir, 'filepicker.js'),
+  outfile: path.join(__dirname, 'filepicker.js'),
   format:      'esm',
   platform:    'browser',
   target:      ['es2020'],
