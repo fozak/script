@@ -2065,12 +2065,14 @@ const UniversalGrid = function({ run_doc, field }) {
   const rows    = run_doc.target?.data || []
   const titleField = schema.title_field || 'name'
 
-  const columns = (schema.fields?.filter(f => f.in_list_view) || [])
+  /*const columns = (schema.fields?.filter(f => f.in_list_view) || [])
     .map(f => ({
       accessorKey: f.fieldname,
       header:      f.label || f.fieldname,
     }))
+ */  
 
+    const columns = Object.keys(rows[0] || {})  // ← from actual data keys
   const table = RT.useReactTable({
     data:                  rows,
     columns,

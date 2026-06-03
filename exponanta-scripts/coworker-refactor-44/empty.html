@@ -41,7 +41,17 @@
   <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
   <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta17/dist/js/tabler.min.js"></script>
+  
 
+  <!--- TANSTACK GRID   -->
+
+    <script src="https://unpkg.com/@tanstack/react-table@8.20.5/build/umd/index.production.js"></script>
+  <script>
+    globalThis.TanStackTable = globalThis.ReactTable;
+    console.log('✅ TanStack Table loaded:', !!globalThis.TanStackTable);
+  </script>
+
+  <!---end -->
   <script type="module" src="index.js"></script>
   <script type="module" src="CW-ui.js"></script>
   <script type="module" src="app-ui.js"></script>
