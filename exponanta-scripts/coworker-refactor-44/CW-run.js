@@ -340,10 +340,11 @@ CW._expand = async function (run_doc, fieldname) {
 
   const fields = fieldname
     ? schema.fields?.filter(f => f.fieldname === fieldname)
-    : schema.fields?.filter(f => 
-        f.fieldtype === 'Table' || 
+    : schema.fields?.filter(f =>
+        f.fieldtype === 'Table'              ||
         f.fieldtype === 'Relationship Panel' ||
-        f.fieldtype === 'Link'
+        f.fieldtype === 'Link'               ||
+        f.fieldtype === 'ChildRun'
       );
 
   const promises = [];
@@ -351,6 +352,19 @@ CW._expand = async function (run_doc, fieldname) {
     const exists = run_doc.child_run_ids
       .some(id => CW.runs[id]?.source_field === field.fieldname);
     if (exists) continue;
+
+    if (field.fieldtype === 'ChildRun') {
+      promises.push(run_doc.child({
+        ...field.run_args,
+        operation:    field.run_args?.operation || 'select',
+        query:        CW._resolveQuery(run_doc, field.fieldname),
+        source_field: field.fieldname,
+        options:      { render: false },
+        component:    null,
+        container:    null,
+      }));
+      continue;
+    }
 
     if (field.fieldtype === 'Link') {
       const val = doc[field.fieldname];

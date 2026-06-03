@@ -895,6 +895,37 @@ function refetchGrid(run_doc) {
   });
 }
 
+
+
+
+
+
+// ============================================================
+// _resolveQuery
+// ============================================================
+
+function _resolveQuery(run_doc, fieldname) {
+  const schema = CW.Schema?.[run_doc.target_doctype]
+  const field  = schema?.fields?.find(f => f.fieldname === fieldname)
+  const doc    = run_doc.target?.data?.[0]
+
+  if (!field?.run_args?.query) return field?.run_args?.query
+
+  try {
+    return JSON.parse(
+      JSON.stringify(field.run_args.query).replace(/\{\{([\w.]+)\}\}/g, (_, path) => {
+        const val = path.split('.').reduce((o, k) => o?.[k], { doc })
+        return val !== undefined ? val : ''
+      })
+    )
+  } catch(e) {
+    console.warn('[CW._resolveQuery]', fieldname, e.message)
+    return field.run_args.query
+  }
+}
+
+
+
 // ─── assign to CW ────────────────────────────────────────────────────────────
 
 CW.getGridSelected   = getGridSelected;
@@ -916,6 +947,7 @@ CW._patchDataField = _patchDataField;
 CW._logChanges = _logChanges;
 CW._logThreads = _logThreads;
 CW._getListFields = _getListFields;
+CW._resolveQuery = _resolveQuery;
 
 // ============================================================
 // PERSIST STUB
