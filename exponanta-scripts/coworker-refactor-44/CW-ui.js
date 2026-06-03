@@ -1869,8 +1869,8 @@ const GridToolbar = function ({ run_doc, field }) {
 };
 
 
-//===========================Grid===============================
-
+//===========================Grid NO DEPENDENCIES===============================
+/*
 const UniversalGrid = function ({ run_doc, field }) {
   console.log('[UniversalGrid render]', field?.fieldname, 'time:', Date.now());
 
@@ -2053,6 +2053,83 @@ const UniversalGrid = function ({ run_doc, field }) {
       ce("div", { className: "text-center text-secondary py-5" }, "No records"),
   );
 };
+*/
+
+/* TanStack grid version */
+
+const UniversalGrid = function({ run_doc, field }) {
+  run_doc = CW._getChildRun(run_doc, field?.fieldname) || run_doc
+
+  const RT      = globalThis.TanStackTable
+  const schema  = CW.Schema?.[run_doc.target_doctype] || {}
+  const rows    = run_doc.target?.data || []
+  const titleField = schema.title_field || 'name'
+
+  const columns = (schema.fields?.filter(f => f.in_list_view) || [])
+    .map(f => ({
+      accessorKey: f.fieldname,
+      header:      f.label || f.fieldname,
+    }))
+
+  const table = RT.useReactTable({
+    data:                  rows,
+    columns,
+    getCoreRowModel:       RT.getCoreRowModel(),
+    getSortedRowModel:     RT.getSortedRowModel(),
+    getFilteredRowModel:   RT.getFilteredRowModel(),
+    getPaginationRowModel: RT.getPaginationRowModel(),
+  })
+
+  if (!RT) return ce('div', null, 'TanStack Table not loaded')
+
+  return ce('div', { className: 'cw-universal-grid' },
+    ce('div', { className: 'table-responsive' },
+      ce('table', { className: 'table table-hover table-sm mb-0' },
+        ce('thead', null,
+          table.getHeaderGroups().map(hg =>
+            ce('tr', { key: hg.id },
+              hg.headers.map(h =>
+                ce('th', {
+                  key:     h.id,
+                  onClick: h.column.getToggleSortingHandler(),
+                  style:   { cursor: 'pointer', userSelect: 'none' },
+                }, h.column.columnDef.header)
+              )
+            )
+          )
+        ),
+        ce('tbody', null,
+          table.getRowModel().rows.map(row =>
+            ce('tr', {
+              key:     row.id,
+              style:   { cursor: 'pointer' },
+              onClick: () => run_doc.child({
+                operation:      'select',
+                target_doctype: run_doc.target_doctype,
+                query:          { where: { name: row.original.name } },
+                view:           'form',
+                options:        { render: true },
+              })
+            },
+              row.getVisibleCells().map(cell =>
+                ce('td', {
+                  key:       cell.id,
+                  className: cell.column.id === titleField ? 'fw-medium' : 'text-secondary',
+                },
+                  RT.flexRender(cell.column.columnDef.cell, cell.getContext())
+                )
+              )
+            )
+          )
+        )
+      )
+    ),
+    rows.length === 0 &&
+      ce('div', { className: 'text-center text-secondary py-5' }, 'No records')
+  )
+}
+
+
 
 globalThis.UniversalGrid = UniversalGrid;
 console.log("✅ UniversalGrid loaded");
