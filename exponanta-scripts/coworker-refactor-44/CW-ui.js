@@ -171,7 +171,7 @@ const BlockNoteField = function ({
     });
     return () => {
       alive = false;
-      import("./editor.js").then(({ unmount }) => unmount(run_doc));
+      import("./editor.js").then(({ unmount }) => unmount(run_doc, field.fieldname));
     };
   }, [run_doc.name]);
 
@@ -190,7 +190,7 @@ const BlockNoteField = function ({
   }
 
   return ce("div", {
-    id: run_doc.name,
+    id: `${run_doc.name}-${field.fieldname}`,
     style: {
       position: "relative",
       border: "1px solid var(--tblr-border-color)",
@@ -1713,7 +1713,7 @@ const SearchBar = function () {
   });
 };
 
-const LeftPaneChat = function () {
+const MainLeftPaneChat = function () {
   const [messages, setMessages] = React.useState([]);
   const [term, setTerm] = React.useState("");
   const listRef = React.useRef(null);
@@ -2056,22 +2056,110 @@ const UniversalGrid = function ({ run_doc, field }) {
 */
 
 /* TanStack grid version */
-
 const UniversalGrid = function({ run_doc, field }) {
-  run_doc = CW._getChildRun(run_doc, field?.fieldname) || run_doc
+  if (!run_doc) return null
 
-  const RT      = globalThis.TanStackTable
-  const schema  = CW.Schema?.[run_doc.target_doctype] || {}
-  const rows    = run_doc.target?.data || []
+  const parentRun  = run_doc
+  run_doc          = CW._getChildRun(run_doc, field?.fieldname) || run_doc
+
+  const RT         = globalThis.TanStackTable
+  if (!RT) return ce('div', null, 'TanStack Table not loaded')
+
+  const mode       = !field ? 'MainGrid' : field.fieldtype === 'Table' ? 'Table' : 'Relationship'
+  const doctype    = mode === 'MainGrid' ? run_doc.target_doctype || run_doc.source_doctype : field.options
+  const schema     = CW.Schema?.[doctype] || {}
   const titleField = schema.title_field || 'name'
+  const rows       = run_doc.target?.data || []
 
+  const [hoveredRow, setHoveredRow] = React.useState(null)
+  const [, force]                   = React.useReducer(x => x + 1, 0)
 
-  
-const columns = Object.keys(rows[0] || {}).map(k => ({
-  accessorKey: k,
-  header:      schema.fields?.find(f => f.fieldname === k)?.label || k,
-}))
+  const selected   = CW.getGridSelected(run_doc)
+  const allChecked = selected.length === rows.length && rows.length > 0
 
+  const cv = (val) => {
+    if (val === null || val === undefined) return ''
+    if (typeof val === 'object') return JSON.stringify(val)
+    return String(val)
+  }
+
+  const dataColumns = Object.keys(rows[0] || {}).map(k => ({
+    accessorKey: k,
+    header:      schema.fields?.find(f => f.fieldname === k)?.label || k,
+    cell:        ({ row }) => {
+      const isTitle = k === titleField
+      return ce('span', {
+        className: isTitle ? 'fw-medium' : 'text-secondary',
+        style:     isTitle ? { cursor: 'pointer' } : {},
+        onClick:   isTitle ? (e) => {
+          e.stopPropagation()
+          run_doc.child({
+            operation:      'select',
+            target_doctype: doctype,
+            query:          { where: { name: row.original.name } },
+            view:           'form',
+            options:        { render: true },
+          })
+        } : undefined,
+      }, cv(row.original[k]))
+    }
+  }))
+
+  const chkColumn = {
+    id:     '__chk',
+    header: () => ce('span', {
+      style:   { display: 'block', width: 36 },
+      onClick: (e) => { e.stopPropagation(); CW.toggleAllSelected(run_doc); force() },
+    },
+      allChecked
+        ? ce('input', { type: 'checkbox', className: 'form-check-input', checked: true, readOnly: true })
+        : null
+    ),
+    cell: ({ row }) => {
+      const isHovered  = hoveredRow === row.original.name
+      const isSelected = selected.includes(row.original.name)
+      return ce('span', {
+        style:   { display: 'block', width: 36 },
+        onClick: (e) => { e.stopPropagation(); CW.toggleSelected(run_doc, row.original.name); force() },
+      },
+        isHovered || isSelected
+          ? ce('input', { type: 'checkbox', className: 'form-check-input', checked: isSelected, readOnly: true })
+          : ce('span', { className: 'cw-grid-circle' })
+      )
+    }
+  }
+
+  const actColumn = {
+    id:   '__act',
+    header: () => null,
+    cell: ({ row }) => {
+      const isHovered = hoveredRow === row.original.name
+      const btns = isHovered && CW._getFormButtons
+        ? CW._getFormButtons(run_doc, row.original)?.outside || []
+        : []
+      return ce('div', { className: 'text-end pe-3', style: { width: 160 } },
+        btns.map(btn =>
+          ce('button', {
+            key:       btn.signal,
+            className: 'btn btn-sm btn-ghost-secondary ms-1',
+            onClick:   async (e) => {
+              e.stopPropagation()
+              await run_doc.child({
+                operation:      'update',
+                target_doctype: doctype,
+                query:          { where: { name: row.original.name } },
+                input:          { _state: { [btn.signal]: '' } },
+                options:        { render: false, internal: true },
+              })
+              CW.refetchGrid(run_doc)
+            },
+          }, btn.label)
+        )
+      )
+    }
+  }
+
+  const columns = [chkColumn, ...dataColumns, actColumn]
 
   const table = RT.useReactTable({
     data:                  rows,
@@ -2082,9 +2170,8 @@ const columns = Object.keys(rows[0] || {}).map(k => ({
     getPaginationRowModel: RT.getPaginationRowModel(),
   })
 
-  if (!RT) return ce('div', null, 'TanStack Table not loaded')
-
   return ce('div', { className: 'cw-universal-grid' },
+    ce(GridToolbar, { run_doc, field }),
     ce('div', { className: 'table-responsive' },
       ce('table', { className: 'table table-hover table-sm mb-0' },
         ce('thead', null,
@@ -2093,36 +2180,31 @@ const columns = Object.keys(rows[0] || {}).map(k => ({
               hg.headers.map(h =>
                 ce('th', {
                   key:     h.id,
+                  style:   { cursor: h.column.getCanSort() ? 'pointer' : 'default', userSelect: 'none' },
                   onClick: h.column.getToggleSortingHandler(),
-                  style:   { cursor: 'pointer', userSelect: 'none' },
-                }, h.column.columnDef.header)
+                },
+                  RT.flexRender(h.column.columnDef.header, h.getContext())
+                )
               )
             )
           )
         ),
         ce('tbody', null,
-          table.getRowModel().rows.map(row =>
-            ce('tr', {
-              key:     row.id,
-              style:   { cursor: 'pointer' },
-              onClick: () => run_doc.child({
-                operation:      'select',
-                target_doctype: run_doc.target_doctype,
-                query:          { where: { name: row.original.name } },
-                view:           'form',
-                options:        { render: true },
-              })
+          table.getRowModel().rows.map(row => {
+            const isSelected = selected.includes(row.original.name)
+            return ce('tr', {
+              key:          row.id,
+              className:    isSelected ? 'table-active' : '',
+              onMouseEnter: () => setHoveredRow(row.original.name),
+              onMouseLeave: () => setHoveredRow(null),
             },
               row.getVisibleCells().map(cell =>
-                ce('td', {
-                  key:       cell.id,
-                  className: cell.column.id === titleField ? 'fw-medium' : 'text-secondary',
-                },
+                ce('td', { key: cell.id },
                   RT.flexRender(cell.column.columnDef.cell, cell.getContext())
                 )
               )
             )
-          )
+          })
         )
       )
     ),
@@ -2131,10 +2213,8 @@ const columns = Object.keys(rows[0] || {}).map(k => ({
   )
 }
 
-
-
-globalThis.UniversalGrid = UniversalGrid;
-console.log("✅ UniversalGrid loaded");
+globalThis.UniversalGrid = UniversalGrid
+console.log('✅ UniversalGrid loaded')
 
 // ============================================================
 // COMPONENT REGISTRY
@@ -2143,6 +2223,6 @@ console.log("✅ UniversalGrid loaded");
 globalThis.MainForm = MainForm;
 globalThis.MainGrid = MainGrid;
 globalThis.SearchBar = SearchBar;
-globalThis.LeftPaneChat = LeftPaneChat;
+globalThis.MainLeftPaneChat = MainLeftPaneChat;
 
 console.log("✅ CW-ui.js loaded");

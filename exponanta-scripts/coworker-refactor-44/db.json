@@ -3368,7 +3368,7 @@
       },
       {
         "fieldname": "description",
-        "fieldtype": "Text Editor",
+        "fieldtype": "BlockNote",
         "label": "Task Description",
         "oldfieldname": "description",
         "oldfieldtype": "Text Editor",

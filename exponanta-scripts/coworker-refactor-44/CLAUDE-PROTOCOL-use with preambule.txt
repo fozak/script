@@ -1,0 +1,138 @@
+I want to follow this pattern 
+
+Load preamble(rules)
+  ↓
+State task in outcome format
+  ↓
+Claude declares: files, phase, assumptions
+  ↓
+You confirm or correct assumptions
+  ↓
+Claude implements (minimum code)
+  ↓
+You run verify condition
+  ↓
+Pass → done
+Fail → paste IIFE result, not description of the failure
+
+
+# CW Framework — Claude Session Protocol
+
+Paste at the start of every session alongside the preamble.
+
+---
+
+## BEFORE EVERY TASK
+
+You provide:
+Task:   [one sentence outcome — what should be true after, not how]
+Files:  [files you expect to be touched — can be wrong, Claude corrects]
+Verify: [how you will confirm it worked — IIFE, visual check, etc.]
+
+Claude responds with declaration only — no code until you confirm:
+WILL CHANGE:
+[file] [line/function]: [exact change in one sentence]
+WILL NOT TOUCH (noticed, leaving alone):
+[thing]: [one sentence — why out of scope]
+ASSUMPTIONS:
+[anything unclear — stated as a question, not a conclusion]
+VERIFY:
+[exact IIFE or check — agreed before any code is written]
+
+You respond with exactly one of:
+- `proceed` — both lists correct, write the code
+- `add [X] to WILL CHANGE` — promote from second list
+- `remove [X] from WILL CHANGE` — Claude overreached
+- `answer to assumption` — resolve before proceeding
+
+No code until you say proceed or answer assumptions.
+
+---
+
+## DURING IMPLEMENTATION
+SIMPLICITY   Minimum code that solves the problem.
+No speculative features, abstractions, or flexibility not requested.
+If 200 lines would do in 50 — rewrite before submitting.
+STYLE        Match existing code exactly — naming, spacing, patterns.
+Do not improve adjacent code, comments, or formatting.
+SCOPE        Every changed line traces directly to WILL CHANGE list.
+If a change requires touching something not in WILL CHANGE — stop, ask.
+
+---
+
+## AFTER IMPLEMENTATION
+
+Claude states:
+CHANGED:
+[file] [line/function]: [what was done]
+RUN VERIFY:
+[exact IIFE or check to paste in console]
+
+You run verify and respond with one of:
+- result output — paste IIFE result, not description of it
+- `pass` — verify confirmed
+
+If verify fails: paste the IIFE output. Claude reads the actual error, not your summary of it.
+
+---
+
+## EXAMPLE — full loop
+
+**You:**
+Task:   BlockNote container id should use run_doc.name-fieldname pattern like FilePicker
+Files:  editor.jsx, CW-ui.js
+Verify: document.querySelector('.bn-root')?.parentElement?.id shows name-fieldname format
+
+**Claude:**
+WILL CHANGE:
+editor.jsx mount(): containerId = ${run_doc.name}-${fieldname}, _roots keyed by containerId
+editor.jsx mountRenderer(): same containerId pattern
+CW-ui.js BlockNoteField return: id = ${run_doc.name}-${field.fieldname}
+WILL NOT TOUCH (noticed, leaving alone):
+editor.jsx unmount(): signature is (run_doc) — FilePicker uses (run_doc, fieldname)
+→ not stated in task, promote if wanted
+CW-ui.js line 174 unmount call: passes only run_doc
+→ depends on unmount signature, not stated in task
+ASSUMPTIONS:
+none
+VERIFY:
+;(async () => {
+const el = document.querySelector('.bn-root')
+console.log('container id:', el?.parentElement?.id)
+})()
+expected: run_doc.name-fieldname format
+
+**You:**
+add unmount signature to WILL CHANGE
+add CW-ui.js line 174 to WILL CHANGE
+proceed
+
+**Claude:** writes code covering all four items.
+
+**Claude after code:**
+CHANGED:
+editor.jsx mount(): containerId pattern applied
+editor.jsx mountRenderer(): containerId pattern applied
+editor.jsx unmount(): signature changed to (run_doc, fieldname)
+CW-ui.js line 193: id = ${run_doc.name}-${field.fieldname}
+CW-ui.js line 174: unmount call passes field.fieldname
+RUN VERIFY:
+;(async () => {
+const el = document.querySelector('.bn-root')
+console.log('container id:', el?.parentElement?.id)
+})()
+
+**You paste result:**
+container id: run9fegh5l89f1m-description
+
+**Claude:** ✅ done.
+
+---
+
+## WHAT NEVER HAPPENS
+
+- Code before `proceed`
+- Changes not in WILL CHANGE list
+- WILL NOT TOUCH list is empty when Claude noticed related issues
+- Verify skipped or described instead of run
+- Claude fixes things in WILL NOT TOUCH without being asked

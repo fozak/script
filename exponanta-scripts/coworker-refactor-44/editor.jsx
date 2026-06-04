@@ -4,7 +4,7 @@
  * Exposes:
  *   window.CWEditor.mount({ run_doc, fieldname, onChange })
  *   window.CWEditor.mountRenderer({ run_doc, fieldname })
- *   window.CWEditor.unmount(run_doc)
+ *   window.CWEditor.unmount(run_doc, fieldname)
  */
 
 import React from 'react'
@@ -43,7 +43,7 @@ function parseBlocks(raw) {
 
 // ─── Root registry ────────────────────────────────────────────────────────────
 
-const _roots = new Map()  // run_doc.name → ReactDOM root
+const _roots = new Map()  // containerId → ReactDOM root
 
 // ─── Editor component ─────────────────────────────────────────────────────────
 
@@ -79,17 +79,18 @@ function CWBlockNoteRenderer({ run_doc, fieldname }) {
 // ─── Public API ───────────────────────────────────────────────────────────────
 
 function mount({ run_doc, fieldname, onChange }) {
-  const container = document.getElementById(run_doc.name)
+  const containerId = `${run_doc.name}-${fieldname}`
+  const container   = document.getElementById(containerId)
   if (!container) return
 
-  if (_roots.has(run_doc.name)) {
-    const old = _roots.get(run_doc.name)
-    _roots.delete(run_doc.name)
+  if (_roots.has(containerId)) {
+    const old = _roots.get(containerId)
+    _roots.delete(containerId)
     setTimeout(() => { try { old.unmount() } catch(_) {} }, 0)
   }
 
   const root = ReactDOM.createRoot(container)
-  _roots.set(run_doc.name, root)
+  _roots.set(containerId, root)
 
   root.render(
     <React.StrictMode>
@@ -99,17 +100,18 @@ function mount({ run_doc, fieldname, onChange }) {
 }
 
 function mountRenderer({ run_doc, fieldname }) {
-  const container = document.getElementById(run_doc.name)
+  const containerId = `${run_doc.name}-${fieldname}`
+  const container   = document.getElementById(containerId)
   if (!container) return
 
-  if (_roots.has(run_doc.name)) {
-    const old = _roots.get(run_doc.name)
-    _roots.delete(run_doc.name)
+  if (_roots.has(containerId)) {
+    const old = _roots.get(containerId)
+    _roots.delete(containerId)
     setTimeout(() => { try { old.unmount() } catch(_) {} }, 0)
   }
 
   const root = ReactDOM.createRoot(container)
-  _roots.set(run_doc.name, root)
+  _roots.set(containerId, root)
 
   root.render(
     <React.StrictMode>
@@ -118,10 +120,11 @@ function mountRenderer({ run_doc, fieldname }) {
   )
 }
 
-function unmount(run_doc) {
-  if (_roots.has(run_doc.name)) {
-    try { _roots.get(run_doc.name).unmount() } catch(_) {}
-    _roots.delete(run_doc.name)
+function unmount(run_doc, fieldname) {
+  const containerId = `${run_doc.name}-${fieldname}`
+  if (_roots.has(containerId)) {
+    try { _roots.get(containerId).unmount() } catch(_) {}
+    _roots.delete(containerId)
   }
 }
 

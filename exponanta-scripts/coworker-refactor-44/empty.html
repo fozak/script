@@ -67,12 +67,18 @@
       })
     }
 
-    window.addEventListener('load', async () => {
-      await waitForBoot()
-      cwStateFromUrl()
-      trackContentHit()  // added
-      ReactDOM.render(React.createElement(LeftPaneChat, {}), document.getElementById('left_pane'))
-    })
+  window.addEventListener('load', async () => {
+  await waitForBoot()
+  cwStateFromUrl()
+  trackContentHit()
+  await CW.run({
+    operation: 'select',
+    target_doctype: 'Chat',
+    component: 'MainLeftPaneChat',
+    container: 'left_pane',
+    options: { render: true }
+  })
+})
   </script>
 </body>
 </html>
