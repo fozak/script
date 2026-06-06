@@ -2,7 +2,11 @@
 // CW-ui.js — React 18 UMD, no JSX, Tabler CSS
 // ============================================================
 
-const CW = globalThis.CW;
+//const CW = globalThis.CW;   //declared in CW-state
+
+
+
+
 const ce = React.createElement;
 
 // ============================================================

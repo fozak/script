@@ -6,7 +6,9 @@
 // input is cleared after _mergeInput — all reads from target
 // ============================================================
 
-const CW = globalThis.CW;
+//const CW = globalThis.CW;
+
+
 
 // ============================================================
 // RESOLVER
