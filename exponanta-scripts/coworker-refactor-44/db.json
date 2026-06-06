@@ -1093,14 +1093,14 @@
       "reqd": 1,
       "in_list_view": 1
     },
-        {
-        "fieldname": "relationship_parent",
-        "fieldtype": "Table",
-        "in_list_view": 0,
-        "label": "Event Relationships",
-        "options": "Relationship",
-        "search_index": 1
-      },
+    {
+      "fieldname": "relationship_parent",
+      "fieldtype": "Table",
+      "in_list_view": 0,
+      "label": "Event Relationships",
+      "options": "Relationship",
+      "search_index": 1
+    },
     {
       "fieldname": "deck",
       "fieldtype": "Text",
@@ -1160,6 +1160,23 @@
       "display": "SlotBadge",
       "reqd": 1,
       "in_list_view": 1
+    },
+    {
+      "fieldname": "event_start",
+      "fieldtype": "Datetime",
+      "label": "Event Start",
+      "reqd": 1,
+      "in_list_view": 1,
+      "read_only": 1,
+      "description": "Derived from event_slot. Used for filtering past vs future events."
+    },
+    {
+      "fieldname": "event_end",
+      "fieldtype": "Datetime",
+      "label": "Event End",
+      "reqd": 0,
+      "read_only": 1,
+      "description": "Derived from event_slot. Used for detecting in-progress events."
     },
     {
       "fieldname": "availability_rule",
@@ -1292,14 +1309,14 @@
     }
   ],
   "relationship_roles": {
-  "User": {
-    "Organizer":       { "transitions": ["0_1", "0_2", "1_2", "2_0"] },
-    "Attendee":        { "transitions": ["0_1", "0_2", "1_2"] },
-    "Speaker":         { "transitions": ["0_2", "1_2"] },
-    "Volunteer":       { "transitions": ["0_2", "1_2"] },
-    "Sponsor Contact": { "transitions": ["0_2", "1_2"] }
-  }
-},
+    "User": {
+      "Organizer":       { "transitions": ["0_1", "0_2", "1_2", "2_0"] },
+      "Attendee":        { "transitions": ["0_1", "0_2", "1_2"] },
+      "Speaker":         { "transitions": ["0_2", "1_2"] },
+      "Volunteer":       { "transitions": ["0_2", "1_2"] },
+      "Sponsor Contact": { "transitions": ["0_2", "1_2"] }
+    }
+  },
   "_state": {
     "0": {
       "values": [0, 1, 2],
