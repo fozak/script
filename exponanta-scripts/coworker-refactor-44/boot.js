@@ -5,7 +5,7 @@ async function bootstrap() {
   const base = window.location.origin;
 
   // ── 1. Load schemas from db.json ─────────────────────────
-  const docs = await fetch(`${base}/db.json`).then(r => r.json());
+  const docs = await fetch(`${base}/assets/db.json`).then(r => r.json());
   globalThis.CW.Schema = {};
   for (const s of docs.filter(d => d.doctype === "Schema")) {
     globalThis.CW.Schema[s.schema_name] = s;
