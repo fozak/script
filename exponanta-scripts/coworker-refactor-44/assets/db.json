@@ -1,4 +1,69 @@
-[{
+[
+  {
+  "schema_name": "File",
+  "doctype": "Schema",
+  "title_field": "file_name",
+  "is_public": 1,
+  "fields": [
+    {
+      "fieldname": "file_name",
+      "fieldtype": "Data",
+      "label": "File Name",
+      "in_list_view": 1,
+      "read_only": 1
+    },
+    {
+      "fieldname": "extension",
+      "fieldtype": "Data",
+      "label": "Extension",
+      "in_list_view": 1,
+      "read_only": 1
+    },
+    {
+      "fieldname": "path",
+      "fieldtype": "Data",
+      "label": "Path",
+      "in_list_view": 1,
+      "read_only": 1
+    },
+    {
+      "fieldname": "directory",
+      "fieldtype": "Data",
+      "label": "Directory",
+      "in_list_view": 0,
+      "read_only": 1
+    },
+    {
+      "fieldname": "size",
+      "fieldtype": "Int",
+      "label": "Size",
+      "in_list_view": 0,
+      "read_only": 1
+    },
+    {
+      "fieldname": "modified",
+      "fieldtype": "Datetime",
+      "label": "Modified",
+      "in_list_view": 1,
+      "read_only": 1
+    },
+    {
+      "fieldname": "is_directory",
+      "fieldtype": "Check",
+      "label": "Is Directory",
+      "in_list_view": 0,
+      "read_only": 1
+    },
+    {
+      "fieldname": "content",
+      "fieldtype": "Code",
+      "label": "Content",
+      "in_list_view": 0,
+      "options": "JavaScript"
+    }
+  ]
+},
+  {
  "actions": [],
  "allow_import": 1,
  "allow_rename": 1,

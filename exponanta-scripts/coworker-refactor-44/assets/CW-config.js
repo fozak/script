@@ -451,6 +451,17 @@ globalThis.CW._config = {
       Run: null,
     },
 
+
+      // doctype → adapter name mapping
+  // if target_doctype matches, use this adapter instead of db
+  doctypeAdapters: {
+    File:      "fs",
+    GitCommit: "git",
+    GitBranch: "git",
+    GitDiff:   "git",
+  },
+  
+
     // Adapter registry (defines what's available)
     registry: {
       // ──────────────────────────────────────────────────────
@@ -467,6 +478,11 @@ globalThis.CW._config = {
           collection: "item",
         },
       },
+      fs: {
+    type: "fs",
+    name: "FileSystem",
+    logChanges: 0,
+  },
 
       memory: {
         type: "db",

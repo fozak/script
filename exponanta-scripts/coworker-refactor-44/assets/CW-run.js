@@ -29,8 +29,16 @@ CW._resolveAll = function (op) {
     : null;
 
   const opConfig    = cfg.operations?.[op.operation] || {};
+  /* const adapterType = opConfig.adapterType || 'db';
+  op.adapter        = cfg.adapters?.defaults?.[adapterType] || cfg.adapters?.defaults?.db; */
+
   const adapterType = opConfig.adapterType || 'db';
-  op.adapter        = cfg.adapters?.defaults?.[adapterType] || cfg.adapters?.defaults?.db;
+//const doctypeOverride = cfg.adapters?.doctypeAdapters?.[run_doc.target_doctype];
+
+const doctypeOverride = cfg.adapters?.doctypeAdapters?.[op.target_doctype];
+op.adapter = doctypeOverride 
+  || cfg.adapters?.defaults?.[adapterType] 
+  || cfg.adapters?.defaults?.db;
 
   const view       = cfg.operationToView?.[op.operation] ?? null;
   const viewConfig = cfg.views?.[view?.toLowerCase()] || {};
@@ -197,7 +205,7 @@ CW._handleSignal = async function (run_doc) {
   const signal   = run_doc._signal;
   const doctype  = run_doc.target_doctype;
   const schema   = CW.Schema?.[doctype];
-  const db       = CW._config.adapters.defaults.db;
+  //const db       = CW._config.adapters.defaults.db;  //NEVER used
   const doc      = run_doc.target?.data?.[0] || {};
 
   const stateDef = CW._getStateDef(doctype);
@@ -628,8 +636,12 @@ CW._preflight = function (run_doc) {
 CW._handlers = {
 
   select: async function (run_doc) {
-    const db = CW._config.adapters.defaults.db;
-    await globalThis.Adapter[db].select(run_doc);
+    /*const db = CW._config.adapters.defaults.db;
+    await globalThis.Adapter[db].select(run_doc);*/
+
+    await globalThis.Adapter[run_doc.adapter].select(run_doc); //insetad
+
+
     if (run_doc.error || !run_doc.target?.data) return;
 
     const schema     = CW.Schema?.[run_doc.target_doctype ?? run_doc.source_doctype];
@@ -671,12 +683,13 @@ CW._handlers = {
     CW._preflight(run_doc);
     if (run_doc.error) return;
     CW._stripVirtual(run_doc);  // strip virtual after validation, before DB write
-    const db = CW._config.adapters.defaults.db;
-    await globalThis.Adapter[db].create(run_doc);
+    /* const db = CW._config.adapters.defaults.db;
+    await globalThis.Adapter[db].create(run_doc); */
+    await globalThis.Adapter[run_doc.adapter].create(run_doc);
   },
 
   update: async function (run_doc) {
-    const db  = CW._config.adapters.defaults.db;
+    //const db  = CW._config.adapters.defaults.db;
     const doc = run_doc.target?.data?.[0];
     const name = doc?.name || run_doc.query?.where?.name;
 
@@ -694,7 +707,9 @@ CW._handlers = {
     CW._preflight(run_doc);
     if (run_doc.error) return;
     CW._stripVirtual(run_doc);  // strip virtual after validation, before DB write
-    await globalThis.Adapter[db].update(run_doc);
+    //await globalThis.Adapter[db].update(run_doc);
+
+    await globalThis.Adapter[run_doc.adapter].update(run_doc);
   },
 
   delete: async function (run_doc) {

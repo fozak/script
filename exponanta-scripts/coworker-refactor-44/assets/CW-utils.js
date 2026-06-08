@@ -764,6 +764,7 @@ async function _patchDataField(docName, fieldName, value) {
 async function _logChanges(run_doc, explicitChanges = null) {
   if (run_doc.options?._logging === false) return
   if (!CW._config.systemSettings?.logChanges) return
+  if (CW._config.adapters.registry?.[run_doc.adapter]?.logChanges === 0) return  // ← add this
 
   const doc = run_doc.target?.data?.[0]
   if (!doc?.name) return
