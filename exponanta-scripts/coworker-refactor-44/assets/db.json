@@ -60,6 +60,13 @@
       "label": "Content",
       "in_list_view": 0,
       "options": "JavaScript"
+    },
+        {
+      "fieldname": "ai_content",
+      "fieldtype": "Data",
+      "label": "AI content",
+      "in_list_view": 0,
+      "read_only": 0
     }
   ]
 },

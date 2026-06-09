@@ -423,9 +423,14 @@ if (
   (run_doc.operation === 'update' || run_doc.operation === 'delete') &&
   !run_doc.target?.data?.[0]?.name
 ) {
-  //await globalThis.Adapter[CW._config.adapters.defaults.db].select(run_doc)
+  //await globalThis.Adapters[CW._config.adapters.defaults.db].select(run_doc)
 
-   await CW._handlers.select(run_doc);
+  // await CW._handlers.select(run_doc);
+
+  const _savedOp = run_doc.operation;
+  run_doc.operation = 'select';
+  await CW._handlers.select(run_doc);
+  run_doc.operation = _savedOp;
 }
 
     await CW._logChanges(run_doc)  // ← before merge
@@ -467,7 +472,7 @@ if (
     run_doc.status  = run_doc.error ? 'failed' : 'completed';
     run_doc.success = !run_doc.error;
 
-  } catch (err) {
+  } catch (err) {     //line 475
     run_doc.error = {
       message: err.message,
       code:    `${run_doc.operation?.toUpperCase()}_FAILED`,
@@ -629,6 +634,22 @@ CW._preflight = function (run_doc) {
   }
 };
 
+
+// ============================================================
+// _getAdapters — resolves adapter config to string array
+// ============================================================
+
+CW._getAdapters = function(run_doc) {
+  const a = run_doc.adapter;
+  if (!a) return [CW._config.adapters.defaults.db];
+  if (typeof a === 'string') return [a];
+  if (Array.isArray(a)) return a;
+  const resolved = a[run_doc.operation] || a['default'] || CW._config.adapters.defaults.db;
+  return [].concat(resolved);
+};
+
+
+
 // ============================================================
 // HANDLERS
 // ============================================================
@@ -636,10 +657,12 @@ CW._preflight = function (run_doc) {
 CW._handlers = {
 
   select: async function (run_doc) {
-    /*const db = CW._config.adapters.defaults.db;
-    await globalThis.Adapter[db].select(run_doc);*/
 
-    await globalThis.Adapter[run_doc.adapter].select(run_doc); //insetad
+
+      for (const a of CW._getAdapters(run_doc)) {
+      await globalThis.Adapters[a].select(run_doc);
+      if (run_doc.error) break;
+    }
 
 
     if (run_doc.error || !run_doc.target?.data) return;
@@ -653,8 +676,6 @@ CW._handlers = {
       if (shouldFilter) {
         const viewFields   = schema.fields.filter(f => f.in_list_view).map(f => f.fieldname);
         const titleField   = schema.title_field ? [schema.title_field] : [];
-        //const systemFields = (CW._config.systemFields || []).filter(sf => sf.fetch).map(sf => sf.name);
-        //const fields       = [...new Set([...systemFields, ...titleField, ...viewFields])];
         const fields     = [...new Set([...titleField, ...viewFields])];
         run_doc.target.data = run_doc.target.data.map(item => {
           const filtered = {};
@@ -683,13 +704,15 @@ CW._handlers = {
     CW._preflight(run_doc);
     if (run_doc.error) return;
     CW._stripVirtual(run_doc);  // strip virtual after validation, before DB write
-    /* const db = CW._config.adapters.defaults.db;
-    await globalThis.Adapter[db].create(run_doc); */
-    await globalThis.Adapter[run_doc.adapter].create(run_doc);
+
+    for (const a of CW._getAdapters(run_doc)) {
+      await globalThis.Adapters[a].create(run_doc);
+      if (run_doc.error) break;
+    }
   },
 
   update: async function (run_doc) {
-    //const db  = CW._config.adapters.defaults.db;
+
     const doc = run_doc.target?.data?.[0];
     const name = doc?.name || run_doc.query?.where?.name;
 
@@ -707,9 +730,12 @@ CW._handlers = {
     CW._preflight(run_doc);
     if (run_doc.error) return;
     CW._stripVirtual(run_doc);  // strip virtual after validation, before DB write
-    //await globalThis.Adapter[db].update(run_doc);
 
-    await globalThis.Adapter[run_doc.adapter].update(run_doc);
+
+    for (const a of CW._getAdapters(run_doc)) {
+      await globalThis.Adapters[a].update(run_doc);
+      if (run_doc.error) break;
+    }
   },
 
   delete: async function (run_doc) {

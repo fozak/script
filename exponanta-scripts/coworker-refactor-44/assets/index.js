@@ -34,7 +34,7 @@ async function bootstrap() {
   globalThis.CW._compileSchemas();
 
   // Init PocketBase adapter
-  await globalThis.Adapter.pocketbase.init();
+  await globalThis.Adapters.pocketbase.init();
 
   // Restore auth session
   if (typeof authRestore === "function") authRestore();

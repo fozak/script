@@ -203,10 +203,19 @@ const EMAIL_KEYED = {
   UserSettings: "uses",
 };
 
+const PATH_KEYED = {
+  File: "file",
+};
+
 function generateId(doctype, title = null) {
   if (EMAIL_KEYED[doctype]) {
     if (!title?.trim()) throw new Error(`${doctype} requires an email address`);
-    return (EMAIL_KEYED[doctype] + hashEmail(title)).substring(0, 15);
+    return (EMAIL_KEYED[doctype] + hashString(title)).substring(0, 15);
+  }
+
+  if (PATH_KEYED[doctype]) {
+    if (!title?.trim()) throw new Error(`${doctype} requires a path`);
+    return (PATH_KEYED[doctype] + hashString(title)).substring(0, 15);
   }
 
   return SINGLE_DOCTYPES.has(doctype)
@@ -214,7 +223,7 @@ function generateId(doctype, title = null) {
     : generateMultiId(doctype, title);
 }
 
-function hashEmail(email) {
+function hashString(email) {
   let h1 = 0,
     h2 = 0x9747b28c;
   for (let i = 0; i < email.length; i++) {
@@ -764,7 +773,10 @@ async function _patchDataField(docName, fieldName, value) {
 async function _logChanges(run_doc, explicitChanges = null) {
   if (run_doc.options?._logging === false) return
   if (!CW._config.systemSettings?.logChanges) return
-  if (CW._config.adapters.registry?.[run_doc.adapter]?.logChanges === 0) return  // ← add this
+  //if (CW._config.adapters.registry?.[run_doc.adapter]?.logChanges === 0) return  // ← add this
+
+  const adapters = CW._getAdapters(run_doc);
+if (adapters.some(a => CW._config.adapters.registry?.[a]?.logChanges === 0)) return;
 
   const doc = run_doc.target?.data?.[0]
   if (!doc?.name) return

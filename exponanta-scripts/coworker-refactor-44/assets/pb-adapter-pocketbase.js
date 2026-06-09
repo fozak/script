@@ -125,7 +125,7 @@ async function init(run_doc) {
   const { pb_url } = globalThis.CW._config;
   globalThis.pb = new PocketBase(pb_url);
   globalThis.pb.autoCancellation(false);
-  console.log("✅ PocketBase initialized:", pb_url);
+  //console.log("✅ PocketBase initialized:", pb_url);
 }
 
 // ============================================================
@@ -197,6 +197,8 @@ async function select(run_doc) {
 // ============================================================
 
 async function create(run_doc) {
+
+  //console.log("pb.create fired. PB create input:", JSON.stringify(run_doc.target?.data?.[0] || {}));
   const { collection } = globalThis.CW._config;
   const doc = run_doc.target?.data?.[0];
   if (!doc) {
@@ -254,28 +256,33 @@ async function update(run_doc) {
     }
 
   } catch (err) {
-    console.error('PB update error:', JSON.stringify(err.response?.data || err.message))
-    run_doc.error = err.message
-  }
-}
+ if (err.status === 404 || !err.status) {
+ 
+  await Adapters.pocketbase.create(run_doc);
+} else {
 
+       console.error('PB update error:', JSON.stringify(err.response?.data || err.message))
+      run_doc.error = err.message
+    }
+  }
+}  
 // ============================================================
 // DELETE (soft — docstatus = 2)
 // ============================================================
 
 async function del(run_doc) {
   if (run_doc.target?.data?.[0]) run_doc.target.data[0].docstatus = 2;
-  await update(run_doc);
+   await Adapters.pocketbase.update(run_doc); 
 }
 
 // ============================================================
 // SELF-REGISTER
 // ============================================================
 
-globalThis.Adapter            = globalThis.Adapter || {};
-globalThis.Adapter.pocketbase = { init, select, create, update, delete: del };
+globalThis.Adapters            = globalThis.Adapters || {};
+globalThis.Adapters.pocketbase = { init, select, create, update, delete: del };
 
-console.log("✅ pb-adapter-pocketbase.js loaded");
+//console.log("✅ pb-adapter-pocketbase.js loaded");
 
 // ============================================================
 // AUTH METHODS
@@ -395,7 +402,7 @@ async function signUp(run_doc) {
   } catch (err) { run_doc.error = err.message; }
 }
 
-Object.assign(globalThis.Adapter.pocketbase, {
+Object.assign(globalThis.Adapters.pocketbase, {
   authWithPassword,
   authRefresh,
   authWithOTP,
@@ -411,4 +418,4 @@ Object.assign(globalThis.Adapter.pocketbase, {
   signUp,
 });
 
-console.log('✅ pb-adapter-auth-methods.js loaded');
+//console.log('✅ pb-adapter-auth-methods.js loaded');

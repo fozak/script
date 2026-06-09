@@ -274,4 +274,4 @@ globalThis._openPaired  = _openPaired;
   }
 })();
 
-console.log('✅ app-ui.js loaded');
+//console.log('✅ app-ui.js loaded');

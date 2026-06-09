@@ -13,7 +13,7 @@ async function bootstrap() {
   globalThis.CW._compileSchemas();
 
   // ── 2. Init PocketBase adapter ───────────────────────────
-  await globalThis.Adapter.pocketbase.init();
+  await globalThis.Adapters.pocketbase.init();
 
   // ── 3. Restore auth session ──────────────────────────────
   if (typeof authRestore === "function") authRestore();
@@ -30,7 +30,7 @@ async function bootstrap() {
     await CW._compileDocument(adapterRun);
   }
 
-  console.log("✅ bootstrap complete");
+  //console.log("✅ bootstrap complete");
   globalThis.CW._booted = true;
   globalThis.dispatchEvent(new CustomEvent('CW:booted'));
 }

@@ -455,7 +455,12 @@ globalThis.CW._config = {
       // doctype → adapter name mapping
   // if target_doctype matches, use this adapter instead of db
   doctypeAdapters: {
-    File:      "fs",
+      File: {
+    select: 'fs',
+    update: ['fs', 'pocketbase'],
+    create: ['fs', 'pocketbase'],
+    delete: 'fs',
+  },
     GitCommit: "git",
     GitBranch: "git",
     GitDiff:   "git",

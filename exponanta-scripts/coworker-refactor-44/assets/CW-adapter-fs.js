@@ -35,8 +35,8 @@ function _mergeRecord(rec) {
 
 function _recordFromHandle(handle, path, file) {
   // file = await handle.getFile() — called during index build
-  // generateId("File", filename) → e.g. "fileindexts9zfgi" — stable readable id
-  const id        = generateId("File", handle.name);
+  // generateId("File", path) → e.g. "filets9zfgi" — stable readable id
+  const id        = generateId("File", path);
   const name_part = handle.name;
   const dot       = name_part.lastIndexOf(".");
   const extension = dot > 0 ? name_part.slice(dot + 1).toLowerCase() : "";
@@ -432,17 +432,25 @@ async function update(run_doc) {
   }
 
   try {
-    const content = doc.content ?? "";
-    const writable = await rec._handle.createWritable();
-    await writable.write(content);
-    await writable.close();
+    // only write to disk if content explicitly provided
+    if (doc.content !== undefined && doc.content !== null) {
+      const content  = doc.content ?? "";
+      const writable = await rec._handle.createWritable();
+      await writable.write(content);
+      await writable.close();
+      const file        = await rec._handle.getFile();
+      rec.updated       = new Date(file.lastModified).toISOString();
+      rec.data.size     = file.size;
+      rec.data.modified = file.lastModified;
+      rec.data.content  = content;
+    }
 
-    // refresh file metadata
-    const file = await rec._handle.getFile();
-    rec.updated          = new Date(file.lastModified).toISOString();
-    rec.data.size        = file.size;
-    rec.data.modified    = file.lastModified;
-    rec.data.content     = content;
+    // always update metadata fields in _fsIndex
+    for (const [k, v] of Object.entries(doc)) {
+      if (!['id', 'name', 'doctype', 'content'].includes(k)) {
+        rec.data[k] = v;
+      }
+    }
 
     run_doc.target  = { data: [_mergeRecord(rec)], meta: { updated: 1 } };
     run_doc.success = true;
@@ -526,7 +534,7 @@ async function _resolveHandleForWrite(filePath, create = false) {
 // SELF-REGISTER
 // ============================================================
 
-globalThis.Adapter        = globalThis.Adapter || {};
-globalThis.Adapter.fs     = { init, select, create, update, delete: del, reindex };
+globalThis.Adapters        = globalThis.Adapters || {};
+globalThis.Adapters.fs     = { init, select, create, update, delete: del, reindex };
 
 console.log("✅ CW-adapter-fs.js loaded");
