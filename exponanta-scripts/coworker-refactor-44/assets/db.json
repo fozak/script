@@ -100094,7 +100094,7 @@
     "sort_order": "DESC",
     "states": [],
     "timeline_field": "customer",
-    "title_field": "customer_name",
+    "title_field": "name",
     "track_changes": 1,
     "track_seen": 1
   },
@@ -129448,126 +129448,6 @@
     "sort_field": "modified",
     "sort_order": "DESC",
     "title_field": "subject"
-  },
-  {
-    "_schema_doctype": "SalesInvoiceNew",
-    "description": "New sales invoice with manual save and submit",
-    "doctype": "Schema",
-    "field_order": [
-      "name",
-      "email",
-      "emailVisibility",
-      "profileId",
-      "verified",
-      "docstatus",
-      "owner",
-      "_allowed",
-      "_allowed_read"
-    ],
-    "fields": [
-      {
-        "fieldname": "name",
-        "fieldtype": "Data",
-        "label": "Name",
-        "read_only": 1,
-        "reqd": 0,
-        "in_list_view": 1
-      },
-      {
-        "fieldname": "email",
-        "fieldtype": "Data",
-        "label": "Email",
-        "options": "Email",
-        "reqd": 1
-      },
-      {
-        "default": "0",
-        "fieldname": "emailVisibility",
-        "fieldtype": "Check",
-        "label": "Email Visibility"
-      },
-      {
-        "default": "",
-        "fieldname": "profileId",
-        "fieldtype": "Data",
-        "label": "Profile ID"
-      },
-      {
-        "default": "0",
-        "fieldname": "verified",
-        "fieldtype": "Check",
-        "label": "Verified"
-      },
-      {
-        "default": "0",
-        "fieldname": "docstatus",
-        "fieldtype": "Int",
-        "hidden": 1,
-        "label": "Document Status",
-        "no_copy": 1,
-        "print_hide": 1,
-        "read_only": 1
-      },
-      {
-        "fieldname": "owner",
-        "fieldtype": "Data",
-        "hidden": 1,
-        "label": "Created By",
-        "no_copy": 1,
-        "print_hide": 1,
-        "read_only": 1
-      },
-      {
-        "fieldname": "_allowed",
-        "fieldtype": "JSON",
-        "hidden": 1,
-        "label": "Allowed Roles (Write)",
-        "no_copy": 1,
-        "print_hide": 1,
-        "read_only": 1
-      },
-      {
-        "fieldname": "_allowed_read",
-        "fieldtype": "JSON",
-        "hidden": 1,
-        "label": "Allowed Roles (Read)",
-        "no_copy": 1,
-        "print_hide": 1,
-        "read_only": 1
-      }
-    ],
-    "icon": "fa fa-file-invoice",
-    "id": "guy1gq56qb6uxud",
-    "is_submittable": 1,
-    "module": "Accounts",
-    "name": "schemasalesinvo",
-    "permissions": [
-      {
-        "cancel": 1,
-        "create": 1,
-        "delete": 1,
-        "read": 1,
-        "role": "Accounts Manager",
-        "submit": 1,
-        "write": 1
-      },
-      {
-        "create": 1,
-        "read": 1,
-        "role": "Accounts User",
-        "write": 1
-      },
-      {
-        "create": 1,
-        "read": 1,
-        "role": "Sales User"
-      }
-    ],
-    "schema_name": "SalesInvoiceNew",
-    "search_fields": "customer,name,po_number",
-    "sort_field": "posting_date",
-    "sort_order": "DESC",
-    "title_field": "name"
   },
   {
     "docstatus": 0,

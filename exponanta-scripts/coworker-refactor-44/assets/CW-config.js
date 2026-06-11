@@ -457,7 +457,7 @@ globalThis.CW._config = {
   doctypeAdapters: {
       File: {
     select: 'fs',
-    update: ['fs', 'pocketbase'],
+    update: ['fs', 'dispatch', 'pocketbase'],
     create: ['fs', 'pocketbase'],
     delete: 'fs',
   },

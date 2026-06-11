@@ -1,8 +1,8 @@
 // ============================================================
 // CW-adapter-xlsx.js
-// XLSX transform adapter — extracts computed fields from xlsx files
-// Reads file content from _fsIndex via run_doc.target.data[0].name
-// Writes results to run_doc.target.data[0]._computed.xlsx
+// Transform adapter — parses xlsx files, writes to _computed.xlsx
+// Reads: _fsIndex via target.data[0].name
+// Writes: target.data[0]._computed.xlsx — additive only, never replaces
 // All functions: function(run_doc) — mutate only, no return.
 // ============================================================
 
@@ -11,7 +11,7 @@ const XLSX_SCRIPTS = [
 ];
 
 // ============================================================
-// INIT — load CDN dependencies if not already present
+// INIT
 // ============================================================
 
 async function _xlsxEnsureInit(run_doc) {
@@ -21,47 +21,26 @@ async function _xlsxEnsureInit(run_doc) {
 }
 
 async function init(run_doc) {
-  if (typeof JSZip !== 'undefined') {
-    run_doc.success = true;
-    return;
-  }
+  if (typeof JSZip !== 'undefined') { run_doc.success = true; return; }
   try {
     for (const src of XLSX_SCRIPTS) {
       await new Promise((resolve, reject) => {
         const s = document.createElement('script');
-        s.src = src;
-        s.onload = resolve;
+        s.src = src; s.onload = resolve;
         s.onerror = () => reject(new Error(`Failed to load: ${src}`));
         document.head.appendChild(s);
       });
     }
     run_doc.success = true;
-  } catch (err) {
-    run_doc.error = err.message;
-  }
+  } catch (err) { run_doc.error = err.message; }
 }
 
 // ============================================================
-// INTERNAL — get ArrayBuffer from _fsIndex
-// ============================================================
-
-async function _getBuffer(name) {
-  const rec = globalThis._fsIndex?.get(name);
-  if (!rec) throw new Error(`File not in _fsIndex: ${name}`);
-  const file = await rec._handle.getFile();
-  return file.arrayBuffer();
-}
-
-// ============================================================
-// INTERNAL — parse helpers
+// INTERNAL HELPERS
 // ============================================================
 
 function _parseXml(str) {
   return new DOMParser().parseFromString(str, 'application/xml');
-}
-
-async function _loadZip(buf) {
-  return JSZip.loadAsync(buf);
 }
 
 async function _getSharedStrings(zip) {
@@ -71,11 +50,6 @@ async function _getSharedStrings(zip) {
   return [...xml.querySelectorAll('si')].map(si =>
     [...si.querySelectorAll('t')].map(t => t.textContent).join('')
   );
-}
-
-async function _getSheetNames(zip) {
-  const wbXml = _parseXml(await zip.file('xl/workbook.xml').async('string'));
-  return [...wbXml.querySelectorAll('sheet')].map(s => s.getAttribute('name'));
 }
 
 function _resolveCell(c, strings) {
@@ -93,31 +67,30 @@ function _colIndex(ref) {
   return [...col].reduce((n, c) => n * 26 + c.charCodeAt(0) - 64, 0) - 1;
 }
 
+function _ensureComputed(doc) {
+  if (!doc._computed)       doc._computed = {};
+  if (!doc._computed.xlsx)  doc._computed.xlsx = {};
+}
+
 // ============================================================
-// FIELD FUNCTIONS — one per _computed.xlsx field
-// Each receives (run_doc, zip, strings) — already parsed
-// Writes to run_doc.target.data[0]._computed.xlsx[fieldname]
+// FIELD FUNCTIONS — additive writes to _computed.xlsx
 // ============================================================
 
 async function ai_content(run_doc, zip, strings) {
-  const sheetEls = [..._parseXml(await zip.file('xl/workbook.xml').async('string')).querySelectorAll('sheet')];
-  const parts = ['<!-- unpacked excel file - resolved -->'];
+  const doc      = run_doc.target.data[0];
+  const wbXml    = _parseXml(await zip.file('xl/workbook.xml').async('string'));
+  const sheetEls = [...wbXml.querySelectorAll('sheet')];
+  const parts    = ['<!-- unpacked excel file - resolved -->'];
 
   for (let si = 0; si < sheetEls.length; si++) {
     const sheetName = sheetEls[si].getAttribute('name');
     const sheetFile = zip.file(`xl/worksheets/sheet${si + 1}.xml`);
     if (!sheetFile) continue;
 
-    const wsXml = _parseXml(await sheetFile.async('string'));
-    const rows  = [...wsXml.querySelectorAll('row')];
+    const rows = [..._parseXml(await sheetFile.async('string')).querySelectorAll('row')];
+    if (!rows.length) { parts.push(`\n<!-- sheet${si+1}: ${sheetName} -->\n(empty)`); continue; }
 
-    if (!rows.length) {
-      parts.push(`\n<!-- sheet${si + 1}: ${sheetName} -->\n(empty)`);
-      continue;
-    }
-
-    const grid = [];
-    let maxCol = 0;
+    const grid = []; let maxCol = 0;
     for (const row of rows) {
       const r = parseInt(row.getAttribute('r')) - 1;
       const rowData = {};
@@ -129,78 +102,67 @@ async function ai_content(run_doc, zip, strings) {
       grid[r] = rowData;
     }
 
-    const headers = [];
-    for (let c = 0; c <= maxCol; c++) {
-      headers[c] = grid[0]?.[c] ?? String.fromCharCode(65 + c);
-    }
-
-    const colTypes = new Array(maxCol + 1).fill(null);
+    const headers   = Array.from({ length: maxCol + 1 }, (_, c) => grid[0]?.[c] ?? String.fromCharCode(65 + c));
+    const colTypes  = new Array(maxCol + 1).fill(null);
     for (let r = 1; r < grid.length; r++) {
       if (!grid[r]) continue;
       for (let c = 0; c <= maxCol; c++) {
         const v = grid[r][c];
         if (v === undefined || v === '') continue;
-        const t = /^\d{4}-\d{2}-\d{2}$/.test(v) ? 'date'
-                : /^=/.test(v)                   ? 'formula'
-                : isNaN(v)                        ? 'text'
-                : 'number';
-        if (colTypes[c] === null) colTypes[c] = t;
-        else if (colTypes[c] !== t) colTypes[c] = 'mixed';
+        const t = /^\d{4}-\d{2}-\d{2}$/.test(v) ? 'date' : /^=/.test(v) ? 'formula' : isNaN(v) ? 'text' : 'number';
+        colTypes[c] = colTypes[c] === null ? t : colTypes[c] !== t ? 'mixed' : t;
       }
     }
 
-    const colTypeSummary = headers.map((h, i) => `${h}:${colTypes[i] ?? 'empty'}`).join(', ');
-    parts.push(`\n<!-- sheet${si + 1}: ${sheetName} | columns: ${colTypeSummary} -->`);
-
+    parts.push(`\n<!-- sheet${si+1}: ${sheetName} | columns: ${headers.map((h,i) => `${h}:${colTypes[i]??'empty'}`).join(', ')} -->`);
     const lines = [];
     for (let r = 1; r < grid.length; r++) {
       if (!grid[r]) continue;
-      const vals = [];
-      for (let c = 0; c <= maxCol; c++) vals.push(grid[r][c] ?? '');
-      lines.push(`${r + 1}: ${vals.join(' | ')}`);
+      lines.push(`${r+1}: ${Array.from({length: maxCol+1}, (_,c) => grid[r][c]??'').join(' | ')}`);
     }
     parts.push(lines.join('\n'));
   }
 
-  const doc = run_doc.target.data[0];
-  if (!doc._computed) doc._computed = {};
-  if (!doc._computed.xlsx) doc._computed.xlsx = {};
+  _ensureComputed(doc);
   doc._computed.xlsx.ai_content = parts.join('\n');
 }
 
 async function sheet_names(run_doc, zip) {
-  const names = await _getSheetNames(zip);
-  const doc = run_doc.target.data[0];
-  if (!doc._computed) doc._computed = {};
-  if (!doc._computed.xlsx) doc._computed.xlsx = {};
-  doc._computed.xlsx.sheet_names = names;
+  const doc      = run_doc.target.data[0];
+  const wbXml    = _parseXml(await zip.file('xl/workbook.xml').async('string'));
+  _ensureComputed(doc);
+  doc._computed.xlsx.sheet_names = [...wbXml.querySelectorAll('sheet')].map(s => s.getAttribute('name'));
 }
 
 // ============================================================
-// UPDATE — orchestrator, calls all field functions
+// UPDATE — orchestrator
+// Only runs if target.data[0] is an xlsx file
+// Additive: only writes to _computed.xlsx, never replaces target
 // ============================================================
 
 async function update(run_doc) {
   if (!await _xlsxEnsureInit(run_doc)) return;
 
   const doc = run_doc.target?.data?.[0];
-  if (!doc?.name) {
-    run_doc.error = '400 xlsx.update: no file record in target';
-    return;
-  }
+  if (!doc?.name) return;
+
+  // only process xlsx files
+  if (doc.extension !== 'xlsx') return;
+
+  // only run if _fsIndex has the file handle
+  const rec = globalThis._fsIndex?.get(doc.name);
+  if (!rec) return;
 
   try {
-    const buf     = await _getBuffer(doc.name);
-    const zip     = await _loadZip(buf);
+    const file    = await rec._handle.getFile();
+    const buf     = await file.arrayBuffer();
+    const zip     = await JSZip.loadAsync(buf);
     const strings = await _getSharedStrings(zip);
 
-    // call all registered field functions
-    const ops = { ai_content, sheet_names };
-    for (const [, fn] of Object.entries(ops)) {
-      await fn(run_doc, zip, strings);
-    }
+    await ai_content(run_doc, zip, strings);
+    await sheet_names(run_doc, zip);
 
-    run_doc.success = true;
+    // success stays as set by previous adapter — don't overwrite
   } catch (err) {
     run_doc.error = err.message;
   }
