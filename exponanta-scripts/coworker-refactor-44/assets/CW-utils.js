@@ -747,23 +747,28 @@ CW.searchDebounced = searchDebounced;
 // _patchDataField — partial update of a single data field in PB
 // ============================================================
 
+//=====prev version
+
 /*async function _patchDataField(docName, fieldName, value) {
-  const collection = CW._config.collection
-  const current    = await globalThis.pb.collection(collection).getOne(docName)
-  const mergedData = { ...current.data, [fieldName]: value }
-  await globalThis.pb.collection(collection).update(docName, { data: mergedData })
-}*/
-
-//=====change to fix
-
-//=====change to fix
-
-async function _patchDataField(docName, fieldName, value) {
   const collection = CW._config.collection
   const current    = await globalThis.pb.collection(collection).getOne(docName)
   const existing   = Array.isArray(current.data[fieldName]) ? current.data[fieldName] : []
   const mergedData = { ...current.data, [fieldName]: [...existing, value] }
   await globalThis.pb.collection(collection).update(docName, { data: mergedData })
+}*/
+
+async function _patchDataField(docName, fieldName, value) {
+  const collection = CW._config.collection;
+  try {
+    const current  = await globalThis.pb.collection(collection).getOne(docName);
+    const existing = Array.isArray(current.data[fieldName]) ? current.data[fieldName] : [];
+    await globalThis.pb.collection(collection).update(docName, {
+      data: { [fieldName]: [...existing, value] }  // ← only _changes field, no spread
+    });
+  } catch (err) {
+    if (err?.status === 404) return;
+    throw err;
+  }
 }
 
 // ============================================================
@@ -771,6 +776,9 @@ async function _patchDataField(docName, fieldName, value) {
 // ============================================================
 
 async function _logChanges(run_doc, explicitChanges = null) {
+  // before the test, add a console.log to _logChanges top:
+console.log('[_logChanges] input keys:', Object.keys(run_doc.input));
+//end
   if (run_doc.options?._logging === false) return
   if (!CW._config.systemSettings?.logChanges) return
   //if (CW._config.adapters.registry?.[run_doc.adapter]?.logChanges === 0) return  // ← add this
@@ -789,7 +797,8 @@ if (adapters.some(a => CW._config.adapters.registry?.[a]?.logChanges === 0)) ret
     const skip = new Set(['_changes', 'modified', 'modified_by', 'creation', 'files+', 'files-'])
     changes = Object.entries(run_doc.input)
       .filter(([k]) => !skip.has(k) && k !== '_state')
-      .map(([k, v]) => ({ field: k, from: doc[k] ?? null, to: v }))
+      //.map(([k, v]) => ({ field: k, from: doc[k] ?? null, to: v }))
+      .map(([k, v]) => ({ field: k, from: doc[k] ?? null, to: v, source: CW._getAdapters(run_doc).join(',') }))
       .filter(c => JSON.stringify(c.from) !== JSON.stringify(c.to))
   }
 

@@ -486,7 +486,7 @@ globalThis.CW._config = {
       fs: {
     type: "fs",
     name: "FileSystem",
-    logChanges: 0,
+    logChanges: 1,
   },
 
       memory: {

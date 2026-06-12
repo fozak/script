@@ -1,8 +1,8 @@
 // ============================================================
 // CW-adapter-pdf.js
-// Transform adapter — parses PDF files, writes to _computed.pdf
+// Transform adapter — parses PDF files
 // Reads: _fsIndex via target.data[0].name
-// Writes: target.data[0]._computed.pdf — additive only, never replaces
+// Writes: run_doc.input — flat fields, no namespace
 // All functions: function(run_doc) — mutate only, no return.
 // ============================================================
 
@@ -41,16 +41,9 @@ async function _pdfEnsureInit(run_doc) {
   return !run_doc.error;
 }
 
-
-
 // ============================================================
 // INTERNAL HELPERS
 // ============================================================
-
-function _ensureComputed(doc) {
-  if (!doc._computed)      doc._computed = {};
-  if (!doc._computed.pdf)  doc._computed.pdf = {};
-}
 
 async function _loadPdf(buf) {
   const loadingTask = globalThis.pdfjsLib.getDocument({ data: buf });
@@ -59,7 +52,6 @@ async function _loadPdf(buf) {
 
 async function _extractPageText(page) {
   const content = await page.getTextContent();
-  // group spans into lines by y-position
   const lines = {};
   for (const item of content.items) {
     if (!item.str?.trim()) continue;
@@ -68,7 +60,7 @@ async function _extractPageText(page) {
     lines[y].push(item.str);
   }
   return Object.keys(lines)
-    .sort((a, b) => b - a) // top to bottom
+    .sort((a, b) => b - a)
     .map(y => lines[y].join(' '))
     .filter(Boolean)
     .join('\n');
@@ -92,7 +84,6 @@ async function _extractFormFields(page) {
 // ============================================================
 
 async function ai_content(run_doc, pdf) {
-  const doc   = run_doc.target.data[0];
   const parts = ['<!-- unpacked pdf file - resolved -->'];
 
   for (let i = 1; i <= pdf.numPages; i++) {
@@ -117,34 +108,28 @@ async function ai_content(run_doc, pdf) {
     }
   }
 
-  _ensureComputed(doc);
-  doc._computed.pdf.ai_content = parts.join('\n');
+  run_doc.input.ai_content = parts.join('\n');
 }
 
 async function page_count(run_doc, pdf) {
-  const doc = run_doc.target.data[0];
-  _ensureComputed(doc);
-  doc._computed.pdf.page_count = pdf.numPages;
+  run_doc.input.page_count = pdf.numPages;
 }
 
 async function form_fields(run_doc, pdf) {
-  const doc    = run_doc.target.data[0];
   const fields = [];
 
   for (let i = 1; i <= pdf.numPages; i++) {
-    const page        = await pdf.getPage(i);
-    const pageFields  = await _extractFormFields(page);
+    const page       = await pdf.getPage(i);
+    const pageFields = await _extractFormFields(page);
     fields.push(...pageFields.map(f => ({ ...f, page: i })));
   }
 
-  _ensureComputed(doc);
-  doc._computed.pdf.form_fields = fields;
+  run_doc.input.form_fields = fields;
 }
 
 // ============================================================
 // UPDATE — orchestrator
 // Only runs if target.data[0] is a pdf file
-// Additive: only writes to _computed.pdf, never replaces target
 // ============================================================
 
 async function update(run_doc) {
@@ -153,10 +138,8 @@ async function update(run_doc) {
   const doc = run_doc.target?.data?.[0];
   if (!doc?.name) return;
 
-  // only process pdf files
   if (doc.extension !== 'pdf') return;
 
-  // only run if _fsIndex has the file handle
   const rec = globalThis._fsIndex?.get(doc.name);
   if (!rec) return;
 

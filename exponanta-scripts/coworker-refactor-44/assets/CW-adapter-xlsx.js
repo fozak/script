@@ -1,8 +1,8 @@
 // ============================================================
 // CW-adapter-xlsx.js
-// Transform adapter — parses xlsx files, writes to _computed.xlsx
+// Transform adapter — parses xlsx files
 // Reads: _fsIndex via target.data[0].name
-// Writes: target.data[0]._computed.xlsx — additive only, never replaces
+// Writes: run_doc.input — flat fields, no namespace
 // All functions: function(run_doc) — mutate only, no return.
 // ============================================================
 
@@ -67,17 +67,11 @@ function _colIndex(ref) {
   return [...col].reduce((n, c) => n * 26 + c.charCodeAt(0) - 64, 0) - 1;
 }
 
-function _ensureComputed(doc) {
-  if (!doc._computed)       doc._computed = {};
-  if (!doc._computed.xlsx)  doc._computed.xlsx = {};
-}
-
 // ============================================================
-// FIELD FUNCTIONS — additive writes to _computed.xlsx
+// FIELD FUNCTIONS
 // ============================================================
 
 async function ai_content(run_doc, zip, strings) {
-  const doc      = run_doc.target.data[0];
   const wbXml    = _parseXml(await zip.file('xl/workbook.xml').async('string'));
   const sheetEls = [...wbXml.querySelectorAll('sheet')];
   const parts    = ['<!-- unpacked excel file - resolved -->'];
@@ -102,8 +96,8 @@ async function ai_content(run_doc, zip, strings) {
       grid[r] = rowData;
     }
 
-    const headers   = Array.from({ length: maxCol + 1 }, (_, c) => grid[0]?.[c] ?? String.fromCharCode(65 + c));
-    const colTypes  = new Array(maxCol + 1).fill(null);
+    const headers  = Array.from({ length: maxCol + 1 }, (_, c) => grid[0]?.[c] ?? String.fromCharCode(65 + c));
+    const colTypes = new Array(maxCol + 1).fill(null);
     for (let r = 1; r < grid.length; r++) {
       if (!grid[r]) continue;
       for (let c = 0; c <= maxCol; c++) {
@@ -123,21 +117,17 @@ async function ai_content(run_doc, zip, strings) {
     parts.push(lines.join('\n'));
   }
 
-  _ensureComputed(doc);
-  doc._computed.xlsx.ai_content = parts.join('\n');
+  run_doc.input.ai_content = parts.join('\n');  // ← was doc.input.xlsx.ai_content
 }
 
 async function sheet_names(run_doc, zip) {
-  const doc      = run_doc.target.data[0];
-  const wbXml    = _parseXml(await zip.file('xl/workbook.xml').async('string'));
-  _ensureComputed(doc);
-  doc._computed.xlsx.sheet_names = [...wbXml.querySelectorAll('sheet')].map(s => s.getAttribute('name'));
+  const wbXml = _parseXml(await zip.file('xl/workbook.xml').async('string'));
+  run_doc.input.sheet_names = [...wbXml.querySelectorAll('sheet')].map(s => s.getAttribute('name'));  // ← was doc.input.xlsx.sheet_names
 }
 
 // ============================================================
 // UPDATE — orchestrator
 // Only runs if target.data[0] is an xlsx file
-// Additive: only writes to _computed.xlsx, never replaces target
 // ============================================================
 
 async function update(run_doc) {
@@ -146,10 +136,8 @@ async function update(run_doc) {
   const doc = run_doc.target?.data?.[0];
   if (!doc?.name) return;
 
-  // only process xlsx files
   if (doc.extension !== 'xlsx') return;
 
-  // only run if _fsIndex has the file handle
   const rec = globalThis._fsIndex?.get(doc.name);
   if (!rec) return;
 
@@ -162,7 +150,6 @@ async function update(run_doc) {
     await ai_content(run_doc, zip, strings);
     await sheet_names(run_doc, zip);
 
-    // success stays as set by previous adapter — don't overwrite
   } catch (err) {
     run_doc.error = err.message;
   }
