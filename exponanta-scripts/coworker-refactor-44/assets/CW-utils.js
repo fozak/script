@@ -973,7 +973,8 @@ function _resolveQuery(run_doc, fieldname) {
 // runChain
 // ============================================================
 
-CW.runChain = async function(notebookName) {
+async function runChain(notebookName) {
+  // root — load the notebook template
   const notebook_run = await CW.run({
     operation: 'select',
     target_doctype: 'Run',
@@ -983,45 +984,55 @@ CW.runChain = async function(notebookName) {
   });
 
   const cells = JSON.parse(notebook_run.target.data[0].steps);
+  let prev = notebook_run;
 
+  // cell1 — load select template
   const selectCell = cells.find(c => c.type === 'select');
-  const selectTemplate = await notebook_run.child({
+  const selectTemplate = await prev.child({
     operation: 'select',
     target_doctype: 'Run',
     query: { where: { name: selectCell.name } },
     view: 'form',
     options: { render: false }
   });
+  prev = selectTemplate;
   const st = selectTemplate.target.data[0];
 
-  const parent = await notebook_run.child({
+  // cell2 — execute select
+  const parent = await prev.child({
     operation: st.operation,
     target_doctype: st.target_doctype,
     query: JSON.parse(st.query),
     options: { render: false }
   });
+  prev = parent;
 
+  // cell3..N — load script templates and execute
   const scriptCells = cells.filter(c => c.type === 'script');
-  const fns = await Promise.all(scriptCells.map(async cell => {
-    const t = await notebook_run.child({
+  const fns = [];
+  for (const cell of scriptCells) {
+    const t = await prev.child({
       operation: 'select',
       target_doctype: 'Run',
       query: { where: { name: cell.name } },
       view: 'form',
       options: { render: false }
     });
+    prev = t;
     const template = t.target.data[0];
-    const script = await parent.child({
+    const script = await prev.child({
       operation: template.operation,
       target_doctype: template.target_doctype,
       query: JSON.parse(template.query),
       options: { render: false }
     });
-    return new Function('doc', script.target.data[0].code);
-  }));
+    prev = script;
+    fns.push(new Function('doc', script.target.data[0].code));
+  }
 
+  // last cell — update
   await Promise.all(parent.target.data.map(async doc =>
-    parent.child({
+    prev.child({
       operation: 'update',
       target_doctype: st.target_doctype,
       query: { where: { name: doc.name } },
@@ -1029,7 +1040,7 @@ CW.runChain = async function(notebookName) {
       options: { render: false, expand: false }
     })
   ));
-};
+}
 
 // ─── assign to CW ─────────────────────────────────────────────────────────────
 
