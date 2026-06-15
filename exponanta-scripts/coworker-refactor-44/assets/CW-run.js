@@ -343,6 +343,7 @@ CW._getChildRun = function (run_doc, fieldname) {
 
 
 CW._expand = async function (run_doc, fieldname) {
+  if (run_doc.options?.expand === false) return;  // ← add this line
   const schema  = CW.Schema?.[run_doc.target_doctype];
   const doc     = run_doc.target?.data?.[0];
   const docName = doc?.name;

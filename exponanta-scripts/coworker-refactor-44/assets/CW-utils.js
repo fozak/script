@@ -625,7 +625,7 @@ function _parseSmartSearch(term, schema) {
     const titleField = schema?.title_field || "name";
 
     // title_field always first
-    const titlePath = CW._config.topLevelFields.has(titleField)
+    const titlePath = CW._config.LevelFields.has(titleField)
       ? titleField
       : `data.${titleField}`;
 
@@ -747,7 +747,16 @@ CW.searchDebounced = searchDebounced;
 // _patchDataField — partial update of a single data field in PB
 // ============================================================
 
-//=====prev version
+/*async function _patchDataField(docName, fieldName, value) {
+  const collection = CW._config.collection
+  const current    = await globalThis.pb.collection(collection).getOne(docName)
+  const mergedData = { ...current.data, [fieldName]: value }
+  await globalThis.pb.collection(collection).update(docName, { data: mergedData })
+}*/
+
+//=====change to fix
+
+//=====change to fix
 
 /*async function _patchDataField(docName, fieldName, value) {
   const collection = CW._config.collection
@@ -764,6 +773,7 @@ async function _patchDataField(docName, fieldName, value) {
     const existing = Array.isArray(current.data[fieldName]) ? current.data[fieldName] : [];
     await globalThis.pb.collection(collection).update(docName, {
       data: { [fieldName]: [...existing, value] }  // ← only _changes field, no spread
+      
     });
   } catch (err) {
     if (err?.status === 404) return;
@@ -776,37 +786,49 @@ async function _patchDataField(docName, fieldName, value) {
 // ============================================================
 
 async function _logChanges(run_doc, explicitChanges = null) {
-  // before the test, add a console.log to _logChanges top:
-console.log('[_logChanges] input keys:', Object.keys(run_doc.input));
-//end
-  if (run_doc.options?._logging === false) return
-  if (!CW._config.systemSettings?.logChanges) return
-  //if (CW._config.adapters.registry?.[run_doc.adapter]?.logChanges === 0) return  // ← add this
+  //console.log('[_logChanges] input keys:', Object.keys(run_doc.input));
+
+  if (run_doc.options?._logging === false) return;
+  if (!CW._config.systemSettings?.logChanges) return;
 
   const adapters = CW._getAdapters(run_doc);
-if (adapters.some(a => CW._config.adapters.registry?.[a]?.logChanges === 0)) return;
+  if (adapters.some(a => CW._config.adapters.registry?.[a]?.logChanges === 0)) return;
 
-  const doc = run_doc.target?.data?.[0]
-  if (!doc?.name) return
+  const doc = run_doc.target?.data?.[0];
+  if (!doc?.name) return;
 
-  let changes
+  // find Script sibling in run tree
+const parentRun = CW.runs?.[run_doc.parent_run_id];  // ← MISSING
+const sourceRuns = parentRun?.child_run_ids
+  ?.map(id => CW.runs[id])
+  ?.filter(r => r?.target_doctype === 'Script' && r?.success);
+const provenance = sourceRuns?.length
+  ? { Script: sourceRuns.map(r => r.target?.data?.[0]?.title).join(', ') }
+  : {};
+  
+  let changes;
 
   if (explicitChanges) {
-    changes = explicitChanges
+    changes = explicitChanges;
   } else {
-    const skip = new Set(['_changes', 'modified', 'modified_by', 'creation', 'files+', 'files-'])
+    const skip = new Set(['_changes', 'modified', 'modified_by', 'creation', 'files+', 'files-']);
     changes = Object.entries(run_doc.input)
       .filter(([k]) => !skip.has(k) && k !== '_state')
-      //.map(([k, v]) => ({ field: k, from: doc[k] ?? null, to: v }))
-      .map(([k, v]) => ({ field: k, from: doc[k] ?? null, to: v, source: CW._getAdapters(run_doc).join(',') }))
-      .filter(c => JSON.stringify(c.from) !== JSON.stringify(c.to))
+      .map(([k, v]) => ({
+        field: k,
+        from: doc[k] ?? null,
+        to: v,
+        source: CW._getAdapters(run_doc).join(','),
+        ...provenance
+      }))
+      .filter(c => JSON.stringify(c.from) !== JSON.stringify(c.to));
   }
 
   const signals = explicitChanges ? [] : Object.entries(run_doc.input._state || {})
     .filter(([, v]) => v === '')
-    .map(([k]) => k)
+    .map(([k]) => k);
 
-  if (!changes.length && !signals.length) return
+  if (!changes.length && !signals.length) return;
 
   const entry = {
     at: Date.now(),
@@ -814,17 +836,16 @@ if (adapters.some(a => CW._config.adapters.registry?.[a]?.logChanges === 0)) ret
     op: run_doc.operation,
     ...(changes.length && { ch: changes }),
     ...(signals.length && { sig: signals }),
-  }
+  };
 
-  const existing = Array.isArray(doc._changes) ? doc._changes : []
-  const next     = [...existing, entry]
+  const existing = Array.isArray(doc._changes) ? doc._changes : [];
+  const next     = [...existing, entry];
 
   try {
-    //await _patchDataField(doc.name, '_changes', next)
-    await _patchDataField(doc.name, '_changes', entry)
-    doc._changes = next
+    await _patchDataField(doc.name, '_changes', entry);
+    doc._changes = next;
   } catch (err) {
-    console.warn('[CW] _logChanges failed:', err.message)
+    console.warn('[CW] _logChanges failed:', err.message);
   }
 }
 
@@ -948,6 +969,73 @@ function _resolveQuery(run_doc, fieldname) {
 
 
 
+// ============================================================
+// runChain
+// ============================================================
+
+CW.runChain = async function(notebookName) {
+  const notebook_run = await CW.run({
+    operation: 'select',
+    target_doctype: 'Run',
+    query: { where: { name: notebookName } },
+    view: 'form',
+    options: { render: false }
+  });
+
+  const cells = JSON.parse(notebook_run.target.data[0].steps);
+
+  const selectCell = cells.find(c => c.type === 'select');
+  const selectTemplate = await notebook_run.child({
+    operation: 'select',
+    target_doctype: 'Run',
+    query: { where: { name: selectCell.name } },
+    view: 'form',
+    options: { render: false }
+  });
+  const st = selectTemplate.target.data[0];
+
+  const parent = await notebook_run.child({
+    operation: st.operation,
+    target_doctype: st.target_doctype,
+    query: JSON.parse(st.query),
+    options: { render: false }
+  });
+
+  const scriptCells = cells.filter(c => c.type === 'script');
+  const fns = await Promise.all(scriptCells.map(async cell => {
+    const t = await notebook_run.child({
+      operation: 'select',
+      target_doctype: 'Run',
+      query: { where: { name: cell.name } },
+      view: 'form',
+      options: { render: false }
+    });
+    const template = t.target.data[0];
+    const script = await parent.child({
+      operation: template.operation,
+      target_doctype: template.target_doctype,
+      query: JSON.parse(template.query),
+      options: { render: false }
+    });
+    return new Function('doc', script.target.data[0].code);
+  }));
+
+  await Promise.all(parent.target.data.map(async doc =>
+    parent.child({
+      operation: 'update',
+      target_doctype: st.target_doctype,
+      query: { where: { name: doc.name } },
+      input: Object.assign({}, ...await Promise.all(fns.map(fn => fn(doc)))),
+      options: { render: false, expand: false }
+    })
+  ));
+};
+
+// ─── assign to CW ─────────────────────────────────────────────────────────────
+
+CW.runChain = runChain;
+
+
 // ─── assign to CW ────────────────────────────────────────────────────────────
 
 CW.getGridSelected   = getGridSelected;
@@ -992,4 +1080,4 @@ Object.assign(globalThis, {
   searchGridDebounced,
 });
 
-console.log("✅ CW-utils.js v40 loaded");
+console.log("✅ CW-utils.js v41 loaded");

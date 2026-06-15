@@ -22,6 +22,8 @@
 // HELPERS — mirrors _mergeRecord / _buildWhereClause shape
 // ============================================================
 
+(() => {   //isolate scope
+
 const FS_TOP = new Set(["id", "name", "doctype", "created", "updated"]);
 
 function _mergeRecord(rec) {
@@ -538,3 +540,178 @@ globalThis.Adapters        = globalThis.Adapters || {};
 globalThis.Adapters.fs     = { init, select, create, update, delete: del, reindex };
 
 console.log("✅ CW-adapter-fs.js loaded");
+
+// ... [ALL EXISTING CODE FROM YOUR CW-adapter-fs.js GOES HERE UNCHANGED] ...
+
+// ============================================================
+// CONTENT INDEX + GREP — additive, no existing functions touched
+// ============================================================
+
+const DEFAULT_INDEXABLE_EXT = new Set([
+  "js", "ts", "tsx", "jsx", "json", "md", "css", "html", "txt", "yml", "yaml"
+]);
+
+const MAX_INDEX_FILE_SIZE = 1_000_000; // 1MB — skip huge files
+
+function _tokenize(text) {
+  return (text.toLowerCase().match(/[a-z0-9_]{2,}/g) || []);
+}
+
+function _isIndexable(rec) {
+  const ext = rec.data.extension;
+  if (!DEFAULT_INDEXABLE_EXT.has(ext)) return false;
+  if (rec.data.size > MAX_INDEX_FILE_SIZE) return false;
+  return true;
+}
+
+// globalThis._fsContentIndex = Map<token, Set<id>>
+// globalThis._fsLines        = Map<id, string[]>
+async function buildContentIndex(run_doc) {
+  if (!await _ensureInit(run_doc)) return;
+
+  globalThis._fsContentIndex = new Map();
+  globalThis._fsLines        = new Map();
+
+  let indexed = 0, skipped = 0;
+
+  for (const rec of globalThis._fsIndex.values()) {
+    if (!_isIndexable(rec)) { skipped++; continue; }
+
+    let content = rec.data.content;
+    if (content === null || content === undefined) {
+      try {
+        const file = await rec._handle.getFile();
+        content = await file.text();
+        rec.data.content = content; // cache for select() too
+      } catch (e) {
+        skipped++;
+        continue;
+      }
+    }
+
+    const lines = content.split("\n");
+    globalThis._fsLines.set(rec.id, lines);
+
+    const tokens = new Set(_tokenize(content));
+    for (const tok of tokens) {
+      let set = globalThis._fsContentIndex.get(tok);
+      if (!set) { set = new Set(); globalThis._fsContentIndex.set(tok, set); }
+      set.add(rec.id);
+    }
+    indexed++;
+  }
+
+  run_doc.target  = { data: [], meta: { indexed, skipped, totalTokens: globalThis._fsContentIndex.size } };
+  run_doc.success = true;
+}
+
+// query: { term, regex=false, context=2, caseSensitive=false, maxMatches=200 }
+async function grep(run_doc) {
+  if (!await _ensureInit(run_doc)) return;
+  if (!globalThis._fsContentIndex) {
+    run_doc.error = "400 grep: content index not built — call buildContentIndex first";
+    return;
+  }
+
+  const {
+    term, regex = false, context = 2,
+    caseSensitive = false, maxMatches = 200
+  } = run_doc.query || {};
+
+  if (!term) {
+    run_doc.error = "400 grep: query.term is required";
+    return;
+  }
+
+  let candidateIds;
+  if (!regex) {
+    const tokens = _tokenize(term);
+    if (tokens.length) {
+      candidateIds = tokens.reduce((acc, tok) => {
+        const set = globalThis._fsContentIndex.get(tok);
+        if (!set) return new Set();
+        if (acc === null) return new Set(set);
+        return new Set([...acc].filter(id => set.has(id)));
+      }, null) || new Set();
+    } else {
+      candidateIds = new Set(globalThis._fsLines.keys());
+    }
+  } else {
+    candidateIds = new Set(globalThis._fsLines.keys());
+  }
+
+  let matcher;
+  if (regex) {
+    try {
+      matcher = new RegExp(term, caseSensitive ? "g" : "gi");
+    } catch (e) {
+      run_doc.error = `400 grep: invalid regex — ${e.message}`;
+      return;
+    }
+  } else {
+    const escaped = term.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    matcher = new RegExp(escaped, caseSensitive ? "g" : "gi");
+  }
+
+  const results = [];
+  let totalMatches = 0;
+
+  for (const id of candidateIds) {
+    if (totalMatches >= maxMatches) break;
+    const lines = globalThis._fsLines.get(id);
+    if (!lines) continue;
+
+    const rec = globalThis._fsIndex.get(id);
+    const fileMatches = [];
+
+    for (let i = 0; i < lines.length; i++) {
+      if (totalMatches >= maxMatches) break;
+      matcher.lastIndex = 0;
+      if (matcher.test(lines[i])) {
+        const start = Math.max(0, i - context);
+        const end   = Math.min(lines.length - 1, i + context);
+        fileMatches.push({
+          line: i + 1,
+          text: lines[i],
+          context: lines.slice(start, end + 1).map((l, idx) => ({
+            line: start + idx + 1,
+            text: l,
+            isMatch: start + idx === i,
+          })),
+        });
+        totalMatches++;
+      }
+    }
+
+    if (fileMatches.length) {
+      results.push({
+        id,
+        path: rec.data.path,
+        file_name: rec.data.file_name,
+        matches: fileMatches,
+      });
+    }
+  }
+
+  // sort files by path for stable tree order
+  results.sort((a, b) => a.path < b.path ? -1 : a.path > b.path ? 1 : 0);
+
+  run_doc.target = {
+    data: results,
+    meta: { totalMatches, filesMatched: results.length, term, regex },
+  };
+  run_doc.success = true;
+}
+
+// ============================================================
+// SELF-REGISTER (extend existing registration)
+// ============================================================
+
+globalThis.Adapters    = globalThis.Adapters || {};
+globalThis.Adapters.fs = Object.assign(globalThis.Adapters.fs || {}, {
+  buildContentIndex,
+  grep,
+});
+
+console.log("✅ CW-adapter-fs.js (search extension) loaded");
+})();

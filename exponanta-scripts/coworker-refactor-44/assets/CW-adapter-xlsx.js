@@ -6,6 +6,9 @@
 // All functions: function(run_doc) — mutate only, no return.
 // ============================================================
 
+(() => {   //isolate scope
+
+
 const XLSX_SCRIPTS = [
   'https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js'
 ];
@@ -163,3 +166,4 @@ globalThis.Adapters      = globalThis.Adapters || {};
 globalThis.Adapters.xlsx = { init, update, ai_content, sheet_names };
 
 console.log('✅ CW-adapter-xlsx.js loaded');
+})();

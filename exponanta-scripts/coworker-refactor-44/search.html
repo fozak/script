@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CW Search</title>
+  <link rel="preconnect" href="https://rsms.me">
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/core@1.4.0/dist/css/tabler.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+  <style>
+    html, body { height: 100%; }
+    body { display: flex; flex-direction: column; }
+
+    .search-shell {
+      display: grid;
+      grid-template-columns: 380px 1fr;
+      height: 100vh;
+      overflow: hidden;
+    }
+    .pane-left, .pane-right {
+      height: 100vh;
+      overflow-y: auto;
+    }
+    .pane-left {
+      border-right: 1px solid var(--tblr-border-color);
+      display: flex;
+      flex-direction: column;
+    }
+    .search-toolbar {
+      position: sticky;
+      top: 0;
+      background: var(--tblr-bg-surface);
+      z-index: 5;
+      border-bottom: 1px solid var(--tblr-border-color);
+      padding: .5rem .75rem;
+    }
+    .search-results { flex: 1; overflow-y: auto; }
+
+    .file-group { border-bottom: 1px solid var(--tblr-border-color-translucent); }
+    .file-group-header {
+      display: flex; align-items: center; gap: .5rem;
+      padding: .4rem .75rem;
+      cursor: pointer;
+      font-size: .8125rem;
+      font-family: var(--tblr-font-monospace);
+      user-select: none;
+    }
+    .file-group-header:hover { background: var(--tblr-bg-surface-secondary); }
+    .file-group-header .ti-chevron-down { transition: transform .15s; flex-shrink: 0; }
+    .file-group.collapsed .ti-chevron-down { transform: rotate(-90deg); }
+    .file-group.collapsed .match-list { display: none; }
+    .file-group-path { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+    .match-list { padding: 0; }
+    .match-item {
+      display: flex; align-items: baseline; gap: .5rem;
+      padding: .2rem .75rem .2rem 2rem;
+      font-family: var(--tblr-font-monospace);
+      font-size: .8125rem;
+      cursor: pointer;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+    .match-item:hover { background: var(--tblr-bg-surface-secondary); }
+    .match-item.active { background: var(--tblr-active-bg, #e7f1ff); }
+    .match-line-no { color: var(--tblr-secondary); flex-shrink: 0; min-width: 2.5em; text-align: right; }
+    .match-text { overflow: hidden; text-overflow: ellipsis; }
+    .match-text mark { background: #ffe08a; color: inherit; padding: 0; }
+    .match-add-btn {
+      opacity: 0; flex-shrink: 0; margin-left: auto;
+      width: 1.5rem; height: 1.5rem; line-height: 1.5rem; text-align: center;
+      border-radius: 4px;
+    }
+    .match-item:hover .match-add-btn { opacity: 1; }
+    .match-add-btn:hover { background: var(--tblr-primary-lt); }
+
+    .pane-right { display: flex; flex-direction: column; }
+    .preview-section, .scratch-section {
+      border-bottom: 1px solid var(--tblr-border-color);
+    }
+    .scratch-section { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+    .scratch-body { flex: 1; overflow-y: auto; }
+
+    .code-block {
+      font-family: var(--tblr-font-monospace);
+      font-size: .8125rem;
+      margin: 0;
+      padding: .5rem 0;
+      overflow-x: auto;
+    }
+    .code-line { display: flex; }
+    .code-line-no {
+      color: var(--tblr-secondary);
+      text-align: right;
+      min-width: 3.5em;
+      padding-right: .75rem;
+      user-select: none;
+      flex-shrink: 0;
+    }
+    .code-line.is-match { background: #fff3cd; }
+    .code-line-text { white-space: pre; }
+
+    .scratch-item {
+      display: flex; align-items: flex-start; gap: .5rem;
+      padding: .4rem .75rem;
+      border-bottom: 1px solid var(--tblr-border-color-translucent);
+    }
+    .scratch-item .scratch-meta {
+      font-size: .75rem; color: var(--tblr-secondary);
+      font-family: var(--tblr-font-monospace);
+    }
+    .scratch-item .scratch-text {
+      font-family: var(--tblr-font-monospace);
+      font-size: .8125rem;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    .scratch-remove { flex-shrink: 0; cursor: pointer; color: var(--tblr-secondary); }
+    .scratch-remove:hover { color: var(--tblr-danger); }
+
+    .empty-state {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      height: 100%; color: var(--tblr-secondary); text-align: center; padding: 2rem;
+      gap: .5rem;
+    }
+    .empty-state .ti { font-size: 2rem; opacity: .5; }
+
+    @media (max-width: 768px) {
+      .search-shell { grid-template-columns: 1fr; grid-template-rows: 1fr 1fr; }
+      .pane-left { border-right: none; border-bottom: 1px solid var(--tblr-border-color); height: 50vh; }
+      .pane-right { height: 50vh; }
+    }
+  </style>
+</head>
+<body class="antialiased">
+
+  <div class="search-shell">
+    <!-- LEFT: search + results tree -->
+    <div class="pane-left">
+      <div class="search-toolbar">
+        <div class="input-group input-group-sm mb-2">
+          <span class="input-icon-addon"><i class="ti ti-search"></i></span>
+          <input type="text" id="search-input" class="form-control" placeholder="Search" autocomplete="off">
+        </div>
+        <div class="d-flex align-items-center gap-2">
+          <button id="toggle-case" class="btn btn-icon btn-sm" title="Match case" type="button">
+            <i class="ti ti-letter-case"></i>
+          </button>
+          <button id="toggle-regex" class="btn btn-icon btn-sm" title="Use regex" type="button">
+            <i class="ti ti-regex"></i>
+          </button>
+          <div class="ms-auto small text-secondary" id="search-status">No workspace</div>
+          <button id="open-folder" class="btn btn-sm btn-outline-primary" type="button">
+            <i class="ti ti-folder-open"></i> Open folder
+          </button>
+        </div>
+      </div>
+      <div class="search-results" id="search-results">
+        <div class="empty-state">
+          <i class="ti ti-folder-open"></i>
+          <div>Open a folder to start searching</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: preview + scratch buffer -->
+    <div class="pane-right">
+      <div class="preview-section" id="preview-section" style="flex: 0 0 50%; overflow-y: auto;">
+        <div class="empty-state">
+          <i class="ti ti-file-text"></i>
+          <div>Click a match to preview</div>
+        </div>
+      </div>
+      <div class="scratch-section">
+        <div class="card-header d-flex align-items-center">
+          <h3 class="card-title mb-0">Selection <span class="badge bg-secondary-lt text-secondary ms-1" id="scratch-count">0</span></h3>
+          <div class="ms-auto d-flex gap-2">
+            <button id="clear-scratch" class="btn btn-sm btn-outline-secondary" type="button">Clear</button>
+            <button id="export-scratch" class="btn btn-sm btn-primary" type="button" disabled>
+              <i class="ti ti-download"></i> Export
+            </button>
+          </div>
+        </div>
+        <div class="scratch-body" id="scratch-body">
+          <div class="empty-state">
+            <i class="ti ti-list"></i>
+            <div>Add lines from search results to build an export</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 1. UMD libs ── -->
+  <script src="https://cdn.jsdelivr.net/npm/pocketbase@latest/dist/pocketbase.umd.js"></script>
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta17/dist/js/tabler.min.js"></script>
+  <script src="https://unpkg.com/@tanstack/react-table@8.20.5/build/umd/index.production.js"></script>
+  <script>globalThis.TanStackTable = globalThis.ReactTable;</script>
+
+   <!-- ── 2. CW framework — order is the contract ── -->
+  <script src="/assets/CW-state.js"></script>
+  <script src="/assets/CW-config.js"></script>
+  <script src="/assets/CW-utils.js"></script>
+  <script src="/assets/CW-run.js"></script>
+  <script src="/assets/pb-adapter-pocketbase.js"></script>
+
+   <script src="/assets/CW-adapter-fs.js"></script>
+   <script src="/assets/CW-adapter-dispatch.js"></script>
+<script src="/assets/CW-adapter-xlsx.js"></script>
+<script src="/assets/CW-adapter-pdf.js"></script>
+
+  <script src="/assets/auth.js"></script>
+  <script src="/assets/CW-ui.js"></script>
+  <script src="/assets/CW-url.js"></script>
+  <script src="/assets/CW-analytics.js"></script>
+  <script src="/assets/app-ui.js"></script>
+
+  <!-- ── 3. Bootstrap ── -->
+  <script src="/assets/boot.js"></script>
+  
+  <script>
+window.addEventListener('CW:booted', () => cwStateFromUrl());
+</script>
+
+  <script>
+  // ==========================================================
+  // Minimal run_doc helper — mirrors CW's adapter call shape
+  // ==========================================================
+  async function callFs(op, query) {
+    const run_doc = { query: query || {} };
+    await globalThis.Adapters.fs[op](run_doc);
+    if (run_doc.error) throw new Error(run_doc.error);
+    return run_doc.target;
+  }
+
+  // ==========================================================
+  // State
+  // ==========================================================
+  const state = {
+    indexed: false,
+    caseSensitive: false,
+    regex: false,
+    activeMatch: null,   // { id, path, line, contextLines }
+    scratch: [],          // [{ id, path, line, text }]
+  };
+
+  const els = {
+    input:        document.getElementById('search-input'),
+    toggleCase:   document.getElementById('toggle-case'),
+    toggleRegex:  document.getElementById('toggle-regex'),
+    status:       document.getElementById('search-status'),
+    openFolder:   document.getElementById('open-folder'),
+    results:      document.getElementById('search-results'),
+    preview:      document.getElementById('preview-section'),
+    scratchBody:  document.getElementById('scratch-body'),
+    scratchCount: document.getElementById('scratch-count'),
+    clearScratch: document.getElementById('clear-scratch'),
+    exportScratch:document.getElementById('export-scratch'),
+  };
+
+  function escapeHtml(s) {
+    return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+
+  function highlightTerm(text, term, regex, caseSensitive) {
+    if (!term) return escapeHtml(text);
+    let re;
+    try {
+      re = regex
+        ? new RegExp(term, caseSensitive ? 'g' : 'gi')
+        : new RegExp(term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), caseSensitive ? 'g' : 'gi');
+    } catch { return escapeHtml(text); }
+
+    let out = '', last = 0, m;
+    re.lastIndex = 0;
+    while ((m = re.exec(text)) !== null) {
+      out += escapeHtml(text.slice(last, m.index));
+      out += '<mark>' + escapeHtml(m[0]) + '</mark>';
+      last = m.index + m[0].length;
+      if (m[0].length === 0) re.lastIndex++;
+    }
+    out += escapeHtml(text.slice(last));
+    return out;
+  }
+
+  // ==========================================================
+  // Open folder / init / build content index
+  // ==========================================================
+  els.openFolder.addEventListener('click', async () => {
+    els.status.textContent = 'Indexing…';
+    try {
+      await callFs('init', {});
+      const idxMeta = (await callFs('buildContentIndex', {})).meta;
+      state.indexed = true;
+      els.status.textContent = `${globalThis._fsRoot} · ${idxMeta.indexed} files indexed`;
+      els.results.innerHTML = '<div class="empty-state"><i class="ti ti-search"></i><div>Type to search</div></div>';
+      if (els.input.value.trim()) runSearch();
+    } catch (e) {
+      els.status.textContent = 'Error: ' + e.message;
+    }
+  });
+
+  // ==========================================================
+  // Search (debounced)
+  // ==========================================================
+  let debounceTimer = null;
+  els.input.addEventListener('input', () => {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(runSearch, 250);
+  });
+
+  els.toggleCase.addEventListener('click', () => {
+    state.caseSensitive = !state.caseSensitive;
+    els.toggleCase.classList.toggle('active', state.caseSensitive);
+    if (els.input.value.trim()) runSearch();
+  });
+  els.toggleRegex.addEventListener('click', () => {
+    state.regex = !state.regex;
+    els.toggleRegex.classList.toggle('active', state.regex);
+    if (els.input.value.trim()) runSearch();
+  });
+
+  async function runSearch() {
+    const term = els.input.value.trim();
+    if (!state.indexed) return;
+    if (!term) {
+      els.results.innerHTML = '<div class="empty-state"><i class="ti ti-search"></i><div>Type to search</div></div>';
+      return;
+    }
+
+    let target;
+    try {
+      target = await callFs('grep', {
+        term,
+        regex: state.regex,
+        caseSensitive: state.caseSensitive,
+        context: 2,
+        maxMatches: 200,
+      });
+    } catch (e) {
+      els.results.innerHTML = `<div class="empty-state"><i class="ti ti-alert-triangle"></i><div>${escapeHtml(e.message)}</div></div>`;
+      return;
+    }
+
+    renderResults(target, term);
+  }
+
+  function renderResults(target, term) {
+    const { data, meta } = target;
+    if (!data.length) {
+      els.results.innerHTML = '<div class="empty-state"><i class="ti ti-mood-empty"></i><div>No results</div></div>';
+      return;
+    }
+
+    let html = '';
+    for (const file of data) {
+      html += `<div class="file-group">`;
+      html += `  <div class="file-group-header" data-toggle>
+                   <i class="ti ti-chevron-down"></i>
+                   <i class="ti ti-file-text"></i>
+                   <span class="file-group-path" title="${escapeHtml(file.path)}">${escapeHtml(file.path)}</span>
+                   <span class="badge bg-secondary-lt text-secondary">${file.matches.length}</span>
+                 </div>`;
+      html += `  <ul class="match-list">`;
+      for (const m of file.matches) {
+        html += `<li class="match-item"
+                     data-id="${file.id}"
+                     data-path="${escapeHtml(file.path)}"
+                     data-line="${m.line}"
+                     data-text="${escapeHtml(m.text)}"
+                     data-context='${escapeHtml(JSON.stringify(m.context))}'>
+                    <span class="match-line-no">${m.line}</span>
+                    <span class="match-text">${highlightTerm(m.text, term, state.regex, state.caseSensitive)}</span>
+                    <span class="match-add-btn" data-add title="Add to selection"><i class="ti ti-plus"></i></span>
+                  </li>`;
+      }
+      html += `  </ul>`;
+      html += `</div>`;
+    }
+    els.results.innerHTML = html;
+  }
+
+  // ==========================================================
+  // Results interaction: collapse, click → preview, + → scratch
+  // ==========================================================
+  els.results.addEventListener('click', (e) => {
+    const addBtn = e.target.closest('[data-add]');
+    if (addBtn) {
+      e.stopPropagation();
+      const item = addBtn.closest('.match-item');
+      addToScratch(item);
+      return;
+    }
+
+    const header = e.target.closest('[data-toggle]');
+    if (header) {
+      header.closest('.file-group').classList.toggle('collapsed');
+      return;
+    }
+
+    const item = e.target.closest('.match-item');
+    if (item) {
+      document.querySelectorAll('.match-item.active').forEach(el => el.classList.remove('active'));
+      item.classList.add('active');
+      showPreview(item);
+    }
+  });
+
+  function showPreview(item) {
+    const path = item.dataset.path;
+    const line = parseInt(item.dataset.line, 10);
+    const context = JSON.parse(item.dataset.context.replace(/&quot;/g,'"').replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&#39;/g,"'"));
+
+    let html = `<div class="card-header">
+                   <h3 class="card-title" style="font-family: var(--tblr-font-monospace); font-size: .875rem;">
+                     ${escapeHtml(path)}:${line}
+                   </h3>
+                 </div>`;
+    html += `<pre class="code-block">`;
+    for (const l of context) {
+      html += `<div class="code-line${l.isMatch ? ' is-match' : ''}">
+                 <span class="code-line-no">${l.line}</span>
+                 <span class="code-line-text">${escapeHtml(l.text)}</span>
+               </div>`;
+    }
+    html += `</pre>`;
+    els.preview.innerHTML = html;
+  }
+
+  // ==========================================================
+  // Scratch buffer
+  // ==========================================================
+  function addToScratch(item) {
+    const entry = {
+      id: item.dataset.id,
+      path: item.dataset.path,
+      line: parseInt(item.dataset.line, 10),
+      text: item.dataset.text,
+    };
+    // avoid duplicates (same path+line)
+    if (state.scratch.some(s => s.path === entry.path && s.line === entry.line)) return;
+    state.scratch.push(entry);
+    renderScratch();
+  }
+
+  function renderScratch() {
+    els.scratchCount.textContent = state.scratch.length;
+    els.exportScratch.disabled = state.scratch.length === 0;
+
+    if (!state.scratch.length) {
+      els.scratchBody.innerHTML = '<div class="empty-state"><i class="ti ti-list"></i><div>Add lines from search results to build an export</div></div>';
+      return;
+    }
+
+    let html = '';
+    state.scratch.forEach((s, idx) => {
+      html += `<div class="scratch-item">
+                 <div class="flex-fill">
+                   <div class="scratch-meta">${escapeHtml(s.path)}:${s.line}</div>
+                   <div class="scratch-text">${escapeHtml(s.text)}</div>
+                 </div>
+                 <span class="scratch-remove" data-remove="${idx}" title="Remove"><i class="ti ti-x"></i></span>
+               </div>`;
+    });
+    els.scratchBody.innerHTML = html;
+  }
+
+  els.scratchBody.addEventListener('click', (e) => {
+    const rm = e.target.closest('[data-remove]');
+    if (!rm) return;
+    const idx = parseInt(rm.dataset.remove, 10);
+    state.scratch.splice(idx, 1);
+    renderScratch();
+  });
+
+  els.clearScratch.addEventListener('click', () => {
+    state.scratch = [];
+    renderScratch();
+  });
+
+  // ==========================================================
+  // Export — formats scratch buffer with file:line headers,
+  // writes via fs adapter create()
+  // ==========================================================
+  els.exportScratch.addEventListener('click', async () => {
+    if (!state.scratch.length) return;
+
+    // group by path, preserve order of first appearance
+    const byPath = new Map();
+    for (const s of state.scratch) {
+      if (!byPath.has(s.path)) byPath.set(s.path, []);
+      byPath.get(s.path).push(s);
+    }
+
+    let content = '';
+    for (const [path, lines] of byPath) {
+      content += `// ${path}\n`;
+      for (const l of lines.sort((a, b) => a.line - b.line)) {
+        content += `${l.line}: ${l.text}\n`;
+      }
+      content += '\n';
+    }
+
+    const filename = `search-export-${Date.now()}.txt`;
+    try {
+      // create() reads run_doc.target.data[0] directly
+      const run_doc = { target: { data: [{ path: filename, content }] } };
+      await globalThis.Adapters.fs.create(run_doc);
+      if (run_doc.error) throw new Error(run_doc.error);
+      els.status.textContent = `Exported to ${filename}`;
+    } catch (e) {
+      els.status.textContent = 'Export error: ' + e.message;
+    }
+  });
+  </script>
+</body>
+</html>

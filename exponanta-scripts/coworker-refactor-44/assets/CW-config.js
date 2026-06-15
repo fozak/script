@@ -103,7 +103,7 @@ globalThis.CW._config = {
     {
       name: "doctype",
       fetch: true,
-      hidden: 1,
+      hidden: 0,
       in_list_view: 1,
       onWrite: (run_doc) => {
         const doc = run_doc.target?.data?.[0];
@@ -204,7 +204,7 @@ globalThis.CW._config = {
     {
       name: "top_parent",
       fetch: true,
-      hidden: 1,
+      hidden: 0,
       onCreate: (run_doc) => {
         const doc = run_doc.target?.data?.[0];
         if (!doc) return;
@@ -217,7 +217,7 @@ globalThis.CW._config = {
     {
       name: "parent",
       fetch: true,
-      hidden: 1,
+      hidden: 0,
       fieldtype: "Data",
       in_list_view: 1,
       label: "Parent",
@@ -225,7 +225,7 @@ globalThis.CW._config = {
     {
       name: "parenttype",
       fetch: true,
-      hidden: 1,
+      hidden: 0,
       fieldtype: "Data",
       in_list_view: 1,
       label: "Parent Type",
@@ -233,7 +233,7 @@ globalThis.CW._config = {
     {
       name: "parentfield",
       fetch: true,
-      hidden: 1,
+      hidden: 0,
       fieldtype: "Data",
       in_list_view: 1,
       label: "Parent Field",
@@ -386,7 +386,7 @@ globalThis.CW._config = {
       read_only: 0,
       fieldtype: "Filepicker",
       label: "Attachments",
-      in_list_view: 0,
+      in_list_view: 1,
     },
     {
       name: "_changes",
@@ -914,7 +914,7 @@ globalThis.CW._config = {
   // old structure
   // Operation → View mapping
   operationToView: {
-    select: "list",
+    select: "form",   //was list 
     create: "form",
     update: "form",
     delete: null,

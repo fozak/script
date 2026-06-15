@@ -5,6 +5,8 @@
 // Reads from run_doc.target.data[0] — never from run_doc.input
 // ============================================================
 
+(() => {   //isolate scope
+
 // after — delete the const, read from config
 const PB_TOP = CW._config.topLevelFields;
 
@@ -419,3 +421,5 @@ Object.assign(globalThis.Adapters.pocketbase, {
 });
 
 //console.log('✅ pb-adapter-auth-methods.js loaded');
+
+})();

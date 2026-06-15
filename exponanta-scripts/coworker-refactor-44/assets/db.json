@@ -1,4 +1,15 @@
-[
+[{
+  "name": "Script",
+  "schema_name": "Script",
+  "doctype": "Schema",
+  "title_field": "title",
+  "autoname": "hash",
+  "fields": [
+    { "fieldname": "title",        "fieldtype": "Data",  "label": "Title",     "reqd": 1, "in_list_view": 1 },
+    { "fieldname": "target_doctype", "fieldtype": "Data", "label": "Doctype", "in_list_view": 1 },
+    { "fieldname": "code",        "fieldtype": "Code",  "label": "Code",     "options": "JavaScript", "reqd": 1 }
+  ]
+},
   {
   "schema_name": "File",
   "doctype": "Schema",
@@ -129992,7 +130003,8 @@
       "owner",
       "creation",
       "modified",
-      "modified_by"
+      "modified_by",
+      "steps"
     ],
     "fields": [
       {
@@ -130187,7 +130199,14 @@
         "fieldtype": "Data",
         "hidden": 1,
         "read_only": 1
-      }
+      },
+      {
+    "fieldname": "steps",
+    "fieldtype": "Code",
+    "label": "Steps",
+    "options": "JSON",
+    "in_list_view": 1
+}
     ],
     "icon": "fa fa-play-circle",
     "index_web_pages_for_search": 1,

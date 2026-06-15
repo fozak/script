@@ -6,6 +6,8 @@
 // All functions: function(run_doc) — mutate only, no return.
 // ============================================================
 
+
+(() => {   //isolate scope
 const PDF_SCRIPTS = [
   'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js'
 ];
@@ -165,3 +167,5 @@ globalThis.Adapters     = globalThis.Adapters || {};
 globalThis.Adapters.pdf = { init, update, ai_content, page_count, form_fields };
 
 console.log('✅ CW-adapter-pdf.js loaded');
+
+})();
