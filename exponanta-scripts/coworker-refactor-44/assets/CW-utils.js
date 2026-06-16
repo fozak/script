@@ -508,7 +508,7 @@ function _resolveViewComponent(doctype, view, fallback_container) {
     container: fallback_container || "main_container",
   };
 }
-//== get fiels===============================================================================
+//== get fields===============================================================================
 
 function _getListFields(run_doc) {
   const doctype = run_doc.target_doctype || run_doc.source_doctype;
@@ -772,8 +772,8 @@ async function _patchDataField(docName, fieldName, value) {
     const current  = await globalThis.pb.collection(collection).getOne(docName);
     const existing = Array.isArray(current.data[fieldName]) ? current.data[fieldName] : [];
     await globalThis.pb.collection(collection).update(docName, {
-      data: { [fieldName]: [...existing, value] }  // ← only _changes field, no spread
-      
+      //data: { [fieldName]: [...existing, value] }  //bug
+      data: { ...current.data, [fieldName]: [...existing, value] }  //corrected
     });
   } catch (err) {
     if (err?.status === 404) return;
@@ -1045,6 +1045,17 @@ async function runChain(notebookName) {
 // ─── assign to CW ─────────────────────────────────────────────────────────────
 
 CW.runChain = runChain;
+
+
+//---------------------
+
+function tryParseJSON(val) {
+  if (typeof val === 'string') {
+    try { return JSON.parse(val); } catch { return val; }
+  }
+  return val;
+}
+CW.tryParseJSON = tryParseJSON;
 
 
 // ─── assign to CW ────────────────────────────────────────────────────────────

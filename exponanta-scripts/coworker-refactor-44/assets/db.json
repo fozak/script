@@ -1,4 +1,26 @@
 [{
+  "schema_name": "Output",
+  "doctype": "Schema",
+  "_autosave": 0,
+  "title_field": "title",
+  "fields": [
+    {
+      "fieldname": "title",
+      "fieldtype": "Data",
+      "label": "Title",
+      "in_list_view": 1
+    },
+    {
+      "fieldname": "data",
+      "fieldtype": "Code",
+      "label": "Data",
+      "options": "JSON",
+      "in_list_view": 0
+    }
+  ]
+},
+  
+  {
   "name": "Script",
   "schema_name": "Script",
   "doctype": "Schema",
@@ -129342,7 +129364,7 @@
     "search_fields": "_schema_doctype,name,module",
     "sort_field": "modified",
     "sort_order": "DESC",
-    "title_field": "name",
+    "title_field": "schema_name",
     "track_changes": 1
   },
   {
@@ -129964,6 +129986,16 @@
   },
   {
     "_schema_doctype": "Run",
+    "_state": {
+    "1": {
+      "transitions": { "0": [1], "1": [0] },
+      "labels": { "0_1": "▶ Run", "1_0": "Reset" },
+      "primary": { "0_1": true },
+      "sideEffects": {
+        "0_1": "async function(run_doc) { await CW.runChain(run_doc.target.data[0].name); }"
+      }
+    }
+  },
     "allow_rename": 0,
     "autoname": "hash",
     "doctype": "Schema",
@@ -129971,6 +130003,7 @@
     "engine": "InnoDB",
     "field_order": [
       "name",
+      "title",
       "operation",
       "operation_original",
       "source_doctype",
@@ -130013,6 +130046,14 @@
         "label": "Name",
         "in_list_view": 1,
         "read_only": 1,
+        "hidden": 0
+      },
+            {
+        "fieldname": "title",
+        "fieldtype": "Data",
+        "label": "Title",
+        "in_list_view": 1,
+        "read_only": 0,
         "hidden": 0
       },
       {
@@ -130206,7 +130247,14 @@
     "label": "Steps",
     "options": "JSON",
     "in_list_view": 1
-}
+},
+{
+      "fieldname": "save_to",
+      "fieldtype": "Link",
+      "label": "Save To",
+      "options": "Schema",
+      "in_list_view": 1
+    }
     ],
     "icon": "fa fa-play-circle",
     "index_web_pages_for_search": 1,
@@ -130231,7 +130279,7 @@
     "sort_order": "DESC",
     "track_changes": 1,
     "translated_doctype": 0,
-    "title_field": "name"
+    "title_field": "title"
   },
   {
     "_allowed": "",
