@@ -115,11 +115,11 @@ async function _writeToProfile(userId, incoming) {
   const doc = fetchRun.target?.data?.[0]
   if (!doc) return
 
-  const existing = doc.content_history
-    ? (typeof doc.content_history === 'string'
+  const existing = tryParseJSON(doc.content_history) || {}
+    /*? (typeof doc.content_history === 'string'
         ? JSON.parse(doc.content_history)
-        : doc.content_history)
-    : {}
+        : doc.content_history) 
+    : {}*/
 
   // first-touch wins — existing keys not overwritten
   const merged = { ...incoming, ...existing }

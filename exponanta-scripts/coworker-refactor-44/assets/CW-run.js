@@ -643,8 +643,8 @@ CW._preflight = function (run_doc) {
     }
   }
 
-  // JSON stringify Code fields
-  if (schema?.fields) {
+  // JSON stringify Code fields - dont need it 
+  /*if (schema?.fields) {
     for (const f of schema.fields) {
       if (
         f.fieldtype === 'Code' &&
@@ -655,7 +655,7 @@ CW._preflight = function (run_doc) {
         doc[f.fieldname] = JSON.stringify(doc[f.fieldname]);
       }
     }
-  }
+  }*/
 
   // systemFields — operate on target.data[0] via run_doc
   for (const sf of CW._config.systemFields || []) {

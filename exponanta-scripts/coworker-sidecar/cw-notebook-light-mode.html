@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CW Notebook</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/core@1.4.0/dist/css/tabler.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css" />
+  <style>
+    .will-change { color: var(--tblr-warning); font-weight: 500; }
+    .from-val { color: var(--tblr-secondary); text-decoration: line-through; font-size: 11px; }
+    .to-val { color: var(--tblr-success); font-weight: 500; }
+    .cell-connector { height: 16px; display: flex; align-items: center; justify-content: center; color: var(--tblr-secondary); position: relative; }
+    .cell-connector::before { content: ''; position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: var(--tblr-border-color); }
+    .cell-connector i { position: relative; z-index: 1; background: var(--tblr-body-bg); padding: 0 3px; font-size: 12px; }
+  </style>
+</head>
+<body class="antialiased">
+<div class="container-xl py-3">
+
+  <div class="row g-2 mb-3">
+    <div class="col-4">
+      <div class="card card-sm">
+        <div class="card-body">
+          <div class="text-secondary" style="font-size:11px; text-transform:uppercase; letter-spacing:.05em">Concern 1</div>
+          <div class="fw-medium" style="font-size:13px">What will change?</div>
+          <div class="text-success" style="font-size:11px"><i class="ti ti-circle-check"></i> dry run mode</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="card card-sm">
+        <div class="card-body">
+          <div class="text-secondary" style="font-size:11px; text-transform:uppercase; letter-spacing:.05em">Concern 2</div>
+          <div class="fw-medium" style="font-size:13px">Which records?</div>
+          <div class="text-success" style="font-size:11px"><i class="ti ti-circle-check"></i> live preview</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="card card-sm">
+        <div class="card-body">
+          <div class="text-secondary" style="font-size:11px; text-transform:uppercase; letter-spacing:.05em">Concern 3</div>
+          <div class="fw-medium" style="font-size:13px">Did it work?</div>
+          <div class="text-success" style="font-size:11px"><i class="ti ti-circle-check"></i> results summary</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <div class="text-secondary mb-1" style="font-size:11px; text-transform:uppercase; letter-spacing:.05em">Target — concern 2</div>
+    <div class="card card-sm">
+      <div class="card-body d-flex align-items-center gap-2">
+        <i class="ti ti-database text-secondary"></i>
+        <input type="text" class="form-control form-control-sm flex-fill" value="Task  ·  status = open" readonly style="background:none;border:none;box-shadow:none;" />
+        <span class="badge bg-blue-lt">3 records</span>
+        <button class="btn btn-sm btn-outline-secondary" onclick="togglePreview()">
+          <i class="ti ti-eye"></i> preview
+        </button>
+      </div>
+    </div>
+
+    <div id="preview-wrap" class="mt-2">
+      <div class="card card-sm">
+        <div class="table-responsive">
+          <table class="table table-sm table-vcenter card-table mb-0">
+            <thead>
+              <tr>
+                <th>name</th>
+                <th>subject</th>
+                <th>label <span class="text-warning">(will change)</span></th>
+                <th>status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="text-secondary">taskx3b</td>
+                <td>Spread Test Task</td>
+                <td class="will-change">→ spread test task</td>
+                <td><span class="badge bg-blue-lt">open</span></td>
+              </tr>
+              <tr>
+                <td class="text-secondary">taskx4c</td>
+                <td>Buy Milk</td>
+                <td class="will-change">→ buy milk</td>
+                <td><span class="badge bg-blue-lt">open</span></td>
+              </tr>
+              <tr>
+                <td class="text-secondary">taskx5d</td>
+                <td>Call Client</td>
+                <td class="will-change">→ call client</td>
+                <td><span class="badge bg-blue-lt">open</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <div class="text-secondary mb-1" style="font-size:11px; text-transform:uppercase; letter-spacing:.05em">Pipeline</div>
+
+    <div class="card card-sm">
+      <div class="card-body d-flex align-items-center gap-2 py-2">
+        <span class="avatar avatar-xs rounded-circle bg-green-lt text-green fw-medium">1</span>
+        <span class="fw-medium" style="font-size:13px; flex:1">select Task</span>
+        <span class="badge bg-blue-lt">select</span>
+      </div>
+    </div>
+    <div class="cell-connector"><i class="ti ti-arrow-down"></i></div>
+    <div class="card card-sm">
+      <div class="card-body d-flex align-items-center gap-2 py-2">
+        <span class="avatar avatar-xs rounded-circle bg-green-lt text-green fw-medium">2</span>
+        <span class="fw-medium" style="font-size:13px; flex:1">enrich-task</span>
+        <span class="badge bg-yellow-lt">script</span>
+      </div>
+    </div>
+    <div class="cell-connector"><i class="ti ti-arrow-down"></i></div>
+    <div class="card card-sm">
+      <div class="card-body d-flex align-items-center gap-2 py-2">
+        <span class="avatar avatar-xs rounded-circle bg-green-lt text-green fw-medium">3</span>
+        <span class="fw-medium" style="font-size:13px; flex:1">add-random-title</span>
+        <span class="badge bg-yellow-lt">script</span>
+      </div>
+    </div>
+    <div class="cell-connector"><i class="ti ti-arrow-down"></i></div>
+    <div class="card card-sm">
+      <div class="card-body d-flex align-items-center gap-2 py-2">
+        <span class="avatar avatar-xs rounded-circle bg-secondary-lt text-secondary fw-medium">4</span>
+        <span class="fw-medium" style="font-size:13px; flex:1">update Task</span>
+        <span class="badge bg-green-lt">update</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex align-items-center gap-2 mb-3">
+    <button class="btn btn-sm btn-outline-warning" onclick="showDryRun()">
+      <i class="ti ti-eye"></i> dry run
+    </button>
+    <button class="btn btn-sm btn-outline-success" onclick="showResults()">
+      <i class="ti ti-player-play"></i> ▶ Run
+    </button>
+    <span class="text-secondary ms-1" style="font-size:12px">last run: 2 min ago</span>
+  </div>
+
+  <div id="dry-panel" style="display:none" class="mb-3">
+    <div class="alert alert-warning d-flex align-items-center gap-2 py-2 mb-2">
+      <i class="ti ti-alert-triangle"></i>
+      <span style="font-size:13px">dry run — no records will be written. preview only.</span>
+    </div>
+    <div class="card card-sm">
+      <div class="card-header py-2">
+        <h4 class="card-title mb-0" style="font-size:13px">what would change</h4>
+        <div class="card-options">
+          <span class="text-secondary" style="font-size:11px">3 records · 2 fields each</span>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-sm table-vcenter card-table mb-0">
+          <thead>
+            <tr><th>record</th><th>field</th><th>from</th><th>to</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>taskx3b</td><td>label</td><td class="from-val">null</td><td class="to-val">spread test task</td></tr>
+            <tr><td>taskx3b</td><td>subject</td><td class="from-val">Spread Test Task</td><td class="to-val">Spread Test Task-gwpn6</td></tr>
+            <tr><td>taskx4c</td><td>label</td><td class="from-val">null</td><td class="to-val">buy milk</td></tr>
+            <tr><td>taskx4c</td><td>subject</td><td class="from-val">Buy Milk</td><td class="to-val">Buy Milk-xqe32</td></tr>
+            <tr><td>taskx5d</td><td>label</td><td class="from-val">null</td><td class="to-val">call client</td></tr>
+            <tr><td>taskx5d</td><td>subject</td><td class="from-val">Call Client</td><td class="to-val">Call Client-abc99</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div id="results-panel" style="display:none" class="mb-3">
+    <div class="text-secondary mb-1" style="font-size:11px; text-transform:uppercase; letter-spacing:.05em">Results — concern 3</div>
+    <div class="card card-sm">
+      <div class="card-header py-2">
+        <h4 class="card-title mb-0" style="font-size:13px">run completed</h4>
+        <div class="card-options">
+          <button class="btn btn-sm btn-outline-danger">
+            <i class="ti ti-arrow-back-up"></i> revert
+          </button>
+        </div>
+      </div>
+      <div class="card-body py-2">
+        <div class="row g-2 mb-2">
+          <div class="col-3">
+            <div class="card card-sm bg-success-lt">
+              <div class="card-body text-center py-2">
+                <div class="h2 mb-0 text-success">3</div>
+                <div class="text-secondary" style="font-size:11px">updated</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="card card-sm bg-danger-lt">
+              <div class="card-body text-center py-2">
+                <div class="h2 mb-0 text-danger">0</div>
+                <div class="text-secondary" style="font-size:11px">failed</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="card card-sm bg-warning-lt">
+              <div class="card-body text-center py-2">
+                <div class="h2 mb-0 text-warning">2</div>
+                <div class="text-secondary" style="font-size:11px">fields changed</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="card card-sm">
+              <div class="card-body text-center py-2">
+                <div class="h2 mb-0">0.6s</div>
+                <div class="text-secondary" style="font-size:11px">duration</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-sm table-vcenter card-table mb-0">
+          <thead>
+            <tr><th>record</th><th>field</th><th>before</th><th>after</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>taskx3b · Spread Test Task</td><td>label</td><td class="from-val">null</td><td class="to-val">spread test task</td></tr>
+            <tr><td>taskx3b · Spread Test Task</td><td>subject</td><td class="from-val">Spread Test Task</td><td class="to-val">Spread Test Task-gwpn6</td></tr>
+            <tr><td>taskx4c · Buy Milk</td><td>label</td><td class="from-val">null</td><td class="to-val">buy milk</td></tr>
+            <tr><td>taskx4c · Buy Milk</td><td>subject</td><td class="from-val">Buy Milk</td><td class="to-val">Buy Milk-xqe32</td></tr>
+            <tr><td>taskx5d · Call Client</td><td>label</td><td class="from-val">null</td><td class="to-val">call client</td></tr>
+            <tr><td>taskx5d · Call Client</td><td>subject</td><td class="from-val">Call Client</td><td class="to-val">Call Client-abc99</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function togglePreview() {
+  const w = document.getElementById('preview-wrap');
+  w.style.display = w.style.display === 'none' ? 'block' : 'none';
+}
+function showDryRun() {
+  document.getElementById('dry-panel').style.display = 'block';
+  document.getElementById('results-panel').style.display = 'none';
+}
+function showResults() {
+  document.getElementById('results-panel').style.display = 'block';
+  document.getElementById('dry-panel').style.display = 'none';
+}
+</script>
+</body>
+</html>

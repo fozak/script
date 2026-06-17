@@ -358,7 +358,9 @@ function _getDimValue(doc, dim, dimDef) {
   var state = doc._state;
   if (typeof state === "string") {
     try {
-      state = JSON.parse(state);
+      //state = JSON.parse(state);
+      state = tryParseJSON(state);
+
     } catch (_) {
       state = {};
     }
@@ -983,7 +985,8 @@ async function runChain(notebookName) {
     options: { render: false }
   });
 
-  const cells = JSON.parse(notebook_run.target.data[0].steps);
+  //const cells = JSON.parse(notebook_run.target.data[0].steps);
+  const cells = tryParseJSON(notebook_run.target.data[0].steps);
   let prev = notebook_run;
 
   // cell1 — load select template
@@ -1002,7 +1005,8 @@ async function runChain(notebookName) {
   const parent = await prev.child({
     operation: st.operation,
     target_doctype: st.target_doctype,
-    query: JSON.parse(st.query),
+    //query: JSON.parse(st.query),
+    query: tryParseJSON(st.query),
     options: { render: false }
   });
   prev = parent;
@@ -1023,7 +1027,8 @@ async function runChain(notebookName) {
     const script = await prev.child({
       operation: template.operation,
       target_doctype: template.target_doctype,
-      query: JSON.parse(template.query),
+      //query: JSON.parse(template.query),
+      query: tryParseJSON(template.query),
       options: { render: false }
     });
     prev = script;

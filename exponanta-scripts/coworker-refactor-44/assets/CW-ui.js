@@ -568,7 +568,10 @@ if (field.fieldtype === "Table")
         source_field: field.fieldname,
       });
       if (cr.success) {
-        const opts = cr.target?.data || [];
+        const raw = cr.target?.data || [];  //added
+const opts = [...new Map(raw.map(o => [o.name, o])).values()]
+  .sort((a, b) => (a[titleField] || a.name).localeCompare((b[titleField] || b.name))); //added
+        //const opts = cr.target?.data || [];
         const current = opts.find((o) => o.name === localVal);
         if (current) setSearch(current[titleField] || current.name);
         setLinkOpts(opts);
@@ -609,6 +612,7 @@ if (field.fieldtype === "Table")
                   key: o.name,
                   className: "dropdown-item",
                   type: "button",
+                  key: `${run_doc.name}-${field.fieldname}-${o.name}`, //added
                   onMouseDown: (e) => {
                     e.preventDefault();
                     setSearch(o[titleField] || o.name);

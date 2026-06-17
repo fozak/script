@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CW Notebook</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/core@1.4.0/dist/css/tabler.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css" />
+  <style>
+    body { background: #1a1c23; }
+    .page-wrapper { background: #1a1c23; }
+    .section-label { font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: #6c7a8d; margin-bottom: 6px; }
+    .card { background: #24272f; border: 1px solid #2e3340; border-radius: 8px; }
+    .card-header { background: #1e2128; border-bottom: 1px solid #2e3340; }
+    .table { color: #c9d1d9; }
+    .table thead th { background: #1e2128; color: #8b98a8; font-weight: 600; font-size: 11px; letter-spacing: .06em; text-transform: uppercase; border-bottom: 1px solid #2e3340; }
+    .table tbody td { border-bottom: 1px solid #2e3340; color: #c9d1d9; }
+    .table tbody tr:last-child td { border-bottom: none; }
+    .table tbody tr:hover td { background: #2a2d36; }
+    .concern-card { background: #24272f; border: 1px solid #2e3340; border-radius: 8px; padding: 12px 16px; }
+    .concern-num { font-size: 10px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: #4a5568; }
+    .concern-title { font-size: 14px; font-weight: 600; color: #e2e8f0; margin: 2px 0; }
+    .cell-connector { height: 18px; display: flex; align-items: center; justify-content: center; color: #3d4451; position: relative; }
+    .cell-connector::before { content: ''; position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: #2e3340; }
+    .cell-connector i { position: relative; z-index: 1; background: #1a1c23; padding: 0 4px; font-size: 13px; color: #4a5568; }
+    .cell-card { background: #24272f; border: 1px solid #2e3340; border-radius: 8px; }
+    .cell-body { display: flex; align-items: center; gap: 10px; padding: 10px 14px; }
+    .cell-num { width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; flex-shrink: 0; }
+    .cell-num-done { background: #1a3a2a; color: #40c97a; }
+    .cell-num-pending { background: #1e2128; color: #6c7a8d; }
+    .cell-name { flex: 1; font-size: 14px; font-weight: 600; color: #e2e8f0; }
+    .pill { display: inline-flex; align-items: center; padding: 2px 10px; border-radius: 99px; font-size: 11px; font-weight: 600; letter-spacing: .03em; }
+    .pill-select { background: #1a2a4a; color: #58a6ff; }
+    .pill-script { background: #2d2210; color: #e3a008; }
+    .pill-update { background: #1a3a2a; color: #40c97a; }
+    .pill-records { background: #1a2a4a; color: #58a6ff; }
+    .will-change { color: #e3a008; font-weight: 600; }
+    .from-val { color: #4a5568; text-decoration: line-through; font-size: 11px; }
+    .to-val { color: #40c97a; font-weight: 600; }
+    .target-bar { background: #24272f; border: 1px solid #2e3340; border-radius: 8px; display: flex; align-items: center; gap: 10px; padding: 10px 14px; }
+    .target-input { flex: 1; background: none; border: none; outline: none; color: #e2e8f0; font-size: 14px; font-weight: 600; }
+    .btn-outline-warning { border-color: #e3a008 !important; color: #e3a008 !important; }
+    .btn-outline-warning:hover { background: #2d2210 !important; }
+    .btn-outline-success { border-color: #40c97a !important; color: #40c97a !important; }
+    .btn-outline-success:hover { background: #1a3a2a !important; }
+    .btn-outline-danger { border-color: #e74c3c !important; color: #e74c3c !important; }
+    .dry-notice { background: #2d2210; border: 1px solid #e3a008; border-radius: 8px; padding: 8px 14px; display: flex; align-items: center; gap: 8px; color: #e3a008; font-size: 13px; }
+    .stat-card { background: #1e2128; border-radius: 8px; padding: 10px 14px; text-align: center; }
+    .stat-val { font-size: 22px; font-weight: 700; line-height: 1; }
+    .stat-lbl { font-size: 11px; color: #6c7a8d; margin-top: 2px; }
+    .card-title-dark { font-size: 13px; font-weight: 600; color: #e2e8f0; margin: 0; }
+    .last-run { font-size: 12px; color: #4a5568; }
+    .alert-warning-dark { background: #2d2210; border: 1px solid #e3a008; border-radius: 8px; color: #e3a008; }
+  </style>
+</head>
+<body>
+<div class="container-xl py-3">
+
+  <div class="row g-2 mb-3">
+    <div class="col-4">
+      <div class="concern-card">
+        <div class="concern-num">Concern 1</div>
+        <div class="concern-title">What will change?</div>
+        <div style="font-size:11px; color:#40c97a; margin-top:2px"><i class="ti ti-circle-check"></i> dry run mode</div>
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="concern-card">
+        <div class="concern-num">Concern 2</div>
+        <div class="concern-title">Which records?</div>
+        <div style="font-size:11px; color:#40c97a; margin-top:2px"><i class="ti ti-circle-check"></i> live preview</div>
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="concern-card">
+        <div class="concern-num">Concern 3</div>
+        <div class="concern-title">Did it work?</div>
+        <div style="font-size:11px; color:#40c97a; margin-top:2px"><i class="ti ti-circle-check"></i> results summary</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <div class="section-label">Target — concern 2</div>
+    <div class="target-bar">
+      <i class="ti ti-database" style="color:#6c7a8d; font-size:16px"></i>
+      <input class="target-input" type="text" value="Task  ·  status = open" readonly />
+      <span class="pill pill-records">3 records</span>
+      <button class="btn btn-sm btn-outline-secondary" onclick="togglePreview()" style="border-color:#2e3340; color:#8b98a8;">
+        <i class="ti ti-eye"></i> preview
+      </button>
+    </div>
+
+    <div id="preview-wrap" class="mt-2">
+      <div class="card">
+        <div class="table-responsive">
+          <table class="table table-sm table-vcenter card-table mb-0">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Subject</th>
+                <th>Label <span style="color:#e3a008">(will change)</span></th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="color:#6c7a8d">taskx3b</td>
+                <td>Spread Test Task</td>
+                <td class="will-change">→ spread test task</td>
+                <td><span class="pill pill-select">open</span></td>
+              </tr>
+              <tr>
+                <td style="color:#6c7a8d">taskx4c</td>
+                <td>Buy Milk</td>
+                <td class="will-change">→ buy milk</td>
+                <td><span class="pill pill-select">open</span></td>
+              </tr>
+              <tr>
+                <td style="color:#6c7a8d">taskx5d</td>
+                <td>Call Client</td>
+                <td class="will-change">→ call client</td>
+                <td><span class="pill pill-select">open</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <div class="section-label">Pipeline</div>
+
+    <div class="cell-card">
+      <div class="cell-body">
+        <div class="cell-num cell-num-done">1</div>
+        <span class="cell-name">select Task</span>
+        <span class="pill pill-select">select</span>
+      </div>
+    </div>
+    <div class="cell-connector"><i class="ti ti-arrow-down"></i></div>
+    <div class="cell-card">
+      <div class="cell-body">
+        <div class="cell-num cell-num-done">2</div>
+        <span class="cell-name">enrich-task</span>
+        <span class="pill pill-script">script</span>
+      </div>
+    </div>
+    <div class="cell-connector"><i class="ti ti-arrow-down"></i></div>
+    <div class="cell-card">
+      <div class="cell-body">
+        <div class="cell-num cell-num-done">3</div>
+        <span class="cell-name">add-random-title</span>
+        <span class="pill pill-script">script</span>
+      </div>
+    </div>
+    <div class="cell-connector"><i class="ti ti-arrow-down"></i></div>
+    <div class="cell-card">
+      <div class="cell-body">
+        <div class="cell-num cell-num-pending">4</div>
+        <span class="cell-name">update Task</span>
+        <span class="pill pill-update">update</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex align-items-center gap-2 mb-3">
+    <button class="btn btn-sm btn-outline-warning" onclick="showDryRun()">
+      <i class="ti ti-eye"></i> dry run
+    </button>
+    <button class="btn btn-sm btn-outline-success" onclick="showResults()">
+      <i class="ti ti-player-play"></i> ▶ Run
+    </button>
+    <span class="last-run">last run: 2 min ago</span>
+  </div>
+
+  <div id="dry-panel" style="display:none" class="mb-3">
+    <div class="dry-notice mb-2">
+      <i class="ti ti-alert-triangle"></i>
+      dry run — no records will be written. preview only.
+    </div>
+    <div class="card">
+      <div class="card-header d-flex align-items-center justify-content-between" style="padding:10px 14px">
+        <span class="card-title-dark">what would change</span>
+        <span style="font-size:11px; color:#6c7a8d">3 records · 2 fields each</span>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-sm table-vcenter card-table mb-0">
+          <thead><tr><th>Record</th><th>Field</th><th>From</th><th>To</th></tr></thead>
+          <tbody>
+            <tr><td>taskx3b</td><td>label</td><td class="from-val">null</td><td class="to-val">spread test task</td></tr>
+            <tr><td>taskx3b</td><td>subject</td><td class="from-val">Spread Test Task</td><td class="to-val">Spread Test Task-gwpn6</td></tr>
+            <tr><td>taskx4c</td><td>label</td><td class="from-val">null</td><td class="to-val">buy milk</td></tr>
+            <tr><td>taskx4c</td><td>subject</td><td class="from-val">Buy Milk</td><td class="to-val">Buy Milk-xqe32</td></tr>
+            <tr><td>taskx5d</td><td>label</td><td class="from-val">null</td><td class="to-val">call client</td></tr>
+            <tr><td>taskx5d</td><td>subject</td><td class="from-val">Call Client</td><td class="to-val">Call Client-abc99</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div id="results-panel" style="display:none" class="mb-3">
+    <div class="section-label">Results — concern 3</div>
+    <div class="card">
+      <div class="card-header d-flex align-items-center justify-content-between" style="padding:10px 14px">
+        <span class="card-title-dark">run completed</span>
+        <button class="btn btn-sm btn-outline-danger">
+          <i class="ti ti-arrow-back-up"></i> revert
+        </button>
+      </div>
+      <div class="card-body" style="padding:12px 14px">
+        <div class="row g-2 mb-0">
+          <div class="col-3">
+            <div class="stat-card">
+              <div class="stat-val" style="color:#40c97a">3</div>
+              <div class="stat-lbl">updated</div>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="stat-card">
+              <div class="stat-val" style="color:#e74c3c">0</div>
+              <div class="stat-lbl">failed</div>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="stat-card">
+              <div class="stat-val" style="color:#e3a008">2</div>
+              <div class="stat-lbl">fields changed</div>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="stat-card">
+              <div class="stat-val" style="color:#e2e8f0">0.6s</div>
+              <div class="stat-lbl">duration</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-sm table-vcenter card-table mb-0">
+          <thead><tr><th>Record</th><th>Field</th><th>Before</th><th>After</th></tr></thead>
+          <tbody>
+            <tr><td>taskx3b · Spread Test Task</td><td>label</td><td class="from-val">null</td><td class="to-val">spread test task</td></tr>
+            <tr><td>taskx3b · Spread Test Task</td><td>subject</td><td class="from-val">Spread Test Task</td><td class="to-val">Spread Test Task-gwpn6</td></tr>
+            <tr><td>taskx4c · Buy Milk</td><td>label</td><td class="from-val">null</td><td class="to-val">buy milk</td></tr>
+            <tr><td>taskx4c · Buy Milk</td><td>subject</td><td class="from-val">Buy Milk</td><td class="to-val">Buy Milk-xqe32</td></tr>
+            <tr><td>taskx5d · Call Client</td><td>label</td><td class="from-val">null</td><td class="to-val">call client</td></tr>
+            <tr><td>taskx5d · Call Client</td><td>subject</td><td class="from-val">Call Client</td><td class="to-val">Call Client-abc99</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div>
+<script>
+function togglePreview() {
+  const w = document.getElementById('preview-wrap');
+  w.style.display = w.style.display === 'none' ? 'block' : 'none';
+}
+function showDryRun() {
+  document.getElementById('dry-panel').style.display = 'block';
+  document.getElementById('results-panel').style.display = 'none';
+}
+function showResults() {
+  document.getElementById('results-panel').style.display = 'block';
+  document.getElementById('dry-panel').style.display = 'none';
+}
+</script>
+</body>
+</html>

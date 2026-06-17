@@ -125,7 +125,8 @@ Object.assign(globalThis.CW, {
 
       // Load Scripts
       const scripts = doc.scripts
-        ? (typeof doc.scripts === "string" ? JSON.parse(doc.scripts) : doc.scripts)
+        //? (typeof doc.scripts === "string" ? JSON.parse(doc.scripts) : doc.scripts)
+        ? tryParseJSON(doc.scripts)
         : [];
 
       if (Array.isArray(scripts)) {
@@ -147,14 +148,15 @@ Object.assign(globalThis.CW, {
       // Compile Functions
       const runtime = {
         config:
-          typeof doc.config === "string" ? JSON.parse(doc.config) : doc.config,
+          //typeof doc.config === "string" ? JSON.parse(doc.config) : doc.config,
+          tryParseJSON(doc.config) || {},
       };
 
       if (doc.functions) {
         const fns =
-          typeof doc.functions === "string"
+          /*typeof doc.functions === "string"
             ? JSON.parse(doc.functions)
-            : doc.functions;
+            : doc.functions;*/ tryParseJSON(doc.functions) || {};
         Object.entries(fns).forEach(([name, fnStr]) => {
           runtime[name] = eval("(" + fnStr + ")");
         });
