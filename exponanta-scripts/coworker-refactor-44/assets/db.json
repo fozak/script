@@ -1,4 +1,64 @@
-[{
+[
+  {
+  "name": "Person",
+  "schema_name": "Person",
+  "doctype": "Schema",
+  "module": "Core",
+  "title_field": "full_name",
+  "autoname": "field:slug",
+  "is_submittable": 1,
+  "track_changes": 1,
+  "sort_field": "full_name",
+  "sort_order": "ASC",
+  "fields": [
+
+    { "fieldname": "slug",           "fieldtype": "Data",       "label": "Slug",          "reqd": 1 },
+    { "fieldname": "full_name",      "fieldtype": "Data",       "label": "Full Name",      "in_list_view": 1 },
+    { "fieldname": "first_name",     "fieldtype": "Data",       "label": "First Name" },
+    { "fieldname": "last_name",      "fieldtype": "Data",       "label": "Last Name" },
+    { "fieldname": "headline",       "fieldtype": "Data",       "label": "Headline",      "in_list_view": 1 },
+    { "fieldname": "kicker",         "fieldtype": "Data",       "label": "Kicker" },
+    { "fieldname": "deck",           "fieldtype": "Small Text", "label": "Deck" },
+    { "fieldname": "bio",            "fieldtype": "Small Text", "label": "Bio" },
+    { "fieldname": "about",          "fieldtype": "Long Text",  "label": "About" },
+
+    { "fieldname": "role",           "fieldtype": "Data",       "label": "Role",          "in_list_view": 1 },
+    { "fieldname": "company",        "fieldtype": "Link",       "label": "Company",       "options": "Company", "in_list_view": 1 },
+    { "fieldname": "seniority",      "fieldtype": "Select",     "label": "Seniority",     "options": "c-suite\nvp\ndirector\nmanager\nindividual" },
+
+    { "fieldname": "city",           "fieldtype": "Data",       "label": "City" },
+    { "fieldname": "region",         "fieldtype": "Data",       "label": "Region" },
+    { "fieldname": "country",        "fieldtype": "Data",       "label": "Country" },
+
+    { "fieldname": "linkedin",       "fieldtype": "Data",       "label": "LinkedIn URL" },
+    { "fieldname": "twitter",        "fieldtype": "Data",       "label": "Twitter" },
+    { "fieldname": "website",        "fieldtype": "Data",       "label": "Website" },
+    { "fieldname": "email",          "fieldtype": "Data",       "label": "Email" },
+    { "fieldname": "user",           "fieldtype": "Link",       "label": "User",          "options": "User" },
+
+    { "fieldname": "availability",   "fieldtype": "Select",     "label": "Availability",  "options": "open\nselective\nclosed" },
+    { "fieldname": "meeting_format", "fieldtype": "JSON",       "label": "Meeting Format" },
+    { "fieldname": "speaking",       "fieldtype": "Check",      "label": "Speaking" },
+    { "fieldname": "mentoring",      "fieldtype": "Check",      "label": "Mentoring" },
+    { "fieldname": "office_hours",   "fieldtype": "Check",      "label": "Office Hours" },
+
+    { "fieldname": "industry",       "fieldtype": "JSON",       "label": "Industry" },
+    { "fieldname": "tags",           "fieldtype": "JSON",       "label": "Tags" },
+    { "fieldname": "audience",       "fieldtype": "Data",       "label": "Audience" },
+    { "fieldname": "audience_secondary", "fieldtype": "JSON",   "label": "Audience Secondary" },
+
+    { "fieldname": "featured",       "fieldtype": "Check",      "label": "Featured" },
+    { "fieldname": "verified",       "fieldtype": "Check",      "label": "Verified" },
+    { "fieldname": "lang",           "fieldtype": "Data",       "label": "Language",      "default": "en" },
+    { "fieldname": "noindex",        "fieldtype": "Check",      "label": "No Index" },
+    { "fieldname": "sort_order",     "fieldtype": "Int",        "label": "Sort Order" },
+    { "fieldname": "expires",        "fieldtype": "Datetime",   "label": "Expires" },
+
+    { "fieldname": "meta_title",     "fieldtype": "Data",       "label": "Meta Title" },
+    { "fieldname": "meta_description","fieldtype": "Small Text","label": "Meta Description" }
+  ]
+},
+  {
   "schema_name": "Output",
   "doctype": "Schema",
   "_autosave": 0,
@@ -1163,256 +1223,27 @@
   "name": "Event",
   "schema_name": "Event",
   "doctype": "Schema",
+  "docstatus": 1,
+  "module": "Core",
+  "title_field": "title",
+  "autoname": "field:slug",
   "is_submittable": 1,
   "is_public": 1,
-  "title_field": "title",
-  "autoname": "generateId",
-  "view_components": {
-    "list": {
-      "component": "UniversalGrid",
-      "container": "right_pane"
-    },
-    "form": {
-      "component": "MainForm",
-      "container": "right_pane"
+  "track_changes": 1,
+  "sort_field": "event_start",
+  "sort_order": "ASC",
+  "_state": {
+    "0": {
+      "values": [0, 1, 2],
+      "options": ["Draft", "Published", "Archived"],
+      "transitions": { "0": [1, 2], "1": [2], "2": [0] },
+      "labels": { "0_1": "Publish", "0_2": "Archive", "1_2": "Archive", "2_0": "Restore" },
+      "views": { "0": "edit", "1": "read", "2": "read" },
+      "requires": { "0_1": { "is_submittable": 1 } },
+      "sideEffects": {},
+      "primary": { "0_1": true }
     }
   },
-  "fields": [
-    {
-      "fieldname": "name",
-      "fieldtype": "Data",
-      "label": "Name",
-      "in_list_view": 1,
-      "read_only": 1,
-      "hidden": 0
-    },
-    {
-      "fieldname": "section_identity",
-      "fieldtype": "Section Break",
-      "label": "Event"
-    },
-    {
-      "fieldname": "title",
-      "fieldtype": "Data",
-      "label": "Title",
-      "reqd": 1,
-      "in_list_view": 1
-    },
-    {
-      "fieldname": "relationship_parent",
-      "fieldtype": "Table",
-      "in_list_view": 0,
-      "label": "Event Relationships",
-      "options": "Relationship",
-      "search_index": 1
-    },
-    {
-      "fieldname": "deck",
-      "fieldtype": "Text",
-      "label": "Tagline"
-    },
-    {
-      "fieldname": "kicker",
-      "fieldtype": "Data",
-      "label": "Kicker"
-    },
-    {
-      "fieldname": "featured",
-      "fieldtype": "Check",
-      "label": "Featured"
-    },
-    {
-      "fieldname": "lang",
-      "fieldtype": "Select",
-      "label": "Language",
-      "options": "en\nru\nes"
-    },
-    {
-      "fieldname": "section_classify",
-      "fieldtype": "Section Break",
-      "label": "Classification"
-    },
-    {
-      "fieldname": "category",
-      "fieldtype": "Data",
-      "label": "Category"
-    },
-    {
-      "fieldname": "content_category",
-      "fieldtype": "Data",
-      "label": "Content Category"
-    },
-    {
-      "fieldname": "audience",
-      "fieldtype": "Data",
-      "label": "Primary Audience"
-    },
-    {
-      "fieldname": "tags",
-      "fieldtype": "Data",
-      "label": "Tags"
-    },
-    {
-      "fieldname": "section_logistics",
-      "fieldtype": "Section Break",
-      "label": "Logistics"
-    },
-    {
-      "fieldname": "event_slot",
-      "fieldtype": "Data",
-      "label": "Date/Time Slot",
-      "component": "./slot-picker.js",
-      "display": "SlotBadge",
-      "reqd": 1,
-      "in_list_view": 1
-    },
-    {
-      "fieldname": "event_start",
-      "fieldtype": "Datetime",
-      "label": "Event Start",
-      "reqd": 1,
-      "in_list_view": 1,
-      "read_only": 1,
-      "description": "Derived from event_slot. Used for filtering past vs future events."
-    },
-    {
-      "fieldname": "event_end",
-      "fieldtype": "Datetime",
-      "label": "Event End",
-      "reqd": 0,
-      "read_only": 1,
-      "description": "Derived from event_slot. Used for detecting in-progress events."
-    },
-    {
-      "fieldname": "availability_rule",
-      "fieldtype": "Link",
-      "label": "Availability Rule",
-      "options": "AvailabilityRule",
-      "reqd": 0
-    },
-    {
-      "fieldname": "format",
-      "fieldtype": "Select",
-      "label": "Format",
-      "options": "in-person\nonline\nhybrid"
-    },
-    {
-      "fieldname": "docsubtype",
-      "fieldtype": "Select",
-      "label": "Type",
-      "options": "conference\nmeetup\nworkshop\nwebinar\n1-1\nother",
-      "reqd": 0,
-      "in_list_view": 1
-    },
-    {
-      "fieldname": "location",
-      "fieldtype": "Data",
-      "label": "Location"
-    },
-    {
-      "fieldname": "city",
-      "fieldtype": "Data",
-      "label": "City"
-    },
-    {
-      "fieldname": "region",
-      "fieldtype": "Data",
-      "label": "Region"
-    },
-    {
-      "fieldname": "country",
-      "fieldtype": "Data",
-      "label": "Country"
-    },
-    {
-      "fieldname": "virtual_url",
-      "fieldtype": "Data",
-      "label": "Virtual URL"
-    },
-    {
-      "fieldname": "price",
-      "fieldtype": "Currency",
-      "label": "Price"
-    },
-    {
-      "fieldname": "currency",
-      "fieldtype": "Data",
-      "label": "Currency"
-    },
-    {
-      "fieldname": "capacity",
-      "fieldtype": "Int",
-      "label": "Capacity"
-    },
-    {
-      "fieldname": "section_settings",
-      "fieldtype": "Section Break",
-      "label": "Settings"
-    },
-    {
-      "fieldname": "allow_guest_booking",
-      "fieldtype": "Check",
-      "label": "Allow Guest Booking"
-    },
-    {
-      "fieldname": "guest_verification",
-      "fieldtype": "Select",
-      "label": "Guest Verification",
-      "options": "none\nemail\napproval"
-    },
-    {
-      "fieldname": "section_content",
-      "fieldtype": "Section Break",
-      "label": "Content"
-    },
-    {
-      "fieldname": "body",
-      "fieldtype": "Text",
-      "label": "Description"
-    },
-    {
-      "fieldname": "highlights",
-      "fieldtype": "Code",
-      "label": "Highlights",
-      "options": "JSON"
-    },
-    {
-      "fieldname": "photos",
-      "fieldtype": "Code",
-      "label": "Photos",
-      "options": "JSON"
-    },
-    {
-      "fieldname": "section_web",
-      "fieldtype": "Section Break",
-      "label": "Web Page"
-    },
-    {
-      "fieldname": "webpage",
-      "fieldtype": "Table",
-      "options": "WebPage",
-      "label": "Web Page"
-    },
-    {
-      "fieldname": "section_people",
-      "fieldtype": "Section Break",
-      "label": "People & Organizations"
-    },
-    {
-      "fieldname": "relationships",
-      "fieldtype": "Relationship Panel",
-      "label": "Relationships"
-    }
-  ],
-  "permissions": [
-    {
-      "role": "Event Manager",
-      "read": 1,
-      "write": 1,
-      "create": 1,
-      "delete": 1
-    }
-  ],
   "relationship_roles": {
     "User": {
       "Organizer":       { "transitions": ["0_1", "0_2", "1_2", "2_0"] },
@@ -1422,39 +1253,65 @@
       "Sponsor Contact": { "transitions": ["0_2", "1_2"] }
     }
   },
-  "_state": {
-    "0": {
-      "values": [0, 1, 2],
-      "options": ["Draft", "Published", "Archived"],
-      "transitions": {
-        "0": [1, 2],
-        "1": [2],
-        "2": [0]
-      },
-      "labels": {
-        "0_1": "Publish",
-        "0_2": "Archive",
-        "1_2": "Archive",
-        "2_0": "Restore"
-      },
-      "views": {
-        "0": "edit",
-        "1": "read",
-        "2": "read"
-      },
-      "requires": {
-        "0_1": {
-          "is_submittable": 1
-        }
-      },
-      "sideEffects": {},
-      "rules": {},
-      "primary": {
-        "0_1": true
-      }
-    }
-  },
-  "field_order": ["name"]
+  "permissions": [
+    { "role": "Event Manager", "read": 1, "write": 1, "create": 1, "delete": 1 }
+  ],
+  "fields": [
+
+    { "fieldname": "slug",          "fieldtype": "Data",     "label": "Slug",          "reqd": 1 },
+    { "fieldname": "title",         "fieldtype": "Data",     "label": "Title",         "reqd": 1, "in_list_view": 1 },
+    { "fieldname": "kicker",        "fieldtype": "Data",     "label": "Kicker" },
+    { "fieldname": "deck",          "fieldtype": "Text",     "label": "Tagline" },
+    { "fieldname": "body",          "fieldtype": "Text",     "label": "Description" },
+    { "fieldname": "highlights",    "fieldtype": "Code",     "label": "Highlights",    "options": "JSON" },
+
+    { "fieldname": "event_slot",    "fieldtype": "Data",     "label": "Date/Time Slot", "reqd": 1, "in_list_view": 1, "component": "./slot-picker.js", "display": "SlotBadge" },
+    { "fieldname": "event_start",   "fieldtype": "Datetime", "label": "Event Start",   "reqd": 1, "in_list_view": 1, "read_only": 1, "description": "Derived from event_slot. Used for filtering past vs future events." },
+    { "fieldname": "event_end",     "fieldtype": "Datetime", "label": "Event End",     "read_only": 1, "description": "Derived from event_slot. Used for detecting in-progress events." },
+
+    { "fieldname": "format",        "fieldtype": "Select",   "label": "Format",        "options": "in-person\nonline\nhybrid" },
+    { "fieldname": "docsubtype",    "fieldtype": "Select",   "label": "Type",          "options": "conference\nmeetup\nworkshop\nwebinar\n1-1\nother", "in_list_view": 1 },
+    { "fieldname": "location",      "fieldtype": "Data",     "label": "Location",      "in_list_view": 1 },
+    { "fieldname": "city",          "fieldtype": "Data",     "label": "City" },
+    { "fieldname": "region",        "fieldtype": "Data",     "label": "Region" },
+    { "fieldname": "country",       "fieldtype": "Data",     "label": "Country" },
+    { "fieldname": "virtual_url",   "fieldtype": "Data",     "label": "Virtual URL" },
+
+    { "fieldname": "price",         "fieldtype": "Currency", "label": "Price" },
+    { "fieldname": "currency",      "fieldtype": "Data",     "label": "Currency",      "default": "USD" },
+    { "fieldname": "capacity",      "fieldtype": "Int",      "label": "Capacity" },
+    { "fieldname": "going",         "fieldtype": "Int",      "label": "Going",         "default": "0" },
+    { "fieldname": "waitlist",      "fieldtype": "Int",      "label": "Waitlist",      "default": "0" },
+
+    { "fieldname": "allow_guest_booking", "fieldtype": "Check",   "label": "Allow Guest Booking" },
+    { "fieldname": "guest_verification",  "fieldtype": "Select",  "label": "Guest Verification", "options": "none\nemail\napproval" },
+
+    { "fieldname": "register_url",  "fieldtype": "Data",     "label": "Register URL" },
+    { "fieldname": "connect_url",   "fieldtype": "Data",     "label": "Connect URL" },
+
+    { "fieldname": "solution_categories", "fieldtype": "Code", "label": "Solution Categories", "options": "JSON" },
+    { "fieldname": "tags",          "fieldtype": "Code",     "label": "Tags",          "options": "JSON" },
+    { "fieldname": "audience",      "fieldtype": "Data",     "label": "Primary Audience" },
+    { "fieldname": "audience_secondary", "fieldtype": "Code","label": "Audience Secondary", "options": "JSON" },
+
+    { "fieldname": "organizer",     "fieldtype": "Link",     "label": "Organizer",     "options": "Person" },
+    { "fieldname": "series",        "fieldtype": "Link",     "label": "Series",        "options": "EventSeries" },
+    { "fieldname": "availability_rule", "fieldtype": "Link", "label": "Availability Rule", "options": "AvailabilityRule" },
+
+    { "fieldname": "relationship_parent", "fieldtype": "Table", "label": "Event Relationships", "options": "Relationship" },
+    { "fieldname": "relationships", "fieldtype": "Relationship Panel", "label": "Relationships" },
+
+    { "fieldname": "featured",      "fieldtype": "Check",    "label": "Featured" },
+    { "fieldname": "lang",          "fieldtype": "Select",   "label": "Language",      "options": "en\nru\nes", "default": "en" },
+    { "fieldname": "noindex",       "fieldtype": "Check",    "label": "No Index" },
+    { "fieldname": "sort_order",    "fieldtype": "Int",      "label": "Sort Order" },
+    { "fieldname": "expires",       "fieldtype": "Datetime", "label": "Expires" },
+
+    { "fieldname": "meta_title",        "fieldtype": "Data", "label": "Meta Title" },
+    { "fieldname": "meta_description",  "fieldtype": "Text", "label": "Meta Description" },
+
+    { "fieldname": "published_date", "fieldtype": "Datetime", "label": "Published Date" }
+  ]
 },
   {
     "doctype": "Schema",

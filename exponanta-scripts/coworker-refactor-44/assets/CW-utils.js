@@ -204,7 +204,10 @@ const EMAIL_KEYED = {
 };
 
 const PATH_KEYED = {
-  File: "file",
+  File:    "file",
+  Person:  "pers",
+  Company: "comp",
+  Event:   "event",
 };
 
 function generateId(doctype, title = null) {
