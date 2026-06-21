@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JS Runner</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/core@1.4.0/dist/css/tabler.min.css">
+<style>
+  textarea { font-family: monospace; font-size: 12px; line-height: 1.5; resize: vertical; }
+  .output-zone { font-family: monospace; font-size: 12px; line-height: 1.6; padding: 12px; min-height: 120px; max-height: 320px; overflow-y: auto; white-space: pre-wrap; background: #f8f9fa; border-radius: 4px; }
+  .out-err  { color: #e53e3e; }
+  .out-info { color: #3b82f6; }
+  .out-ok   { color: #38a169; }
+  .file-list { list-style: none; padding: 0; margin: 0; }
+  .file-list li { display: flex; align-items: center; gap: 8px; padding: 4px 8px; border-radius: 4px; font-size: 13px; cursor: pointer; }
+  .file-list li:hover { background: #e9ecef; }
+  .file-list li.active { background: #dbe4ff; font-weight: 600; }
+</style>
+</head>
+<body class="antialiased">
+<div class="page">
+  <div class="page-wrapper">
+    <div class="page-body">
+      <div class="container-xl py-4">
+
+        <!-- header -->
+        <div class="row mb-3 align-items-center">
+          <div class="col">
+            <h2 class="page-title">JS Runner</h2>
+            <div class="text-muted">Open folder → pick JS file → edit → run</div>
+          </div>
+          <div class="col-auto d-flex gap-2 align-items-center">
+            <span id="statusBadge" class="badge bg-secondary">idle</span>
+            <button id="runBtn" class="btn btn-primary" disabled>
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 4v16l13 -8z"/></svg>
+              Run
+            </button>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <!-- left: folder + file list -->
+          <div class="col-3">
+            <div class="card h-100">
+              <div class="card-header">
+                <h3 class="card-title">Folder</h3>
+                <div class="card-options">
+                  <button id="openFolder" class="btn btn-sm btn-outline-primary">Open…</button>
+                </div>
+              </div>
+              <div class="card-body p-2">
+                <div id="folderName" class="text-muted small mb-2" style="word-break:break-all">No folder opened</div>
+                <ul id="fileList" class="file-list">
+                  <li class="text-muted" style="cursor:default">—</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- right: JS editor -->
+          <div class="col-9">
+            <div class="card h-100">
+              <div class="card-header">
+                <h3 class="card-title">
+                  JS
+                  <span id="fileName" class="ms-2 text-muted fw-normal small"></span>
+                </h3>
+                <div class="card-options gap-2">
+                  <button id="reloadBtn" class="btn btn-sm btn-ghost-secondary" disabled>Reload</button>
+                  <span id="jsBadge" class="badge bg-secondary">empty</span>
+                </div>
+              </div>
+              <div class="card-body p-0">
+                <textarea id="jsEditor" class="form-control border-0 rounded-0" rows="14"
+                  placeholder="// Pick a .js file from the folder, or paste code here"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- output row -->
+        <div class="row">
+          <!-- console -->
+          <div class="col-6">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Console</h3>
+                <div class="card-options">
+                  <button id="clearConsole" class="btn btn-sm btn-ghost-danger">Clear</button>
+                </div>
+              </div>
+              <div class="card-body p-0">
+                <div id="consoleOut" class="output-zone"><span class="text-muted">Console output…</span></div>
+              </div>
+            </div>
+          </div>
+          <!-- json -->
+          <div class="col-6">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">JSON output</h3>
+                <div class="card-options">
+                  <button id="copyJson" class="btn btn-sm btn-ghost-secondary">Copy</button>
+                  <button id="clearJson" class="btn btn-sm btn-ghost-danger">Clear</button>
+                </div>
+              </div>
+              <div class="card-body p-0">
+                <div id="jsonOut" class="output-zone"><span class="text-muted">JSON result…</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+// ── state ────────────────────────────────────────────────────
+let dirHandle = null
+let activeFileHandle = null
+
+// ── elements ─────────────────────────────────────────────────
+const openFolderBtn = document.getElementById('openFolder')
+const fileListEl    = document.getElementById('fileList')
+const folderNameEl  = document.getElementById('folderName')
+const jsEditorEl    = document.getElementById('jsEditor')
+const fileNameEl    = document.getElementById('fileName')
+const reloadBtn     = document.getElementById('reloadBtn')
+const runBtn        = document.getElementById('runBtn')
+const statusBadge   = document.getElementById('statusBadge')
+const jsBadge       = document.getElementById('jsBadge')
+const consoleEl     = document.getElementById('consoleOut')
+const jsonOutEl     = document.getElementById('jsonOut')
+
+// ── helpers ──────────────────────────────────────────────────
+function setStatus(text, cls) {
+  statusBadge.textContent = text
+  statusBadge.className = 'badge ' + cls
+}
+function setJsBadge(text, cls) {
+  jsBadge.textContent = text
+  jsBadge.className = 'badge ' + cls
+}
+function clearIfPlaceholder(el) {
+  if (el.querySelector('span.text-muted')) el.innerHTML = ''
+}
+function appendConsole(msg, type) {
+  clearIfPlaceholder(consoleEl)
+  const d = document.createElement('div')
+  d.textContent = msg
+  if (type === 'err')  d.className = 'out-err'
+  if (type === 'info') d.className = 'out-info'
+  if (type === 'ok')   d.className = 'out-ok'
+  consoleEl.appendChild(d)
+  consoleEl.scrollTop = consoleEl.scrollHeight
+}
+function showJson(obj) {
+  clearIfPlaceholder(jsonOutEl)
+  jsonOutEl.textContent = JSON.stringify(obj, null, 2)
+}
+
+// ── open folder ──────────────────────────────────────────────
+openFolderBtn.addEventListener('click', async () => {
+  try {
+    dirHandle = await window.showDirectoryPicker({ mode: 'read' })
+    folderNameEl.textContent = dirHandle.name
+    await populateFileList()
+  } catch (e) {
+    if (e.name !== 'AbortError') appendConsole('✗ ' + e.message, 'err')
+  }
+})
+
+async function populateFileList() {
+  fileListEl.innerHTML = ''
+  const jsFiles = []
+  for await (const [name, handle] of dirHandle.entries()) {
+    if (handle.kind === 'file' && name.endsWith('.js')) jsFiles.push({ name, handle })
+  }
+  jsFiles.sort((a, b) => a.name.localeCompare(b.name))
+  if (!jsFiles.length) {
+    fileListEl.innerHTML = '<li class="text-muted" style="cursor:default">No .js files</li>'
+    return
+  }
+  jsFiles.forEach(({ name, handle }) => {
+    const li = document.createElement('li')
+    li.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-sm text-yellow" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 3v4a1 1 0 0 0 1 1h4"/><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z"/></svg><span>${name}</span>`
+    li.addEventListener('click', () => loadFile(name, handle, li))
+    fileListEl.appendChild(li)
+  })
+}
+
+async function loadFile(name, handle, li) {
+  // mark active
+  fileListEl.querySelectorAll('li').forEach(el => el.classList.remove('active'))
+  li.classList.add('active')
+  activeFileHandle = handle
+  const file = await handle.getFile()
+  jsEditorEl.value = await file.text()
+  fileNameEl.textContent = name
+  reloadBtn.disabled = false
+  runBtn.disabled = false
+  setJsBadge('loaded', 'bg-success')
+}
+
+// ── reload from disk ─────────────────────────────────────────
+reloadBtn.addEventListener('click', async () => {
+  if (!activeFileHandle) return
+  const file = await activeFileHandle.getFile()
+  jsEditorEl.value = await file.text()
+  appendConsole('↺ reloaded from disk', 'info')
+})
+
+// ── editor → enable run on paste/type ────────────────────────
+jsEditorEl.addEventListener('input', () => {
+  const has = jsEditorEl.value.trim().length > 0
+  runBtn.disabled = !has
+  if (has) setJsBadge('edited', 'bg-azure')
+})
+
+// ── run JS ───────────────────────────────────────────────────
+async function runJS(code) {
+  const origLog   = console.log
+  const origError = console.error
+  const origWarn  = console.warn
+  let jsonResult = null
+
+  console.log = (...args) => {
+    origLog(...args)
+    const msg = args.map(a => typeof a === 'object' ? JSON.stringify(a, null, 2) : String(a)).join(' ')
+    appendConsole(msg)
+    try {
+      const parsed = JSON.parse(typeof args[0] === 'string' ? args[0] : JSON.stringify(args[0]))
+      if (parsed && typeof parsed === 'object') jsonResult = parsed
+    } catch {}
+  }
+  console.error = (...args) => { origError(...args); appendConsole('ERR: ' + args.map(String).join(' '), 'err') }
+  console.warn  = (...args) => { origWarn(...args);  appendConsole('WARN: ' + args.map(String).join(' ')) }
+
+  try {
+    // expose dirHandle as global so scripts can use it
+    window.__dirHandle = dirHandle
+    const fn = new Function('dirHandle', 'return (async () => { ' + code + ' })()')
+    const ret = await fn(dirHandle)
+    if (ret != null && typeof ret === 'object') jsonResult = ret
+  } finally {
+    console.log   = origLog
+    console.error = origError
+    console.warn  = origWarn
+  }
+  return jsonResult
+}
+
+runBtn.addEventListener('click', async () => {
+  const code = jsEditorEl.value.trim()
+  if (!code) return
+  runBtn.disabled = true
+  setStatus('running…', 'bg-blue')
+  appendConsole('── run ──────────────────────────────────', 'info')
+  try {
+    const result = await runJS(code)
+    if (result) {
+      showJson(result)
+      appendConsole('✓ JSON captured', 'ok')
+    } else {
+      clearIfPlaceholder(jsonOutEl)
+      jsonOutEl.textContent = '(no JSON result — see console)'
+    }
+    setStatus('done ✓', 'bg-success')
+    appendConsole('── done ─────────────────────────────────', 'info')
+  } catch(e) {
+    appendConsole('✗ ' + e.message, 'err')
+    setStatus('error', 'bg-danger')
+  } finally {
+    runBtn.disabled = false
+  }
+})
+
+// ── clear buttons ─────────────────────────────────────────────
+document.getElementById('clearConsole').addEventListener('click', () => {
+  consoleEl.innerHTML = '<span class="text-muted">Console output…</span>'
+})
+document.getElementById('clearJson').addEventListener('click', () => {
+  jsonOutEl.innerHTML = '<span class="text-muted">JSON result…</span>'
+})
+document.getElementById('copyJson').addEventListener('click', () => {
+  if (jsonOutEl.querySelector('span.text-muted')) return
+  navigator.clipboard.writeText(jsonOutEl.textContent).then(() => {
+    const btn = document.getElementById('copyJson')
+    const orig = btn.textContent
+    btn.textContent = 'Copied!'
+    setTimeout(() => btn.textContent = orig, 1500)
+  })
+})
+</script>
+</body>
+</html>

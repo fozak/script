@@ -12,7 +12,7 @@
   "sort_order": "ASC",
   "fields": [
 
-    { "fieldname": "slug",           "fieldtype": "Data",       "label": "Slug",          "reqd": 1 },
+    { "fieldname": "slug",           "fieldtype": "Data",       "label": "Slug/LinkedInUrl",          "reqd": 1 },
     { "fieldname": "full_name",      "fieldtype": "Data",       "label": "Full Name",      "in_list_view": 1 },
     { "fieldname": "first_name",     "fieldtype": "Data",       "label": "First Name" },
     { "fieldname": "last_name",      "fieldtype": "Data",       "label": "Last Name" },

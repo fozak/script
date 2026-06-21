@@ -4,6 +4,44 @@
 
 const CW = globalThis.CW;
 
+
+// ============================================================
+// transliteration bundle (embedded)
+// ============================================================
+// in CW-utils.js — non-blocking
+import('https://cdn.jsdelivr.net/npm/transliteration@2.3.5/dist/browser/bundle.esm.min.js')
+  .then(({ slugify }) => {
+  slugify.config({
+  replace: [
+    ['.', '-dot-'],
+    ['@', '-at-'],
+    ['!', '-excl-'],
+    ['?', '-q-'],
+    ['#', '-hash-'],
+    ['$', '-usd-'],
+    ['%', '-pct-'],
+    ['&', '-and-'],
+    ['+', '-plus-'],
+    ['=', '-eq-'],
+    ['*', '-star-'],
+    ['/', '-slash-'],
+    ['|', '-pipe-'],
+    ['~', '-tilde-'],
+    [',', '-comma-'],
+    [';', '-semi-'],
+    [':', '-colon-'],
+  ],
+  replaceAfter: [
+    [/--+/g, '-'],     // collapse multiple dashes
+    [/^-|-$/g, ''],    // trim leading/trailing dashes
+  ]
+})
+    const _slugify = slugify
+CW.slugify = (str) => _slugify(str).replace(/-{2,}/g, '-')
+  })
+
+// ============================================================
+
 // ============================================================
 // LAYOUT PARSER
 // ============================================================
@@ -212,18 +250,27 @@ const PATH_KEYED = {
 
 function generateId(doctype, title = null) {
   if (EMAIL_KEYED[doctype]) {
-    if (!title?.trim()) throw new Error(`${doctype} requires an email address`);
-    return (EMAIL_KEYED[doctype] + hashString(title)).substring(0, 15);
+    if (!title?.trim()) throw new Error(`${doctype} requires an email address`)
+    return (EMAIL_KEYED[doctype] + hashString(title)).substring(0, 15)
   }
 
   if (PATH_KEYED[doctype]) {
-    if (!title?.trim()) throw new Error(`${doctype} requires a path`);
-    return (PATH_KEYED[doctype] + hashString(title)).substring(0, 15);
+    if (!title?.trim()) throw new Error(`${doctype} requires a path`)
+    return (PATH_KEYED[doctype] + hashString(title)).substring(0, 15)
   }
 
-  return SINGLE_DOCTYPES.has(doctype)
-    ? generateSingleId(doctype, title)
-    : generateMultiId(doctype, title);
+  if (SINGLE_DOCTYPES.has(doctype)) {
+    return generateSingleId(doctype, title)
+  }
+
+  // default — was generateMultiId (random), now deterministic if title exists
+  if (title?.trim()) {
+    const prefix = doctype.toLowerCase().replace(/[^a-z0-9]/g, '').substring(0, 4)
+    return (prefix + hashString(title)).substring(0, 15)
+  }
+
+  // fallback — random for ephemeral doctypes like Run
+  return generateMultiId(doctype, title)
 }
 
 function hashString(email) {

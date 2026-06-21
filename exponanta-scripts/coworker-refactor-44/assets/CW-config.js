@@ -111,21 +111,31 @@ globalThis.CW._config = {
       },
     },
     {
-      name: "name",
-      fetch: true,
+    name: "slug",
+    fetch: true,
       hidden: 0,
       in_list_view: 1,
       fieldtype: "Data",
-      onCreate: (run_doc) => {
-        const doc = run_doc.target?.data?.[0];
-        if (!doc || doc.name) return;
-        const s = CW.Schema?.[run_doc.target_doctype];
-        const a = s?.autoname;
-        doc.name = a?.startsWith("field:")
-          ? generateId(run_doc.target_doctype, doc[a.slice(6)])
-          : generateId(run_doc.target_doctype);
-      },
+    onCreate: (run_doc) => {
+      const doc = run_doc.target?.data?.[0];
+      if (!doc || doc.slug) return;  // skip if already in input
+      const s = CW.Schema?.[run_doc.target_doctype];
+      if (!s?.title_field) return;
+      doc.slug = CW.slugify(doc[s.title_field]);
     },
+  },
+{
+  name: "name",
+  fetch: true,
+  hidden: 0,
+  in_list_view: 1,
+  fieldtype: "Data",
+  onCreate: (run_doc) => {
+    const doc = run_doc.target?.data?.[0];
+    if (!doc || doc.name) return;
+    doc.name = generateId(run_doc.target_doctype, doc.slug);
+  },
+},
     {
       name: "docstatus",
       fetch: true,
