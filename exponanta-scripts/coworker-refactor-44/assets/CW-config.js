@@ -111,31 +111,32 @@ globalThis.CW._config = {
       },
     },
     {
-    name: "slug",
-    fetch: true,
+      name: "slug",
+      fetch: true,
       hidden: 0,
       in_list_view: 1,
       fieldtype: "Data",
-    onCreate: (run_doc) => {
-      const doc = run_doc.target?.data?.[0];
-      if (!doc || doc.slug) return;  // skip if already in input
-      const s = CW.Schema?.[run_doc.target_doctype];
-      if (!s?.title_field) return;
-      doc.slug = CW.slugify(doc[s.title_field]);
+      onCreate: (run_doc) => {
+        const doc = run_doc.target?.data?.[0];
+        if (!doc || doc.slug) return;
+        doc.slug = generateSlug(run_doc);
+      },
     },
-  },
-{
-  name: "name",
-  fetch: true,
-  hidden: 0,
-  in_list_view: 1,
-  fieldtype: "Data",
-  onCreate: (run_doc) => {
-    const doc = run_doc.target?.data?.[0];
-    if (!doc || doc.name) return;
-    doc.name = generateId(run_doc.target_doctype, doc.slug);
-  },
-},
+    {
+      name: "name",
+      fetch: true,
+      hidden: 0,
+      in_list_view: 1,
+      fieldtype: "Data",
+      onCreate: (run_doc) => {
+        const doc = run_doc.target?.data?.[0];
+        if (!doc || doc.name) return;
+        const s = CW.Schema?.[run_doc.target_doctype];
+        const a = s?.autoname;
+        const seed = a?.startsWith("field:") ? doc[a.slice(6)] : doc.slug;
+        doc.name = generateId(run_doc.target_doctype, seed);
+      },
+    },
     {
       name: "docstatus",
       fetch: true,
@@ -461,21 +462,19 @@ globalThis.CW._config = {
       Run: null,
     },
 
-
-      // doctype → adapter name mapping
-  // if target_doctype matches, use this adapter instead of db
-  doctypeAdapters: {
+    // doctype → adapter name mapping
+    // if target_doctype matches, use this adapter instead of db
+    doctypeAdapters: {
       File: {
-    select: 'fs',
-    update: ['fs', 'dispatch', 'pocketbase'],
-    create: ['fs', 'pocketbase'],
-    delete: 'fs',
-  },
-    GitCommit: "git",
-    GitBranch: "git",
-    GitDiff:   "git",
-  },
-  
+        select: "fs",
+        update: ["fs", "dispatch", "pocketbase"],
+        create: ["fs", "pocketbase"],
+        delete: "fs",
+      },
+      GitCommit: "git",
+      GitBranch: "git",
+      GitDiff: "git",
+    },
 
     // Adapter registry (defines what's available)
     registry: {
@@ -494,10 +493,10 @@ globalThis.CW._config = {
         },
       },
       fs: {
-    type: "fs",
-    name: "FileSystem",
-    logChanges: 1,
-  },
+        type: "fs",
+        name: "FileSystem",
+        logChanges: 1,
+      },
 
       memory: {
         type: "db",
@@ -924,7 +923,7 @@ globalThis.CW._config = {
   // old structure
   // Operation → View mapping
   operationToView: {
-    select: "form",   //was list 
+    select: "form", //was list
     create: "form",
     update: "form",
     delete: null,

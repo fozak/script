@@ -376,6 +376,16 @@ function validateId(id) {
   );
 }
 
+// in CW-utils.js
+function generateSlug(run_doc) {
+  const doc = run_doc.target?.data?.[0]
+  const s   = CW.Schema?.[run_doc.target_doctype]
+  const a   = s?.autoname
+  const source = a?.startsWith("field:") ? a.slice(6) : s?.title_field
+  if (!source || !doc?.[source]) return null
+  return CW.slugify(doc[source])
+}
+
 // ============================================================
 // FSM HELPERS — moved from CW-run.js
 // Pure functions — read Schema/config only, no run_doc mutation
