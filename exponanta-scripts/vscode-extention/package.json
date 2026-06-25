@@ -1,0 +1,27 @@
+{
+  "name": "my-extension",
+  "displayName": "My Component Panel",
+  "version": "0.0.1",
+  "engines": { "vscode": "^1.80.0" },
+  "categories": ["Other"],
+  "activationEvents": [],
+  "main": "./extension.js",
+ "contributes": {
+  "commands": [
+    {
+      "command": "myExtension.openPanel",
+      "title": "Open Component Panel"
+    }
+  ],
+  "keybindings": [
+    {
+      "command": "myExtension.openPanel",
+      "key": "ctrl+shift+w",
+      "mac": "cmd+shift+w"
+    }
+  ]
+},
+  "devDependencies": {
+    "@types/vscode": "^1.80.0"
+  }
+}

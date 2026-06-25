@@ -1,0 +1,7 @@
+{
+  "server.js:30:res.writeHead(200, { 'Content-Type': 'application/json' });": "This is a note",
+  "server.js:9:const COMMENTS_FILE = path.join(__dirname, 'comments.json');": "note2",
+  "server.js:7:const PORT = 3000;": "new note3",
+  "server.js:8:const RG_PATH = process.env.RG_PATH || 'rg';": "note4",
+  "server.js:4:const { spawn } = require('child_process');": "note 5 - updated"
+}

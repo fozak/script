@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>rg search</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/core@1.4.0/dist/css/tabler.min.css">
+<style>
+  body { background: #1a1a2e; }
+  .match-line { font-family: monospace; font-size: 0.8rem; white-space: pre-wrap; word-break: break-all; }
+  .match-highlight { background: #f59f00; color: #1a1a2e; border-radius: 2px; padding: 0 2px; font-weight: 700; }
+  .file-group { border-left: 3px solid #206bc4; margin-bottom: 0.5rem; }
+  .file-header { background: #1e3a5f; padding: 4px 10px; font-family: monospace; font-size: 0.78rem; color: #74c0fc; cursor: pointer; }
+  .line-num { color: #6c757d; min-width: 40px; display: inline-block; text-align: right; padding-right: 8px; user-select: none; }
+  .result-row { padding: 1px 10px; border-bottom: 1px solid #2a2a3e; }
+  .result-row:hover { background: #1e1e3a; }
+  #results-wrap { max-height: calc(100vh - 220px); overflow-y: auto; }
+  .badge-count { font-family: monospace; }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="container-xl py-3">
+
+    <!-- header -->
+    <div class="page-header mb-3">
+      <div class="row align-items-center">
+        <div class="col-auto">
+          <h2 class="page-title text-white">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg>
+            rg search
+          </h2>
+        </div>
+        <div class="col">
+          <div id="status-badge"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- search form -->
+    <div class="card mb-3" style="background:#16213e; border:1px solid #2a3a5a;">
+      <div class="card-body py-2">
+        <div class="row g-2 align-items-end">
+          <div class="col">
+            <label class="form-label text-muted mb-1" style="font-size:0.75rem;">PATTERN</label>
+            <input id="pattern" type="text" class="form-control" placeholder="regex pattern…" style="font-family:monospace; background:#0f0f1a; border-color:#2a3a5a; color:#e0e0e0;">
+          </div>
+          <div class="col-5">
+            <label class="form-label text-muted mb-1" style="font-size:0.75rem;">DIRECTORY</label>
+            <input id="dir" type="text" class="form-control" value="." style="font-family:monospace; background:#0f0f1a; border-color:#2a3a5a; color:#e0e0e0;">
+          </div>
+          <div class="col-auto">
+            <button id="btn-search" class="btn btn-primary" onclick="startSearch()">
+              Search
+            </button>
+            <button id="btn-cancel" class="btn btn-danger ms-1 d-none" onclick="cancelSearch()">
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- results -->
+    <div class="card" style="background:#16213e; border:1px solid #2a3a5a;">
+      <div class="card-header py-2" style="border-bottom:1px solid #2a3a5a;">
+        <div class="card-title text-muted" style="font-size:0.75rem; margin:0;">
+          RESULTS
+        </div>
+        <div class="card-options">
+          <span id="match-count" class="badge bg-blue badge-count">0 matches</span>
+        </div>
+      </div>
+      <div id="results-wrap">
+        <div id="results" style="color:#c9d1d9;"></div>
+        <div id="empty" class="text-center py-5 text-muted" style="font-size:0.85rem;">
+          Enter a pattern and directory to search
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+let es = null;
+let matchCount = 0;
+let fileGroups = {};
+let isDone = false; // guard against onerror firing on clean close
+
+function startSearch() {
+  const pattern = document.getElementById('pattern').value.trim();
+  const dir = document.getElementById('dir').value.trim() || '.';
+  if (!pattern) return;
+
+  cancelSearch();
+  resetResults();
+
+  setStatus('searching', `Searching for <code>${escHtml(pattern)}</code> in <code>${escHtml(dir)}</code>`);
+  document.getElementById('btn-cancel').classList.remove('d-none');
+  document.getElementById('btn-search').disabled = true;
+
+  isDone = false;
+  const url = `/search?pattern=${encodeURIComponent(pattern)}&dir=${encodeURIComponent(dir)}`;
+  es = new EventSource(url);
+
+  es.addEventListener('match', e => {
+    addMatch(JSON.parse(e.data));
+  });
+
+  es.addEventListener('summary', e => {
+    const data = JSON.parse(e.data);
+    const secs = data.elapsed_total.secs + '.' + String(data.elapsed_total.nanos).slice(0, 3) + 's';
+    setStatus('done', `Found <strong>${matchCount}</strong> matches in ${data.stats.searches_with_match} files — ${secs}`);
+  });
+
+  es.addEventListener('error', e => {
+    // rg stderr — not a connection error
+    try {
+      const data = JSON.parse(e.data);
+      setStatus('error', `rg: ${data.message}`);
+    } catch {}
+  });
+
+  es.addEventListener('done', () => {
+    isDone = true;
+    es.close(); es = null;
+    document.getElementById('btn-cancel').classList.add('d-none');
+    document.getElementById('btn-search').disabled = false;
+    if (matchCount === 0) {
+      document.getElementById('empty').textContent = 'No matches found.';
+      document.getElementById('empty').style.display = '';
+    }
+  });
+
+  es.onerror = () => {
+    if (isDone) return; // expected — server closed after done
+    setStatus('error', 'Connection error — is the server running?');
+    cancelSearch();
+  };
+}
+
+function cancelSearch() {
+  if (es) { es.close(); es = null; }
+  document.getElementById('btn-cancel').classList.add('d-none');
+  document.getElementById('btn-search').disabled = false;
+}
+
+function resetResults() {
+  matchCount = 0;
+  fileGroups = {};
+  document.getElementById('results').innerHTML = '';
+  document.getElementById('match-count').textContent = '0 matches';
+  document.getElementById('empty').style.display = 'none';
+}
+
+function addMatch(data) {
+  matchCount++;
+  document.getElementById('match-count').textContent = `${matchCount} match${matchCount === 1 ? '' : 'es'}`;
+
+  const filePath = data.path.text;
+
+  // get or create file group
+  if (!fileGroups[filePath]) {
+    const group = document.createElement('div');
+    group.className = 'file-group mb-1';
+    group.innerHTML = `<div class="file-header">${escHtml(filePath)}</div><div class="file-lines"></div>`;
+    fileGroups[filePath] = group.querySelector('.file-lines');
+    document.getElementById('results').appendChild(group);
+  }
+
+  const linesEl = fileGroups[filePath];
+  const row = document.createElement('div');
+  row.className = 'result-row match-line';
+
+  // build highlighted line
+  const lineText = data.lines.text;
+  let highlighted = '';
+  let pos = 0;
+  for (const sm of data.submatches) {
+    highlighted += escHtml(lineText.slice(pos, sm.start));
+    highlighted += `<span class="match-highlight">${escHtml(lineText.slice(sm.start, sm.end))}</span>`;
+    pos = sm.end;
+  }
+  highlighted += escHtml(lineText.slice(pos));
+
+  row.innerHTML = `<span class="line-num">${data.line_number}</span>${highlighted}`;
+  linesEl.appendChild(row);
+
+  // auto-scroll only if near bottom
+  const wrap = document.getElementById('results-wrap');
+  if (wrap.scrollHeight - wrap.scrollTop - wrap.clientHeight < 80) {
+    wrap.scrollTop = wrap.scrollHeight;
+  }
+}
+
+function setStatus(type, msg) {
+  const colors = { searching: 'bg-blue', done: 'bg-green', error: 'bg-red' };
+  document.getElementById('status-badge').innerHTML =
+    `<span class="badge ${colors[type] || 'bg-secondary'}">${msg}</span>`;
+}
+
+function escHtml(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+// submit on Enter
+document.getElementById('pattern').addEventListener('keydown', e => {
+  if (e.key === 'Enter') startSearch();
+});
+</script>
+</body>
+</html>

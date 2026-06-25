@@ -1,0 +1,49 @@
+Approach 1: mutool (fastest spawn, simplest)
+install:
+  choco install mupdf   (already done)
+
+extract:
+  spawnSync('mutool', ['convert', '-F', 'text', '-o', '-', filepath])
+  → stdout = plain text
+  → ~60ms/file including spawn
+
+index flow:
+  1. fdir scan → array of {path, mtime, size}
+  2. build keys → path|mtime|size
+  3. SELECT key FROM file_cache → Set
+  4. diff → stale files only
+  5. for each stale .pdf:
+       mutool convert -F text -o - filepath → text
+  6. upsert SQLite:
+       file_cache (key, path, mtime, size, content, indexed_at)
+       fts5 (content, filepath)
+  7. search: SELECT snippet FROM fts WHERE fts MATCH ?
+
+Approach 2: unpdf (no binary dep, pure JS)
+install:
+  npm install unpdf
+
+extract:
+  import { extractText, getDocumentProxy } from 'unpdf'
+  const buf = await readFile(filepath)
+  const pdf = await getDocumentProxy(new Uint8Array(buf))
+  const { text } = await extractText(pdf, { mergePages: true })
+  → ~100-150ms/file, in-process, no spawn
+
+index flow:
+  same as above steps 1-4
+  5. for each stale .pdf:
+       readFile → getDocumentProxy → extractText → text
+  6. upsert SQLite: same
+  7. search: same
+
+Comparison:
+                mutool          unpdf
+speed           ~60ms           ~100-150ms
+dependencies    binary (choco)  npm only
+windows         works           works
+cross-platform  needs mupdf     zero deps
+maintenance     external bin    npm package
+cold start      per spawn       one-time WASM init
+Recommendation: mutool for your setup — already installed, faster, one line of code. Use unpdf only if you need zero binary dependencies (e.g. shipping to other machines without choco).
+Both approaches are identical from SQLite onward — the adapter is the only difference.
