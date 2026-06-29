@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Annotator Test</title>
+<link rel="stylesheet" href="https://unpkg.com/tippy.js@6/dist/tippy.css">
+<style>
+  body { font-family: system-ui, sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; line-height: 1.6; }
+  h1 { color: #333; }
+  .box { background: #f0f4ff; border: 1px solid #c0cfe0; border-radius: 8px; padding: 20px; margin: 20px 0; }
+  .img-wrap { display: flex; gap: 20px; margin: 20px 0; }
+  img { width: 200px; height: 140px; object-fit: cover; border-radius: 6px; border: 1px solid #ccc; }
+  .area { background: linear-gradient(135deg, #667eea, #764ba2); height: 100px; border-radius: 8px; margin: 20px 0; display:flex; align-items:center; justify-content:center; color:white; font-weight:bold; }
+  #status { position: fixed; top: 10px; right: 10px; background: #333; color: #fff; padding: 6px 12px; border-radius: 6px; font-size: 12px; z-index: 99999; }
+  #log { background: #1a1a1a; color: #0f0; font: 12px monospace; padding: 12px; border-radius: 6px; height: 120px; overflow-y: auto; margin-top: 20px; }
+</style>
+</head>
+<body>
+
+<div id="status">Mode: OFF — press Alt+A</div>
+
+<h1>Annotator Test Page</h1>
+<p>Press <strong>Alt+A</strong> to toggle annotation mode (red outline = ON).</p>
+
+<h2>Scenario 1: Text</h2>
+<div class="box" id="text-block">
+  <p>The quick brown fox jumps over the lazy dog. This is a sample paragraph with enough text to select and annotate. Try selecting any portion of this text while in annotation mode.</p>
+  <p>A second paragraph with more content. Boston Door Company was engaged to restore five sets of entry doors across the two main buildings.</p>
+</div>
+
+<h2>Scenario 2: Images</h2>
+<div class="img-wrap">
+  <img id="img1" src="https://picsum.photos/seed/door1/200/140" alt="Door restoration 1">
+  <img id="img2" src="https://picsum.photos/seed/door2/200/140" alt="Door restoration 2">
+  <img id="img3" src="https://picsum.photos/seed/door3/200/140" alt="Door restoration 3">
+</div>
+
+<h2>Scenario 3: Area / Background</h2>
+<div class="area" id="gradient-area">Click anywhere on this background area</div>
+
+<h2>Scenario 4: No ID element</h2>
+<div class="box">
+  <div style="background:#fff3cd;padding:12px;border-radius:4px;">
+    This div has no ID. Tests nth-child selector fallback.
+  </div>
+</div>
+
+<h2>Console API</h2>
+<p>In DevTools console: <code>_ann.list()</code> · <code>_ann.clear()</code> · <code>_ann.export()</code></p>
+
+<div id="log"></div>
+
+<script>
+// ── Logger ───────────────────────────────────────────────────────────────────
+const log = (msg, color) => {
+  const el = document.getElementById('log');
+  const line = document.createElement('div');
+  line.style.color = color || '#0f0';
+  line.textContent = '[' + new Date().toLocaleTimeString() + '] ' + msg;
+  el.appendChild(line);
+  el.scrollTop = el.scrollHeight;
+};
+const origWarn = console.warn;
+console.warn = (...args) => { log('⚠ ' + args.join(' '), '#ff0'); origWarn(...args); };
+log('Page loaded. Press Alt+A to start.');
+</script>
+
+<script>
+// ── Annotator IIFE ───────────────────────────────────────────────────────────
+(function () {
+  'use strict';
+
+  const KEY    = 'cw_annotations:' + location.hostname + location.pathname;
+  const TOGGLE = e => e.altKey && e.key === 'a';
+
+  let data = JSON.parse(localStorage.getItem(KEY) || '[]');
+  let mode = false;
+  const cleanups = new Map();
+
+  const save = () => localStorage.setItem(KEY, JSON.stringify(data));
+
+  const removeAnn = (id) => {
+    data = data.filter(a => a.id !== id);
+    save();
+    (cleanups.get(id) || []).forEach(fn => fn());
+    cleanups.delete(id);
+    document.querySelectorAll(`[data-ann="${id}"]`).forEach(el => el.remove());
+    log('🗑 deleted annotation ' + id.slice(0,8), '#f88');
+  };
+
+  // ── Load scripts sequentially ─────────────────────────────────────────────
+  function loadScript(src) {
+    return new Promise((res, rej) => {
+      if (document.querySelector(`script[src="${src}"]`)) { res(); return; }
+      const s = document.createElement('script');
+      s.src = src; s.onload = res; s.onerror = rej;
+      document.head.appendChild(s);
+    });
+  }
+
+  // ── Selector waterfall ────────────────────────────────────────────────────
+  function bestSelector(el) {
+    if (el.id) return '#' + CSS.escape(el.id);
+    if (el.dataset && el.dataset.cwPath) return `[data-cw-path="${el.dataset.cwPath}"]`;
+    const src  = el.getAttribute('src') || el.getAttribute('data-src') || '';
+    const base = src.split('/').pop().split('?')[0];
+    if (base && document.querySelectorAll(`[src*="${base}"]`).length === 1)
+      return `[src*="${CSS.escape(base)}"]`;
+    if (el.getAttribute('alt'))
+      return `img[alt="${CSS.escape(el.getAttribute('alt'))}"]`;
+    const cls = [...el.classList].filter(c =>
+      !/active|open|hover|visible|show|hide|selected/.test(c));
+    if (cls.length) {
+      const sel = el.tagName.toLowerCase() + '.' + cls.join('.');
+      if (document.querySelectorAll(sel).length === 1) return sel;
+    }
+    const parts = [];
+    let node = el;
+    for (let i = 0; i < 4 && node && node !== document.body; i++) {
+      const idx = [...(node.parentNode?.children || [])].indexOf(node) + 1;
+      parts.unshift(`${node.tagName.toLowerCase()}:nth-child(${idx})`);
+      node = node.parentNode;
+    }
+    return parts.join(' > ');
+  }
+
+  function resolveEl(ann) {
+    try { const el = document.querySelector(ann.selector); if (el) return el; } catch(_) {}
+    if (ann.fallback)
+      return [...document.querySelectorAll('img,video,canvas')]
+        .find(el => (el.src || '').includes(ann.fallback)) || null;
+    return null;
+  }
+
+  // ── Tippy edit — one click, prompt fires, done ────────────────────────────
+  function attachTippy(el, id) {
+    const instance = tippy(el, {
+      content: '...',
+      trigger: 'click',
+      placement: 'top',
+      animation: false,
+      onShow(inst) {
+        // hide immediately so no bubble renders
+        setTimeout(() => inst.hide(), 0);
+        const ann = data.find(a => a.id === id);
+        if (!ann) return;
+        // setTimeout lets Tippy finish its show cycle before prompt blocks thread
+        setTimeout(() => {
+          const n = prompt('Edit note (blank = delete):', ann.note);
+          if (n === null) return;
+          if (n.trim() === '') { removeAnn(id); return; }
+          ann.note = n.trim();
+          save();
+          el.title = n.trim();
+          log('✏ updated: ' + n.trim());
+        }, 10);
+      }
+    });
+    return instance;
+  }
+
+  // ── TEXT ──────────────────────────────────────────────────────────────────
+  function highlightRange(range, id) {
+    const mark = document.createElement('mark');
+    mark.dataset.ann = id;
+    mark.style.cssText = 'background:rgba(255,220,0,0.5);border-radius:2px;cursor:pointer;';
+    try { range.surroundContents(mark); } catch(e) {
+      log('⚠ surroundContents failed (cross-element selection)', '#ff0');
+      return false;
+    }
+    const ann = data.find(a => a.id === id);
+    mark.title = ann ? ann.note : '';
+    attachTippy(mark, id);
+    cleanups.set(id, [() => { mark.replaceWith(...mark.childNodes); }]);
+    log('✅ text annotated: "' + (ann?.quote?.exact || '').slice(0,30) + '"');
+    return true;
+  }
+
+  function findByQuote(quote) {
+    const body  = document.body.innerText;
+    const pi    = body.indexOf(quote.prefix);
+    const start = pi !== -1 ? pi + quote.prefix.length : body.indexOf(quote.exact);
+    if (start === -1) return null;
+    const end = start + quote.exact.length;
+    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+    let chars = 0, sn, en, so, eo, node;
+    while (node = walker.nextNode()) {
+      const len = node.length;
+      if (!sn && chars + len > start) { sn = node; so = start - chars; }
+      if (sn  && chars + len >= end)  { en = node; eo = end   - chars; break; }
+      chars += len;
+    }
+    if (!sn || !en) return null;
+    const r = document.createRange();
+    r.setStart(sn, so); r.setEnd(en, eo);
+    return r;
+  }
+
+  // ── IMAGE / AREA ──────────────────────────────────────────────────────────
+  function placePin(el, ann) {
+    const pin = document.createElement('div');
+    pin.dataset.ann = ann.id;
+    pin.title = ann.note;
+    pin.style.cssText = `
+      position:fixed;z-index:2147483647;pointer-events:auto;user-select:none;
+      width:24px;height:24px;border-radius:50%;cursor:pointer;
+      background:#e53935;color:#fff;font:bold 14px system-ui;
+      display:flex;align-items:center;justify-content:center;
+      box-shadow:0 2px 8px rgba(0,0,0,.5);
+    `;
+    pin.textContent = '📌';
+    document.body.appendChild(pin);
+
+    const posPin = () => {
+      const r = el.getBoundingClientRect();
+      if (!r.width && !r.height) return;
+      pin.style.left = (r.left + r.width  * ann.offset.x - 12) + 'px';
+      pin.style.top  = (r.top  + r.height * ann.offset.y - 12) + 'px';
+    };
+
+    posPin();
+    const ro = new ResizeObserver(posPin);
+    ro.observe(el);
+    window.addEventListener('scroll', posPin, {passive: true});
+    window.addEventListener('resize', posPin, {passive: true});
+
+    attachTippy(pin, ann.id);
+    log('📌 ' + ann.type + ' annotated: ' + ann.selector.slice(0, 40));
+
+    cleanups.set(ann.id, [() => {
+      ro.disconnect();
+      window.removeEventListener('scroll', posPin);
+      window.removeEventListener('resize', posPin);
+      pin.remove();
+    }]);
+  }
+
+  // ── Restore ───────────────────────────────────────────────────────────────
+  function restore() {
+    if (!data.length) { log('No saved annotations for this page.'); return; }
+    log('Restoring ' + data.length + ' annotation(s)...');
+    data.forEach(ann => {
+      if (ann.type === 'text') {
+        const r = findByQuote(ann.quote);
+        if (r) highlightRange(r, ann.id);
+        else   console.warn('[annotator] orphan text:', ann.quote?.exact?.slice(0, 40));
+      } else {
+        const el = resolveEl(ann);
+        if (el) placePin(el, ann);
+        else    console.warn('[annotator] orphan element:', ann.selector);
+      }
+    });
+  }
+
+  // ── Create ────────────────────────────────────────────────────────────────
+  document.addEventListener('mouseup', e => {
+    if (!mode) return;
+
+    // TEXT
+    const sel = window.getSelection();
+    if (sel && !sel.isCollapsed && sel.toString().trim().length >= 2) {
+      const note = prompt('Annotate selection:');
+      if (!note) { sel.removeAllRanges(); return; }
+      const range  = sel.getRangeAt(0).cloneRange();
+      const exact  = sel.toString();
+      const body   = document.body.innerText;
+      const pos    = body.indexOf(exact);
+      const prefix = body.substring(Math.max(0, pos - 32), pos);
+      const suffix = body.substring(pos + exact.length, pos + exact.length + 32);
+      const id     = crypto.randomUUID();
+      const container = range.commonAncestorContainer;
+      data.push({ id, type: 'text', note,
+        quote: { exact, prefix, suffix },
+        selector: bestSelector(container.nodeType === 3
+          ? container.parentElement : container)
+      });
+      save();
+      highlightRange(range, id);
+      sel.removeAllRanges();
+      return;
+    }
+
+    // IMAGE / AREA — skip if click was on an existing pin or mark
+    if (e.target.dataset.ann) return;
+    const el   = e.target.closest('[id],[data-cw-path],img,canvas,video,svg,section,article,main,header,footer,div,span') || e.target;
+    const note = prompt('Annotate this element:');
+    if (!note) return;
+    const r    = el.getBoundingClientRect();
+    const src  = el.getAttribute('src') || el.getAttribute('data-src') || '';
+    const base = src.split('/').pop().split('?')[0];
+    const ann  = {
+      id: crypto.randomUUID(),
+      type: ['IMG','VIDEO','CANVAS'].includes(el.tagName) ? 'image' : 'area',
+      note,
+      selector: bestSelector(el),
+      fallback: base || null,
+      offset: {
+        x: r.width  ? (e.clientX - r.left) / r.width  : 0.5,
+        y: r.height ? (e.clientY - r.top)  / r.height : 0.5
+      }
+    };
+    data.push(ann); save();
+    placePin(el, ann);
+  }, true);
+
+  // ── Toggle ────────────────────────────────────────────────────────────────
+  window.addEventListener('keydown', e => {
+    if (!TOGGLE(e)) return;
+    mode = !mode;
+    document.body.style.outline = mode ? '3px solid #e53935' : '';
+    document.getElementById('status').textContent = 'Mode: ' + (mode ? 'ON — select text or click element' : 'OFF');
+    document.getElementById('status').style.background = mode ? '#e53935' : '#333';
+    log(mode ? '🟢 Annotation mode ON' : '⚫ Annotation mode OFF', mode ? '#0f0' : '#aaa');
+  });
+
+  // ── Public API ────────────────────────────────────────────────────────────
+  window._ann = {
+    list:   () => { console.table(data); log('Listed ' + data.length + ' annotations'); },
+    clear:  () => { [...data].forEach(a => removeAnn(a.id)); log('Cleared all', '#f88'); },
+    export: () => { const j = JSON.stringify(data, null, 2); log('Exported ' + data.length + ' annotations'); return j; },
+  };
+
+  // ── Boot ──────────────────────────────────────────────────────────────────
+  log('Loading Tippy...');
+  loadScript('https://unpkg.com/@popperjs/core@2/dist/umd/popper.min.js')
+    .then(() => loadScript('https://unpkg.com/tippy.js@6/dist/tippy-bundle.umd.min.js'))
+    .then(() => {
+      log('✅ Tippy loaded. Restoring annotations...');
+      restore();
+      log('Ready. Alt+A to toggle mode.');
+    })
+    .catch(err => log('❌ Failed to load Tippy: ' + err, '#f00'));
+
+})();
+</script>
+</body>
+</html>
