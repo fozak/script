@@ -1,0 +1,82 @@
+const i = {success:false, error:null};
+await Adapters.fs.init(i);
+console.log('init:', i.success, i.error);
+CW-adapter-fs.js:252 ✅ FS: restored handle from IDB (silent): assets
+CW-adapter-fs.js:276 🔍 FS: indexing assets ...
+CW-adapter-fs.js:278 ✅ FS adapter initialized: assets (52 files)
+VM149:3 init: true null
+undefined
+// reindex
+const r = {success:false, error:null};
+await Adapters.fs.reindex(r);
+console.log('reindexed:', r.success, r.target?.meta);
+
+// call — find a pdf file and update
+const u = await CW.run({
+  target_doctype: 'File',
+  operation: 'update',
+  query: { where: { extension: 'pdf' } },
+  options: { render: false }
+});
+
+console.log('success:', u.success);
+console.log('error:', u.error);
+console.log('page_count:', u.target?.data?.[0]?._computed?.pdf?.page_count);
+console.log('form_fields:', u.target?.data?.[0]?._computed?.pdf?.form_fields);
+console.log('ai_content:', u.target?.data?.[0]?._computed?.pdf?.ai_content?.slice(0, 500));
+CW-adapter-fs.js:504 ✅ FS reindexed: 52 files
+VM153:4 reindexed: true {total: 52}
+Client.ts:425  PATCH http://143.198.29.88:8090/api/collections/item/records/file07yiritn63g 404 (Not Found)
+send @ Client.ts:425
+update @ CrudService.ts:214
+update @ RecordService.ts:266
+update @ pb-adapter-pocketbase.js:242
+update @ CW-run.js:736
+await in update
+CW.controller @ CW-run.js:462
+await in CW.controller
+CW.run @ CW-run.js:551
+(anonymous) @ VM153:7Understand this error
+Client.ts:425 Fetch failed loading: PATCH "http://143.198.29.88:8090/api/collections/item/records/file07yiritn63g".
+send @ Client.ts:425
+update @ CrudService.ts:214
+update @ RecordService.ts:266
+update @ pb-adapter-pocketbase.js:242
+update @ CW-run.js:736
+await in update
+CW.controller @ CW-run.js:462
+await in CW.controller
+CW.run @ CW-run.js:551
+(anonymous) @ VM153:7
+VM153:14 success: true
+VM153:15 error: null
+VM153:16 page_count: undefined
+VM153:17 form_fields: undefined
+VM153:18 ai_content: undefined
+Client.ts:425 Fetch finished loading: POST "http://143.198.29.88:8090/api/collections/item/records".
+send @ Client.ts:425
+create @ CrudService.ts:189
+create @ RecordService.ts:252
+create @ pb-adapter-pocketbase.js:211
+update @ pb-adapter-pocketbase.js:261
+await in update
+update @ CW-run.js:736
+await in update
+CW.controller @ CW-run.js:462
+await in CW.controller
+CW.run @ CW-run.js:551
+(anonymous) @ VM153:7
+undefined
+const u = await CW.run({
+  target_doctype: 'File',
+  operation: 'update',
+  query: { where: { extension: 'pdf' } },
+  options: { render: false }
+});
+
+console.log('success:', u.success);
+console.log('error:', u.error);
+console.log('page_count:', u.target?.data?.[0]?._computed?.pdf?.page_count);
+console.log('form_fields:', u.target?.data?.[0]?._computed?.pdf?.form_fields);
+console.log('ai_content:', u.target?.data?.[0]?._computed?.pdf?.ai_content?.slice(0, 500));
+VM164:8 success: true

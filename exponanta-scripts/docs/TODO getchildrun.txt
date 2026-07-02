@@ -1,0 +1,34 @@
+You're right. Child runs are persistent in CW.runs — they're the audit trail. You never delete them.
+So the re-expand pattern is wrong. You don't clear and re-create. You fire a new child run on top:
+javascript// 1. mutate query
+doc.top_reviews_query = { where: { parent: doc.name, review_rating: { gt: 4 } } }
+
+// 2. fire new child run directly — don't touch _expand
+const child = await run_doc.child({
+  target_doctype: 'Review',
+  query:          CW._resolveQuery(run_doc, 'top_reviews'),
+  source_field:   'top_reviews',
+  options:        { render: false },
+})
+
+// 3. render the new child
+CW._render(child)
+New child run added to child_run_ids. Old one stays — audit trail preserved. _getChildRun finds the latest one by source_field — returns the most recent child run for that field.
+
+But does _getChildRun return the latest?
+javascriptCW._getChildRun = function (run_doc, fieldname) {
+  if (!fieldname) return null;
+  return run_doc.child_run_ids
+    .map(id => CW.runs[id])
+    .find(r => r?.source_field === fieldname) || null;
+}
+find returns the first match — not the latest. If two child runs have source_field === 'top_reviews' — old one wins.
+Fix _getChildRun to return last match:
+javascriptCW._getChildRun = function (run_doc, fieldname) {
+  if (!fieldname) return null
+  return run_doc.child_run_ids
+    .map(id => CW.runs[id])
+    .filter(r => r?.source_field === fieldname)
+    .at(-1) || null
+}
+.at(-1) — last child run for that field. Most recent wins. Audit trail intact.

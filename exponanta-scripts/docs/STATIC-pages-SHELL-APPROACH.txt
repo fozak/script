@@ -1,0 +1,181 @@
+app.html — the shell, one file for all pages:
+html<!DOCTYPE html>
+<html>
+<head>
+  <!-- SEO injected here via afterbegin -->
+  <!-- assets — fixed, never changes -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="/brandbook/favicon.svg">
+  <link rel="preconnect" href="https://rsms.me">
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/core@1.4.0/dist/css/tabler.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/core@1.4.0/dist/css/tabler-marketing.min.css">
+  <link rel="stylesheet" href="/assets/added.css">
+</head>
+<body class="body-marketing body-gradient">
+  <div id="cmp-navbar"></div>
+  <div id="page"></div>
+  <div id="cmp-footer"></div>
+  <script src="https://cdn.jsdelivr.net/npm/@tabler/core@latest/dist/js/tabler.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/pocketbase@0.21.3/dist/pocketbase.umd.js"></script>
+  <script src="/assets/js/CW-run.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <script>
+    const id = new URLSearchParams(location.search).get('id');
+    Promise.all([
+      fetch(`https://pb.exponanta.com/api/collections/item/records/${id}`).then(r => r.json()),
+      fetch('components/navbar.html').then(r => r.text()),
+      fetch('components/footer.html').then(r => r.text()),
+    ]).then(([doc, navbar, footer]) => {
+      document.head.insertAdjacentHTML('afterbegin', doc._web.head);
+      document.getElementById('page').innerHTML    = doc._web.content;
+      document.getElementById('cmp-navbar').innerHTML = navbar;
+      document.getElementById('cmp-footer').innerHTML = footer;
+    });
+  </script>
+</body>
+</html>
+doc._web — what lives in PocketBase:
+jsdoc._web = {
+  // Jekyll: head-seo.html
+  head: `
+    <title>Exponanta — Trusted introductions. Real growth.</title>
+    <meta name="description" content="...">
+    <link rel="canonical" href="https://exponanta.com/">
+    <meta property="og:title" content="...">
+    <meta property="og:description" content="...">
+    <meta property="og:url" content="https://exponanta.com/">
+    <script type="application/ld+json">{...}<\/script>
+  `,
+
+  // Jekyll: {{ content }}
+  content: `
+    <section id="block-hero">...</section>
+    <section id="block-benefits">...</section>
+    <section id="block-pricing">...</section>
+  `
+}
+That's the complete system. Jekyll mapping:
+head-seo.html   → doc._web.head      (per page, in PocketBase)
+head-assets.html → shell <head>      (fixed, in app.html)
+navbar.html     → components/navbar.html (fetched once)
+{{ content }}   → doc._web.content   (per page, in PocketBase)
+footer.html     → components/footer.html (fetched once)
+scripts.html    → shell <body> bottom (fixed, in app.html)You said: do api endpoint assumes queriesdo api endpoint assumes queries11:16 AMClaude responded: Yes, PocketBase API supports queries natively:Yes, PocketBase API supports queries natively:
+js// by id — direct, fastest
+/api/collections/item/records/abc123
+
+// by slug — filter query
+/api/collections/item/records?filter=(slug='home')
+
+// by doctype + slug
+/api/collections/item/records?filter=(doctype='Page'&&slug='home')
+
+// with fields — only fetch what you need
+/api/collections/item/records?filter=(slug='home')&fields=_web
+So your loader can do either:
+js// clean URLs via id
+app.html?id=abc123
+
+// human readable via slug
+app.html?slug=home
+jsconst params = new URLSearchParams(location.search);
+const id     = params.get('id');
+const slug   = params.get('slug');
+
+const url = id
+  ? `https://pb.exponanta.com/api/collections/item/records/${id}`
+  : `https://pb.exponanta.com/api/collections/item/records?filter=(slug='${slug}')`;
+
+fetch(url)
+  .then(r => r.json())
+  .then(doc => {
+    // for filter query response is { items: [...] }
+    const record = id ? doc : doc.items[0];
+    ...
+  });
+Slug gives you readable URLs like app.html?slug=home, id gives you the shortest possible fetch.You said: i can have both, i fetch by query, it seems that pocketbase skipping http://143.i can have both, i fetch by query, it seems that pocketbase skipping http://143.198.29.88:8090/api/collections/item/records?filter=doctype%20%3D%20%22Task%22&slug=%22list-of-tasks%2211:24 AMClaude responded: Your query is malformed — slug needs to be inside the filter parameter, not a separate parameter:Your query is malformed — slug needs to be inside the filter parameter, not a separate parameter:
+# wrong — slug is outside filter
+?filter=doctype="Task"&slug="list-of-tasks"
+
+# correct — both inside filter
+?filter=(doctype="Task"&&slug="list-of-tasks")
+Full correct URL:
+http://143.198.29.88:8090/api/collections/item/records?filter=(doctype%3D"Task"%26%26slug%3D"list-of-tasks")
+Or unencoded for readability:
+?filter=(doctype="Task"&&slug="list-of-tasks")
+In JS:
+jsconst filter = encodeURIComponent(`(doctype="Task"&&slug="list-of-tasks")`);
+fetch(`http://143.198.29.88:8090/api/collections/item/records?filter=${filter}`)
+  .then(r => r.json())
+  .then(data => {
+    const record = data.items[0];
+  });You said: no, slug is just for googleno, slug is just for google11:24 AMClaude responded: Got it, so just:Got it, so just:
+?filter=(doctype="Page"&&name="home")
+Or whatever field you use as the page identifier. slug is only in doc._web.head as the canonical URL for Google — not used for fetching.
+What field are you using to identify pages in PocketBase — name?You said: namename11:24 AMClaude responded: Then:Then:
+jsconst name = new URLSearchParams(location.search).get('name');
+fetch(`https://pb.exponanta.com/api/collections/item/records?filter=(doctype="Page"&&name="${name}")`)
+  .then(r => r.json())
+  .then(data => {
+    const doc = data.items[0];
+    document.head.insertAdjacentHTML('afterbegin', doc._web.head);
+    document.getElementById('page').innerHTML = doc._web.content;
+  });
+URL becomes:
+app.html?name=home
+app.html?name=about
+app.html?name=pricing
+Clean, readable, maps directly to PocketBase name field.You said: you didnt understand me app.you didnt understand me app.html?name=taskr3grevrevve&url=my-important-task this is saved insitemap.xml for google. url is never used to query, just for google. athout its stored inside _web11:28 AMClaude responded: Got it.Got it. So:
+app.html?name=abc123    ← used to fetch from PocketBase
+         &url=my-important-task  ← only for Google/sitemap, never touched by JS
+jsconst name = new URLSearchParams(location.search).get('name');
+fetch(`https://pb.exponanta.com/api/collections/item/records?filter=(name="${name}")`)
+  .then(r => r.json())
+  .then(data => {
+    const doc = data.items[0];
+    document.head.insertAdjacentHTML('afterbegin', doc._web.head);
+    document.getElementById('page').innerHTML = doc._web.content;
+  });
+url param is completely ignored by JS. Google reads the sitemap, sees the human-readable url, crawls it, renders the page. JS only ever looks at name.You said: see any edges with this?see any edges with this?11:29 AMClaude responded: Yes, a few:Yes, a few:
+1. name is exposed in the URL
+app.html?name=abc123&url=my-important-task
+Anyone can enumerate records by guessing name values. Fine for public pages, problem if some records are private.
+2. Google may ignore url param
+Googlebot crawls the exact URL from sitemap. It sees app.html?name=abc123&url=my-important-task — the url param is just noise to Google, it doesn't make the URL look like /my-important-task. You still have ugly URLs in search results.
+3. Filter injection
+js`?filter=(name="${name}")`  // name = " || 1=1 || name="
+Someone crafts a malicious name param and breaks your filter. Sanitize:
+jsconst name = encodeURIComponent(new URLSearchParams(location.search).get('name'));
+4. items[0] assumption
+If name is not unique across doctypes, you get the wrong record. Safer:
+js?filter=(doctype="Page"&&name="${name}")
+5. Empty result
+No guard if data.items[0] is undefined — page silently breaks. Add:
+jsif (!data.items[0]) { document.getElementById('page').innerHTML = '<h1>404</h1>'; return; }You said: which ones are real problem.which ones are real problem. my defence is API rules of pocketbase, nothing private is leaked11:30 AMClaude responded: With PocketBase API rules as your defence, only two are real problems:With PocketBase API rules as your defence, only two are real problems:
+1. Filter injection — real, easy fix
+js// just sanitize the input
+const name = new URLSearchParams(location.search).get('name')?.replace(/"/g, '');
+2. Empty result / 404 — real, silent failure is bad UX
+jsconst doc = data.items[0];
+if (!doc) { document.getElementById('page').innerHTML = '<h1>404</h1>'; return; }
+The rest:
+
+URL ugliness — not a problem, it's a design choice
+Record enumeration — not a problem, PocketBase rules handle it
+doctype filter — not a problem if name is unique per collection
+You said: why 1.why 1. Filter injection — real, easy fix is a problem11:30 AMClaude responded: You're right, it's not a real problem either.You're right, it's not a real problem either.
+PocketBase API rules block unauthorized access regardless of what the filter says. A malicious filter like " || 1=1 || name=" might return unexpected records, but if those records are protected by API rules they won't be returned anyway.
+If all your public pages are intentionally public — filter injection just returns other public records at worst. No private data leaks.
+So only one real problem: empty result / 404 guard.You said: should we filer by doctype first http://143.should we filer by doctype first http://143.198.29.88:8090/api/collections/item/records?filter=filter=(name=%22taskle6gnrvfemk%22)&slug=%22list-of-tasks%2211:33 AMClaude responded: Yes, filter by doctype first — but your URL is malformed again, slug is outside filter:Yes, filter by doctype first — but your URL is malformed again, slug is outside filter:
+?filter=(doctype="Page"&&name="taskle6gnrvfemk")
+Two reasons to include doctype:
+1. Performance — PocketBase can use doctype as an index to narrow the search before checking name.
+2. Correctness — if name happens to collide across doctypes (a Task and a Page both named "home"), you get the right one.
+So:
+jsconst name = new URLSearchParams(location.search).get('name');
+fetch(`https://pb.exponanta.com/api/collections/item/records?filter=(doctype="Page"&&name="${name}")`)You said: if name is indexed, for 10000 records, is this good enoughif name is indexed, for 10000 records, is this good enough11:34 AMClaude responded: Yes, for 10,000 records a single indexed field lookup is effectively instant — microseconds.Yes, for 10,000 records a single indexed field lookup is effectively instant — microseconds. PocketBase uses SQLite under the hood, indexed field lookup is O(log n), at 10,000 records that's ~13 comparisons.
+Adding doctype to the filter with both fields indexed is still one fast query — SQLite handles compound index lookups well.
+You'd only start thinking about optimization at 100,000+ records, and even then the bottleneck would be network latency to your VPS, not the query itself.

@@ -1,0 +1,63 @@
+Your proposal in full:
+
+Core principle: every file is a first-class record
+doctype: file
+id:      content43tvfsdgw
+title:   "Primary Logo"
+alt:     "Exponanta"
+tags:    ["brand", "logo"]
+state:   published          ← FSM controlled
+is_default: logo_content43tvfsdgw_suffix2.jpg  ← current live version
+files: [
+  logo_content43tvfsdgw_suffix1.jpg  ← v1, archived
+  logo_content43tvfsdgw_suffix2.jpg  ← v2, live
+  logo_content43tvfsdgw_suffix3.jpg  ← v3, draft
+]
+
+Filename convention: semantic_recordid_suffix.jpg
+
+semantic — human readable, intent clear
+recordid — permanent link back to metadata record
+suffix — PB-generated, becomes the version identifier
+no random suffix problem — suffix is repurposed as version
+
+
+Two-zone storage
+PB attachment field   → draft zone, internal only
+                         never referenced in HTML
+                         can be replaced freely
+                         suffix doesn't matter here
+
+pb_public/assets/     → published zone, public
+                         files copied once on FSM publish
+                         never edited in place
+                         NGINX serves directly, no app layer
+
+FSM publish transition is atomic
+draft → published:
+  1. copy file to pb_public/assets/
+  2. update is_default              ← only after step 1
+  3. update state = published
+Rollback = flip is_default to previous suffix. Instant, no file operations.
+
+Public URL
+HTML:   <img src="/assets/{{ record.is_default }}">
+NGINX:  /assets/* → pb_public/assets/
+result: /assets/logo_content43tvfsdgw_suffix2.jpg
+Stable, deterministic, no UUID opacity, no app-layer proxy, no suffix surprise.
+
+Global media picker = WordPress media library
+UI:      grid of published file records
+backing: pb_public/assets/
+picker:  returns record.is_default path
+result:  familiar WordPress mental model
+         but with version history WordPress lacks
+
+Comparison to Directus
+Directus:  UUID on disk + /assets/uuid  ← opaque, requires app layer
+Yours:     semantic_id_suffix           ← readable, NGINX serves directly
+Both:      metadata separate from storage name  ✓
+Both:      stable public URL regardless of edits ✓
+Yours:     binary version history via suffix archive ✓ (Directus lacks this)
+
+The only invariant to enforce: is_default never points to a file that doesn't exist in pb_public/assets/. The atomic FSM transition guarantees this.

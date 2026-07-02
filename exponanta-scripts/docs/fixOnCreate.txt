@@ -1,0 +1,11 @@
+The fix in one sentence:
+Added _changes to systemFields in CW-config.js with an onCreate handler that builds the initial audit entry from doc fields before pb.create() fires — included in the create payload, zero extra DB calls.
+Key details:
+
+Runs in _preflight → systemFields onCreate — after defaults and name are set, before _splitRecord
+Skips system fields: _changes, modified, modified_by, creation, _state, _allowed, _allowed_read, files, name, doctype, docstatus, owner
+Only writes if logChanges: 1 and options._logging !== false
+Entry format: { at, by, op: 'create', ch: [{ field, from: null, to }] }
+Guards: skips null/undefined/empty values to avoid noise from default "0" fields if needed (currently included)
+
+Previously _changes was in CW.defaultFields but had no systemFields entry — so it was fetched but never written on create.

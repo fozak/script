@@ -1,0 +1,488 @@
+Auditable System — US Standards Approach
+Relevant US Standards
+SOC 2 Type II — most relevant for SaaS. Five trust principles: Security, Availability, Processing Integrity, Confidentiality, Privacy. Requires audit logs, access controls, change management.
+HIPAA — if health data. Requires audit trails on all PHI access, not just writes.
+NIST 800-53 — federal standard. AU (Audit and Accountability) control family is the relevant one.
+FISMA — federal systems. Builds on NIST.
+For Exponanta (community platform, entrepreneurship) — SOC 2 is the right target. Not HIPAA, not FISMA.
+
+What SOC 2 Audit Logging Requires
+
+Who — authenticated user identity
+What — what action was taken, on what record
+When — timestamp, immutable
+Where — IP address, session
+Result — success or failure
+Before/After — field-level diff on writes (SOC 2 Type II)
+
+
+What CW Already Has
+RequirementCWGapWhorun_doc.user.id, modified_by✅Whatrun_doc.operation, target_doctype, _signal✅Whenrun_doc.creation, modified✅Resultrun_doc.status, run_doc.error✅FSM transitions_state history on every doc✅ACL changesRelationship records as transactions✅Before/After diff❌ no field-level versioning❌Immutable logCW.runs is in-memory, not persisted❌IP/sessionrun_doc.user.token but no IP❌Tamper-proofNothing prevents DB edits❌
+
+The Core Gap — CW.runs is not persisted
+Every run_doc has everything needed for an audit log — who, what, when, operation, signal, error, parent/child chain. But it lives in memory only. Page refresh = gone.
+The fix: persist CW.runs to PocketBase as an AuditLog collection on completion.
+js// in CW.controller after completion:
+if (CW._config.auditLog) {
+  pb.collection('audit_log').create({
+    run_name:      run_doc.name,
+    operation:     run_doc.operation,
+    target_type:   run_doc.target_doctype,
+    target_name:   run_doc.target?.data?.[0]?.name,
+    signal:        run_doc._signal || null,
+    user_id:       run_doc.user?.name,
+    status:        run_doc.status,
+    error:         run_doc.error || null,
+    parent_run:    run_doc.parent_run_id,
+    created:       run_doc.creation,
+  });
+}
+Separate collection, append-only, no update/delete rules.
+
+Field-Level Diff — Before/After
+Currently _mergeInput overwrites fields in target.data[0] — the before state is lost.
+Fix: in _handlers.update, before _preflight, snapshot the before state:
+jsconst before = JSON.parse(JSON.stringify(doc));
+// ... after adapter.update:
+const after  = run_doc.target.data[0];
+const diff   = computeDiff(before, after);
+// persist diff to audit log
+computeDiff — simple key comparison:
+jsfunction computeDiff(before, after) {
+  const diff = {};
+  for (const k of new Set([...Object.keys(before), ...Object.keys(after)])) {
+    if (JSON.stringify(before[k]) !== JSON.stringify(after[k])) {
+      diff[k] = { before: before[k], after: after[k] };
+    }
+  }
+  return diff;
+}
+
+Tamper-Proof Log
+PocketBase audit collection rules:
+
+Create: authenticated users (system only via internal: true)
+Update: nobody — @request.auth.id = ""  (impossible)
+Delete: nobody — @request.auth.id = ""  (impossible)
+
+Append-only at DB level. No CW code can update or delete audit records.
+
+IP Address
+PocketBase doesn't expose client IP to API rules. Options:
+
+Cloudflare Worker proxy — captures CF-Connecting-IP header, passes to CW
+PB hook (Go plugin) — captures IP server-side
+Client-side fetch to IP detection service at session start
+
+For SOC 2 — IP logging is recommended but not strictly required if you have strong user identity.
+
+Priority Order for SOC 2 Readiness
+
+Persist CW.runs to audit collection — highest value, captures all operations
+Append-only PB rules on audit collection — tamper-proof
+Field-level diff — needed for Type II, captures before/after
+Retention policy — SOC 2 requires 1 year minimum log retention
+IP logging — nice to have, not blocking
+
+
+What This Looks Like in Practice
+Every CW.run that completes writes one audit record:
+json{
+  "run_name": "run4x3mfsvjupi8",
+  "operation": "update",
+  "target_type": "UserPublicProfile",
+  "target_name": "userpublici34dr",
+  "signal": "1.1_2",
+  "user_id": "userwu26lawu26l",
+  "status": "completed",
+  "error": null,
+  "parent_run": "runpkkf9xx95szg",
+  "diff": { "full_name": { "before": "test444", "after": "test445" } },
+  "created": 1777396245726
+}
+Full traceability. Who changed what, when, from what value to what value, triggered by which signal, as part of which parent operation. SOC 2 auditors can query this collection directly.You said: can i skip the select operations and still being SOC complientcan i skip the select operations and still being SOC complient10:37 AMClaude responded: Yes.Yes. SOC 2 audit requirements focus on writes — creates, updates, deletes, and access control changes. Reads (selects) are only required to be logged in specific contexts:
+HIPAA — requires logging ALL access including reads on PHI records. But you're not HIPAA.
+SOC 2 — requires logging:
+
+All write operations ✅
+Authentication events (login/logout) ✅
+Access control changes (_allowed/_allowed_read modifications) ✅
+Failed access attempts ✅
+Administrative actions ✅
+
+Reads are NOT required by SOC 2 unless you're handling sensitive data categories (financial records, PII at scale).
+Practical filter in CW:
+js// in CW.controller after completion:
+const opConfig = CW._config.operations?.[run_doc.operation] || {};
+if (CW._config.auditLog && opConfig.type !== 'read') {
+  // persist to audit collection
+}
+One line — skips all select operations, logs everything else. Clean.
+Additional skip candidates:
+
+Internal child runs that are system ACL patches (options.internal: true) — debatable, these ARE writes but system-generated. For SOC 2 you'd want to keep them since ACL changes are high-value audit events.
+Failed selects — definitely skip.
+
+Recommendation: log all writes including internal ACL patches. Skip selects. That covers SOC 2 completely and keeps log volume manageable.You said: if i do "diff": { "full_name": { "before": "test444", "after": "test445" } }, then i need to make premerge snapshot, corrent.if i do "diff": { "full_name": { "before": "test444", "after": "test445" } }, then i need to make premerge snapshot, corrent. where in code?10:40 AMClaude responded: Yes.Yes. Pre-merge snapshot. In _handlers.update — before _preflight and before _mergeInput has already run (it runs in controller before handlers are called).
+Wait — _mergeInput runs in controller BEFORE _handlers.update is called. So by the time _handlers.update runs, target.data[0] already has merged values. The before state is already overwritten.
+The snapshot must happen in controller — between _mergeInput and _clearInput:
+js// in CW.controller:
+CW._mergeInput(run_doc);
+
+// snapshot BEFORE clear — target.data[0] has merged new values
+// but we need the ORIGINAL before merge
+Wait — that's also wrong. After _mergeInput, target.data[0] already has new values merged in.
+The snapshot must happen before _mergeInput:
+js// in CW.controller:
+// 1. snapshot before merge
+const beforeSnap = run_doc.target?.data?.[0]
+  ? JSON.parse(JSON.stringify(run_doc.target.data[0]))
+  : null;
+
+// 2. merge input → target
+CW._mergeInput(run_doc);
+
+// 3. clear input
+CW._clearInput(run_doc);
+
+// store snapshot on run_doc for later diff
+run_doc._before = beforeSnap;
+Then in CW.controller after completion:
+jsif (CW._config.auditLog && opConfig.type !== 'read') {
+  const after = run_doc.target?.data?.[0];
+  const diff  = CW._computeDiff(run_doc._before, after);
+  // persist run_doc + diff to audit collection
+}
+Line in CW-run.js — right before CW._mergeInput(run_doc) at line 340.You said: i can calculate diff later, but SOC requirements probably require strict diffing.i can calculate diff later, but SOC requirements probably require strict diffing. Give opinion10:41 AMClaude responded: For SOC 2 Type II — strict diffing at write time is the right approach, not deferred calculation.For SOC 2 Type II — strict diffing at write time is the right approach, not deferred calculation.
+Why strict at write time:
+1. Immutability — if you calculate diff later from two stored snapshots, both snapshots must be stored. That's double storage. If either is tampered with, the diff is wrong. At write time you have ground truth — before is the DB state, after is what was committed.
+2. Auditor expectation — SOC 2 auditors want to see "what changed in this operation" as a single atomic record. Not "here are two snapshots, please diff them yourself."
+3. Forensics — if a record is later deleted or corrupted, you still have the field-level diff in the audit log. Deferred calculation loses this.
+4. Performance — calculating diff at write time is cheap (one pass over changed fields). Calculating diff later requires fetching two records and comparing — expensive at audit query time.
+5. NIST 800-53 AU-10 — non-repudiation requires the audit record to be complete and self-contained at the time of the event. Deferred diff breaks non-repudiation.
+Practical concern: the _before snapshot on run_doc is cheap — JSON.parse(JSON.stringify(doc)) before merge. The diff calculation after completion is one computeDiff call. Total overhead is negligible.
+Recommendation: snapshot before _mergeInput, diff after adapter completes, persist both diff and final state in one audit record. Strict, complete, self-contained. SOC 2 compliant.You said: ok assuming i do 2 async writes, then lets think what is SOC compient store for these to avoid tampering consernok assuming i do 2 async writes, then lets think what is SOC compient store for these to avoid tampering consern10:44 AMClaude responded: The tamper concern is: even if you write to PocketBase with append-only rules, a compromised PB admin account or direct DB access can modify records.The tamper concern is: even if you write to PocketBase with append-only rules, a compromised PB admin account or direct DB access can modify records.
+For SOC 2 compliant tamper-proof audit storage, the standard approaches are:
+
+Option 1 — Cryptographic chaining (blockchain-lite)
+Each audit record includes a hash of the previous record:
+jsconst prevHash = await getLastAuditHash();
+const record = {
+  ...auditData,
+  prev_hash: prevHash,
+  hash: sha256(JSON.stringify(auditData) + prevHash),
+};
+Any tampered record breaks the hash chain — detectable by replaying and recomputing. No trusted third party needed. Self-verifying.
+Implementation: SHA-256 via Web Crypto API in browser, store hash in audit record. Periodic chain verification job.
+
+Option 2 — Write to immutable external store
+Send audit events to a SOC 2 certified logging service:
+
+AWS CloudWatch Logs — append-only, tamper-evident, AWS manages integrity
+Datadog — SOC 2 certified, immutable logs
+Splunk — enterprise standard, SOC 2 auditors know it
+AWS S3 with Object Lock — WORM (Write Once Read Many), legally immutable
+
+You write to PB for your app, simultaneously fire-and-forget to the external service. Auditors query the external service — not your PB.
+
+Option 3 — PB + Litestream + S3
+Litestream continuously replicates PocketBase's SQLite WAL (Write-Ahead Log) to S3. Every write is captured at the DB level — not application level. Even direct DB edits are captured.
+S3 with versioning enabled = immutable timeline of your entire DB. Auditors can restore any point in time and verify.
+This is the strongest option for your stack because:
+
+Captures everything including direct DB edits
+No application code changes for tamper-proofing
+S3 versioning = legally defensible
+Litestream is designed for PocketBase/SQLite
+Cost is minimal (S3 storage)
+
+
+Recommendation for your stack
+Litestream → S3 with Object Lock for tamper-proof storage + cryptographic chaining in your audit collection for application-level verification.
+Two layers:
+
+S3 WAL replication — captures everything at DB level, immutable
+Hash chain in audit records — detectable at application level
+
+The audit collection in PB with append-only rules becomes the queryable interface. Litestream/S3 becomes the tamper-proof ground truth. If auditors need to verify — restore from S3 and compare.
+This is achievable with your current PB stack, zero server code, and minimal cost.You said: give me pratical example of 2 snapshots nthe with crypto chaininggive me pratical example of 2 snapshots nthe with crypto chaining10:46 AMViewed a file, created a fileViewed a file, created a fileClaude's response was interruptedRetryYou said: i mean record examplesi mean record examples10:47 AMClaude responded: Two audit records — second chains from first:Two audit records — second chains from first:
+Record 1 — create UserPublicProfile:
+json{
+  "name":         "auditrun4x3mfs",
+  "run_name":     "run4x3mfsvjupi8",
+  "operation":    "create",
+  "target_type":  "UserPublicProfile",
+  "target_name":  "userpublici34dr",
+  "signal":       "1.0_1",
+  "user_id":      "userwu26lawu26l",
+  "status":       "completed",
+  "error":        null,
+  "parent_run":   null,
+  "created":      1777396245726,
+  "diff": {
+    "_created": {
+      "before": null,
+      "after": {
+        "full_name": "test444",
+        "docstatus": 0,
+        "_allowed": ["roleispublixxxx"],
+        "_allowed_read": ["roleispublixxxx"]
+      }
+    }
+  },
+  "prev_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+  "hash":      "a3f8c2e1d7b94560f2a1c3e8d9b04571f3a2c1e8d9b04571f3a2c1e8d9b045"
+}
+Record 2 — update full_name, chains from record 1:
+json{
+  "name":         "auditrun7y6ngt",
+  "run_name":     "runbg48udq517x6",
+  "operation":    "update",
+  "target_type":  "UserPublicProfile",
+  "target_name":  "userpublici34dr",
+  "signal":       "1.1_2",
+  "user_id":      "userwu26lawu26l",
+  "status":       "completed",
+  "error":        null,
+  "parent_run":   "runpkkf9xx95szg",
+  "created":      1777399265500,
+  "diff": {
+    "full_name": {
+      "before": "test444",
+      "after":  "test445"
+    },
+    "_state": {
+      "before": { "1.0_1": "1" },
+      "after":  { "1.0_1": "1", "1.1_2": "1" }
+    }
+  },
+  "prev_hash": "a3f8c2e1d7b94560f2a1c3e8d9b04571f3a2c1e8d9b04571f3a2c1e8d9b045",
+  "hash":      "d9b04571f3a2c1e8a3f8c2e1d7b94560f2a1c3e8d9b04571f3a2c1e8d9b045"
+}
+
+The chain: record2.prev_hash === record1.hash ✓
+Tamper detection: if someone edits record1.diff.full_name.before from "test444" to "test000" — recompute record1.hash from its content → doesn't match record2.prev_hash → chain broken → tamper detected.
+Hash input = SHA-256(JSON.stringify({ all fields except hash }) + prev_hash) — deterministic, verifiable by anyone with the records.You said: lets use run_name, no more addiotional nameslets use run_name, no more addiotional names10:48 AMClaude responded: Correct.Correct. run_name is already unique — it's generateId('Run'). No need for a separate name field on the audit record. The audit record IS the run, identified by run_name.
+So the records become:
+Record 1:
+json{
+  "run_name":    "run4x3mfsvjupi8",
+  "operation":   "create",
+  "target_type": "UserPublicProfile",
+  "target_name": "userpublici34dr",
+  "signal":      "1.0_1",
+  "user_id":     "userwu26lawu26l",
+  "status":      "completed",
+  "error":       null,
+  "parent_run":  null,
+  "created":     1777396245726,
+  "diff": {
+    "_created": {
+      "before": null,
+      "after": {
+        "full_name": "test444",
+        "docstatus": 0,
+        "_allowed_read": ["roleispublixxxx"]
+      }
+    }
+  },
+  "prev_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+  "hash":      "a3f8c2e1d7b94560f2a1c3e8d9b04571f3a2c1e8d9b04571f3a2c1e8d9b045"
+}
+Record 2:
+json{
+  "run_name":    "runbg48udq517x6",
+  "operation":   "update",
+  "target_type": "UserPublicProfile",
+  "target_name": "userpublici34dr",
+  "signal":      "1.1_2",
+  "user_id":     "userwu26lawu26l",
+  "status":      "completed",
+  "error":       null,
+  "parent_run":  "runpkkf9xx95szg",
+  "created":     1777399265500,
+  "diff": {
+    "full_name": {
+      "before": "test444",
+      "after":  "test445"
+    },
+    "_state": {
+      "before": { "1.0_1": "1" },
+      "after":  { "1.0_1": "1", "1.1_2": "1" }
+    }
+  },
+  "prev_hash": "a3f8c2e1d7b94560f2a1c3e8d9b04571f3a2c1e8d9b04571f3a2c1e8d9b045",
+  "hash":      "d9b04571f3a2c1e8a3f8c2e1d7b94560f2a1c3e8d9b04571f3a2c1e8d9b045"
+}
+run_name is the primary key. parent_run references another run_name. Chain intact via prev_hash → hash.You said: and now, storage consern.and now, storage consern. what is SOC logical approach to it. as this is a kind of chiken and egg propblem like sysadmin can tamper db, so he can temper the logs?10:52 AMClaude responded: Yes.Yes. That's the fundamental SOC 2 audit log paradox:
+The person who controls the infrastructure controls the logs.
+SOC 2 auditors know this. The solution is not to prevent tampering — it's to make tampering detectable and require separation of duties.
+
+SOC 2 Logical Approach
+1. Separation of duties
+The person who can write to the DB should not be the same person who can access the audit log store. In practice:
+
+Developer/sysadmin → controls PocketBase
+Auditor/compliance officer → controls audit log storage
+Neither has both
+
+For a solo founder this is hard — but you can achieve it with:
+
+Audit logs written to AWS S3 with separate AWS account (not the same account as your infra)
+S3 Object Lock (WORM) — even the account owner cannot delete/modify
+Only the compliance officer has S3 credentials
+
+
+2. Cryptographic chaining is the detection layer
+The hash chain doesn't prevent tampering — it makes it provably detectable:
+
+Sysadmin edits audit record → hash chain breaks
+Independent auditor recomputes hashes → detects break
+SOC 2 auditor asks: "show me the chain verification" → you run it → it passes or fails
+
+The key: auditor can verify independently without trusting you.
+
+3. Write-time anchoring to external immutable store
+The gold standard: at write time, simultaneously send a hash/fingerprint to an external service that the sysadmin cannot control:
+Option A — AWS CloudTrail + S3 Object Lock
+CW writes audit record to PB
+→ simultaneously sends SHA-256 of record to S3 (separate AWS account, Object Lock)
+→ S3 stores: { run_name, hash, timestamp }
+Sysadmin can edit PB. Cannot edit S3. Auditor compares PB hashes to S3 hashes.
+Option B — Blockchain anchor (low cost)
+Services like Tierion or OpenTimestamps write your hash to Bitcoin/Ethereum blockchain. Immutable by definition. $0 cost on OpenTimestamps. Auditors can verify on-chain.
+Option C — Email to auditor
+Daily digest of all audit hashes emailed to your auditor/compliance officer. Simple, legally defensible. They have an independent copy.
+
+Practical recommendation for your stack
+Tier 1 (do now):
+
+Append-only PB rules + cryptographic chaining → detectable tampering
+Litestream → S3 WAL replication → full DB history at infrastructure level
+
+Tier 2 (SOC 2 readiness):
+
+Separate AWS account for audit S3 bucket with Object Lock
+Daily hash digest emailed to compliance officer
+Chain verification script that auditors can run independently
+
+Tier 3 (enterprise):
+
+Blockchain anchoring via OpenTimestamps
+Third-party SIEM (Datadog, Splunk) receiving audit events in real-time
+
+
+The honest SOC 2 answer
+SOC 2 auditors don't expect perfect tamper-proof logs from a startup. They expect:
+
+Controls exist — you have audit logging
+Controls are documented — you can show the policy
+Controls are tested — you run chain verification periodically
+Separation of duties — at least two people involved in sensitive operations
+Anomaly detection — you notice if something breaks
+
+The cryptographic chain + Litestream/S3 + append-only PB rules satisfies all five for SOC 2 Type I. Type II requires evidence over time (6-12 months of logs). Start now, run the chain verification quarterly, document it.You said: no, the question if this solution is for othersno, the question if this solution is for others10:54 AMClaude responded: Ah.Ah. You're asking whether CW's audit log system could be a product — sold to others as a SOC 2 compliant audit solution.
+The chicken-and-egg problem becomes even more acute when you're the vendor:
+The customer's concern: "You, the vendor (Exponanta/CW), control the infrastructure. You could tamper with your own customers' audit logs."
+This is exactly the problem that killed early SaaS audit log products. The answer has to be cryptographic proof that even the vendor cannot tamper.
+
+What makes it viable as a product
+The customer must be the key holder.
+At write time:
+
+CW generates the audit record + hash
+Customer's own private key signs the hash
+Signed hash stored in customer-controlled storage (their S3, their key vault)
+CW stores the audit record
+
+Now even if CW tampers with the audit record in PB — the customer's signed hash in their own S3 doesn't match. Tamper detected. CW vendor is not trusted.
+This is the end-to-end encryption model applied to audit logs.
+
+Existing solutions doing this
+Warrant — audit log as a service, customer-controlled signing keys, SOC 2 certified. This is exactly what you'd be building.
+Audit Sink — similar model.
+Panther — SIEM with customer-controlled data lake.
+
+The product opportunity
+None of these integrate natively with PocketBase + client-side frameworks. CW's unique position:
+
+Audit log built into the framework pipeline — zero developer effort
+run_doc already has everything needed
+Customer key management via browser Web Crypto API
+Works with any PB deployment
+
+This is a real gap in the market. PocketBase has no native audit log. CW could be the first framework to offer SOC 2 compliant audit logging out of the box for PB-based applications.
+Is that the direction you're thinking?You said: no.no. i think how to implement it in secure way. this is a paradox, i need to have an auditable log, and it should be separated, and it contains customer data. so this becomes customer data leakage risk consirn though audi logs10:57 AMClaude responded: Yes.Yes. Now you've identified the real tension:
+Audit logs must contain enough detail to be useful (who changed what field from what value) but that detail IS the sensitive data.
+So you can't:
+
+Send full diff to external service → customer data leaves your infrastructure
+Store only hashes externally → not enough to verify tampering of content
+Store nothing externally → sysadmin can tamper undetected
+
+
+The SOC 2 answer to this specific problem
+Don't store customer data in the external anchor. Store only cryptographic proof.
+Audit record (stays in your PB):
+{
+  "run_name": "run4x3mfs",
+  "diff": { "full_name": { "before": "test444", "after": "test445" } },  ← customer data
+  "hash": "a3f8c2e1..."  ← fingerprint of the above
+}
+
+External anchor (S3 / blockchain / email):
+{
+  "run_name": "run4x3mfs",
+  "hash":     "a3f8c2e1..."  ← NO customer data, just the fingerprint
+  "timestamp": 1777396245726
+}
+External store has zero customer data — only hashes and timestamps. Auditor verifies: recompute hash from PB record → compare to external anchor → match = untampered.
+Sysadmin cannot tamper without breaking the external anchor. Customer data never leaves your infrastructure.
+
+This is the standard enterprise pattern
+
+PB = source of truth, customer data, full audit records
+S3/blockchain = tamper-evident anchor, hashes only, no PII
+Auditor = runs verification script, compares hashes
+
+SOC 2 auditors accept this. GDPR accepts this (no data leaves). Customer data stays in your infrastructure. Tamper detection works.
+The only remaining concern: your S3 bucket is still in your AWS account. Separation of duties requires either a separate AWS account or a third-party anchor (blockchain, auditor-controlled S3).
+For most SOC 2 audits: separate AWS account with Object Lock + daily hash export is sufficient. The auditor controls the S3 credentials, not you.You said: the client js code.the client js code. if 2 hooks (pre commit and after) in customer js, then the client code can be tampered by extracting hooks. it this SOC consern to raised11:04 AMClaude responded: Yes.Yes. This is a legitimate SOC 2 concern — client-side code integrity.
+The attack vector:
+
+Sysadmin modifies CW-run.js or CW-config.js — removes or disables the audit hooks
+Operations proceed normally but nothing is logged
+No tamper detected because the chain simply has gaps — looks like quiet periods
+Auditor sees no anomalies unless they specifically check for missing operations
+
+
+Why this is hard to solve on client-side
+Client-side JavaScript is inherently untrustworthy:
+
+Anyone with server access can modify the JS files
+Browser caches can serve old versions
+CDN can serve different versions to different users
+No way to verify client-side code integrity from the server
+
+This is the fundamental weakness of your architecture — business logic in the browser cannot be audited at the code level.
+
+SOC 2 controls that address this
+1. Subresource Integrity (SRI)
+html<script src="/CW-run.js" 
+  integrity="sha384-abc123..." 
+  crossorigin="anonymous">
+Browser refuses to execute if hash doesn't match. But sysadmin controls both the file AND the HTML — can update both simultaneously.
+2. Content Security Policy (CSP) + external hash registry
+Publish expected SRI hashes to an external service (GitHub, S3, auditor-controlled). Automated monitoring checks deployed hash vs expected hash. Alert on mismatch.
+3. Server-side audit hook (the real fix)
+Move the pre/post commit hooks to PocketBase hooks (Go plugin) or a Cloudflare Worker proxy. Client-side code cannot bypass server-side hooks regardless of tampering.
+Client → Cloudflare Worker (audit hook) → PocketBase
+Worker intercepts every write, generates audit record, writes to S3 before forwarding to PB. Client code is irrelevant — worker cannot be modified by the same person who controls PB.
+4. Separate deployment pipeline
+Audit hooks deployed from a separate repo, separate CI/CD, separate access control. Developer cannot deploy app code and audit code simultaneously without two approvals.
+
+Honest SOC 2 answer
+For SOC 2 Type I — client-side audit hooks with SRI + external hash monitoring is acceptable if documented as a compensating control.
+For SOC 2 Type II — auditors will flag client-side business logic as a finding. The expected answer is server-side enforcement.
+The architectural implication: CW's client-side pipeline is powerful but creates a SOC 2 gap. The Cloudflare Worker proxy pattern — where every PB write goes through a Worker that cannot be bypassed — is the right answer for audit integrity.
+This is actually an opportunity: CW + Cloudflare Worker audit proxy = genuinely SOC 2 compliant architecture. Worker is the trust boundary, not the client.

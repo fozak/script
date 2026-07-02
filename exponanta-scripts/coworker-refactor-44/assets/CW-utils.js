@@ -264,14 +264,26 @@ function generateId(doctype, title = null) {
     return generateSingleId(doctype, title)
   }
 
-  // default — was generateMultiId (random), now deterministic if title exists
+  /* default — was generateMultiId (random), now deterministic if title exists
   if (title?.trim()) {
     const prefix = doctype.toLowerCase().replace(/[^a-z0-9]/g, '').substring(0, 4)
     return (prefix + hashString(title)).substring(0, 15)
   }
 
   // fallback — random for ephemeral doctypes like Run
-  return generateMultiId(doctype, title)
+  return generateMultiId(doctype, title)*/
+
+  //new
+
+  if (title?.trim()) {
+  const prefix = doctype.toLowerCase().replace(/[^a-z0-9]/g, '').substring(0, 4)
+  return (prefix + hashString(title)).padEnd(15, '0').substring(0, 15)
+}
+//random fallback for ephemeral doctypes like Run
+
+const prefix = doctype.toLowerCase().replace(/[^a-z0-9]/g, '').substring(0, 4)
+return (prefix + generateRandom(15 - prefix.length)).substring(0, 15)
+
 }
 
 function hashString(email) {
@@ -1093,7 +1105,8 @@ async function runChain(notebookName) {
       options: { render: false }
     });
     prev = script;
-    fns.push(new Function('doc', script.target.data[0].code));
+    //fns.push(new Function('doc', script.target.data[0].code));
+    fns.push(new Function('run_doc', script.target.data[0].code));
   }
 
   // last cell — update
@@ -1102,7 +1115,8 @@ async function runChain(notebookName) {
       operation: 'update',
       target_doctype: st.target_doctype,
       query: { where: { name: doc.name } },
-      input: Object.assign({}, ...await Promise.all(fns.map(fn => fn(doc)))),
+      //input: Object.assign({}, ...await Promise.all(fns.map(fn => fn(doc)))),
+      input: Object.assign({}, ...await Promise.all(fns.map(fn => fn({ source: doc })))),
       options: { render: false, expand: false }
     })
   ));

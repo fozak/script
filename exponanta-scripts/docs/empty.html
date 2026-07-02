@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CW</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta17/dist/css/tabler.min.css">
+  <style>
+    #main_container:empty,
+    #left_pane:empty,
+    #right_pane:empty { display: none; }
+    .threads-left  { height: 100vh; overflow-y: auto; border-right: 1px solid var(--tblr-border-color); }
+    .threads-right { height: 100vh; overflow-y: auto; }
+/* column narrower---*/
+.cw-universal-grid table {
+  table-layout: fixed;
+  width: 100%;
+}
+
+.cw-universal-grid td,
+.cw-universal-grid th {
+  word-wrap: break-word;
+  white-space: normal;
+}
+  </style>
+</head>
+<body class="antialiased">
+  <div id="nav_container">
+   
+  </div>
+  <div class="container-xl py-3">
+    <div id="main_container"></div>
+    <div class="row g-0">
+      <div class="col-md-3 threads-left"  id="left_pane"></div>
+      <div class="col-md-9 threads-right" id="right_pane"></div>
+    </div>
+  </div>
+  <div id="toast_container"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/pocketbase@latest/dist/pocketbase.umd.js"></script>
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta17/dist/js/tabler.min.js"></script>
+  
+
+  <!--- TANSTACK GRID   -->
+
+    <script src="https://unpkg.com/@tanstack/react-table@8.20.5/build/umd/index.production.js"></script>
+  <script>
+    globalThis.TanStackTable = globalThis.ReactTable;
+    console.log('✅ TanStack Table loaded:', !!globalThis.TanStackTable);
+  </script>
+
+  <!---end -->
+  <script type="module" src="index.js"></script>
+  <script type="module" src="CW-ui.js"></script>
+  <script type="module" src="app-ui.js"></script>
+  <script type="module" src="CW-url.js"></script>
+  <script type="module" src="CW-analytics.js"></script>
+
+  <script type="module">
+    async function waitForBoot() {
+      return new Promise(resolve => {
+        const check = setInterval(() => {
+          if (globalThis.CW?._booted) { clearInterval(check); resolve() }
+        }, 100)
+      })
+    }
+
+  window.addEventListener('load', async () => {
+  await waitForBoot()
+  cwStateFromUrl()
+  trackContentHit()
+  await CW.run({
+    operation: 'select',
+    target_doctype: 'Chat',
+    component: 'MainLeftPaneChat',
+    container: 'left_pane',
+    options: { render: true }
+  })
+})
+  </script>
+</body>
+</html>

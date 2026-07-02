@@ -1,0 +1,205 @@
+The field serializer does:
+javascriptconst view = run_doc.view || "list";
+// view = 'form' → no in_list_view filter → all fields pass through
+in_list_view only filters when view === 'list'. 'form' falls through to full data.
+
+So the complete picture for operation: select, view: form:
+ConcernResultWhyData filtering✅ All fieldsserializer reads run_doc.view = 'form'Component❌ MainForm_resolveViewComponent('Task', 'form') → MainForm
+Only the component is broken. The data is already correct.
+
+Fix just the component — add one map to config:
+javascriptoperationToComponent: {
+  select:  'MainGrid',
+  create:  'MainForm',
+  update:  'MainForm',
+  takeone: 'MainForm',
+  delete:   null,
+}
+And in _resolveAll, one line change:
+javascriptif (!('component' in op)) {
+  op.component = cfg.operationToComponent?.[op.operation]  // ← operation wins for UI
+    ?? resolved?.component 
+    ?? viewConfig.component 
+    ?? null;
+}
+Result: view is purely data. operation drives component. Clean separation, minimal change.You said: i returned select: list.i returned select: list.  reacll my proposed (not implemented layout)11:15 AMClaude responded: Found it — from the January 2026 chat.Relevant chatsRelevant chatsFound it — from the January 2026 chat. That's your proposed (not yet implemented) config layout:
+javascript// ✅ NEW unified views map — component + container together
+views: {
+  list: {
+    component: "MainGrid",
+    container: "main_container",
+    options: { render: true },
+  },
+  form: {
+    component: "MainForm",
+    container: "main_container",
+    options: { render: true },
+  },
+  chat: {
+    component: "MainChat",
+    container: "right_pane",
+    options: { render: true },
+  },
+},
+
+// Operation → View (data concern)
+operationToView: {
+  select:  "list",
+  create:  "form",
+  update:  "form",
+  delete:   null,
+  takeone: "form",
+},
+
+// old/redundant — to be replaced by views{}
+viewToComponent: { list: "MainGrid", form: "MainForm", ... },
+viewToContainer: { list: "main_container", form: "main_container", ... },
+The idea was: collapse viewToComponent + viewToContainer into the single views{} map, so view → { component, container, options } is one lookup. The old two maps become redundant.
+This was proposed but never implemented — _resolveAll still reads from viewToComponent/viewToContainer separately.
+So the missing step is: wire _resolveAll to read from cfg.views[view] instead of the two separate maps. That's the one code change needed to make the proposed layout live. Want me to write that diff?You said: recall "layout" field proposalrecall "layout" field proposal11:15 AMClaude responded: Found it.Searched memorySearched memoryFound it. From the April 2026 chat — here's your proposed layout field architecture:
+
+The proposal: in_{view}_view as a generic pattern on schema fields
+javascript// Schema field definition
+{
+  fieldname: "email",
+  in_list_view: true,    // shows in MainGrid columns
+  in_form_view: true,    // shows in MainForm fields  
+  in_card_view: true,    // shows in card layout
+  // pattern: in_{view}_view — not hardcoded, derived from view name
+}
+The filter logic (dynamic, not hardcoded):
+javascriptconst viewKey = `in_${view}_view`;   // "in_list_view", "in_form_view", etc.
+schema.fields.filter(f => f[viewKey])
+The state at that chat:
+
+view: 'list' → filters by in_list_view ✅ implemented
+view: 'form' → no filtering, all fields pass through — NOT locked in yet
+in_form_view property on fields — proposed but not yet enforced
+
+So your original instinct was right: view: form should filter by in_form_view the same way view: list filters by in_list_view. The shouldFilter condition that only triggers for list and card is what's blocking the clean architecture.
+The fix is simply removing the shouldFilter guard and letting the in_{view}_view pattern run for all views — which naturally gives you full data for form (since all fields have in_form_view: true by default), and filtered data for list.
+Want to implement that now?You said: i literally had layout field in run_doc proposal - look more carefullyi literally had layout field in run_doc proposal - look more carefully11:18 AMClaude responded: Found it — from the January 2026 "Normalizing run() pipeline input/output data shapes" chat.Searched memorySearched memoryFound it — from the January 2026 "Normalizing run() pipeline input/output data shapes" chat. The layout field was part of viewConfig:
+javascript// === UI/RENDERING (separate from data) ===
+view: "form",
+component: "TaskForm",
+container: "#app",
+viewConfig: {           // ← here it is
+  layout: "grid",       // ← layout as a separate concern from view
+  view: "card"
+},
+So the proposal was:
+
+run_doc.view = data concern — drives field filtering (in_{view}_view)
+run_doc.viewConfig.layout = UI concern — drives which layout MainGrid renders ("grid", "table", "card", "kanban")
+run_doc.component = which component mounts
+
+The separation you were proposing:
+operation: 'select'
+  → view: 'list'          # data — in_list_view fields only
+  → viewConfig.layout: 'table'  # UI — table rows vs cards
+  → component: 'MainGrid' # mount point
+So layout lives inside viewConfig on run_doc, not as a top-level field. And MainGrid reads run_doc.viewConfig?.layout to switch between its table/card modes — currently done via useState('list') internally, but the proposal was to drive it from run_doc so it's declarable from the call site.
+Does that match what you were looking for?You said: what is the most correct logical path assuming view is foundational data filteringwhat is the most correct logical path assuming view is foundational data filtering11:20 AMClaude responded: Given view = data filter foundation, the logical chain is:Given view = data filter foundation, the logical chain is:
+operation
+  → view          (data shape: which fields)
+    → layout      (UI structure: how to arrange those fields)  
+      → component (which React component renders that layout)
+        → container (where in DOM it mounts)
+Each level derives from the one above:
+
+select → view: list → layout: table → component: MainGrid → container: main_container
+select → view: list → layout: card → component: MainGrid → container: main_container
+takeone → view: form → layout: form → component: MainForm → container: main_container
+
+Key insight: layout is the missing middle layer between view and component. view: list can render as layout: table OR layout: card — same data, different UI. That's why MainGrid has an internal viewMode toggle today — it's filling the gap where layout should live on run_doc.
+Config maps become clean:
+javascriptoperationToView: {
+  select:  'list',   // data
+  create:  'form',
+  update:  'form',
+  takeone: 'form',
+},
+
+viewToLayout: {
+  list: 'table',     // default layout per view
+  form: 'form',
+},
+
+layoutToComponent: {
+  table:  'MainGrid',
+  card:   'MainGrid',   // same component, different layout prop
+  form:   'MainForm',
+  kanban: 'MainGrid',
+  chat:   'MainChat',
+},
+And run_doc top-level fields:
+javascript{
+  view:      'list',    // data filter
+  layout:    'table',   // UI structure (overridable)
+  component: 'MainGrid',
+  container: 'main_container',
+}
+The override chain at call site:
+javascript// default — all derived
+CW.run({ operation: 'select', target_doctype: 'Task' })
+// → view:list, layout:table, component:MainGrid
+
+// override layout only — same data, different UI
+CW.run({ operation: 'select', target_doctype: 'Task', layout: 'card' })
+// → view:list, layout:card, component:MainGrid
+
+// override view — different data shape
+CW.run({ operation: 'select', target_doctype: 'Task', view: 'form' })
+// → view:form, layout:form, component:MainForm
+_resolveAll applies each level only if not already set by caller — exactly the same 'view' in op ? op.view : derived pattern you already have, just extended to layout too.You said: layout: card → component: MainGrid then components should have layout as arglayout: card → component: MainGrid then components should have layout as arg11:22 AMClaude responded: Yes exactly.Yes exactly. MainGrid receives run_doc and reads run_doc.layout:
+javascriptconst MainGrid = function({ run_doc }) {
+  const layout = run_doc.layout || 'table';  // 'table' | 'card' | 'kanban'
+  
+  if (layout === 'card')   return ce(CardLayout,   { run_doc });
+  if (layout === 'kanban') return ce(KanbanLayout, { run_doc });
+  return ce(TableLayout, { run_doc });  // default
+};
+Sub-layouts are pure renderers — no data fetching, just run_doc.target.data:
+javascriptconst TableLayout  = ({ run_doc }) => { /* rows as <tr> */ };
+const CardLayout   = ({ run_doc }) => { /* rows as cards */ };
+const KanbanLayout = ({ run_doc }) => { /* rows grouped by status */ };
+Same pattern for MainForm:
+javascriptconst MainForm = function({ run_doc }) {
+  const layout = run_doc.layout || 'form';  // 'form' | 'split' | 'wizard'
+  
+  if (layout === 'wizard') return ce(WizardLayout, { run_doc });
+  if (layout === 'split')  return ce(SplitLayout,  { run_doc });
+  return ce(FormLayout, { run_doc });
+};
+So the contract is clean:
+
+run_doc.view → field serializer reads this (data)
+run_doc.layout → component reads this (UI structure)
+run_doc.component → _render reads this (mount decision)
+
+And the toggle that currently lives in MainGrid as useState('list') moves out to run_doc.layout — making it observable, serializable, and URL-drivable via cwStateFromUrl.You said: so then its basically list of keys, and component ability to accept and rerenderso then its basically list of keys, and component ability to accept and rerender11:23 AMClaude responded: Yes.Yes. run_doc is just a bag of keys:
+javascript{
+  operation: 'select',
+  view:      'list',      // → field filter
+  layout:    'card',      // → sub-renderer inside component
+  component: 'MainGrid',  // → what mounts
+  container: 'main_container',  // → where it mounts
+}
+And a component is just a function that reads whatever keys it cares about from run_doc and re-renders when they change.
+The component contract:
+javascriptconst MainGrid = ({ run_doc }) => {
+  const layout = run_doc.layout;    // reads layout key
+  const data   = run_doc.target?.data;  // reads data
+  // renders accordingly
+};
+So "adding a new layout" is just:
+
+Add card → MainGrid entry to layoutToComponent config
+Write CardLayout sub-renderer
+MainGrid reads run_doc.layout === 'card' → dispatches to it
+
+And "switching layout at runtime" is just:
+javascriptrun_doc.layout = 'card';
+CW._render(run_doc);  // re-mounts same component, different layout
+No new run, no re-fetch, no state gymnastics. The data is already in run_doc.target.data — only the presentation key changed.
+This is also why useState inside components is wrong for layout — it's invisible to run_doc, not URL-serializable, not observable. Layout belongs on run_doc as a plain key, and the component just reads it.

@@ -1,0 +1,211 @@
+CW Run Schema — Notebook Execution via ▶ Run Button
+What Was Built
+A Run doc with operation: 'chain' becomes a notebook. Clicking ▶ Run in MainForm fires CW.runChain via the FSM sideEffect. The full chain executes and writes back to the target doctype.
+
+Changes to Run Schema
+Two additions to the Run schema stored in PocketBase as record schemarunyu2kaj:
+1. steps field
+json{
+  "fieldname": "steps",
+  "fieldtype": "Code",
+  "label": "Steps",
+  "options": "JSON",
+  "in_list_view": 1
+}
+Stores the ordered array of cell references. in_list_view: 1 is required — without it the list-view field filter strips steps from the returned doc, and runChain fails with tryParseJSON(undefined).
+2. save_to field
+json{
+  "fieldname": "save_to",
+  "fieldtype": "Link",
+  "label": "Save To",
+  "options": "Schema",
+  "in_list_view": 0
+}
+Declares the target doctype for writing merged script output. Link to Schema doctype — value is a schema name like 'Task', 'Invoice', 'Output'.
+3. state on Run schema
+json{
+  "state": {
+    "1": {
+      "transitions": { "0": [1], "1": [0] },
+      "labels": { "0_1": "▶ Run", "1_0": "Reset" },
+      "primary": { "0_1": true },
+      "sideEffects": {
+        "0_1": "async function(run_doc) { await CW.runChain(run_doc.target.data[0].name); }"
+      }
+    }
+  }
+}
+Dim 1 (not dim 0 which is reserved for docstatus). Transition 0→1 renders as ▶ Run primary button. Transition 1→0 renders as Reset.
+
+Where It Is Saved
+The Run schema record lives in PocketBase item collection as schemarunyu2kaj with doctype: 'Schema'. It is loaded at boot by CW-state.js _compileSchemas which:
+
+Reads all Schema records from PocketBase
+Finds schema_name: 'Run'
+Compiles state[1].sideEffects['0_1'] from string → async function via eval('(' + fnStr + ')')
+Registers under CW.Schema.Run._state
+
+After compilation:
+javascriptCW.Schema.Run._state[1].sideEffects['0_1']
+// → async function(run_doc) { await CW.runChain(run_doc.target.data[0].name); }
+
+How the ▶ Run Button Works
+Step 1 — Render
+javascriptawait CW.run({
+  operation: 'select',
+  target_doctype: 'Run',
+  query: { where: { name: 'rundt65dt7ubdte' } },
+  view: 'form',
+  component: 'MainForm',
+  container: 'right_pane',
+  options: { render: true }
+});
+MainForm renders the Run doc. _getFormButtons calls _getTransitions(schema, doc, '1'). Doc _state has no 1.0_1 signal set → current dim value is 0 → transition 0→1 is available → ▶ Run button appears.
+Step 2 — Click
+User clicks ▶ Run. MainForm sets run_doc.input._state = { '1.0_1': '' } and calls CW.controller(run_doc).
+Step 3 — Signal dispatch
+Controller finds signal '1.0_1' with empty string value → routes to _handleSignal → validates transition → calls _execTransition(run_doc, '1', '0_1').
+Step 4 — SideEffect fires
+javascript_execTransition finds sideEffects['0_1'] → typeof fn === 'function' → await fn(run_doc)
+→ await CW.runChain(run_doc.target.data[0].name)
+→ await CW.runChain('rundt65dt7ubdte')
+run_doc.target.data[0].name is always present — name is a system field, never stripped by field filters.
+Step 5 — Chain executes
+runChain loads the notebook template fresh with view: 'form' (gets full steps array), then traverses the sequential chain tree. Full execution takes ~600ms for 8 nodes.
+Step 6 — View switch
+After _execTransition completes, controller re-selects the Run doc and re-renders MainForm. The ▶ Run button is now gone — _state has 1.0_1: '1' (signal fired) and dim 1 current value is 1 — transition 1→0 (Reset) appears instead.
+
+The Notebook Run Doc
+json{
+  "doctype": "Run",
+  "name": "rundt65dt7ubdte",
+  "title": "chain-test",
+  "operation": "chain",
+  "steps": [
+    { "name": "runxekzykab2vxi", "type": "select" },
+    { "name": "run8zuegfnm983x", "type": "script" },
+    { "name": "run0htk6s8qoui6", "type": "script" }
+  ],
+  "_state": { "1.0_1": "" }
+}
+steps is a native array in PocketBase (auto-parsed by PocketBase on read). tryParseJSON handles both string and object transparently. type on each cell tells runChain how to handle execution — select sets parent, script compiles code and collects fn.
+
+Execution Tree Produced
+rungtw7128p17s5   select Run (notebook)          ← root
+  └── run3iaxc2ddx2jp   select Run (select template)
+        └── runbnv59klfutwx   select Task
+              └── runssutybmrctu6   select Run (enrich-task template)
+                    └── runp2j6z4i0wy6j   select Script enrich-task
+                          └── runsf46skexfmtn   select Run (add-random-title template)
+                                └── run1bmedzpn7b4h   select Script add-random-title
+                                      └── runjm5dll6lngnq   update Task ✅
+8 nodes, fully sequential, all parent_run_id links correct, 0 orphans, Task updated in PocketBase with _changes audit trail.
+
+tryParseJSON Refactor
+Added tryParseJSON(val) to CW-utils.js — handles both string and already-parsed object transparently:
+javascriptfunction tryParseJSON(val) {
+  if (typeof val === 'string') {
+    try { return JSON.parse(val); } catch { return val; }
+  }
+  return val;
+}
+CW.tryParseJSON = tryParseJSON;
+Replaced all defensive inline typeof x === 'string' ? JSON.parse(x) : x patterns across runChain, _getDimValue, CW-state.js, CW-analytics.js. Removed _preflight Code/JSON stringification block — adapter handles serialization transparently, _preflight was leaking adapter concerns into CW core.
+
+
+
+
+
+CW.Schema["Output"]
+{schema_name: 'Output', doctype: 'Schema', _autosave: 0, title_field: 'title', fields: Array(13)}doctype: "Schema"fields: (13) [{…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}]schema_name: "Output"title_field: "title"_autosave: 0[[Prototype]]: Object
+// IIEE — Output doctype never persists to PocketBase
+console.group('IIEE Output _autosave:0');
+
+// I — create
+const c = await CW.run({ operation:'create', target_doctype:'Output', input:{ title:'test output', data: JSON.stringify({ foo:'bar' }) }, options:{ render:false } });
+console.log('create — status:', c.status);
+console.log('create — error:', c.error);
+console.log('create — target.data[0]:', c.target?.data?.[0]);
+
+// verify no PB write happened — select immediately after
+const s1 = await CW.run({ operation:'select', target_doctype:'Output', query:{ where:{ title:'test output' }}, options:{ render:false } });
+console.log('select after create — count:', s1.target?.data?.length, '← should be 0');
+
+// I — update
+const u = await CW.run({ operation:'update', target_doctype:'Output', query:{ where:{ name:'outputtest123' }}, input:{ title:'updated' }, options:{ render:false } });
+console.log('update — status:', u.status);
+console.log('update — error:', u.error);
+
+// verify no PB write
+const s2 = await CW.run({ operation:'select', target_doctype:'Output', query:{ where:{ title:'updated' }}, options:{ render:false } });
+console.log('select after update — count:', s2.target?.data?.length, '← should be 0');
+
+console.groupEnd();
+VM11463:2 IIEE Output _autosave:0
+VM11463:6 create — status: completed
+VM11463:7 create — error: null
+VM11463:8 create — target.data[0]: {title: 'test output', data: '{"foo":"bar"}'}
+VM11463:12 select after create — count: 0 ← should be 0
+Client.ts:425 Fetch finished loading: GET "http://143.198.29.88:8090/api/collections/item/records?page=1&perPage=1000&skipTotal=true&filter=doctype%20%3D%20%22Output%22%20%26%26%20(data.title%20%3D%20%22test%20output%22)".
+send @ Client.ts:425
+getList @ CrudService.ts:80
+getList @ RecordService.ts:225
+(anonymous) @ CrudService.ts:254
+_getFullList @ CrudService.ts:268
+getFullList @ CrudService.ts:50
+getFullList @ RecordService.ts:214
+select @ pb-adapter-pocketbase.js:188
+select @ CW-run.js:693
+CW.controller @ CW-run.js:456
+await in CW.controller
+CW.run @ CW-run.js:581
+(anonymous) @ VM11463:11
+VM11463:16 update — status: completed
+VM11463:17 update — error: null
+VM11463:21 select after update — count: 0 ← should be 0
+Client.ts:425 Fetch finished loading: GET "http://143.198.29.88:8090/api/collections/item/records?page=1&perPage=1000&skipTotal=1&filter=doctype%20%3D%20%22Output%22%20%26%26%20(name%20%3D%20%22outputtest123%22)".
+send @ Client.ts:425
+getList @ CrudService.ts:80
+getList @ RecordService.ts:225
+(anonymous) @ CrudService.ts:254
+_getFullList @ CrudService.ts:268
+getFullList @ CrudService.ts:50
+getFullList @ RecordService.ts:214
+select @ pb-adapter-pocketbase.js:159
+select @ CW-run.js:693
+CW.controller @ CW-run.js:433
+CW.run @ CW-run.js:581
+(anonymous) @ VM11463:15
+Client.ts:425 Fetch finished loading: GET "http://143.198.29.88:8090/api/collections/item/records?page=1&perPage=1000&skipTotal=true&filter=doctype%20%3D%20%22Output%22%20%26%26%20(data.title%20%3D%20%22updated%22)".
+send @ Client.ts:425
+getList @ CrudService.ts:80
+getList @ RecordService.ts:225
+(anonymous) @ CrudService.ts:254
+_getFullList @ CrudService.ts:268
+getFullList @ CrudService.ts:50
+getFullList @ RecordService.ts:214
+select @ pb-adapter-pocketbase.js:188
+select @ CW-run.js:693
+CW.controller @ CW-run.js:456
+await in CW.controller
+CW.run @ CW-run.js:581
+(anonymous) @ VM11463:20
+undefined
+const outputRun = Object.values(CW.runs).find(r => 
+  r.target_doctype === 'Output' && 
+  r.target?.data?.[0]
+);
+
+console.log('Output run found:', !!outputRun);
+console.log('Output run name:', outputRun?.name);
+console.log('Output data:', outputRun?.target?.data?.[0]);
+VM11467:6 Output run found: true
+VM11467:7 Output run name: runk0z4tg3ihupq
+VM11467:8 Output data: {title: 'test output', data: '{"foo":"bar"}'}
+undefined
+Object.values(CW.runs)
+  .filter(r => r.target_doctype === 'Output' && r.target?.data?.[0])
+  .forEach((r, i) => console.log(`Output[${i}]`, r.name, r.operation, r.target.data[0]));
+VM11471:3 Output[0] runk0z4tg3ihupq create {title: 'test output', data: '{"foo":"bar"}'}
+VM11471:3 Output[1] rune2apbhn7n3m7 update {title: 'updated'}
+undefined

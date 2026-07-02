@@ -1,0 +1,20 @@
+The fix — one line change in _logChanges:
+javascript// BEFORE
+const existing = Array.isArray(doc._changes) ? doc._changes : []
+const next     = [...existing, entry]
+await _patchDataField(doc.name, '_changes', next)
+doc._changes = next
+javascript// AFTER
+await _patchDataField(doc.name, '_changes', entry)
+And update _patchDataField to append:
+javascriptasync function _patchDataField(docName, fieldName, value) {
+  const collection = CW._config.collection
+  const current    = await globalThis.pb.collection(collection).getOne(docName)
+  
+  const existing   = Array.isArray(current.data[fieldName]) ? current.data[fieldName] : null
+  const finalValue = existing !== null ? [...existing, value] : value
+  
+  const mergedData = { ...current.data, [fieldName]: finalValue }
+  await globalThis.pb.collection(collection).update(docName, { data: mergedData })
+}
+This only appends when the field is an array — for non-array fields like modified it still overwrites as before. And it always appends to the fresh PB value, never the stale memory value.

@@ -1,0 +1,12 @@
+Problem: In Table mode (inline UniversalGrid inside MainForm), clicking the checkbox td correctly mutated run_doc.query.where.name.in via CW.toggleSelected but the checkbox did not visually update until the mouse moved out of the row.
+Root cause: CW.toggleSelected calls CW._render(run_doc) where run_doc is the child run with component: null. _render returns early — nothing re-renders. UniversalGrid is a React child inside MainForm with no mechanism to re-render itself. The only state change that triggered a re-render was setHoveredRow(null) on onMouseLeave — which happened when the mouse moved out of the row.
+Fix: Added useReducer as a force re-render trigger inside UniversalGrid:
+javascriptconst [, force] = React.useReducer(x => x + 1, 0);
+Called after CW.toggleSelected in the checkbox click handler:
+javascriptonClick: (e) => {
+  e.stopPropagation();
+  CW.toggleSelected(run_doc, row.name);
+  force();
+},
+force() increments a counter — React detects the state change and re-renders UniversalGrid immediately. selected is re-read from run_doc.query.where.name.in — checkbox updates instantly.
+Why MainGrid didn't have this problem: In MainGrid mode run_doc.component = 'UniversalGrid' — _render(run_doc) renders UniversalGrid directly to right_pane. Instant visual update without force()

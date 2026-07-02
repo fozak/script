@@ -1,0 +1,1273 @@
+it gives like Account [root] <PERMISSIONS>   Accounting Dimension Detail [named_child] (field: offsetting_account)     Company [lookup] (field: company) <PERMISSIONS>     Account [lookup] (field: offsetting_account) <PERMISSIONS>   Account Closing Balance [named_child] (field: account) <PERMISSIONS>     Account [lookup] (field: account) <PERMISSIONS>     Cost Center [lookup] (field: cost_center) <PERMISSIONS>     Project [lookup] (field: project) <PERMISSIONS>     Company [lookup] (field: company) <PERMISSIONS>     Finance Book [lookup] (field: finance_book) <PERMISSIONS>     Period Closing Voucher [lookup] (field: period_closing_voucher) <PERMISSIONS>   Applicable On Account [named_child] (field: applicable_on_account)     Account [lookup] (field: applicable_on_account) <PERMISSIONS>   Bank Account [named_child] (field: account) <PERMISSIONS>     Account [lookup] (field: account) <PERMISSIONS>     Bank [lookup] (field: bank) <PERMISSIONS>     Bank Account Type [lookup] (field: account_type) <PERMISSIONS>     Bank Account Subtype [lookup] (field: account_subtype) <PERMISSIONS>     Company [lookup] (field: company) <PERMISSIONS>   Budget Account [named_child] (field: account)     Account [lookup] (field: account) <PERMISSIONS>   Exchange Rate Revaluation Account [named_child] (field: account)     Account [lookup] (field: account) <PERMISSIONS>   Journal Entry Account [named_child] (field: account)     Account [lookup] (field: account) <PERMISSIONS>     Cost Center [lookup] (field: cost_center) <PERMISSIONS>     Project [lookup] (field: project) <PERMISSIONS>     Bank Account [lookup] (field: bank_account) <PERMISSIONS>   Journal Entry Template Account [named_child] (field: account)     Account [lookup] (field: account) <PERMISSIONS>   Ledger Merge Accounts [named_child] (field: account)     Account [lookup] (field: account) <PERMISSIONS>   Mode of Payment Account [named_child] (field: default_account)     Company [lookup] (field: company) <PERMISSIONS>     Account [lookup] (field: default_account) <PERMISSIONS>   Party Account [named_child] (field: account)     Company [lookup] (field: company) <PERMISSIONS>     Account [lookup] (field: account) <PERMISSIONS>   Payment Gateway Account [named_child] (field: payment_account) <PERMISSIONS>     Account [lookup] (field: payment_account) <PERMISSIONS>   Process Deferred Accounting [named_child] (field: account) <PERMISSIONS>     Process Deferred Accounting [lookup] (field: amended_from) <PERMISSIONS>     Account [lookup] (field: account) <PERMISSIONS>     Company [lookup] (field: company) <PERMISSIONS>   Process Statement Of Accounts [named_child] (field: account) <PERMISSIONS>     Process Statement Of Accounts Customer [table_child] (field: customers)       Customer [lookup] (field: customer) <PERMISSIONS>     Company [lookup] (field: company) <PERMISSIONS>     Account [lookup] (field: account) <PERMISSIONS>     Finance Book [lookup] (field: finance_book) <PERMISSIONS>     Terms and Conditions [lookup] (field: terms_and_conditions) <PERMISSIONS>     Payment Terms Template [lookup] (field: payment_terms_template) <PERMISSIONS>     Sales Partner [lookup] (field: sales_partner) <PERMISSIONS>     Sales Person [lookup] (field: sales_person) <PERMISSIONS>     Territory [lookup] (field: territory) <PERMISSIONS>   South Africa VAT Account [named_child] (field: account)     Account [lookup] (field: account) <PERMISSIONS>   Tax Withholding Account [named_child] (field: account)     Company [lookup] (field: company) <PERMISSIONS>     Account [lookup] (field: account) <PERMISSIONS>   UAE VAT Account [named_child] (field: account)     Account [lookup] (field: account) <PERMISSIONS>   Company [lookup] (field: company) <PERMISSIONS>   Account [lookup] (field: parent_account) <PERMISSIONS> Accounting Dimension [root] <PERMISSIONS>   Accounting Dimension Detail [table_child] (field: dimension_defaults)     Company [lookup] (field: company) <PERMISSIONS>     Account [lookup] (field: offsetting_account) <PERMISSIONS> Accounting Dimension Filter [root] <PERMISSIONS>   Applicable On Account [table_child] (field: accounts)     Account [lookup] (field: applicable_on_account) <PERMISSIONS>   Allowed Dimension [table_child] (field: dimensions)   Company [lookup] (field: company) <PERMISSIONS> Accounting Period [root] <PERMISSIONS>   Closed Document [table_child] (field: closed_documents)   Company [lookup] (field: company) <PERMISSIONS> Accounts Settings [root] <PERMISSIONS> Advance Payment Ledger Entry [root] <PERMISSIONS>   Company [lookup] (field: company) <PERMISSIONS> Bank [root] <PERMISSIONS>   Bank Transaction Mapping [table_child] (field: bank_transaction_mapping)   Bank Account [named_child] (field: bank) <PERMISSIONS>     Account [lookup] (field: account) <PERMISSIONS>     Bank [lookup] (field: bank) <PERMISSIONS>     Bank Account Type [lookup] (field: account_type) <PERMISSIONS>     Bank Account Subtype [lookup] (field: account_subtype) <PERMISSIONS>     Company [lookup] (field: company) <PERMISSIONS>   Bank Guarantee [named_child] (field: bank) <PERMISSIONS>     Customer [lookup] (field: customer) <PERMISSIONS>     Supplier [lookup] (field: supplier) <PERMISSIONS>     Project [lookup] (field: project) <PERMISSIONS>     Bank [lookup] (field: bank) <PERMISSIONS>     Bank Account [lookup] (field: bank_account) <PERMISSIONS>     Account [lookup] (field: account) <PERMISSIONS>     Bank Guarantee [lookup] (field: amended_from) <PERMISSIONS>   Bank Statement Import [named_child] (field: bank) <PERMISSIONS>     Company [lookup] (field: company) <PERMISSIONS>     Bank Account [lookup] (field: bank_account) <PERMISSIONS>     Bank [lookup] (field: bank) <PERMISSIONS> Bank Account Subtype [root] <PERMISSIONS> Bank Account Type [root] <PERMISSIONS> Bank Clearance [root] <PERMISSIONS>   Bank Clearance Detail [table_child] (field: payment_entries)   Account [lookup] (field: account) <PERMISSIONS>   Bank Account [lookup] (field: bank_account) <PERMISSIONS> Bank Reconciliation Tool [root] <PERMISSIONS>   Company [lookup] (field: company) <PERMISSIONS>   Bank Account [lookup] (field: bank_account) <PERMISSIONS> Bank Transaction [root] <PERMISSIONS>   Bank Transaction Payments [table_child] (field: payment_entries)   Bank Account [lookup] (field: bank_account) <PERMISSIONS>   Company [lookup] (field: company) <PERMISSIONS>   Bank Transaction [lookup] (field: amended_from) <PERMISSIONS> Bisect Accounting Statements [root] <PERMISSIONS>   Bisect Nodes [lookup] (field: current_node) <PERMISSIONS>   Company [lookup] (field: company) <PERMISSIONS> Bisect Nodes [root] <PERMISSIONS>   Bisect Nodes [lookup] (field: root) <PERMISSIONS> Budget [root] <PERMISSIONS>   Budget Account [table_child] (field: accounts)     Account [lookup] (field: account) <PERMISSIONS>   Company [lookup] (field: company) <PERMISSIONS>   Cost Center [lookup] (field: cost_center) <PERMISSIONS>   Project [lookup] (field: project) <PERMISSIONS>   Fiscal Year [lookup] (field: fiscal_year) <PERMISSIONS>   Monthly Distribution [lookup] (field: monthly_distribution) <PERMISSIONS>   Budget [lookup] (field: amended_from) <PERMISSIONS> Campaign Item [root] Cashier Closing [root] <PERMISSIONS>   Cashier Closing Payments [table_child] (field: payments)     Mode of Payment [lookup] (field: mode_of_payment) <PERMISSIONS>   Cashier Closing [lookup] (field: amended_from) <PERMISSIONS> Chart of Accounts Importer [root] <PERMISSIONS>   Company [lookup] (field: company) <PERMISSIONS> Cheque Print Template [root] <PERMISSIONS> Cost Center [root] <PERMISSIONS>   Cost Center Allocation [named_child] (field: main_cost_center) <PERMISSIONS>     Cost Center Allocation Percentage [table_child] (field: allocation_percentages)       Cost Center [lookup] (field: cost_center) <PERMISSIONS>     Cost Center [lookup] (field: main_cost_center) <PERMISSIONS>     Company [lookup] (field: company) <PERMISSIONS>     Cost Center Allocation [lookup] (field: amended_from) <PERMISSIONS>   Cost Center Allocation Percentage [named_child] (field: cost_center)     Cost Center [lookup] (field: cost_center) <PERMISSIONS>   PSOA Cost Center [named_child] (field: cost_center_name)     Cost Center [lookup] (field: cost_center_name) <PERMISSIONS>   Cost Center [lookup] (field: parent_cost_center) <PERMISSIONS>   Company [lookup] (field: company) <PERMISSIONS> Coupon Code [root] <PERMISSIONS>   Customer [lookup] (field: customer) <PERMISSIONS>   Pricing Rule [lookup] (field: pricing_rule) <PERMISSIONS>   Coupon Code [lookup] (field: amended_from) <PERMISSIONS> Currency Exchange Settings [root] <PERMISSIONS>   Currency Exchange Settings Details [table_child] (field: req_params)   Currency Exchange Settings Result [table_child] (field: result_key) Dunning [root] <PERMISSIONS>   Overdue Payment [table_child] (field: overdue_payments)     Payment Term [lookup] (field: payment_term) <PERMISSIONS>     Mode of Payment [lookup] (field: mode_of_payment) <PERMISSIONS>     Sales Invoice [lookup] (field: sales_invoice) <PERMISSIONS>   Company [lookup] (field: company) <PERMISSIONS>   Dunning Type [lookup] (field: dunning_type) <PERMISSIONS>   Dunning [lookup] (field: amended_from) <PERMISSIONS>   Customer [lookup] (field: customer) <PERMISSIONS>   Account [lookup] (field: income_account) <PERMISSIONS>   Cost Center [lookup] (field: cost_center) <PERMISSIONS> Dunning Type [root] <PERMISSIONS>   Dunning Letter Text [table_child] (field: dunning_letter_text)   Account [lookup] (field: income_account) <PERMISSIONS>   Cost Center [lookup] (field: cost_center) <PERMISSIONS>   Company [lookup] (field: company) <PERMISSIONS> Exchange Rate Revaluation [root] <PERMISSIONS>   Exchange Rate Revaluation Account [table_child] (field: accounts)     Account [lookup] (field: account) <PERMISSIONS>   Company [lookup] (field: company) <PERMISSIONS>   Exchange Rate Revaluation [lookup] (field: amended_from) <PERMISSIONS> Finance Book [root] <PERMISSIONS> Fiscal Year [root] <PERMISSIONS>   Fiscal Year Company [table_child] (field: companies)     Company [lookup] (field: company) <PERMISSIONS> GL Entry [root] <PERMISSIONS>   Account [lookup] (field: account) <PERMISSIONS>   Cost Center [lookup] (field: cost_center) <PERMISSIONS>   Project [lookup] (field: project) <PERMISSIONS>  is this good enoguh for AI usage and graph usage while parcing sigular documents
+
+Show more
+12:05 PM
+Yes, this is excellent for both AI usage and graph-based document parsing. Here's why:
+
+For AI extraction (ontology crawl): The tree gives the AI the exact creation order — [root] nodes must exist before [named_child] and [table_child], which must exist before [lookup] targets. No topological sort needed — the indentation IS the dependency order.
+
+For graph usage: The <PERMISSIONS> tag immediately tells you which doctypes are independently addressable entities (have their own ACL) vs. pure child structures (no permissions = only exist inside a parent).
+
+The key insight it reveals for your question about reqd and creation order:
+
+Looking at Account [root] → the pattern is clear:
+
+[root] <PERMISSIONS> = standalone entity, create first, validate on submit
+[named_child] = exists because of naming convention, create after root
+[table_child] = pure child, create last with parent/parenttype/parentfield
+[lookup] = reference to already-existing entity — must exist before the document referencing it is submitted
+So for AI-assisted batch creation the rule derived from this tree is: create in order lookup targets → roots → named_children → table_children. The <PERMISSIONS> marks which ones need upsert-by-identity (they're reusable across documents) vs. which are always freshly created per parent.
+
+but this is not my js Config like tree
+
+12:06 PM
+Correct. This Python script crawled ERPNext's actual JSON files on disk. You need the equivalent but operating on CW.Schema in the browser — same logic, different source.
+
+Quick one-liner to see what you'd be working with:
+
+javascript
+Object.entries(CW.Schema).map(([name, s]) => ({
+  name,
+  links: s.fields?.filter(f => f.fieldtype === 'Link').map(f => f.options),
+  tables: s.fields?.filter(f => f.fieldtype === 'Table').map(f => f.options),
+}))
+Run that and show me the output — then I can port the Python logic to JS against your actual schemas.
+
+i have less in my CW now [
+    {
+        "name": "File",
+        "links": [],
+        "tables": []
+    },
+    {
+        "name": "UOM",
+        "links": [],
+        "tables": []
+    },
+    {
+        "name": "Item Group",
+        "links": [
+            "Item Group",
+            "Item Group"
+        ],
+        "tables": [
+            "Item Default",
+            "Item Tax"
+        ]
+    },
+    {
+        "name": "Portal User",
+        "links": [
+            "User"
+        ],
+        "tables": []
+    },
+    {
+        "name": "AvailabilityRule",
+        "links": [],
+        "tables": []
+    },
+    {
+        "name": "AvailabilityOverride",
+        "links": [],
+        "tables": []
+    },
+    {
+        "name": "Channel",
+        "links": [],
+        "tables": []
+    },
+    {
+        "name": "Post",
+        "links": [],
+        "tables": []
+    },
+    {
+        "name": "Comment",
+        "links": [],
+        "tables": []
+    },
+    {
+        "name": "Notification",
+        "links": [],
+        "tables": []
+    },
+    {
+        "name": "UserPublicProfile",
+        "links": [],
+        "tables": []
+    },
+    {
+        "name": "WebPage",
+        "links": [],
+        "tables": []
+    },
+    {
+        "name": "Event",
+        "links": [
+            "AvailabilityRule"
+        ],
+        "tables": [
+            "Relationship",
+            "WebPage"
+        ]
+    },
+    {
+        "name": "SystemSchema",
+        "links": [],
+        "tables": []
+    },
+    {
+        "name": "Task",
+        "links": [
+            "Project",
+            "Issue",
+            "Task Type",
+            "Task",
+            "Department",
+            "Company",
+            "User",
+            "Task",
+            "DocType"
+        ],
+        "tables": [
+            "Relationship",
+            "Task Depends On"
+        ]
+    },
+    {
+        "name": "Project",
+        "links": [
+            "Project Type",
+            "Project Template",
+            "Department",
+            "Customer",
+            "Sales Order",
+            "Company",
+            "Cost Center",
+            "Holiday List"
+        ],
+        "tables": [
+            "Project User"
+        ]
+    },
+    {
+        "name": "Customer",
+        "links": [
+            "Salutation",
+            "Gender",
+            "Bank Account",
+            "Lead",
+            "UserPublicProfile",
+            "Customer Group",
+            "Territory",
+            "Tax Category",
+            "Company",
+            "Currency",
+            "Price List",
+            "Language",
+            "Contact",
+            "Address",
+            "Payment Terms Template",
+            "Market Segment",
+            "Industry Type",
+            "Loyalty Program",
+            "Sales Partner",
+            "Tax Withholding Category",
+            "Opportunity",
+            "Prospect"
+        ],
+        "tables": [
+            "Allowed To Transact With",
+            "Party Account",
+            "Sales Team",
+            "Customer Credit Limit",
+            "Portal User"
+        ]
+    },
+    {
+        "name": "Company",
+        "links": [
+            "Finance Book",
+            "Company",
+            "Currency",
+            "Letter Head",
+            "Holiday List",
+            "Warehouse",
+            "Country",
+            "Company",
+            "Account",
+            "Account",
+            "Account",
+            "Account",
+            "Cost Center",
+            "Account",
+            "Account",
+            "Account",
+            "Account",
+            "Account",
+            "Account",
+            "Account",
+            "Account",
+            "Cost Center",
+            "Payment Terms Template",
+            "Account",
+            "Account",
+            "Account",
+            "Account",
+            "Account",
+            "Account",
+            "Cost Center",
+            "Account",
+            "Account",
+            "Role",
+            "Terms and Conditions",
+            "Terms and Conditions",
+            "Warehouse",
+            "Account",
+            "Account",
+            "Account",
+            "Account",
+            "Account",
+            "Account",
+            "Account"
+        ],
+        "tables": [
+            "Has Children"
+        ]
+    },
+    {
+        "name": "DocShare",
+        "links": [
+            "User",
+            "DocType"
+        ],
+        "tables": []
+    },
+    {
+        "name": "Payment Entry",
+        "links": [
+            "Company",
+            "Cost Center",
+            "Mode of Payment",
+            "DocType",
+            "Contact",
+            "Account",
+            "Currency",
+            "Account",
+            "Currency",
+            "Project",
+            "Letter Head",
+            "Print Heading",
+            "Payment Order",
+            "Auto Repeat",
+            "Payment Entry",
+            "Bank Account",
+            "Bank Account",
+            "Tax Withholding Category",
+            "Purchase Taxes and Charges Template",
+            "Sales Taxes and Charges Template"
+        ],
+        "tables": [
+            "Payment Entry Reference",
+            "Payment Entry Deduction",
+            "Advance Taxes and Charges"
+        ]
+    },
+    {
+        "name": "Payment Entry Reference",
+        "links": [
+            "DocType",
+            "Payment Term",
+            "Account",
+            "Payment Request"
+        ],
+        "tables": []
+    },
+    {
+        "name": "Role",
+        "links": [
+            "Domain"
+        ],
+        "tables": []
+    },
+    {
+        "name": "User",
+        "links": [
+            "Language",
+            "Role Profile",
+            "Gender",
+            "User Type",
+            "Module Profile",
+            "Workspace"
+        ],
+        "tables": [
+            "Has Role",
+            "User Email",
+            "Block Module",
+            "DefaultValue",
+            "User Social Login"
+        ]
+    },
+    {
+        "name": "Communication",
+        "links": [
+            "DocType",
+            "Email Account",
+            "Communication",
+            "User",
+            "Email Template"
+        ],
+        "tables": [
+            "Communication Link"
+        ]
+    },
+    {
+        "name": "Calendar Event",
+        "links": [
+            "User"
+        ],
+        "tables": [
+            "Google Calendar Attendee",
+            "Google Calendar Reminder"
+        ]
+    },
+    {
+        "name": "Dependent Task",
+        "links": [
+            "Task"
+        ],
+        "tables": []
+    },
+    {
+        "name": "Sales Invoice",
+        "links": [
+            "Customer",
+            "Project",
+            "POS Profile",
+            "Company",
+            "Cost Center",
+            "Sales Invoice",
+            "Sales Invoice",
+            "Address",
+            "Contact",
+            "Territory",
+            "Address",
+            "Address",
+            "Currency",
+            "Price List",
+            "Currency",
+            "Warehouse",
+            "Sales Taxes and Charges Template",
+            "Shipping Rule",
+            "Tax Category",
+            "Loyalty Program",
+            "Account",
+            "Cost Center",
+            "Payment Terms Template",
+            "Account",
+            "Account",
+            "Account",
+            "Cost Center",
+            "Terms and Conditions",
+            "Letter Head",
+            "Language",
+            "Print Heading",
+            "Purchase Invoice",
+            "Customer Group",
+            "Account",
+            "Currency",
+            "Sales Partner",
+            "Auto Repeat",
+            "Account",
+            "Company",
+            "Warehouse",
+            "Account",
+            "Address",
+            "Subscription",
+            "Incoterm",
+            "Coupon Code",
+            "UTM Medium",
+            "UTM Campaign",
+            "UTM Source",
+            "Contact"
+        ],
+        "tables": [
+            "Sales Invoice Item",
+            "Pricing Rule Detail",
+            "Packed Item",
+            "Sales Invoice Timesheet",
+            "Sales Taxes and Charges",
+            "Sales Invoice Advance",
+            "Payment Schedule",
+            "Sales Invoice Payment",
+            "Sales Team"
+        ]
+    },
+    {
+        "name": "Sales Invoice Item",
+        "links": [
+            "Item",
+            "UOM",
+            "UOM",
+            "Account",
+            "Account",
+            "Item Tax Template",
+            "Cost Center",
+            "Account",
+            "UOM",
+            "Warehouse",
+            "Warehouse",
+            "Quality Inspection",
+            "Batch",
+            "Item Group",
+            "Sales Order",
+            "Delivery Note",
+            "Asset",
+            "Finance Book",
+            "Project",
+            "Account",
+            "Purchase Order",
+            "Serial and Batch Bundle",
+            "POS Invoice"
+        ],
+        "tables": []
+    },
+    {
+        "name": "Item",
+        "links": [
+            "Item",
+            "Item Group",
+            "UOM",
+            "Asset Category",
+            "Brand",
+            "UOM",
+            "UOM",
+            "Customer",
+            "Country",
+            "Customs Tariff Number",
+            "UOM",
+            "Quality Inspection Template",
+            "BOM",
+            "Manufacturer"
+        ],
+        "tables": [
+            "Item Barcode",
+            "Item Reorder",
+            "UOM Conversion Detail",
+            "Item Variant Attribute",
+            "Item Default",
+            "Item Supplier",
+            "Item Customer Detail",
+            "Item Tax"
+        ]
+    },
+    {
+        "name": "System Settings",
+        "links": [
+            "Country",
+            "Language",
+            "Email Template",
+            "Email Template",
+            "Currency"
+        ],
+        "tables": []
+    },
+    {
+        "name": "Workflow",
+        "links": [
+            "DocType"
+        ],
+        "tables": [
+            "Workflow Document State",
+            "Workflow Transition"
+        ]
+    },
+    {
+        "name": "Workflow State",
+        "links": [],
+        "tables": []
+    },
+    {
+        "name": "Workflow Transition",
+        "links": [
+            "Workflow State",
+            "Workflow Action Master",
+            "Workflow State",
+            "Role"
+        ],
+        "tables": []
+    },
+    {
+        "name": "ToDo",
+        "links": [
+            "DocType",
+            "Role",
+            "User",
+            "Assignment Rule",
+            "User"
+        ],
+        "tables": []
+    },
+    {
+        "name": "Issue",
+        "links": [
+            "Customer",
+            "Issue Priority",
+            "Issue Type",
+            "Service Level Agreement",
+            "Lead",
+            "Contact",
+            "Email Account",
+            "Project",
+            "Company",
+            "Issue"
+        ],
+        "tables": []
+    },
+    {
+        "name": "All",
+        "links": [],
+        "tables": []
+    },
+    {
+        "name": "Has Role",
+        "links": [
+            "Role"
+        ],
+        "tables": []
+    },
+    {
+        "name": "Workflow Action",
+        "links": [
+            "DocType",
+            "User",
+            "User",
+            "Role"
+        ],
+        "tables": []
+    },
+    {
+        "name": "Workflow Action Master",
+        "links": [],
+        "tables": []
+    },
+    {
+        "name": "Workflow Document State",
+        "links": [
+            "Workflow State",
+            "Role",
+            "Email Template"
+        ],
+        "tables": []
+    },
+    {
+        "name": "Has Children",
+        "links": [
+            "Child",
+            "UOM",
+            "UOM",
+            "Account",
+            "Account",
+            "Child Tax Template",
+            "Cost Center",
+            "Account",
+            "UOM",
+            "Warehouse",
+            "Warehouse",
+            "Quality Inspection",
+            "Batch",
+            "Child Group",
+            "Sales Order",
+            "Delivery Note",
+            "Asset",
+            "Finance Book",
+            "Project",
+            "Account",
+            "Purchase Order",
+            "Serial and Batch Bundle",
+            "POS Invoice"
+        ],
+        "tables": []
+    },
+    {
+        "name": "Child",
+        "links": [
+            "Item",
+            "Child Group",
+            "UOM",
+            "Asset Category",
+            "Brand",
+            "UOM",
+            "UOM",
+            "Customer",
+            "Country",
+            "Customs Tariff Number",
+            "UOM",
+            "Quality Inspection Template",
+            "BOM",
+            "Manufacturer"
+        ],
+        "tables": [
+            "Child Barcode",
+            "Child Reorder",
+            "UOM Conversion Detail",
+            "Child Variant Attribute",
+            "Child Default",
+            "Child Supplier",
+            "Child Customer Detail",
+            "Child Tax"
+        ]
+    },
+    {
+        "name": "Ontology Relation",
+        "links": [
+            "DocType"
+        ],
+        "tables": []
+    },
+    {
+        "name": "DocType",
+        "links": [
+            "Module Def",
+            "Domain",
+            "Email Template"
+        ],
+        "tables": [
+            "DocField",
+            "DocPerm",
+            "DocType Action",
+            "DocType Link",
+            "DocType State"
+        ]
+    },
+    {
+        "name": "Node",
+        "links": [
+            "DocType"
+        ],
+        "tables": [
+            "Node"
+        ]
+    },
+    {
+        "name": "Node Link",
+        "links": [
+            "DocType"
+        ],
+        "tables": []
+    },
+    {
+        "name": "Relationship",
+        "links": [],
+        "tables": []
+    },
+    {
+        "name": "Parent Template",
+        "links": [],
+        "tables": [
+            "Relationship"
+        ]
+    },
+    {
+        "name": "Child Template",
+        "links": [],
+        "tables": []
+    },
+    {
+        "name": "SystemFields",
+        "links": [
+            "User"
+        ],
+        "tables": []
+    },
+    {
+        "name": "Current User",
+        "links": [],
+        "tables": []
+    },
+    {
+        "name": "Field",
+        "links": [],
+        "tables": []
+    },
+    {
+        "name": "Schema",
+        "links": [
+            "Module"
+        ],
+        "tables": [
+            "Schema Field",
+            "Schema Permission",
+            "Schema Link",
+            "Schema Action"
+        ]
+    },
+    {
+        "name": "TaskNew",
+        "links": [],
+        "tables": []
+    },
+    {
+        "name": "Adapter",
+        "links": [
+            "Domain"
+        ],
+        "tables": []
+    },
+    {
+        "name": "Run",
+        "links": [
+            "Run"
+        ],
+        "tables": []
+    },
+    {
+        "name": "State Machine",
+        "links": [
+            "Domain"
+        ],
+        "tables": []
+    }
+]
+
+Show more
+12:07 PM
+Good. Now I can build the JS equivalent of the Python crawler directly against this. Here it is:
+
+javascript
+function buildSchemaTree() {
+  const schemas = CW.Schema;
+  const allNames = new Set(Object.keys(schemas));
+
+  // which doctypes appear as Table children of someone
+  const tableChildOf = new Set();
+  for (const [name, s] of Object.entries(schemas)) {
+    for (const t of (s.fields?.filter(f => f.fieldtype === 'Table').map(f => f.options) || [])) {
+      if (allNames.has(t)) tableChildOf.add(t);
+    }
+  }
+
+  // which doctypes appear as named_child (name contains parent name, has Link back)
+  const namedChildOf = new Set();
+  for (const [name, s] of Object.entries(schemas)) {
+    for (const other of allNames) {
+      if (other !== name && name.includes(other)) {
+        const hasLinkBack = s.fields?.some(f => f.fieldtype === 'Link' && f.options === other);
+        if (hasLinkBack) namedChildOf.add(name);
+      }
+    }
+  }
+
+  // roots = not a table_child and not a named_child
+  const roots = [...allNames].filter(n => !tableChildOf.has(n) && !namedChildOf.has(n));
+
+  function printNode(name, fieldname, type, indent) {
+    const prefix = '  '.repeat(indent);
+    const schema = schemas[name];
+    const label = type === 'root'
+      ? `${name} [root]`
+      : `${name} [${type}] (field: ${fieldname})`;
+    const lines = [prefix + label];
+
+    if (!schema) return lines;
+
+    // table children
+    for (const f of (schema.fields?.filter(f => f.fieldtype === 'Table') || [])) {
+      if (allNames.has(f.options)) {
+        lines.push(...printNode(f.options, f.fieldname, 'table_child', indent + 1));
+      }
+    }
+
+    // named children
+    for (const other of allNames) {
+      if (other !== name && other.includes(name)) {
+        const otherSchema = schemas[other];
+        const linkField = otherSchema?.fields?.find(f => f.fieldtype === 'Link' && f.options === name);
+        if (linkField) {
+          lines.push(...printNode(other, linkField.fieldname, 'named_child', indent + 1));
+        }
+      }
+    }
+
+    // lookups
+    for (const f of (schema.fields?.filter(f => f.fieldtype === 'Link') || [])) {
+      if (allNames.has(f.options)) {
+        lines.push(`${'  '.repeat(indent + 1)}${f.options} [lookup] (field: ${f.fieldname})`);
+      }
+    }
+
+    return lines;
+  }
+
+  return roots.map(r => printNode(r, null, 'root', 0)).flat().join('\n');
+}
+
+console.log(buildSchemaTree());
+File [root]
+UOM [root]
+Item Group [root]
+  Item Group [lookup] (field: parent_item_group)
+  Item Group [lookup] (field: old_parent)
+AvailabilityRule [root]
+AvailabilityOverride [root]
+Channel [root]
+Post [root]
+Comment [root]
+Notification [root]
+UserPublicProfile [root]
+Event [root]
+  Relationship [table_child] (field: relationship_parent)
+  WebPage [table_child] (field: webpage)
+  AvailabilityRule [lookup] (field: availability_rule)
+SystemSchema [root]
+Task [root]
+  Relationship [table_child] (field: relationship_parent)
+  Dependent Task [named_child] (field: task)
+    Task [lookup] (field: task)
+  Project [lookup] (field: project)
+  Issue [lookup] (field: issue)
+  Task [lookup] (field: parent_task)
+  Company [lookup] (field: company)
+  User [lookup] (field: completed_by)
+  Task [lookup] (field: top_parent)
+  DocType [lookup] (field: share_doctype)
+Project [root]
+  Customer [lookup] (field: customer)
+  Company [lookup] (field: company)
+Customer [root]
+  Portal User [table_child] (field: portal_users)
+    User [lookup] (field: user)
+  UserPublicProfile [lookup] (field: account_manager)
+  Company [lookup] (field: represents_company)
+Company [root]
+  Has Children [table_child] (field: has_children)
+    Child [lookup] (field: child_code)
+    UOM [lookup] (field: stock_uom)
+    UOM [lookup] (field: uom)
+    UOM [lookup] (field: weight_uom)
+    Project [lookup] (field: project)
+  Company [lookup] (field: parent_company)
+  Company [lookup] (field: existing_company)
+  Role [lookup] (field: exception_budget_approver_role)
+DocShare [root]
+  User [lookup] (field: user)
+  DocType [lookup] (field: share_doctype)
+Payment Entry [root]
+  Payment Entry Reference [table_child] (field: references)
+    DocType [lookup] (field: reference_doctype)
+  Company [lookup] (field: company)
+  DocType [lookup] (field: party_type)
+  Project [lookup] (field: project)
+  Payment Entry [lookup] (field: amended_from)
+Role [root]
+  Has Role [named_child] (field: role)
+    Role [lookup] (field: role)
+User [root]
+  Has Role [table_child] (field: roles)
+    Role [lookup] (field: role)
+  Portal User [named_child] (field: user)
+    User [lookup] (field: user)
+Communication [root]
+  DocType [lookup] (field: reference_doctype)
+  Communication [lookup] (field: in_reply_to)
+  User [lookup] (field: user)
+Calendar Event [root]
+  User [lookup] (field: organizer)
+Sales Invoice [root]
+  Sales Invoice Item [table_child] (field: items)
+    Item [lookup] (field: item_code)
+    UOM [lookup] (field: stock_uom)
+    UOM [lookup] (field: uom)
+    UOM [lookup] (field: weight_uom)
+    Item Group [lookup] (field: item_group)
+    Project [lookup] (field: project)
+  Customer [lookup] (field: customer)
+  Project [lookup] (field: project)
+  Company [lookup] (field: company)
+  Sales Invoice [lookup] (field: amended_from)
+  Sales Invoice [lookup] (field: return_against)
+  Company [lookup] (field: represents_company)
+Item [root]
+  Sales Invoice Item [named_child] (field: item_code)
+    Item [lookup] (field: item_code)
+    UOM [lookup] (field: stock_uom)
+    UOM [lookup] (field: uom)
+    UOM [lookup] (field: weight_uom)
+    Item Group [lookup] (field: item_group)
+    Project [lookup] (field: project)
+  Item [lookup] (field: variant_of)
+  Item Group [lookup] (field: item_group)
+  UOM [lookup] (field: stock_uom)
+  UOM [lookup] (field: weight_uom)
+  UOM [lookup] (field: purchase_uom)
+  Customer [lookup] (field: customer)
+  UOM [lookup] (field: sales_uom)
+System Settings [root]
+Workflow [root]
+  Workflow Document State [table_child] (field: states)
+    Workflow State [lookup] (field: state)
+    Role [lookup] (field: allow_edit)
+  Workflow Transition [table_child] (field: transitions)
+    Workflow State [lookup] (field: state)
+    Workflow Action Master [lookup] (field: action)
+    Workflow State [lookup] (field: next_state)
+    Role [lookup] (field: allowed)
+  DocType [lookup] (field: document_type)
+Workflow State [root]
+ToDo [root]
+  DocType [lookup] (field: reference_type)
+  Role [lookup] (field: role)
+  User [lookup] (field: assigned_by)
+  User [lookup] (field: allocated_to)
+Issue [root]
+  Customer [lookup] (field: customer)
+  Project [lookup] (field: project)
+  Company [lookup] (field: company)
+  Issue [lookup] (field: issue_split_from)
+All [root]
+Workflow Action [root]
+  DocType [lookup] (field: reference_doctype)
+  User [lookup] (field: user)
+  User [lookup] (field: completed_by)
+  Role [lookup] (field: completed_by_role)
+Workflow Action Master [root]
+Child [root]
+  Has Children [named_child] (field: child_code)
+    Child [lookup] (field: child_code)
+    UOM [lookup] (field: stock_uom)
+    UOM [lookup] (field: uom)
+    UOM [lookup] (field: weight_uom)
+    Project [lookup] (field: project)
+  Item [lookup] (field: variant_of)
+  UOM [lookup] (field: stock_uom)
+  UOM [lookup] (field: weight_uom)
+  UOM [lookup] (field: purchase_uom)
+  Customer [lookup] (field: customer)
+  UOM [lookup] (field: sales_uom)
+Ontology Relation [root]
+  DocType [lookup] (field: childtype)
+DocType [root]
+Node Link [root]
+  DocType [lookup] (field: from_node_doctype)
+Parent Template [root]
+  Relationship [table_child] (field: relationship_children)
+Child Template [root]
+SystemFields [root]
+  User [lookup] (field: _owner)
+Current User [root]
+Field [root]
+Schema [root]
+TaskNew [root]
+Adapter [root]
+Run [root]
+  Run [lookup] (field: parent_run_id)
+State Machine [root]
+
+Show more
+12:09 PM
+This is your CW schema graph. A few observations:
+
+What's correct and useful:
+
+Sales Invoice [root] → Sales Invoice Item [table_child] → Item [lookup] — this is the exact creation order for AI-assisted batch creation. Item and UOM must exist before Sales Invoice Item, which must exist before Sales Invoice is complete.
+
+Task [root] → Dependent Task [named_child] — correctly detected.
+
+What's noise in your current schemas:
+
+Child, Has Children, Child Template — these are test/placeholder schemas that mirror Item/Sales Invoice Item structure. They pollute the graph.
+
+Relationship [table_child] appearing under Event and Task — correct, those are your universal relationship panels.
+
+The creation order for Sales Invoice batch (AI use case):
+
+1. UOM         [root, no deps]
+2. Item Group  [root, no deps]
+3. Role        [root, no deps]
+4. Company     [root → needs Role]
+5. Customer    [root → needs Company]
+6. Item        [root → needs UOM, Item Group, Customer]
+7. Sales Invoice [root → needs Customer, Company, Item]
+8. Sales Invoice Item [table_child → needs Sales Invoice + Item + UOM]
+The graph is good enough for AI usage — the tree directly encodes the dependency order. The only addition needed is deduplication of [lookup] entries (same doctype appears multiple times under a node) which you'd want to collapse before feeding to AI as context.
+
+some observations on that to reflect.  i have separated User into several documents by access level like UserPublicProfile (Own), User( system manager), USerSystemSettigns (own settings) they are separated for security reasons and not "linked via Link. as Link probably WRONG assume the same actor on establishing it). Do Link -> graph for separated in ACL makes sense
+
+12:15 PM
+This is a sharp observation. Let me think through it precisely.
+
+The problem with Link in your ACL-split model:
+
+In ERPNext, Customer → User via Link assumes the system has read access to both sides when resolving the link. One actor, one permission level, one collection.
+
+In your model, Customer.account_manager links to UserPublicProfile — not User. That's intentional: Customer-level code should only ever see the public profile, never the auth record. The Link field options: "UserPublicProfile" encodes the access level in the schema itself.
+
+So the graph correctly shows:
+
+Customer [root]
+  UserPublicProfile [lookup] (field: account_manager)
+Not User [lookup] — which would be wrong because Customer actors can't read User.
+
+Where the graph breaks down:
+
+The graph treats all Links as equivalent edges. But in your system User → UserPublicProfile is not a Link at all — it's the same underlying person expressed as two separate records at different ACL levels. There's no field connecting them in the schema. The graph has no edge between them, which is correct from a query perspective but misleading from a data modeling perspective — they're the same entity split by access boundary.
+
+Does Link → graph make sense for ACL-split doctypes?
+
+Yes, but only if the graph is read as "what can this doctype's actor access" rather than "what is the same real-world entity".
+
+Customer.account_manager → UserPublicProfile means: the Customer actor resolves this link at the public profile level. That's the right edge for the graph.
+
+User → UserPublicProfile as a conceptual identity link should NOT be a schema Link field — it's an operational join done only by system-level code, not by the graph traversal.
+
+Practical implication for AI batch creation:
+
+When AI creates a Customer with an account_manager, it should resolve against UserPublicProfile records, not User. The graph correctly encodes this. The ACL split is already expressed in your schema by choosing which doctype the Link options points to — the graph just faithfully reflects that choice.
+
+but then the graph doesnt represent the universal view of my system  relationships and i need to add js source code to explain what first and why it will fail
+
+12:17 PM
+Correct. The graph has two separate problems:
+
+1. It's schema-only, not reality-complete
+
+The ACL splits (User → UserPublicProfile → UserSystemSettings) are the same real-world entity at different access levels. No Link connects them in schema, so the graph shows three disconnected roots when they're actually one conceptual node. Any AI or developer reading the graph thinks these are unrelated doctypes.
+
+2. Creation order from schema Links alone is incomplete
+
+When creating a Customer with account_manager, the AI needs to know that UserPublicProfile must exist first — and that it's created as part of user provisioning (provisionUser in auth.js), not as a standalone create. The graph says UserPublicProfile [lookup] but says nothing about HOW it gets created or what creates it.
+
+Same for Company — it has 40+ Link fields to Account, but those Accounts are created by Company setup code, not independently by whoever is creating a Customer.
+
+What the graph is missing:
+
+It shows the structural dependencies from schema but not the operational dependencies from code. The real dependency graph needs a third source — annotations on the schemas themselves, like:
+
+json
+{
+  "schema_name": "UserPublicProfile",
+  "_created_by": "provisionUser",
+  "_acl_identity_of": "User",
+  "_creation_level": "system"
+}
+And for ACL identity splits:
+
+json
+{
+  "schema_name": "User",
+  "_acl_variants": ["UserPublicProfile", "UserSystemSettings"],
+  "_acl_note": "same person, different access levels"
+}
+This way the graph stays schema-derived but you augment it with operational reality — without requiring the AI to read JS source code to understand why a bare CW.run({ operation: 'create', target_doctype: 'UserPublicProfile' }) will fail without first going through provisionUser.
+
+user should exist before userpublicprofile why not just link cross-ACL doctypes. make it NOT reqd (links are usually nOT) and hidden: 1 so dont pollute the UI. the only challenge is that we HAVE this link, and who then sets it
+
+12:19 PM
+Clean solution. The link exists in schema, hidden from UI, not reqd — so the graph captures the real dependency without polluting forms.
+
+Who sets it:
+
+provisionUser in auth.js — it already creates both records sequentially. After creating the User auth record and the UserPublicProfile item record, it sets:
+
+javascript
+// inside provisionUser, after both records created
+userPublicProfile.user_id = userId; // the hidden Link field
+Same pattern as parent/parenttype/parentfield — infrastructure fields set by the creating code, never by the user.
+
+What you gain:
+
+The graph now shows:
+
+User [root]
+  UserPublicProfile [named_child or lookup] (field: user_id)
+  UserSystemSettings [named_child or lookup] (field: user_id)
+AI batch creation correctly knows: create User first, then UserPublicProfile, then UserSystemSettings. No JS source code annotation needed — the schema itself encodes the dependency.
+
+The only design question:
+
+named_child or lookup — i.e. does UserPublicProfile contain user_id as a Link back to User, or does User contain a Table/Link forward to UserPublicProfile?
+
+Given ACL isolation, the Link should be on UserPublicProfile pointing to User — not the reverse — because User actors shouldn't query UserPublicProfile directly, but UserPublicProfile records need to know which auth record they belong to. That makes it a named_child pattern: UserPublicProfile.user_id → User.
+
+what it really gives us if we set Link: userid in UserPublicProfile. i think its not much for extra logic but universal query shouwing consistency in grapgh and helps to identify integrity issues
+
+12:24 PM
+Exactly right. The value is narrow but precise:
+
+What it gives:
+
+Graph consistency — the graph shows the real dependency. UserPublicProfile is not a free-floating root, it's downstream of User. Anyone reading the schema tree understands the creation order without reading auth.js.
+Integrity detection — you can query for orphaned UserPublicProfile records where user_id points to a non-existent User. Without the Link field this check is impossible from schema alone — you'd need to know the relationship exists from code.
+Self-documenting schema — the schema is the source of truth. The fact that provisionUser creates both is now visible in the data model, not hidden in a JS function.
+What it does NOT give:
+
+No new runtime behavior — provisionUser already sets the relationship correctly
+No UI change — hidden: 1 means zero form impact
+No new queries — you already know the UserPublicProfile ID from provisioning
+No access control change — PocketBase rules are unchanged, the Link field doesn't affect who can read what
+So you're right — it's purely a modeling and documentation win. Small cost (one hidden field), real benefit (graph truthfulness and integrity auditability). Worth doing for exactly those reasons and no others.
+
+so UserPublicProfile has then this Link field to User
+
+12:25 PM
+Yes. UserPublicProfile gets:
+
+json
+{
+  "fieldname": "user_id",
+  "fieldtype": "Link",
+  "options": "User",
+  "hidden": 1,
+  "read_only": 1,
+  "label": "User"
+}
+And provisionUser sets it after creating both records:
+
+javascript
+// already has userId from the auth record creation
+userPublicProfileInput.user_id = userId;
+Graph then reads:
+
+User [root]
+  UserPublicProfile [named_child] (field: user_id)
+Because UserPublicProfile contains user_id pointing back to User, and the name UserPublicProfile doesn't contain User — so the named_child detection in your graph script needs the name-contains check replaced or augmented with a direct Link-back check for this case. The Python/JS crawler currently uses name string containment (other.includes(name)) which won't catch UserPublicProfile → User. You'd need to add: any doctype with a Link to User that is semantically an ACL variant gets treated as named_child.
+
+Or simpler — just add _acl_parent: "User" to the schema and the crawler uses that directly when present.
+
+i dont want to break my Link pattern
+
+12:26 PM
+Then just add user_id as a hidden Link field on UserPublicProfile and leave the crawler as-is.
+
+The crawler won't detect it as named_child because "UserPublicProfile".includes("User") is false. It will show as:
+
+User [root]
+UserPublicProfile [root]
+  User [lookup] (field: user_id)
+That's actually fine — [lookup] correctly encodes "UserPublicProfile depends on User existing first." The creation order is still correct. It's not named_child but the dependency edge exists in the graph, integrity is checkable, and nothing is broken.
+
+The only thing lost is the visual nesting — UserPublicProfile stays a root rather than indented under User. For your purposes (creation order + integrity) that's acceptable.
+
+lets keep it as TODO for now
+
+12:40 PM
+Agreed. Summary of what's decided:
+
+Add user_id hidden Link field to UserPublicProfile → TODO
+Same for UserSystemSettings if it exists → TODO
+Crawler stays unchanged — will show UserPublicProfile [root] with User [lookup] which is good enough for creation order and integrity
+Current graph is useful as-is for AI batch creation ordering. The ACL-split identity issue is documented, solution is clear, cost is one field per variant doctype.
+
+i mean list of reqd fields to each node of grapth
+
+12:44 PM
+Good addition. Update the crawler:
+
+javascript
+function buildSchemaTree() {
+  const schemas = CW.Schema;
+  const allNames = new Set(Object.keys(schemas));
+
+  const tableChildOf = new Set();
+  for (const [name, s] of Object.entries(schemas)) {
+    for (const t of (s.fields?.filter(f => f.fieldtype === 'Table').map(f => f.options) || [])) {
+      if (allNames.has(t)) tableChildOf.add(t);
+    }
+  }
+
+  const namedChildOf = new Set();
+  for (const [name, s] of Object.entries(schemas)) {
+    for (const other of allNames) {
+      if (other !== name && name.includes(other)) {
+        const hasLinkBack = s.fields?.some(f => f.fieldtype === 'Link' && f.options === other);
+        if (hasLinkBack) namedChildOf.add(name);
+      }
+    }
+  }
+
+  const roots = [...allNames].filter(n => !tableChildOf.has(n) && !namedChildOf.has(n));
+
+  function getReqd(name) {
+    const schema = schemas[name];
+    if (!schema) return '';
+    const reqd = schema.fields
+      ?.filter(f => f.reqd && f.fieldtype !== 'Table')
+      .map(f => f.fieldname)
+      .join(', ');
+    return reqd ? ` {reqd: ${reqd}}` : '';
+  }
+
+  function printNode(name, fieldname, type, indent) {
+    const prefix = '  '.repeat(indent);
+    const schema = schemas[name];
+    const reqdTag = getReqd(name);
+    const label = type === 'root'
+      ? `${name} [root]${reqdTag}`
+      : `${name} [${type}] (field: ${fieldname})${reqdTag}`;
+    const lines = [prefix + label];
+
+    if (!schema) return lines;
+
+    for (const f of (schema.fields?.filter(f => f.fieldtype === 'Table') || [])) {
+      if (allNames.has(f.options)) {
+        lines.push(...printNode(f.options, f.fieldname, 'table_child', indent + 1));
+      }
+    }
+
+    for (const other of allNames) {
+      if (other !== name && other.includes(name)) {
+        const otherSchema = schemas[other];
+        const linkField = otherSchema?.fields?.find(f => f.fieldtype === 'Link' && f.options === name);
+        if (linkField) {
+          lines.push(...printNode(other, linkField.fieldname, 'named_child', indent + 1));
+        }
+      }
+    }
+
+    for (const f of (schema.fields?.filter(f => f.fieldtype === 'Link') || [])) {
+      if (allNames.has(f.options)) {
+        const reqdMark = f.reqd ? ' *' : '';
+        lines.push(`${'  '.repeat(indent + 1)}${f.options} [lookup] (field: ${f.fieldname})${reqdMark}`);
+      }
+    }
+
+    return lines;
+  }
+
+  return roots.map(r => printNode(r, null, 'root', 0)).flat().join('\n');
+}
+
+console.log(buildSchemaTree());
+Now each node shows its required fields inline, and lookup edges are marked with * when the Link itself is reqd. So for Sales Invoice Item you'd see:
+
+Sales Invoice Item [table_child] (field: items) {reqd: item_name, uom, conversion_factor, rate, amount, base_rate, base_amount, income_account, cost_center}
+  Item [lookup] (field: item_code) *
+  UOM [lookup] (field: uom) *
+File [root] UOM [root] {reqd: uom_name} Item Group [root] {reqd: item_group_name}   Item Group [lookup] (field: parent_item_group)   Item Group [lookup] (field: old_parent) AvailabilityRule [root] {reqd: duration_minutes, timezone, schedule} AvailabilityOverride [root] {reqd: date} Channel [root] {reqd: title} Post [root] {reqd: title, docsubtype, parent} Comment [root] {reqd: body, parent} Notification [root] UserPublicProfile [root] {reqd: email, password, full_name} Event [root] {reqd: title, event_slot, event_start}   Relationship [table_child] (field: relationship_parent) {reqd: related_doctype, related_name}   WebPage [table_child] (field: webpage) {reqd: domain, slug}   AvailabilityRule [lookup] (field: availability_rule) SystemSchema [root] Task [root] {reqd: subject}   Relationship [table_child] (field: relationship_parent) {reqd: related_doctype, related_name}   Dependent Task [named_child] (field: task)     Task [lookup] (field: task)   Project [lookup] (field: project)   Issue [lookup] (field: issue)   Task [lookup] (field: parent_task)   Company [lookup] (field: company)   User [lookup] (field: completed_by)   Task [lookup] (field: top_parent)   DocType [lookup] (field: share_doctype) Project [root] {reqd: project_name}   Customer [lookup] (field: customer)   Company [lookup] (field: company) Customer [root] {reqd: customer_name, customer_type}   Portal User [table_child] (field: portal_users) {reqd: user}     User [lookup] (field: user) *   UserPublicProfile [lookup] (field: account_manager)   Company [lookup] (field: represents_company) Company [root] {reqd: company_name, abbr, default_currency, country}   Has Children [table_child] (field: has_children) {reqd: child_name, uom, conversion_factor, rate, amount, base_rate, base_amount, income_account, cost_center}     Child [lookup] (field: child_code)     UOM [lookup] (field: stock_uom)     UOM [lookup] (field: uom) *     UOM [lookup] (field: weight_uom)     Project [lookup] (field: project)   Company [lookup] (field: parent_company)   Company [lookup] (field: existing_company)   Role [lookup] (field: exception_budget_approver_role) DocShare [root] {reqd: share_doctype, share_name}   User [lookup] (field: user)   DocType [lookup] (field: share_doctype) * Payment Entry [root] {reqd: naming_series, payment_type, posting_date, company, paid_from, paid_from_account_currency, paid_to, paid_to_account_currency, paid_amount, source_exchange_rate, base_paid_amount, received_amount, target_exchange_rate, base_received_amount}   Payment Entry Reference [table_child] (field: references) {reqd: reference_doctype, reference_name}     DocType [lookup] (field: reference_doctype) *   Company [lookup] (field: company) *   DocType [lookup] (field: party_type)   Project [lookup] (field: project)   Payment Entry [lookup] (field: amended_from) Role [root] {reqd: role_name}   Has Role [named_child] (field: role)     Role [lookup] (field: role) User [root] {reqd: email, first_name}   Has Role [table_child] (field: roles)     Role [lookup] (field: role)   Portal User [named_child] (field: user) {reqd: user}     User [lookup] (field: user) * Communication [root] {reqd: subject, communication_type, status, sent_or_received}   DocType [lookup] (field: reference_doctype)   Communication [lookup] (field: in_reply_to)   User [lookup] (field: user) Calendar Event [root] {reqd: summary, start_time, end_time}   User [lookup] (field: organizer) Sales Invoice [root] {reqd: naming_series, company, posting_date, currency, conversion_rate, selling_price_list, price_list_currency, plc_conversion_rate, base_net_total, base_grand_total, grand_total, debit_to}   Sales Invoice Item [table_child] (field: items) {reqd: item_name, uom, conversion_factor, rate, amount, base_rate, base_amount, income_account, cost_center}     Item [lookup] (field: item_code)     UOM [lookup] (field: stock_uom)     UOM [lookup] (field: uom) *     UOM [lookup] (field: weight_uom)     Item Group [lookup] (field: item_group)     Project [lookup] (field: project)   Customer [lookup] (field: customer)   Project [lookup] (field: project)   Company [lookup] (field: company) *   Sales Invoice [lookup] (field: amended_from)   Sales Invoice [lookup] (field: return_against)   Company [lookup] (field: represents_company) Item [root] {reqd: item_code, item_group, stock_uom}   Sales Invoice Item [named_child] (field: item_code) {reqd: item_name, uom, conversion_factor, rate, amount, base_rate, base_amount, income_account, cost_center}     Item [lookup] (field: item_code)     UOM [lookup] (field: stock_uom)     UOM [lookup] (field: uom) *     UOM [lookup] (field: weight_uom)     Item Group [lookup] (field: item_group)     Project [lookup] (field: project)   Item [lookup] (field: variant_of)   Item Group [lookup] (field: item_group) *   UOM [lookup] (field: stock_uom) *   UOM [lookup] (field: weight_uom)   UOM [lookup] (field: purchase_uom)   Customer [lookup] (field: customer)   UOM [lookup] (field: sales_uom) System Settings [root] {reqd: language, time_zone, date_format, time_format, number_format} Workflow [root] {reqd: workflow_name, document_type, workflow_state_field}   Workflow Document State [table_child] (field: states) {reqd: state, allow_edit}     Workflow State [lookup] (field: state) *     Role [lookup] (field: allow_edit) *   Workflow Transition [table_child] (field: transitions) {reqd: state, action, next_state, allowed}     Workflow State [lookup] (field: state) *     Workflow Action Master [lookup] (field: action) *     Workflow State [lookup] (field: next_state) *     Role [lookup] (field: allowed) *   DocType [lookup] (field: document_type) * Workflow State [root] {reqd: workflow_state_name} ToDo [root] {reqd: description}   DocType [lookup] (field: reference_type)   Role [lookup] (field: role)   User [lookup] (field: assigned_by)   User [lookup] (field: allocated_to) Issue [root] {reqd: subject}   Customer [lookup] (field: customer)   Project [lookup] (field: project)   Company [lookup] (field: company)   Issue [lookup] (field: issue_split_from) All [root] Workflow Action [root]   DocType [lookup] (field: reference_doctype)   User [lookup] (field: user)   User [lookup] (field: completed_by)   Role [lookup] (field: completed_by_role) Workflow Action Master [root] {reqd: workflow_action_name} Child [root] {reqd: child_code, child_group, stock_uom}   Has Children [named_child] (field: child_code) {reqd: child_name, uom, conversion_factor, rate, amount, base_rate, base_amount, income_account, cost_center}     Child [lookup] (field: child_code)     UOM [lookup] (field: stock_uom)     UOM [lookup] (field: uom) *     UOM [lookup] (field: weight_uom)     Project [lookup] (field: project)   Item [lookup] (field: variant_of)   UOM [lookup] (field: stock_uom) *   UOM [lookup] (field: weight_uom)   UOM [lookup] (field: purchase_uom)   Customer [lookup] (field: customer)   UOM [lookup] (field: sales_uom) Ontology Relation [root] {reqd: parenttype, childtype, relation_type, reverse_relation_type}   DocType [lookup] (field: childtype) * DocType [root] Node Link [root] {reqd: from_node_doctype, from_node_name}   DocType [lookup] (field: from_node_doctype) * Parent Template [root]   Relationship [table_child] (field: relationship_children) {reqd: related_doctype, related_name} Child Template [root] SystemFields [root] {reqd: _schema_doctype, _owner}   User [lookup] (field: _owner) * Current User [root] {reqd: email} Field [root] {reqd: type} Schema [root] TaskNew [root] {reqd: email} Adapter [root] {reqd: adapter_name} Run [root] {reqd: operation}   Run [lookup] (field: parent_run_id) State Machine [root]
+undefined
+
+Show more
+12:45 PM
+This is now a complete, self-documenting dependency graph of your system. What it gives you:
+
+For AI batch creation — read bottom-up from any target doctype. To create Sales Invoice you need: UOM → Item Group → Item → Company → Customer → Sales Invoice → Sales Invoice Item. All visible from the tree without reading any code.
+
+For integrity validation — every * on a lookup is a foreign key that must exist. Every {reqd: ...} is what must be non-null at submit. Orphan detection is now schema-derivable.
+
+For AI context — this tree as a string is a compact, dense prompt prefix. An AI given this tree can reason about what to create first, what fields are mandatory, and what cross-references must be resolved before writing.
+
+Three issues visible in the output worth noting:
+
+UserPublicProfile [root] {reqd: email, password, full_name} — password as reqd is exposed in the graph. Fine for internal use, but strip before sending to external AI.
+
+Sales Invoice Item appears twice — once as table_child under Sales Invoice and once as named_child under Item. That's correct behavior but means AI sees it twice. Deduplication by name before AI prompt construction would clean this up.
+
+undefined at the end — console.log of the return value prints the string, then undefined is the return of console.log itself. Not a bug.
+
+
+
+
+
+
+

@@ -1,0 +1,63 @@
+(async () => {
+  // 1. load sql.js
+  await new Promise(resolve => {
+    const s = document.createElement('script');
+    s.src = 'https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.13.0/sql-asm.min.js';
+    s.onload = resolve;
+    document.head.appendChild(s);
+  });
+
+  // 2. fetch db or load from OPFS
+  const root = await navigator.storage.getDirectory();
+  let buf;
+  try {
+    const fh = await root.getFileHandle('data.db');
+    buf = await fh.getFile().then(f => f.arrayBuffer());
+    console.log('loaded from OPFS');
+  } catch {
+    buf = await fetch('/assets/data.db').then(r => r.arrayBuffer());
+    console.log('loaded from network');
+  }
+
+  // 3. load into sql.js, read into array
+  const SQL = await initSqlJs();
+  const db = new SQL.Database(new Uint8Array(buf));
+  const [result] = db.exec("SELECT * FROM item");
+  let rows = result.values.map(v =>
+    Object.fromEntries(result.columns.map((k, i) => [k, v[i]]))
+  );
+  console.log('rows loaded:', rows.length);
+
+  // 4. mutate one row
+  rows[0].name = 'CHANGED';
+  console.log('mutated row 0:', rows[0]);
+
+  // 5. write back to sql.js db
+  const r = rows[0];
+  db.run(`UPDATE item SET name=? WHERE id=?`, [r.name, r.id]);
+
+  // 6. export db binary and save to OPFS
+  const exported = db.export();
+  db.close();
+  const fh = await root.getFileHandle('data.db', { create: true });
+  const w = await fh.createWritable();
+  await w.write(exported);
+  await w.close();
+  console.log('saved to OPFS — click the button to sync to disk');
+
+  // 7. inject a button for user gesture
+  const btn = document.createElement('button');
+  btn.textContent = '💾 Save data.db to disk';
+  btn.style.cssText = 'position:fixed;bottom:20px;right:20px;z-index:99999;padding:12px 20px;font-size:16px;background:#2563eb;color:white;border:none;border-radius:8px;cursor:pointer';
+  btn.onclick = async () => {
+    const fh = await window.showSaveFilePicker({ suggestedName: 'data.db' });
+    const w = await fh.createWritable();
+    const opfsFh = await root.getFileHandle('data.db');
+    const file = await opfsFh.getFile();
+    await w.write(file);
+    await w.close();
+    btn.textContent = '✅ Saved!';
+    setTimeout(() => btn.remove(), 2000);
+  };
+  document.body.appendChild(btn);
+})();

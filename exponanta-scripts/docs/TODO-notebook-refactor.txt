@@ -1,0 +1,26 @@
+A Script cell is just a Run doc where target_doctype = 'Script'. That's the only difference. The "uniqueness" is purely in how runChain handles it — compile code into fn() instead of calling CW.run().
+Everything else is identical — it has a name, lives in PocketBase, is discoverable in the Run list, has _changes, can be referenced by multiple notebooks.
+There is no separate Script concept needed at the cell level. It's just a Run doc that happens to target the Script doctype.You said: so notebook just look for code, if not null, compiles itso notebook just look for code, if not null, compiles itJun 16Claude responded: Yes — exactly.Yes — exactly.
+javascriptif (template.code) {
+  // compile and execute
+  const fn = new Function('doc', 'run_doc', template.code);
+  await Promise.all(parentDocs.map(doc => fn(doc, prev)));
+} else {
+  // just run
+  prev = await prev.child({
+    operation: template.operation,
+    target_doctype: template.target_doctype,
+    query: tryParseJSON(template.query),
+    input: tryParseJSON(template.input),
+    options: tryParseJSON(template.options) || { render: false }
+  });
+}
+code field on the Run template. If present — it's a script cell. If null — it's a regular operation cell. No target_doctype check needed. No special types. One field drives the entire dispatch.
+Add code to the Run schema:
+json{
+  "fieldname": "code",
+  "fieldtype": "Code",
+  "label": "Code",
+  "in_list_view": 0
+}
+The Script doctype becomes optional — you can author code directly on the Run template, or keep Script as a separate lookup for discoverability. Both work with the same template.code check.

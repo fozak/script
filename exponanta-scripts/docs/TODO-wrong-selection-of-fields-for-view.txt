@@ -1,0 +1,39 @@
+Object.keys(rows[0]) — row 0 has no title key, so the column never appears. Row 3 has it but it's never checked.
+Fix in UniversalGrid: use CW._getListFields(run_doc) instead of Object.keys(rows[0]) to build columns. That reads from schema, not from the first row's keys.2 / 2You said: do CW.do CW._getListFields(run_doc) return view specific list for current view like in_list_view11:12 AMClaude responded: Show me the current implementation of CW.Show me the current implementation of CW._getListFields — paste it or tell me where it lives. I won't guess whether it's been implemented or is still the designed-but-not-wired version from the May chats.//== get fields===============================================================================
+
+function _getListFields(run_doc) {
+  const doctype = run_doc.target_doctype || run_doc.source_doctype;
+  const schema = CW.Schema?.[doctype];
+  const view = run_doc.view || 'list';
+  const skipTypes = new Set(['Section Break','Column Break','Tab Break','HTML','Button','Table']);
+  const viewFlag = `in_${view}_view`;
+
+  const fields = (schema?.fields || [])
+    .filter(f => f[viewFlag] && !skipTypes.has(f.fieldtype));
+
+  if (fields.length > 0) return fields;
+
+  // fallback — derive from actual data
+  const data = run_doc.target?.data || [];
+  return Object.keys(data[0] || {})
+    .filter(k => !k.startsWith('_') && k !== 'doctype')
+    .slice(0, 6)
+    .map(k => ({ fieldname: k, label: k }));
+};Show less11:13 AMClaude responded: The function is correct and view-aware.The function is correct and view-aware. It reads in_list_view (or in_form_view) from schema.
+Your call was view: 'form' — so viewFlag = 'in_form_view'. None of your Run schema fields have in_form_view: 1, so fields.length === 0 and it falls through to Object.keys(data[0]) — which is row 0, which has no title.
+That's the bug. You passed view: 'form' to a select that's feeding a grid. The grid calls _getListFields with run_doc.view === 'form', finds no in_form_view fields, falls back to Object.keys(data[0]).
+Two fixes:
+Option A — UniversalGrid always forces in_list_view regardless of run_doc.view:
+javascript// in UniversalGrid, override view when building columns
+const colRun = { ...run_doc, view: 'list' };
+const columns = CW._getListFields(colRun);
+Option B — _getListFields fallback tries in_list_view before raw keys:
+javascriptif (fields.length > 0) return fields;
+
+// try list view as secondary fallback before raw keys
+const listFields = (schema?.fields || [])
+  .filter(f => f.in_list_view && !skipTypes.has(f.fieldtype));
+if (listFields.length > 0) return listFields;
+
+// last resort — raw keys
+Option B is safer — it never returns wrong columns regardless of what view the caller set.

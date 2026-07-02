@@ -1,0 +1,91 @@
+ use views in dimDef:
+Already in your _execTransition:
+javascriptif (dimDef.views?.[String(to)]) { ... }
+After transition 0→1 succeeds → switch view to success component:
+json"0": {
+  "transitions": { "0": [1] },
+  "labels": { "0_1": "Sign Up" },
+  "sideEffects": { "0_1": "Adapter.pocketbase.signUp" },
+  "views": { "1": "success" }
+}
+CW._config.views:
+javascriptviews: {
+  success: { component: 'SuccessMessage', container: 'threads_right' }
+}
+SuccessMessage component:
+javascriptconst SuccessMessage = ({ run_doc }) => {
+  const msg = CW.Schema?.[run_doc.target_doctype]?._messages?.success || 'Done!';
+  return ce('div', { className: 'alert alert-success' }, msg);
+};
+Schema adds message:
+json"_messages": { "success": "Account created! Check your email to verify." }
+No new mechanism — views already implemented. Just add a SuccessMessage component and configure views in schema.
+Is that minimal enough?You said: do i have views not view in code.do i have views not view in code. why?10:21 PMClaude responded: Let me check: views (plural) in dimDef — line 120:Let me check:Check views vs view in CW-run.jsCheck views vs view in CW-run.jsviews (plural) in dimDef — line 120:
+javascriptdimDef.views?.[String(to)]
+Maps state value → view name:
+json"views": { "1": "success", "2": "cancelled" }
+views (plural) in CW._config — line 33, 128:
+javascriptCW._config.views?.[view]
+Global view registry: { list: {...}, form: {...}, success: {...} }
+Why views (plural) on dimDef?
+Because multiple states can each map to different views:
+
+State 1 → "success" view
+State 2 → "cancelled" view
+
+It's a map from state value → view name. Plural makes sense — multiple possible view mappings per dim.
+It's consistent — both usages of views are correct as they are.You said: so, fsm can manipulate view like form in 0 then grid in 1 etc?so, fsm can manipulate view like form in 0 then grid in 1 etc?10:23 PMClaude responded: Yes.Yes. Exactly.
+Schema:
+json"0": {
+  "transitions": { "0": [1, 2] },
+  "labels": { "0_1": "Submit", "0_2": "Cancel" },
+  "views": {
+    "0": "form",
+    "1": "success",
+    "2": "list"
+  }
+}
+After transition 0→1 → view switches to success component.
+After transition 0→2 → view switches to list component.
+Real use cases:
+
+Wizard step 1 (form) → step 2 (form) → step 3 (form) → done (success)
+Task draft (form) → submitted (read) → cancelled (list)
+Auth unauthenticated (login form) → authenticated (profile form)
+Channel list (grid) → channel selected (feed form)
+
+The FSM IS the navigation. State transitions drive view switches. No URL changes needed, no explicit child.run navigation code — just declare in schema.
+This is the unified architecture — FSM controls both document state AND UI state. One schema, one source of truth for everything.You said: is this implemented?is this implemented?10:24 PMClaude responded: Let me check: Yes.Let me check:Check views implementation in _execTransitionCheck views implementation in _execTransitionYes. Fully implemented.
+After transition to state to:
+
+Checks dimDef.views[String(to)] → view name
+Resolves component from schema view_components or CW._config.views
+Fires child.run(select, ...) with new view + component
+Renders in same container
+
+The only limitation: it always fires operation: 'select' — fetches the document fresh and renders with the new view component.
+For success message — you need a component that doesn't need a document, just renders a message. The select will return the just-created record which is fine.
+So just:
+json"views": { "1": "success" }
+javascriptCW._config.views.success = { component: 'SuccessMessage', container: 'threads_right' }
+Works today. No code changes needed.You said: and schema should have message:.and schema should have message:.....   in_message_view (or not?)10:26 PMClaude responded: No need for inmessageview or special schema field.No need for in_message_view or special schema field.
+SuccessMessage component just reads from run_doc:
+javascriptconst SuccessMessage = ({ run_doc }) => {
+  const schema = CW.Schema?.[run_doc.target_doctype];
+  const msg = schema?._messages?.submitted || 'Done!';
+  return ce('div', { className: 'alert alert-success mt-3' }, msg);
+};
+Schema declares the message:
+json{
+  "schema_name": "UserPublicProfile",
+  "_messages": {
+    "submitted": "Account created! Check your email to verify."
+  }
+}
+_messages is just a schema key — no new mechanism, no new fieldtype, no in_message_view. Component reads it directly.
+Same pattern as title_field, explicit_edit_intent — schema keys that components read directly.You said: but select filters by in{view}viewbut select filters by in_{view}_view10:27 PMClaude responded: Yes.Yes. _handlers.select filters fields by in_list_view for list and card views.
+For success view — no filtering happens because:
+javascriptconst shouldFilter = activeView === 'list' || activeView === 'card';
+success is neither → no field filtering → target.data[0] has all fields.
+SuccessMessage component just reads _messages from schema — doesn't need any fields from target.data[0] at all.
+So no in_success_view needed. The view switch fires select which populates target.data[0] with the full record, and SuccessMessage ignores it — just reads schema _messages.

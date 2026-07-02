@@ -1,0 +1,645 @@
+Yes. Let me map it:
+1. Record level — one row in DB
+javascript// select → view subset → one record
+{ operation: 'select', query: { where: { name: 'TSK-001' } }, view: 'form' }
+2. Field level — action on a value within a record
+javascript// click status badge → FSM signal
+{ signal: 'approve', on: 'field', fieldname: 'status' }
+
+// click link → open related record
+{ operation: 'select', target_doctype: 'User', on: 'field', fieldname: 'assigned_to' }
+3. Synthetic / selection level — action over N selected records
+javascript// bulk action — no specific record, acts on selection
+{ operation: 'update', query: { where: { name: ['TSK-001', 'TSK-002'] } }, input: { status: 'Done' } }
+
+These three cover ~99% of cases. The rare 4th case is:
+4. Cross-record / relational — action that involves two doctypes
+javascript// assign Task to Project — neither field nor bulk
+{ operation: 'create', target_doctype: 'Relationship', ... }
+But even that fits run_doc.child() — it's just a create with two foreign keys.
+
+So your entire UI surface is:
+record    → run_doc (select, takeone, create, update, delete)
+field     → run_doc.child() with fieldname context
+selection → run_doc.child() with query: { where: { name: [...selected] } }
+Three trigger surfaces. One execution primitive. That's the whole thing.You said: now.now. i have fieldrender for MainForm. this is essentialy components. Like date picker. It should be universal but then its more context issue (wich is not big deal as it is function(run_doc) so it can distigush wherether it is in list or form view12:51 PMClaude responded: Yes exactly.Yes exactly. FieldRenderer is already universal because it receives run_doc — so it always knows context:
+javascriptconst FieldRenderer = function({ run_doc, field }) {
+  const view   = run_doc.view    // 'list' | 'form' | 'card'
+  const layout = run_doc.layout  // 'table' | 'card' | 'form'
+  
+  // same field, different rendering based on context
+  if (view === 'list') return ce(FieldInline, { field, run_doc })   // read-only, compact
+  if (view === 'form') return ce(FieldInput,  { field, run_doc })   // editable, full
+}
+And CW_FIELD_COMPONENTS registry already handles the fieldtype dispatch:
+javascriptCW._config.fieldComponents = {
+  'Date':     CWFieldDate,      // datepicker in form, formatted string in list
+  'Link':     CWFieldLink,      // searchable dropdown in form, clickable text in list
+  'Select':   CWFieldSelect,    // dropdown in form, badge in list
+  'Currency': CWFieldCurrency,  // input in form, formatted number in list
+}
+Each field component internally branches on run_doc.view:
+javascriptconst CWFieldDate = function({ run_doc, field }) {
+  const view = run_doc.view
+  const val  = run_doc.target?.data?.[0]?.[field.fieldname]
+
+  if (view !== 'form') return ce('span', null, formatDate(val))  // list/card — just show
+  return ce(DatePicker, { value: val, onChange: ... })            // form — interactive
+}
+So the elegance is:
+
+One FieldRenderer — no branching at grid/form level
+One component per fieldtype — branches internally on run_doc.view
+Zero props beyond run_doc and field — all context comes from the run
+
+The datepicker knowing it's in a list vs form is not a "context problem" — it's just run_doc.view. Already there.You said: so then its config over fieldtypes for different layoutsso then its config over fieldtypes for different layouts12:52 PMClaude responded: Yes.Yes. The registry becomes:
+javascriptCW._config.fieldComponents = {
+  'Date': {
+    form:  CWFieldDatePicker,    // interactive
+    list:  CWFieldDateText,      // formatted string
+    card:  CWFieldDateText,      // same as list
+  },
+  'Link': {
+    form:  CWFieldLinkSearch,    // searchable dropdown
+    list:  CWFieldLinkText,      // clickable text
+    card:  CWFieldLinkBadge,     // avatar + name
+  },
+  'Select': {
+    form:  CWFieldSelectDropdown,
+    list:  CWFieldSelectBadge,
+    card:  CWFieldSelectBadge,
+  },
+  'Currency': {
+    form:  CWFieldCurrencyInput,
+    list:  CWFieldCurrencyText,
+    card:  CWFieldCurrencyText,
+  },
+}
+Then FieldRenderer is just a lookup:
+javascriptconst FieldRenderer = function({ run_doc, field }) {
+  const view      = run_doc.view || 'form'
+  const typeMap   = CW._config.fieldComponents[field.fieldtype]
+  const Component = typeMap?.[view] || typeMap?.form || CWFieldText
+
+  return ce(Component, { run_doc, field })
+}
+Zero branching inside FieldRenderer. Zero branching inside field components. Each component does one thing — renders its specific fieldtype in its specific view context.
+Adding a new view like kanban is just:
+javascript'Date': {
+  form:   CWFieldDatePicker,
+  list:   CWFieldDateText,
+  card:   CWFieldDateText,
+  kanban: CWFieldDateText,   // ← one line
+}
+And adding a new fieldtype is just a new key in the registry — no existing code touched.
+This is the config-over-code endgame for field rendering.You said: any top2 challlenges for exactly my situationany top2 challlenges for exactly my situation12:54 PMClaude responded: 1.1. Default fallback chain
+Your fieldtypes will never have all views defined. Link in kanban — did you define it? Probably not. So the fallback needs to be smart:
+javascriptconst Component = typeMap?.[view]        // exact match
+  || typeMap?.[layout]                   // layout fallback
+  || typeMap?.['form']                   // form is canonical default
+  || CWFieldText                         // last resort
+The risk: silent fallback to wrong component. A Currency field falling back to CWFieldText in a new view renders fine visually but loses formatting and edit behavior. You won't notice until a user does.
+The challenge is defining what the canonical fallback chain is — and being consistent. view → layout → form → text sounds right but you need to commit to it and document it, otherwise every new fieldtype will make different assumptions.
+
+2. Edit vs read state within the same view
+view: 'form' maps to CWFieldDatePicker — but a form can be in read mode too (before user clicks edit, or for read-only fields). So view alone isn't enough:
+javascript// same view, two states — which component?
+{ view: 'form', mode: 'read'  }  // → CWFieldDateText? CWFieldDateReadonly?
+{ view: 'form', mode: 'edit'  }  // → CWFieldDatePicker
+You either need mode as a second dimension in the config matrix:
+javascript'Date': {
+  form: {
+    read: CWFieldDateText,
+    edit: CWFieldDatePicker,
+  },
+  list: CWFieldDateText,
+}
+Or you push mode into run_doc (which you likely already have via operation) and let each component branch on run_doc.operation === 'select' vs 'update'. But that conflates operation with render state — which breaks your clean separation.
+This is the deeper challenge because it touches your view = data / layout = UI split. Read vs edit is a third dimension that doesn't cleanly fit either.You said: so then we dont do by doctype but by fieldtype // dynamic — columns ARE a query result columns: { operation: 'select', target_doctype: 'GridColumn', query: { w…so then we dont do by doctype but by fieldtype // dynamic — columns ARE a query result columns: { operation: 'select', target_doctype: 'GridColumn', query: { where: { parent: 'Task' } } }12:56 PMClaude responded: Yes.Yes. GridColumn becomes FieldView or FieldLayout doctype:
+javascript// stored in DB — per fieldtype, not per doctype
+{ 
+  fieldtype: 'Date',
+  view:      'form',
+  mode:      'edit',
+  component: 'CWFieldDatePicker',
+}
+{
+  fieldtype: 'Date', 
+  view:      'form',
+  mode:      'read',
+  component: 'CWFieldDateText',
+}
+{
+  fieldtype: 'Date',
+  view:      'list',
+  mode:      '*',           // wildcard — always same
+  component: 'CWFieldDateText',
+}
+Then FieldRenderer is just:
+javascriptconst FieldRenderer = function({ run_doc, field }) {
+  const view = run_doc.view
+  const mode = run_doc.operation === 'select' ? 'read' : 'edit'
+
+  const match = CW._fieldViews.find(r =>
+    r.fieldtype === field.fieldtype &&
+    r.view      === view &&
+    (r.mode === mode || r.mode === '*')
+  )
+
+  const Component = CW.components[match?.component] || CWFieldText
+  return ce(Component, { run_doc, field })
+}
+Where CW._fieldViews is loaded once at boot:
+javascript// boot
+const r = await CW.run({
+  operation:      'select',
+  target_doctype: 'FieldView',
+  options:        { render: false }
+})
+CW._fieldViews = r.target.data
+What this unlocks:
+
+User can go to FieldView screen and change what renders for Date in list view — no code deploy
+New fieldtype = insert records into FieldView doctype, done
+Override per doctype = add doctype column to FieldView, filter by it
+The fallback chain becomes a query order — most specific record wins
+
+The challenge from before dissolves — mode: read/edit is just another filter dimension in the query, not a hardcoded branch in code.
+Everything is data. FieldRenderer has zero opinions.You said: is this benefitial strategicallyis this benefitial strategically12:57 PMClaude responded: Yes — but only if you're building a platform, not an app.Yes — but only if you're building a platform, not an app.
+Where it pays off:
+You're building CW as a framework others (or you across multiple projects) deploy. Exponanta, CFE, Boston Elite — all run on the same CW core. A FieldView change in core propagates everywhere. No code touched in any project.
+That's the Frappe/ERPNext bet — and it worked. Their entire customization story (Customize Form, Client Script, Server Script) is exactly this: behavior stored as data, executed at runtime. It's why ERPNext can be deployed for a hospital and a manufacturing company with zero code changes.
+Where it costs you:
+Right now you're one person building three things. The indirection adds cognitive load — debugging means tracing through DB records, not reading code. A Date field not rendering correctly means checking FieldView records, not a JS file. That's a longer path than:
+javascript'Date': { form: CWFieldDatePicker, list: CWFieldDateText }
+The strategic question is timing:
+Now:     hardcoded config map    → fast to build, easy to debug
+Later:   DB-driven FieldView     → platform-ready, zero-deploy customization
+The good news — your architecture already supports the upgrade path. Because FieldRenderer takes run_doc and field, switching from config map to DB lookup is one function change. The components don't move.
+So the strategic answer: build the config map now, design the DB schema for FieldView now, migrate when you have a second tenant. Don't pay the complexity cost before you need it.You said: give me then how Universal grid will look like with such configgive me then how Universal grid will look like with such config /* TanStack grid version */
+const UniversalGrid = function({ run_doc, field }) {
+  if (!run_doc) return null
+
+  const parentRun  = run_doc
+  run_doc          = CW._getChildRun(run_doc, field?.fieldname) || run_doc
+
+  const RT         = globalThis.TanStackTable
+  if (!RT) return ce('div', null, 'TanStack Table not loaded')
+
+  const mode       = !field ? 'MainGrid' : field.fieldtype === 'Table' ? 'Table' : 'Relationship'
+  const doctype    = mode === 'MainGrid' ? run_doc.target_doctype || run_doc.source_doctype : field.options
+  const schema     = CW.Schema?.[doctype] || {}
+  const titleField = schema.title_field || 'name'
+  const rows       = run_doc.target?.data || []
+
+  const [hoveredRow, setHoveredRow] = React.useState(null)
+  const [, force]                   = React.useReducer(x => x + 1, 0)
+
+  const selected   = CW.getGridSelected(run_doc)
+  const allChecked = selected.length === rows.length && rows.length > 0
+
+  const cv = (val) => {
+    if (val === null || val === undefined) return ''
+    if (typeof val === 'object') return JSON.stringify(val)
+    return String(val)
+  }
+
+  const dataColumns = Object.keys(rows[0] || {}).map(k => ({
+    accessorKey: k,
+    header:      schema.fields?.find(f => f.fieldname === k)?.label || k,
+    cell:        ({ row }) => {
+      const isTitle = k === titleField
+      return ce('span', {
+        className: isTitle ? 'fw-medium' : 'text-secondary',
+        style:     isTitle ? { cursor: 'pointer' } : {},
+        onClick:   isTitle ? (e) => {
+          e.stopPropagation()
+          run_doc.child({
+            operation:      'select',
+            target_doctype: doctype,
+            query:          { where: { name: row.original.name } },
+            view:           'form',
+            options:        { render: true },
+          })
+        } : undefined,
+      }, cv(row.original[k]))
+    }
+  }))
+
+  const chkColumn = {
+    id:     '__chk',
+    header: () => ce('span', {
+      style:   { display: 'block', width: 36 },
+      onClick: (e) => { e.stopPropagation(); CW.toggleAllSelected(run_doc); force() },
+    },
+      allChecked
+        ? ce('input', { type: 'checkbox', className: 'form-check-input', checked: true, readOnly: true })
+        : null
+    ),
+    cell: ({ row }) => {
+      const isHovered  = hoveredRow === row.original.name
+      const isSelected = selected.includes(row.original.name)
+      return ce('span', {
+        style:   { display: 'block', width: 36 },
+        onClick: (e) => { e.stopPropagation(); CW.toggleSelected(run_doc, row.original.name); force() },
+      },
+        isHovered || isSelected
+          ? ce('input', { type: 'checkbox', className: 'form-check-input', checked: isSelected, readOnly: true })
+          : ce('span', { className: 'cw-grid-circle' })
+      )
+    }
+  }
+
+  const actColumn = {
+    id:   '__act',
+    header: () => null,
+    cell: ({ row }) => {
+      const isHovered = hoveredRow === row.original.name
+      const btns = isHovered && CW._getFormButtons
+        ? CW._getFormButtons(run_doc, row.original)?.outside || []
+        : []
+      return ce('div', { className: 'text-end pe-3', style: { width: 160 } },
+        btns.map(btn =>
+          ce('button', {
+            key:       btn.signal,
+            className: 'btn btn-sm btn-ghost-secondary ms-1',
+            onClick:   async (e) => {
+              e.stopPropagation()
+              await run_doc.child({
+                operation:      'update',
+                target_doctype: doctype,
+                query:          { where: { name: row.original.name } },
+                input:          { _state: { [btn.signal]: '' } },
+                options:        { render: false, internal: true },
+              })
+              CW.refetchGrid(run_doc)
+            },
+          }, btn.label)
+        )
+      )
+    }
+  }
+
+  const columns = [chkColumn, ...dataColumns, actColumn]
+
+  const table = RT.useReactTable({
+    data:                  rows,
+    columns,
+    getCoreRowModel:       RT.getCoreRowModel(),
+    getSortedRowModel:     RT.getSortedRowModel(),
+    getFilteredRowModel:   RT.getFilteredRowModel(),
+    getPaginationRowModel: RT.getPaginationRowModel(),
+  })
+
+  return ce('div', { className: 'cw-universal-grid' },
+    ce(GridToolbar, { run_doc, field }),
+    ce('div', { className: 'table-responsive' },
+      ce('table', { className: 'table table-hover table-sm mb-0' },
+        ce('thead', null,
+          table.getHeaderGroups().map(hg =>
+            ce('tr', { key: hg.id },
+              hg.headers.map(h =>
+                ce('th', {
+                  key:     h.id,
+                  style:   { cursor: h.column.getCanSort() ? 'pointer' : 'default', userSelect: 'none' },
+                  onClick: h.column.getToggleSortingHandler(),
+                },
+                  RT.flexRender(h.column.columnDef.header, h.getContext())
+                )
+              )
+            )
+          )
+        ),
+        ce('tbody', null,
+          table.getRowModel().rows.map(row => {
+            const isSelected = selected.includes(row.original.name)
+            return ce('tr', {
+              key:          row.id,
+              className:    isSelected ? 'table-active' : '',
+              onMouseEnter: () => setHoveredRow(row.original.name),
+              onMouseLeave: () => setHoveredRow(null),
+            },
+              row.getVisibleCells().map(cell =>
+                ce('td', { key: cell.id },
+                  RT.flexRender(cell.column.columnDef.cell, cell.getContext())
+                )
+              )
+            )
+          })
+        )
+      )
+    ),
+    rows.length === 0 &&
+      ce('div', { className: 'text-center text-secondary py-5' }, 'No records')
+  )
+}
+
+globalThis.UniversalGrid = UniversalGrid
+console.log('✅ UniversalGrid loaded')Show more12:58 PMClaude responded: Here's the refactored version with config-driven columns: javascriptHere's the refactored version with config-driven columns:Check skills for frontendCheck skills for frontendjavascript// ============================================================
+// COLUMN TYPE REGISTRY
+// config-driven — add new column types here, zero grid changes
+// ============================================================
+
+CW._config.columnTypes = {
+
+  selection: (col, { run_doc, force, selected, allChecked }) => ({
+    id:     '__chk',
+    size:   36,
+    header: () => ce('span', {
+      style:   { display: 'block', width: 36 },
+      onClick: (e) => { e.stopPropagation(); CW.toggleAllSelected(run_doc); force() },
+    }, allChecked
+      ? ce('input', { type: 'checkbox', className: 'form-check-input', checked: true, readOnly: true })
+      : null
+    ),
+    cell: ({ row }) => {
+      const isSelected = selected.includes(row.original.name)
+      return ce('span', {
+        style:   { display: 'block', width: 36 },
+        onClick: (e) => { e.stopPropagation(); CW.toggleSelected(run_doc, row.original.name); force() },
+      }, isSelected
+        ? ce('input', { type: 'checkbox', className: 'form-check-input', checked: true, readOnly: true })
+        : ce('span', { className: 'cw-grid-circle' })
+      )
+    }
+  }),
+
+  // hover state passed via col context
+  selection_hover: (col, { run_doc, force, selected, allChecked, hoveredRow }) => ({
+    id:     '__chk',
+    size:   36,
+    header: () => ce('span', {
+      style:   { display: 'block', width: 36 },
+      onClick: (e) => { e.stopPropagation(); CW.toggleAllSelected(run_doc); force() },
+    }, allChecked
+      ? ce('input', { type: 'checkbox', className: 'form-check-input', checked: true, readOnly: true })
+      : null
+    ),
+    cell: ({ row }) => {
+      const isHovered  = hoveredRow === row.original.name
+      const isSelected = selected.includes(row.original.name)
+      return ce('span', {
+        style:   { display: 'block', width: 36 },
+        onClick: (e) => { e.stopPropagation(); CW.toggleSelected(run_doc, row.original.name); force() },
+      }, isHovered || isSelected
+        ? ce('input', { type: 'checkbox', className: 'form-check-input', checked: isSelected, readOnly: true })
+        : ce('span', { className: 'cw-grid-circle' })
+      )
+    }
+  }),
+
+  field: (col, { run_doc, doctype, schema, cv }) => ({
+    accessorKey: col.fieldname,
+    header:      col.label || schema.fields?.find(f => f.fieldname === col.fieldname)?.label || col.fieldname,
+    cell:        ({ row }) => {
+      const Component = CW._resolveFieldComponent(col.fieldname, run_doc, schema)
+      return ce(Component, { run_doc, field: col, record: row.original })
+    }
+  }),
+
+  title: (col, { run_doc, doctype, schema, cv }) => ({
+    accessorKey: col.fieldname,
+    header:      col.label || schema.fields?.find(f => f.fieldname === col.fieldname)?.label || col.fieldname,
+    cell:        ({ row }) => ce('span', {
+      className: 'fw-medium',
+      style:     { cursor: 'pointer' },
+      onClick:   (e) => {
+        e.stopPropagation()
+        run_doc.child({
+          ...(col.action || { operation: 'select', view: 'form', options: { render: true } }),
+          target_doctype: doctype,
+          query:          { where: { name: row.original.name } },
+        })
+      },
+    }, cv(row.original[col.fieldname]))
+  }),
+
+  data: (col, { schema, cv }) => ({
+    accessorKey: col.fieldname,
+    header:      col.label || schema.fields?.find(f => f.fieldname === col.fieldname)?.label || col.fieldname,
+    cell:        ({ row }) => ce('span', { className: 'text-secondary' }, cv(row.original[col.fieldname]))
+  }),
+
+  actions: (col, { run_doc, doctype, hoveredRow }) => ({
+    id:     '__act',
+    size:   160,
+    header: () => null,
+    cell:   ({ row }) => {
+      const isHovered = hoveredRow === row.original.name
+      const btns = isHovered && CW._getFormButtons
+        ? CW._getFormButtons(run_doc, row.original)?.outside || []
+        : []
+      return ce('div', { className: 'text-end pe-3' },
+        btns.map(btn => ce('button', {
+          key:       btn.signal,
+          className: `btn btn-sm ${btn.className || 'btn-ghost-secondary'} ms-1`,
+          onClick:   async (e) => {
+            e.stopPropagation()
+            await run_doc.child({
+              operation:      'update',
+              target_doctype: doctype,
+              query:          { where: { name: row.original.name } },
+              input:          { _state: { [btn.signal]: '' } },
+              options:        { render: false, internal: true },
+            })
+            CW.refetchGrid(run_doc)
+          },
+        }, btn.label))
+      )
+    }
+  }),
+}
+
+// ============================================================
+// RESOLVE COLUMNS
+// from schema.columns (array) or fallback to field-driven auto
+// ============================================================
+
+CW._resolveGridColumns = function(schema, rows) {
+  if (schema.columns) return schema.columns   // declarative — schema wins
+
+  // auto — derive from data keys, mark title field
+  const titleField = schema.title_field || 'name'
+  return [
+    { type: 'selection_hover' },
+    ...Object.keys(rows[0] || {}).map(k => ({
+      fieldname: k,
+      type:      k === titleField ? 'title' : 'data',
+    })),
+    { type: 'actions' },
+  ]
+}
+
+// ============================================================
+// FIELD COMPONENT RESOLVER
+// view + fieldtype → component
+// ============================================================
+
+CW._resolveFieldComponent = function(fieldname, run_doc, schema) {
+  const field    = schema.fields?.find(f => f.fieldname === fieldname)
+  const view     = run_doc.view || 'list'
+  const typeMap  = CW._config.fieldComponents?.[field?.fieldtype]
+  return typeMap?.[view] || typeMap?.form || CWFieldText
+}
+
+// ============================================================
+// UNIVERSAL GRID
+// ============================================================
+
+const UniversalGrid = function({ run_doc, field }) {
+  if (!run_doc) return null
+
+  run_doc = CW._getChildRun(run_doc, field?.fieldname) || run_doc
+
+  const RT = globalThis.TanStackTable
+  if (!RT) return ce('div', null, 'TanStack Table not loaded')
+
+  const mode      = !field ? 'MainGrid' : field.fieldtype === 'Table' ? 'Table' : 'Relationship'
+  const doctype   = mode === 'MainGrid' ? run_doc.target_doctype || run_doc.source_doctype : field?.options
+  const schema    = CW.Schema?.[doctype] || {}
+  const rows      = run_doc.target?.data || []
+
+  const [hoveredRow, setHoveredRow] = React.useState(null)
+  const [, force]                   = React.useReducer(x => x + 1, 0)
+
+  const selected   = CW.getGridSelected(run_doc)
+  const allChecked = selected.length === rows.length && rows.length > 0
+
+  const cv = (val) => {
+    if (val === null || val === undefined) return ''
+    if (typeof val === 'object') return JSON.stringify(val)
+    return String(val)
+  }
+
+  // ── resolve column descriptors from schema or auto ──────
+  const colDescriptors = CW._resolveGridColumns(schema, rows)
+
+  // ── build TanStack column defs from registry ─────────────
+  const ctx = { run_doc, doctype, schema, cv, force, selected, allChecked, hoveredRow }
+
+  const columns = colDescriptors
+    .map(col => {
+      const builder = CW._config.columnTypes[col.type || 'data']
+      return builder ? builder(col, ctx) : null
+    })
+    .filter(Boolean)
+
+  // ── TanStack table ────────────────────────────────────────
+  const table = RT.useReactTable({
+    data:                  rows,
+    columns,
+    getCoreRowModel:       RT.getCoreRowModel(),
+    getSortedRowModel:     RT.getSortedRowModel(),
+    getFilteredRowModel:   RT.getFilteredRowModel(),
+    getPaginationRowModel: RT.getPaginationRowModel(),
+  })
+
+  // ── render ────────────────────────────────────────────────
+  return ce('div', { className: 'cw-universal-grid' },
+    ce(GridToolbar, { run_doc, field }),
+    ce('div', { className: 'table-responsive' },
+      ce('table', { className: 'table table-hover table-sm mb-0' },
+        ce('thead', null,
+          table.getHeaderGroups().map(hg =>
+            ce('tr', { key: hg.id },
+              hg.headers.map(h =>
+                ce('th', {
+                  key:     h.id,
+                  style:   { cursor: h.column.getCanSort() ? 'pointer' : 'default', userSelect: 'none' },
+                  onClick: h.column.getToggleSortingHandler(),
+                }, RT.flexRender(h.column.columnDef.header, h.getContext()))
+              )
+            )
+          )
+        ),
+        ce('tbody', null,
+          table.getRowModel().rows.map(row => {
+            const isSelected = selected.includes(row.original.name)
+            return ce('tr', {
+              key:          row.id,
+              className:    isSelected ? 'table-active' : '',
+              onMouseEnter: () => setHoveredRow(row.original.name),
+              onMouseLeave: () => setHoveredRow(null),
+            },
+              row.getVisibleCells().map(cell =>
+                ce('td', { key: cell.id },
+                  RT.flexRender(cell.column.columnDef.cell, cell.getContext())
+                )
+              )
+            )
+          })
+        )
+      )
+    ),
+    rows.length === 0 &&
+      ce('div', { className: 'text-center text-secondary py-5' }, 'No records')
+  )
+}
+
+globalThis.UniversalGrid = UniversalGrid
+console.log('✅ UniversalGrid loaded')
+What changed and why:
+The grid itself went from ~120 lines of mixed logic to ~40 lines of pure orchestration. All behavior moved to CW._config.columnTypes registry.
+The chain is now:
+schema.columns (descriptors)
+  → CW._resolveGridColumns()   — auto if not declared
+  → CW._config.columnTypes[]   — builder per type
+  → TanStack column def        — pure render
+Adding a new column behavior = one entry in columnTypes, zero grid changes.
+Declaring columns in schema:
+javascript// Task schema
+columns: [
+  { type: 'selection_hover' },
+  { type: 'title',   fieldname: 'subject',  action: { operation: 'select', view: 'form' } },
+  { type: 'data',    fieldname: 'status' },
+  { type: 'data',    fieldname: 'due_date' },
+  { type: 'actions' },
+]You said: so we have no child.so we have no child.runs in UI code itself1:03 PMClaude responded: Correct — ideally zero run_doc.Correct — ideally zero run_doc.child() calls inside UI components.
+All child runs move to action descriptors in config/schema:
+javascript// BEFORE — child run hardcoded in UI
+onClick: () => run_doc.child({
+  operation:      'select',
+  target_doctype: doctype,
+  query:          { where: { name: row.original.name } },
+  view:           'form',
+  options:        { render: true },
+})
+
+// AFTER — descriptor in schema, executor in registry
+{ type: 'title', action: { operation: 'select', view: 'form', options: { render: true } } }
+The registry executes it:
+javascript// one place in columnTypes.title — never in UI
+run_doc.child({ ...col.action, target_doctype: doctype, query: { where: { name } } })
+So the only place run_doc.child() lives:
+CW._config.columnTypes   — column actions
+CW._config.rowActions    — FSM buttons  
+CW._config.fieldActions  — field-level clicks
+CW._executeAction()      — single executor for all three
+CW._executeAction becomes the universal dispatcher:
+javascriptCW._executeAction = function(action, run_doc, record) {
+  if (action.signal) {
+    // FSM signal
+    return run_doc.child({
+      operation:      'update',
+      target_doctype: run_doc.target_doctype,
+      query:          { where: { name: record.name } },
+      input:          { _state: { [action.signal]: '' } },
+      options:        { render: false, internal: true },
+    })
+  }
+  // standard run
+  return run_doc.child({
+    ...action,
+    target_doctype: action.target_doctype || run_doc.target_doctype,
+    query:          { where: { name: record?.name } },
+  })
+}
+UI components then have zero CW awareness:
+javascript// column cell — pure UI, no CW imports
+cell: ({ row }) => ce('span', {
+  onClick: (e) => {
+    e.stopPropagation()
+    CW._executeAction(col.action, run_doc, row.original)  // ← one line, always
+  }
+}, row.original[col.fieldname])
+The UI becomes a rendering surface only. All execution logic is in the registry. All behavior is declared in schema/config. The component has no opinion about what clicking does — it just calls CW._executeAction with whatever descriptor it was given.

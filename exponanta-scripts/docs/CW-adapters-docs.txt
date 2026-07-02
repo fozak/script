@@ -1,0 +1,71 @@
+CW Adapter Chain — Session Documentation
+What Was Built
+A multi-adapter chain system for the File doctype that routes a single CW.run call through multiple storage and transform layers in sequence.
+
+How the Chain Works
+CW._getAdapters(run_doc) resolves run_doc.adapter to a string array based on the operation:
+javascriptCW._getAdapters = function(run_doc) {
+  const a = run_doc.adapter;
+  if (!a) return [CW._config.adapters.defaults.db];
+  if (typeof a === 'string') return [a];
+  if (Array.isArray(a)) return a;
+  const resolved = a[run_doc.operation] || a['default'] || CW._config.adapters.defaults.db;
+  return [].concat(resolved);
+};
+Handlers loop through the resolved array:
+javascriptfor (const a of CW._getAdapters(run_doc)) {
+  await globalThis.Adapters[a][run_doc.operation](run_doc);
+  if (run_doc.error) break;
+}
+Single run_doc flows through every adapter in sequence. Each adapter mutates run_doc.target.data[0] additively — never replacing what the previous adapter wrote.
+
+Config
+Per-operation adapter routing lives in doctypeAdapters:
+javascriptdoctypeAdapters: {
+  File: {
+    select: 'fs',
+    update: ['fs', 'dispatch', 'pocketbase'],
+    create: ['fs', 'pocketbase'],
+    delete: 'fs',
+  }
+}
+
+select — fs only (source of truth for file existence)
+update — fs (metadata) → dispatch (extension router) → pocketbase (persist)
+create — fs (write to disk) → pocketbase (commit record)
+delete — fs only (hard delete from disk)
+
+
+Adapter Architecture
+4 adapters registered on globalThis.Adapters:
+AdapterRolepocketbaseHTTP CRUD against PocketBase item collectionfsFile System Access API — _fsIndex in-memory handle registrydispatchExtension router — calls Adapters[ext].update(run_doc)xlsxTransform — parses xlsx, writes to target.data[0]._computed.xlsx
+Mental model:
+
+fs = working tree (live filesystem)
+pocketbase File record = commit (intentional operation history, not directory mirror)
+dispatch = extension point for new file types
+xlsx/docx/pdf = transform adapters, purely additive
+
+Adding a new file type: create CW-adapter-{ext}.js, register as Adapters.ext. Zero config changes, zero core changes.
+
+Key Architectural Decisions
+Stable File IDs — generateId("File", path) uses hashString(path) — deterministic, path-anchored, stable across sessions as long as same root folder is picked. Added PATH_KEYED to generateId alongside existing EMAIL_KEYED.
+Pre-fetch select operation swap — controller pre-fetch uses run_doc.operation = 'select' temporarily so _getAdapters resolves adapter['select'] = 'fs' only, not the full update chain.
+pb upsert — pb.update catch on 404 calls Adapters.pocketbase.create(run_doc) — first write creates the record, subsequent writes patch it. File record in pb is a commit, not a directory sync.
+_computed pattern — transform adapters write to target.data[0]._computed.{adapter} — namespaced, never overwrites other adapters' data. Mirrors _state deep-merge discipline.
+_logChanges adapter check — changed from every to some so logging skips when any adapter in the chain has logChanges: 0 (fs adapter opts out).
+
+Top 2 Problems Faced
+1. Global scope function name collision
+Both pb-adapter-pocketbase.js and CW-adapter-fs.js define create, update, select, del as plain global functions. fs adapter loads after pb adapter — overwrites pb's functions in global scope. pb.update catch called bare create(run_doc) which resolved to fs create → tried to write a file instead of posting to PocketBase → "state cached" File System Access API error.
+Fix: replace bare create(run_doc) call in pb.update catch with Adapters.pocketbase.create(run_doc) — resolves through registry, not global scope. Same fix for del calling update.
+Long-term fix: wrap each adapter file in IIFE or convert to ES modules.
+2. Pre-fetch select running wrong adapters
+Controller pre-fetch block calls CW._handlers.select to load the record before update. But run_doc.operation is still 'update' at that point, so _getAdapters resolves adapter['update'] = ['fs', 'pocketbase']. fs returns the file record, then pb runs and returns empty (record doesn't exist yet), overwrites target.data with []. Controller then sees no name → routes to create → _preflight fails with "File requires a path".
+Fix: swap run_doc.operation = 'select' before pre-fetch, restore after. One clean semantic fix — pre-fetch IS a select operation.
+
+Key Learnings
+Plain script files share global scope — any function declared at top level is global. Two adapter files with identical function names silently overwrite each other. Always call adapter functions via Adapters.X.fn() registry, never by bare name inside adapter files.
+Adapter contract must be additive — each adapter in a chain should only add to target.data[0], never replace it. The pb adapter replacing target after a successful PATCH is correct (it returns the server's canonical record). Transform adapters (xlsx) must be purely additive — read name, write to _computed, leave everything else untouched.
+Operation semantics are adapter-specific — update means "overwrite file" for fs, "upsert record" for pb, "parse and enrich" for xlsx. The operation name is the routing key; each adapter interprets it according to its own capabilities. The chain model handles this cleanly — no adapter needs to know what the others do.
+File doctype is two-layer — fs owns existence and content (working tree), pb owns metadata and computed fields (commit history). name = hashString(path) is the join key between the two layers. reindex refreshes the working tree but never touches pb — pb records are intentional commits, not directory mirrors.

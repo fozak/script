@@ -1,0 +1,28 @@
+CW._expand — documentation
+What it does:
+Fetches all child/related documents for a form view record. Fires child runs for Table, Relationship Panel, and Link fields — populating CW.runs with their data before the form renders.
+Where it's called:
+In CW._handlers.select, after the main document is fetched and filtered:
+javascriptif (run_doc.view === 'form' && run_doc.target?.data?.[0]?.name) {
+  await CW._expand(run_doc);
+}
+Conditions:
+
+Only fires on view === 'form'
+Only fires when a document exists (data?.[0]?.name)
+Skips fields already expanded (checks child_run_ids for existing source_field match)
+
+What it expands:
+Table            → select child records where parent = doc.name
+Relationship Panel → select child records where parent = doc.name
+Link             → select single linked record where name = field value
+How it works:
+Fires all child runs simultaneously via Promise.all — parallel network requests. Awaited before returning so all data is in CW.runs before _render fires.
+Each child run stored in CW.runs with source_field = field.fieldname — retrieved later by CW._getChildRun(run_doc, fieldname).
+Pipeline position:
+CW._handlers.select
+  → fetch document from PocketBase
+  → filter to in_list_view fields
+  → await CW._expand    ← here
+  → return to CW.controller
+  → CW._render fires    ← all data ready

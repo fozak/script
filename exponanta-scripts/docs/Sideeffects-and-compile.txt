@@ -1,0 +1,30 @@
+//CW-state.js  on load
+
+_compileSchemas: function () {
+  // compile sideEffects and rules
+  for (const [doctype, schema] of Object.entries(globalThis.CW.Schema || {})) {
+    for (const [dim, def] of Object.entries(schema._state || {})) {
+      for (const [key, fnStr] of Object.entries(def.sideEffects || {})) {
+        if (typeof fnStr === 'string') {
+          if (key.includes('.') || !fnStr.includes('function')) continue;
+          try { def.sideEffects[key] = eval('(' + fnStr + ')'); }
+          catch(e) { console.error(`[CW] compile sideEffects[${doctype}][${dim}][${key}]`, e); }
+        }
+      }
+      for (const [key, fnStr] of Object.entries(def.rules || {})) {
+        if (typeof fnStr === 'string') {
+          try { def.rules[key] = eval('(' + fnStr + ')'); }
+          catch(e) { console.error(`[CW] compile rules[${doctype}][${dim}][${key}]`, e); }
+        }
+      }
+    }
+
+
+so 
+
+CW.Schema.Run._state
+{1: {…}}1: labels: {0_1: '▶ Run', 1_0: 'Reset'}primary: {0_1: true}sideEffects: {0_1: ƒ}transitions: {0: Array(1), 1: Array(1)}[[Prototype]]: Object[[Prototype]]: Object
+CW.Schema.Run._state
+{1: {…}}1: labels: {0_1: '▶ Run', 1_0: 'Reset'}primary: {0_1: true}sideEffects: 0_1: async ƒ (run_doc)length: 1name: ""arguments: (...)caller: (...)[[FunctionLocation]]: VM12871:1[[Prototype]]: AsyncFunction[[Scopes]]: Scopes[10][[Prototype]]: Objecttransitions: {0: Array(1), 1: Array(1)}[[Prototype]]: Object[[Prototype]]: Object
+CW.Schema.Run._state[1].sideEffects["0_1"]
+async ƒ (run_doc) { await CW.runChain(run_doc.target.data[0].name); }

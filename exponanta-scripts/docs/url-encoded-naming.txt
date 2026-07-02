@@ -1,0 +1,22 @@
+after adding slug http://127.0.0.1:8090/empty.html?target_doctype=Event&operation=select&view=form&query%5Bwhere%5D%5Bslug%5D=ai-expo-showcase-april-28-29-2026
+
+i have db with CURRENT fetching like
+
+?target_doctype=Sales%20Invoice&operation=select&view=form&query%5Bwhere%5D%5Bname%5D=salesinvoi6chqe
+
+idea it to have more SEO-friendy urls 
+
+?target_doctype=Event&operation=select&view=form&query%5Bwhere%5D%5Bname%5D=event3fr4567j8o&slug=event-ai-boston-conference 
+
+slug is not used for lookup, only for display/SEO. That’s good—but you still have redundancy.
+
+You’re sending:
+
+Primary key → name=event3fr4567j8o (correct, authoritative)
+Slug → event-ai-boston-conference (decorative)
+
+assets 
+
+?target_doctype=Asset&operation=select&view=form&query%5Bwhere%5D%5Bname%5D=asset3fr4567j8o&parent=event3fr4567j8o&slug=hero-image.jpg
+
+

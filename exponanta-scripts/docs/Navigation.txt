@@ -1,0 +1,162 @@
+CW Navigation — Architecture Lessons
+Mistakes Not to Repeat
+1. Using component name as navigation criteria
+component === 'MainGrid' breaks the moment you rename or add a component. Navigation must be based on semantic intent — view and options.render — not implementation details.
+2. Using parent_run_id chain for navigation history
+Parent chain encodes document relationships, not visit sequence. Revisiting the same node (list → form → list → form2) is invisible in the parent chain — both forms are children of the same list run. Navigation history and document graph are two different things.
+3. Truncating navStack on new navigation
+Browser-style truncation (slice(0, index+1)) destroys history when user goes back and opens a different record. User expects full visit history to be preserved.
+4. Mixing navStack and parent chain
+Attempting to derive navigation from parent chain while also maintaining a stack creates contradictions. Pick one. Stack owns navigation history. Parent chain owns document relationships.
+5. navigateTo breaking the chain
+navigateTo that manipulates the stack (searching for existing entry, jumping to it) creates inconsistent state. navigateTo should just push and render — same as any other navigation.
+6. Forward navigation complexity
+Forward navigation does not need special handling. It is always user-initiated via row click or explicit action. _nextNavRun via child_run_ids is unnecessary complexity.
+7. _prevNavRun / _nextNavRun traversal
+Traversing parent/child chains to find previous/next nav run requires skipping non-nav nodes and breaks on revisits. Simple index arithmetic on _navStack is always correct and O(1).
+8. Breadcrumbs reading from parent chain
+_findGridRun searching parent chain for a list run breaks when user navigated to form directly without going through a list. Breadcrumbs should read from _navStack backwards from current index — same source of truth as navigation.
+Correct Architecture
+
+_navStack — array of run names in visit order, push only, no truncation
+_navIndex — current position, moves on back/forward
+CW._isNavRun — component != null && options.render === true — only semantic criteria
+CW._render — pushes to stack if different from current, renders
+navigate(back/forward) — moves index, renders run at new index
+navigateTo(runName) — pushes and renders, same as _render
+Breadcrumbs — search _navStack backwards from _navIndex
+Parent chain — used only for document relationships, never for navigation
+
+
+// ============================================================
+// RENDER SYSTEM
+// ============================================================
+
+CW._reactRoots = new Map();
+CW._navStack   = [];
+CW._navIndex   = -1;
+CW.current_run = null;
+
+CW._getOrCreateRoot = function (containerId) {
+  if (!CW._reactRoots.has(containerId)) {
+    const el = document.getElementById(containerId);
+    if (el) CW._reactRoots.set(containerId, ReactDOM.createRoot(el));
+  }
+  return CW._reactRoots.get(containerId);
+};
+
+CW._isNavRun = function (run_doc) {
+  return run_doc.component != null && run_doc.options?.render === true;
+};
+
+CW._render = function (run_doc) {
+  if (!run_doc?.component || !run_doc?.container) return;
+  const Comp = globalThis[run_doc.component];
+  if (!Comp) return;
+  if (CW._isNavRun(run_doc)) {
+    if (CW._navStack[CW._navIndex] !== run_doc.name) {
+      CW._navStack.push(run_doc.name);
+      CW._navIndex = CW._navStack.length - 1;
+    }
+    CW.current_run = run_doc.name;
+    _updateNavUI();
+  }
+  CW._getOrCreateRoot(run_doc.container)
+    ?.render(ce(Comp, { run_doc, data: run_doc.target?.data || [] }));
+};
+
+CW.getCurrentRun = function () {
+  return CW.runs[CW.current_run] || null;
+};
+
+// ============================================================
+// NAVIGATION
+// ============================================================
+
+function _renderRun(run_doc) {
+  if (CW._navStack[CW._navIndex] !== run_doc.name) {
+    CW._navStack.push(run_doc.name);
+    CW._navIndex = CW._navStack.length - 1;
+  }
+  CW.current_run = run_doc.name;
+  CW._getOrCreateRoot(run_doc.container)
+    ?.render(ce(globalThis[run_doc.component], { run_doc, data: run_doc.target?.data || [] }));
+  _updateNavUI();
+}
+
+function navigate(direction) {
+  const to = direction === 'back' ? CW._navIndex - 1 : CW._navIndex + 1;
+  if (to < 0 || to >= CW._navStack.length) return false;
+  CW._navIndex   = to;
+  CW.current_run = CW._navStack[to];
+  const run_doc  = CW.runs[CW.current_run];
+  CW._getOrCreateRoot(run_doc.container)
+    ?.render(ce(globalThis[run_doc.component], { run_doc, data: run_doc.target?.data || [] }));
+  _updateNavUI();
+  return true;
+}
+
+function navigateTo(runName) {
+  const run_doc = CW.runs[runName];
+  if (!run_doc || CW.current_run === runName) return false;
+  _renderRun(run_doc);
+  return true;
+}
+
+function _findGridRun(doctype) {
+  for (let i = CW._navIndex - 1; i >= 0; i--) {
+    const r = CW.runs[CW._navStack[i]];
+    if (r?.view === 'list' &&
+       (r.source_doctype === doctype || r.target_doctype === doctype))
+      return CW._navStack[i];
+  }
+  return null;
+}
+
+function _getBreadcrumbs() {
+  const current = CW.getCurrentRun();
+  if (!current) return [{ text: 'Home', runName: null }];
+
+  const home = CW._navStack[0] || null;
+
+  if (current.view === 'list')
+    return [
+      { text: 'Home', runName: home },
+      { text: current.source_doctype || current.target_doctype || 'List', runName: null },
+    ];
+
+ if (current.view === 'form') {
+  const doctype  = current.source_doctype || current.target_doctype;
+  const doc      = current.target?.data?.[0] || {};
+  const docname  = doc[CW.Schema?.[doctype]?.title_field || 'name'] || doc.name || 'New';
+  const gridRun  = _findGridRun(doctype);
+  return [
+    { text: 'Home', runName: home !== gridRun ? home : null },
+    { text: doctype, runName: gridRun },
+    { text: docname, runName: null },
+  ];
+}
+
+  return [{ text: 'Home', runName: home }];
+}
+
+function _updateNavUI() {
+  const bb = document.getElementById('back_btn');
+  const fb = document.getElementById('forward_btn');
+  if (bb) bb.disabled = CW._navIndex <= 0;
+  if (fb) fb.disabled = CW._navIndex >= CW._navStack.length - 1;
+  const el = document.getElementById('breadcrumbs');
+  if (el)
+    el.innerHTML = _getBreadcrumbs()
+      .map((c, i, arr) => {
+        const last = i === arr.length - 1;
+        if (last)      return `<li class="breadcrumb-item active">${c.text}</li>`;
+        if (c.runName) return `<li class="breadcrumb-item"><a href="#" onclick="navigateTo('${c.runName}');return false;">${c.text}</a></li>`;
+        return         `<li class="breadcrumb-item">${c.text}</li>`;
+      })
+      .join('');
+}
+
+globalThis.navigate   = navigate;
+globalThis.navigateTo = navigateTo;
+globalThis.addEventListener('coworker:state:change', _updateNavUI);

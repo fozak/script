@@ -1,0 +1,298 @@
+Final Flow Engine Architecture Decisions
+1. Core Structure
+Flow Template Storage:
+
+Doctype: flow_template
+Execution: run(evaluate, flow_template, {name: "flow_name"})
+Each step becomes a child run() with provenance chain
+
+2. Step Definition Schema
+json{
+  "name": "step_{15_char_random}",           // Stable ID
+  "title": "select_order_where_status_open", // Human-readable, semantic - this is parced from args by adding _
+  "operation": "select|create|update|evaluate",
+  "doctype": "Order|Payment|Code|etc",
+  "source_step": "prev_step_title",          // Explicit dependency (null = parallel)
+  "args": { /* operation-specific */ },
+  "onTrue": "next_step_title",               // For evaluate operations
+  "onFalse": "other_step_title",             // For evaluate operations
+  "continueOnError": false
+}
+3. Key Fields
+
+name: Random ID (stable, never changes)
+title: Semantic name with underscores (used for references)
+operation: What to do (not "action" or "run")
+doctype: Target entity (always present, even for evaluate → "Code")
+source_step: References title (not name), explicit dependency graph
+
+4. Provenance & Context
+Every run carries:
+javascriptcontext.options = {
+  parentRunId,    // Chains execution tree
+  flowId,         // Which flow execution
+  sessionId,      // User session
+  uiContext: {
+    view: "list|form|chat|grid",           // Declarative view type
+    containerId: "main_container",          // Auto-resolved from view
+    viewType: "list",                       // Redundant but explicit
+    userId: "user_123",
+    triggeredBy: "click|flow|cron|webhook"
+  }
+}
+5. UI Attribution
+View-driven routing:
+javascript// Static mapping
+const VIEW_TO_CONTAINER = {
+  'list': 'main_container',
+  'chat': 'right_pane',
+  'modal': 'overlay_container'
+};
+
+// Usage
+run({ operation: 'select', doctype: 'Task', view: 'list' })
+// Auto-routes to main_container
+Pattern: Similar to Android Intents / MIME type handlers
+6. Context Storage Rules
+Single document:
+json{"where": {"name": "ORD-001"}}  // or take: 1
+// Stores as: { order: {...} }
+// Template: {{order.total}}
+Multiple documents:
+json{"where": {"status": "Open"}}  // no take: 1
+// Stores as: { orders: [...] }  // Plural!
+// Template: {{orders.length}}
+```
+
+**Cardinality detection:**
+- Has `take: 1` → singular
+- `where` uses unique field (`name`, `id`) → singular
+- Otherwise → plural (doctype + 's')
+
+## 7. Template Resolution
+
+**Two notations supported:**
+
+**Short (when unambiguous):**
+```
+{{order.total}}
+{{code.task_count}}
+```
+
+**Full (when multiple steps of same doctype):**
+```
+{{select_order_where_status_open.order.total}}
+{{calculate_task_metrics.code.task_count}}
+Validation: Check for ambiguity before execution, error if multiple steps produce same doctype and short notation used
+8. Where Clause Syntax
+Dot notation (not nested objects):
+json"where": {
+  "payment.verified": true,
+  "order.total": {">": 100}
+}
+No source_action in where - use source_step field instead
+9. Operations
+Data operations:
+
+select, create, update, delete - Standard CRUD
+
+Meta operations:
+
+evaluate with doctype: "Code" - Computation or conditionals
+
+Conditionals: args.condition + onTrue/onFalse
+Calculations: args.code + return values
+
+
+
+10. Parallelism
+No explicit parallel flag needed.
+Dependency graph defines execution:
+
+source_step: null → Run immediately (parallel with root)
+source_step: "title" → Wait for that step
+onTrue/onFalse → Creates branches
+
+DAG (Directed Acyclic Graph) structure = execution plan
+11. Computation Steps
+List operations require evaluate step:
+json{
+  "operation": "evaluate",
+  "doctype": "Code",
+  "source_step": "select_open_tasks",
+  "args": {
+    "code": "return { sum: tasks.reduce(...), count: tasks.length }"
+  }
+}
+```
+
+Templates are simple substitution only - complex logic in evaluate steps.
+
+## 12. Execution Flow
+```
+1. run(evaluate, flow_template)
+2. Load template (system query, no provenance)
+3. Build dependency graph from source_step links
+4. Execute steps respecting dependencies
+5. Each step = coworker.run() with parentRunId chain
+6. Store results in context (singular/plural by cardinality)
+7. Resolve templates before next step execution
+8. Handle branching via onTrue/onFalse
+13. State Management
+CoworkerState holds:
+
+activeRuns - Indexed by run_id
+Pre-computed views: runsByContainer, activeDialogs, activeAI
+React subscribes to state, renders based on uiContext.containerId
+
+React is dumb renderer - no flow logic, just visualizes CoworkerState
+14. Reference Resolution
+
+All cross-step references use title (not name)
+source_step, onTrue, onFalse all reference title
+Title is human-readable with underscores, derived from operation
+
+15. System Design Philosophy
+"Everything is a doctype" - Unix philosophy applied
+
+Flows are doctypes
+Code/conditions are doctypes (Code)
+Logs are doctypes (AuditLog)
+All operations flow through same run() infrastructure
+
+Separation of concerns:
+
+Engine (coworker) = execution + state
+View (React) = rendering only
+Flow = declarative definition
+No special cases, unified architecture
+
+
+
+
+{
+  "name": "flow_template_7xd9ml0i3xzfps7",
+  "description": "flow template example",
+  "steps": [
+    {
+      "name": "step_a7k3m9p2x5w8q1z",
+      "title": "select_order_where_status_submitted",
+      "operation": "select",
+      "doctype": "Order",
+      "args": {
+        "where": { "status": "Submitted" }
+      },
+      "continueOnError": false
+    },
+    {
+      "name": "step_b4n6r8t1y3u5v7c",
+      "title": "select_payment_for_order",
+      "operation": "select",
+      "doctype": "Payment",
+      "source_step": "select_order_where_status_submitted",
+      "args": {
+        "where": { "payment.verified": true }
+      },
+      "continueOnError": false
+    },
+    {
+      "name": "step_d2f5h7j9k0m3p6s",
+      "title": "check_payment_verified",
+      "operation": "evaluate",
+      "doctype": "Code",
+      "source_step": "select_payment_for_order",
+      "args": {
+        "condition": "order.status === 'Submitted' && payment.verified === true"
+      },
+      "onTrue": "create_invoice_for_order",
+      "onFalse": "update_payment_to_waiting",
+      "continueOnError": false
+    },
+    {
+      "name": "step_e8g1i4k7m0n2q5t",
+      "title": "create_invoice_for_order",
+      "operation": "create",
+      "doctype": "Invoice",
+      "source_step": "check_payment_verified",
+      "args": {
+        "data": {
+          "order_name": "{{order.name}}",
+          "amount": "{{order.total}}"
+        }
+      },
+      "continueOnError": false
+    },
+    {
+      "name": "step_f9h2j5l8n1p4r7u",
+      "title": "update_payment_to_waiting",
+      "operation": "update",
+      "doctype": "Payment",
+      "source_step": "check_payment_verified",
+      "args": {
+        "where": { "payment.id": "{{payment.id}}" },
+        "data": { "status": "Waiting" }
+      },
+      "continueOnError": false
+    },
+    {
+      "name": "step_h1j3k5m7p9r2t4v",
+      "title": "log_audit_parallel",
+      "operation": "log",
+      "doctype": "AuditLog",
+      "args": {
+        "message": "Parallel audit logging for all actions completed."
+      },
+       "continueOnError": false
+    }
+  ]
+}
+
+// New file: flow_template_list_operations.json
+
+
+{
+  "name": "flow_template_list_operations",
+  "description": "Example using list with calculation step",
+  "steps": [
+    {
+      "name": "step_a1b2c3d4e5f6g7h",
+      "title": "select_open_tasks",
+      "operation": "select",
+      "doctype": "Task",
+      "args": {
+        "where": { "status": "Open" }
+      }
+    },
+    {
+      "name": "step_b2c3d4e5f6g7h8i",
+      "title": "calculate_task_metrics",
+      "operation": "evaluate",
+      "doctype": "Code",
+      "source_step": "select_open_tasks",
+      "args": {
+        "code": `
+          const task_count = tasks.length;
+          const total_estimated_hours = tasks.reduce((sum, t) => sum + t.estimated_hours, 0);
+          const task_names = tasks.map(t => t.name).join(', ');
+          
+          return { task_count, total_estimated_hours, task_names };
+        `
+      }
+    },
+    {
+      "name": "step_h8i9j0k1l2m3n4o",
+      "title": "create_summary_report",
+      "operation": "create",
+      "doctype": "Report",
+      "source_step": "calculate_task_metrics",
+      "args": {
+        "data": {
+          "title": "Open Tasks Summary",
+          "task_count": "{{code.task_count}}",
+          "total_estimated_hours": "{{code.total_estimated_hours}}",
+          "task_names": "{{code.task_names}}"
+        }
+      }
+    }
+  ]
+}

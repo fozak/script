@@ -1,0 +1,237 @@
+//discussion 
+
+Waterfall of Ownership
+
+1. Schema — declares intent
+javascriptCW.Schema['HomePage'] = {
+  fields: [
+    { fieldname: 'tasks', fieldtype: 'Table',    options: 'Task',
+      run_args: { query: { where: { parent: '{{doc.name}}', status: 'Open' } } } },
+    { fieldname: 'reviews', fieldtype: 'ChildRun',
+      run_args: { target_doctype: 'Review', view: 'block' } },
+    { fieldname: 'body',  fieldtype: 'BlockNote' },
+    { fieldname: 'files', fieldtype: 'Filepicker' },
+  ]
+}
+Schema owns: field definition, fetch config (run_args), type declaration. Nothing else.
+
+2. CW.fieldTypes registry — maps fieldtype to lifecycle config
+javascriptCW.fieldTypes = {
+  Table:      { expand: 'parent',   component: 'UniversalGrid'  },
+  ChildRun:   { expand: 'run_args', component: 'ChildRunComponent' },
+  BlockNote:  { expand: null,       component: 'BlockNoteField' },
+  Filepicker: { expand: null,       component: 'Filepicker'     },
+  Data:       { expand: null,       component: 'DataField'      },
+  Link:       { expand: 'lazy',     component: 'LinkField'      },
+}
+Registry owns: which pre-fetch strategy, which component. Nothing else.
+
+3. _expand — pre-fetch phase
+javascript// reads CW.fieldTypes[field.fieldtype].expand
+// 'parent'   → query: { where: { parent: docName } }
+// 'run_args' → spread field.run_args, CW._resolveQuery
+// 'lazy'     → skip, component fetches on demand
+// null       → skip, no pre-fetch needed
+_expand owns: spawning child runs before render, one per expandable field. Nothing else.
+
+4. FieldRenderer — dispatch phase
+javascriptconst ftDef = CW.fieldTypes[field.fieldtype]
+const Comp  = globalThis[ftDef.component]
+return ce(Comp, { field, run_doc, readOnly })
+FieldRenderer owns: reading registry, mounting correct component. Nothing else.
+
+5. Component — UI + interaction lifecycle
+javascript// reads pre-fetched child run
+const child = CW._getChildRun(run_doc, field.fieldname)
+
+// owns from here:
+// - local state
+// - user interactions
+// - further child runs (upload, lazy fetch, signal)
+// - re-render decisions
+Component owns: everything after mount — state, interactions, child run firing, re-render. Nothing else.
+
+The complete waterfall
+Schema          →  what fields exist + fetch config
+fieldTypes      →  which strategy + which component
+_expand         →  pre-fetch child runs in parallel
+_render         →  mount MainForm → FieldRenderer per field
+FieldRenderer   →  dispatch to component by fieldtype
+Component       →  own UI + interaction + further child runs
+Each layer owns exactly one concern. Nothing crosses boundaries. Data flows down via run_doc. Interactions flow up via run_doc.child().You said: is this simple enough.is this simple enough. any radical improvement11:01 AMClaude responded: It's clean but one redundancy exists.It's clean but one redundancy exists.
+
+The redundancy
+CW.fieldTypes registry is a separate config that must stay in sync with FieldRenderer dispatch and _expand logic. Three places that all know about fieldtypes:
+CW.fieldTypes    → expand strategy + component name
+_expand          → reads expand strategy
+FieldRenderer    → reads component name
+If you add a new fieldtype — update all three.
+
+The radical simplification
+Eliminate CW.fieldTypes entirely. Put everything directly on the schema field definition:
+javascript{ fieldname: 'tasks', fieldtype: 'Table',
+  component: 'UniversalGrid',
+  run_args:  { query: { where: { parent: '{{doc.name}}' } } }
+}
+
+{ fieldname: 'body', fieldtype: 'BlockNote',
+  component: 'BlockNoteField'
+}
+_expand checks field.run_args — if present, expand. If not, skip. No registry needed.
+FieldRenderer reads field.component directly — no registry lookup needed.
+
+Waterfall becomes
+Schema     →  field definition + run_args + component — single source of truth
+_expand    →  field.run_args present? → spawn child run
+FieldRenderer → field.component present? → mount it
+Component  →  owns everything after
+One source of truth. No registry to maintain. Adding a new fieldtype = define it in schema only.
+
+The tradeoff
+CW.fieldTypes is better when defaults apply to many doctypes — define once, reuse everywhere. field.component on schema is better when each field is explicitly declared anyway.
+For your model — schema is already explicit per field. field.component is the simpler path. CW.fieldTypes is only needed if you want implicit defaults without declaring component per field.You said: no.no. CW.fieldTypes is good, i have 50+ doctypels, then we replicate the same config for lets say Table11:02 AMClaude responded: Yes.Yes. CW.fieldTypes is correct for your scale.
+Table default behavior defined once in CW.fieldTypes — all 50+ doctypes with Table fields get it automatically. No per-field component or expand declarations needed.
+Schema field stays minimal:
+javascript{ fieldname: 'tasks', fieldtype: 'Table', options: 'Task' }
+CW.fieldTypes.Table owns the defaults. Schema only overrides when needed:
+javascript// override only when different from default
+{ fieldname: 'top_tasks', fieldtype: 'Table', options: 'Task',
+  run_args: { query: { where: { parent: '{{doc.name}}', status: 'Open' } } } }
+CW.fieldTypes = defaults for all. Schema run_args = per-field override. Clean, DRY, scales to 50+ doctypes without repetition.
+
+
+
+Yes. Block is ChildRun standalone.
+Block  =  ChildRun fetch  +  layout render (no interactive widget)
+No user input. No local state. No commitField. Just fetch data, render output. The layout handles the display — review_card, naked, whatever is defined on the schema.
+So Block fieldtype is redundant. It's just ChildRun with view: 'block':
+javascript// Block
+{ fieldname: 'reviews', fieldtype: 'Block', options: 'Review' }
+
+// equivalent ChildRun
+{ fieldname: 'reviews', fieldtype: 'ChildRun', run_args: { target_doctype: 'Review', view: 'block' } }
+ChildRun with view: 'block' tells _render to use the block layout. No separate Block fieldtype needed. Block collapses into ChildRun.
+
+The complete picture
+ChildRun standalone  →  fetch + layout render    →  was Block
+ChildRun + UI        →  fetch + interactive widget →  Link, Table, Relationship
+ChildRun is the fetch primitive. What happens after the fetch — layout render vs interactive widget — is determined by view and the component that handles it.You said: is my ChildRun type is unnennessary generalization or still some valueis my ChildRun type is unnennessary generalization or still some value9:36 AMClaude responded: Still value.Still value. Three reasons.
+
+1. Explicit run_args is genuinely new
+Table, Link, Block all have implicit fetch logic hardcoded in _expand. ChildRun makes the fetch declaration explicit and data-driven:
+javascript// Table — _expand hardcodes the query
+query: { where: { parent: docName } }
+
+// ChildRun — query is declared on the field
+run_args: { query: { where: { event: '{{doc.event_id}}' } } }
+Any query, any filter, any ordering — without writing a new fieldtype. That's real flexibility Table and Block don't have.
+
+2. It's the escape hatch for non-standard fetches
+Table always fetches by parent. Link always fetches by name. ChildRun fetches by anything:
+javascript// can't express with Table or Block
+{ fieldtype: 'ChildRun', run_args: { 
+    target_doctype: 'Event',
+    query: { where: { organizer: '{{doc.name}}', status: 'Active' }, order: 'date ASC', take: 3 }
+}}
+
+3. run_args spread into run_doc.child() directly
+No intermediate mapping. _expand just spreads field.run_args. That's the cleanest possible API — the field IS the function call.
+
+Where it's unnecessary
+For standard parent-child relationships — Table and Block defaults — ChildRun is more verbose without adding value. { fieldtype: 'Table', options: 'Task' } is cleaner than { fieldtype: 'ChildRun', run_args: { target_doctype: 'Task', query: { where: { parent: '{{doc.name}}' } }, view: 'list' } }.
+
+Verdict
+Keep ChildRun as the power user fieldtype — for non-standard queries, custom views, computed filters. Keep Table, Link, Block as ergonomic shorthands for the common cases. Same relationship as Alpine's x-data declarative vs Alpine.data() programmatic.You said: Now assume i need Block with reviews >4 only.Now assume i need Block with reviews >4 only. how much convenient is { fieldtype: 'ChildRun', run_args: { target_doctype: 'Task', query: { where: { parent: '{{doc.name}}' } }, view: 'list' } }9:38 AMClaude responded: Very convenient.Very convenient. One field change:
+javascript{ fieldname: 'top_reviews', fieldtype: 'ChildRun', run_args: { 
+    target_doctype: 'Review',
+    query: { where: { parent: '{{doc.name}}', review_rating: { gt: 4 } } },
+    view: 'block'
+}}
+With Block fieldtype you cannot express this at all — _expand hardcodes { where: { parent: docName } }. You'd need custom code or a new fieldtype.
+With ChildRun — just add review_rating: { gt: 4 } to the query. No new code, no new fieldtype, no field.code string. Pure data.
+This is exactly the case where ChildRun earns its place over Block.You said: now.now. run_args is just json fied n Schema. So in DOCUMENT i can mutate it. what it will give me9:40 AMClaude responded: It gives you runtime-configurable child runs — the content manager can change what data a block fetches without touching code.It gives you runtime-configurable child runs — the content manager can change what data a block fetches without touching code.
+
+What becomes possible
+javascript// stored in PocketBase record
+{
+  doctype: 'HomePage',
+  data: {
+    top_reviews_query: { where: { parent: '{{doc.name}}', review_rating: { gt: 4 } } }
+  }
+}
+Schema field reads from doc instead of hardcoded:
+javascript{ fieldname: 'top_reviews', fieldtype: 'ChildRun', run_args: { 
+    target_doctype: 'Review',
+    query: '{{doc.top_reviews_query}}',   // ← from document
+    view: 'block'
+}}
+Or more directly — run_args itself comes from the document:
+javascript{ fieldname: 'top_reviews', fieldtype: 'ChildRun', 
+  run_args_field: 'top_reviews_query'   // ← read run_args from doc[field.run_args_field]
+}
+
+What this unlocks
+Hardcoded run_argsrun_args from documentWho controls queryDeveloperContent managerChange requiresCode deployRecord updatePer-page customizationNoYesA/B testingNoYesDynamic filtersNoYes
+
+The concrete example
+Two HomePage records — one for Boston, one for Cambridge:
+javascript// Boston homepage record
+{ top_reviews_query: { where: { parent: '{{doc.name}}', city: 'Boston', review_rating: { gt: 4 } } } }
+
+// Cambridge homepage record  
+{ top_reviews_query: { where: { parent: '{{doc.name}}', city: 'Cambridge', review_rating: { gt: 3 } } } }
+Same schema. Same ChildRun field. Different query per record. No code change.
+
+The honest risk
+run_args from document means untrusted data driving run_doc.child() calls. A content manager could inject arbitrary queries — fetch records they shouldn't see, cause expensive queries, enumerate data.
+Safe only if content managers are trusted operators — same trust boundary as field.code.You said: how to unlock mutating (without saving, inmemory) in the easiest wayhow to unlock mutating (without saving, inmemory) in the easiest way9:43 AMClaude responded: The simplest way — run_doc.The simplest way — run_doc.input already exists for this:
+javascript// mutate in memory without saving
+run_doc.input['top_reviews_query'] = { where: { parent: doc.name, review_rating: { gt: 4 } } }
+CW._mergeInput(run_doc)   // merges input into target.data[0]
+await CW._expand(run_doc, 'top_reviews')  // re-expands with new query
+CW._render(run_doc)
+_mergeInput already merges input into target.data[0] without saving. _expand re-reads doc.top_reviews_query — now has the mutated value. _render re-renders.
+
+Even simpler — mutate target.data[0] directly
+javascriptconst doc = run_doc.target.data[0]
+doc.top_reviews_query = { where: { parent: doc.name, review_rating: { gt: 4 } } }
+await CW._expand(run_doc, 'top_reviews')
+CW._render(run_doc)
+No _mergeInput needed. Direct mutation of the in-memory doc. _expand picks it up via CW._resolveQuery which reads from doc. Nothing persisted.
+
+Three lines. No new mechanism needed.
+Your existing pipeline already supports this — _resolveQuery reads from live doc, _expand re-fetches, _render re-renders. Mutation is just writing to doc before calling them.You said: await CW.await CW._expand(run_doc, 'top_reviews') top_reviews should be ChildRun type or any, check accurately9:48 AMClaude responded: _expand filters on fieldtype:_expand filters on fieldtype:
+javascriptconst fields = fieldname
+  ? schema.fields?.filter(f => f.fieldname === fieldname)
+  : schema.fields?.filter(f =>
+      f.fieldtype === 'Table'              ||
+      f.fieldtype === 'Relationship Panel' ||
+      f.fieldtype === 'Link'               ||
+      f.fieldtype === 'ChildRun'
+    )
+When called with a specific fieldname — CW._expand(run_doc, 'top_reviews') — it uses the first filter branch:
+javascriptschema.fields?.filter(f => f.fieldname === fieldname)
+No fieldtype check at all. It finds the field by name only, then hits the fieldtype dispatch:
+javascriptif (field.fieldtype === 'ChildRun') { ... }
+if (field.fieldtype === 'Link') { ... }
+// default — Table/Relationship
+So top_reviews must be ChildRun fieldtype to hit the ChildRun branch. If it's Block or Table — falls through to the default branch which hardcodes { where: { parent: docName } } — ignores doc.top_reviews_query entirely.
+Answer: yes, must be ChildRun fieldtype for _resolveQuery to be called and the mutated query to be picked up.You said: await CW.await CW._expand(run_doc, 'top_reviews') CW._render(run_doc) it this completer rerender of doc (all fields)9:50 AMClaude responded: Yes.Yes. CW._render(run_doc) re-renders the entire component tree from run_doc — all fields, all blocks, everything.
+
+If you only want to re-render the top_reviews block
+javascriptconst child = CW._getChildRun(run_doc, 'top_reviews')
+if (child) CW._render(child)
+Renders only the top_reviews child run — review_card layout with fresh data. Parent page untouched.
+
+So the full selective mutation flow is
+javascript// 1. mutate query in memory
+const doc = run_doc.target.data[0]
+doc.top_reviews_query = { where: { parent: doc.name, review_rating: { gt: 4 } } }
+
+// 2. re-expand only this field — refetches Reviews with new query
+await CW._expand(run_doc, 'top_reviews')
+
+// 3. re-render only this child — not the whole page
+const child = CW._getChildRun(run_doc, 'top_reviews')
+if (child) CW._render(child)
+Three lines. Surgical — only top_reviews block refetches and re-renders. Rest of the page untouched.

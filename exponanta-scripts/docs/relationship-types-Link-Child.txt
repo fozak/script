@@ -1,0 +1,26 @@
+https://claude.ai/chat/2b0f276a-a886-48d6-b3d2-7941d00a5ecc
+
+What exists
+Two structural primitives
+Link — one document references another independently existing document. Stored as a field value on the referencing record. Zero extra records created. The linked document owns its own lifecycle.
+Table/Child — child records exist only as part of a parent. Stored with parent + parenttype + parentfield stamped on each child row by _init_child at runtime (proved from base_document.py). Parent schema declares the Table field; child schema declares istable: 1. Definition lives in one place — the parent's fieldname — and is derived onto children at write time.
+Relationship doctype
+A managed entity wrapping a Link-style connection where the connection itself needs state, type, notes, and FSM lifecycle. Structurally still two independently existing records pointing at each other — not a third primitive. Used for ad-hoc cross-doctype connections, ACL extensions, provenance tracking (EXTRACTED_FROM). Fields: from_doctype, from_name, to_doctype, to_name, type.
+Coverage
+These two primitives cover 100% of cases:
+
+Does the related record own its own existence? → Link
+Does it only exist as part of the parent? → Table/child
+Does the connection itself need to be managed as an entity? → Relationship (still Link underneath)
+
+What's implemented in CW
+
+_expand — auto-fetches Table children and Link targets as child runs on form view
+parent / parenttype / parentfield in defaultFields — always fetched, always stamped on create
+Query for Table children: { where: { parent: docName } } — correct because adapter scopes by target_doctype (= parentfield disambiguation)
+Relationship widget — React component with FSM state per relationship record
+_changes audit trail — tracks field-level history including Link value changes
+
+What's missing
+
+Link integrity validation — no check that linked record actually exists before save (next to implement, requires making _preflight async)

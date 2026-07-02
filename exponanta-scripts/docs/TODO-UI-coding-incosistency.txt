@@ -1,0 +1,71 @@
+Looking at the UI code, here are the specific unification issues:
+Key pattern — 3 different styles:
+javascriptkey: rel.id || rel.name      // RelationshipPanel
+key: row.id || row.name      // MainGrid list
+key: record.id || record.name // MainGrid card
+key: opt.id                   // MultiSelectPanel
+key: m.id                     // LeftPaneChat
+Fix — one utility, used everywhere:
+javascriptCW._key = (doc) => doc?.name || doc?.id || String(Math.random());
+Variable naming — same thing, 4 names:
+
+rel in RelationshipPanel
+row in MainGrid list
+record in MainGrid card
+rec in MultiSelectPanel
+
+No fix needed here — local names are fine as long as the pattern (CW._key(x)) is consistent.
+Defence at data boundary — missing in 2 places:
+loadRels:
+javascriptif (cr.success) setRels((cr.target?.data || []).filter(r => r.name));
+loadOpts:
+javascriptif (!id || selected.includes(id)) continue;
+Plan:
+
+Add CW._key to CW-utils.js → verify: no inline || rel.name patterns remain
+Replace all key: x.id || x.name with key: CW._key(x) → verify: no React key warnings
+Add data boundary defence in loadRels and loadOpts → verify: empty name records don't reach render
+
+That's the full unification. Nothing else needs changing.You said: are Variable naming — same thing, 4 names:are Variable naming — same thing, 4 names:rel in RelationshipPanelrow in MainGrid listrecord in MainGrid cardrec in MultiSelectPanel not doc?9:52 PMClaude responded: You're right.You're right. In your system everything in target.data is a doc. The local names rel, row, record, rec are all the same thing — a doc from target.data.
+Should all be doc everywhere. Then CW._key(doc) reads consistently across all components.You said: list all inconsistencies in naminglist all inconsistencies in naming9:52 PMClaude responded: Looking at the code:Looking at the code:
+Item being iterated:
+
+rel — RelationshipPanel
+row — MainGrid list view
+record — MainGrid card view
+rec — MultiSelectPanel
+m — LeftPaneChat (different, it's a message not a doc)
+
+Should all be doc.
+Schema lookup:
+
+relSchema — RelationshipPanel
+schema — MainGrid, MainForm
+childSchema — FieldRenderer Table/Link
+
+Should all be schema.
+Doctype:
+
+doctype — MainForm, MainGrid
+src.doctype — MultiSelectPanel
+no variable, inline "Relationship" — RelationshipPanel
+
+Title field:
+
+titleField — MainGrid, FieldRenderer
+labelField — MultiSelectPanel
+
+Buttons:
+
+btns — RelationshipPanel, MainGrid card
+btn — FormActions, RelationshipPanel map
+outside, menu — FormActions
+
+Data source:
+
+rels — RelationshipPanel
+data — MainGrid prop
+opts — MultiSelectPanel
+childData — FieldRenderer Table
+
+Should all be docs or stay domain-specific where it makes sense (opts for search results is acceptable).

@@ -1,0 +1,85 @@
+docsubtype — PocketBase JSON Filter Performance Reference
+==========================================================
+
+CONTEXT
+-------
+Field: data.docsubtype (stored inside the JSON `data` column in `item` collection)
+Query pattern: doctype = "Asset" && data.docsubtype = "blog"
+Scale: 10,000 records
+
+
+HOW IT WORKS UNDER THE HOOD
+----------------------------
+PocketBase dot-notation (data.docsubtype) translates to SQLite:
+  json_extract(data, '$.docsubtype')
+
+No index exists on this by default — SQLite must scan rows and call
+json_extract() on each one.
+
+
+REAL-WORLD PERFORMANCE (from PocketBase maintainer + community)
+---------------------------------------------------------------
+- PocketBase creator tested 350k records: response 0.6ms – 311ms
+  (search applied against 10 columns simultaneously)
+- For 10k records (35x smaller): realistically 5–30ms on a DigitalOcean droplet
+
+IMPORTANT MITIGATING FACTOR — two-stage filtering:
+  1. doctype = "Asset"  →  uses the doctype index (fast, narrows result set)
+  2. data.docsubtype = "blog"  →  json_extract only on the Asset subset
+
+If 10k total items but only ~500 are Asset, json_extract runs on ~500 rows,
+not 10k. Practical cost is much lower than worst-case.
+
+
+WITH A GENERATED COLUMN INDEX (without promoting to a real PB field)
+----------------------------------------------------------------------
+Add via migration or PocketBase admin SQL hook:
+
+  CREATE INDEX IF NOT EXISTS idx_item_docsubtype
+  ON item(json_extract(data, '$.docsubtype'));
+
+Result: microsecond lookups even on millions of rows.
+This is the SQLite "virtual generated column" pattern — no schema change,
+no PocketBase field promotion required.
+
+
+RECOMMENDATION BY SCALE
+------------------------
+  < 50k items total    →  no index needed, 5–30ms is fine
+  50k – 200k items     →  add the generated column index above
+  200k+ items          →  consider promoting docsubtype to a real PB column
+                          (Text field, indexed) for full B-tree speed
+
+
+PROMOTION (when needed later)
+------------------------------
+Add `docsubtype` as a real Text field in PocketBase collection schema,
+mark as indexed. Then filter becomes:
+
+  doctype = "Asset" && docsubtype = "blog"
+
+This hits a standard B-tree index: sub-millisecond at any scale.
+
+
+QUERY SYNTAX (current — JSON path)
+------------------------------------
+pb.collection('item').getFullList({
+  filter: 'doctype = "Asset" && data.docsubtype = "blog"',
+  sort: '-created'
+})
+
+
+QUERY SYNTAX (after promotion to real column)
+----------------------------------------------
+pb.collection('item').getFullList({
+  filter: 'doctype = "Asset" && docsubtype = "blog"',
+  sort: '-created'
+})
+
+
+SOURCES
+-------
+- PocketBase GitHub Discussion #6088 (maintainer production benchmark, 350k records)
+- PocketBase GitHub Discussion #2827 (json_extract dot-notation confirmed)
+- PocketBase GitHub Issue #423 (json_extract performance considerations)
+- SQLite virtual generated columns + indexing (webpronews.com, ubos.tech, Dec 2025)

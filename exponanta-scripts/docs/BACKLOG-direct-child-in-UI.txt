@@ -1,0 +1,353 @@
+relationship is just another interlink document while Webpage is referencing parent directly, correct?8:39 PMYes exactly.
+WebPage — references parent directly via parent/parenttype/parentfield fields. It's a structural child — one Event has one or more WebPages. The relationship is compositional: WebPage cannot exist without its parent Event.
+Relationship — is an interlink document between two independent records. Both sides exist independently. Event exists, User exists — Relationship connects them. Either side can exist without the other.
+Event ──── (parent field) ──── WebPage        ← compositional, WebPage owned by Event
+Event ←─── (related_name) ─── Relationship ──→ User   ← interlink, both independent
+So in PocketBase item collection:
+WebPage.data.parent     = 'eventjwb1ahd001'   ← points up to parent
+WebPage.data.parenttype = 'Event'
+
+Relationship.data.parent       = 'eventjwb1ahd001'  ← the context (Event)
+Relationship.data.related_name = 'userabc123'        ← the other side (User)
+Both use the same parent/parenttype child pattern for fetching — but semantically WebPage is a part of Event, while Relationship is a connection between Event and User.any value of fetching both into 1 existing widget while assigning the default: "related" for such direct relationships. will it be logical?8:41 PMNo — it would break the semantic clarity. WebPage and Relationship serve fundamentally different purposes:
+
+RelationshipPanel shows people and organizations connected to the parent — with FSM lifecycle (Accept/Reject/Cancel), access control side effects, and type dropdowns driven by relationshipTypes config.
+WebPage is a publishing artifact — it has Publish/Unpublish FSM, SEO fields, domain routing. It has nothing to do with access control or people.
+
+Forcing WebPage into RelationshipPanel with type="related" would mean:
+
+The panel would show "exponanta.com slug: test-boston | related | Draft | Accept/Reject" — nonsensical
+The type dropdown would offer "Attendee, Speaker, Sponsor..." alongside "related"
+The sideEffect logic would try to add webpagew7fecoqh to Event _allowed_read — wrong
+
+Two separate panels in the form is the right answer:
+
+Relationship Panel fieldtype → RelationshipPanel component — people/orgs
+Table fieldtype with options: "WebPage" → ChildTable component — web presence
+
+Each renders appropriately for its purpose. The fact that both use parent/parenttype for fetching is an implementation detail, not a reason to merge them in the UI.Give me select for MainForm for tasknspwbzd3gqj8:43 PMjavascriptconst run = CW.run({
+  operation:      'select',
+  target_doctype: 'Task',
+  query:          { where: { name: 'tasknspwbzd3gqj' }, view: 'form' },
+  view:           'form',
+  component:      'MainForm',
+  container:      'main_container',
+  options:        { render: true },
+});but my relationship panel is quite consistent and ready for 0,1,2 even for direct relationship, the only issue is that we can not delete relationship for direct (even that i am not sure)8:49 PMYou're right — the panel is already fully functional for all states. Looking at it:
+
+Submitted → Cancel button ✅
+Cancelled → Reopen button ✅
+Draft → Accept/Reject buttons ✅
+
+For WebPage as a "direct relationship" — the issue isn't deletion, it's that WebPage has a different FSM (Publish/Unpublish/Republish) not Accept/Reject/Cancel. So the buttons would be wrong if WebPage went through RelationshipPanel.
+But your point is valid — if we define WebPage with type="webpage" and override its FSM labels in the panel context, the panel structure (title, type badge, state badge, action buttons) is identical. The only thing that differs is which buttons appear — and that's already driven by _getTransitions from the schema.
+So the real question is: does WebPage _state produce the right buttons (Publish/Unpublish) when rendered through RelationshipPanel? If yes — one panel handles everything, no separate ChildTable component needed.
+The only genuine difference is the add flow — RelationshipPanel's add form asks for related_name (search for a User/Org). WebPage doesn't have a related_name — it has slug, domain, meta_title. So the add form would need to be different.
+That's the only real blocker. Everything else works. Agree?No the FSM is not different. its the same.8:50 PMYou're right. WebPage FSM is:
+0 → 1  Publish
+0 → 2  Discard  
+1 → 2  Unpublish
+2 → 0  Republish
+Relationship FSM is:
+0 → 1  Accept
+0 → 2  Reject
+1 → 2  Cancel
+2 → 0  Reopen
+Same structure — 0,1,2 with same transition graph. Only the labels differ. And labels come from the doctype's _state config, which _getTransitions already reads correctly.
+So RelationshipPanel already renders the right buttons for WebPage — it would show Publish/Unpublish/Discard/Republish automatically because CW._getTransitions('WebPage', doc, '0') returns the WebPage labels.
+The only real difference is the add form — for Relationship you search for a User/Org and pick a type. For WebPage you enter slug, domain, meta_title.
+So one panel, two add form variants driven by the child doctype. The panel itself is already correct. Does the add form need to be schema-driven (render fields from CW.Schema.WebPage.fields) rather than hardcoded?You totally confused they all the same variation of child doctypes, the only relationship is different8:51 PMYou're right, I overcomplicated it.
+All child doctypes — WebPage, Relationship, any future child — follow the same pattern:
+
+parent / parenttype / parentfield links to parent
+FSM 0,1,2 with doctype-specific labels
+Same panel renders all of them
+
+Relationship is special only because it has related_name / related_doctype / related_title — it points to a second record. That's the only thing that makes it different from WebPage or any other child doctype.
+So the UI is simply:
+
+One universal child panel — renders any child doctype by parentfield
+Add form — schema-driven from CW.Schema[childDoctype].fields — works for WebPage (slug, domain) and Relationship (related_name, type) alike
+FSM buttons — from _getTransitions, labels from the child doctype's _state
+
+The Event schema then just declares:
+json{ "fieldname": "webpage",       "fieldtype": "Child Panel", "options": "WebPage",       "label": "Web Pages" },
+{ "fieldname": "relationships", "fieldtype": "Child Panel", "options": "Relationship",  "label": "Relationships" }
+One component, two instances, different child doctypes. Correct?why cant we put all direct and indidect under 1 panel, check out // ============================================================
+// COMPONENT REGISTRY
+// ============================================================
+
+CW._components = { MainForm, MainGrid };
+
+globalThis.addEventListener('coworker:state:change', _updateNavUI);
+
+console.log('✅ CW-ui.js loaded');
+
+// ============================================================
+// RELATIONSHIP PANEL
+// Fieldtype: "Relationship Panel"
+// Shows existing relationships + add new via type-first flow
+// ============================================================
+
+const RelationshipPanel = function({ run_doc }) {
+  const doc      = run_doc.target?.data?.[0] || {};
+  const doctype  = run_doc.target_doctype || run_doc.source_doctype;
+  const docName  = doc.name;
+
+  // flatten relationshipTypes config for this parent doctype
+  // { "Assignee": "User", "Reviewer": "User", "Blocks": "Task", ... }
+  const typeMap  = React.useMemo(() => {
+    const map    = {};
+    const dtConf = CW._config?.relationshipTypes?.[doctype] || {};
+    for (const [relatedDoctype, types] of Object.entries(dtConf)) {
+      for (const type of types) map[type] = relatedDoctype;
+    }
+    return map;
+  }, [doctype]);
+
+  const allTypes = Object.keys(typeMap);
+
+  // existing relationships
+  const [rels, setRels]         = React.useState([]);
+  const [loaded, setLoaded]     = React.useState(false);
+
+  // add form state
+  const [selType, setSelType]   = React.useState('');
+  const [searchText, setSearch] = React.useState('');
+  const [linkOpts, setLinkOpts] = React.useState([]);
+  const [linkOpen, setLinkOpen] = React.useState(false);
+  const [selName, setSelName]   = React.useState('');
+  const [selTitle, setSelTitle] = React.useState('');
+  const [notes, setNotes]       = React.useState('');
+  const [saving, setSaving]     = React.useState(false);
+
+  // load existing relationships
+  const loadRels = React.useCallback(async () => {
+    if (!docName) return;
+    const cr = await run_doc.child({
+      operation:      'select',
+      target_doctype: 'Relationship',
+      query:          { where: { parent: docName, parentfield: 'relationships' } },
+      options:        { render: false },
+    });
+    if (cr.success) setRels(cr.target?.data || []);
+    setLoaded(true);
+  }, [docName]);
+
+  React.useEffect(() => { loadRels(); }, [docName]);
+
+  // when type changes, clear selection and load options
+  const onTypeChange = async (type) => {
+    setSelType(type);
+    setSelName(''); setSelTitle(''); setSearch(''); setLinkOpts([]); setLinkOpen(false);
+    if (!type) return;
+    const relatedDoctype = typeMap[type];
+    if (!relatedDoctype) return;
+    const schema     = CW.Schema?.[relatedDoctype];
+    const titleField = schema?.title_field || 'name';
+    const cr = await run_doc.child({
+      operation:      'select',
+      target_doctype: relatedDoctype,
+      query:          { take: 50, select: ['name', titleField] },
+      options:        { render: false },
+    });
+    if (cr.success) { setLinkOpts(cr.target?.data || []); setLinkOpen(true); }
+  };
+
+  // add relationship
+  const onAdd = async () => {
+    if (!selType || !selName) return;
+    setSaving(true);
+    const cr = await run_doc.child({
+      operation:      'create',
+      target_doctype: 'Relationship',
+      options:        { render: false },
+    });
+    Object.assign(cr.input, {
+      related_doctype: typeMap[selType],
+      related_name:    selName,
+      related_title:   selTitle || selName,
+      type:            selType,
+      notes:           notes,
+      parent:          docName,
+      parenttype:      doctype,
+      parentfield:     'relationships',
+    });
+    await new Promise(r => setTimeout(r, 300));
+    setSaving(false);
+    // reset form
+    setSelType(''); setSelName(''); setSelTitle(''); setSearch(''); setNotes('');
+    await loadRels();
+  };
+
+  // FSM action on existing relationship (Accept/Cancel/Reopen/Reject)
+  const onRelAction = async (rel, btnKey) => {
+    const r = CW.run({
+      operation:      'select',
+      target_doctype: 'Relationship',
+      query:          { where: { name: rel.name } },
+      options:        { render: false },
+    });
+    await CW.controller(r);
+    if (r.error) return;
+    r.input['.operation'] = 'update';
+    await new Promise(r2 => setTimeout(r2, 50));
+    r.input._state = { [btnKey]: '' };
+    await new Promise(r2 => setTimeout(r2, 1500));
+    await loadRels();
+  };
+
+  // get FSM buttons for a relationship record
+  const getRelButtons = (rel) => {
+    const stateDef = CW._getStateDef('Relationship');
+    const dim0     = stateDef?.['0'];
+    if (!dim0) return [];
+    const cur = rel._state?.['0'] ?? rel.docstatus ?? 0;
+    return (dim0.transitions?.[cur] || [])
+      .map(to => ({ key: `${cur}_${to}`, label: dim0.labels?.[`${cur}_${to}`] || `${cur}_${to}` }));
+  };
+
+  const statusBadge = (rel) => {
+    const dim0    = CW._getStateDef('Relationship')?.['0'];
+    const cur     = rel._state?.['0'] ?? rel.docstatus ?? 0;
+    const label   = dim0?.options?.[cur] || '';
+    const cls     = ['bg-warning text-dark','bg-success','bg-danger'][cur] || 'bg-secondary';
+    return label ? ce('span', { className: `badge ${cls} ms-1` }, label) : null;
+  };
+
+  const relatedDoctype = typeMap[selType] || '';
+  const titleField     = CW.Schema?.[relatedDoctype]?.title_field || 'name';
+  const filteredOpts   = linkOpts
+    .filter(o => o.name || o.id)  // skip records with no id
+    .filter(o => !searchText || (o[titleField] || o.name || o.id || '').toLowerCase().includes(searchText.toLowerCase()));
+
+  return ce('div', { className: 'mt-3' },
+
+    // ── Existing relationships ──────────────────────────────
+    loaded && rels.length > 0 && ce('div', { className: 'mb-3' },
+      rels.map(rel => ce('div', {
+        key: rel.name,
+        className: 'border rounded p-2 mb-2 d-flex justify-content-between align-items-center',
+      },
+        // left: info
+        ce('div', {},
+          ce('div', { className: 'd-flex align-items-center gap-2' },
+            ce('span', { className: 'fw-medium' }, rel.related_title || rel.related_name),
+            ce('span', { className: 'text-muted small' }, rel.type),
+            statusBadge(rel)
+          ),
+          rel.notes && ce('div', { className: 'text-muted small mt-1' }, rel.notes)
+        ),
+        // right: FSM buttons
+        ce('div', { className: 'd-flex gap-1' },
+          getRelButtons(rel).map(btn => ce('button', {
+            key: btn.key,
+            className: btn.key.endsWith('_2')
+              ? 'btn btn-sm btn-outline-danger'
+              : btn.key.endsWith('_0')
+              ? 'btn btn-sm btn-outline-secondary'
+              : 'btn btn-sm btn-outline-success',
+            onClick: () => onRelAction(rel, btn.key),
+          }, btn.label))
+        )
+      ))
+    ),
+
+    loaded && rels.length === 0 && ce('div', { className: 'text-muted small mb-2' }, 'No relationships yet'),
+
+    // ── Add form ────────────────────────────────────────────
+    allTypes.length === 0
+      ? ce('div', { className: 'text-muted small' }, `No relationship types configured for ${doctype}`)
+      : ce('div', { className: 'd-flex gap-2 align-items-start flex-wrap' },
+
+          // type select
+          ce('select', {
+            className: 'form-select form-select-sm',
+            style: { width: '140px' },
+            value: selType,
+            onChange: (e) => onTypeChange(e.target.value),
+          },
+            ce('option', { value: '' }, 'Type...'),
+            allTypes.map(t => ce('option', { key: t, value: t }, t))
+          ),
+
+          // link search — only shown after type selected
+          selType && ce('div', { className: 'position-relative', style: { width: '200px' } },
+            ce('input', {
+              type: 'text', className: 'form-control form-control-sm',
+              placeholder: `Search ${relatedDoctype}...`,
+              value: searchText,
+              onChange: (e) => { setSearch(e.target.value); setLinkOpen(true); },
+              onFocus:  () => setLinkOpen(true),
+              onBlur:   () => setTimeout(() => setLinkOpen(false), 200),
+            }),
+            linkOpen && filteredOpts.length > 0 && ce('div', {
+              className: 'dropdown-menu show w-100',
+              style: { maxHeight: '200px', overflowY: 'auto', zIndex: 1050 },
+            },
+              filteredOpts.map((o, i) => {
+                const oId    = o.name || o.id || String(i);
+                const oTitle = o[titleField] || o.name || o.id || oId;
+                return ce('button', {
+                  key: oId, className: 'dropdown-item', type: 'button',
+                  onMouseDown: (e) => {
+                    e.preventDefault();
+                    setSelName(oId);
+                    setSelTitle(oTitle);
+                    setSearch(oTitle);
+                    setLinkOpen(false);
+                  },
+                }, oTitle);
+              })
+            )
+          ),
+
+          // notes
+          selType && ce('input', {
+            type: 'text', className: 'form-control form-control-sm',
+            style: { width: '160px' },
+            placeholder: 'Notes (optional)',
+            value: notes,
+            onChange: (e) => setNotes(e.target.value),
+          }),
+
+          // add button
+          selType && ce('button', {
+            className: 'btn btn-sm btn-primary',
+            disabled: !selName || saving,
+            onClick: onAdd,
+          }, saving ? '...' : '+ Add')
+        )
+  );
+};Show more8:55 PMThe current RelationshipPanel hardcodes parentfield: 'relationships' and queries only Relationship doctype. To support all child doctypes (WebPage, Relationship, any future child) under one panel, two changes needed:
+
+Accept fieldname and childDoctype as props — so the panel knows what to fetch and what schema to use for the add form
+The add form becomes schema-driven from CW.Schema[childDoctype].fields instead of hardcoded type/search/notes fields
+
+For Relationship — the add form shows type dropdown + linked record search (current behavior).
+For WebPage — the add form shows slug, domain, meta_title fields from schema.
+For any future child — just works from schema fields.
+The Event schema then declares:
+json{ "fieldname": "webpage",       "fieldtype": "Child Panel", "options": "WebPage",      "label": "Web Pages" },
+{ "fieldname": "relationships", "fieldtype": "Child Panel", "options": "Relationship", "label": "Relationships" }
+RelationshipPanel becomes ChildPanel — props: { run_doc, fieldname, childDoctype }. FSM buttons come from _getTransitions(childDoctype, doc, '0') — already doctype-aware. Status badge same.
+The only Relationship-specific thing is the linked record search — that stays as a special case when childDoctype === 'Relationship', or better: when the schema has a field with fieldtype: 'Link'.
+Want me to refactor RelationshipPanel → ChildPanel with this approach?the only challenge is potentially that we query all docs for parent doctype?8:56 PMYes — the current add form does:
+javascriptconst cr = await run_doc.child({
+  operation:      'select',
+  target_doctype: relatedDoctype,
+  query:          { take: 50, select: ['name', titleField] },
+  options:        { render: false },
+});
+This fetches 50 records from the entire item collection filtered by doctype — no scoping to what the current user can actually see. For User that's fine (50 users). For large collections it's a problem.
+But this is already handled by PocketBase view/list rules — only records the user has access to come back. So the query is already scoped by RBAC implicitly.
+The real challenge is search — currently it filters client-side on the 50 fetched records. If there are 500 users, the right one might not be in the first 50.
+Fix: search server-side — when user types, fire a new select with a contains filter:
+javascriptquery: { 
+  take: 20,
+  where: { [titleField]: { contains: searchText } },
+  select: ['name', titleField]
+}
+This keeps it scalable regardless of collection size. And it works identically for WebPage (slug search), Relationship (related_title search), or any child doctype.
+So no fundamental architecture problem — just replace client-side filter with server-side search. Want to proceed with the ChildPanel refactor?not yet. lets keep for now8:58 PMOK. Current state — RelationshipPanel works for Relationship doctype. ChildPanel refactor is backlogged.
+What's next?

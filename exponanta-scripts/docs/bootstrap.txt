@@ -1,0 +1,33 @@
+You have two paths:
+Path A — seed-data.db (copy the file)
+1. Stop PocketBase
+2. Copy seed-data.db → pb_data/data.db
+3. Start PocketBase
+Roles are already in. But you need to manually verify roleispublixxxx has correct _allowed_read and all 4 roles exist — you said it only has 2.
+Path B — Migration JS (current approach)
+1. Fresh empty data.db
+2. pocketbase serve
+3. Migration runs automatically → seeds all 4 roles correctly
+4. App ready for first provisionUser
+
+Recommended: Path B because:
+
+Migration is source-controlled in pb_migrations/
+Always produces a known correct state
+seed-data.db can get stale as you add roles
+
+The full bootstrap sequence from zero:
+1. pocketbase serve
+   → pb_migrations/1_seed_roles.js runs
+   → 4 Role records created with _allowed_read: [roleispublixxxx]
+
+2. App loads → fetches db.json → CW.Schema populated
+
+3. First user hits register page → CW.run provisionUser
+   → @users auth record
+   → User item (_allowed: [rolesystemmanag])
+   → UserSettings
+   → UserPublicProfile (_allowed_read: [roleispublixxxx])
+
+4. Done — app is live
+That's your complete bootstrap. One command, one signup.

@@ -1,0 +1,32 @@
+The fix is IIFE for both adapters. One wrap per file, zero logic changes:
+CW-adapter-fs.js:
+javascript(function() {
+  // entire file content here
+  globalThis.Adapters.fs = { init, select, create, update, delete: del, reindex };
+  console.log("✅ CW-adapter-fs.js loaded");
+})();
+pb-adapter-pocketbase.js:
+javascript(function() {
+  // entire file content here
+  globalThis.Adapters.pocketbase = { init, select, create, update, delete: del };
+  console.log("✅ pb-adapter-pocketbase.js loaded");
+})();
+All internal function names become local to the IIFE scope. No global pollution. No cross-adapter overwrites. The only globals set are Adapters.fs and Adapters.pocketbase — intentional.
+Proceed?You said: to put at the end?to put at the end?2:42 PMClaude responded: No — wrap the entire file.No — wrap the entire file. Opening (function() { at the very top, closing })(); at the very bottom. Everything inside.You said: any other way.any other way. i dont like this one2:42 PMClaude responded: Yes — just add 'use strict' at the top?Yes — just add 'use strict' at the top? No, that doesn't help with scope.
+The cleanest alternative without IIFE or modules: rename all public functions with a prefix in each file:
+javascript// pb adapter
+async function pb_create(run_doc) { ... }
+async function pb_select(run_doc) { ... }
+async function pb_update(run_doc) { ... }
+async function pb_del(run_doc) { ... }
+async function pb_init(run_doc) { ... }
+
+globalThis.Adapters.pocketbase = { 
+  init: pb_init, select: pb_select, 
+  create: pb_create, update: pb_update, delete: pb_del 
+};
+javascript// fs adapter
+async function fs_create(run_doc) { ... }
+async function fs_select(run_doc) { ... }
+// etc
+No wrapping, no modules, no discipline required — the names themselves don't collide. The registry keys stay clean (create, select etc). Proceed?

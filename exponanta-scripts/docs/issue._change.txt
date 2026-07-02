@@ -1,0 +1,5 @@
+describe the issue, but make that YOU ASSUME it is the reason7:17 PMClaude responded: Assumed issue: _changes not included in initial create payloadAssumed issue: _changes not included in initial create payload
+The _changes systemField handler likely runs after pb.create() as a follow-up patch. On a fresh record the user's ID is not yet in _allowed directly (only their role is), so the update rule blocks the patch with 403.
+On update this works fine because the user already has access via their role in _allowed.
+Assumed fix: move _changes population to happen before pb.create() so it's included in the initial payload — no follow-up patch needed, no rule check on update.
+This is deferred — marking as known issue: _changes on create blocked by update rule, fix is to include in create payload.

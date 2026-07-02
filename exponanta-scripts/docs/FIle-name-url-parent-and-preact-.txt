@@ -1,0 +1,123 @@
+https://claude.ai/chat/90bc6cbc-aa25-43da-8f25-516a23d022e3
+
+
+with this. we mostly storing data in Event, so web-page is not ness needed as child
+
+6:26 PM
+Correct. Everything the page needs is already on Event:
+
+title, deck, kicker          → content
+event_slot, location         → meta
+tags, audience, featured     → classification  
+slug                         → URL + asset convention
+meta_title, meta_desc        → SEO
+og_image                     → derived from asset('og-image.jpg')
+body, highlights             → rich content
+register_url, connect_url    → action links
+status                       → card badge
+WebPage as a child buys you nothing right now
+The only thing WebPage added was:
+
+docstatus for publish control → just add is_submittable to Event directly
+slug → already on Event
+SEO fields → already on Event
+Drop WebPage. Event is the document.
+Event (data + presentation + publish lifecycle)
+└── File[] (assets, flat /assets/)
+└── Relationship[] (attendees, speakers, sponsors)
+└── Session[] (child sessions)
+Clean. One hop everywhere. EventCard and EventForm read directly from doc.* with no child traversal needed.
+
+When you genuinely need multi-document per entity — brochure, email campaign, landing page variant — reintroduce a container doctype then. Not now.
+
+/assets/${parent_doc.slug}.${child.short_name} confirm that this nessesity comes exclusively from the need to store semantic names instead of not readable ids
+
+7:39 PM
+Yes. Exactly.
+
+If you were content with:
+
+/assets/asset3fr4567j8o.jpg
+You need nothing else. PB record ID is globally unique, no parent needed in the filename, no slug needed, no convention needed. One field, done.
+
+The entire convention:
+
+/assets/${parent_doc.slug}.${child.short_name}
+exists exclusively because you want:
+
+/assets/boston-ai-conference.hero-image.jpg
+— a URL a human can read, guess, type, and that means something to a search engine.
+
+That's the only reason. The ID alone would work perfectly for every technical requirement.
+
+any easy convention to use <html > tags without building and using ce('section', { className: 'mb-5' },
+
+7:40 PM
+Yes. htm — a tiny library that gives you tagged template literals, no build step needed:
+
+html
+<script src="https://unpkg.com/htm/preact/standalone.module.js"></script>
+Or with React UMD:
+
+javascript
+const html = htm.bind(React.createElement)
+Then instead of:
+
+javascript
+ce('section', { className: 'mb-5' },
+  ce('h2', { className: 'mb-4' }, 'Upcoming Events'),
+  ce('div', { className: 'container' })
+)
+You write:
+
+javascript
+html`
+  <section class="mb-5">
+    <h2 class="mb-4">Upcoming Events</h2>
+    <div class="container"></div>
+  </section>
+`
+Drop-in for your stack
+javascript
+// after React UMD loads
+const html = htm.bind(React.createElement)
+
+const EventCard = ({ doc }) => html`
+  <div class="card event-card evh evh--v1 mb-3">
+    <div class="evh__img">
+      <img src=${asset(doc.slug, 'hero-image.jpg')} alt=${doc.title} />
+    </div>
+    <div class="evh__body">
+      <h3 class="evh__title">${doc.title}</h3>
+      <p class="evh__desc">${doc.deck}</p>
+    </div>
+  </div>
+`
+No build, no JSX transpiler, no Babel. Works with your React 18 UMD exactly as-is. The only difference from JSX is class instead of className.
+
+is this close to ideal
+
+7:43 PM
+For your stack — yes, very close. Let me assess honestly:
+
+What makes it close to ideal
+No build step — stays true to your no-build constraint, loads from CDN
+Readable — HTML tags instead of ce() nesting, maintainable by anyone
+React-compatible — same reconciler, same hooks, same component model
+Tiny — htm is ~700 bytes gzipped
+
+The one real concern
+Script load order — htm must load after React UMD but before any component file that uses html. In your strict load order contract this is one more dependency to manage.
+
+What would make it fully ideal
+If html is defined once globally:
+
+javascript
+// in CW-ui.js, after React loads
+globalThis.html = htm.bind(React.createElement)
+Then every component file just uses html directly — no import, no per-file setup. Consistent with how your stack already exposes React, ce, and components on globalThis.
+
+The only alternative closer to ideal
+Raw JSX with esbuild — but that requires a build step which you've deliberately avoided. So for your constraints, htm is the right answer.
+
+One line in CW-ui.js, one CDN script tag, done.

@@ -1,0 +1,34 @@
+UserPublicProfile — _autosave: 0 Signal Update Bug & Fix
+Schema context
+UserPublicProfile has _autosave: 0 — no automatic saves on field change. All writes are signal-driven.
+The bug
+When calling CW.run with operation: 'update' and a signal in _state:
+jsCW.run({
+  operation:      'update',
+  target_doctype: 'UserPublicProfile',
+  query:          { where: { owner: userId } },
+  input:          { content_history: {...}, _state: { '1.1_2': '' } },
+  options:        { render: false },
+})
+The error returned: Transition 1_2 not allowed from current state 0 (dim 1)
+Root cause
+CW.controller called _mergeInput before fetching the existing record. For update operations, run_doc.target is null on entry — the existing doc with its _state: { '1.0_1': '1' } is only in PocketBase, not in memory.
+_mergeInput created an empty doc = {}, merged input _state: { '1.1_2': '' } into it. _getDimValue found no v === '1' signal, returned default 0. Transition 1_2 from state 0 blocked.
+Fix — CW-run.js controller, between _resolveInput and _mergeInput:
+js// 1. meta channel
+CW._resolveInput(run_doc);
+
+// 1.A — fetch existing doc before merge so _state is available
+if (run_doc.operation !== 'create' && !run_doc.target?.data?.[0]?.name) {
+  await globalThis.Adapter[CW._config.adapters.defaults.db].select(run_doc);
+}
+
+// 2. merge input → target.data[0]
+CW._mergeInput(run_doc);
+
+// 3. clear input
+CW._clearInput(run_doc);
+Why this works
+The fetch populates target.data[0] with the real PocketBase record including _state: { '1.0_1': '1' }. Then _mergeInput merges the incoming _state: { '1.1_2': '' } on top — result is { '1.0_1': '1', '1.1_2': '' }. _getDimValue finds '1.0_1': '1', derives current = 1. Transition 1_2 from state 1 passes.
+Guard condition
+!run_doc.target?.data?.[0]?.name — skips the fetch if target is already populated (e.g. when called from _handleSignal internally after a create, or when caller pre-populated target).

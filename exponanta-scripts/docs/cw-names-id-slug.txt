@@ -1,0 +1,153 @@
+https://claude.ai/chat/90bc6cbc-aa25-43da-8f25-516a23d022e3
+
+CW ID & Slug System — Reference
+Overview
+Every CW record has two stable identifiers:
+
+name — 15-char opaque ID, machine-addressable, collision-proof, used as PocketBase primary key
+slug — human-readable, URL-safe, SEO-friendly, used for display and asset filenames
+
+Both are generated automatically on onCreate via systemFields. Neither requires manual input except for external anchors (LinkedIn slugs, etc.).
+
+Doctype Categories
+1. EMAIL_KEYED
+javascriptconst EMAIL_KEYED = {
+  User:              'user',
+  UserPublicProfile: 'usep',
+  UserSettings:      'uses',
+}
+
+name seed = raw email (not slugified)
+slug = CW.slugify(email) → display only, not used for ID
+name recoverable from raw email only
+Schema: autoname: "field:email"
+
+2. PATH_KEYED
+javascriptconst PATH_KEYED = {
+  File:    'file',
+  Person:  'pers',
+  Company: 'comp',
+  Event:   'event',
+}
+
+name seed = slug (external anchor provided in input)
+slug = provided in input.slug — never auto-generated for these doctypes
+name recoverable from slug
+Schema: autoname: "field:slug"
+
+3. SINGLE_DOCTYPES
+javascript// Role, Country, Currency, Department, UOM, Schema, etc.
+
+name = generateSingleId(doctype, title) — doctype prefix + title chars
+slug = CW.slugify(title_field_value) — auto-generated
+name recoverable from title (normalized, not slug)
+Schema: no special autoname needed
+
+4. Default (all others)
+javascript// Task, Project, Article, Lead, etc.
+
+name = prefix + hashString(slug) — deterministic from slug
+slug = CW.slugify(title_field_value) — auto-generated from title_field
+name recoverable from slug
+Schema: title_field must be defined
+
+5. Ephemeral (no title)
+javascript// Run, Log, etc.
+
+name = random via generateMultiId — not recoverable
+slug = not generated
+These are transient records, never content-addressed
+
+
+How generateId Works
+javascriptgenerateId(doctype, seed)
+Priority order:
+
+EMAIL_KEYED → prefix + hashString(raw_email)
+PATH_KEYED → prefix + hashString(slug)
+SINGLE_DOCTYPES → generateSingleId(doctype, title)
+Default with title → prefix + hashString(slug)
+No title → generateMultiId (random)
+
+Always deterministic for categories 1–4. Same input → same output every time.
+
+How generateSlug Works
+javascriptfunction generateSlug(run_doc) {
+  const doc    = run_doc.target?.data?.[0]
+  const s      = CW.Schema?.[run_doc.target_doctype]
+  const a      = s?.autoname
+  const source = a?.startsWith("field:") ? a.slice(6) : s?.title_field
+  if (!source || !doc?.[source]) return null
+  return CW.slugify(doc[source])
+}
+
+Reads autoname from schema → determines which field to slugify
+Falls back to title_field if no autoname
+Returns null gracefully if no source found
+
+
+systemFields Execution Order
+1. doctype  onWrite  → sets doc.doctype
+2. slug     onCreate → generateSlug(run_doc) if doc.slug not already set
+3. name     onCreate → generateId(doctype, seed from autoname)
+Order is critical — slug must exist before name is generated.
+
+Correct Usage in Code
+Creating a record with external slug (Person, Company)
+javascript// always provide slug in input — it IS the anchor
+CW.run({
+  operation: 'create',
+  target_doctype: 'Person',
+  input: {
+    slug:      'liubov-isakova-213305239',   // ← LinkedIn vanity URL
+    full_name: 'Liubov Isakova',
+  }
+})
+// → name = generateId('Person', 'liubov-isakova-213305239') = 'pers01zn65669iw'
+Creating a record without slug (Task, Event)
+javascript// do NOT provide slug — auto-generated from title_field
+CW.run({
+  operation: 'create',
+  target_doctype: 'Task',
+  input: {
+    subject: 'Создать отчёт по продажам',   // ← title_field
+  }
+})
+// → slug = CW.slugify('Создать отчёт...') = 'sozdat-otchyot-po-prodazham'
+// → name = generateId('Task', slug) = 'task...'
+Creating a User
+javascript// email is the anchor — do NOT provide slug
+CW.run({
+  operation: 'create',
+  target_doctype: 'User',
+  input: {
+    email:      'liubov@example.com',   // ← raw email, seed for name
+    full_name:  'Liubov Isakova',
+    first_name: 'Liubov',
+    last_name:  'Isakova',
+  }
+})
+// → slug = CW.slugify('liubov@example.com') = 'liubov-at-example-dot-com'
+// → name = generateId('User', 'liubov@example.com') = 'user...'
+Recovering name from known slug
+javascript// PATH_KEYED and default — name recoverable from slug
+generateId('Person', 'liubov-isakova-213305239')  // → 'pers01zn65669iw'
+generateId('Task',   'sozdat-otchyot-po-prodazham') // → 'task...'
+
+// EMAIL_KEYED — name recoverable from raw email only
+generateId('User', 'liubov@example.com')  // → 'user...'
+// NOT from slug:
+generateId('User', 'liubov-at-example-dot-com')  // → different ID ✗
+Asset filename convention
+javascript// {name}.{slug}.{semantic}.{ext}
+'pers01zn65669iw.liubov-isakova-213305239.avatar.jpg'
+'task04ydeytb4sw.sozdat-otchyot-po-prodazham.attachment.pdf'
+'user01p5hkfxgd1.liubov-at-example-dot-com.avatar.jpg'
+Slugifying strings
+javascriptCW.slugify('Любовь Исакова')           // → 'lyubov-isakova'
+CW.slugify('liubov@example.com')       // → 'liubov-at-example-dot-com'
+CW.slugify('AI Expo: Boston 2026!')    // → 'ai-expo-colon-boston-2026-excl'
+CW.slugify('my-existing-slug')         // → 'my-existing-slug'
+
+Schema Requirements per Category
+Categoryautonametitle_fieldslug in inputEMAIL_KEYEDfield:emailanyneverPATH_KEYEDfield:sluganyalways requiredSINGLE_DOCTYPESnot neededrequiredneverDefaultnot neededrequiredneverEphemeralnot needednot needednever

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign in — Exponanta</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta17/dist/css/tabler.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+</head>
+<body class="antialiased">
+<div class="page page-center">
+  <div class="container container-tight py-4">
+    <div class="card card-md" id="login_card">
+      <div class="card-body">
+
+        <div class="text-center mb-4">
+          <a href="/" class="fw-bold fs-3 text-decoration-none text-dark">Exponanta</a>
+          <p class="text-muted mt-1 mb-0">Sign in to your account</p>
+        </div>
+
+        <div id="alert" class="alert alert-danger d-none mb-3"></div>
+
+        <div id="form_section">
+          <div class="mb-3">
+            <label class="form-label required">Email address</label>
+            <input type="email" id="email" class="form-control" placeholder="you@example.com" autocomplete="email">
+            <div class="invalid-feedback" id="email_error"></div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label required">
+              Password
+              <span class="form-label-description">
+                <a href="#" id="forgot_link">Forgot password?</a>
+              </span>
+            </label>
+            <div class="input-group input-group-flat">
+              <input type="password" id="password" class="form-control" placeholder="Your password" autocomplete="current-password">
+              <span class="input-group-text">
+                <a href="#" id="toggle_pw" class="link-secondary" title="Show password">
+                  <i class="ti ti-eye"></i>
+                </a>
+              </span>
+            </div>
+            <div class="invalid-feedback" id="password_error"></div>
+          </div>
+
+          <div class="mt-4">
+            <button id="submit_btn" class="btn btn-primary w-100">
+              <span id="btn_text">Sign in</span>
+              <span id="btn_spinner" class="d-none spinner-border spinner-border-sm ms-2"></span>
+            </button>
+          </div>
+        </div>
+
+        <div id="forgot_section" class="d-none text-center py-3">
+          <i class="ti ti-mail fs-1 text-muted mb-2 d-block"></i>
+          <p class="mb-3">Check your email for a password reset link.</p>
+          <a href="#" id="back_link" class="btn btn-outline-secondary btn-sm">Back to sign in</a>
+        </div>
+
+        <div id="success_section" class="d-none text-center py-3">
+          <i class="ti ti-circle-check fs-1 text-success mb-2 d-block"></i>
+          <p class="fw-semibold mb-1">Welcome back!</p>
+          <p class="text-muted small">Redirecting...</p>
+          <div class="progress mt-3" style="height:3px">
+            <div class="progress-bar progress-bar-striped progress-bar-animated w-100"></div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="card-footer text-center text-muted">
+        Don't have an account? <a href="/register.html">Sign up</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 1. PocketBase SDK -->
+<script src="https://cdn.jsdelivr.net/npm/pocketbase@latest/dist/pocketbase.umd.js"></script>
+<!-- 2. CW modules — provides pb global + auth functions -->
+<script type="module">
+  import './index.js'
+</script>
+<!-- 3. Login logic -->
+<script type="module">
+  async function waitForBoot() {
+    return new Promise(resolve => {
+      const check = setInterval(() => {
+        if (globalThis.CW?._booted) { clearInterval(check); resolve(); }
+      }, 100);
+    });
+  }
+
+  await waitForBoot();
+
+  // already logged in — redirect
+  if (globalThis.pb?.authStore?.isValid) {
+    window.location.href = '/app.html';
+  }
+
+  const emailEl    = document.getElementById('email');
+  const passwordEl = document.getElementById('password');
+  const submitBtn  = document.getElementById('submit_btn');
+  const btnText    = document.getElementById('btn_text');
+  const btnSpinner = document.getElementById('btn_spinner');
+  const alertEl    = document.getElementById('alert');
+  const formSection    = document.getElementById('form_section');
+  const forgotSection  = document.getElementById('forgot_section');
+  const successSection = document.getElementById('success_section');
+
+  function showAlert(msg) {
+    alertEl.textContent = msg;
+    alertEl.classList.remove('d-none');
+  }
+
+  function hideAlert() {
+    alertEl.classList.add('d-none');
+  }
+
+  function setLoading(on) {
+    submitBtn.disabled = on;
+    btnText.textContent = on ? 'Signing in...' : 'Sign in';
+    btnSpinner.classList.toggle('d-none', !on);
+  }
+
+  async function submit() {
+    hideAlert();
+    const email    = emailEl.value.trim().toLowerCase();
+    const password = passwordEl.value;
+
+    if (!email)    { emailEl.classList.add('is-invalid'); return; }
+    if (!password) { passwordEl.classList.add('is-invalid'); return; }
+    emailEl.classList.remove('is-invalid');
+    passwordEl.classList.remove('is-invalid');
+
+    setLoading(true);
+    try {
+      await globalThis.authLogin(email, password);
+      formSection.classList.add('d-none');
+      successSection.classList.remove('d-none');
+      setTimeout(() => { window.location.href = '/app.html'; }, 1200);
+    } catch(err) {
+      const status = err?.status || err?.response?.status;
+      if (status === 400) {
+        showAlert('Invalid email or password.');
+      } else if (status === 403) {
+        showAlert('Account not verified. Check your email.');
+      } else {
+        showAlert(err?.message || 'Something went wrong. Please try again.');
+      }
+      setLoading(false);
+    }
+  }
+
+  submitBtn.addEventListener('click', submit);
+  passwordEl.addEventListener('keydown', e => { if (e.key === 'Enter') submit(); });
+
+  // toggle password visibility
+  document.getElementById('toggle_pw').addEventListener('click', e => {
+    e.preventDefault();
+    passwordEl.type = passwordEl.type === 'password' ? 'text' : 'password';
+  });
+
+  // forgot password
+  document.getElementById('forgot_link').addEventListener('click', async e => {
+    e.preventDefault();
+    const email = emailEl.value.trim().toLowerCase();
+    if (email) {
+      try { await globalThis.pb.collection('users').requestPasswordReset(email); }
+      catch(_) {}
+    }
+    formSection.classList.add('d-none');
+    forgotSection.classList.remove('d-none');
+  });
+
+  document.getElementById('back_link').addEventListener('click', e => {
+    e.preventDefault();
+    forgotSection.classList.add('d-none');
+    formSection.classList.remove('d-none');
+  });
+</script>
+</body>
+</html>

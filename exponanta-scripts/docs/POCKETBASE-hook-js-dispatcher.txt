@@ -1,0 +1,79 @@
+PocketBase Dynamic Hook Dispatcher
+What it does: Any new record creation triggers a lookup of a special "Code" record, executes the JavaScript stored in its data.code field, and writes the result back to the triggering record.
+
+The hook (pb_hooks/main.pb.js) fires on every item collection create. It finds the record named Code-100c6mfyqpy78ik, parses data.code, injects __id and __app into globalThis, then evals the code.
+The Code record (Code-100c6mfyqpy78ik) is a regular item record whose data.code field contains the JavaScript to run. Changing this field changes the behavior of all future hook executions — no restart needed.
+The triggering record is whatever item record was just created. Its id is available inside the eval'd code as __id. After the HTTP call, the code looks up this same record via __app.findFirstRecordByFilter and writes the response back with __app.save.
+The flow:
+create any item record
+  → hook fires
+  → loads Code-100c6mfyqpy78ik.data.code
+  → eval(code) with __id, __app in scope
+  → code calls $http.send to external URL
+  → code writes response back to triggering record
+  → PB realtime pushes update to browser
+Key facts:
+
+$http.send is synchronous in goja — hook blocks until response returns, then saves
+eval works in PocketBase's goja runtime and shares the hook's scope via globalThis
+No Node.js, no worker process — pure PocketBase
+Swapping the Code record's data.code is the only thing needed to change behavior
+
+//=========================HOOK=======================
+
+console.log("Hook v3 file loaded successfully");
+
+onRecordAfterCreateSuccess((e) => {
+    try {
+        const collection = e.record.collection().name;
+        const recordId = e.record.id;
+        console.log("✓ Record saved successfully!");
+        console.log("Collection:", collection);
+        console.log("Record ID:", recordId);
+
+        if (collection !== "item") return;
+
+        console.log("✓ Items record detected");
+
+        const target = $app.findFirstRecordByFilter(
+            "item",
+            `name = "Code-100c6mfyqpy78ik"`
+        );
+
+        if (!target) {
+            console.warn("⚠️ Target record not found");
+            return;
+        }
+
+        console.log("✓ Target record found:", target.id);
+
+        let data;
+        try {
+            data = JSON.parse(target.getString("data"));
+        } catch (err) {
+            console.error("⚠️ Could not parse data field:", err.message);
+            return;
+        }
+
+        const code = data?.code;
+        if (!code) {
+            console.warn("⚠️ No code found in data.code");
+            return;
+        }
+
+        console.log("🧠 Executing code...");
+        globalThis.__id = e.record.id;
+        globalThis.__app = $app;
+        eval(code);
+
+    } catch (err) {
+        console.error("✗ Uncaught error:", err.message);
+    }
+});
+
+//==================CODE record
+{
+  "code": "const res = $http.send({url:'https://httpbin.org/post',method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:__id})}); console.log('step1 http status:', res.statusCode); const body = JSON.parse(String.fromCharCode(...res.body)); const r = __app.findFirstRecordByFilter('item',`id = \"${__id}\"`); r.set('data', JSON.stringify({response: body})); __app.save(r); console.log('step2 saved to', __id)",
+  "doctype": "Code",
+  "name": "Code-100c6mfyqpy78ik"
+}

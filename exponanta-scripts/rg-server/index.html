@@ -19,6 +19,19 @@
   .comment-row textarea { width: 100%; background: #1a1a2e; border: 1px solid #f59f00; color: #e0e0e0; font-family: monospace; font-size: 0.78rem; padding: 3px 6px; resize: none; border-radius: 2px; outline: none; }
   #results-wrap { max-height: calc(100vh - 260px); overflow-y: auto; }
   .badge-count { font-family: monospace; }
+  #dir-browser {
+    display: none;
+    position: absolute;
+    z-index: 100;
+    background: #0f0f1a;
+    border: 1px solid #2a3a5a;
+    border-top: none;
+    font-family: monospace;
+    font-size: 0.78rem;
+    min-width: 320px;
+    max-height: 240px;
+    overflow-y: auto;
+  }
 </style>
 </head>
 <body>
@@ -43,15 +56,24 @@
         <div class="row g-2 align-items-end">
           <div class="col">
             <label class="form-label text-muted mb-1" style="font-size:0.75rem;">PATTERN</label>
-            <input id="pattern" type="text" class="form-control" placeholder="regex pattern…" style="font-family:monospace; background:#0f0f1a; border-color:#2a3a5a; color:#e0e0e0;">
+            <input id="pattern" type="text" class="form-control" placeholder="regex pattern…"
+                   style="font-family:monospace; background:#0f0f1a; border-color:#2a3a5a; color:#e0e0e0;">
           </div>
-          <div class="col-4">
+          <div class="col-4" style="position:relative;">
             <label class="form-label text-muted mb-1" style="font-size:0.75rem;">DIRECTORY</label>
-            <input id="dir" type="text" class="form-control" value="." style="font-family:monospace; background:#0f0f1a; border-color:#2a3a5a; color:#e0e0e0;">
+            <div class="input-group">
+              <input id="dir" type="text" class="form-control" value="."
+                     style="font-family:monospace; background:#0f0f1a; border-color:#2a3a5a; color:#e0e0e0;"
+                     onkeydown="if(event.key==='Enter')startSearch()">
+              <button class="btn btn-outline-secondary" onclick="openBrowser()" title="Browse"
+                      style="border-color:#2a3a5a; color:#74c0fc;">📁</button>
+            </div>
+            <div id="dir-browser"></div>
           </div>
           <div class="col-3">
             <label class="form-label text-muted mb-1" style="font-size:0.75rem;">FLAGS ONLY</label>
-            <input id="args" type="text" class="form-control" placeholder="-A 10 -i -t js" style="font-family:monospace; background:#0f0f1a; border-color:#2a3a5a; color:#e0e0e0;">
+            <input id="args" type="text" class="form-control" placeholder="-A 10 -i -t js"
+                   style="font-family:monospace; background:#0f0f1a; border-color:#2a3a5a; color:#e0e0e0;">
           </div>
           <div class="col-auto">
             <button id="btn-search" class="btn btn-primary" onclick="startSearch()">Search</button>
@@ -298,6 +320,84 @@ function escHtml(str) {
 
 document.getElementById('pattern').addEventListener('keydown', e => {
   if (e.key === 'Enter') startSearch();
+});
+
+// ── Directory browser ──────────────────────────────────────────────────────
+
+async function openBrowser() {
+  const start = document.getElementById('dir').value.trim() || '.';
+  await browseTo(start);
+}
+
+async function browseTo(dir) {
+  const panel = document.getElementById('dir-browser');
+  panel.style.display = 'block';
+  panel.innerHTML = '<div style="padding:4px 8px; color:#6c757d;">loading…</div>';
+  try {
+    const r = await fetch(`/ls?dir=${encodeURIComponent(dir)}`);
+    const { abs, dirs, error } = await r.json();
+    if (error) {
+      panel.innerHTML = `<div style="padding:4px 8px; color:#f03e3e;">${escHtml(error)}</div>`;
+      return;
+    }
+    document.getElementById('dir').value = abs;
+    panel.innerHTML = '';
+
+    // ".." row
+    const up = document.createElement('div');
+    up.textContent = '↑ ..';
+    up.style.cssText = 'padding:3px 8px; cursor:pointer; color:#74c0fc;';
+    up.onmouseenter = () => up.style.background = '#1e1e3a';
+    up.onmouseleave = () => up.style.background = '';
+    up.onclick = () => browseTo(abs + '/..');
+    panel.appendChild(up);
+
+    for (const d of dirs) {
+      const row = document.createElement('div');
+      row.textContent = '📁 ' + d;
+      row.style.cssText = 'padding:3px 8px; cursor:pointer; color:#c9d1d9;';
+      row.onmouseenter = () => row.style.background = '#1e1e3a';
+      row.onmouseleave = () => row.style.background = '';
+      // single-click → navigate into; double-click → select & close
+      row.onclick = () => browseTo(abs + '/' + d);
+      row.ondblclick = () => {
+        document.getElementById('dir').value = abs + '/' + d;
+        panel.style.display = 'none';
+      };
+      panel.appendChild(row);
+    }
+
+    if (!dirs.length) {
+      const empty = document.createElement('div');
+      empty.textContent = '(no subdirectories)';
+      empty.style.cssText = 'padding:4px 8px; color:#6c757d;';
+      panel.appendChild(empty);
+    }
+
+    // confirm row
+    const use = document.createElement('div');
+    use.textContent = '✓ Use: ' + abs;
+    use.style.cssText = 'padding:4px 8px; cursor:pointer; color:#f59f00; border-top:1px solid #2a3a5a; margin-top:2px; position:sticky; bottom:0; background:#0f0f1a;';
+    use.onmouseenter = () => use.style.background = '#1e1e3a';
+    use.onmouseleave = () => use.style.background = '#0f0f1a';
+    use.onclick = () => {
+      document.getElementById('dir').value = abs;
+      panel.style.display = 'none';
+    };
+    panel.appendChild(use);
+
+  } catch (e) {
+    panel.innerHTML = `<div style="padding:4px 8px; color:#f03e3e;">fetch error</div>`;
+  }
+}
+
+// close browser on outside click
+document.addEventListener('click', e => {
+  const panel = document.getElementById('dir-browser');
+  const dirInput = document.getElementById('dir');
+  if (!panel.contains(e.target) && !e.target.closest('.input-group')) {
+    panel.style.display = 'none';
+  }
 });
 </script>
 </body>

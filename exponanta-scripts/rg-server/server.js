@@ -118,6 +118,24 @@ const server = http.createServer((req, res) => {
     return;
   }
 
+  //-------------------
+  if (url.pathname === '/ls') {
+  const dir = path.resolve(url.searchParams.get('dir') || '.');
+  try {
+    const entries = fs.readdirSync(dir, { withFileTypes: true });
+    const dirs = entries
+      .filter(e => e.isDirectory() && !e.name.startsWith('.'))
+      .map(e => e.name)
+      .sort();
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ abs: dir, dirs }));
+  } catch (e) {
+    res.writeHead(400, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ error: e.message }));
+  }
+  return;
+}
+//--------------
   res.writeHead(404);
   res.end('not found');
 });

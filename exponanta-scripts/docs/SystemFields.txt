@@ -1,0 +1,30 @@
+## SystemFields Merged into Schema at Boot (`_compileSchemas`)
+
+### What changed
+System fields (defined in `CW._config.systemFields`) are now merged into every
+`CW.Schema[doctype].fields` array once at boot inside `_compileSchemas`.
+This eliminates duplicate runtime merging in `MainForm`, `MainGrid`, and `_getListFields`.
+
+### Rules
+- Fields with `hidden: 1` or no `fieldtype` are excluded from the merge
+- Behavioral keys (`onWrite`, `onCreate`, `fetch`) are stripped — schema fields are UI/validation only
+- `name` is renamed to `fieldname`
+- All other keys are copied as-is (no hardcoding)
+- A field is only added if its `fieldname` is not already in `schema.fields`
+
+### Required systemField properties for UI visibility
+Every systemField that should appear in forms or grids must have:
+- `fieldtype` — required, otherwise excluded from merge
+- `label` — required for form label rendering; falls back to `name` if missing
+- `hidden: 0` — must be explicit, default assumption is hidden
+- `in_list_view: 1` — required to appear in grid columns
+- `full_width: 1` — optional, set on fields like `Filepicker` that need `col-12` in MainForm
+
+### What was removed after merge
+- `MainForm` systemFields merge block
+- `_handlers.select` separate `systemFields` line in list filter
+- `_getListFields` sysFields merge block
+
+### Remaining uses of `CW._config.systemFields`
+- `_preflight` — `onWrite`/`onCreate` behavioral handlers (not affected by merge)
+- Definition in `CW-config.js` — source of truth

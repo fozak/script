@@ -1,0 +1,44 @@
+lets step back and define more accurately the delete in my system.  initially i wanted soft delete of having docstatus = 2. It was done to have frappe like buisness approach (like revealing all transactions). Now i am conserned on polluting the UI. How frappe solves this
+
+3:17 PM
+Claude responded: Frappe solves it with two separate concepts:
+Frappe solves it with two separate concepts:
+
+1. Cancel — docstatus = 2 — business record stays visible, immutable, shows "Cancelled" badge. Used for submitted documents that need audit trail — invoices, stock entries, salary slips. You can see it happened, you just can't edit it.
+
+2. Delete — actual removal from DB — used for draft documents (docstatus = 0) that were never submitted. No audit trail needed. Also available to System Manager for cancelled docs in some cases.
+
+The rule: if a document was ever submitted (docstatus = 1), you cancel it, not delete it. If it was never submitted (still draft), you delete it.
+
+Your current system has delete handler setting docstatus = 2 — which is cancel, not delete. That's why UI gets polluted — cancelled records keep showing up.
+
+Clean fix:
+
+0_2 transition → actual delete from DB (draft never submitted, safe to remove)
+1_2 transition → cancel (submitted, needs audit trail, stays in DB)
+Add a filter in all list/grid selects: docstatus != 2 by default
+The last point is key — Frappe always filters docstatus != 2 in list views unless you explicitly ask to see cancelled records. Your _handlers.select should do the same.
+
+Do you want to add that default filter?
+
+You said: i see no issue of 0.
+i see no issue of 0.0_2 for non submittable = delete
+
+3:19 PM
+Claude responded: Correct.
+Correct. Clean rule:
+
+is_submittable: 0 — 0_2 = hard delete from DB, no audit trail needed
+is_submittable: 1 — 0_2 = soft delete/reject (stays at docstatus: 2), 1_2 = cancel
+So in _handleSignal or _execTransition, when dim=0, key=0_2:
+
+javascript
+if (toVal === 2 && !schema?.is_submittable) {
+  // hard delete
+  await CW._handlers.delete(run_doc);
+} else {
+  // soft — docstatus=2 stays in DB
+}
+And _handlers.delete does actual DB removal, not docstatus=2.
+
+Does your current _handlers.delete do actual removal or just sets docstatus=2?

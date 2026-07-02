@@ -1,0 +1,20 @@
+CW URL Query Reference
+Load a specific record (form view):
+?target_doctype=Event&operation=select&view=form&query[where][name]=eventq7h68m6xpg
+List with filters:
+?target_doctype=Event&operation=select&view=list&query[where][status]=active
+List with pagination:
+?target_doctype=Event&operation=select&view=list&query[perPage]=20&query[page]=1
+Combined filter + pagination:
+?target_doctype=Event&operation=select&view=list&query[where][status]=active&query[perPage]=20
+Sort:
+?target_doctype=Event&operation=select&view=list&query[sort][date]=desc
+Raw PocketBase filter (escape as needed):
+?target_doctype=Event&operation=select&view=list&query[filter]=data.status="active"
+Key rules:
+
+Specific record → always query[where][name]=<id> — never query[name]
+Nested filters → query[where][fieldname]=value
+perPage triggers paginated getList; omitting it uses getFullList
+query[filter] is raw PocketBase filter string, appended after doctype clause
+Dots in field names are preserved — query[where][0.0_1]=value works

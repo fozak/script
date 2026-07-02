@@ -1,0 +1,48 @@
+is this an issue of 0,1,2 beying very simple and CLEAR but on 1 we still need to change _state
+
+9:34 PM
+Yes exactly. The editable guard assumes docstatus=1 means "locked, no edits". But docstatus=1 (Submitted/Published) still needs internal state changes — FSM transitions, sideEffects updating _allowed_read, system fields like modified.
+
+The guard is too broad. What actually needs protection is:
+
+User field edits — blocked by FieldRenderer read-only already
+FSM transitions — always allowed, go through signal path (bypasses editable anyway)
+Internal/programmatic updates — should always proceed
+So editable in the write path is genuinely redundant — signals bypass it, UI is blocked by FieldRenderer, programmatic uses internal: true as workaround.
+
+Remove it completely. The write path becomes:
+
+javascript
+const dataKeys = Object.keys(run_doc.input).filter(k => k !== '_state');
+if (dataKeys.length > 0) {
+  run_doc.operation = ...
+  await CW._handlers[run_doc.operation](run_doc);
+And remove internal: true from sideEffects — no longer needed. Cleaner all around.
+
+what lines of code should be changed and how. Review all CW-run.js
+
+9:36 PM
+Looking at the current CW-run.js — the only change needed is in CW.controller:
+
+
+Find the editable check in controller
+Find the editable check in controller
+Two lines to change — remove editable variable and remove it from the condition:
+
+
+Edited a file, ran a command
+Edited a file, ran a command
+Two lines — 218 and 225. Remove line 218 entirely, change line 225:
+
+Line 216-225 becomes:
+
+javascript
+    } else {
+      const opConfig = CW._config.operations?.[run_doc.operation] || {};
+
+      if (opConfig.type === "read" || opConfig.type === "auth") {
+        await CW._handlers[run_doc.operation]?.(run_doc);
+      } else if (opConfig.type === "write") {
+        const dataKeys = Object.keys(run_doc.input).filter(k => k !== '_state');
+        if (dataKeys.length > 0) {
+Remove lines 216-218 (schema, doc, editable) and change if (editable && dataKeys.length > 0) to if (dataKeys.length > 0). Also remove internal: true from SystemSchema sideEffects since it's no longer needed.

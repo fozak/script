@@ -1,0 +1,32 @@
+no TODO to make path keyd defaultGot it — flip the default case to be PATH_KEYED behavior (deterministic from title/path) and make random the explicit opt-in for truly ephemeral doctypes, rather than the silent fallback:
+javascriptfunction generateId(doctype, title = null) {
+  if (EMAIL_KEYED[doctype]) {
+    if (!title?.trim()) throw new Error(`${doctype} requires an email address`)
+    return (EMAIL_KEYED[doctype] + hashString(title)).substring(0, 15)
+  }
+
+  if (PATH_KEYED[doctype]) {
+    if (!title?.trim()) throw new Error(`${doctype} requires a path`)
+    return (PATH_KEYED[doctype] + hashString(title)).substring(0, 15)
+  }
+
+  if (SINGLE_DOCTYPES.has(doctype)) {
+    return generateSingleId(doctype, title)
+  }
+
+  // default — deterministic if title exists, same as PATH_KEYED but no prefix constraint
+  if (title?.trim()) {
+    const prefix = doctype.toLowerCase().replace(/[^a-z0-9]/g, '').substring(0, 4)
+    return (prefix + hashString(title)).substring(0, 15)
+  }
+
+  // explicit ephemeral opt-in — only for doctypes that intentionally have no stable key (Run, etc.)
+  throw new Error(`${doctype} requires a title/path for deterministic ID — use generateMultiId() explicitly for ephemeral records`)
+}
+So the design intent becomes:
+
+Everything deterministic by default — if you have a title/path, you get a stable ID. No silent randoms.
+Ephemeral is explicit — callers that genuinely want a random ID (like Run) call generateMultiId() directly, making the intent visible in the call site rather than hidden in a fallback branch.
+The throw on missing title becomes universal — not just PATH_KEYED/EMAIL_KEYED, but all doctypes, forcing the caller to be deliberate about whether they meant ephemeral (call generateMultiId) or just forgot to pass a title (fix the call).
+
+The one thing to verify: wherever Run records are created in your pipeline, they presumably call generateId today and rely on the random fallback — those call sites need to be updated to call generateMultiId explicitly after this change.

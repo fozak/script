@@ -1,0 +1,118 @@
+is this 95% ideal
+
+10:46 AM
+No. 85%. Two missing pieces for the last 15%:
+
+Missing 1 — Inverse type declaration (5%)
+
+Every directed edge has a semantic inverse that should be declared, not derived:
+
+json
+{
+  "type": "FILED",
+  "inverse": "FILED_BY"
+}
+Without this, reverse traversal works technically (query where to_name = X) but loses semantic meaning. "What did Robin file?" and "Who filed this return?" are different questions — they deserve different type labels, not just query direction reversal. Palantir's Ontology Manager requires declaring both directions of every link type. Your config needs:
+
+javascript
+CW._config.link_types = {
+  FILED:          { inverse: 'FILED_BY',      from: 'Person',    to: 'TaxReturn' },
+  LIVES_AT:       { inverse: 'RESIDENCE_OF',  from: 'Person',    to: 'Address'   },
+  EXTRACTED_FROM: { inverse: 'PRODUCED',      from: 'AnyObject', to: 'File'      },
+  BILLED_TO:      { inverse: 'HAS_INVOICE',   from: 'Invoice',   to: 'Customer'  },
+}
+Missing 2 — Confidence threshold + verification status (10%)
+
+confidence: 0.99 in the data blob is passive — it's just a number. What's missing is an active verification state that gates whether this relationship is used in queries:
+
+json
+"status": "unverified" | "confirmed" | "rejected" | "superseded"
+Without this, your graph mixes AI-extracted relationships (confidence 0.6, possibly wrong) with human-confirmed relationships (confidence 1.0, authoritative) in the same query results. Every graph traversal needs to know which edges to trust.
+
+This is Palantir's edit approval workflow applied to edges — an AI-extracted LIVES_AT link starts as unverified, a human confirms it → confirmed, a later document contradicts it → superseded with valid_to set.
+
+Add these two and you're at 98%:
+
+json
+{
+  "doctype": "Relationship",
+  "name": "relxxxxxxxxxxxxxxx",
+  "data": {
+    "from_doctype": "Person",
+    "from_name":    "person43gfv...",
+    "to_doctype":   "TaxReturn",
+    "to_name":      "taxret1gh...",
+    "type":         "FILED",
+    "inverse":      "FILED_BY",
+    "status":       "confirmed",
+    "weight":       1.0,
+    "valid_from":   1672531200000,
+    "valid_to":     null,
+    "data": {
+      "confidence":   0.99,
+      "extracted_at": 1781040000000,
+      "source_file":  "file01p9g9qt7yc"
+    }
+  }
+}
+The remaining 2% is graph-database-level indexing that PocketBase can't provide natively — traversal performance at scale. Acceptable tradeoff for your use case.
+
+can we still traverse it relatively efficient with pb
+
+10:54 AM
+Yes. PocketBase's filter syntax handles the two core traversal patterns efficiently enough for your scale:
+
+Forward traversal — "what did Robin file?"
+
+javascript
+CW.run({
+  target_doctype: 'Relationship',
+  query: { where: { 
+    from_name: 'person43gfv...',
+    type: 'FILED',
+    status: 'confirmed'
+  }}
+})
+Reverse traversal — "who filed this return?"
+
+javascript
+CW.run({
+  target_doctype: 'Relationship',
+  query: { where: { 
+    to_name: 'taxret1gh...',
+    type: 'FILED'  // or inverse: 'FILED_BY'
+  }}
+})
+Two-hop traversal — "all documents Robin is connected to"
+
+javascript
+// hop 1 — get all relationships from Robin
+const rels = await CW.run({
+  target_doctype: 'Relationship',
+  query: { where: { from_name: 'person43gfv...' }}
+});
+
+// hop 2 — get all target objects
+const names = rels.target.data.map(r => r.to_name);
+const objects = await CW.run({
+  target_doctype: 'File',  // or any doctype
+  query: { where: { name: { in: names } }}
+});
+The honest performance picture:
+
+Traversal	PocketBase	Neo4j
+1-hop	Fast — single filter query	Fast
+2-hop	OK — 2 queries	Fast
+3-hop	Slow — 3 queries + growing result sets	Fast
+Full graph traversal	Very slow	Native
+Aggregations (count links per node)	OK with skipTotal	Fast
+Your scale ceiling:
+
+PocketBase handles this fine up to:
+
+~100k Relationship records
+~3-hop traversal depth
+~1000 concurrent queries
+Beyond that you'd need a dedicated graph layer. For your use case — personal/team knowledge management, ontology extraction from a project's documents — you'll never hit that ceiling.
+
+One optimization worth adding — index the key traversal fields in PocketBase collection rules. Your item collection filter rules should include from_name, to_name, type, status as indexed fields. PocketBase uses SQLite underneath — these become CREATE INDEX statements, making single-hop traversal ~10x faster.

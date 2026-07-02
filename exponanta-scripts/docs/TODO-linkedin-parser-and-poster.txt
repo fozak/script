@@ -1,0 +1,47 @@
+window.addEventListener('message', async (e) => {
+  if (e.data?.type !== 'LINKEDIN_PROFILE') return
+
+  console.log('📥 LinkedIn profile received:', e.data.url)
+
+  // ── DeepSeek extract ────────────────────────────────────
+  const res = await fetch('https://api.deepseek.com/v1/chat/completions', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer sk-xxx'
+    },
+    body: JSON.stringify({
+      model: 'deepseek-chat',
+      max_tokens: 1500,
+      response_format: { type: 'json_object' },
+      messages: [{
+        role: 'system',
+        content: 'Extract LinkedIn Person data. Return only valid json: {"slug":"","full_name":"","first_name":"","last_name":"","headline":"","city":"","region":"","country":"","role":"","company":"","about":"","experience":[{"title":"","company":"","start":"","end":"","location":""}],"linkedin":""}'
+      }, {
+        role: 'user',
+        content: `URL: ${e.data.url}\n\nPage text:\n${e.data.text}`
+      }]
+    })
+  })
+
+  const data   = await res.json()
+  const person = JSON.parse(data.choices[0].message.content)
+  person.avatar_b64 = e.data.avatar_b64
+  person.avatar_ext = e.data.avatar_ext
+
+  console.log('👤 extracted:', person.full_name, person.role)
+
+  // ── CW create ────────────────────────────────────────────
+  await CW.run({
+    operation:      'create',
+    target_doctype: 'Person',
+    input:          person
+  })
+
+  // ── avatar save ──────────────────────────────────────────
+  const savedName = generateId('Person', person.slug)
+  const fileName  = `${savedName}.${person.slug}.avatar.${person.avatar_ext}`
+  console.log('🖼 avatar file:', fileName)
+  // TODO: upload avatar_b64 to /assets/fileName
+
+})
