@@ -1,0 +1,52 @@
+@value colors: '../../common-ui/colors.css';
+@value color11, color2 from colors;
+
+.switch {
+    cursor: pointer;
+    text-indent: -9999px;
+    width: 45px;
+    height: 20px;
+    background: #b3b3b37a;
+    display: flex;
+    border-radius: 100px;
+    position: relative;
+    flex-direction: row-reverse;
+    align-items: center;
+
+    &::after {
+        content: '';
+        margin-left: 15px;
+        margin-right: -25px;
+        width: 24px;
+        height: 24px;
+        background: #fff;
+        border-radius: 90px;
+        box-shadow: 0px 1px 3px 1px #ccc;
+        transition: 0.3s;
+        background-image: url('/img/removeIcon.svg');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 8px;
+    }
+}
+
+.activeSwitch {
+    background: color2;
+
+    &::after {
+        background-image: url('/img/check.svg');
+        background-size: 15px;
+        left: calc(100% - 5px);
+        transform: translateX(-100%);
+    }
+}
+
+.input {
+    height: 0;
+    width: 0;
+    visibility: hidden;
+}
+
+.searchSwitch {
+    cursor: pointer;
+}

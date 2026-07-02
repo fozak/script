@@ -123,6 +123,21 @@ globalThis.CW._config = {
       },
     },
     {
+  name: "title",
+  fetch: true,
+  hidden: 0,
+  in_list_view: 1,
+  fieldtype: "Data",
+  onCreate: (run_doc) => {
+    const doc = run_doc.target?.data?.[0];
+    if (!doc) return;
+    const s = CW.Schema?.[run_doc.target_doctype];
+    const titleFieldName = s?.title_field || "title";
+    if (titleFieldName === "title") return;
+    doc.title = doc[titleFieldName] ?? doc.title;
+  },
+},
+    {
       name: "name",
       fetch: true,
       hidden: 0,

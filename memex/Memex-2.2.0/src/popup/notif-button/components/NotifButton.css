@@ -1,0 +1,6 @@
+.notification {
+	composes: inboxIcon from 'src/common-ui/icons.css';
+    background-size: 18px;
+    margin-top: 0px;
+    background-position-y: 4px;
+}

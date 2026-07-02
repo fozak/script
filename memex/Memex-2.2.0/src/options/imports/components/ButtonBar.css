@@ -1,0 +1,112 @@
+@value colors: '../../../common-ui/colors.css';
+@value color1, color4, color12 from colors;
+
+.container {
+    display: flex;
+    flex-direction: row;
+    height: 100px;
+    justify-content: flex-end;
+    margin-bottom: -30px;
+}
+
+.loadingContainer {
+    display: flex;
+    flex-direction: column;
+    width: 45%;
+}
+
+.actionContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.actionBar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.actionButton {
+    background: #5cd9a6;
+    border: none;
+    height: 36px;
+    border-radius: 3px;
+    font-weight: 600;
+    cursor: pointer;
+
+    &.hidden {
+        display: none;
+    }
+}
+
+.helpText {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    height: 35px;
+    font-weight: 400;
+    text-align: right;
+    color: #8d857f;
+    font-size: 0.8em;
+}
+
+.cancel {
+    composes: cancelNaked from '../../../common-ui/elements.css';
+    padding: 3px 8px 3px 8px;
+    background-color: transparent;
+    color: color12;
+    border: none;
+    font-size: 14px;
+    margin-bottom: 30px;
+}
+
+.recalc {
+    composes: nakedSquareButton from '../../../common-ui/elements.css';
+    color: color4;
+    margin: 0 10px 30px 0;
+    width: 35px;
+    background: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.startImport {
+    margin-bottom: 30px;
+    padding: 6px 18px;
+    font-size: 14px;
+    color: #2f2f2f;
+
+    &[disabled] {
+        opacity: 0.4;
+        cursor: not-allowed;
+    }
+}
+
+.pause,
+.resume {
+    composes: startImport;
+    margin-left: 20px;
+}
+
+.dashboard {
+    composes: startImport;
+    border: 1px solid #5671cf;
+    cursor: pointer;
+    display: inline-block;
+    white-space: nowrap;
+    vertical-align: middle;
+    color: #5671cf;
+    font-size: 14px;
+    background: none;
+    margin-left: 10px;
+}
+
+.newImport {
+    composes: startImport;
+    border: none;
+    outline: none;
+}

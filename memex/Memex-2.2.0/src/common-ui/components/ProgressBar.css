@@ -1,0 +1,31 @@
+@value colors: 'src/common-ui/colors.css';
+@value color1, color5, color6, color4, radius3 from colors;
+
+.container {
+    display: flex;
+    align-items: center;
+    margin: 30px 0 0 0;
+}
+
+.percent {
+    color: white;
+    font-size: 12px;
+    padding-left: 3px;
+    padding-right: 3px;
+    font-weight: 500;
+}
+
+.bar {
+    width: 100%;
+    background-color: #ededed;
+    overflow: hidden;
+}
+
+.color {
+    background-color: #5671cf;
+    height: 16px;
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}

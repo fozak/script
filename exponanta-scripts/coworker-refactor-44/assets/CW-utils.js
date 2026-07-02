@@ -246,6 +246,7 @@ const PATH_KEYED = {
   Person:  "pers",
   Company: "comp",
   Event:   "event",
+  WebPage: "webp"
 };
 
 function generateId(doctype, title = null) {

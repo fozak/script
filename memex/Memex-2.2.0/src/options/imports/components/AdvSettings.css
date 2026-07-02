@@ -1,0 +1,52 @@
+@value colors: 'src/common-ui/colors.css';
+@value color3, color4, color12 from colors;
+
+.container {
+    margin: 15px;
+}
+
+.title {
+    color: color3;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.warning {
+    font-style: italic;
+    font-size: 0.85em;
+    margin: 15px 0 0;
+    color: color12;
+}
+
+.concurrencyInput {
+    position: relative;
+}
+
+.prevFailedCheckbox {
+    position: relative;
+    margin-right: 40px;
+}
+
+.settingsList {
+    padding: 0;
+}
+
+.settingsListItem {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    align-items: center;
+    color: color4;
+    font-size: 0.9rem;
+
+    &:last-child {
+        margin-bottom: 1em;
+    }
+
+    & input {
+        padding: 5px 0px 5px 10px;
+        margin-left: 0px;
+        width: 40px;
+        margin-right: 5px;
+    }
+}

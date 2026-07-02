@@ -1,0 +1,85 @@
+.outer {
+    position: relative;
+    margin: 0 auto;
+    float: right;
+
+    & p {
+        margin-right: -10px;
+    }
+
+    & a {
+        text-decoration: none;
+        color: #3eb995;
+    }
+}
+
+.shareIcons {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    margin-top: 100px;
+    margin-left: -36px;
+    width: 7%;
+    height: 500px;
+}
+
+@media only screen and (max-width: 980px) {
+    .shareIcons {
+        display: none;
+    }
+}
+
+.fedIcon {
+    overflow: hidden;
+    margin-bottom: 0px;
+    margin-top: 11px;
+    transform: rotate(90deg);
+    background-color: #3eb995;
+}
+
+.fedLink {
+    text-decoration: none;
+    position: absolute;
+    color: #fff !important; /* stylelint-disable-line declaration-no-important */
+    background-color: #3eb99587;
+    transform: rotate(90deg);
+    margin-top: 100px;
+    margin-left: -13px;
+    font-size: 15px;
+    text-align: center;
+    padding: 14px 20px 17px 20px;
+    transform-origin: 0 100%;
+    font-weight: 100;
+    letter-spacing: 2px;
+}
+
+.shareText {
+    position: relative;
+    margin-left: -15px;
+    margin-bottom: 5px;
+    font-size: 12px;
+    color: #3eb995;
+    text-align: right;
+    max-width: 45px;
+}
+
+.shareImg {
+    width: 25px;
+    height: 25px;
+}
+
+.chatBox {
+    margin-top: 175px;
+    text-decoration: none;
+}
+
+.chatText {
+    position: relative;
+    margin-left: -10px;
+    margin-bottom: 5px;
+    font-size: 12px;
+    color: #3eb995;
+    text-align: center;
+    max-width: 45px;
+    margin-top: 0px;
+}

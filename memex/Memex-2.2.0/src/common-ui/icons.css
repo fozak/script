@@ -1,0 +1,249 @@
+/* Positioning */
+
+.iconPosition {
+    mask-position: center;
+    mask-repeat: no-repeat;
+    mask-size: 80%;
+    display: flex;
+}
+
+.standardMenu {
+    width: 22px;
+    height: 22px;
+    padding-left: 35px;
+    margin-right: 15px;
+    mask-size: 18px;
+    mask-position: center;
+    mask-repeat: no-repeat;
+    background-color: #3a2f45;
+}
+
+.standardIcon {
+    mask-position: center;
+    mask-repeat: no-repeat;
+    height: 20px;
+    width: 20px;
+    mask-size: 16px;
+    background-color: #3a2f45;
+}
+
+/* LOGOS */
+
+.logo {
+    composes: iconPosition;
+    background-image: url('/img/memex-logo.png');
+}
+
+.logoSquared {
+    composes: iconPosition;
+    background-image: url('/img/worldbrain-logo-narrow-bw-48.png');
+}
+
+/* OTHER */
+
+.removeIcon {
+    composes: standardIcon;
+    mask-position: center;
+    mask-repeat: no-repeat;
+    mask-image: url('/img/close.svg');
+}
+
+.removeMinusIcon {
+    composes: standardIcon;
+    mask-position: center;
+    mask-repeat: no-repeat;
+    mask-image: url('/img/remove.svg');
+}
+
+.searchIcon {
+    composes: standardIcon;
+    mask-position: center;
+    mask-repeat: no-repeat;
+    mask-image: url('/img/search.svg');
+}
+
+.checkMark {
+    composes: standardIcon;
+    mask-position: center;
+    mask-repeat: no-repeat;
+    mask-image: url('/img/check.svg');
+}
+
+.checkRound {
+    composes: standardIcon;
+    mask-position: center;
+    mask-repeat: no-repeat;
+    mask-image: url('/img/checkRound.svg');
+}
+
+.starMark {
+    composes: standardIcon;
+    mask-position: center;
+    mask-repeat: no-repeat;
+    mask-image: url('/img/star_blue_full.svg');
+    opacity: 0.7;
+    mask-size: 100%;
+}
+
+.inboxIcon {
+    composes: standardIcon;
+    mask-position: center;
+    mask-repeat: no-repeat;
+    mask-image: url('/img/notification.svg');
+}
+
+.inboxIconFull {
+    composes: standardIcon;
+    mask-position: center;
+    mask-repeat: no-repeat;
+    mask-image: url('/img/notificationFull.svg');
+}
+
+.settingsIcon {
+    composes: standardIcon;
+    mask-position: center;
+    mask-repeat: no-repeat;
+    mask-image: url('/img/settings.svg');
+}
+
+.syncIcon {
+    composes: standardIcon;
+    mask-position: center;
+    mask-repeat: no-repeat;
+    mask-image: url('/img/sync.svg');
+}
+
+.upgradeIcon {
+    composes: standardIcon;
+    mask-position: center;
+    mask-repeat: no-repeat;
+    mask-image: url('/img/star_yellow.svg');
+}
+
+.collectionsIcon {
+    composes: standardIcon;
+    mask-position: center;
+    mask-repeat: no-repeat;
+    mask-image: url('/img/collections.svg');
+}
+
+.filtersIcon {
+    composes: standardIcon;
+    mask-position: center;
+    mask-repeat: no-repeat;
+    mask-image: url('/img/filter.svg');
+}
+
+.collectionsIconFull {
+    composes: standardIcon;
+    mask-position: center;
+    mask-repeat: no-repeat;
+    mask-image: url('/img/collectionsIconFull.svg');
+}
+
+.filtersIconFull {
+    composes: standardIcon;
+    mask-position: center;
+    mask-repeat: no-repeat;
+    mask-image: url('/img/filtersIconFull.svg');
+}
+
+.arrowTriangle {
+    composes: standardIcon;
+    mask-position: center;
+    mask-repeat: no-repeat;
+    mask-image: url('/img/arrow.svg');
+}
+
+.importIcon {
+    composes: standardIcon;
+    mask-position: center;
+    mask-repeat: no-repeat;
+    mask-image: url('/img/import.svg');
+}
+
+.backupIcon {
+    composes: standardIcon;
+    mask-position: center;
+    mask-repeat: no-repeat;
+    mask-image: url('/img/backup.svg');
+}
+
+.blockIcon {
+    composes: standardIcon;
+    mask-position: center;
+    mask-repeat: no-repeat;
+    mask-image: url('/img/block.svg');
+}
+
+.privacyIcon {
+    composes: standardIcon;
+    mask-position: center;
+    mask-repeat: no-repeat;
+    mask-image: url('/img/shield.svg');
+}
+
+.teamIcon {
+    composes: iconPosition standardIcon;
+    mask-image: url('/img/arrow.svg');
+}
+
+.helpIcon {
+    composes: iconPosition standardIcon;
+    mask-position: center;
+    mask-repeat: no-repeat;
+    mask-image: url('/img/help.svg');
+}
+
+.tutorialIcon {
+    composes: iconPosition standardIcon;
+    mask-position: center;
+    mask-repeat: no-repeat;
+    mask-image: url('/img/book.svg');
+}
+
+.searchGreyIcon {
+    composes: iconPosition standardIcon;
+    mask-position: center;
+    mask-repeat: no-repeat;
+    mask-image: url('/img/searchGrey.svg');
+}
+
+.WarningIconWhite {
+    composes: iconPosition standardIcon;
+    mask-position: center;
+    mask-repeat: no-repeat;
+    mask-image: url('/img/warning_white.svg');
+}
+
+.addIcon {
+    composes: iconPosition standardIcon;
+    mask-image: url('/img/plus.svg');
+}
+
+.arrowUpRight {
+    composes: iconPosition standardIcon;
+    mask-image: url('/img/arrowUp.svg');
+}
+
+.closeIcon {
+    composes: iconPosition standardIcon;
+    mask-image: url('/img/close.svg');
+}
+
+.reload {
+    composes: iconPosition standardIcon;
+    mask-image: url('/img/reload.svg');
+}
+
+.excluded {
+    composes: iconPosition standardIcon;
+    mask-image: url('/img/exclusion.svg');
+}
+
+.tipIcon {
+    composes: iconPosition standardIcon;
+    mask-image: url('/img/icon_tooltip.svg');
+    height: 21px;
+    width: 16px;
+}

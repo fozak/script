@@ -1,0 +1,170 @@
+@value colors: 'src/common-ui/colors.css';
+@value color4, color6 from colors;
+
+.container {
+    composes: toolTips from 'src/common-ui/elements.css';
+    position: absolute;
+    top: 100px;
+    left: 200px;
+    text-align: center;
+    width: fit-content;
+    background: #fff;
+    height: fit-content;
+    padding: 6px 30px 35px 30px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    color: color4;
+    font-size: 16px;
+    z-index: 35000;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* .container::after {
+    content: ' ';
+    position: absolute;
+    top: -48px;
+    left: calc(50% - 12.5px);
+    margin-left: 0px;
+    width: 16px;
+    background-color: #3eb995;
+    border-radius: 50px;
+    height: 16px;
+    transform: rotate(45deg);
+    z-index: 253459;
+    animation: pulse 2s infinite;
+} */
+
+.container a {
+    text-decoration: none;
+}
+
+.title {
+    color: color4;
+    font-weight: 600;
+}
+
+.emoji {
+    font-size: 20px;
+    margin-right: 5px;
+    font-style: normal;
+    font-weight: normal;
+    vertical-align: middle;
+}
+
+.noBold {
+    font-weight: 400;
+    vertical-align: middle;
+    font-size: 14px;
+    color: #3eb995;
+}
+
+.proTipPro {
+    text-align: center;
+}
+
+.example {
+    color: #3eb995;
+    font-size: 14px;
+    font-weight: 400;
+    text-transform: none;
+    vertical-align: middle;
+    margin-top: 0px;
+}
+
+.navigationBox {
+    height: 20px;
+    display: flex;
+    justify-content: flex-end;
+    margin-right: -22px;
+    margin-left: -6px;
+    margin-bottom: 15px;
+}
+
+.close {
+    composes: removeIcon from 'src/common-ui/icons.css';
+    composes: nakedSquareButton from 'src/common-ui/elements.css';
+    background-repeat: no-repeat;
+    background-position: center;
+    cursor: pointer;
+    background-size: 12px;
+    width: 22px;
+    height: 22px;
+}
+
+.text {
+    color: color4;
+    font-weight: 500;
+    font-size: 17px;
+}
+
+.prev {
+    composes: arrowTriangle from 'src/common-ui/icons.css';
+    composes: nakedSquareButton from 'src/common-ui/elements.css';
+    background-repeat: no-repeat;
+    background-position: center;
+    cursor: pointer;
+    width: 22px;
+    height: 22px;
+    background-size: 8px;
+}
+
+.next {
+    composes: arrowTriangle from 'src/common-ui/icons.css';
+    composes: nakedSquareButton from 'src/common-ui/elements.css';
+    background-repeat: no-repeat;
+    background-position: center;
+    cursor: pointer;
+    width: 22px;
+    height: 22px;
+    transform: rotate(180deg);
+    background-size: 8px;
+}
+
+.proTip {
+    vertical-align: middle;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.subInfo {
+    color: #3eb995;
+    font-size: 15px;
+    margin-top: 10px;
+}
+
+.start {
+    composes: CTA from 'src/common-ui/elements.css';
+    font-size: 14px;
+    padding: 3px 8px;
+    margin-left: 10px;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 #17376676;
+    }
+
+    70% {
+        box-shadow: 0 0 0 10px #17376600;
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 #17376600;
+    }
+}
+
+@keyframes pulse_slow {
+    0% {
+        box-shadow: 0 0 0 0 #79ffd8;
+    }
+
+    70% {
+        box-shadow: 0 0 0 10px #3eb99500;
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 #3eb99500;
+    }
+}

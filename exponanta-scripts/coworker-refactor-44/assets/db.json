@@ -1135,7 +1135,7 @@
     "doctype": "Schema",
     "is_child": 1,
     "is_submittable": 1,
-    "title_field": "slug",
+    "title_field": "source_url",
     "autoname": "generateId",
     "fields": [
       {
@@ -1150,16 +1150,23 @@
         "fieldname": "domain",
         "fieldtype": "Data",
         "label": "Domain",
-        "reqd": 1,
+        "reqd": 0,
         "in_list_view": 1
       },
       {
         "fieldname": "slug",
         "fieldtype": "Data",
         "label": "URL Slug",
-        "reqd": 1,
+        "reqd": 0,
         "in_list_view": 1
       },
+      {
+    "fieldname": "source_url",
+    "fieldtype": "Data",
+    "label": "Source URL",
+    "reqd": 1,
+    "in_list_view": 1
+},
       {
         "fieldname": "meta_title",
         "fieldtype": "Data",
