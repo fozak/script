@@ -1,4 +1,166 @@
 
+
+we stepped back and corrected
+
+// ============================================================
+// runChain
+// ============================================================
+
+async function runChain(notebookName) {
+  // root — load the notebook template
+  const notebook_run = await CW.run({
+    operation: 'select',
+    target_doctype: 'Run',
+    query: { where: { name: notebookName } },
+    view: 'form',
+    options: { render: false }
+  });
+
+  //const cells = JSON.parse(notebook_run.target.data[0].steps);
+  const cells = tryParseJSON(notebook_run.target.data[0].steps);
+  let prev = notebook_run;
+
+  // cell1 — load select template
+  const selectCell = cells.find(c => c.type === 'select');
+  const selectTemplate = await prev.child({
+    operation: 'select',
+    target_doctype: 'Run',
+    query: { where: { name: selectCell.name } },
+    view: 'form',
+    options: { render: false }
+  });
+  prev = selectTemplate;
+  const st = selectTemplate.target.data[0];
+
+  // cell2 — execute select
+  const parent = await prev.child({
+    operation: st.operation,
+    target_doctype: st.target_doctype,
+    //query: JSON.parse(st.query),
+    query: tryParseJSON(st.query),
+    options: { render: false }
+  });
+  prev = parent;
+
+  // cell3..N — load script templates and execute
+  const scriptCells = cells.filter(c => c.type === 'script');
+  const fns = [];
+  for (const cell of scriptCells) {
+    const t = await prev.child({
+      operation: 'select',
+      target_doctype: 'Run',
+      query: { where: { name: cell.name } },
+      view: 'form',
+      options: { render: false }
+    });
+    prev = t;
+    const template = t.target.data[0];
+    const script = await prev.child({
+      operation: template.operation,
+      target_doctype: template.target_doctype,
+      //query: JSON.parse(template.query),
+      query: tryParseJSON(template.query),
+      options: { render: false }
+    });
+    prev = script;
+    //fns.push(new Function('doc', script.target.data[0].code));
+    fns.push(new Function('run_doc', script.target.data[0].code));
+  }
+
+  // last cell — update
+  await Promise.all(parent.target.data.map(async doc =>
+    prev.child({
+      operation: 'update',
+      target_doctype: st.target_doctype,
+      query: { where: { name: doc.name } },
+      //input: Object.assign({}, ...await Promise.all(fns.map(fn => fn(doc)))),
+      input: Object.assign({}, ...await Promise.all(fns.map(fn => fn({ source: doc })))),
+      options: { render: false, expand: false }
+    })
+  ));
+}
+
+# CW Notebook — runChain Pattern
+## Example: extend-deadlines-pending-tasks
+
+---
+
+## 1. Script record — code convention
+
+Script `code` field must be a **plain function body** (not a named declaration).
+`run_doc.source` is the current record being transformed.
+Return value is the delta merged into `input` for the update.
+
+```js
+// Script: extend-deadline  (scri0apseqgrzvv)
+const record = run_doc.source;
+const d = record.exp_end_date ? new Date(record.exp_end_date) : new Date();
+d.setDate(d.getDate() + 30);
+return { exp_end_date: d.toISOString().slice(0, 10) };
+```
+
+**Rules:**
+- no function declaration wrapper
+- read from `run_doc.source` — the current record
+- return a plain delta object `{ fieldname: value }`
+- no side effects — no child runs, no CW.run calls
+
+---
+
+## 2. Cell templates — Run records
+
+Each cell is a Run record stored in PocketBase.
+
+**Select cell** — defines what to pull:
+```js
+CW.run({ operation:'create', target_doctype:'Run', input:{
+  operation:      'select',
+  title:          'run-select-pending',
+  target_doctype: 'Task',
+  query:          JSON.stringify({ where: { status: 'Pending' } }),
+}, options:{ render:false } })
+// → run0a60do4kxcu0
+```
+
+**Script cell** — points to a Script record:
+```js
+CW.run({ operation:'create', target_doctype:'Run', input:{
+  operation:      'select',
+  title:          'run-extend-deadline',
+  target_doctype: 'Script',
+  query:          JSON.stringify({ where: { title: 'extend-deadline' } }),
+}, options:{ render:false } })
+// → run015iwkmjh8c0
+```
+
+---
+
+## 3. Notebook record — Run with operation:'chain'
+
+```js
+CW.run({ operation:'create', target_doctype:'Run', input:{
+  operation: 'chain',
+  title:     'notebook-extend-deadlines',
+  steps:     JSON.stringify([
+    { name: 'run0a60do4kxcu0', type: 'select' },
+    { name: 'run015iwkmjh8c0', type: 'script' },
+  ]),
+}, options:{ render:false } })
+// → run0e0qtq3umx50
+```
+
+---
+
+## 4. Execution
+
+```js
+await CW.runChain('run0e0qtq3umx50');
+```
+
+**Run tree produced:**
+
+
+
 https://claude.ai/chat/85d496a5-0fdd-4f98-94aa-e554e370c742from this chat javascriptasync function runChain(notebookName) {
   // root — load notebook template
   const notebook_run = await CW.run({
