@@ -494,7 +494,7 @@ CW.controller = async function (run_doc) {
       await CW._handleSignal(run_doc);
     } else {
       const opConfig = CW._config.operations?.[run_doc.operation] || {};
-      if (opConfig.type === "read" || opConfig.type === "auth") {
+      if (opConfig.type === 'read' || opConfig.type === 'auth' || opConfig.type === 'updateMany') {
         await CW._handlers[run_doc.operation]?.(run_doc);
       } else {
         run_doc.operation = doc.name ? "update" : "create";
@@ -814,6 +814,24 @@ CW._handlers = {
       }
     }
   },
+
+  updateMany: async function (run_doc) {
+  const schema   = CW.Schema?.[run_doc.target_doctype];
+  const autosave = run_doc.autosave ?? schema?.autosave ?? 1;
+  const docs     = run_doc.target?.data || [];
+
+  for (let i = 0; i < docs.length; i++) {
+    if (run_doc.error) break;
+
+    run_doc.target.data[0] = docs[i];
+
+    await CW._handlers.update(run_doc);  // ← full pipeline per record
+
+    docs[i] = run_doc.target.data[0];   // ← write back
+  }
+
+  run_doc.target.data = docs;
+},
 
   delete: async function (run_doc) {
     if (run_doc.target?.data?.[0]) run_doc.target.data[0].docstatus = 2;

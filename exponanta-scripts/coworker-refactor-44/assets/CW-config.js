@@ -772,8 +772,8 @@ globalThis.CW._config = {
       fetchOriginals: true,
       bypassController: false,
     },
-    bulk_update: {
-      type: "write",
+    updateMany: {
+      type: "updateMany",
       adapterType: "db", // ✅ NEW
       draft: false,
       requiresSchema: false,

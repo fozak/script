@@ -1,6 +1,6 @@
 
 
-
+https://claude.ai/chat/81abe4c9-ba9d-474f-833f-8d52734628df 
 
 # strategic approach v3
 
@@ -98,7 +98,75 @@
 │                                                                  │
 │  [+ new notebook]                                               │
 └─────────────────────────────────────────────────────────────────┘
+#
 
+Based on everything in this conversation and your strategic v3 diagram:
+
+Notebook Structure
+A notebook is a Run record stored in PocketBase with operation: 'chain' and a steps JSON array referencing cell names. Each cell is also a Run record with operation, target_doctype, query, code, or nested steps.
+javascript// notebook record
+{ name: 'notebook-001', operation: 'chain', steps: '[{"name":"cell-1"},{"name":"cell-2"}]' }
+
+// cell record — operation type
+{ name: 'cell-1', operation: 'select', target_doctype: 'Task', query: '{"where":{}}' }
+
+// cell record — script type
+{ name: 'cell-2', operation: 'update', target_doctype: 'Task', code: '...' }
+
+// cell record — nested notebook
+{ name: 'cell-3', operation: 'chain', steps: '[...]' }
+
+Cell Dispatch — three types
+javascriptif (template.steps?.length)  → runChain()         // nested notebook
+else if (template.code)      → script via new Function()  // transform
+else                         → CW.run()            // plain operation
+
+run_doc.steps as dynamic FSM
+Each cell position becomes dim 2 of the FSM — built at runtime from steps, not from CW.Schema. _getStateDef accepts optional run_doc to merge dynamic dims:
+javascript// dim 2 — notebook execution position
+{ "2": { transitions: { "0":[1], "1":[2], "2":[3] } } }
+Static schema dims (0/1) remain unchanged. Dim 2+ is dynamic per notebook instance.
+
+Dry Run
+autosave: 0 passed through the entire chain — gates only the db adapter loop, everything else runs normally:
+javascript// phase 1 (transform adapters) — always runs
+// _logChanges — always runs → populates _changes
+// _preflight  — always runs → full record in memory
+// _stripVirtual — always runs
+// db adapter  — SKIPPED when autosave === 0
+Two-pass execution:
+javascript// pass 1 — dry run, collect diff
+const dry     = await runChain('notebook-001', null, { autosave: 0 });
+const preview = collectChanges(dry);  // reads _changes from all child run_docs
+
+// pass 2 — execute after user confirms
+const result  = await runChain('notebook-001', null, { autosave: 1 });
+collectChanges walks CW.runs via child_run_ids recursively — _changes already has before/after per field because _logChanges runs before the autosave guard.
+
+AI Prompt → Plan → Dry Run → Execute flow
+user prompt
+    → CW.run({ operation: 'create', target_doctype: 'Agent', input: { prompt } })
+    → AI returns notebook structure (steps + cells as JSON)
+    → cells written to Run doctype in PocketBase
+    → runChain(notebookName, null, { autosave: 0 })  // dry run
+    → collectChanges() → WHAT WILL CHANGE table shown to user
+    → user confirms
+    → runChain(notebookName, null, { autosave: 1 })  // execute
+    → DONE table with ✔ per record
+
+Undo
+Each executed run has _changes with from/to per field — undo is a reverse pass:
+javascript// for each change entry, reverse the patch
+await CW.run({ operation: 'update', target_doctype, input: { name, [field]: from } });
+child_run_ids tree gives you selective undo per cell or full undo for the whole chain.
+
+Key invariants
+
+autosave propagates via run_doc.autosave — runtime override, schema default fallback
+_changes populated in both dry and live runs — diff is always available
+runChain is recursive — notebooks nest cleanly
+All runs tracked in CW.runs — full audit trail, undo, replay all from same structure
+_getStateDef(doctype, run_doc) — static schema dims + dynamic notebook dims unified
 
 # mock 
 (async () => {
