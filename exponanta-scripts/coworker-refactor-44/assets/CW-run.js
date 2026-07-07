@@ -463,7 +463,9 @@ CW.controller = async function (run_doc) {
     CW._resolveInput(run_doc);
 
     if (
-      (run_doc.operation === "update" || run_doc.operation === "delete") &&
+      (run_doc.operation === "update" ||
+        run_doc.operation === "delete" ||
+        run_doc.operation === "updateMany") &&
       !run_doc.target?.data?.[0]?.name
     ) {
       //await globalThis.Adapters[CW._config.adapters.defaults.db].select(run_doc)
@@ -475,14 +477,16 @@ CW.controller = async function (run_doc) {
       await CW._handlers.select(run_doc);
       run_doc.operation = _savedOp;
     }
+    // skip log/merge/clear for updateMany
+    if (run_doc.operation !== "updateMany") {
+      await CW._logChanges(run_doc); // ← before merge
 
-    await CW._logChanges(run_doc); // ← before merge
+      // 2. merge all input → target.data[0] (including virtual + _state)
+      CW._mergeInput(run_doc);
 
-    // 2. merge all input → target.data[0] (including virtual + _state)
-    CW._mergeInput(run_doc);
-
-    // 3. clear input — everything is now in target.data[0]
-    CW._clearInput(run_doc);
+      // 3. clear input — everything is now in target.data[0]
+      CW._clearInput(run_doc);
+    }
 
     const doc = run_doc.target?.data?.[0] || {};
 
@@ -494,7 +498,11 @@ CW.controller = async function (run_doc) {
       await CW._handleSignal(run_doc);
     } else {
       const opConfig = CW._config.operations?.[run_doc.operation] || {};
-      if (opConfig.type === 'read' || opConfig.type === 'auth' || opConfig.type === 'updateMany') {
+      if (
+        opConfig.type === "read" ||
+        opConfig.type === "auth" ||
+        opConfig.type === "updateMany"
+      ) {
         await CW._handlers[run_doc.operation]?.(run_doc);
       } else {
         run_doc.operation = doc.name ? "update" : "create";
@@ -816,18 +824,22 @@ CW._handlers = {
   },
 
   updateMany: async function (run_doc) {
-  const schema   = CW.Schema?.[run_doc.target_doctype];
-  const autosave = run_doc.autosave ?? schema?.autosave ?? 1;
-  const docs     = run_doc.target?.data || [];
+  const docs  = run_doc.target?.data || [];
+  const patch = { ...run_doc.input };     // shared patch, snapshot once
 
   for (let i = 0; i < docs.length; i++) {
     if (run_doc.error) break;
 
-    run_doc.target.data[0] = docs[i];
+    run_doc.target.data[0] = docs[i];     // OLD → target
+    run_doc.input = { ...patch };         // patch → input, restored each iteration
 
-    await CW._handlers.update(run_doc);  // ← full pipeline per record
+    await CW._logChanges(run_doc);
+    CW._mergeInput(run_doc);
+    CW._clearInput(run_doc);
 
-    docs[i] = run_doc.target.data[0];   // ← write back
+    await CW._handlers.update(run_doc);
+
+    docs[i] = run_doc.target.data[0];
   }
 
   run_doc.target.data = docs;
