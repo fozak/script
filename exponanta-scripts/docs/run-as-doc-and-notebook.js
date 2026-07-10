@@ -1,3 +1,164 @@
+jsconst { target, ...rest } = JSON.parse(JSON.stringify(r));
+
+const saved = await CW.run({
+  operation:      'create',
+  target_doctype: 'Run',
+  input:          rest,
+  options:        { render: false, expand: false },
+});
+
+
+{
+  "_changes": [
+    {
+      "at": 1783520434229,
+      "by": "user0am1gxpsi72",
+      "ch": [
+        {
+          "field": "operation",
+          "from": null,
+          "to": "select"
+        },
+        {
+          "field": "operation_original",
+          "from": null,
+          "to": "select"
+        },
+        {
+          "field": "target_doctype",
+          "from": null,
+          "to": "Task"
+        },
+        {
+          "field": "adapter",
+          "from": null,
+          "to": "pocketbase"
+        },
+        {
+          "field": "view",
+          "from": null,
+          "to": "form"
+        },
+        {
+          "field": "component",
+          "from": null,
+          "to": "MainForm"
+        },
+        {
+          "field": "container",
+          "from": null,
+          "to": "right_pane"
+        },
+        {
+          "field": "query",
+          "from": null,
+          "to": {
+            "where": {
+              "status": "Pending"
+            }
+          }
+        },
+        {
+          "field": "input",
+          "from": null,
+          "to": {
+            "_state": {}
+          }
+        },
+        {
+          "field": "status",
+          "from": null,
+          "to": "completed"
+        },
+        {
+          "field": "success",
+          "from": null,
+          "to": true
+        },
+        {
+          "field": "child_run_ids",
+          "from": null,
+          "to": [
+            "runowljkwpc3x1y",
+            "runsyf1z61esqaj",
+            "runorjx75or1arn"
+          ]
+        },
+        {
+          "field": "options",
+          "from": null,
+          "to": {
+            "render": false
+          }
+        },
+        {
+          "field": "user",
+          "from": null,
+          "to": {
+            "email": "denis1@test.com",
+            "name": "user0am1gxpsi72",
+            "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb2xsZWN0aW9uSWQiOiJfcGJfdXNlcnNfYXV0aF8iLCJleHAiOjE3ODQwNjM2MjksImlkIjoidXNlcjBhbTFneHBzaTcyIiwicmVmcmVzaGFibGUiOnRydWUsInR5cGUiOiJhdXRoIn0.djroUeFp9byua1KSWtc5tR7QWNXGb-QE29_vYGA1pMM",
+            "verified": false
+          }
+        },
+        {
+          "field": "duration",
+          "from": null,
+          "to": 0
+        }
+      ],
+      "op": "create"
+    }
+  ],
+  "_state": {},
+  "adapter": "pocketbase",
+  "autosave": null,
+  "child_run_ids": [
+    "runowljkwpc3x1y",
+    "runsyf1z61esqaj",
+    "runorjx75or1arn"
+  ],
+  "component": "MainForm",
+  "container": "right_pane",
+  "creation": 1783520434229,
+  "duration": 0,
+  "error": null,
+  "input": {
+    "_state": {}
+  },
+  "modified": 1783520434229,
+  "modified_by": "user0am1gxpsi72",
+  "operation": "select",
+  "operation_original": "select",
+  "options": {
+    "render": false
+  },
+  "parent_run_id": null,
+  "query": {
+    "where": {
+      "status": "Pending"
+    }
+  },
+  "search": "",
+  "slug": null,
+  "source_doctype": null,
+  "source_field": null,
+  "status": "completed",
+  "success": true,
+  "target_doctype": "Task",
+  "user": {
+    "email": "denis1@test.com",
+    "name": "user0am1gxpsi72",
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb2xsZWN0aW9uSWQiOiJfcGJfdXNlcnNfYXV0aF8iLCJleHAiOjE3ODQwNjM2MjksImlkIjoidXNlcjBhbTFneHBzaTcyIiwicmVmcmVzaGFibGUiOnRydWUsInR5cGUiOiJhdXRoIn0.djroUeFp9byua1KSWtc5tR7QWNXGb-QE29_vYGA1pMM",
+    "verified": false
+  },
+  "view": "form"
+}Show moreClean — no nested target, single _changes entry, operation: 'select', query: { where: { status: 'Pending' } }, target_doctype: 'Task'.
+Still saving execution state though — status: 'completed', success: true, child_run_ids, user.token. These are runtime fields not definition fields.
+For a clean template you'd also strip:
+jsconst { target, status, success, error, duration, child_run_ids, parent_run_id, user, ...rest } = JSON.parse(JSON.stringify(r));
+But that's your call on what belongs in a template record.
+
 
 
 we stepped back and corrected

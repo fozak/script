@@ -99,22 +99,20 @@ CW._mergeInput = function (run_doc) {
   if (!run_doc.target.data[0]) run_doc.target.data[0] = {};
 
   const doc = run_doc.target.data[0];
+  const schema = CW.Schema?.[run_doc.target_doctype];
+  const readOnly = new Set(
+    (schema?.fields || []).filter(f => f.read_only).map(f => f.fieldname)
+  );
 
   for (const [k, v] of Object.entries(run_doc.input)) {
     if (k === "_state") continue;
+    if (readOnly.has(k)) continue;   // ← skip read_only fields
     doc[k] = v;
   }
 
   if (run_doc.input._state && typeof run_doc.input._state === "object") {
     if (!doc._state) doc._state = {};
-    const inputState = run_doc.input._state;
-    const targetState = doc._state;
-
-    // preserve history — only overwrite the exact incoming signal keys
-    //for (const sig of Object.keys(inputState)) {
-    //  delete targetState[sig];
-    //}
-    Object.assign(targetState, inputState);
+    Object.assign(doc._state, run_doc.input._state);
   }
 };
 

@@ -168,7 +168,160 @@ runChain is recursive — notebooks nest cleanly
 All runs tracked in CW.runs — full audit trail, undo, replay all from same structure
 _getStateDef(doctype, run_doc) — static schema dims + dynamic notebook dims unified
 
-# mock 
+# dvvd
+// CW Console — Ctrl+Enter to run
+// Globals: CW, pb, run, authLogin
+// add glyph margin support
+CW._editor.updateOptions({ glyphMargin: true });
+
+// add style
+const s = document.createElement('style');
+s.textContent = `.cw-step-glyph::before { content: '▶'; color: #3b5bdb; cursor: pointer; font-size: 11px; }`;
+document.head.appendChild(s);
+
+// decorate all // step: lines
+function updateDecorations() {
+  const lines = CW._editor.getValue().split('\n');
+  const decorations = [];
+  lines.forEach((line, i) => {
+    if (line.match(/\/\/ step:\s*(\w+)/)) {
+      decorations.push({
+        range: new monaco.Range(i + 1, 1, i + 1, 1),
+        options: {
+          glyphMarginClassName: 'cw-step-glyph',
+          glyphMarginHoverMessage: { value: '▶ run step' },
+        }
+      });
+    }
+  });
+  CW._editor._decorations = CW._editor.deltaDecorations(CW._editor._decorations || [], decorations);
+}
+
+CW._editor.updateDecorations = updateDecorations;
+updateDecorations();
+
+// click handler
+CW._editor.onMouseDown(e => {
+  if (e.target.type !== monaco.editor.MouseTargetType.GUTTER_GLYPH_MARGIN) return;
+  const line = e.target.position.lineNumber;
+  const src  = CW._editor.getValue().split('\n')[line - 1];
+  const m    = src.match(/\/\/ step:\s*(\w+)/);
+  if (!m) return;
+  const key = m[1];
+
+  // find any globalThis function that has .run with this key
+  const nb = Object.values(globalThis).find(v => typeof v === 'function' && v.run);
+  if (nb?.run) { delete nb.run[key]; nb(nb.run); }
+});
+
+CW._editor.onDidChangeModelContent(e => {
+  updateDecorations();
+  if (!globalThis.run) return;  // ← use globalThis.run
+  const lines = CW._editor.getValue().split('\n');
+  e.changes.forEach(change => {
+    const lineNum = change.range.startLineNumber;
+    for (let i = lineNum - 1; i >= 0; i--) {
+      const m = lines[i].match(/\/\/ step:\s*(\w+)/);
+      if (m) { delete globalThis.run[m[1]]; break; }
+    }
+  });
+});
+
+
+console.log('glyphs added');
+
+//---
+
+
+
+async function myNotebook(run) {
+  myNotebook.run = run;
+
+  const step = async (key, fn) => {
+    const btn = document.getElementById(key);
+    if (btn) btn.onclick = () => { delete run[key]; myNotebook(run); };
+    return (run[key] ??= await fn());
+  };
+
+  // step: notebook
+  run.notebook ??= await CW.run({ operation: 'create', target_doctype: 'Run', input: { operation: 'chain', title: 'My Notebook' }, options: { render: false } });
+
+  // step: tasks
+  await step('tasks', () => run.notebook.child({
+    operation:      'select',
+    target_doctype: 'Task',
+    query:          { where: { status: 'Completed' } },
+    options:        { render: false },
+  }));
+
+  // step: console
+await step('console', async () => { console.log('i am fired3'); return true; });
+
+  // step: update_tasks
+  await step('update_tasks', () => Promise.all(
+    run.tasks.target.data.map(task =>
+      run.tasks.child({
+        operation:      'update',
+        target_doctype: 'Task',
+        query:          { where: { name: task.name } },
+        input:          { status: 'Pending' },
+        options:        { render: false },
+      })
+    )
+  ));
+
+  return run;
+}
+
+
+globalThis.myNotebook = myNotebook;
+globalThis.run = {};                    // ← global
+await myNotebook(globalThis.run);  
+
+# moch v2
+
+async function myNotebook(run) {
+  myNotebook.run = run;
+
+  const step = async (key, fn) => {
+    const btn = document.getElementById(key);
+    if (btn) btn.onclick = () => { delete run[key]; myNotebook(run); };
+    return (run[key] ??= await fn());
+  };
+
+  // step: notebook
+  run.notebook ??= await CW.run({ operation: 'create', target_doctype: 'Run', input: { operation: 'chain', title: 'My Notebook' }, options: { render: false } });
+
+  // step: tasks
+  await step('tasks', () => run.notebook.child({
+    operation:      'select',
+    target_doctype: 'Task',
+    query:          { where: { status: 'Pending' } },
+    options:        { render: false },
+  }));
+
+  // step: update_tasks
+  await step('update_tasks', () => Promise.all(
+    run.tasks.target.data.map(task =>
+      run.tasks.child({
+        operation:      'update',
+        target_doctype: 'Task',
+        query:          { where: { name: task.name } },
+        input:          { status: 'Completed' },
+        options:        { render: false },
+      })
+    )
+  ));
+
+  return run;
+}
+
+globalThis.myNotebook = myNotebook;
+globalThis.run = {};                    // ← global
+await myNotebook(globalThis.run);       // ← pass global run
+
+
+# ================== 
 (async () => {
   // ── mock infrastructure ────────────────────────────────────────────────────
 

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>CW Console</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/core@1.4.0/dist/css/tabler.min.css">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #0f0f13; color: #e0e0e0; font-family: monospace; height: 100vh; display: flex; flex-direction: column; }
+#toolbar { display: flex; align-items: center; gap: 8px; padding: 8px 12px; background: #16161e; border-bottom: 1px solid #2a2a3a; }
+#toolbar button { font-size: 12px; padding: 4px 10px; border: 1px solid #2a2a3a; background: #1e1e2e; color: #a0a0c0; cursor: pointer; border-radius: 3px; }
+#toolbar button:hover { background: #2a2a3a; color: #e0e0e0; }
+#toolbar button.primary { background: #3b5bdb; border-color: #3b5bdb; color: #fff; }
+#main { display: flex; flex: 1; overflow: hidden; }
+#editor { flex: 1; }
+#output { width: 380px; overflow-y: auto; padding: 8px; border-left: 1px solid #2a2a3a; font-size: 11px; display: flex; flex-direction: column; gap: 4px; }
+.out-line { padding: 3px 6px; border-radius: 2px; white-space: pre-wrap; word-break: break-all; }
+.out-log { color: #aaa; }
+.out-error { color: #ef5350; background: #1a0a0a; }
+.out-result { color: #7b9fff; background: #0a0a1a; }
+#status-bar { font-size: 11px; color: #555; padding: 3px 12px; background: #16161e; border-top: 1px solid #2a2a3a; }
+</style>
+</head>
+<body>
+
+<div id="toolbar">
+  <span style="color:#7b9fff; font-size:12px; font-weight:bold;">CW Console</span>
+  <button class="primary" id="btn-run">▶ Run  (Ctrl+Enter)</button>
+  <button id="btn-clear">Clear output</button>
+</div>
+
+<div id="main">
+  <div id="editor"></div>
+  <div id="output"></div>
+</div>
+
+<div id="status-bar">ready</div>
+
+<script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.44.0/min/vs/loader.js"></script>
+<script>
+require.config({ paths: { vs: 'https://cdn.jsdelivr.net/npm/monaco-editor@0.44.0/min/vs' } });
+
+let editor;
+const out = document.getElementById('output');
+
+const _log = console.log.bind(console);
+console.log = (...args) => {
+  _log(...args);
+  appendOut(args.map(a => typeof a === 'object' ? JSON.stringify(a, null, 2) : String(a)).join(' '), 'out-log');
+};
+
+function appendOut(text, cls) {
+  const el = document.createElement('div');
+  el.className = 'out-line ' + cls;
+  el.textContent = text;
+  out.appendChild(el);
+  out.scrollTop = out.scrollHeight;
+}
+
+function setStatus(msg) {
+  document.getElementById('status-bar').textContent = msg;
+}
+
+async function runCode() {
+  const src = editor.getValue();
+  setStatus('running...');
+  try {
+    const result = await (new Function(`return (async () => { ${src} })()`)());
+    if (result !== undefined) appendOut(JSON.stringify(result, null, 2), 'out-result');
+    setStatus('done');
+  } catch(e) {
+    appendOut(e.message, 'out-error');
+    setStatus('error');
+  }
+}
+
+require(['vs/editor/editor.main'], () => {
+  monaco.editor.defineTheme('cw-dark', {
+    base: 'vs-dark', inherit: true, rules: [],
+    colors: {
+      'editor.background':           '#0f0f13',
+      'editor.foreground':           '#e0e0e0',
+      'editor.lineHighlightBackground': '#16161e',
+      'editorLineNumber.foreground': '#333344',
+      'editorCursor.foreground':     '#7b9fff',
+    }
+  });
+
+  editor = monaco.editor.create(document.getElementById('editor'), {
+    value: `// write any JS here\nconst x = 1 + 1;\nconsole.log('result:', x);`,
+    language:   'javascript',
+    theme:      'cw-dark',
+    fontSize:   13,
+    fontFamily: 'monospace',
+    minimap:    { enabled: false },
+    automaticLayout: true,
+    scrollBeyondLastLine: false,
+    tabSize: 2,
+  });
+
+  monaco.languages.typescript.javascriptDefaults.addExtraLib(`
+    declare const CW: any;
+    declare const run: Record<string, any>;
+    declare const pb: any;
+  `, 'globals.d.ts');
+
+  editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.Enter, runCode);
+  document.getElementById('btn-run').onclick = runCode;
+  document.getElementById('btn-clear').onclick = () => { out.innerHTML = ''; };
+});
+</script>
+</body>
+</html>

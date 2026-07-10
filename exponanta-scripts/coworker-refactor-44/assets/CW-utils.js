@@ -249,6 +249,13 @@ const PATH_KEYED = {
   WebPage: "webp"
 };
 
+const RANDOM_DOCTYPES = new Set([
+  "Run",
+  "Log",
+  "Notification",
+  // ...
+]);
+
 function generateId(doctype, title = null) {
   if (EMAIL_KEYED[doctype]) {
     if (!title?.trim()) throw new Error(`${doctype} requires an email address`)
@@ -264,26 +271,14 @@ function generateId(doctype, title = null) {
     return generateSingleId(doctype, title)
   }
 
-  /* default — was generateMultiId (random), now deterministic if title exists
-  if (title?.trim()) {
-    const prefix = doctype.toLowerCase().replace(/[^a-z0-9]/g, '').substring(0, 4)
-    return (prefix + hashString(title)).substring(0, 15)
+
+   const prefix = doctype.toLowerCase().replace(/[^a-z0-9]/g, '').substring(0, 4)
+
+  if (!RANDOM_DOCTYPES.has(doctype) && title?.trim()) {
+    return (prefix + hashString(title)).padEnd(15, '0').substring(0, 15)
   }
 
-  // fallback — random for ephemeral doctypes like Run
-  return generateMultiId(doctype, title)*/
-
-  //new
-
-  if (title?.trim()) {
-  const prefix = doctype.toLowerCase().replace(/[^a-z0-9]/g, '').substring(0, 4)
-  return (prefix + hashString(title)).padEnd(15, '0').substring(0, 15)
-}
-//random fallback for ephemeral doctypes like Run
-
-const prefix = doctype.toLowerCase().replace(/[^a-z0-9]/g, '').substring(0, 4)
-return (prefix + generateRandom(15 - prefix.length)).substring(0, 15)
-
+  return (prefix + generateRandom(15 - prefix.length)).substring(0, 15)
 }
 
 function hashString(email) {
