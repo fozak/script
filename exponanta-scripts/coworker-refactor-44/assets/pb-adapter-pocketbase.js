@@ -420,6 +420,12 @@ Object.assign(globalThis.Adapters.pocketbase, {
   signUp,
 });
 
+
+// eager init — so pb is available before CW.run is called
+const { pb_url } = globalThis.CW._config
+globalThis.pb = globalThis.pb || new PocketBase(pb_url)
+globalThis.pb.autoCancellation(false)
+
 //console.log('✅ pb-adapter-auth-methods.js loaded');
 
 })();

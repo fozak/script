@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CW</title>
+<link rel="preconnect" href="https://rsms.me">
+<link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/core@1.4.0/dist/css/tabler.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+  <style>
+    #main_container:empty,
+    #left_pane:empty,
+    #right_pane:empty { display: none; }
+    .threads-left  { height: 100vh; overflow-y: auto; border-right: 1px solid var(--tblr-border-color); }
+    .threads-right { height: 100vh; overflow-y: auto; }
+/* column narrower---*/
+.cw-universal-grid table {
+  table-layout: fixed;
+  width: 100%;
+}
+
+.cw-universal-grid td,
+.cw-universal-grid th {
+  word-wrap: break-word;
+  white-space: normal;
+}
+  </style>
+</head>
+<body class="antialiased">
+  <div id="nav_container">
+   
+  </div>
+  <div class="container-xl py-3">
+    <div id="main_container"></div>
+    <div class="row g-0">
+      <div class="col-md-3 threads-left"  id="left_pane"></div>
+      <div class="col-md-9 threads-right" id="right_pane"></div>
+    </div>
+  </div>
+  <div id="toast_container"></div>
+
+  <!-- ── 1. UMD libs ── -->
+  <script src="https://cdn.jsdelivr.net/npm/pocketbase@latest/dist/pocketbase.umd.js"></script>
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta17/dist/js/tabler.min.js"></script>
+  <script src="https://unpkg.com/@tanstack/react-table@8.20.5/build/umd/index.production.js"></script>
+  <script>globalThis.TanStackTable = globalThis.ReactTable;</script>
+
+   <!-- ── 2. CW framework — order is the contract ── -->
+  <script src="/assets/CW-state.js"></script>
+  <script src="/assets/CW-config.js"></script>
+  <script src="/assets/CW-utils.js"></script>
+  <script src="/assets/CW-run.js"></script>
+  <script src="/assets/pb-adapter-pocketbase.js"></script>
+  <script src="/assets/auth.js"></script>
+  <script src="/assets/CW-ui.js"></script>
+
+
+
+<script src="/assets/CW-identity.js"></script>
+<script src="/assets/CW-hub-client.js"></script>
+ 
+  <!--monaco-->
+  <script src="/assets/CW-monaco.js"></script>
+
+  <script src="/assets/CW-url.js"></script>
+  <!-- <script src="/assets/CW-analytics.js"></script> -->
+  <script src="/assets/app-ui.js"></script>
+
+  <!-- ── 3. Bootstrap ── -->
+  <script src="/assets/boot.js"></script>
+  
+  <script>
+window.addEventListener('CW:booted', () => cwStateFromUrl());
+</script>
+</body>
+</html>

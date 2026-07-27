@@ -1273,7 +1273,7 @@
     { "fieldname": "highlights",    "fieldtype": "Code",     "label": "Highlights",    "options": "JSON" },
 
     { "fieldname": "event_slot",    "fieldtype": "Data",     "label": "Date/Time Slot", "reqd": 1, "in_list_view": 1, "component": "./slot-picker.js", "display": "SlotBadge" },
-    { "fieldname": "event_start",   "fieldtype": "Datetime", "label": "Event Start",   "reqd": 1, "in_list_view": 1, "read_only": 1, "description": "Derived from event_slot. Used for filtering past vs future events." },
+    { "fieldname": "event_start",   "fieldtype": "Datetime", "label": "Event Start",   "reqd": 1, "in_list_view": 1, "description": "Derived from event_slot. Used for filtering past vs future events." },
     { "fieldname": "event_end",     "fieldtype": "Datetime", "label": "Event End",     "read_only": 1, "description": "Derived from event_slot. Used for detecting in-progress events." },
 
     { "fieldname": "format",        "fieldtype": "Select",   "label": "Format",        "options": "in-person\nonline\nhybrid" },

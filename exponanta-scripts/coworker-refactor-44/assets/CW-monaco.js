@@ -4,7 +4,7 @@
 // Activate: CW.monaco() or ?console=1 in URL
 // ============================================================
 
-//(function() {
+// https://claude.ai/chat/43009a35-25e4-402b-a137-0b8479fc13c1
 
 const MONACO_CDN = "https://cdn.jsdelivr.net/npm/monaco-editor@0.44.0/min/vs";
 
@@ -119,29 +119,7 @@ function _restoreConsole() {
   console.log = _origLog;
   console.error = _origErr;
 }
-/* new 
-async function _runCode() {
-  CW._run = CW._run || {};
-  const lineNum = _editor._glyphLine || 1;
-  _editor._glyphLine = null;
-  const lines = _editor.getValue().split("\n");
-  const src = ["const run = CW._run;", ...lines.slice(lineNum - 1)].join("\n");
-  const out = document.getElementById("cw-monaco-output");
-  if (out) {
-    const sep = document.createElement("hr");
-    sep.className = "cw-out-sep";
-    out.appendChild(sep);
-  }
-  _setStatus("running…");
-  try {
-    const result = await new Function(`return (async () => { ${src} })()`)();
-    if (result !== undefined) _appendOut(_serialize(result), "cw-out-result");
-    _setStatus("done — " + new Date().toLocaleTimeString());
-  } catch (e) {
-    _appendOut(e.stack || e.message, "cw-out-error");
-    _setStatus("error: " + e.message);
-  }
-}*/
+
 
 async function _runCode() {
   CW._run = CW._run || {};
@@ -158,11 +136,30 @@ async function _runCode() {
   }
   _setStatus("running…");
   try {
-    const result = await eval(`(async () => { ${src} })()`);
+    const result = await eval(
+      `(async () => { ${src} })()\n//# sourceURL=notebook.js`,
+    );
     if (result !== undefined) _appendOut(_serialize(result), "cw-out-result");
     _setStatus("done — " + new Date().toLocaleTimeString());
   } catch (e) {
-    _appendOut(e.stack || e.message, "cw-out-error");
+    const relevant = (e.stack || e.message)
+      .split("\n")
+      .filter((l) => !l.includes(" at ") || l.includes("notebook.js"))
+      .map((l) => {
+        const m = l.match(/notebook\.js:(\d+)/);
+        if (m) {
+          const errLine = parseInt(m[1]) + lineNum - 1;
+          const codeLine = lines[errLine - 1]?.trim() || "";
+          return (
+            l.replace(/notebook\.js:\d+/, `notebook.js:${errLine}`) +
+            `\n  → ${codeLine} // ${e.constructor.name}`
+          );
+        }
+        return l;
+      })
+      .slice(0, 2)
+      .join("\n");
+    _appendOut(relevant, "cw-out-error");
     _setStatus("error: " + e.message);
   }
 }
@@ -261,31 +258,36 @@ function _initMonaco() {
     CW._editor = _editor;
     CW._editor.runCode = _runCode;
 
-// ── setup ──────────────────────────────────────────────────
-_editor.updateOptions({ glyphMargin: true });
+    // ── setup ──────────────────────────────────────────────────
+    _editor.updateOptions({ glyphMargin: true });
 
-if (!document.getElementById('cw-glyph-style')) {
-  const s = document.createElement('style');
-  s.id = 'cw-glyph-style';
-  s.textContent = `.cw-step-glyph::before { content: '▶'; color: #3b5bdb; cursor: pointer; font-size: 11px; }`;
-  document.head.appendChild(s);
-}
+    if (!document.getElementById("cw-glyph-style")) {
+      const s = document.createElement("style");
+      s.id = "cw-glyph-style";
+      s.textContent = `.cw-step-glyph::before { content: '▶'; color: #3b5bdb; cursor: pointer; font-size: 11px; }`;
+      document.head.appendChild(s);
+    }
 
-_editor.onMouseMove(e => {
-  if (!e.target.position) return;
-  const line = e.target.position.lineNumber;
-  _editor._decorations = _editor.deltaDecorations(_editor._decorations || [], [{
-    range: new monaco.Range(line, 1, line, 1),
-    options: { glyphMarginClassName: 'cw-step-glyph' }
-  }]);
-});
+    _editor.onMouseMove((e) => {
+      if (!e.target.position) return;
+      const line = e.target.position.lineNumber;
+      _editor._decorations = _editor.deltaDecorations(
+        _editor._decorations || [],
+        [
+          {
+            range: new monaco.Range(line, 1, line, 1),
+            options: { glyphMarginClassName: "cw-step-glyph" },
+          },
+        ],
+      );
+    });
 
-_editor.onMouseDown(e => {
-  if (e.target.type !== monaco.editor.MouseTargetType.GUTTER_GLYPH_MARGIN) return;
-  _editor._glyphLine = e.target.position.lineNumber;
-  _runCode();
-});
-
+    _editor.onMouseDown((e) => {
+      if (e.target.type !== monaco.editor.MouseTargetType.GUTTER_GLYPH_MARGIN)
+        return;
+      _editor._glyphLine = e.target.position.lineNumber;
+      _runCode();
+    });
   });
 }
 

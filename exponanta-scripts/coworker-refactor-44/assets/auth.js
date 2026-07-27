@@ -156,8 +156,11 @@ async function provisionUser(email, password, name) {
   });
 
   // Step 4: Send verification
-  await pb.collection('users').requestVerification(email);
 
+  if (!email.includes('.invalid')) {  //defend against anon emails
+  await pb.collection('users').requestVerification(email);
+}
+  
   console.log('✅ User provisioned:', userId);
   return { userId, usesId };
 }
@@ -311,6 +314,8 @@ Object.assign(globalThis, {
   clearProfile,
   SYSTEM_MANAGER_ROLE_ID,
 });
+
+//authRestore();  <- dont do this
 
 console.log('✅ auth.js loaded');
 

@@ -22,6 +22,30 @@ globalThis.CW.defaultFields = [
 ];
 
 globalThis.CW._config = {
+
+hub: {
+  url: "https://hub.i771468.workers.dev/",
+},
+
+ identity: {
+    keys: {
+      user:    'cw_user',      // localStorage key
+      utms:    'cw_utms',
+      session: 'cw_session',   // sessionStorage key
+    },
+    pseudo_domain: {
+      anon:  '@user.anon.invalid',
+      phone: '@user.phone.invalid',
+    },
+    qualify: {
+      time_ms:       120000,
+      scroll_pct:    0.5,
+      require_score: 2,
+    },
+    bot_patterns: [/bot/i, /crawler/i, /spider/i, /headless/i],
+  },
+
+
   ui: {
     show_state_badges: false,
   },
@@ -1753,21 +1777,17 @@ globalThis.CW._config = {
     },
   },
 
-  // ✅ Interaction config
-  fieldInteractionConfig: {
-    activeProfile: "default",
-    profiles: {
-      default: {
-        onChange: { enabled: true, debounce: 300, action: "write_draft" },
-        onBlur: { enabled: true, debounce: 0, action: "auto_save" },
-        onButtonClick: {
-          enabled: true,
-          debounce: 0,
-          action: "workflow_action",
-        },
-      },
+fieldInteractionConfig: {
+  activeProfile: "default",
+  profiles: {
+    default: {
+      onChange:      { enabled: true, debounce: 300,  action: "write_draft" },
+      onBlur:        { enabled: true, debounce: 0,    action: "auto_save" },
+      onButtonClick: { enabled: true, debounce: 0,    action: "workflow_action" },
+      onCodeChange:  { enabled: true, debounce: 3000, action: "auto_save" },
     },
   },
+},
 
   //== version 2 = checking for wrong combitations https://claude.ai/chat/fc16e068-e05b-4631-9ec0-928dface364a
 
