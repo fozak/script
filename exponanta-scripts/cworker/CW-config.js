@@ -22,6 +22,11 @@ globalThis.CW.defaultFields = [
 
 globalThis.CW._config = {
 
+  roles: {
+  systemManager: 'rolesystemmanag',
+  public:        'roleispublicxxx',
+},
+
 hub: {
   url: "https://hub-cf.i771468.workers.dev/",   
 },
@@ -211,10 +216,7 @@ hub: {
       onCreate: (run_doc) => {
         const doc = run_doc.target?.data?.[0];
         if (doc)
-          doc.owner =
-            doc.doctype === "User"
-              ? ""
-              : globalThis.pb?.authStore?.model?.id || "";
+         doc.owner = doc.doctype === 'User' ? '' : run_doc.user?.name || '';
       },
     },
     {
@@ -240,7 +242,7 @@ hub: {
       in_list_view: 0,
       onWrite: (run_doc) => {
         const doc = run_doc.target?.data?.[0];
-        if (doc) doc.modified_by = globalThis.pb?.authStore?.model?.id || "";
+        if (doc) doc.modified_by = run_doc.user?.name || "";
       },
     },
     {

@@ -1,0 +1,14 @@
+name = "hub-cf"
+main = "worker.js"
+compatibility_date = "2026-01-01"
+
+[assets]
+directory = "."
+
+[[d1_databases]]
+binding = "DB"
+database_name = "nesen-d1"
+database_id = "bfafca56-dbc9-49d5-a6cc-137ec0ee06c9"
+
+# [vars]
+# JWT_SECRET = "your-secret-here"
