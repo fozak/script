@@ -59,9 +59,9 @@ hub: {
     logThreads: 1,
   },
 
-  doctypeAliases: {
+  /*doctypeAliases: {
     todo: "ToDo",
-  },
+  },*/ // 729 line dublicate
 
   pb_url: "http://143.198.29.88:8090",
   collection: "item",
