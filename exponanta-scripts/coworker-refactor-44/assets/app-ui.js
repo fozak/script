@@ -340,7 +340,7 @@ globalThis.cwToast     = cwToast;
 globalThis._openPaired = _openPaired;
 
 
-Object.assign(globalThis, { authGuard })
+Object.assign(globalThis, { authGuard });
 
 // ── Initial render ───────────────────────────────────────────
 

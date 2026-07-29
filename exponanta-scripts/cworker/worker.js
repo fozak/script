@@ -1,8 +1,19 @@
+// ============================================================
+// worker.js — CW Hub Worker
+// Serves shell.html + routes run_doc to CW.controller
+// ============================================================
+
 import './CW-state.js'
 import './CW-config.js'
 import './CW-utils.js'
 import './CW-run.js'
 import './CW-adapter-d1.js'
+
+const CORS = {
+  'Access-Control-Allow-Origin':  '*',
+  'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+}
 
 export default {
   async fetch(req, env, ctx) {
@@ -14,19 +25,22 @@ export default {
     if (req.method === 'OPTIONS') return new Response(null, { headers: CORS })
 
     if (req.method === 'POST') {
-      const run_doc   = await req.json()
-      run_doc.options = { ...run_doc.options, expand: false }
-      await CW.controller(run_doc)
-      return Response.json(run_doc)
+      try {
+        const run_doc   = await req.json()
+        const token     = req.headers.get('Authorization') || ''
+        try { run_doc.user = await verifyJWT(token, env.JWT_SECRET) } catch { run_doc.user = {} }
+        run_doc.options = { ...run_doc.options, expand: false }
+        await CW.controller(run_doc)
+        return Response.json(run_doc, { headers: CORS })
+      } catch (err) {
+        return Response.json({ error: err.message }, { status: 500, headers: CORS })
+      }
     }
 
-    // serve index.html for / 
     if (req.method === 'GET' && (path === '/' || path === '/index.html')) {
-      const res = await env.ASSETS.fetch(new Request(new URL('/shell.html', url)))
-      return res
+      return env.ASSETS.fetch(new Request(new URL('/shell.html', url)))
     }
 
-    // serve all other static assets
     return env.ASSETS.fetch(req)
   }
 }
