@@ -1,5 +1,5 @@
 // ============================================================
-// v 44.2 auth.js — Exponanta auth module
+// auth.js — Exponanta auth module
 // Depends on: pocketbase.umd.js, CW-utils.js
 // Load order: pb SDK → CW-utils → auth.js
 // No Alpine dependency — fires cw:auth:change event instead
@@ -111,7 +111,7 @@ function _dispatchAuthChange(profile) {
 // FETCH ITEM PROFILE
 // ============================================================
 
-/*async function fetchItemProfile(userId) {
+async function fetchItemProfile(userId) {
   try {
     const record = await pb.collection('item').getOne(userId);
     return record?.data || {};
@@ -119,29 +119,14 @@ function _dispatchAuthChange(profile) {
     console.warn('Could not fetch item profile:', e);
     return {};
   }
-}*/
-
-async function fetchItemProfile(userId) {
-  try {
-    const run_doc = await CW.run({
-      operation:      'select',
-      target_doctype: 'User',
-      query:          { where: { name: userId } },
-      view:           'form',
-      options:        { render: false },
-    })
-    return run_doc.target?.data?.[0] || {}
-  } catch (e) {
-    console.warn('Could not fetch item profile:', e)
-    return {}
-  }
 }
+
 // ============================================================
-// PROVISION USER - moved to adapter
+// PROVISION USER
 // Creates: @users auth record + User item + UserPublicProfile item
 // Must be called before login (creates auth record first)
 // ============================================================
-/*
+
 async function provisionUser(email, password, name) {
   const userId   = generateId('User', email);
   const usepId   = generateId('UserPublicProfile', email);
@@ -178,7 +163,7 @@ async function provisionUser(email, password, name) {
   
   console.log('✅ User provisioned:', userId);
   return { userId, usesId };
-}*/
+}
 
 // ============================================================
 // LOGIN
@@ -313,7 +298,7 @@ function authStoreDefaults() {
 // ============================================================
 
 Object.assign(globalThis, {
-  //provisionUser,  //moved to adapter
+  provisionUser,
   authLogin,
   authRegister,
   authLogout,
@@ -333,20 +318,4 @@ Object.assign(globalThis, {
 //authRestore();  <- dont do this
 
 console.log('✅ auth.js loaded');
-
-/* usage
-// 1. login
-const r = await CW.run({
-  operation: 'authWithPassword',
-  target_doctype: 'User',
-  input: { email: 'denis1@test.com', password: '********' }
-})
-
-// 2. build profile and dispatch
-if (r.success) {
-  const itemData = await fetchItemProfile(r.user.name)
-  const profile  = buildProfile(r.user, itemData)
-  saveProfile(profile)
-  _dispatchAuthChange(profile)
-} */
 

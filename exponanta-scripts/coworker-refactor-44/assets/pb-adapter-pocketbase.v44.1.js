@@ -1,5 +1,5 @@
 // ============================================================
-// v44.2 pb-adapter-pocketbase.js
+// pb-adapter-pocketbase.js
 // Pure DB connector. No business logic.
 // All functions: function(run_doc) — mutate only, no return.
 // Reads from run_doc.target.data[0] — never from run_doc.input
@@ -404,43 +404,6 @@ async function signUp(run_doc) {
   } catch (err) { run_doc.error = err.message; }
 }
 
-
-// add to pb adapter — pure backend, no UI calls
-async function provisionUser(run_doc_or_email, password, name) {
-  // double signature
-  let email, pw, nm
-  if (typeof run_doc_or_email === 'object') {
-    ;({ email, password: pw, name: nm } = run_doc_or_email.target?.data?.[0] || {})
-  } else {
-    email = run_doc_or_email; pw = password; nm = name
-  }
-
-  const userId = generateId('User', email)
-  const usesId = generateId('UserSettings', email)
-
-  await globalThis.pb.collection('users').create({
-    id: userId, email, password: pw, passwordConfirm: pw,
-    name: nm, emailVisibility: true,
-  })
-  await globalThis.pb.collection('users').authWithPassword(email, pw)
-  await globalThis.pb.collection('item').create({
-    id: userId, name: userId, doctype: 'User', docstatus: 0,
-    owner: '', _allowed: [SYSTEM_MANAGER_ROLE_ID], _allowed_read: [],
-    data: { id: userId, email, name: nm, doctype: 'User', docstatus: 0 },
-  })
-  await globalThis.pb.collection('item').create({
-    id: usesId, name: usesId, doctype: 'UserSettings', docstatus: 0,
-    owner: userId, _allowed: [userId], _allowed_read: [],
-    data: { user: userId, email },
-  })
-  if (!email.includes('.invalid'))
-    await globalThis.pb.collection('users').requestVerification(email)
-
-  if (run_doc_or_email?.target) {
-    _setUser(run_doc_or_email)
-  }
-}
-
 Object.assign(globalThis.Adapters.pocketbase, {
   authWithPassword,
   authRefresh,
@@ -455,7 +418,6 @@ Object.assign(globalThis.Adapters.pocketbase, {
   confirmEmailChange,
   signIn,
   signUp,
-  provisionUser,
 });
 
 

@@ -1,5 +1,5 @@
 // ============================================================
-// v 44.2 CW-run.js — refactored
+// CW-run.js — refactored v44.1
 // Signal format: "dim.from_to" — e.g. "0.0_1", "1.0_1"
 // FSM pure helpers in CW-utils.js
 // target.data[0] is single source of truth
@@ -101,12 +101,12 @@ CW._mergeInput = function (run_doc) {
   const doc = run_doc.target.data[0];
   const schema = CW.Schema?.[run_doc.target_doctype];
   const readOnly = new Set(
-    (schema?.fields || []).filter((f) => f.read_only).map((f) => f.fieldname),
+    (schema?.fields || []).filter(f => f.read_only).map(f => f.fieldname)
   );
 
   for (const [k, v] of Object.entries(run_doc.input)) {
     if (k === "_state") continue;
-    if (readOnly.has(k)) continue; // ← skip read_only fields
+    if (readOnly.has(k)) continue;   // ← skip read_only fields
     doc[k] = v;
   }
 
@@ -495,13 +495,13 @@ CW.controller = async function (run_doc) {
       run_doc._signal = signal[0];
       await CW._handleSignal(run_doc);
     } else {
-      if (CW._handlers[run_doc.operation]) {
-        await CW._handlers[run_doc.operation](run_doc);
-      } else if (
-        globalThis.Adapters[CW._getAdapters(run_doc)[0]]?.[run_doc.operation]
+      const opConfig = CW._config.operations?.[run_doc.operation] || {};
+      if (
+        opConfig.type === "read" ||
+        opConfig.type === "auth" ||
+        opConfig.type === "updateMany"
       ) {
-        for (const a of CW._getAdapters(run_doc))
-          await globalThis.Adapters[a][run_doc.operation]?.(run_doc);
+        await CW._handlers[run_doc.operation]?.(run_doc);
       } else {
         run_doc.operation = doc.name ? "update" : "create";
 
@@ -526,6 +526,7 @@ CW.controller = async function (run_doc) {
 
             for (const a of CW._getAdapters(run_doc)) {
               if (run_doc.error) break;
+              //if (CW._config.adapters.registry?.[a]?.type === "db") {
               const schema = CW.Schema?.[run_doc.target_doctype];
               const autosave = run_doc.autosave ?? schema?.autosave ?? 1;
 
@@ -821,26 +822,26 @@ CW._handlers = {
   },
 
   updateMany: async function (run_doc) {
-    const docs = run_doc.target?.data || [];
-    const patch = { ...run_doc.input }; // shared patch, snapshot once
+  const docs  = run_doc.target?.data || [];
+  const patch = { ...run_doc.input };     // shared patch, snapshot once
 
-    for (let i = 0; i < docs.length; i++) {
-      if (run_doc.error) break;
+  for (let i = 0; i < docs.length; i++) {
+    if (run_doc.error) break;
 
-      run_doc.target.data[0] = docs[i]; // OLD → target
-      run_doc.input = { ...patch }; // patch → input, restored each iteration
+    run_doc.target.data[0] = docs[i];     // OLD → target
+    run_doc.input = { ...patch };         // patch → input, restored each iteration
 
-      await CW._logChanges(run_doc);
-      CW._mergeInput(run_doc);
-      CW._clearInput(run_doc);
+    await CW._logChanges(run_doc);
+    CW._mergeInput(run_doc);
+    CW._clearInput(run_doc);
 
-      await CW._handlers.update(run_doc);
+    await CW._handlers.update(run_doc);
 
-      docs[i] = run_doc.target.data[0];
-    }
+    docs[i] = run_doc.target.data[0];
+  }
 
-    run_doc.target.data = docs;
-  },
+  run_doc.target.data = docs;
+},
 
   delete: async function (run_doc) {
     if (run_doc.target?.data?.[0]) run_doc.target.data[0].docstatus = 2;
