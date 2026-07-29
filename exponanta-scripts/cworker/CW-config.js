@@ -18,13 +18,12 @@ globalThis.CW.defaultFields = [
   "_allowed_read",
   "files",
   "_changes",
-  "_threads", // ← add both
 ];
 
 globalThis.CW._config = {
 
 hub: {
-  url: "https://hub.i771468.workers.dev/",
+  url: "https://hub-cf.i771468.workers.dev/",   
 },
 
  identity: {
@@ -62,11 +61,13 @@ hub: {
   pb_url: "http://143.198.29.88:8090",
   collection: "item",
 
-  topLevelFields: new Set([
+  topLevelFields: new Set([    //data field is leftout intentiionally - check why LATER TODO
     "id",
     "name",
     "doctype",
     "docstatus",
+    "title",
+    "domain",
     "owner",
     "_allowed",
     "_allowed_read",
@@ -490,7 +491,7 @@ hub: {
   adapters: {
     // Default adapter per category
     defaults: {
-      db: "pocketbase",
+      db: "d1",   //changed from d1 to pocketbase
       auth: "auth",
       storage: null, // Future
       email: null, // Future

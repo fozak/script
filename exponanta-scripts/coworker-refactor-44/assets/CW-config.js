@@ -23,6 +23,11 @@ globalThis.CW.defaultFields = [
 
 globalThis.CW._config = {
 
+roles: {
+  systemManager: 'rolesystemmanag',
+  public:        'roleispublicxxx',
+},
+
 hub: {
   url: "https://hub.i771468.workers.dev/",
 },

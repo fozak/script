@@ -1,5 +1,5 @@
 // ============================================================
-// CW-utils.js v 40
+// v 44.4 CW-utils.js 
 // ============================================================
 
 const CW = globalThis.CW;
@@ -1133,6 +1133,41 @@ function tryParseJSON(val) {
 CW.tryParseJSON = tryParseJSON;
 
 
+//----authrelated 
+
+function getInitials(name) {
+  if (!name?.trim()) return '?'
+  return name.trim().split(/\s+/)
+    .map(w => w[0].toUpperCase())
+    .slice(0, 2)
+    .join('')
+}
+
+function getAvatarColor(userId) {
+  if (!userId) return '#3b5bdb'
+  let hash = 0
+  for (let i = 0; i < userId.length; i++)
+    hash = userId.charCodeAt(i) + ((hash << 5) - hash)
+  const colors = ['#e03131','#c2255c','#9c36b5','#6741d9','#3b5bdb','#1971c2','#0c8599','#2f9e44','#e8590c','#f08c00']
+  return colors[Math.abs(hash) % colors.length]
+}
+
+function buildProfile(authModel, itemData = {}) {
+  const id     = authModel.id
+  const name   = itemData.name || authModel.name || authModel.email || ''
+  const avatar = itemData.avatar || null
+  return {
+    id,
+    name,
+    email:       authModel.email,
+    avatar,
+    initials:    getInitials(name),
+    avatarColor: getAvatarColor(id),
+    verified:    authModel.verified || false,
+  }
+}
+
+
 // ─── assign to CW ────────────────────────────────────────────────────────────
 
 CW.getGridSelected   = getGridSelected;
@@ -1175,6 +1210,9 @@ Object.assign(globalThis, {
   persist,
   searchGrid,
   searchGridDebounced,
+  getInitials,
+  getAvatarColor,
+  buildProfile
 });
 
 console.log("✅ CW-utils.js v41 loaded");

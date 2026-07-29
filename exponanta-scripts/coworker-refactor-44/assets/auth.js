@@ -4,6 +4,42 @@
 // Load order: pb SDK → CW-utils → auth.js
 // No Alpine dependency — fires cw:auth:change event instead
 // ============================================================
+/*
+
+→ CW-utils.js:
+
+getInitials
+getAvatarColor
+buildProfile
+
+→ app-ui.js:
+
+saveProfile
+loadProfile
+clearProfile
+_dispatchAuthChange
+authStoreDefaults
+authGuard
+
+→ pb-adapter-pocketbase.js:
+
+provisionUser
+authLogin
+authLogout
+authRefresh
+authRestore
+authRegister
+fetchItemProfile (private)
+all PB SDK auth mirrors (authWithPassword, authWithOTP, requestOTP, authClear, requestPasswordReset, confirmPasswordReset, requestVerification, confirmVerification, requestEmailChange, confirmEmailChange)
+
+→ CW-config.js:
+
+SYSTEM_MANAGER_ROLE_ID → CW._config.roles.systemManager
+public role → CW._config.roles.public
+
+Deleted:
+
+auth.js
 
 const SYSTEM_MANAGER_ROLE_ID = 'rolesystemmanag';
 
@@ -178,7 +214,7 @@ async function provisionUser(email, password, name) {
   
   console.log('✅ User provisioned:', userId);
   return { userId, usesId };
-}*/
+}
 
 // ============================================================
 // LOGIN

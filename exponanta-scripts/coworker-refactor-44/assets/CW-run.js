@@ -1,5 +1,5 @@
 // ============================================================
-// v 44.2 CW-run.js — refactored
+// v 44.3 CW-run.js — refactored  select updated to become UNIVERSAL
 // Signal format: "dim.from_to" — e.g. "0.0_1", "1.0_1"
 // FSM pure helpers in CW-utils.js
 // target.data[0] is single source of truth
@@ -742,10 +742,14 @@ CW._handlers = {
     const sel = run_doc.query?.select;
 
     if (schema && !sel) {
-      const shouldFilter = activeView === "list" || activeView === "card";
+      const viewFieldFlag = `in_${activeView}_view`;
+      const hasViewFields = schema.fields.some((f) => f[viewFieldFlag]);
+      const shouldFilter = activeView === "list" || hasViewFields;
+
       if (shouldFilter) {
+        const flagToUse = hasViewFields ? viewFieldFlag : "in_list_view";
         const viewFields = schema.fields
-          .filter((f) => f.in_list_view)
+          .filter((f) => f[flagToUse])
           .map((f) => f.fieldname);
         const titleField = schema.title_field ? [schema.title_field] : [];
         const fields = [...new Set([...titleField, ...viewFields])];

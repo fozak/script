@@ -1,11 +1,87 @@
 // ============================================================
-// app-ui.js — Exponanta app shell UI
-// NavBar + Toasts — React, reads pb.authStore directly
+// v 44.4 app-ui.js — Exponanta app shell UI
+// NavBar + Toasts — React
 // No Alpine dependency
 // Listens to: cw:auth:change
 // ============================================================
 
-//const ce = React.createElement;
+// ============================================================
+// PROFILE CACHE (localStorage keyed by user ID)
+// ============================================================
+
+function saveProfile(profile) {
+  if (!profile?.id) return;
+  localStorage.setItem(profile.id, JSON.stringify(profile));
+}
+
+function loadProfile(userId) {
+  if (!userId) return null;
+  try { return JSON.parse(localStorage.getItem(userId) || 'null'); }
+  catch { return null; }
+}
+
+function clearProfile(userId) {
+  if (userId) localStorage.removeItem(userId);
+}
+
+// ============================================================
+// AUTH STATE EVENT
+// ============================================================
+
+function _dispatchAuthChange(profile) {
+  globalThis.currentUser = profile || null
+
+  if (globalThis.CW?._config) {
+    globalThis.CW._config.currentUser = profile || null;
+  }
+
+  globalThis.dispatchEvent(new CustomEvent('cw:auth:change', { detail: profile }));
+
+  if (typeof Alpine !== 'undefined') {
+    const store = Alpine.store('auth');
+    if (!store) return;
+    if (profile) {
+      store.isValid     = true;
+      store.verified    = profile.verified;
+      store.id          = profile.id;
+      store.name        = profile.name;
+      store.email       = profile.email;
+      store.avatar      = profile.avatar;
+      store.initials    = profile.initials;
+      store.avatarColor = profile.avatarColor;
+    } else {
+      store.isValid     = false;
+      store.verified    = false;
+      store.id          = null;
+      store.name        = '';
+      store.email       = '';
+      store.avatar      = null;
+      store.initials    = '';
+      store.avatarColor = '#3b5bdb';
+    }
+  }
+}
+
+function authStoreDefaults() {
+  return {
+    isValid:     false,
+    verified:    false,
+    id:          null,
+    name:        '',
+    email:       '',
+    avatar:      null,
+    initials:    '',
+    avatarColor: '#3b5bdb',
+  };
+}
+
+Object.assign(globalThis, {
+  saveProfile,
+  loadProfile,
+  clearProfile,
+  _dispatchAuthChange,
+  authStoreDefaults,
+});
 
 // ============================================================
 // TOAST SYSTEM
@@ -73,8 +149,7 @@ function cwToast(message, type = 'success', duration = 3000) {
 }
 
 // ============================================================
-// PAIRED OPEN — universal grid+form for any doctype
-// clears all runs, fires fresh boot, opens first record
+// PAIRED OPEN
 // ============================================================
 
 async function _openPaired(doctype, query) {
@@ -90,7 +165,7 @@ async function _openPaired(doctype, query) {
 // ============================================================
 
 function _openProfile() {
-  _openPaired('UserPublicProfile', { where: { owner: CW._config?.currentUser?.id } });
+  _openPaired('UserPublicProfile', { where: { owner: globalThis.currentUser?.id } });
 }
 
 function _openDashboard() {
@@ -101,7 +176,7 @@ function _openDashboard() {
 // NAVBAR
 // ============================================================
 
-let _navRoot    = null;
+let _navRoot = null;
 
 const NavBar = function({ profile }) {
   const isValid = !!profile;
@@ -195,11 +270,12 @@ const NavBar = function({ profile }) {
               !profile.verified && ce('div', null,
                 ce('div', { className: 'dropdown-divider' }),
                 ce('a', { className: 'dropdown-item text-warning', href: '#',
-                  onClick: (e) => {
+                  onClick: async (e) => {
                     e.preventDefault();
-                    globalThis.pb?.collection('users').requestVerification(profile.email)
-                      .then(() => cwToast('Verification email sent!', 'success'))
-                      .catch(() => cwToast('Failed to send verification email', 'error'));
+                    const r = await CW.run({ operation: 'requestVerification', target_doctype: 'User', input: { email: profile.email } })
+                    r.success
+                      ? cwToast('Verification email sent!', 'success')
+                      : cwToast('Failed to send verification email', 'error')
                   }
                 },
                   ce('i', { className: 'ti ti-mail-forward me-2' }), 'Resend verification'
@@ -243,6 +319,16 @@ globalThis.addEventListener('cw:auth:change', (e) => {
   _renderNav(e.detail);
 });
 
+
+//---
+
+function authGuard(requireVerified = false) {
+  if (!globalThis.currentUser) { window.location.href = '/login.html'; return false }
+  if (requireVerified && !globalThis.currentUser.verified) { window.location.href = '/auth/unverified.html'; return false }
+  return true
+}
+
+
 // ── Expose on CW + globalThis ────────────────────────────────
 
 if (globalThis.CW) {
@@ -250,28 +336,17 @@ if (globalThis.CW) {
   globalThis.CW._renderNav = _renderNav;
 }
 
-globalThis.cwToast      = cwToast;
-globalThis._openPaired  = _openPaired;
+globalThis.cwToast     = cwToast;
+globalThis._openPaired = _openPaired;
+
+
+Object.assign(globalThis, { authGuard })
 
 // ── Initial render ───────────────────────────────────────────
 
 (function() {
-  const model = globalThis.pb?.authStore?.isValid ? globalThis.pb.authStore.model : null;
-  if (model) {
-    const cached  = typeof loadProfile === 'function' ? loadProfile(model.id) : null;
-    const profile = cached || {
-      id:          model.id,
-      name:        model.name || model.email || '',
-      email:       model.email,
-      avatar:      null,
-      initials:    typeof getInitials === 'function' ? getInitials(model.name || model.email || '') : '?',
-      avatarColor: typeof getAvatarColor === 'function' ? getAvatarColor(model.id) : '#3b5bdb',
-      verified:    model.verified || false,
-    };
-    _renderNav(profile);
-  } else {
-    _renderNav(null);
-  }
+  const profile = globalThis.currentUser || null
+  _renderNav(profile)
 })();
 
-//console.log('✅ app-ui.js loaded');
+console.log('✅ app-ui.js loaded');
