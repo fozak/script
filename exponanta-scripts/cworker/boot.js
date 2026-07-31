@@ -36,7 +36,7 @@ if (typeof window !== 'undefined' && typeof window.addEventListener === 'functio
 } else {
   // Worker
   globalThis._bootstrap    = workerBootstrap
-  globalThis.CW._bootstrap = workerBootstrap*/
-}
+  globalThis.CW._bootstrap = workerBootstrap
+}*/
 
 
