@@ -1,5 +1,5 @@
 // ============================================================
-// v 44.3 CW-run.js — refactored  select updated to become UNIVERSAL
+// v 44.2 CW-run.js — refactored
 // Signal format: "dim.from_to" — e.g. "0.0_1", "1.0_1"
 // FSM pure helpers in CW-utils.js
 // target.data[0] is single source of truth
@@ -99,11 +99,6 @@ CW._mergeInput = function (run_doc) {
   if (!run_doc.target.data[0]) run_doc.target.data[0] = {};
 
   const doc = run_doc.target.data[0];
-
-  //test
-  //console.log('_mergeInput input:', JSON.stringify(run_doc.input));
-  //console.log('_mergeInput doc.status before:', doc?.status);
-  //
   const schema = CW.Schema?.[run_doc.target_doctype];
   const readOnly = new Set(
     (schema?.fields || []).filter((f) => f.read_only).map((f) => f.fieldname),
@@ -119,8 +114,6 @@ CW._mergeInput = function (run_doc) {
     if (!doc._state) doc._state = {};
     Object.assign(doc._state, run_doc.input._state);
   }
-  //test
-   //console.log('_mergeInput doc.status after:', doc?.status);
 };
 
 // ============================================================
@@ -749,14 +742,10 @@ CW._handlers = {
     const sel = run_doc.query?.select;
 
     if (schema && !sel) {
-      const viewFieldFlag = `in_${activeView}_view`;
-      const hasViewFields = schema.fields.some((f) => f[viewFieldFlag]);
-      const shouldFilter = activeView === "list" || hasViewFields;
-
+      const shouldFilter = activeView === "list" || activeView === "card";
       if (shouldFilter) {
-        const flagToUse = hasViewFields ? viewFieldFlag : "in_list_view";
         const viewFields = schema.fields
-          .filter((f) => f[flagToUse])
+          .filter((f) => f.in_list_view)
           .map((f) => f.fieldname);
         const titleField = schema.title_field ? [schema.title_field] : [];
         const fields = [...new Set([...titleField, ...viewFields])];

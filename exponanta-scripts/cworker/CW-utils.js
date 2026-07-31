@@ -913,10 +913,12 @@ const provenance = sourceRuns?.length
 
   try {
     await _patchDataField(doc.name, '_changes', entry);
-    doc._changes = next;
+    //doc._changes = next;
   } catch (err) {
-    console.warn('[CW] _logChanges failed:', err.message);
+    //console.warn('[CW] _logChanges failed:', err.message);
   }
+
+  doc._changes = next  // ← always update in memory
 }
 
 // ============================================================
@@ -948,7 +950,7 @@ async function _logThreads(run_doc, entry) {
   
     doc._threads = next
   } catch (err) {
-    console.warn('[CW] _logThreads failed:', err.message)
+    //console.warn('[CW] _logThreads failed:', err.message)
   }
 }
 

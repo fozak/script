@@ -213,17 +213,6 @@ hub: {
       },
     },
     {
-  name: "id",
-  fetch: true,
-  hidden: 1,
-  onCreate: (run_doc) => {
-    const doc = run_doc.target?.data?.[0];
-    if (!doc || doc.id) return;
-    doc.id = doc.name;  // id always mirrors name
-  },
-},
-
-    {
       name: "slug",
       fetch: true,
       hidden: 0,
@@ -266,6 +255,16 @@ hub: {
       },
     },
     {
+  name: "id",
+  fetch: true,
+  hidden: 0,
+  onCreate: (run_doc) => {
+    const doc = run_doc.target?.data?.[0];
+    if (!doc || doc.id) return;
+    doc.id = doc.name;  // id always mirrors name
+  },
+},
+    {
       name: "docstatus",
       fetch: true,
       hidden: 1,
@@ -275,19 +274,19 @@ hub: {
         if (doc && doc.docstatus === undefined) doc.docstatus = 0;
       },
     },
-    {
-      name: "creation",
-      fetch: true,
-      hidden: 1,
-      read_only: 1,
-      fieldtype: "Datetime",
-      label: "Created",
-      in_list_view: 1,
-      onCreate: (run_doc) => {
-        const doc = run_doc.target?.data?.[0];
-        if (doc) doc.creation = Date.now();
-      },
-    },
+   {
+  name: "created",           // ← was "creation"
+  fetch: true,
+  hidden: 1,
+  read_only: 1,
+  fieldtype: "Datetime",
+  label: "Created",
+  in_list_view: 1,
+  onCreate: (run_doc) => {
+    const doc = run_doc.target?.data?.[0];
+    if (doc) doc.created = Date.now();  // ← was doc.creation
+  },
+},
     {
       name: "owner",
       fetch: true,

@@ -9,39 +9,52 @@
 (() => {
   const cfg = () => globalThis.CW._config;
 
-// ============================================================
-// RECORD HELPERS — D1 specific (arrays serialized to JSON strings)
-// ============================================================
+  // ============================================================
+  // RECORD HELPERS — D1 specific (arrays serialized to JSON strings)
+  // ============================================================
 
-function _splitRecord(doc) {
-  const top  = {}
-  const data = {}
-  for (const [k, v] of Object.entries(doc)) {
-    if (CW._config.topLevelFields.has(k) || /^[\w]+[+-]$|^[+-][\w]+$/.test(k) || v instanceof File) {
-      top[k] = Array.isArray(v) || (v && typeof v === 'object') ? JSON.stringify(v) : v
-    } else {
-      data[k] = v
+  function _splitRecord(doc) {
+    const top = {};
+    const data = {};
+    for (const [k, v] of Object.entries(doc)) {
+      if (
+        CW._config.topLevelFields.has(k) ||
+        /^[\w]+[+-]$|^[+-][\w]+$/.test(k) ||
+        v instanceof File
+      ) {
+        top[k] =
+          Array.isArray(v) || (v && typeof v === "object")
+            ? JSON.stringify(v)
+            : v;
+      } else {
+        data[k] = v;
+      }
     }
+    return { top, data };
   }
-  return { top, data }
-}
 
-function _mergeRecord(rec) {
-  const raw = rec.data
-  const doc = Object.assign({}, typeof raw === 'string' ? JSON.parse(raw || '{}') : raw || {})
-  for (const k of CW._config.topLevelFields) {
-    if (!(k in rec)) continue
-    const v = rec[k]
-    if (typeof v === 'string' && (v.startsWith('[') || v.startsWith('{'))) {
-      try { doc[k] = JSON.parse(v) } catch { doc[k] = v }
-    } else {
-      doc[k] = v
+  function _mergeRecord(rec) {
+    const raw = rec.data;
+    const doc = Object.assign(
+      {},
+      typeof raw === "string" ? JSON.parse(raw || "{}") : raw || {},
+    );
+    for (const k of CW._config.topLevelFields) {
+      if (!(k in rec)) continue;
+      const v = rec[k];
+      if (typeof v === "string" && (v.startsWith("[") || v.startsWith("{"))) {
+        try {
+          doc[k] = JSON.parse(v);
+        } catch {
+          doc[k] = v;
+        }
+      } else {
+        doc[k] = v;
+      }
     }
+    return doc;
   }
-  return doc
-}
 
-  
   // ============================================================
   // TRANSPORT — browser → Worker → D1
   // ============================================================
@@ -211,46 +224,22 @@ function _mergeRecord(rec) {
     if (!globalThis.env?.DB) {
       await _post(run_doc);
       return;
-
-      //
-
-      console.log('A - env.DB exists:', !!globalThis.env?.DB)
-  console.log('B - cfg exists:', !!cfg())
-  console.log('C - topLevelFields:', !!cfg()?.topLevelFields)
-  console.log('D - sql:', !!cfg()?.sql)
-  console.log('E - listSQL type:', typeof cfg()?.sql?.listSQL)
-  
-  try {
-    const doctype = run_doc.target_doctype ?? run_doc.source_doctype
-    console.log('F - doctype:', doctype)
-    
-    const { clause, params } = _buildFilter(run_doc)
-    console.log('G - clause:', clause)
-    
-  } catch(err) {
-    console.error('EXACT ERROR:', err.stack)
-    run_doc.error = err.message
-    return
-  }
-      //
     }
 
     const doctype = run_doc.target_doctype ?? run_doc.source_doctype;
-    const schema = globalThis.CW.Schema?.[doctype];
-
     const { clause, params: filterParams } = _buildFilter(run_doc);
     const aclParams = cfg().sql.aclParams(run_doc.user);
     const sort = _buildSort(run_doc);
     const limit = _buildLimit(run_doc);
+    const baseSQL =
+      CW.Schema?.[doctype]?.listSQL?.(cfg()) || cfg().sql.listSQL(cfg());
 
-    //const baseSQL = schema?._listSQL || cfg().sql.listSQL(cfg());
-const baseSQL = CW.Schema?.[doctype]?.listSQL?.(cfg()) || cfg().sql.listSQL(cfg())
     const sql = `
-  ${baseSQL}
-  ${clause ? `AND (${clause})` : ""}
-  ORDER BY ${sort}
-  ${limit.sql}
-`.trim();
+    ${baseSQL}
+    ${clause ? `AND (${clause})` : ""}
+    ORDER BY ${sort}
+    ${limit.sql}
+  `.trim();
 
     try {
       const rows = await globalThis.env.DB.prepare(sql)
@@ -316,6 +305,9 @@ const baseSQL = CW.Schema?.[doctype]?.listSQL?.(cfg()) || cfg().sql.listSQL(cfg(
     }
 
     const doc = run_doc.target?.data?.[0];
+    //test
+    //console.log("D1 update doc.status:", doc?.status);
+    //console.log("D1 update doc keys:", Object.keys(doc || {}));
     if (!doc?.name) {
       run_doc.error = "400 update: no target document";
       return;
