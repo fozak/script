@@ -1,16 +1,7 @@
-// ============================================================
-// v 44.5 boot.js — isomorphic bootstrap for browser and Worker
-// Same file, two execution paths based on env.DB presence
-// ============================================================
-
 async function bootstrap() {
-  if (globalThis.CW._booted) return
+  const base = window.location.origin
 
-  // ── 1. load schemas from db.json ─────────────────────────
-  const base = globalThis.env?.DB
-    ? globalThis.CW._config.hub.url
-    : window.location.origin
-
+  // ── 1. load schemas ──────────────────────────────────────
   const docs = await fetch(`${base}/db.json`).then(r => r.json())
   globalThis.CW.Schema = {}
   for (const s of docs.filter(d => d.doctype === 'Schema')) {
@@ -20,16 +11,19 @@ async function bootstrap() {
   // ── 2. compile schemas ───────────────────────────────────
   globalThis.CW._compileSchemas()
 
-  // ── 3. adapter init — browser only ──────────────────────
-  if (!globalThis.env?.DB) {
-    await globalThis.Adapters.pocketbase.init()
-    if (typeof authRestore === 'function') authRestore()
+  // ── 3. adapter init ──────────────────────────────────────
+  const dbAdapter = CW._config.adapters?.defaults?.db
+  const adapter   = globalThis.Adapters?.[dbAdapter]
 
+  if (adapter?.init) await adapter.init()
+  if (typeof authRestore === 'function') authRestore()
+
+  if (adapter) {
     const adapterRun = await CW.run({
       operation:      'select',
       target_doctype: 'Adapter',
       view:           'form',
-      options:        { render: false }
+      options:        { render: false },
     })
     if (adapterRun.success) {
       adapterRun.target.data = adapterRun.target.data.filter(a => a.docstatus === 1)
@@ -39,18 +33,10 @@ async function bootstrap() {
 
   // ── 4. done ──────────────────────────────────────────────
   globalThis.CW._booted = true
-  if (typeof window !== 'undefined') {
-    globalThis.dispatchEvent(new CustomEvent('CW:booted'))
-  }
-
+  globalThis.dispatchEvent(new CustomEvent('CW:booted'))
   console.log('✅ CW bootstrap complete')
 }
 
-// ── entry point ──────────────────────────────────────────────
-if (typeof window !== 'undefined') {
-  window.addEventListener('load', () => bootstrap())
-} else {
-  globalThis.CW._bootstrap = bootstrap
-}
+window.addEventListener('load', () => bootstrap())
 
 
