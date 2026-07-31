@@ -1,48 +1,56 @@
-// boot.js
+// ============================================================
+// v 44.5 boot.js — isomorphic bootstrap for browser and Worker
+// Same file, two execution paths based on env.DB presence
+// ============================================================
 
 async function bootstrap() {
-  const base = window.location.origin;
+  if (globalThis.CW._booted) return
 
-  // ── 1. Load schemas from db.json ──────────────────────────
-  const docs = await fetch(`${base}/db.json`).then(r => r.json());
-  globalThis.CW.Schema = {};
-  for (const s of docs.filter(d => d.doctype === "Schema")) {
-    globalThis.CW.Schema[s.schema_name] = s;
-  }
-  globalThis.CW._compileSchemas();
+  // ── 1. load schemas from db.json ─────────────────────────
+  const base = globalThis.env?.DB
+    ? globalThis.CW._config.hub.url
+    : window.location.origin
 
-  // ── 2. Init active adapter ─────────────────────────────────
-  const adapter = CW._config.adapters.defaults.db
-  await globalThis.Adapters[adapter]?.init?.()
-
-  // ── 3. Restore auth session ────────────────────────────────
-  const stored = JSON.parse(localStorage.getItem('currentUser') || 'null')
-  if (stored?.token) {
-    try {
-      const payload = JSON.parse(atob(stored.token.split('.')[1].replace(/-/g,'+').replace(/_/g,'/')))
-      if (payload.exp > Date.now() / 1000) {
-        globalThis.currentUser = stored
-        _dispatchAuthChange(stored)
-      } else {
-        localStorage.removeItem('currentUser')
-      }
-    } catch { localStorage.removeItem('currentUser') }
+  const docs = await fetch(`${base}/db.json`).then(r => r.json())
+  globalThis.CW.Schema = {}
+  for (const s of docs.filter(d => d.doctype === 'Schema')) {
+    globalThis.CW.Schema[s.schema_name] = s
   }
 
-  // ── 4. Load compiled Adapter records ──────────────────────
-  const adapterRun = await CW.run({
-    operation:      'select',
-    target_doctype: 'Adapter',
-    view:           'form',
-    options:        { render: false }
-  });
-  if (adapterRun.success) {
-    adapterRun.target.data = adapterRun.target.data.filter(a => a.docstatus === 1);
-    await CW._compileDocument(adapterRun);
+  // ── 2. compile schemas ───────────────────────────────────
+  globalThis.CW._compileSchemas()
+
+  // ── 3. adapter init — browser only ──────────────────────
+  if (!globalThis.env?.DB) {
+    await globalThis.Adapters.pocketbase.init()
+    if (typeof authRestore === 'function') authRestore()
+
+    const adapterRun = await CW.run({
+      operation:      'select',
+      target_doctype: 'Adapter',
+      view:           'form',
+      options:        { render: false }
+    })
+    if (adapterRun.success) {
+      adapterRun.target.data = adapterRun.target.data.filter(a => a.docstatus === 1)
+      await CW._compileDocument(adapterRun)
+    }
   }
 
-  globalThis.CW._booted = true;
-  globalThis.dispatchEvent(new CustomEvent('CW:booted'));
+  // ── 4. done ──────────────────────────────────────────────
+  globalThis.CW._booted = true
+  if (typeof window !== 'undefined') {
+    globalThis.dispatchEvent(new CustomEvent('CW:booted'))
+  }
+
+  console.log('✅ CW bootstrap complete')
 }
 
-window.addEventListener("load", () => bootstrap());
+// ── entry point ──────────────────────────────────────────────
+if (typeof window !== 'undefined') {
+  window.addEventListener('load', () => bootstrap())
+} else {
+  globalThis.CW._bootstrap = bootstrap
+}
+
+

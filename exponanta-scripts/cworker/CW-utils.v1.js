@@ -1,5 +1,5 @@
 // ============================================================
-// v 44.4 CW-utils.js 
+// CW-utils.js v 40
 // ============================================================
 
 const CW = globalThis.CW;
@@ -1133,87 +1133,7 @@ function tryParseJSON(val) {
 CW.tryParseJSON = tryParseJSON;
 
 
-//----authrelated 
-
-function getInitials(name) {
-  if (!name?.trim()) return '?'
-  return name.trim().split(/\s+/)
-    .map(w => w[0].toUpperCase())
-    .slice(0, 2)
-    .join('')
-}
-
-function getAvatarColor(userId) {
-  if (!userId) return '#3b5bdb'
-  let hash = 0
-  for (let i = 0; i < userId.length; i++)
-    hash = userId.charCodeAt(i) + ((hash << 5) - hash)
-  const colors = ['#e03131','#c2255c','#9c36b5','#6741d9','#3b5bdb','#1971c2','#0c8599','#2f9e44','#e8590c','#f08c00']
-  return colors[Math.abs(hash) % colors.length]
-}
-
-function buildProfile(authModel, itemData = {}) {
-  const id     = authModel.id
-  const name   = itemData.name || authModel.name || authModel.email || ''
-  const avatar = itemData.avatar || null
-  return {
-    id,
-    name,
-    email:       authModel.email,
-    avatar,
-    initials:    getInitials(name),
-    avatarColor: getAvatarColor(id),
-    verified:    authModel.verified || false,
-  }
-}
-
-
-// ============================================================
-// RECORD HELPERS — shared by all DB adapters
-// ============================================================
-
-/*function _mergeRecord(rec) {
-  const doc = Object.assign({}, rec.data || {})
-  for (const k of CW._config.topLevelFields) {
-    if (k in rec) doc[k] = rec[k]
-  }
-  return doc
-}*/
-
-
-/*
-function _mergeRecord(rec) {
-  const raw = rec.data
-  const doc = Object.assign({}, 
-    typeof raw === 'string' ? JSON.parse(raw || '{}') : raw || {}
-  )
-  for (const k of CW._config.topLevelFields) {
-    if (k in rec) doc[k] = rec[k]
-  }
-  return doc
-}
-
-function _splitRecord(doc) {
-  const top  = {}
-  const data = {}
-  for (const [k, v] of Object.entries(doc)) {
-    if (
-      CW._config.topLevelFields.has(k) ||
-      /^[\w]+[+-]$|^[+-][\w]+$/.test(k) ||
-      v instanceof File
-    ) {
-      top[k] = v
-    } else {
-      data[k] = v
-    }
-  }
-  return { top, data }
-}*/
-
-// ─── assign to CW ─────────────────────────────────────────────
-//CW._mergeRecord = _mergeRecord
-//CW._splitRecord = _splitRecord
-
+// ─── assign to CW ────────────────────────────────────────────────────────────
 
 CW.getGridSelected   = getGridSelected;
 CW.toggleSelected    = toggleSelected;
@@ -1255,12 +1175,6 @@ Object.assign(globalThis, {
   persist,
   searchGrid,
   searchGridDebounced,
-  getInitials,
-  getAvatarColor,
-  buildProfile,
-  //_mergeRecord,
- // _splitRecord,
-  generateSlug,
 });
 
 console.log("✅ CW-utils.js v41 loaded");

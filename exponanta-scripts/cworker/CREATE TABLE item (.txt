@@ -1,0 +1,15 @@
+CREATE TABLE item (
+  id            TEXT PRIMARY KEY,
+  name          TEXT NOT NULL,
+  doctype       TEXT NOT NULL,
+  docstatus     INTEGER DEFAULT 0,
+  title         TEXT DEFAULT '',
+  domain        TEXT DEFAULT '',
+  owner         TEXT DEFAULT '',
+  _allowed      TEXT DEFAULT '[]',
+  _allowed_read TEXT DEFAULT '[]',
+  created       INTEGER,
+  modified      INTEGER,
+  files         TEXT DEFAULT '[]',
+  data          TEXT DEFAULT '{}'
+);

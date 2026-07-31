@@ -8,34 +8,9 @@
 (() => {   //isolate scope
 
 // after — delete the const, read from config
-const PB_TOP = CW._config.topLevelFields;
+// const PB_TOP = CW._config.topLevelFields; //not used
 
 
-
-function _splitRecord(doc) {
-  const top = {};
-  const data = {};
-  for (const [k, v] of Object.entries(doc)) {
-    if (
-      PB_TOP.has(k) ||
-      /^[\w]+[+-]$|^[+-][\w]+$/.test(k) ||
-      v instanceof File
-    ) {
-      top[k] = v;
-    } else {
-      data[k] = v;
-    }
-  }
-  return { top, data };
-}
-
-function _mergeRecord(rec) {
-  const doc = Object.assign({}, rec.data || {});
-  for (const k of PB_TOP) {
-    if (k in rec) doc[k] = rec[k];
-  }
-  return doc;
-}
 
 function _getFieldPath(fieldName) {
   if (PB_TOP.has(fieldName)) return fieldName;

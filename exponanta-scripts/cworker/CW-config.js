@@ -1,5 +1,5 @@
 // ============================================================
-// CW-config.js
+// v44.5 for d1 addons CW-config.js
 // ============================================================
 
 globalThis.CW.defaultFields = [
@@ -18,17 +18,56 @@ globalThis.CW.defaultFields = [
   "_allowed_read",
   "files",
   "_changes",
+  "_threads", // ← add both
 ];
 
 globalThis.CW._config = {
 
-  roles: {
+roles: {
   systemManager: 'rolesystemmanag',
   public:        'roleispublicxxx',
 },
 
+// ── D1 SQL defaults ──────────────────────────────────────────
+  sql: {
+
+
+    // default ACL joins — reused in every SELECT
+    aclJoins: `
+      LEFT JOIN json_each(item._allowed)      __je_allowed
+      LEFT JOIN json_each(item._allowed_read) __je_allowed_read
+    `,
+
+    // default ACL WHERE fragment — ? bindings: [doctype, sub, sub, sub, ...roles, ...roles]
+    aclWhere: (cfg) => `(
+      __je_allowed_read.value = '${cfg.roles.public}'
+      OR item.owner = ?
+      OR __je_allowed.value = ?
+      OR __je_allowed_read.value = ?
+    )`,
+
+    // default listSQL — override per schema if needed
+  listSQL: (cfg) => `
+  SELECT DISTINCT item.* FROM item
+  ${cfg.sql.aclJoins}
+  WHERE (
+    __je_allowed_read.value = '${cfg.roles.public}'
+    OR item.owner = ?
+    OR __je_allowed.value = ?
+    OR __je_allowed_read.value = ?
+  )
+`,
+
+    // default aclParams — bindings for ACL WHERE in order
+    aclParams: (user) => [
+      user?.sub ?? '',   // owner
+      user?.sub ?? '',   // _allowed
+      user?.sub ?? '',   // _allowed_read
+    ],
+  },
+
 hub: {
-  url: "https://hub-cf.i771468.workers.dev/",   
+  url: "https://hub-cf.i771468.workers.dev/",  //url: "https://hub.i771468.workers.dev/",
 },
 
  identity: {
@@ -61,24 +100,41 @@ hub: {
 
   /*doctypeAliases: {
     todo: "ToDo",
-  },*/ // 729 line dublicate
+  },*/ //see below
 
   pb_url: "http://143.198.29.88:8090",
   collection: "item",
 
-  topLevelFields: new Set([    //data field is leftout intentiionally - check why LATER TODO
+  topLevelFields: new Set([
     "id",
     "name",
     "doctype",
     "docstatus",
-    "title",
+    "title",  // data is left out 
     "domain",
     "owner",
     "_allowed",
     "_allowed_read",
     "created",
+    "modified",
     "files",
   ]),
+
+  dbColumns: new Set([
+  "id",
+  "name",
+  "doctype",
+  "docstatus",
+  "title",
+  "domain",
+  "owner",
+  "_allowed",
+  "_allowed_read",
+  "created",
+  "modified",
+  "files",
+  "data",   // ← blob column
+]),
 
   publicDoctypes: ["Event", "WebPage", "UserPublicProfile", "Session"],
 
@@ -140,6 +196,17 @@ hub: {
         if (doc) doc.doctype = doc.doctype || run_doc.target_doctype;
       },
     },
+    {
+  name: "id",
+  fetch: true,
+  hidden: 1,
+  onCreate: (run_doc) => {
+    const doc = run_doc.target?.data?.[0];
+    if (!doc || doc.id) return;
+    doc.id = doc.name;  // id always mirrors name
+  },
+},
+
     {
       name: "slug",
       fetch: true,
@@ -216,7 +283,10 @@ hub: {
       onCreate: (run_doc) => {
         const doc = run_doc.target?.data?.[0];
         if (doc)
-         doc.owner = doc.doctype === 'User' ? '' : run_doc.user?.name || '';
+          doc.owner =
+            doc.doctype === "User"
+              ? ""
+              : globalThis.pb?.authStore?.model?.id || "";
       },
     },
     {
@@ -242,7 +312,7 @@ hub: {
       in_list_view: 0,
       onWrite: (run_doc) => {
         const doc = run_doc.target?.data?.[0];
-        if (doc) doc.modified_by = run_doc.user?.name || "";
+        if (doc) doc.modified_by = globalThis.pb?.authStore?.model?.id || "";
       },
     },
     {
@@ -493,7 +563,7 @@ hub: {
   adapters: {
     // Default adapter per category
     defaults: {
-      db: "d1",   //changed from d1 to pocketbase
+      db: "d1",   //pocketbase
       auth: "auth",
       storage: null, // Future
       email: null, // Future

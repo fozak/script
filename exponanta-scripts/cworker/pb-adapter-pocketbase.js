@@ -1,5 +1,5 @@
 // ============================================================
-// v44.2 pb-adapter-pocketbase.js
+// v44.4 pb-adapter-pocketbase.js
 // Pure DB connector. No business logic.
 // All functions: function(run_doc) — mutate only, no return.
 // Reads from run_doc.target.data[0] — never from run_doc.input
@@ -8,34 +8,9 @@
 (() => {   //isolate scope
 
 // after — delete the const, read from config
-const PB_TOP = CW._config.topLevelFields;
+// const PB_TOP = CW._config.topLevelFields; //not used
 
 
-
-function _splitRecord(doc) {
-  const top = {};
-  const data = {};
-  for (const [k, v] of Object.entries(doc)) {
-    if (
-      PB_TOP.has(k) ||
-      /^[\w]+[+-]$|^[+-][\w]+$/.test(k) ||
-      v instanceof File
-    ) {
-      top[k] = v;
-    } else {
-      data[k] = v;
-    }
-  }
-  return { top, data };
-}
-
-function _mergeRecord(rec) {
-  const doc = Object.assign({}, rec.data || {});
-  for (const k of PB_TOP) {
-    if (k in rec) doc[k] = rec[k];
-  }
-  return doc;
-}
 
 function _getFieldPath(fieldName) {
   if (PB_TOP.has(fieldName)) return fieldName;
@@ -291,7 +266,6 @@ globalThis.Adapters.pocketbase = { init, select, create, update, delete: del };
 // Pure PocketBase SDK mirrors. No business logic.
 // Reads from run_doc.target.data[0] — never from run_doc.input
 // ============================================================
-
 function _setUser(run_doc) {
   run_doc.user = {
     name:     globalThis.pb.authStore.record?.id       ?? null,
@@ -300,6 +274,22 @@ function _setUser(run_doc) {
     verified: globalThis.pb.authStore.record?.verified ?? false,
   };
   run_doc.success = true;
+}
+
+async function fetchItemProfile(userId) {
+  try {
+    const r = await CW.run({
+      operation:      'select',
+      target_doctype: 'User',
+      query:          { where: { name: userId } },
+      view:           'form',
+      options:        { render: false },
+    })
+    return r.target?.data?.[0] || {}
+  } catch (e) {
+    console.warn('Could not fetch item profile:', e)
+    return {}
+  }
 }
 
 async function authWithPassword(run_doc) {
@@ -388,26 +378,7 @@ async function confirmEmailChange(run_doc) {
   } catch (err) { run_doc.error = err.message; }
 }
 
-async function signIn(run_doc) {
-  const { email, password } = run_doc.target?.data?.[0] || {};
-  try {
-    await authLogin(email, password);
-    _setUser(run_doc);
-  } catch (err) { run_doc.error = err.message; }
-}
-
-async function signUp(run_doc) {
-  const { email, password, full_name } = run_doc.target?.data?.[0] || {};
-  try {
-    await authRegister(email, password, full_name);
-    _setUser(run_doc);
-  } catch (err) { run_doc.error = err.message; }
-}
-
-
-// add to pb adapter — pure backend, no UI calls
 async function provisionUser(run_doc_or_email, password, name) {
-  // double signature
   let email, pw, nm
   if (typeof run_doc_or_email === 'object') {
     ;({ email, password: pw, name: nm } = run_doc_or_email.target?.data?.[0] || {})
@@ -425,7 +396,7 @@ async function provisionUser(run_doc_or_email, password, name) {
   await globalThis.pb.collection('users').authWithPassword(email, pw)
   await globalThis.pb.collection('item').create({
     id: userId, name: userId, doctype: 'User', docstatus: 0,
-    owner: '', _allowed: [SYSTEM_MANAGER_ROLE_ID], _allowed_read: [],
+    owner: '', _allowed: [CW._config.roles.systemManager], _allowed_read: [],
     data: { id: userId, email, name: nm, doctype: 'User', docstatus: 0 },
   })
   await globalThis.pb.collection('item').create({
@@ -441,6 +412,57 @@ async function provisionUser(run_doc_or_email, password, name) {
   }
 }
 
+async function authLogin(run_doc) {
+  const { email, password } = run_doc.target?.data?.[0] || {}
+  try {
+    await globalThis.pb.collection('users').authWithPassword(email, password)
+    const itemData = await fetchItemProfile(globalThis.pb.authStore.record.id)
+    const profile  = buildProfile(globalThis.pb.authStore.record, itemData)
+    saveProfile(profile)
+    _dispatchAuthChange(profile)
+    _setUser(run_doc)
+  } catch (err) { run_doc.error = err.message }
+}
+
+async function authLogout(run_doc) {
+  const userId = globalThis.pb.authStore.model?.id
+  globalThis.pb.authStore.clear()
+  clearProfile(userId)
+  _dispatchAuthChange(null)
+  run_doc.success = true
+}
+
+async function authRestore(run_doc) {
+  if (!globalThis.pb.authStore.isValid) {
+    globalThis.pb.authStore.clear()
+    _dispatchAuthChange(null)
+    run_doc.success = true
+    return
+  }
+  const userId  = globalThis.pb.authStore.model?.id
+  const profile = loadProfile(userId)
+  if (profile) {
+    _dispatchAuthChange(profile)
+  } else {
+    const freshProfile = buildProfile(globalThis.pb.authStore.model, await fetchItemProfile(userId))
+    saveProfile(freshProfile)
+    _dispatchAuthChange(freshProfile)
+  }
+  _setUser(run_doc)
+}
+
+//---
+
+async function authRegister(email, password, name) {
+  await provisionUser(email, password, name)
+  const model    = pb.authStore.model
+  const itemData = await fetchItemProfile(model.id)
+  const profile  = buildProfile(model, itemData)
+  saveProfile(profile)
+  _dispatchAuthChange(profile)
+  return profile
+}
+
 Object.assign(globalThis.Adapters.pocketbase, {
   authWithPassword,
   authRefresh,
@@ -453,17 +475,20 @@ Object.assign(globalThis.Adapters.pocketbase, {
   confirmVerification,
   requestEmailChange,
   confirmEmailChange,
-  signIn,
-  signUp,
   provisionUser,
+  authLogin,
+  authLogout,
+  authRestore,
+  authRegister
 });
 
+globalThis.provisionUser = provisionUser
 
 // eager init — so pb is available before CW.run is called
 const { pb_url } = globalThis.CW._config
 globalThis.pb = globalThis.pb || new PocketBase(pb_url)
 globalThis.pb.autoCancellation(false)
 
-//console.log('✅ pb-adapter-auth-methods.js loaded');
+console.log('✅ pb-adapter-pocketbase.js loaded');
 
 })();

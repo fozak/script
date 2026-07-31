@@ -1168,7 +1168,39 @@ function buildProfile(authModel, itemData = {}) {
 }
 
 
-// ─── assign to CW ────────────────────────────────────────────────────────────
+// ============================================================
+// RECORD HELPERS — shared by all DB adapters
+// ============================================================
+
+function _mergeRecord(rec) {
+  const doc = Object.assign({}, rec.data || {})
+  for (const k of CW._config.topLevelFields) {
+    if (k in rec) doc[k] = rec[k]
+  }
+  return doc
+}
+
+function _splitRecord(doc) {
+  const top  = {}
+  const data = {}
+  for (const [k, v] of Object.entries(doc)) {
+    if (
+      CW._config.topLevelFields.has(k) ||
+      /^[\w]+[+-]$|^[+-][\w]+$/.test(k) ||
+      v instanceof File
+    ) {
+      top[k] = v
+    } else {
+      data[k] = v
+    }
+  }
+  return { top, data }
+}
+
+// ─── assign to CW ─────────────────────────────────────────────
+CW._mergeRecord = _mergeRecord
+CW._splitRecord = _splitRecord
+
 
 CW.getGridSelected   = getGridSelected;
 CW.toggleSelected    = toggleSelected;
@@ -1212,7 +1244,9 @@ Object.assign(globalThis, {
   searchGridDebounced,
   getInitials,
   getAvatarColor,
-  buildProfile
+  buildProfile,
+  _mergeRecord,
+  _splitRecord
 });
 
 console.log("✅ CW-utils.js v41 loaded");

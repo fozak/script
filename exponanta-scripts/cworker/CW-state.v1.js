@@ -1,5 +1,5 @@
 // ============================================================
-// v 44.5 added sql compile CW-state.js - Centralized State & Runtime
+// CW-state.js - Centralized State & Runtime
 // ============================================================
 
 globalThis.CW = globalThis.CW || {};
@@ -175,16 +175,8 @@ Object.assign(globalThis.CW, {
   // call once at boot after CW.Schema is populated from db.json
   // after this no further eval of schema strings is needed anywhere
 _compileSchemas: function () {
-
-
-    //const cfg = globalThis.CW._config  // ← added this
   // compile sideEffects and rules
   for (const [doctype, schema] of Object.entries(globalThis.CW.Schema || {})) {
-
-       // ── compile SQL rules ──────────────────────────────────────
-    //schema._listSQL = (schema.listSQL || cfg.sql.listSQL)(cfg)
-
-
     for (const [dim, def] of Object.entries(schema._state || {})) {
       for (const [key, fnStr] of Object.entries(def.sideEffects || {})) {
         if (typeof fnStr === 'string') {
