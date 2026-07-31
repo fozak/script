@@ -20,7 +20,7 @@ export default {
   async fetch(req, env, ctx) {
     globalThis.env = globalThis.env || env
 
-    await CW._bootstrap()  // ← free after first request due to _booted flag
+    //await CW._bootstrap()  // ← free after first request due to _booted flag
 
     const url  = new URL(req.url)
     const path = url.pathname

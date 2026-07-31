@@ -1,5 +1,5 @@
-// boot.js
-
+// boot.js - to add _compileSchemas if needed
+/*
 async function bootstrap() {
   if (globalThis._CW_booted) return
 
@@ -36,7 +36,7 @@ if (typeof window !== 'undefined' && typeof window.addEventListener === 'functio
 } else {
   // Worker
   globalThis._bootstrap    = workerBootstrap
-  globalThis.CW._bootstrap = workerBootstrap
+  globalThis.CW._bootstrap = workerBootstrap*/
 }
 
 
