@@ -15,6 +15,8 @@ const CORS = {
   "Access-Control-Allow-Headers": "Content-Type, Authorization",
 };
 
+
+
 export default {
   async fetch(req, env, ctx) {
     globalThis.env = globalThis.env || env;
@@ -39,14 +41,15 @@ export default {
       return Response.redirect(`${cfg.authUrl}?${params}`, 302)
     }
 
-    // ── OAuth callback — debug version ────────────────────
+    // ── OAuth callback ────────────────────────────────────
     if (req.method === 'GET' && path.match(/^\/auth\/(\w+)\/callback$/)) {
-      const provider = path.split('/')[2]
-      const code     = url.searchParams.get('code')
-      const cfg      = CW._config.oauth?.[provider]
+      const provider   = path.split('/')[2]
+      const code       = url.searchParams.get('code')
+      const return_url = atob(url.searchParams.get('state') || btoa('/'))
+      const cfg        = CW._config.oauth?.[provider]
 
       if (!cfg) return new Response('Unknown provider', { status: 404 })
-      if (!code) return Response.json({ error: 'no code' }, { headers: CORS })
+      if (!code) return Response.redirect(`${return_url}#error=no_code`, 302)
 
       // exchange code
       const tokenRes = await fetch(cfg.tokenUrl, {
@@ -60,16 +63,48 @@ export default {
           grant_type:    'authorization_code',
         })
       })
-      const tokens = await tokenRes.json()
+      const { access_token } = await tokenRes.json()
+      if (!access_token) return Response.redirect(`${return_url}#error=token_failed`, 302)
 
       // get user info
-      const userRes    = await fetch(cfg.userInfoUrl, {
-        headers: { Authorization: `Bearer ${tokens.access_token}` }
-      })
-      const googleUser = await userRes.json()
+      const raw          = await (await fetch(cfg.userInfoUrl, { headers: { Authorization: `Bearer ${access_token}` } })).json()
+      const providerUser = cfg.mapUser(raw)
 
-      // return raw for debugging
-      return Response.json({ tokens, googleUser }, { headers: CORS })
+      // find or create user
+      const r = await CW.run({
+        operation:      'create',
+        target_doctype: 'User',
+        input: {
+          email:      providerUser.email,
+          full_name:  providerUser.full_name,
+          user_image: providerUser.user_image,
+          providers:  providerUser.providers,
+        },
+        options: { render: false }
+      })
+
+      console.log('create result:', JSON.stringify({ success: r.success, error: r.error }))
+
+      const errorStr = typeof r.error === 'string' ? r.error : JSON.stringify(r.error)
+      if (!r.success && !errorStr.includes('UNIQUE')) {
+        return Response.redirect(`${return_url}#error=${encodeURIComponent(errorStr)}`, 302)
+      }
+
+      // if user exists — select and issue token
+      let token = r.user?.token
+      if (!token) {
+        const sel = await CW.run({
+          operation:      'select',
+          target_doctype: 'User',
+          query:          { where: { email: providerUser.email } },
+          options:        { render: false }
+        })
+        const doc     = sel.target?.data?.[0]
+        const payload = buildPayload(doc)
+        token         = await signJWT(payload, env.JWT_SECRET)
+      }
+
+      return Response.redirect(`${return_url}#token=${token}`, 302)
     }
 
     // ── CW POST ───────────────────────────────────────────

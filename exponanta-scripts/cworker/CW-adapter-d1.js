@@ -486,7 +486,7 @@ async function _issueToken(doc, run_doc) {
     run_doc.success = true
   }
 //-----------------------------------------------
-  async function loginWithOAuth(run_doc) {
+ async function loginWithOAuth(run_doc) {
   if (!globalThis.env?.DB) {
     await _post(run_doc)
     if (run_doc.success && run_doc.user?.token) {
@@ -496,11 +496,8 @@ async function _issueToken(doc, run_doc) {
     return
   }
 
-  const { provider, code } = run_doc.target?.data?.[0] || run_doc.input || {}
-  if (!provider || !code) { run_doc.error = '400 provider and code required'; return }
-
-  const providerUser = await _exchangeOAuthCode(provider, code)
-  if (!providerUser) { run_doc.error = `401 ${provider} auth failed`; return }
+  const { provider, providerUser } = run_doc.target?.data?.[0] || {}
+  if (!provider || !providerUser) { run_doc.error = '400 provider and providerUser required'; return }
 
   const row = await globalThis.env.DB
     .prepare(`SELECT * FROM item WHERE doctype = 'User' AND json_extract(data, '$.email') = ? LIMIT 1`)
@@ -539,7 +536,7 @@ async function _issueToken(doc, run_doc) {
     return
   }
 
-  const state  = (typeof doc._state === 'string' ? tryParseJSON(doc._state) : doc._state) || {}
+  const state = (typeof doc._state === 'string' ? tryParseJSON(doc._state) : doc._state) || {}
   if (state.status !== 'Active') {
     run_doc.error = `403 account ${state.status?.toLowerCase()}`
     return
