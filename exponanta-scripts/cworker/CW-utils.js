@@ -1169,52 +1169,72 @@ function buildProfile(authModel, itemData = {}) {
   }
 }
 
-
 // ============================================================
-// RECORD HELPERS — shared by all DB adapters
+// JWT HELPERS
 // ============================================================
 
-/*function _mergeRecord(rec) {
-  const doc = Object.assign({}, rec.data || {})
-  for (const k of CW._config.topLevelFields) {
-    if (k in rec) doc[k] = rec[k]
-  }
-  return doc
-}*/
 
-
-/*
-function _mergeRecord(rec) {
-  const raw = rec.data
-  const doc = Object.assign({}, 
-    typeof raw === 'string' ? JSON.parse(raw || '{}') : raw || {}
+async function pbkdf2(password) {
+  const enc  = new TextEncoder()
+  const key  = await crypto.subtle.importKey('raw', enc.encode(password), 'PBKDF2', false, ['deriveBits'])
+  const bits = await crypto.subtle.deriveBits(
+    { name: 'PBKDF2', salt: enc.encode('cw-salt'), iterations: 100000, hash: 'SHA-256' },
+    key, 256
   )
-  for (const k of CW._config.topLevelFields) {
-    if (k in rec) doc[k] = rec[k]
-  }
-  return doc
+  return btoa(String.fromCharCode(...new Uint8Array(bits)))
 }
 
-function _splitRecord(doc) {
-  const top  = {}
-  const data = {}
-  for (const [k, v] of Object.entries(doc)) {
-    if (
-      CW._config.topLevelFields.has(k) ||
-      /^[\w]+[+-]$|^[+-][\w]+$/.test(k) ||
-      v instanceof File
-    ) {
-      top[k] = v
-    } else {
-      data[k] = v
-    }
-  }
-  return { top, data }
-}*/
 
-// ─── assign to CW ─────────────────────────────────────────────
-//CW._mergeRecord = _mergeRecord
-//CW._splitRecord = _splitRecord
+
+
+async function signJWT(payload, secret) {
+  const enc     = new TextEncoder()
+  const header  = btoa(JSON.stringify({ alg: 'HS256', typ: 'JWT' }))
+  const body    = btoa(JSON.stringify({ ...payload, exp: Math.floor(Date.now() / 1000) + 86400 }))
+  const data    = header + '.' + body
+  const key     = await crypto.subtle.importKey(
+    'raw', enc.encode(secret),
+    { name: 'HMAC', hash: 'SHA-256' },
+    false, ['sign']
+  )
+  const sig     = await crypto.subtle.sign('HMAC', key, enc.encode(data))
+  return data + '.' + btoa(String.fromCharCode(...new Uint8Array(sig)))
+}
+
+async function verifyJWT(token, secret) {
+  if (!token?.startsWith('Bearer ')) return {}
+  const raw = token.slice(7)
+  const parts = raw.split('.')
+  if (parts.length !== 3) return {}
+  try {
+    const enc  = new TextEncoder()
+    const key  = await crypto.subtle.importKey(
+      'raw', enc.encode(secret),
+      { name: 'HMAC', hash: 'SHA-256' },
+      false, ['verify']
+    )
+    const data = parts[0] + '.' + parts[1]
+    const sig  = Uint8Array.from(atob(parts[2]), c => c.charCodeAt(0))
+    const ok   = await crypto.subtle.verify('HMAC', key, sig, enc.encode(data))
+    if (!ok) return {}
+    const payload = JSON.parse(atob(parts[1]))
+    if (payload.exp < Math.floor(Date.now() / 1000)) return {}
+    return payload
+  } catch {
+    return {}
+  }
+}
+
+function buildPayload(doc) {
+  const schema = CW.Schema?.User
+  if (!schema) return {}
+  const fields = schema.fields
+    .filter(f => f.in_local_view)
+    .map(f => f.fieldname)
+  return Object.fromEntries(
+    fields.filter(k => k in doc).map(k => [k, doc[k]])
+  )
+}
 
 
 CW.getGridSelected   = getGridSelected;
@@ -1238,6 +1258,12 @@ CW._logThreads = _logThreads;
 CW._getListFields = _getListFields;
 CW._resolveQuery = _resolveQuery;
 
+
+
+
+
+
+
 // ============================================================
 // PERSIST STUB
 // ============================================================
@@ -1260,6 +1286,10 @@ Object.assign(globalThis, {
   getInitials,
   getAvatarColor,
   buildProfile,
+  pbkdf2,
+  signJWT,
+  verifyJWT,
+  buildPayload,
   //_mergeRecord,
  // _splitRecord,
   generateSlug,

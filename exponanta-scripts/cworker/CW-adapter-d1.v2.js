@@ -260,7 +260,12 @@
   // CREATE
   // ============================================================
 
-  async function _d1Insert(run_doc) {
+  async function create(run_doc) {
+    if (!globalThis.env?.DB) {
+      await _post(run_doc);
+      return;
+    }
+
     const doc = run_doc.target?.data?.[0];
     if (!doc) {
       run_doc.error = "400 create: no target document";
@@ -281,34 +286,12 @@
       await globalThis.env.DB.prepare(sql)
         .bind(...topVals, JSON.stringify(data))
         .run();
+
       run_doc.target = { data: [doc], meta: { name: doc.name } };
       run_doc.success = true;
     } catch (err) {
       run_doc.error = err.message;
     }
-  }
-
-  async function createUser(run_doc) {
-    for (const f of CW._config.userFields || []) {
-      if (f.onCreate) await f.onCreate(run_doc);
-    }
-
-    await _d1Insert(run_doc);
-    if (run_doc.error) return;
-
-    const doc = run_doc.target.data[0];
-    const payload = buildPayload(doc);
-    const token = await signJWT(payload, globalThis.env.JWT_SECRET);
-    run_doc.user = { ...payload, token };
-  }
-
-  async function create(run_doc) {
-    if (!globalThis.env?.DB) {
-      await _post(run_doc);
-      return;
-    }
-    if (run_doc.target_doctype === "User") return createUser(run_doc);
-    await _d1Insert(run_doc);
   }
 
   // ============================================================

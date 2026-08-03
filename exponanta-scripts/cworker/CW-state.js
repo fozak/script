@@ -125,8 +125,8 @@ Object.assign(globalThis.CW, {
 
       // Load Scripts
       const scripts = doc.scripts
-        //? (typeof doc.scripts === "string" ? JSON.parse(doc.scripts) : doc.scripts)
-        ? tryParseJSON(doc.scripts)
+        ? //? (typeof doc.scripts === "string" ? JSON.parse(doc.scripts) : doc.scripts)
+          tryParseJSON(doc.scripts)
         : [];
 
       if (Array.isArray(scripts)) {
@@ -174,60 +174,66 @@ Object.assign(globalThis.CW, {
   // compile sideEffects and rules strings in CW.Schema into live functions
   // call once at boot after CW.Schema is populated from db.json
   // after this no further eval of schema strings is needed anywhere
-_compileSchemas: function () {
-
-
-    //const cfg = globalThis.CW._config  // ← added this
-  // compile sideEffects and rules
-  for (const [doctype, schema] of Object.entries(globalThis.CW.Schema || {})) {
-
-       // ── compile SQL rules ──────────────────────────────────────
-    //schema._listSQL = (schema.listSQL || cfg.sql.listSQL)(cfg)
-
-
-    for (const [dim, def] of Object.entries(schema._state || {})) {
-      for (const [key, fnStr] of Object.entries(def.sideEffects || {})) {
-        if (typeof fnStr === 'string') {
-          if (key.includes('.') || !fnStr.includes('function')) continue;
-          try { def.sideEffects[key] = eval('(' + fnStr + ')'); }
-          catch(e) { console.error(`[CW] compile sideEffects[${doctype}][${dim}][${key}]`, e); }
+  _compileSchemas: function () {
+    for (const [doctype, schema] of Object.entries(globalThis.CW.Schema || {})) {
+      
+      // compile sideEffects and rules
+      for (const [dim, def] of Object.entries(schema._state || {})) {
+        for (const [key, fnStr] of Object.entries(def.sideEffects || {})) {
+          if (typeof fnStr === "string") {
+            if (key.includes(".") || !fnStr.includes("function")) continue;
+            try { def.sideEffects[key] = eval("(" + fnStr + ")") }
+            catch (e) { console.error(`[CW] compile sideEffects[${doctype}][${dim}][${key}]`, e) }
+          }
+        }
+        for (const [key, fnStr] of Object.entries(def.rules || {})) {
+          if (typeof fnStr === "string") {
+            try { def.rules[key] = eval("(" + fnStr + ")") }
+            catch (e) { console.error(`[CW] compile rules[${doctype}][${dim}][${key}]`, e) }
+          }
         }
       }
-      for (const [key, fnStr] of Object.entries(def.rules || {})) {
-        if (typeof fnStr === 'string') {
-          try { def.rules[key] = eval('(' + fnStr + ')'); }
-          catch(e) { console.error(`[CW] compile rules[${doctype}][${dim}][${key}]`, e); }
+
+      // merge systemFields into schema.fields
+      const sysFields = (globalThis.CW._config?.systemFields || [])
+        .filter((sf) => sf.fieldtype && (!sf.hidden || sf.in_list_view))
+        .map((sf) => {
+          const field = {}
+          for (const [k, v] of Object.entries(sf)) {
+            if (k === "name") field.fieldname = v
+            else if (k === "onWrite" || k === "onCreate" || k === "fetch") continue
+            else field[k] = v
+          }
+          field.fieldname = field.fieldname || sf.name
+          return field
+        })
+
+      const existing = new Set((schema.fields || []).map((f) => f.fieldname))
+      for (const sf of sysFields) {
+        if (!existing.has(sf.fieldname)) {
+          schema.fields.push(sf)
+        } else {
+          const idx = schema.fields.findIndex((f) => f.fieldname === sf.fieldname)
+          if (idx !== -1) schema.fields[idx] = { ...schema.fields[idx], ...sf }
         }
       }
     }
 
-    // merge systemFields into schema.fields
-const sysFields = (globalThis.CW._config?.systemFields || [])
-  .filter(sf => sf.fieldtype && (!sf.hidden || sf.in_list_view))  //was hidden only
-  .map(sf => {
-    const field = {};
-    for (const [k, v] of Object.entries(sf)) {
-      if (k === 'name') field.fieldname = v;
-      else if (k === 'onWrite' || k === 'onCreate' || k === 'fetch') continue;
-      else field[k] = v;
+    // enrich User schema with userFields — once, after all schemas compiled
+    if (CW.Schema.User) {
+      const userFields = CW._config.userFields || []
+      for (const uf of userFields) {
+        const idx = CW.Schema.User.fields.findIndex((f) => f.fieldname === uf.fieldname)
+        if (idx !== -1) {
+          CW.Schema.User.fields[idx] = { ...CW.Schema.User.fields[idx], ...uf }
+        } else {
+          CW.Schema.User.fields.push(uf)
+        }
+      }
     }
-    field.fieldname = field.fieldname || sf.name;
-    return field;
-  });
 
-   const existing = new Set((schema.fields || []).map(f => f.fieldname));
-for (const sf of sysFields) {
-  if (!existing.has(sf.fieldname)) {
-    schema.fields.push(sf);
-  } else {
-    const idx = schema.fields.findIndex(f => f.fieldname === sf.fieldname);
-    if (idx !== -1) schema.fields[idx] = { ...schema.fields[idx], ...sf };
-  }
-}
-  }
-
-  console.log('✅ CW.Schema compiled');
-},
+    console.log("✅ CW.Schema compiled")
+  },
 
   compileAll: async function () {
     let compiled = 0;
@@ -244,7 +250,6 @@ for (const sf of sysFields) {
     console.log(`✓ Compiled ${compiled} run(s)`);
     return compiled;
   },
-
 });
 
 // ============================================================
@@ -257,6 +262,5 @@ globalThis.CW = new Proxy(globalThis.CW, {
     return globalThis[prop] || {};
   },
 });
-
 
 console.log("✅ CW-state.js loaded");
