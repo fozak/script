@@ -1,0 +1,47 @@
+_compileSchemas approach — documented:
+
+Problem it solves: Schema definitions are split across three sources — doctype schema (CW.Schema.User), system-wide fields (_config.systemFields), and doctype-specific field hooks (_config.doctypeFields). Each source has different precedence rules. Compile merges all three into a single coherent schema.fields and schema._state per doctype.
+
+Execution order — must run after:
+
+globalThis.CW.Schema populated (from db.json or CW-config.js)
+CW._config fully defined including systemFields and userFields
+CW._config.doctypeFields set — cannot be inline in _config object literal because it references _config.userFields which doesn't exist until the object is fully assigned
+
+Why doctypeFields is set after _config:
+JS object literals evaluate all values before assignment. CW._config.userFields inside the same literal is undefined at evaluation time. Setting doctypeFields as a separate statement after _config assignment guarantees userFields exists.
+
+Three merge passes per doctype, in order:
+
+systemFields → schema.fields: system WINS
+— strips hooks (onCreate, onWrite, fetch, _state) from systemField before merge
+— if field exists: { ...existing, ...sf } — system overwrites doctype
+— if field missing: push
+systemFields _state → schema._state: merge by dim key
+— docstatus dim injected into every doctype
+— if dim exists: { ...sf._state, ...existing } — doctype can override system dim props
+— if dim missing: add
+doctypeFields → schema.fields: existing WINS
+— adds hooks (onCreate, onUpdate) and flags (in_local_view) to existing fields
+— if field exists: { ...df, ...existing } — existing props win, userField fills gaps
+— if field missing: push
+doctypeFields _state → schema._state: existing WINS
+— User-specific dims (status, email_status) already declared in schema, not overwritten
+— if dim missing: add
+compile sideEffects/rules LAST
+— eval string functions to live functions
+— runs after all merges so system-injected dims are also compiled
+
+The matrix:
+
+	fields	_state
+systemFields	system wins	doctype can override
+doctypeFields	existing wins	existing wins
+
+Invariants:
+
+CW.Schema[doctype] after compile = complete field definition, no gaps
+schema._state after compile = all dims including system docstatus
+Hooks (onCreate, onWrite) never appear in schema.fields — stripped during systemFields map
+doctypeFields is general — any doctype can have special field behavior, not hardcoded to User
+Compile is idempotent — safe to call multiple times (though only called once at boot)

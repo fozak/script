@@ -395,178 +395,302 @@ function generateSlug(run_doc) {
 }
 
 // ============================================================
-// FSM HELPERS — moved from CW-run.js
-// Pure functions — read Schema/config only, no run_doc mutation
+// FSM HELPERS
 // ============================================================
 
-// _getStateDef: merge SystemSchema dim + doctype dim for all dims
-// returns { "0": { ...dim0 }, "1": { ...dim1 }, ... }
+// _getStateDef: schema._state already compiled with systemFields dims
+// no SystemSchema merge needed — compile handles it
 function _getStateDef(doctype) {
-  const sys = CW.Schema?.SystemSchema?._state || {};
-  const dt = CW.Schema?.[doctype]?._state || {};
-  const dims = new Set([...Object.keys(sys), ...Object.keys(dt)]);
-  const merged = {};
-  for (const dim of dims) {
-    const sysDim = sys[dim] || {};
-    const dtDim = dt[dim] || {};
-    merged[dim] = Object.assign({}, sysDim, dtDim);
-    // deep merge sideEffects — dtDim overrides sysDim per key
-    merged[dim].sideEffects = Object.assign(
-      {},
-      sysDim.sideEffects || {},
-      dtDim.sideEffects || {},
-    );
-  }
-  return merged;
+  return CW.Schema?.[doctype]?._state || {}
 }
 
-// _getDimValue: read current value for a dim from doc._state
-// falls back to dimDef.fieldname field on doc, then dimDef.values[0]
+// _getDimValue: read current semantic value for a dim from doc._state
 function _getDimValue(doc, dim, dimDef) {
-  var state = doc._state;
-  if (typeof state === "string") {
-    try {
-      //state = JSON.parse(state);
-      state = tryParseJSON(state);
-
-    } catch (_) {
-      state = {};
-    }
-  }
-  if (state && typeof state === "object") {
-  if (dim in state && typeof state[dim] === "number") return state[dim];
-  
-  const prefix = dim + ".";
-  var current = null;
+  const state = (typeof doc._state === 'string' ? tryParseJSON(doc._state) : doc._state) || {}
+  if (dim in state && typeof state[dim] === 'string') return state[dim]
+  // fallback — check signal history for last completed transition
+  const prefix = dim + '.'
+  let current = null
   for (const [k, v] of Object.entries(state)) {
-    if (!k.startsWith(prefix)) continue;
-    const rest = k.slice(prefix.length);
-    const parts = rest.split("_");
-    if (parts.length !== 2) continue;
-    const from = parseInt(parts[0]);
-    const to = parseInt(parts[1]);
-    if (isNaN(from) || isNaN(to)) continue;
-    if (v === "1") current = to;
-    if (v === "-1") current = from;
+    if (!k.startsWith(prefix)) continue
+    const rest = k.slice(prefix.length)
+    const parts = rest.split('.')
+    if (parts.length !== 2) continue
+    const [from, to] = parts
+    if (v === '1')  current = to
+    if (v === '-1') current = from
   }
-  if (current !== null) return current;
-}
-  if (dimDef?.fieldname && dimDef.fieldname in doc)
-    return doc[dimDef.fieldname];
-  return dimDef?.values?.[0] ?? 0;
+  if (current !== null) return current
+  if (dimDef?.fieldname && dimDef.fieldname in doc) return doc[dimDef.fieldname]
+  return dimDef?.default ?? dimDef?.values?.[0] ?? null
 }
 
 // _getTransitions: returns available transitions for a dim given current doc state
-// filters by requires + rules, returns array of { signal, from, to, label, confirm }
-// label overrides applied from schema.permissions.transitions for Self and all roles
 function _getTransitions(schema, doc, dim, run_doc) {
-  const stateDef = _getStateDef(schema.schema_name || schema.name);
-  const dimDef = stateDef[dim];
-  if (!dimDef) return [];
+  const stateDef = _getStateDef(schema.schema_name || schema.name)
+  const dimDef   = stateDef[dim]
+  if (!dimDef) return []
 
-  const current = _getDimValue(doc, dim, dimDef);
-  const tos = dimDef.transitions?.[String(current)] || [];
+  const current = _getDimValue(doc, dim, dimDef)
+  const tos     = dimDef.transitions?.[current] || []
 
-  // build label overrides from schema.permissions.transitions
-  // Self = current user is owner or subject of this document
-  const currentUserId = CW._config?.currentUser?.id || "";
-  const isSelf = !!(
-    currentUserId &&
-    (doc.name === currentUserId || doc.owner === currentUserId)
-  );
-  const labelOverrides = {};
+  // label overrides from schema.permissions.transitions
+  const currentUserId = CW._config?.currentUser?.id || ''
+  const isSelf = !!(currentUserId && (doc.name === currentUserId || doc.owner === currentUserId))
+  const labelOverrides = {}
   for (const p of schema.permissions || []) {
-    if (p.role === "Self" && !isSelf) continue;
+    if (p.role === 'Self' && !isSelf) continue
     for (const [signal, label] of Object.entries(p.transitions || {})) {
-      if (signal.startsWith(dim + ".")) labelOverrides[signal] = label;
+      if (signal.startsWith(dim + '.')) labelOverrides[signal] = label
     }
   }
 
-  // relationship_roles — parent schema drives transition visibility per type
-  const parentDoctype = CW.runs?.[run_doc?.parent_run_id]?.target_doctype || doc.parenttype;
-  const parentSchema = CW.Schema?.[parentDoctype];
-  const relRole = parentSchema?.relationship_roles?.[doc.related_doctype]?.[doc.type];
+  // relationship_roles
+  const parentDoctype = CW.runs?.[run_doc?.parent_run_id]?.target_doctype || doc.parenttype
+  const parentSchema  = CW.Schema?.[parentDoctype]
+  const relRole       = parentSchema?.relationship_roles?.[doc.related_doctype]?.[doc.type]
 
-  return tos
-    .map((to) => {
-      const bareKey = `${current}_${to}`;
-      const signal = `${dim}.${bareKey}`;
-      const requires = dimDef.requires?.[bareKey] || {};
-      const rule = dimDef.rules?.[bareKey];
-      const reqPassed = Object.entries(requires).every(
-        ([k, v]) => Number(schema[k] ?? 0) === Number(v),
-      );
-      const rulePassed =
-        typeof rule === "function"
-          ? rule({
-              target: { data: [doc] },
-              input: {},
-              target_doctype: schema.schema_name || schema.name,
-            })
-          : true;
-      if (!reqPassed || !rulePassed) return null;
-      if (relRole?.transitions && !relRole.transitions.includes(bareKey)) return null;
-      return {
-        signal,
-        from: current,
-        to,
-        label: labelOverrides[signal] || dimDef.labels?.[bareKey],
-        confirm: dimDef.confirm?.[bareKey],
-      };
-    })
-    .filter(Boolean);
+  return tos.map((to) => {
+    const bareKey = `${current}.${to}`           // semantic: "Invited.Active"
+    const signal  = `${dim}.${bareKey}`           // "status.Invited.Active"
+    const requires  = dimDef.requires?.[bareKey] || {}
+    const rule      = dimDef.rules?.[bareKey]
+    const reqPassed = Object.entries(requires).every(([k, v]) => Number(schema[k] ?? 0) === Number(v))
+    const rulePassed = typeof rule === 'function'
+      ? rule({ target: { data: [doc] }, input: {}, target_doctype: schema.schema_name || schema.name })
+      : true
+    if (!reqPassed || !rulePassed) return null
+    if (relRole?.transitions && !relRole.transitions.includes(bareKey)) return null
+    return {
+      signal,
+      from:    current,
+      to,
+      label:   labelOverrides[signal] || dimDef.labels?.[bareKey],
+      confirm: dimDef.confirm?.[bareKey],
+    }
+  }).filter(Boolean)
 }
 
 // _getFormButtons: returns { outside, menu } button groups for MainForm
-// outside: Save + primary dim 0 buttons
-// menu: Edit + non-primary dim 0 + dim 1+ buttons
-/*function _getFormButtons(run_doc) {
-  const doctype = run_doc.target_doctype || run_doc.source_doctype;
-  const schema = CW.Schema?.[doctype];
-  const doc = run_doc.target?.data?.[0] || {};*/
-
-
 function _getFormButtons(run_doc, row) {
-  const doctype  = run_doc.target_doctype || run_doc.source_doctype;
-  const schema   = CW.Schema?.[doctype];
-  const doc      = row || run_doc.target?.data?.[0] || {};
+  const doctype  = run_doc.target_doctype || run_doc.source_doctype
+  const schema   = CW.Schema?.[doctype]
+  const doc      = row || run_doc.target?.data?.[0] || {}
+  const stateDef = _getStateDef(doctype)
+  const dimDocstatus = stateDef?.['docstatus']          // ← semantic key
+  const explicit = !!(schema?.explicit_edit_intent ?? 0)
+  const editing  = ['update', 'create'].includes(run_doc.operation) && (doc.docstatus ?? 0) === 0
+  const isOwner  = doc.owner === CW._config?.currentUser?.id
+  const actLabels = dimDocstatus?.action_labels || {}
 
-  const stateDef = CW._getStateDef(doctype);
-  const dim0 = stateDef?.["0"];
-  const explicit = !!(schema?.explicit_edit_intent ?? 0);
-  const editing =
-    ["update", "create"].includes(run_doc.operation) &&
-    (doc.docstatus ?? 0) === 0;
-  const isOwner = doc.owner === CW._config?.currentUser?.id;
-  const actLabels = dim0?.action_labels || {};
-
-  const outside = [];
-  const menu = [];
+  const outside = []
+  const menu    = []
 
   if (explicit && editing)
-    outside.push({ type: "save", label: actLabels.save || "Save" });
-
+    outside.push({ type: 'save', label: actLabels.save || 'Save' })
   if (explicit && !editing && isOwner)
-    menu.push({ type: "edit", label: actLabels.edit || "Edit" });
+    menu.push({ type: 'edit', label: actLabels.edit || 'Edit' })
 
-  // all dims — primary → outside, non-primary → menu
   Object.keys(stateDef).forEach((dim) => {
-    const dimDef = stateDef[dim];
-    const btns = _getTransitions(schema, doc, dim, run_doc);
+    const dimDef = stateDef[dim]
+    const btns   = _getTransitions(schema, doc, dim, run_doc)
     btns.forEach((b) => {
-      const bareKey = b.signal.slice(b.signal.indexOf(".") + 1);
+      const bareKey = b.signal.slice(b.signal.indexOf('.') + 1)
       if (dimDef?.primary?.[bareKey]) {
-        outside.push({ type: "fsm", ...b });
+        outside.push({ type: 'fsm', ...b })
       } else {
-        menu.push({ type: "fsm", ...b });
+        menu.push({ type: 'fsm', ...b })
       }
-    });
-  });
+    })
+  })
 
-  return { outside, menu };
+  return { outside, menu }
 }
 
-// _resolveViewComponent: schema view_components → config views → fallback
+// _execTransition — fire sideEffects + sync docstatus + view switch
+async function _execTransition(run_doc, dim, key) {
+  const doctype  = run_doc.target_doctype
+  const stateDef = _getStateDef(doctype)
+  const dimDef   = stateDef[dim]
+  if (!dimDef) return
+
+  // fire sideEffects
+  const effects = Object.entries(dimDef.sideEffects || {})
+    .filter(([k]) => k === key || k.startsWith(key + '.'))
+
+  for (const [effectKey, fn] of effects) {
+    if (effectKey === key) {
+      if (typeof fn === 'function') {
+        await fn(run_doc)
+      } else if (typeof fn === 'string') {
+        const path = fn.split('.')
+        let resolved = globalThis
+        for (const p of path) resolved = resolved?.[p]
+        if (typeof resolved === 'function') await resolved(run_doc)
+        else console.warn('[CW] Effect not found:', fn)
+      }
+    } else {
+      const path = effectKey.slice(key.length + 1).split('.')
+      let target = globalThis
+      for (const p of path) target = target?.[p]
+      if (typeof target === 'function') await target(run_doc)
+      else console.warn('[CW] Adapter effect not found:', effectKey.slice(key.length + 1))
+    }
+  }
+
+  // key = "Invited.Active" or "Draft.Submitted"
+  const [fromVal, toVal] = key.split('.')
+  const doc = run_doc.target?.data?.[0]
+
+  // sync top-level docstatus for SQL — docstatus dim only
+  if (doc && dim === 'docstatus') {
+    doc.docstatus = dimDef.values.indexOf(toVal)  // 'Draft'→0, 'Submitted'→1, 'Cancelled'→2
+  }
+
+  // store semantic value in _state
+  if (doc) {
+    if (!doc._state) doc._state = {}
+    doc._state[dim] = toVal
+  }
+
+  // view switch after transition
+  if (run_doc.container && dimDef.views?.[toVal]) {
+    const view     = dimDef.views[toVal]
+    const resolved = CW._resolveViewComponent(doctype, view, run_doc.container)
+    const component = resolved?.component ?? (typeof resolved === 'string' ? resolved : null)
+    const container = run_doc.container || resolved?.container || CW._config.views?.[view]?.container
+    if (component) {
+      await run_doc.child({
+        operation:      'select',
+        target_doctype: doctype,
+        query:          { where: { name: run_doc.target?.data?.[0]?.name || run_doc.query?.where?.name } },
+        view,
+        component,
+        container,
+        options:        { render: true },
+        source_field:   '_state',
+      })
+    }
+  }
+}
+
+// _handleSignal — dispatch FSM signal from doc._state
+async function _handleSignal(run_doc) {
+  const _savedInternal = run_doc.options?.internal
+  if (!run_doc.options) run_doc.options = {}
+  run_doc.options.internal = true
+
+  const signal   = run_doc._signal
+  const doctype  = run_doc.target_doctype
+  const schema   = CW.Schema?.[doctype]
+  const doc      = run_doc.target?.data?.[0] || {}
+  const stateDef = _getStateDef(doctype)
+
+  const _failSignal = (err) => {
+    run_doc.error = err
+    if (doc._state) doc._state[signal] = '-1'
+    run_doc.options.internal = _savedInternal
+  }
+
+  let matched = false
+
+  for (const [dim, dimDef] of Object.entries(stateDef)) {
+    if (!signal.startsWith(dim + '.')) continue
+    const key = signal.slice(dim.length + 1)     // "Invited.Active"
+
+    if (dimDef.sideEffects?.[key] === undefined && dimDef.labels?.[key] === undefined) continue
+
+    const currentVal = _getDimValue(doc, dim, dimDef)
+    const [fromVal, toVal] = key.split('.')       // "Invited", "Active"
+
+    // validate transition
+    const validTos = dimDef.transitions?.[currentVal] || []
+    if (fromVal !== currentVal || !validTos.includes(toVal)) {
+      _failSignal(`Transition ${key} not allowed from current state ${currentVal} (dim ${dim})`)
+      return
+    }
+
+    // validate requires
+    const requires  = dimDef.requires?.[key] || {}
+    const reqPassed = Object.entries(requires).every(([k, v]) => Number(schema?.[k] ?? 0) === Number(v))
+    if (!reqPassed) { _failSignal(`${signal} not allowed for this doctype`); return }
+
+    // validate rule
+    const rule = dimDef.rules?.[key]
+    if (typeof rule === 'function' && !rule(run_doc)) { _failSignal(`${signal} rule not satisfied`); return }
+
+    try {
+      await _execTransition(run_doc, dim, key)
+
+      // mark signal success in _state history
+      if (!doc._state) doc._state = {}
+      doc._state[signal] = '1'
+      // _execTransition already set doc._state[dim] = toVal
+
+      // mark in input._state for DB write
+      run_doc.input._state[signal] = '1'
+
+      run_doc.operation = doc.name ? 'update' : 'create'
+      if (run_doc.operation === 'update') {
+        await CW._handlers.update(run_doc)
+      } else {
+        await CW._handlers.create(run_doc)
+      }
+    } catch (e) {
+      _failSignal(e.message)
+    }
+
+    matched = true
+    break
+  }
+
+  if (!matched) {
+    if (signal === 'save') {
+      run_doc.operation = doc.name ? 'update' : 'create'
+      await CW._handlers[run_doc.operation](run_doc)
+    } else if (signal === 'submit') {
+      doc.docstatus = 1
+      run_doc.operation = 'update'
+      await CW._handlers.update(run_doc)
+    } else if (signal === 'cancel') {
+      doc.docstatus = 2
+      run_doc.operation = 'update'
+      await CW._handlers.update(run_doc)
+    } else if (signal === 'amend') {
+      if ((doc.docstatus ?? 0) !== 2) { _failSignal('amend only allowed on cancelled records (docstatus=2)'); return }
+      const skipAmend = new Set(['name','id','created','modified','modified_by','_state','docstatus','amended_from'])
+      const newDoc = {}
+      for (const [k, v] of Object.entries(doc)) {
+        if (!skipAmend.has(k)) newDoc[k] = v
+      }
+      newDoc.amended_from = doc.name
+      newDoc.docstatus    = 0
+      run_doc.target      = { data: [newDoc] }
+      run_doc.operation   = 'create'
+      await CW._handlers.create(run_doc)
+    } else {
+      _failSignal(`Unknown signal: ${signal}`)
+    }
+  }
+
+  run_doc.options.internal = _savedInternal
+
+  if (!run_doc.error && run_doc.operation === 'create' && run_doc.target?.data?.[0]?.name) {
+    run_doc.query = Object.assign({}, run_doc.query, { where: { name: run_doc.target.data[0].name } })
+  }
+}
+
+// assign to CW and globalThis
+CW._getStateDef    = _getStateDef
+CW._getDimValue    = _getDimValue
+CW._getTransitions = _getTransitions
+CW._getFormButtons = _getFormButtons
+CW._execTransition = _execTransition
+CW._handleSignal   = _handleSignal
+
+//===========================================================================
+// 
+//  _resolveViewComponent: schema view_components → config views → fallback
 // returns { component, container } always
 function _resolveViewComponent(doctype, view, fallback_container) {
   const dtViews = CW.Schema?.[doctype]?.view_components;
@@ -638,23 +762,7 @@ CW.evalTemplateObj = (obj, context) => {
   );
 };
 
-// ─── searchGrid ───────────────────────────────────────────────────────────────
-// Universal search/navigation from SearchBar.
-//
-//   ""          → restore current grid, no filter
-//   "test"      → filter current grid by title_field
-//   "task"      → switch to Task list, no filter
-//   "task test" → switch to Task list, filter by "test"
-//
-// Same doctype as current grid → child run (rerender in place)
-// Different doctype            → new CW.run (new grid)
-// ─────────────────────────────────────────────────────────────────────────────
 
-// ─── _parseSmartSearch ────────────────────────────────────────────────────────
-// Parses smart search term into PocketBase filter string.
-// "toyota status:open priority:high" →
-//   data.subject ~ "toyota" && data.status = "open" && data.priority = "high"
-// ─────────────────────────────────────────────────────────────────────────────
 
 function _parseSmartSearch(term, schema) {
   if (!term?.trim()) return "";
@@ -813,28 +921,7 @@ const searchDebounced = debounce(search,
 CW.search          = search;
 CW.searchDebounced = searchDebounced;
 
-// ============================================================
-// _patchDataField — partial update of a single data field in PB
-// ============================================================
 
-/*async function _patchDataField(docName, fieldName, value) {
-  const collection = CW._config.collection
-  const current    = await globalThis.pb.collection(collection).getOne(docName)
-  const mergedData = { ...current.data, [fieldName]: value }
-  await globalThis.pb.collection(collection).update(docName, { data: mergedData })
-}*/
-
-//=====change to fix
-
-//=====change to fix
-
-/*async function _patchDataField(docName, fieldName, value) {
-  const collection = CW._config.collection
-  const current    = await globalThis.pb.collection(collection).getOne(docName)
-  const existing   = Array.isArray(current.data[fieldName]) ? current.data[fieldName] : []
-  const mergedData = { ...current.data, [fieldName]: [...existing, value] }
-  await globalThis.pb.collection(collection).update(docName, { data: mergedData })
-}*/
 
 async function _patchDataField(docName, fieldName, value) {
   const collection = CW._config.collection;
@@ -1245,11 +1332,8 @@ CW.refetchGrid       = refetchGrid;
 
 
 // assign FSM helpers to CW — called by CW-run.js and CW-ui.js
-CW._getStateDef = _getStateDef;
-CW._getDimValue = _getDimValue;
-CW._getTransitions = _getTransitions;
+
 CW._resolveViewComponent = _resolveViewComponent;
-CW._getFormButtons = _getFormButtons;
 CW.searchGrid = searchGrid;
 CW.searchGridDebounced = searchGridDebounced;
 CW._patchDataField = _patchDataField;
