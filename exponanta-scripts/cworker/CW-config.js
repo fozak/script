@@ -99,7 +99,7 @@ CW.Schema.User = {
       in_list_view: 1,
       in_local_view: 1,
     },
-    { fieldname: "first_name", fieldtype: "Data", reqd: 1, in_list_view: 1 },
+    { fieldname: "first_name", fieldtype: "Data", reqd: 0, in_list_view: 1 },
     {
       fieldname: "full_name",
       fieldtype: "Data",
@@ -108,12 +108,13 @@ CW.Schema.User = {
       read_only: 1,
     },
     { fieldname: "user_image", fieldtype: "Data", in_local_view: 1 },
-    { fieldname: "password", fieldtype: "Password", virtual: 1 },
+    { fieldname: "password", fieldtype: "Password" },
+    { fieldname: 'providers', fieldtype: 'Code', options: 'JSON', hidden: 0, read_only: 1 },
   ],
   _state: {
     status: {
       name: "status",
-      default: "Invited",
+      default: "Active",
       values: ["Invited", "Active", "Locked", "Reset Pending", "Disabled"],
       transitions: {
         Invited: ["Active", "Disabled"],
@@ -212,6 +213,30 @@ globalThis.CW._config = {
 
   hub: {
     url: "https://hub-cf.i771468.workers.dev/",
+  },
+
+  oauth: {
+    google: {
+      authUrl: "https://accounts.google.com/o/oauth2/v2/auth",
+      tokenUrl: "https://oauth2.googleapis.com/token",
+      userInfoUrl: "https://www.googleapis.com/oauth2/v3/userinfo",
+      scope: "email profile",
+      mapUser: (u) => ({
+        email: u.email,
+        full_name: u.name,
+        user_image: u.picture,
+        google_sub: u.sub,
+        providers: {
+          google: {
+            sub: u.sub,
+            name: u.name,
+            picture: u.picture,
+            email_verified: u.email_verified,
+            locale: u.locale,
+          },
+        },
+      }),
+    },
   },
 
   identity: {
@@ -1013,11 +1038,11 @@ globalThis.CW._config = {
     modify: "update",
     patch: "update",
 
-    // Auth aliases (✅ NEW)
-    login: "signin",
-    register: "signup",
-    logout: "signout",
-    refresh_token: "refresh",
+    // Auth aliases (✅ NEW)  - removed - otherwize routing to auth adapter
+    //login: "signin",
+    //register: "signup",
+    //logout: "signout",
+    //refresh_token: "refresh",
   },
 
   // ============================================================

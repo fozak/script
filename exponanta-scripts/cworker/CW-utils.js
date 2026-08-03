@@ -1261,7 +1261,7 @@ function buildProfile(authModel, itemData = {}) {
 // ============================================================
 
 
-async function pbkdf2(password) {
+/*async function pbkdf2(password) {
   const enc  = new TextEncoder()
   const key  = await crypto.subtle.importKey('raw', enc.encode(password), 'PBKDF2', false, ['deriveBits'])
   const bits = await crypto.subtle.deriveBits(
@@ -1269,23 +1269,38 @@ async function pbkdf2(password) {
     key, 256
   )
   return btoa(String.fromCharCode(...new Uint8Array(bits)))
+}*/
+
+async function pbkdf2(password, salt) {
+  const enc     = new TextEncoder()
+  const saltBuf = salt instanceof Uint8Array
+    ? salt
+    : crypto.getRandomValues(new Uint8Array(16))
+  const key  = await crypto.subtle.importKey('raw', enc.encode(password), 'PBKDF2', false, ['deriveBits'])
+  const bits = await crypto.subtle.deriveBits(
+    { name: 'PBKDF2', salt: saltBuf, iterations: 100000, hash: 'SHA-256' },
+    key, 256
+  )
+  const hash    = Array.from(new Uint8Array(bits)).map(b => b.toString(16).padStart(2, '0')).join('')
+  const saltHex = Array.from(saltBuf).map(b => b.toString(16).padStart(2, '0')).join('')
+  return `${saltHex}:${hash}`
 }
 
 
 
 
 async function signJWT(payload, secret) {
-  const enc     = new TextEncoder()
-  const header  = btoa(JSON.stringify({ alg: 'HS256', typ: 'JWT' }))
-  const body    = btoa(JSON.stringify({ ...payload, exp: Math.floor(Date.now() / 1000) + 86400 }))
-  const data    = header + '.' + body
-  const key     = await crypto.subtle.importKey(
+  const enc    = new TextEncoder()
+  const header = btoa(JSON.stringify({ alg: 'HS256', typ: 'JWT' }))
+  const body   = btoa(JSON.stringify({ ...payload, exp: Math.floor(Date.now() / 1000) + 86400 }))
+  const data   = header + '.' + body
+  const key    = await crypto.subtle.importKey(
     'raw', enc.encode(secret),
     { name: 'HMAC', hash: 'SHA-256' },
     false, ['sign']
   )
-  const sig     = await crypto.subtle.sign('HMAC', key, enc.encode(data))
-  return data + '.' + btoa(String.fromCharCode(...new Uint8Array(sig)))
+  const sig = await crypto.subtle.sign('HMAC', key, enc.encode(data))
+  return data + '.' + btoa(Array.from(new Uint8Array(sig)).map(b => String.fromCharCode(b)).join(''))
 }
 
 async function verifyJWT(token, secret) {

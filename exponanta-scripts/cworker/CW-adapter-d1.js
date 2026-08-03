@@ -183,30 +183,63 @@
     return pbkdf2(password)  // globalThis.pbkdf2 from CW-utils.js
   }
 
-  function _buildUserPayload(doc) {
-    // in_local_view fields
-    const schema  = CW.Schema?.User
-    const fields  = (schema?.fields || [])
-      .filter(f => f.in_local_view)
-      .map(f => f.fieldname)
-    const payload = Object.fromEntries(
-      fields.filter(k => k in doc).map(k => [k, doc[k]])
-    )
-    // resolve FSM dims into JWT
-    const stateDef = CW._getStateDef('User')
-    const state    = (typeof doc._state === 'string'
-      ? tryParseJSON(doc._state)
-      : doc._state) || {}
-    for (const [dim] of Object.entries(stateDef)) {
-      if (dim in state) payload[dim] = state[dim]
+ function _buildUserPayload(doc) {
+  const schema  = CW.Schema?.User
+  const fields  = (schema?.fields || [])
+    .filter(f => f.in_local_view)
+    .map(f => f.fieldname)
+  const payload = Object.fromEntries(
+    fields.filter(k => k in doc).map(k => [k, doc[k]])
+  )
+
+  // resolve FSM dims into JWT
+  const stateDef = CW._getStateDef('User')
+  const state    = (typeof doc._state === 'string'
+    ? tryParseJSON(doc._state)
+    : doc._state) || {}
+  for (const [dim, dimDef] of Object.entries(stateDef)) {
+    if (!(dim in state)) continue
+    if (dim === 'docstatus') {
+      payload[dim] = dimDef.values.indexOf(state[dim])  // 'Draft' → 0
+    } else {
+      payload[dim] = state[dim]  // 'Invited', 'Unverified' etc
     }
-    return payload
   }
 
-  async function _issueToken(doc, run_doc) {
-    const payload = _buildUserPayload(doc)
-    const token   = await signJWT(payload, globalThis.env.JWT_SECRET)
-    run_doc.user  = { ...payload, token }
+  return payload
+}
+
+async function _issueToken(doc, run_doc) {
+  const payload = _buildUserPayload(doc)
+  const token   = await signJWT(payload, globalThis.env.JWT_SECRET)
+  run_doc.user  = { ...payload, token }
+}
+
+
+// ── NEW: OAuth code exchange ──────────────────────────────
+  async function _exchangeOAuthCode(provider, code) {
+    const oauthCfg = CW._config.oauth?.[provider]
+    if (!oauthCfg) return null
+
+    const tokenRes = await fetch(oauthCfg.tokenUrl, {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body:    new URLSearchParams({
+        code,
+        client_id:     globalThis.env[`${provider.toUpperCase()}_CLIENT_ID`],
+        client_secret: globalThis.env[`${provider.toUpperCase()}_CLIENT_SECRET`],
+        redirect_uri:  `${CW._config.hub.url}auth/${provider}/callback`,
+        grant_type:    'authorization_code',
+      })
+    })
+    const { access_token } = await tokenRes.json()
+    if (!access_token) return null
+
+    const userRes = await fetch(oauthCfg.userInfoUrl, {
+      headers: { Authorization: `Bearer ${access_token}` }
+    })
+    const raw = await userRes.json()
+    return oauthCfg.mapUser(raw)
   }
 
   // ============================================================
@@ -409,7 +442,6 @@
     const { email, password } = run_doc.target?.data?.[0] || {}
     if (!email || !password) { run_doc.error = '400 email and password required'; return }
 
-    // fetch User by email
     const row = await globalThis.env.DB
       .prepare(`SELECT * FROM item WHERE doctype = 'User' AND json_extract(data, '$.email') = ? LIMIT 1`)
       .bind(email)
@@ -418,11 +450,19 @@
 
     const doc = _mergeRecord(row)
 
-    // verify password
-    const hash = await pbkdf2(password)
-    if (hash !== doc.password_hash) { run_doc.error = '401 invalid credentials'; return }
+    // ── NEW: guard Google users ───────────────────────────
+    if (doc.providers?.auth_provider === 'google') {
+      run_doc.error = '403 use Google login'
+      return
+    }
 
-    // check status via FSM
+    // verify password
+    const [saltHex] = doc.password_hash.split(':')
+    const saltBytes = new Uint8Array(saltHex.match(/.{2}/g).map(b => parseInt(b, 16)))
+    const computed  = await pbkdf2(password, saltBytes)
+    if (computed !== doc.password_hash) { run_doc.error = '401 invalid credentials'; return }
+
+    // check status
     const state  = (typeof doc._state === 'string' ? tryParseJSON(doc._state) : doc._state) || {}
     const status = state.status
     if (status !== 'Active') {
@@ -435,19 +475,87 @@
     run_doc.success = true
   }
 
-
   async function logout(run_doc) {
-  if (!globalThis.env?.DB) {
-    await _post(run_doc)
-    // client branch — clear currentUser
-    localStorage.removeItem('currentUser')
-    globalThis.currentUser = null
+    if (!globalThis.env?.DB) {
+      await _post(run_doc)
+      localStorage.removeItem('currentUser')
+      globalThis.currentUser = null
+      run_doc.success = true
+      return
+    }
     run_doc.success = true
-    return
   }
-  // Worker branch — future: insert tokenKey into revoked_tokens
-  run_doc.success = true
-}
+
+  // ── NEW: OAuth login ──────────────────────────────────────
+  async function loginWithOAuth(run_doc) {
+    if (!globalThis.env?.DB) {
+      await _post(run_doc)
+      if (run_doc.success && run_doc.user?.token) {
+        localStorage.setItem('currentUser', JSON.stringify(run_doc.user))
+        globalThis.currentUser = run_doc.user
+      }
+      return
+    }
+
+    const { provider, code } = run_doc.input || {}
+    if (!provider || !code) { run_doc.error = '400 provider and code required'; return }
+
+    const providerUser = await _exchangeOAuthCode(provider, code)
+    if (!providerUser) { run_doc.error = `401 ${provider} auth failed`; return }
+
+    const row = await globalThis.env.DB
+      .prepare(`SELECT * FROM item WHERE doctype = 'User' AND json_extract(data, '$.email') = ? LIMIT 1`)
+      .bind(providerUser.email)
+      .first()
+
+    let doc
+    if (row) {
+      doc = _mergeRecord(row)
+
+      const existingProvider = doc.providers?.auth_provider
+      if (existingProvider && existingProvider !== provider) {
+        run_doc.error = `403 use ${existingProvider} login`
+        return
+      }
+
+      doc.providers  = {
+        ...(doc.providers || {}),
+        auth_provider: provider,
+        [provider]:    providerUser.providers[provider]
+      }
+      doc.user_image = doc.user_image || providerUser.user_image
+
+      run_doc.target = { data: [doc] }
+      await _d1Update(run_doc)
+      if (run_doc.error) return
+
+    } else {
+      const newDoc = {
+        email:      providerUser.email,
+        full_name:  providerUser.full_name,
+        user_image: providerUser.user_image,
+        providers:  {
+          auth_provider: provider,
+          [provider]:    providerUser.providers[provider]
+        }
+      }
+      run_doc.target = { data: [newDoc] }
+      run_doc.input  = { ...newDoc }
+      await createUser(run_doc)
+      if (run_doc.error) return
+      doc = run_doc.target.data[0]
+    }
+
+    const state  = (typeof doc._state === 'string' ? tryParseJSON(doc._state) : doc._state) || {}
+    if (state.status !== 'Active') {
+      run_doc.error = `403 account ${state.status?.toLowerCase()}`
+      return
+    }
+
+    run_doc.target  = { data: [doc] }
+    await _issueToken(doc, run_doc)
+    run_doc.success = true
+  }
 
   // ============================================================
   // ADAPTER SURFACE
@@ -458,9 +566,10 @@
     select,
     create,
     update,
-    delete:           _delete,
+    delete:         _delete,
     login,
     logout,
+    loginWithOAuth,
   }
 
-})();
+})()

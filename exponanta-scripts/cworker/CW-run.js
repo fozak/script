@@ -397,12 +397,7 @@ CW.run = async function (op) {
     parent_run_id: op.parent_run_id || null,
     child_run_ids: [],
     options: op.options || {},
-    user: op.user ?? {
-      name: globalThis.pb?.authStore?.model?.id ?? null,
-      email: globalThis.pb?.authStore?.model?.email ?? null,
-      token: globalThis.pb?.authStore?.token ?? null,
-      verified: globalThis.pb?.authStore?.model?.verified ?? false,
-    },
+    user: op.user ?? globalThis.currentUser ?? {},  //<-migrated to use globalThis.currentUser if op.user is not provided
   };
 
   run_doc.child = async function (childOp) {
