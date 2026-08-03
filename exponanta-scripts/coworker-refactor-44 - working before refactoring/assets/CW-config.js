@@ -301,6 +301,15 @@ hub: {
       },
     },
     {
+      name: "_state",
+      fetch: true,
+      in_list_view: 1,
+      hidden: 0,
+      read_only: 1,
+      fieldtype: "Data",
+      label: "State",
+    },
+    {
       name: "top_parent",
       fetch: true,
       hidden: 0,
