@@ -1,6 +1,5 @@
 // ============================================================
 // worker.js — CW Hub Worker
-// Serves shell.html + routes run_doc to CW.controller
 // ============================================================
 
 import "./CW-state.js";
@@ -25,23 +24,52 @@ export default {
 
     if (req.method === "OPTIONS") return new Response(null, { headers: CORS });
 
-    // ── OAuth callback ────────────────────────────────────
-    if (req.method === "GET" && path.match(/^\/auth\/(\w+)\/callback$/)) {
-      const provider   = path.split('/')[2]
-      const code       = url.searchParams.get('code')
-      const return_url = atob(url.searchParams.get('state') || btoa('/'))
-
-      const run_doc = await CW.run({
-        operation:      'loginWithOAuth',
-        target_doctype: 'User',
-        input:          { provider, code },
-        options:        { render: false }
+    // ── OAuth login redirect ──────────────────────────────
+    if (req.method === 'GET' && path.match(/^\/auth\/(\w+)\/login$/)) {
+      const provider = path.split('/')[2]
+      const cfg      = CW._config.oauth?.[provider]
+      if (!cfg) return new Response('Unknown provider', { status: 404 })
+      const params = new URLSearchParams({
+        client_id:     env[`${provider.toUpperCase()}_CLIENT_ID`],
+        redirect_uri:  `${CW._config.hub.url}auth/${provider}/callback`,
+        response_type: 'code',
+        scope:         cfg.scope,
+        state:         btoa(url.searchParams.get('return_url') || '/'),
       })
+      return Response.redirect(`${cfg.authUrl}?${params}`, 302)
+    }
 
-      if (!run_doc.success)
-        return Response.redirect(`${return_url}?error=${encodeURIComponent(run_doc.error)}`, 302)
+    // ── OAuth callback — debug version ────────────────────
+    if (req.method === 'GET' && path.match(/^\/auth\/(\w+)\/callback$/)) {
+      const provider = path.split('/')[2]
+      const code     = url.searchParams.get('code')
+      const cfg      = CW._config.oauth?.[provider]
 
-      return Response.redirect(`${return_url}#token=${run_doc.user.token}`, 302)
+      if (!cfg) return new Response('Unknown provider', { status: 404 })
+      if (!code) return Response.json({ error: 'no code' }, { headers: CORS })
+
+      // exchange code
+      const tokenRes = await fetch(cfg.tokenUrl, {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body:    new URLSearchParams({
+          code,
+          client_id:     env[`${provider.toUpperCase()}_CLIENT_ID`],
+          client_secret: env[`${provider.toUpperCase()}_CLIENT_SECRET`],
+          redirect_uri:  `${CW._config.hub.url}auth/${provider}/callback`,
+          grant_type:    'authorization_code',
+        })
+      })
+      const tokens = await tokenRes.json()
+
+      // get user info
+      const userRes    = await fetch(cfg.userInfoUrl, {
+        headers: { Authorization: `Bearer ${tokens.access_token}` }
+      })
+      const googleUser = await userRes.json()
+
+      // return raw for debugging
+      return Response.json({ tokens, googleUser }, { headers: CORS })
     }
 
     // ── CW POST ───────────────────────────────────────────

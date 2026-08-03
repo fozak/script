@@ -49,8 +49,21 @@
   <script src="/CW-url.js"></script>
   <script src="/app-ui.js"></script>
 
-  <!-- ── 3. Bootstrap ── -->
-  <script src="/boot.js"></script>
+  <!-- ── 3. DO NOT USE ── -->
+  <script src="/boot.js"></script>  
+
+  <script>
+  // extract OAuth token from URL hash after Google redirect
+  const _oauthToken = new URLSearchParams(window.location.hash.slice(1)).get('token')
+  if (_oauthToken) {
+    const _payload = JSON.parse(atob(_oauthToken.split('.')[1]))
+    globalThis.currentUser = { ..._payload, token: _oauthToken }
+    localStorage.setItem('currentUser', JSON.stringify(globalThis.currentUser))
+    window.history.replaceState({}, '', window.location.pathname)
+  }
+
+  window.addEventListener('CW:booted', () => cwStateFromUrl())
+</script>
 
   <script>
     window.addEventListener('CW:booted', () => cwStateFromUrl());

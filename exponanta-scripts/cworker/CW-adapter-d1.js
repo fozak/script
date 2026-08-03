@@ -485,77 +485,70 @@ async function _issueToken(doc, run_doc) {
     }
     run_doc.success = true
   }
-
-  // ── NEW: OAuth login ──────────────────────────────────────
+//-----------------------------------------------
   async function loginWithOAuth(run_doc) {
-    if (!globalThis.env?.DB) {
-      await _post(run_doc)
-      if (run_doc.success && run_doc.user?.token) {
-        localStorage.setItem('currentUser', JSON.stringify(run_doc.user))
-        globalThis.currentUser = run_doc.user
-      }
+  if (!globalThis.env?.DB) {
+    await _post(run_doc)
+    if (run_doc.success && run_doc.user?.token) {
+      localStorage.setItem('currentUser', JSON.stringify(run_doc.user))
+      globalThis.currentUser = run_doc.user
+    }
+    return
+  }
+
+  const { provider, code } = run_doc.target?.data?.[0] || run_doc.input || {}
+  if (!provider || !code) { run_doc.error = '400 provider and code required'; return }
+
+  const providerUser = await _exchangeOAuthCode(provider, code)
+  if (!providerUser) { run_doc.error = `401 ${provider} auth failed`; return }
+
+  const row = await globalThis.env.DB
+    .prepare(`SELECT * FROM item WHERE doctype = 'User' AND json_extract(data, '$.email') = ? LIMIT 1`)
+    .bind(providerUser.email)
+    .first()
+
+  let doc
+  if (row) {
+    doc = _mergeRecord(row)
+    const existingProvider = Object.keys(doc.providers || {})[0]
+    if (existingProvider && existingProvider !== provider) {
+      run_doc.error = `403 use ${existingProvider} login`
       return
     }
-
-    const { provider, code } = run_doc.input || {}
-    if (!provider || !code) { run_doc.error = '400 provider and code required'; return }
-
-    const providerUser = await _exchangeOAuthCode(provider, code)
-    if (!providerUser) { run_doc.error = `401 ${provider} auth failed`; return }
-
-    const row = await globalThis.env.DB
-      .prepare(`SELECT * FROM item WHERE doctype = 'User' AND json_extract(data, '$.email') = ? LIMIT 1`)
-      .bind(providerUser.email)
-      .first()
-
-    let doc
-    if (row) {
-      doc = _mergeRecord(row)
-
-      const existingProvider = doc.providers?.auth_provider
-      if (existingProvider && existingProvider !== provider) {
-        run_doc.error = `403 use ${existingProvider} login`
-        return
-      }
-
-      doc.providers  = {
-        ...(doc.providers || {}),
-        auth_provider: provider,
-        [provider]:    providerUser.providers[provider]
-      }
-      doc.user_image = doc.user_image || providerUser.user_image
-
-      run_doc.target = { data: [doc] }
-      await _d1Update(run_doc)
-      if (run_doc.error) return
-
-    } else {
-      const newDoc = {
+    doc.providers  = { ...(doc.providers || {}), [provider]: providerUser.providers[provider] }
+    doc.user_image = doc.user_image || providerUser.user_image
+    run_doc.target = { data: [doc] }
+    await _d1Update(run_doc)
+    if (run_doc.error) return
+  } else {
+    const createRun = await CW.run({
+      operation:      'create',
+      target_doctype: 'User',
+      input: {
         email:      providerUser.email,
         full_name:  providerUser.full_name,
         user_image: providerUser.user_image,
-        providers:  {
-          auth_provider: provider,
-          [provider]:    providerUser.providers[provider]
-        }
-      }
-      run_doc.target = { data: [newDoc] }
-      run_doc.input  = { ...newDoc }
-      await createUser(run_doc)
-      if (run_doc.error) return
-      doc = run_doc.target.data[0]
-    }
-
-    const state  = (typeof doc._state === 'string' ? tryParseJSON(doc._state) : doc._state) || {}
-    if (state.status !== 'Active') {
-      run_doc.error = `403 account ${state.status?.toLowerCase()}`
-      return
-    }
-
-    run_doc.target  = { data: [doc] }
-    await _issueToken(doc, run_doc)
+        providers:  { [provider]: providerUser.providers[provider] }
+      },
+      options: { render: false }
+    })
+    if (!createRun.success) { run_doc.error = createRun.error; return }
+    doc          = createRun.target.data[0]
+    run_doc.user = createRun.user
     run_doc.success = true
+    return
   }
+
+  const state  = (typeof doc._state === 'string' ? tryParseJSON(doc._state) : doc._state) || {}
+  if (state.status !== 'Active') {
+    run_doc.error = `403 account ${state.status?.toLowerCase()}`
+    return
+  }
+
+  run_doc.target  = { data: [doc] }
+  await _issueToken(doc, run_doc)
+  run_doc.success = true
+}
 
   // ============================================================
   // ADAPTER SURFACE

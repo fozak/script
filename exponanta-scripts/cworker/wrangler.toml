@@ -6,6 +6,9 @@ compatibility_date = "2026-01-01"
 directory = "."
 binding = "ASSETS"
 
+[vars]
+GOOGLE_CLIENT_ID = "325888692252-898ld1tl4l8e1d1hv2v42ds7kjdunp7f.apps.googleusercontent.com"
+
 [[d1_databases]]
 binding = "DB"
 database_name = "nesen-d1"

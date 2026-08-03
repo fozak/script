@@ -215,29 +215,28 @@ globalThis.CW._config = {
     url: "https://hub-cf.i771468.workers.dev/",
   },
 
-  oauth: {
-    google: {
-      authUrl: "https://accounts.google.com/o/oauth2/v2/auth",
-      tokenUrl: "https://oauth2.googleapis.com/token",
-      userInfoUrl: "https://www.googleapis.com/oauth2/v3/userinfo",
-      scope: "email profile",
-      mapUser: (u) => ({
-        email: u.email,
-        full_name: u.name,
-        user_image: u.picture,
-        google_sub: u.sub,
-        providers: {
-          google: {
-            sub: u.sub,
-            name: u.name,
-            picture: u.picture,
-            email_verified: u.email_verified,
-            locale: u.locale,
-          },
-        },
-      }),
-    },
-  },
+oauth: {
+  google: {
+    authUrl:     'https://accounts.google.com/o/oauth2/v2/auth',
+    tokenUrl:    'https://oauth2.googleapis.com/token',
+    userInfoUrl: 'https://www.googleapis.com/oauth2/v3/userinfo',
+    scope:       'email profile',
+    mapUser: (u) => ({
+      email:      u.email,
+      full_name:  u.name,
+      user_image: u.picture,
+      providers: {
+        google: {
+          sub:            u.sub,
+          name:           u.name,
+          picture:        u.picture,
+          email_verified: u.email_verified,
+          locale:         u.locale,
+        }
+      }
+    })
+  }
+},
 
   identity: {
     keys: {
