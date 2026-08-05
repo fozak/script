@@ -205,24 +205,23 @@ globalThis.CW._config = {
 
     aclFilter: (run_doc) => {
       const uid = run_doc.user?.name ?? "";
+      const domain = run_doc.user?.domain ?? "";
       const opType =
         globalThis.CW._config.operations?.[run_doc.operation_original]?.type;
       const isWrite = opType === "write" || opType === "updateMany";
       const cfg = globalThis.CW._config;
 
       if (isWrite) {
-        // must be authenticated
         if (!uid) {
           run_doc.error = "401 unauthorized";
           return;
         }
         run_doc.d1.conditions.push({
           key: "aclFilter",
-          sql: `(item.owner = ? OR __je_allowed.value = ? OR EXISTS (SELECT 1 FROM item_users iu WHERE iu.id = ? AND __je_allowed.value = iu.role_id))`,
-          params: [uid, uid, uid],
+          sql: `(item.domain = ? AND (item.owner = ? OR __je_allowed.value = ? OR EXISTS (SELECT 1 FROM item_users iu WHERE iu.id = ? AND __je_allowed.value = iu.role_id)))`,
+          params: [domain, uid, uid, uid],
         });
       } else {
-        // unauthenticated — public only
         if (!uid) {
           run_doc.d1.conditions.push({
             key: "aclFilter",
@@ -231,11 +230,10 @@ globalThis.CW._config = {
           });
           return;
         }
-        // authenticated — full rule
         run_doc.d1.conditions.push({
           key: "aclFilter",
-          sql: `(__je_allowed_read.value = '${cfg.roles.public}' OR item.id = ? OR item.owner = ? OR __je_allowed.value = ? OR __je_allowed_read.value = ? OR EXISTS (SELECT 1 FROM item_users iu WHERE iu.id = ? AND __je_allowed.value = iu.role_id) OR EXISTS (SELECT 1 FROM item_users iu WHERE iu.id = ? AND __je_allowed_read.value = iu.role_id))`,
-          params: [uid, uid, uid, uid, uid, uid],
+          sql: `(__je_allowed_read.value = '${cfg.roles.public}' OR (item.domain = ? AND (item.id = ? OR item.owner = ? OR __je_allowed.value = ? OR __je_allowed_read.value = ? OR EXISTS (SELECT 1 FROM item_users iu WHERE iu.id = ? AND __je_allowed.value = iu.role_id) OR EXISTS (SELECT 1 FROM item_users iu WHERE iu.id = ? AND __je_allowed_read.value = iu.role_id))))`,
+          params: [domain, uid, uid, uid, uid, uid, uid],
         });
       }
     },

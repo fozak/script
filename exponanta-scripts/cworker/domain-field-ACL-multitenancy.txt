@@ -1,0 +1,136 @@
+Multi-Tenancy Implementation
+Architecture
+
+Single D1 database, single item table. Every record has domain column — tenant identifier. All queries scoped by domain via ACL filter.
+
+How It Works
+
+Tenant = domain — each site (nesen.org, hub-cf.i771468.workers.dev, cfeglobal.org) is a separate tenant. Records belong to the tenant where they were created.
+
+Domain flows through the pipeline:
+
+Browser origin
+  → run_doc.domain (set in _post)
+  → Worker (preserved in run_doc body)
+  → systemFields.onCreate → doc.domain
+  → D1 item.domain column
+  → JWT payload (via in_local_view: 1)
+  → aclFilter (reads run_doc.user.domain)
+  → SELECT WHERE item.domain = user.domain
+Where Domain Is Set
+
+1. Browser _post in CW-adapter-d1.js — NOT YET IMPLEMENTED:
+
+javascript
+if (!run_doc.domain) run_doc.domain = window.location.hostname
+
+Sets domain from browser origin before sending to Worker. Ensures all browser-originated operations carry correct domain.
+
+2. Worker POST handler in worker.js — NOT YET IMPLEMENTED:
+
+javascript
+run_doc.domain = run_doc.domain || new URL(req.headers.get('Origin') || req.url).hostname
+
+Fallback — sets domain from Origin header if browser didn't set it.
+
+3. OAuth oauthCallback in CW-adapter-d1.js — IMPLEMENTED ✓:
+
+javascript
+const domain = new URL(return_url).hostname
+// passed to child create via input.domain
+
+OAuth flow derives domain from return_url which contains the originating site URL.
+
+4. Manual input — CURRENT WORKAROUND:
+
+javascript
+CW.run({ input: { domain: window.location.hostname } })
+
+Explicit passing in every CW.run call — temporary until _post and Worker are updated.
+
+Where Domain Is Stamped on Records
+
+systemFields.domain.onCreate in CW-config.js — IMPLEMENTED ✓:
+
+javascript
+{
+  name: 'domain',
+  onCreate: (run_doc) => {
+    if (!run_doc.target.data[0].domain) {
+      run_doc.target.data[0].domain = run_doc.domain || run_doc.user?.domain || ''
+    }
+  }
+}
+
+Reads run_doc.domain → stamps on doc.domain → persisted to D1.
+
+userFields.domain in CW-config.js — IMPLEMENTED ✓:
+
+javascript
+{ fieldname: 'domain', in_local_view: 1 }
+
+in_local_view: 1 ensures domain is included in JWT payload on User create/login.
+
+Where Domain Is Enforced (ACL Filter)
+
+aclFilter in CW-config.js — IMPLEMENTED ✓:
+
+Read rule:
+
+javascript
+sql: `(
+  __je_allowed_read.value = '${cfg.roles.public}'   ← public: no domain restriction
+  OR (
+    item.domain = ?                                  ← tenant boundary
+    AND (
+      item.id = ?                                    ← own User record
+      OR item.owner = ?                              ← owner
+      OR __je_allowed.value = ?                      ← direct write access
+      OR __je_allowed_read.value = ?                 ← direct read access
+      OR EXISTS (item_users role → _allowed)         ← role write, same domain
+      OR EXISTS (item_users role → _allowed_read)    ← role read, same domain
+    )
+  )
+)`
+params: [domain, uid, uid, uid, uid, uid, uid]
+
+Write rule:
+
+javascript
+sql: `(
+  item.domain = ?                                    ← tenant boundary
+  AND (
+    item.owner = ?                                   ← owner
+    OR __je_allowed.value = ?                        ← direct write
+    OR EXISTS (item_users role → _allowed)           ← role write, same domain
+  )
+)`
+params: [domain, uid, uid, uid]
+
+Key decisions:
+
+Public records (roleispublicxxx) — no domain restriction, truly cross-tenant public
+All other access — scoped to item.domain = user.domain
+user.domain comes from JWT — set at login time, immutable per session
+User Domain Assignment
+
+OAuth login — domain from return_url:
+
+nesen.org → hub/auth/linkedin/login?return_url=nesen.org/page
+  → LinkedIn
+  → hub/auth/linkedin/callback → domain = new URL(return_url).hostname = 'nesen.org'
+  → createUser with domain: 'nesen.org'
+  → JWT contains domain: 'nesen.org'
+
+Password create — domain from input (currently manual):
+
+javascript
+CW.run({ input: { email, password, domain: window.location.hostname } })
+TODO
+Item	Priority	Notes
+Set run_doc.domain in _post from window.location.hostname	HIGH	Eliminates need to pass domain in every CW.run call
+Set run_doc.domain in Worker POST handler from Origin header	HIGH	Server-side fallback
+Domain filter for create ACL	MEDIUM	Currently anon creates not blocked per domain
+Migrate existing records — stamp domain	LOW	Old records have empty domain, invisible to all users
+Cross-domain public records	FUTURE	Currently public = truly public across all tenants
+Admin cross-tenant access	FUTURE	System managers accessing all tenants
