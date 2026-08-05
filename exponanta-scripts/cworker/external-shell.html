@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About — NESEN</title>
+  <meta name="description" content="NESEN is an independent community organization formed in Massachusetts in 2025 to support US entrepreneurship, accelerate innovation, and build a trusted networking community across New England.">
+  <meta name="keywords" content="about NESEN, New England entrepreneurship, Boston startup community, innovation network, Cambridge MA">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://nesen.org/about.html">
+  <meta name="geo.region" content="US-MA">
+  <meta name="geo.placename" content="Cambridge, Massachusetts">
+  <meta name="geo.position" content="42.3601;-71.0942">
+  <meta name="ICBM" content="42.3601, -71.0942">
+  <meta property="og:site_name" content="NESEN">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="ru_RU">
+  <meta property="og:url" content="https://nesen.org/about.html">
+  <meta property="og:title" content="About — NESEN">
+  <meta property="og:description" content="NESEN is an independent community organization formed in Massachusetts in 2025 to support US entrepreneurship, accelerate innovation, and build a trusted networking community across New England.">
+  <meta property="og:image" content="https://nesen.org/og-image.jpg">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="About — NESEN">
+  <meta name="twitter:description" content="NESEN is an independent community organization formed in Massachusetts in 2025 to support US entrepreneurship and innovation.">
+  <meta name="twitter:image" content="https://nesen.org/og-image.jpg">
+  <meta name="twitter:site" content="@nesen">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"NESEN","url":"https://nesen.org","logo":"https://nesen.org/logo.svg","description":"An independent community organization formed in Massachusetts in 2025 to support US entrepreneurship, accelerate innovation, and build a trusted networking community across New England.","address":{"@type":"PostalAddress","streetAddress":"1 Broadway, 5th Floor","addressLocality":"Cambridge","addressRegion":"MA","postalCode":"02142","addressCountry":"US"}}</script>
+  <link rel="alternate" hreflang="en" href="https://nesen.org/about.html">
+  <link rel="alternate" hreflang="x-default" href="https://nesen.org/about.html">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="preconnect" href="https://rsms.me">
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/core@1.4.0/dist/css/tabler.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/core@1.4.0/dist/css/tabler-marketing.min.css">
+  <link rel="stylesheet" href="/nesen.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-TKN48R0YJX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-TKN48R0YJX');
+  </script>
+</head>
+<body class="body-marketing body-gradient">
+  <script src="https://cdn.jsdelivr.net/npm/@tabler/core@latest/dist/js/tabler-theme.min.js"></script>
+  <div id="navbar"></div>
+  <div id="section-about"></div>
+  <div id="section-benefits"></div>
+  <div id="section-visit"></div>
+  <div id="section-apply"></div>
+
+  <!-- CTA -->
+  <section class="section section-light">
+    <div class="container-narrow text-center">
+      <h3 class="h1">The room that refers you<br>is one visit away.</h3>
+      <p class="text-secondary mt-3">Come as a guest. Meet the members. Apply when you're ready.</p>
+      <div class="btn-list justify-content-center mt-5">
+        <a href="/visit.html" class="btn btn-primary btn-lg px-5">Visit as a guest — free</a>
+        <a href="/apply.html" class="btn btn-lg px-5">Apply for membership</a>
+      </div>
+      <div class="text-secondary small mt-4">
+        NESEN — New England Science &amp; Entrepreneurship Network · nesen.org · Every Thursday · 6:30 PM · 90 minutes ·
+        Free · One member per classification
+      </div>
+    </div>
+  </section>
+  <div id="footer"></div>
+
+  <script src="/components.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tabler/core@latest/dist/js/tabler.min.js"></script>
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+  <!-- CW Framework — loaded from hub -->
+  <script src="https://hub-cf.i771468.workers.dev/boot.js"></script>
+
+  <!-- site-specific UI -->
+  <script src="/nesen-ui.js"></script>
+
+  <script>
+    // restore currentUser from localStorage on page load
+    if (!globalThis.currentUser) {
+      const _stored = localStorage.getItem('currentUser')
+      if (_stored) { try { globalThis.currentUser = JSON.parse(_stored) } catch {} }
+    }
+    // extract OAuth token from URL hash
+    const _oauthToken = new URLSearchParams(window.location.hash.slice(1)).get('token')
+    if (_oauthToken) {
+      const _payload = JSON.parse(atob(_oauthToken.split('.')[1]))
+      globalThis.currentUser = { ..._payload, token: _oauthToken }
+      localStorage.setItem('currentUser', JSON.stringify(globalThis.currentUser))
+      window.history.replaceState({}, '', window.location.pathname)
+    }
+    window.addEventListener('CW:booted', () => { /* app shell ready */ })
+  </script>
+</body>
+</html>

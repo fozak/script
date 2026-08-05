@@ -1,0 +1,104 @@
+ACL & Query Pipeline — Invariants & Decisions
+Data Model Invariants
+
+User record ACL fields:
+
+user._allowed      = ['rolesystemmanag']  ← who can edit THIS user record
+user._allowed_read = ['roleprojecmanag']  ← user's own role memberships (special outlet)
+
+Document record ACL fields:
+
+doc.owner         = 'user01fldlgkbtq'   ← creator, write access
+doc._allowed      = ['roleprojecuserx'] ← roles with write access
+doc._allowed_read = ['roleprojecmanag'] ← roles with read access
+
+D1 view — defined once, never changes:
+
+sql
+CREATE VIEW item_users AS
+SELECT u.id, j.value AS role_id
+FROM item u, json_each(u._allowed_read) j
+WHERE u.doctype = 'User'
+ACL Rules
+
+Create rule:
+
+non-User doctypes → always allowed if authenticated
+User doctype → strict via userFields.onCreate hooks:
+  - auth.id matches body.id
+  - _allowed_read empty
+  - _allowed has exactly rolesystemmanag
+  - owner empty
+
+List/View (SELECT) rule:
+
+document returned if ANY of:
+  1. doc._allowed_read contains 'roleispublicxxx'   ← public
+  2. doc.id = auth.id                               ← self (User reading own record)
+  3. doc.owner = auth.id                            ← owner
+  4. doc._allowed contains auth.id                  ← direct write access
+  5. doc._allowed_read contains auth.id             ← direct read access
+  6. doc._allowed contains any of user's roles      ← role write access (via item_users)
+  7. doc._allowed_read contains any of user's roles ← role read access (via item_users)
+
+Update/Delete rule:
+
+allowed if authenticated AND ANY of:
+  1. doc.owner = auth.id                            ← owner
+  2. doc._allowed contains auth.id                  ← direct write
+  3. doc._allowed contains any of user's roles      ← role write (via item_users)
+
+Note: _allowed_read NOT checked — read-only roles cannot write
+Enforcement Points
+Operation	Enforced by
+create User	userFields.onCreate hooks
+create non-User	none — any authenticated user
+select	aclFilter → listSQL conditions
+update pre-fetch	aclFilter → updateSQL conditions
+delete pre-fetch	aclFilter → updateSQL conditions
+update execute	_d1Update — trusts pre-fetch ACL
+delete execute	_delete — trusts pre-fetch ACL
+Config Loaded by _buildQuery
+cfg().sql.aclFilter          ← ACL rule function — mutates run_doc.d1.conditions
+cfg().roles.public           ← 'roleispublicxxx' — public role literal
+cfg().operations[op].type    ← 'read'|'write' — determines which ACL rule
+cfg().topLevelFields         ← Set — routes field to column vs json_extract
+cfg().collection             ← 'item' — table name
+run_doc.d1 Structure
+javascript
+run_doc.d1 = {
+  conditions: [
+    { key: 'aclFilter',     sql: '...',             params: [...] },
+    { key: 'doctypeFilter', sql: 'item.doctype = ?', params: ['Task'] },
+    { key: 'userWhere',     sql: '(item.name = ?)',  params: ['task01'] },
+  ],
+  sort:   'item.modified DESC',
+  limit:  { sql: 'LIMIT ? OFFSET ?', params: [10, 0] },
+  sql:    'SELECT DISTINCT item.* FROM item ... WHERE ... ORDER BY ... LIMIT ?',
+  params: ['user01', 'user01', ..., 'Task', 10, 0],
+  error:  { sql, params, msg }  // only on failure
+}
+Function Architecture
+
+All functions follow fn(run_doc) — mutate only, no return, no extra args.
+
+aclFilter(run_doc)       → cfg() function — mutates run_doc.d1.conditions
+_buildDoctypeFilter(run_doc) → mutates run_doc.d1.conditions
+_buildUserWhere(run_doc)     → mutates run_doc.d1.conditions
+_buildSort(run_doc)          → mutates run_doc.d1.sort
+_buildLimit(run_doc)         → mutates run_doc.d1.limit
+_assembleSQL(run_doc)        → mutates run_doc.d1.sql + run_doc.d1.params
+_buildQuery(run_doc)         → orchestrates all above
+
+select(run_doc)              → calls _buildQuery + executes SQL
+Decisions
+_d1Insert/_d1Update — no run_doc.d1 stamping
+_splitRecord — stays with cfg().topLevelFields, no per-doctype override
+_post — no run_doc.d1 traceability — browser path transparent via Network tab
+createUser/updateUser — stay as if (doctype === 'User') escape hatch, no registry
+item_users view — defined once in D1, view name could go in config but not priority
+Security hole — no ACL in _d1Update/_delete — deferred, pre-fetch ACL sufficient for now
+_buildSort/_buildLimit — separate named functions, mutate run_doc.d1.sort/run_doc.d1.limit
+aclFilter in config — fn(run_doc) pattern, mutates run_doc.d1.conditions directly
+isWrite — derived from cfg().operations[op].type not hardcoded array
+run_doc.d1 traceability — only on select path, not on write path

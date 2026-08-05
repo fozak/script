@@ -1,0 +1,213 @@
+Summary — User Auth & OAuth Implementation
+User Schema — CW.Schema.User
+
+Key fields:
+
+email — reqd, in_local_view: 1, in_list_view: 1
+full_name — in_local_view: 1, read_only: 0
+user_image — in_local_view: 1
+password — fieldtype: 'Password', not virtual — stays in target.data[0] for login
+providers — fieldtype: 'Code', options: 'JSON', read_only: 0 — stores full provider profile
+
+_state dims:
+
+status — default: 'Active', values: ['Invited', 'Active', 'Locked', 'Reset Pending', 'Disabled']
+email_status — default: 'Unverified', values: ['Unverified', 'Verified']
+providers field structure
+
+Nested JSON stored in D1 data column. Provider name is the key:
+
+json
+{
+  "providers": {
+    "google": {
+      "sub":            "115293663888030417863",
+      "name":           "Denis",
+      "picture":        "https://lh3.googleusercontent.com/...",
+      "email_verified": true,
+      "locale":         "en"
+    }
+  }
+}
+json
+{
+  "providers": {
+    "linkedin": {
+      "sub":            "07Gy84ZSHV",
+      "name":           "Dennis Didkovskiy",
+      "picture":        "https://media.licdn.com/...",
+      "email_verified": true,
+      "locale":         { "country": "RU", "language": "ru" }
+    }
+  }
+}
+
+No auth_provider flat field — provider derived from Object.keys(doc.providers)[0].
+
+userFields — CW-config.js
+javascript
+userFields: [
+  {
+    fieldname: 'password_hash',
+    onCreate: async (run_doc) => {
+      const doc = run_doc.target.data[0]
+      if (!doc.password) return  // skip OAuth users
+      doc.password_hash = await pbkdf2(doc.password)
+      delete doc.password
+    }
+  },
+  // ... owner, _allowed, _allowed_read, _state hooks
+]
+
+Security: password_hash skipped for OAuth users. Password login blocked for OAuth users via if (!doc.password_hash) guard in login.
+
+OAuth config — CW-config.js
+javascript
+oauth: {
+  google: {
+    authUrl:     'https://accounts.google.com/o/oauth2/v2/auth',
+    tokenUrl:    'https://oauth2.googleapis.com/token',
+    userInfoUrl: 'https://www.googleapis.com/oauth2/v3/userinfo',
+    scope:       'email profile',
+    mapParams: (env, redirectUri) => ({
+      client_id:     env.GOOGLE_CLIENT_ID,
+      client_secret: env.GOOGLE_CLIENT_SECRET,
+      redirect_uri:  redirectUri,
+      grant_type:    'authorization_code',
+    }),
+    mapUser: (u) => ({
+      email:      u.email,
+      full_name:  u.name,
+      user_image: u.picture,
+      providers: { google: { sub: u.sub, name: u.name, picture: u.picture, email_verified: u.email_verified, locale: u.locale } }
+    })
+  },
+  linkedin: {
+    authUrl:     'https://www.linkedin.com/oauth/v2/authorization',
+    tokenUrl:    'https://www.linkedin.com/oauth/v2/accessToken',
+    userInfoUrl: 'https://api.linkedin.com/v2/userinfo',
+    scope:       'openid profile email',
+    mapParams: (env, redirectUri) => ({
+      client_id:     env.LINKEDIN_CLIENT_ID,
+      client_secret: env.LINKEDIN_CLIENT_SECRET,
+      redirect_uri:  redirectUri,
+      grant_type:    'authorization_code',
+    }),
+    mapUser: (u) => ({
+      email:      u.email,
+      full_name:  u.name,
+      user_image: u.picture,
+      providers: { linkedin: { sub: u.sub, name: u.name, picture: u.picture, email_verified: u.email_verified, locale: u.locale } }
+    })
+  }
+}
+Routes config — CW-config.js
+javascript
+routes: [
+  { method: 'GET',  path: '/auth/google/login',    operation: 'oauthLogin',    provider: 'google' },
+  { method: 'GET',  path: '/auth/google/callback', operation: 'oauthCallback', provider: 'google' },
+  { method: 'GET',  path: '/auth/linkedin/login',    operation: 'oauthLogin',    provider: 'linkedin' },
+  { method: 'GET',  path: '/auth/linkedin/callback', operation: 'oauthCallback', provider: 'linkedin' },
+  { method: 'POST', path: '/*',                    operation: 'cwPost' },
+  { method: 'GET',  path: '/',                     operation: 'shell' },
+]
+Operations config — CW-config.js
+javascript
+operations: {
+  // ... existing select, create, update, delete, updateMany ...
+  oauthLogin:    { type: 'http', adapterType: 'db' },
+  oauthCallback: { type: 'http', adapterType: 'db' },
+  cwPost:        { type: 'http', adapterType: 'db' },
+  shell:         { type: 'http', adapterType: 'db' },
+  login:         { type: 'auth', adapterType: 'db' },
+  logout:        { type: 'auth', adapterType: 'db' },
+}
+D1 Adapter — CW-adapter-d1.js
+
+Auth helpers:
+
+pbkdf2(password, salt?) — per-user random salt, hex encoding, returns saltHex:hashHex
+_buildUserPayload(doc) — reads in_local_view fields + FSM dims → JWT payload
+_issueToken(doc, run_doc) — builds payload, signs JWT, sets run_doc.user
+
+Auth operations:
+
+login(run_doc) — verifies pbkdf2 hash, checks _state.status === 'Active', issues JWT. Guards: block if no password_hash (OAuth user)
+logout(run_doc) — clears localStorage client-side
+createUser(run_doc) — runs userFields.onCreate hooks, initializes _state, calls _d1Insert, issues JWT
+
+HTTP operations:
+
+oauthLogin(run_doc) — reads provider from target.data[0], builds Google/LinkedIn auth URL, sets run_doc.target.data[0].redirect_url
+oauthCallback(run_doc) — exchanges code via cfg.mapParams, gets userinfo, calls cfg.mapUser, creates/finds User via run_doc.child(), issues JWT, sets token and return_url on doc
+cwPost(run_doc) — passthrough, success: true
+shell(run_doc) — passthrough, success: true
+
+Adapter surface:
+
+javascript
+globalThis.Adapters['d1'] = {
+  select, create, update, delete: _delete,
+  login, logout,
+  oauthLogin, oauthCallback, cwPost, shell,
+}
+Worker — worker.js
+javascript
+// POST — CW operation dispatch
+if (req.method === 'POST') {
+  const run_doc = await req.json()
+  run_doc.user  = await verifyJWT(req.headers.get('Authorization') || '', env.JWT_SECRET)
+  const op      = { operation: run_doc.operation }
+  CW._resolveAll(op)
+  await globalThis.Adapters[op.adapter]?.[run_doc.operation]?.(run_doc)
+  return Response.json(run_doc, { headers: CORS })
+}
+
+// GET — route dispatch
+for (const route of CW._config.routes?.filter(r => r.method === 'GET') || []) {
+  if (!new URLPattern({ pathname: route.path }).exec(url)) continue
+  const run_doc = await CW.run({
+    operation:      route.operation,
+    target_doctype: 'Http',
+    input: {
+      provider:   route.provider,
+      code:       url.searchParams.get('code'),
+      state:      url.searchParams.get('state'),
+      return_url: url.searchParams.get('state')
+        ? new URL(atob(url.searchParams.get('state')), url.origin).href
+        : url.origin + '/',
+    },
+    autosave: 0,
+    options:  { render: false }
+  })
+  const doc = run_doc.target?.data?.[0]
+  if (route.operation === 'shell')         return env.ASSETS.fetch(new Request(new URL('/shell.html', url)))
+  if (route.operation === 'oauthLogin')    return run_doc.success ? Response.redirect(doc.redirect_url, 302) : new Response(run_doc.error, { status: 404 })
+  if (route.operation === 'oauthCallback') return run_doc.success ? Response.redirect(`${doc.return_url}#token=${doc.token}`, 302) : Response.redirect(`${doc?.return_url || '/'}#error=${encodeURIComponent(run_doc.error)}`, 302)
+}
+Client — shell.html
+
+Token extraction on page load:
+
+javascript
+const _oauthToken = new URLSearchParams(window.location.hash.slice(1)).get('token')
+if (_oauthToken) {
+  const _payload = JSON.parse(atob(_oauthToken.split('.')[1]))
+  globalThis.currentUser = { ..._payload, token: _oauthToken }
+  localStorage.setItem('currentUser', JSON.stringify(globalThis.currentUser))
+  window.history.replaceState({}, '', window.location.pathname)
+}
+Cloudflare environment
+
+Secrets: JWT_SECRET, GOOGLE_CLIENT_SECRET, LINKEDIN_CLIENT_SECRET
+
+Variables (wrangler.toml): GOOGLE_CLIENT_ID, LINKEDIN_CLIENT_ID
+
+D1: nesen-d1 (bfafca56-dbc9-49d5-a6cc-137ec0ee06c9)
+
+Key invariants
+auth_provider derived from Object.keys(doc.providers)[0] — no separate field
+JWT payload = in_local_view fields + FSM dims — same shape for all auth methods
+localStorage.currentUser = JWT payload + token — single client store
+password_hash skipped for OAuth users — if (!doc.password) return
+Adding new provider = one oauth config entry + two route entries — zero code changes

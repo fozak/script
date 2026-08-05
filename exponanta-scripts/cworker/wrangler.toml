@@ -8,6 +8,7 @@ binding = "ASSETS"
 
 [vars]
 GOOGLE_CLIENT_ID = "325888692252-898ld1tl4l8e1d1hv2v42ds7kjdunp7f.apps.googleusercontent.com"
+LINKEDIN_CLIENT_ID = "77csy2pgtctq9s"
 
 [[d1_databases]]
 binding = "DB"

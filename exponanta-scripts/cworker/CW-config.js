@@ -71,17 +71,15 @@ CW.Schema.Task = {
   },
   permissions: [
     {
-      role: "rolesystemmanag",
+      role: "Projects User",
       read: 1,
       write: 1,
       create: 1,
       delete: 1,
-      transitions: {
-        "status.Open.In Progress": "Start",
-        "status.In Progress.Done": "Complete",
-        "status.Open.Cancelled": "Cancel",
-        "status.Cancelled.Open": "Reopen",
-      },
+    },
+    {
+      role: "Projects Manager",
+      read: 1,
     },
   ],
 };
@@ -95,6 +93,7 @@ CW.Schema.User = {
     {
       fieldname: "email",
       fieldtype: "Data",
+      read_only: 0,
       reqd: 1,
       in_list_view: 1,
       in_local_view: 1,
@@ -105,11 +104,17 @@ CW.Schema.User = {
       fieldtype: "Data",
       in_list_view: 1,
       in_local_view: 1,
-      read_only: 1,
+      read_only: 0, //changed from 1
     },
     { fieldname: "user_image", fieldtype: "Data", in_local_view: 1 },
     { fieldname: "password", fieldtype: "Password" },
-    { fieldname: 'providers', fieldtype: 'Code', options: 'JSON', hidden: 0, read_only: 1 },
+    {
+      fieldname: "providers",
+      fieldtype: "Code",
+      read_only: 1,
+      options: "JSON",
+      hidden: 0,
+    },
   ],
   _state: {
     status: {
@@ -169,74 +174,131 @@ CW.Schema.User = {
   ],
 };
 
+//test Http doc
+
+CW.Schema.Http = {
+  schema_name: "Http",
+  track_changes: 0,
+  fields: [
+    { fieldname: "method", fieldtype: "Data" },
+    { fieldname: "path", fieldtype: "Data" },
+    { fieldname: "provider", fieldtype: "Data" },
+    { fieldname: "code", fieldtype: "Data" },
+    { fieldname: "state", fieldtype: "Data" },
+    { fieldname: "return_url", fieldtype: "Data" },
+    { fieldname: "token", fieldtype: "Data", virtual: 1 },
+    { fieldname: "error", fieldtype: "Data", virtual: 1 },
+  ],
+};
+
 globalThis.CW._config = {
   roles: {
     systemManager: "rolesystemmanag",
     public: "roleispublicxxx",
   },
 
-  // ── D1 SQL defaults ──────────────────────────────────────────
   sql: {
-    // default ACL joins — reused in every SELECT
     aclJoins: `
-      LEFT JOIN json_each(item._allowed)      __je_allowed
-      LEFT JOIN json_each(item._allowed_read) __je_allowed_read
-    `,
+    LEFT JOIN json_each(item._allowed)      __je_allowed
+    LEFT JOIN json_each(item._allowed_read) __je_allowed_read
+  `,
 
-    // default ACL WHERE fragment — ? bindings: [doctype, sub, sub, sub, ...roles, ...roles]
-    aclWhere: (cfg) => `(
-      __je_allowed_read.value = '${cfg.roles.public}'
-      OR item.owner = ?
-      OR __je_allowed.value = ?
-      OR __je_allowed_read.value = ?
-    )`,
+    aclFilter: (run_doc) => {
+      const uid = run_doc.user?.name ?? "";
+      const opType =
+        globalThis.CW._config.operations?.[run_doc.operation_original]?.type;
+      const isWrite = opType === "write" || opType === "updateMany";
+      const cfg = globalThis.CW._config;
 
-    // default listSQL — override per schema if needed
-    listSQL: (cfg) => `
-  SELECT DISTINCT item.* FROM item
-  ${cfg.sql.aclJoins}
-  WHERE (
-    __je_allowed_read.value = '${cfg.roles.public}'
-    OR item.owner = ?
-    OR __je_allowed.value = ?
-    OR __je_allowed_read.value = ?
-  )
-`,
-
-    // default aclParams — bindings for ACL WHERE in order
-    aclParams: (user) => [
-      user?.sub ?? "", // owner
-      user?.sub ?? "", // _allowed
-      user?.sub ?? "", // _allowed_read
-    ],
+      if (isWrite) {
+        // must be authenticated
+        if (!uid) {
+          run_doc.error = "401 unauthorized";
+          return;
+        }
+        run_doc.d1.conditions.push({
+          key: "aclFilter",
+          sql: `(item.owner = ? OR __je_allowed.value = ? OR EXISTS (SELECT 1 FROM item_users iu WHERE iu.id = ? AND __je_allowed.value = iu.role_id))`,
+          params: [uid, uid, uid],
+        });
+      } else {
+        // unauthenticated — public only
+        if (!uid) {
+          run_doc.d1.conditions.push({
+            key: "aclFilter",
+            sql: `(__je_allowed_read.value = '${cfg.roles.public}')`,
+            params: [],
+          });
+          return;
+        }
+        // authenticated — full rule
+        run_doc.d1.conditions.push({
+          key: "aclFilter",
+          sql: `(__je_allowed_read.value = '${cfg.roles.public}' OR item.id = ? OR item.owner = ? OR __je_allowed.value = ? OR __je_allowed_read.value = ? OR EXISTS (SELECT 1 FROM item_users iu WHERE iu.id = ? AND __je_allowed.value = iu.role_id) OR EXISTS (SELECT 1 FROM item_users iu WHERE iu.id = ? AND __je_allowed_read.value = iu.role_id))`,
+          params: [uid, uid, uid, uid, uid, uid],
+        });
+      }
+    },
   },
 
   hub: {
     url: "https://hub-cf.i771468.workers.dev/",
   },
 
-oauth: {
-  google: {
-    authUrl:     'https://accounts.google.com/o/oauth2/v2/auth',
-    tokenUrl:    'https://oauth2.googleapis.com/token',
-    userInfoUrl: 'https://www.googleapis.com/oauth2/v3/userinfo',
-    scope:       'email profile',
-    mapUser: (u) => ({
-      email:      u.email,
-      full_name:  u.name,
-      user_image: u.picture,
-      providers: {
-        google: {
-          sub:            u.sub,
-          name:           u.name,
-          picture:        u.picture,
-          email_verified: u.email_verified,
-          locale:         u.locale,
-        }
-      }
-    })
-  }
-},
+  oauth: {
+    google: {
+      authUrl: "https://accounts.google.com/o/oauth2/v2/auth",
+      tokenUrl: "https://oauth2.googleapis.com/token",
+      userInfoUrl: "https://www.googleapis.com/oauth2/v3/userinfo",
+      scope: "email profile",
+      mapParams: (env, redirectUri) => ({
+        client_id: env.GOOGLE_CLIENT_ID,
+        client_secret: env.GOOGLE_CLIENT_SECRET,
+        redirect_uri: redirectUri,
+        grant_type: "authorization_code",
+      }),
+      mapUser: (u) => ({
+        email: u.email,
+        full_name: u.name,
+        user_image: u.picture,
+        providers: {
+          google: {
+            sub: u.sub,
+            name: u.name,
+            picture: u.picture,
+            email_verified: u.email_verified,
+            locale: u.locale,
+          },
+        },
+      }),
+    },
+    linkedin: {
+      authUrl: "https://www.linkedin.com/oauth/v2/authorization",
+      tokenUrl: "https://www.linkedin.com/oauth/v2/accessToken",
+      userInfoUrl: "https://api.linkedin.com/v2/userinfo",
+      scope: "openid profile email",
+      mapParams: (env, redirectUri) => ({
+        client_id: env.LINKEDIN_CLIENT_ID,
+        client_secret: env.LINKEDIN_CLIENT_SECRET,
+        redirect_uri: redirectUri,
+        grant_type: "authorization_code",
+      }),
+      mapUser: (u) => ({
+        email: u.email,
+        full_name: u.name,
+        user_image: u.picture,
+        providers: {
+          linkedin: {
+            sub: u.sub,
+            name: u.name,
+            picture: u.picture,
+            email_verified: u.email_verified,
+            locale: u.locale,
+          },
+        },
+      }),
+    },
+  },
 
   identity: {
     keys: {
@@ -357,6 +419,7 @@ oauth: {
     {
       name: "doctype",
       fieldtype: "Data",
+      read_only: 1,
       fetch: true,
       hidden: 0,
       in_list_view: 1,
@@ -395,6 +458,7 @@ oauth: {
     },
     {
       name: "name",
+      read_only: 1,
       fetch: true,
       hidden: 0,
       in_list_view: 1,
@@ -412,6 +476,7 @@ oauth: {
     {
       name: "id",
       fieldtype: "Data",
+      read_only: 1,
       fetch: true,
       hidden: 0,
       in_local_view: 1,
@@ -455,6 +520,7 @@ oauth: {
       hidden: 0,
       in_list_view: 1,
       in_local_view: 1,
+      read_only: 1,
       onCreate: (run_doc) => {
         // ← after _state
         const doc = run_doc.target?.data?.[0];
@@ -568,9 +634,9 @@ oauth: {
     },
     {
       name: "_allowed",
+      read_only: 1,
       fetch: true,
       hidden: 0,
-      read_only: 0,
       fieldtype: "SharePanel",
       label: "Sharing",
       in_list_view: 0,
@@ -640,6 +706,7 @@ oauth: {
       name: "_allowed_read",
       fieldtype: "Code", // ← not SharePanel
       options: "JSON",
+      read_only: 1,
       fetch: true,
       hidden: 0,
       in_local_view: 1,
@@ -764,6 +831,14 @@ oauth: {
         ];
       },
     },
+    {
+      name: "domain",
+      onCreate: (run_doc) => {
+        if (!run_doc.target.data[0].domain) {
+          run_doc.target.data[0].domain = run_doc.user?.domain ?? "";
+        }
+      },
+    },
   ],
 
   userFields: [
@@ -772,9 +847,9 @@ oauth: {
       fieldtype: "Data",
       hidden: 0,
       read_only: 1,
-      // no in_local_view
       onCreate: async (run_doc) => {
         const doc = run_doc.target.data[0];
+        if (!doc.password) return; // ← skip OAuth users
         doc.password_hash = await pbkdf2(doc.password);
         delete doc.password;
       },
@@ -783,6 +858,7 @@ oauth: {
     {
       fieldname: "owner",
       fieldtype: "Data",
+      read_only: 1,
       in_local_view: 1,
       onCreate: (run_doc) => {
         run_doc.target.data[0].owner = ""; // User owns nothing, not even itself
@@ -791,6 +867,7 @@ oauth: {
     {
       fieldname: "_allowed",
       fieldtype: "SharePanel",
+      read_only: 1,
       in_local_view: 1,
       onCreate: (run_doc) => {
         run_doc.target.data[0]._allowed = [CW._config.roles.systemManager]; // system manager only
@@ -800,9 +877,20 @@ oauth: {
       fieldname: "_allowed_read",
       fieldtype: "Code",
       options: "JSON",
+      read_only: 1,
       in_local_view: 1,
       onCreate: (run_doc) => {
         run_doc.target.data[0]._allowed_read = []; // empty — self-read via JWT identity, not ACL
+      },
+    },
+    // domain
+    {
+      fieldname: "domain",
+      in_local_view: 1,
+      onCreate: (run_doc) => {
+        if (!run_doc.target.data[0].domain) {
+          run_doc.target.data[0].domain = "unknown";
+        }
       },
     },
   ],
@@ -925,7 +1013,7 @@ oauth: {
           refreshTokenExpiry: "30d", // 30 days
 
           // For internal calculations
-          accessTokenExpiryMs: 15 * 60 * 1000, // 15 minutes
+          accessTokenExpiryMs: 1500 * 60 * 1000, // 1500 minutes
           refreshTokenExpiryMs: 30 * 24 * 60 * 60 * 1000, // 30 days
 
           // Security settings
@@ -1187,94 +1275,60 @@ oauth: {
       fetchOriginals: false,
       bypassController: false,
     },
+
+    // ──────────────────────────────────────────────────────
+    // HTTP OPERATIONS
+    // ──────────────────────────────────────────────────────
+    oauthLogin: {
+      type: "http",
+      adapterType: "db",
+    },
+    oauthCallback: {
+      type: "http",
+      adapterType: "db",
+    },
+    cwPost: {
+      type: "http",
+      adapterType: "db",
+    },
+    shell: {
+      type: "http",
+      adapterType: "db",
+    },
+    createUseroauth: {
+      type: "http",
+      adapterType: "db",
+    },
   },
 
-  /* OLD: Operation behavior configuration for controller
-  operations: {
-    select: {
-      type: "read",
-      draft: false, // ✅ ADD THIS - Reading, not editable
-      requiresSchema: false,
-      validate: false,
-      fetchOriginals: false,
-      bypassController: false,
+  routes: [
+    {
+      method: "GET",
+      path: "/auth/google/login",
+      operation: "oauthLogin",
+      provider: "google",
     },
-    takeone: {
-      type: "read",
-      draft: false, // ✅ ADD THIS - Viewing, not editable
-      requiresSchema: false,
-      validate: false,
-      fetchOriginals: false,
-      bypassController: false,
+    {
+      method: "GET",
+      path: "/auth/google/callback",
+      operation: "oauthCallback",
+      provider: "google",
     },
-    create: {
-      type: "write",
-      draft: true, // ✅ ADD THIS - Creating, editable
-      requiresSchema: true,
-      validate: true,
-      fetchOriginals: false,
-      bypassController: false,
+    {
+      method: "GET",
+      path: "/auth/linkedin/login",
+      operation: "oauthLogin",
+      provider: "linkedin",
     },
-    update: {
-      type: "write",
-      draft: true, // ✅ ADD THIS - Editing, editable
-      requiresSchema: true,
-      validate: true,
-      fetchOriginals: true,
-      bypassController: false,
+    {
+      method: "GET",
+      path: "/auth/linkedin/callback",
+      operation: "oauthCallback",
+      provider: "linkedin",
     },
-    delete: {
-      type: "write",
-      draft: false, // ✅ ADD THIS - Deleting, not editable
-      requiresSchema: false,
-      validate: false,
-      fetchOriginals: true,
-      bypassController: false,
-    },
-    upsert: {
-      type: "write",
-      draft: true, // ✅ ADD THIS - Upserting, editable
-      requiresSchema: true,
-      validate: true,
-      fetchOriginals: true,
-      bypassController: false,
-    },
-    bulk_update: {
-      type: "write",
-      draft: false, // ✅ ADD THIS - Bulk ops, not draft-based
-      requiresSchema: false,
-      validate: false,
-      fetchOriginals: false,
-      bypassController: false,
-    },
-  }, */
-
-  /* ✅ INITIAL
-  views: {
-    list: {
-      component: "MainGrid",
-      container: "main_container",
-      options: {
-        render: true,
-      },
-    },
-    form: {
-      component: "MainForm",
-      container: "main_container",
-      options: {
-        render: true,
-      },
-    },
-    chat: {
-      component: "MainChat",
-      container: "right_pane",
-      options: {
-        render: true,
-      },
-    },
-    edit: { component: 'MainForm', container: 'main_container' },  // ← added
-  read: { component: 'MainForm', container: 'main_container' } // ← added
-  },*/
+    { method: "POST", path: "/*", operation: "cwPost" },
+    { method: "GET", path: "/", operation: "shell" },
+  ],
 
   views: {
     list: { component: "UniversalGrid", container: "right_pane" }, //MainGrid

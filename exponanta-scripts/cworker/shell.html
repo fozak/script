@@ -52,8 +52,8 @@
   <!-- ── 3. DO NOT USE ── -->
   <script src="/boot.js"></script>  
 
-  <script>
-  // extract OAuth token from URL hash after Google redirect
+<script>
+  // extract OAuth token from URL hash after Google/LinkedIn redirect
   const _oauthToken = new URLSearchParams(window.location.hash.slice(1)).get('token')
   if (_oauthToken) {
     const _payload = JSON.parse(atob(_oauthToken.split('.')[1]))
@@ -62,11 +62,17 @@
     window.history.replaceState({}, '', window.location.pathname)
   }
 
+  // restore currentUser from localStorage on page load
+  if (!globalThis.currentUser) {
+    const _stored = localStorage.getItem('currentUser')
+    if (_stored) {
+      try { globalThis.currentUser = JSON.parse(_stored) } catch {}
+    }
+  }
+
   window.addEventListener('CW:booted', () => cwStateFromUrl())
 </script>
 
-  <script>
-    window.addEventListener('CW:booted', () => cwStateFromUrl());
-  </script>
+
 </body>
 </html>

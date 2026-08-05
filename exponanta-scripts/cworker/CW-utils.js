@@ -38,7 +38,27 @@ import('https://cdn.jsdelivr.net/npm/transliteration@2.3.5/dist/browser/bundle.e
 })
     const _slugify = slugify
 CW.slugify = (str) => _slugify(str).replace(/-{2,}/g, '-')
-  })
+  });
+
+
+
+/*
+  function generateSlug(run_doc) {
+  const doc        = run_doc.target?.data?.[0]
+  const schema     = globalThis.CW.Schema?.[run_doc.target_doctype]
+  const titleField = schema?.title_field || 'title'
+  const val        = doc?.[titleField] || doc?.title || doc?.name || ''
+
+  if (typeof globalThis.CW?.slugify === 'function') return globalThis.CW.slugify(val)
+
+  return val
+    .toLowerCase()
+    .replace(/@/g, '-at-')
+    .replace(/\./g, '-dot-')
+    .replace(/[^a-z0-9-]/g, '-')
+    .replace(/-+/g, '-')
+    .replace(/^-|-$/g, '')
+}*/
 
 // ============================================================
 
@@ -385,13 +405,32 @@ function validateId(id) {
 }
 
 // in CW-utils.js
-function generateSlug(run_doc) {
+/*function generateSlug(run_doc) {
   const doc = run_doc.target?.data?.[0]
   const s   = CW.Schema?.[run_doc.target_doctype]
   const a   = s?.autoname
   const source = a?.startsWith("field:") ? a.slice(6) : s?.title_field
   if (!source || !doc?.[source]) return null
   return CW.slugify(doc[source])
+}*/
+
+function generateSlug(run_doc) {
+  const doc    = run_doc.target?.data?.[0]
+  const s      = CW.Schema?.[run_doc.target_doctype]
+  const a      = s?.autoname
+  const source = a?.startsWith("field:") ? a.slice(6) : s?.title_field
+  if (!source || !doc?.[source]) return null
+  
+  const val = doc[source]
+  if (typeof CW.slugify === 'function') return CW.slugify(val)
+  
+  return val
+    .toLowerCase()
+    .replace(/@/g, '-at-')
+    .replace(/\./g, '-dot-')
+    .replace(/[^a-z0-9-]/g, '-')
+    .replace(/-+/g, '-')
+    .replace(/^-|-$/g, '')
 }
 
 // ============================================================
@@ -1291,41 +1330,39 @@ async function pbkdf2(password, salt) {
 
 async function signJWT(payload, secret) {
   const enc    = new TextEncoder()
-  const header = btoa(JSON.stringify({ alg: 'HS256', typ: 'JWT' }))
-  const body   = btoa(JSON.stringify({ ...payload, exp: Math.floor(Date.now() / 1000) + 86400 }))
-  const data   = header + '.' + body
-  const key    = await crypto.subtle.importKey(
-    'raw', enc.encode(secret),
-    { name: 'HMAC', hash: 'SHA-256' },
-    false, ['sign']
-  )
-  const sig = await crypto.subtle.sign('HMAC', key, enc.encode(data))
-  return data + '.' + btoa(Array.from(new Uint8Array(sig)).map(b => String.fromCharCode(b)).join(''))
+  const b64url = (str) => btoa(str).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '')
+  const expiry = globalThis.CW?._config?.adapters?.registry?.auth?.config?.accessTokenExpiryMs ?? 86400000
+  const header = b64url(JSON.stringify({ alg: 'HS256', typ: 'JWT' }))
+  const body   = b64url(JSON.stringify({ ...payload, exp: Math.floor(Date.now() / 1000) + Math.floor(expiry / 1000) }))
+  const data   = `${header}.${body}`
+  const key    = await crypto.subtle.importKey('raw', enc.encode(secret), { name: 'HMAC', hash: 'SHA-256' }, false, ['sign'])
+  const sig    = await crypto.subtle.sign('HMAC', key, enc.encode(data))
+  const sigB64url = b64url(Array.from(new Uint8Array(sig)).map(b => String.fromCharCode(b)).join(''))
+  return `${data}.${sigB64url}`
 }
 
 async function verifyJWT(token, secret) {
   if (!token?.startsWith('Bearer ')) return {}
-  const raw = token.slice(7)
+  const raw   = token.slice(7)
   const parts = raw.split('.')
   if (parts.length !== 3) return {}
   try {
-    const enc  = new TextEncoder()
-    const key  = await crypto.subtle.importKey(
-      'raw', enc.encode(secret),
-      { name: 'HMAC', hash: 'SHA-256' },
-      false, ['verify']
-    )
-    const data = parts[0] + '.' + parts[1]
-    const sig  = Uint8Array.from(atob(parts[2]), c => c.charCodeAt(0))
-    const ok   = await crypto.subtle.verify('HMAC', key, sig, enc.encode(data))
+    const enc    = new TextEncoder()
+    const key    = await crypto.subtle.importKey('raw', enc.encode(secret), { name: 'HMAC', hash: 'SHA-256' }, false, ['verify'])
+    const data   = `${parts[0]}.${parts[1]}`
+    const sigB64 = parts[2].replace(/-/g, '+').replace(/_/g, '/')
+    const sig    = Uint8Array.from(atob(sigB64), c => c.charCodeAt(0))
+    const ok     = await crypto.subtle.verify('HMAC', key, sig, enc.encode(data))
     if (!ok) return {}
-    const payload = JSON.parse(atob(parts[1]))
+    const padded  = parts[1].replace(/-/g, '+').replace(/_/g, '/')
+    const payload = JSON.parse(atob(padded.padEnd(padded.length + (4 - padded.length % 4) % 4, '=')))
     if (payload.exp < Math.floor(Date.now() / 1000)) return {}
     return payload
   } catch {
     return {}
   }
 }
+
 
 function buildPayload(doc) {
   const schema = CW.Schema?.User
@@ -1357,9 +1394,20 @@ CW._logThreads = _logThreads;
 CW._getListFields = _getListFields;
 CW._resolveQuery = _resolveQuery;
 
+//=========rate limits
 
+const _rateLimits = new Map()
 
-
+function checkRateLimit(ip) {
+  const { max, window } = globalThis.CW._config.adapters.registry.auth.config.rateLimit.ip
+  const now   = Date.now()
+  const entry = _rateLimits.get(ip) || { count: 0, start: now }
+  if (now - entry.start > window) { _rateLimits.set(ip, { count: 1, start: now }); return true }
+  if (entry.count >= max) return false
+  entry.count++
+  _rateLimits.set(ip, entry)
+  return true
+}
 
 
 
@@ -1392,6 +1440,7 @@ Object.assign(globalThis, {
   //_mergeRecord,
  // _splitRecord,
   generateSlug,
+  checkRateLimit,
 });
 
 console.log("✅ CW-utils.js v41 loaded");

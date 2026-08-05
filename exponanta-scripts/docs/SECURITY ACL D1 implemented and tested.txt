@@ -1,0 +1,243 @@
+Security Implementation Documentation
+1. ACL — Row-Level Security
+
+D1 Table Columns (top-level on item table):
+
+owner          TEXT   — creator user ID, write access
+_allowed       TEXT   — JSON array of role IDs or user IDs with write access
+_allowed_read  TEXT   — JSON array of role IDs or user IDs with read access
+
+User record special meaning:
+
+user._allowed      = ['rolesystemmanag']  — who can edit THIS user record
+user._allowed_read = ['roleprojecmanag']  — user's own role memberships (outlet)
+
+D1 View — flattens user roles:
+
+sql
+CREATE VIEW item_users AS
+SELECT u.id, j.value AS role_id
+FROM item u, json_each(u._allowed_read) j
+WHERE u.doctype = 'User'
+
+ACL Rules:
+
+Create:
+
+Non-User doctypes — any authenticated user
+User doctype — strictly via userFields.onCreate hooks: own ID, empty _allowed_read, exactly rolesystemmanag in _allowed, empty owner
+
+List/View (SELECT):
+
+public:       doc._allowed_read contains 'roleispublicxxx'
+unauthenticated: public only — all other conditions require uid != ''
+self:         doc.id = auth.id
+owner:        doc.owner = auth.id
+direct write: doc._allowed contains auth.id
+direct read:  doc._allowed_read contains auth.id
+role write:   doc._allowed contains any of user's roles (via item_users)
+role read:    doc._allowed_read contains any of user's roles (via item_users)
+
+Update/Delete:
+
+must be authenticated (uid != '')
+owner:        doc.owner = auth.id
+direct write: doc._allowed contains auth.id
+role write:   doc._allowed contains any of user's roles (via item_users)
+_allowed_read never grants write access
+
+Implementation — cfg().sql.aclFilter(run_doc):
+
+Mutates run_doc.d1.conditions — never returns
+Reads run_doc.user.name from JWT payload
+Reads run_doc.operation_original → cfg().operations[op].type → read or write
+Unauthenticated + read → public condition only
+Unauthenticated + write → run_doc.error = '401 unauthorized'
+Authenticated + read → full 7-condition SQL with item_users EXISTS subqueries
+Authenticated + write → 3-condition SQL with item_users EXISTS subquery
+
+Config location:
+
+javascript
+CW._config.sql.aclFilter    // fn(run_doc) — ACL condition builder
+CW._config.roles.public     // 'roleispublicxxx' — public role literal
+CW._config.roles.systemManager // 'rolesystemmanag'
+2. Field Protection — read_only
+
+Mechanism: _mergeInput reads schema.fields after _compileSchemas — skips any field with read_only: 1. User input for protected fields is silently dropped before reaching target.data[0].
+
+Compile order — priority lowest to highest:
+
+doctypeFields → schema.fields → systemFields → userFields (User only via doctypeFields.User)
+
+Protected fields in systemFields (read_only: 1):
+
+doctype       — prevents doctype escalation
+name          — record identity, immutable
+id            — same as name
+owner         — set on create, never changes
+modified_by   — system-stamped
+created       — creation timestamp
+_allowed      — ACL write roles, set by systemFields.onWrite
+_allowed_read — ACL read roles, set by systemFields.onWrite
+_changes      — audit trail, append-only
+
+Protected fields in userFields → CW.Schema.User (read_only: 1):
+
+password_hash — never via input, only via password flow
+owner         — User owns nothing (always '')
+_allowed      — only rolesystemmanag, set on create
+_allowed_read — always empty on create, managed separately
+
+Protected fields in CW.Schema.User.fields (read_only: 1):
+
+email         — prevents account takeover
+providers     — OAuth provider data, set by system
+
+Additional User protection — ACL:
+User _allowed = ['rolesystemmanag'] and owner = '' — no authenticated user (except system managers) has write access to any User record. email, password_hash protected by ACL even if read_only were absent.
+
+3. Rate Limiting
+
+Implementation: checkRateLimit(ip) in CW-utils.js — synchronous, first check in Worker before any async operation.
+
+Storage: _rateLimits = new Map() — module-scoped, per-isolate. Resets between Cloudflare isolate restarts. Not globally shared across all Workers — sufficient for NESEN scale.
+
+Config location:
+
+javascript
+CW._config.adapters.registry.auth.config.rateLimit.ip
+  max:    100    // requests per window
+  window: 60000  // 1 minute in ms
+CW._config.adapters.registry.auth.config.rateLimit.user
+  max:    1000
+  window: 60000
+
+Worker integration:
+
+javascript
+const ip = req.headers.get('CF-Connecting-IP') || 'unknown'
+if (!checkRateLimit(ip)) {
+  return new Response('429 Too Many Requests', { status: 429, headers: CORS })
+}
+
+Applied to all POST requests before JWT verification, body parsing, or any business logic.
+
+4. JWT Security
+
+Algorithm: HMAC-SHA256 — crypto.subtle Web Crypto API, FIPS-certified, constant-time operations.
+
+Encoding: base64url (RFC 7515) — no spaces, no padding, URL-safe. Uses Array.from().map().join() — no spread operator, stable on all runtimes.
+
+Expiry: config-driven:
+
+javascript
+CW._config.adapters.registry.auth.config.accessTokenExpiryMs  // default 86400000 (24h)
+
+Payload contents — in_local_view: 1 fields from CW.Schema.User + FSM dims:
+
+email, full_name, user_image, title
+name, id, docstatus, owner
+_allowed, _allowed_read
+status, email_status
+exp
+
+Worker enforcement: every POST request — run_doc.user = await verifyJWT(Authorization header, JWT_SECRET). Worker always owns run_doc.user — browser cannot supply a pre-verified user.
+
+Secret storage: Cloudflare Worker secret JWT_SECRET — never in code, never in wrangler.toml.
+
+Config location:
+
+javascript
+CW._config.adapters.registry.auth.config.jwtSecret      // fallback only — real secret in env
+CW._config.adapters.registry.auth.config.jwtAlgorithm   // 'HS256'
+CW._config.adapters.registry.auth.config.accessTokenExpiryMs
+5. OAuth Security
+
+Providers: Google, LinkedIn — OpenID Connect.
+
+Flow: server-side code exchange only — client_secret never exposed to browser. Browser receives only final JWT via URL fragment (#token=).
+
+State parameter: btoa(return_url) — prevents CSRF on OAuth callback.
+
+Cross-domain token delivery: URL fragment (#token=) — not sent to server on subsequent requests, not in server logs.
+
+Secrets storage: Cloudflare Worker secrets:
+
+JWT_SECRET
+GOOGLE_CLIENT_SECRET
+LINKEDIN_CLIENT_SECRET
+
+Variables in wrangler.toml (non-secret):
+
+GOOGLE_CLIENT_ID
+LINKEDIN_CLIENT_ID
+6. Password Security
+
+Algorithm: PBKDF2-SHA256 via crypto.subtle — Web Crypto API.
+
+Salt: per-user random salt, 16 bytes, stored as hex prefix: saltHex:hashHex.
+
+OAuth guard: if password_hash is null — login returns '403 use provider login' — OAuth users cannot login via password.
+
+Config location:
+
+javascript
+CW._config.adapters.registry.auth.config.passwordHashIterations  // 100000
+CW._config.adapters.registry.auth.config.saltLength              // 16
+CW._config.adapters.registry.auth.config.maxFailedAttempts       // 5 (not yet wired)
+CW._config.adapters.registry.auth.config.lockDurationMs          // 15min (not yet wired)
+Open Items
+Item	Priority	Notes
+maxFailedAttempts login lockout	Medium	config defined, not wired
+Token invalidation on logout	Low	24h expiry + localStorage clear sufficient for NESEN
+Email verification flow	Medium	email_status FSM dim exists, flow not built
+Password reset flow	Medium	not built
+User rate limiting	Low	IP rate limit done, per-user limit config defined but not wired
+
+
+
+what we might miss strategically
+
+1. Input size validation
+Config has bodySize: 102400 (100KB) but not wired into Worker. Attacker can send huge payloads — DoS via memory exhaustion:
+
+javascript
+if (parseInt(req.headers.get('Content-Length') || 0) > cfg().adapters.registry.auth.config.bodySize) {
+  return new Response('413 Payload Too Large', { status: 413, headers: CORS })
+}
+2. _changes audit trail integrity
+_changes is read_only: 1 — user can't modify it via input. But currently by: null in many records — no authorship tracking. Should stamp run_doc.user.name on every change entry. Without it — no way to audit who changed what.
+
+3. Child run ACL
+run_doc.child() creates child runs — does the child inherit run_doc.user? If not — child operations run without ACL context. Check:
+
+javascript
+run_doc.child = async function (childOp) {
+  childOp.parent_run_id = run_doc.name
+  childOp.user = childOp.user ?? run_doc.user  // ← is this set?
+4. oauthCallback — existing user re-login
+Currently creates new User on every OAuth login — if user already exists, UNIQUE constraint error is caught and ignored. But _issueToken then does a fresh select to get the user. If user was modified (disabled, locked) — the fresh token still gets issued without checking _state.status.
+
+5. CORS — wildcard *
+
+javascript
+'Access-Control-Allow-Origin': '*'
+Any domain can call your Worker. For NESEN — should restrict to known origins:
+
+javascript
+'Access-Control-Allow-Origin': 'https://nesen.org'
+6. No HTTPS enforcement
+Worker is HTTPS by default on workers.dev — but if you add custom domain, ensure Always Use HTTPS is enabled in Cloudflare dashboard.
+
+7. run_doc serialization — sensitive fields in response
+Worker returns full run_doc as JSON — includes run_doc.user (JWT payload), run_doc.d1 (SQL queries), run_doc.target.data (full records). Browser receives more than it needs. Strip sensitive fields before returning:
+
+javascript
+delete run_doc.d1         // SQL internals
+delete run_doc._adapterLog
+return Response.json(run_doc, { headers: CORS })
+
+
+
+
