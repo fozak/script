@@ -1,0 +1,106 @@
+//NOT AGREED YET \
+https://claude.ai/chat/2c8c9f72-f25c-4c33-abe1-82d6c38b823e
+
+Let me pull the exact current state before suggesting anything.
+
+Relevant chats
+Relevant chats
+
+Good enough context. Here is the File schema with bisync fields, plus the key code sources:
+
+File schema:
+
+json
+{
+  "schema_name": "File",
+  "doctype": "Schema",
+  "title_field": "path",
+  "fields": [
+    { "fieldname": "file_name",    "fieldtype": "Data",     "label": "File Name",  "in_list_view": 1, "read_only": 1 },
+    { "fieldname": "extension",    "fieldtype": "Data",     "label": "Extension",  "in_list_view": 1, "read_only": 1 },
+    { "fieldname": "path",         "fieldtype": "Data",     "label": "Path",       "in_list_view": 1, "read_only": 1 },
+    { "fieldname": "directory",    "fieldtype": "Data",     "label": "Directory",  "in_list_view": 0, "read_only": 1 },
+    { "fieldname": "size",         "fieldtype": "Int",      "label": "Size",       "in_list_view": 0, "read_only": 1 },
+    { "fieldname": "modified",     "fieldtype": "Int",      "label": "Modified",   "in_list_view": 1, "read_only": 1 },
+    { "fieldname": "is_directory", "fieldtype": "Check",    "label": "Directory?", "in_list_view": 0, "read_only": 1 },
+    { "fieldname": "content",      "fieldtype": "Code",     "label": "Content",    "in_list_view": 0, "options": "HTML" },
+    { "fieldname": "ai_content",   "fieldtype": "Data",     "label": "AI Content", "in_list_view": 0 },
+    { "fieldname": "annotations",  "fieldtype": "Code",     "label": "Annotations","in_list_view": 0, "options": "JSON" },
+    { "fieldname": "synced",       "fieldtype": "Int",      "label": "Synced",     "in_list_view": 0, "read_only": 1, "hidden": 1 },
+    { "fieldname": "status",       "fieldtype": "Select",   "label": "Status",     "in_list_view": 1,
+      "options": "Draft\nReview\nApproved\nArchived" }
+  ]
+}
+
+BisyncSnapshot doctype — one record per domain:
+
+json
+{
+  "schema_name": "BisyncSnapshot",
+  "doctype": "Schema",
+  "title_field": "domain",
+  "fields": [
+    { "fieldname": "domain",    "fieldtype": "Data", "label": "Domain",   "reqd": 1 },
+    { "fieldname": "snapshot",  "fieldtype": "Code", "label": "Snapshot", "options": "JSON" },
+    { "fieldname": "synced_at", "fieldtype": "Int",  "label": "Synced At","read_only": 1 }
+  ]
+}
+
+snapshot stores [{path, size, modified}] — no sha256 needed.
+
+Key code sources in order of dependency:
+
+1. CW-utils.js          generateId("File", path)     PATH_KEYED
+                        sha256(text)                  Web Crypto
+
+2. CW-adapter-fs.js     _recordFromHandle()           add domain stamp
+                        _walkDir()                    unchanged
+                        bisync()                      new function
+                        _loadSnapshot()               load BisyncSnapshot from D1
+                        _saveSnapshot()               save after sync
+
+3. Worker route         GET  /sync?domain=            flat array from D1
+                        POST /sync                    upsert File record
+                        GET  /sync/snapshot?domain=   BisyncSnapshot record
+                        POST /sync/snapshot           save after sync
+
+4. folder-reader.html   on init → _loadSnapshot()
+                        compare local vs snapshot
+                        if dirty → bisync()
+
+The bisync decision function — the core:
+
+js
+function bisyncDecision(loc, rem) {
+  // identical — skip
+  if (loc.size === rem.size && loc.modified === rem.modified) return 'skip';
+
+  // size differs — newer modtime wins
+  if (loc.size !== rem.size) {
+    return loc.modified > rem.modified ? 'upload' : 'download';
+  }
+
+  // size same, modtime differs — D1 edited content wins
+  if (rem.content) return 'download';
+  return 'upload';
+}
+
+The snapshot fast-check — runs on folder-reader open:
+
+js
+async function isDirty(snapshot) {
+  for (const s of snapshot) {
+    const id  = generateId('File', s.path);
+    const rec = globalThis._fsIndex.get(id);
+    if (!rec) return true;                              // deleted locally
+    if (rec.data.size !== s.size) return true;          // size changed
+    if (rec.data.modified !== s.modified) return true;  // touched
+  }
+  // check for new local files not in snapshot
+  for (const rec of globalThis._fsIndex.values()) {
+    if (!snapshot.find(s => s.path === rec.data.path)) return true;
+  }
+  return false;
+}
+
+Early exit on first dirty file — O(1) best case, O(n) worst case.

@@ -1007,7 +1007,7 @@ const provenance = sourceRuns?.length
   if (explicitChanges) {
     changes = explicitChanges;
   } else {
-    const skip = new Set(['_changes', 'modified', 'modified_by', 'creation', 'files+', 'files-']);
+    const skip = CW._config.logChanges?.skip || new Set(['_changes', 'modified', 'modified_by', 'creation', 'files+', 'files-', 'password']);
     changes = Object.entries(run_doc.input)
       .filter(([k]) => !skip.has(k) && k !== '_state')
       .map(([k, v]) => ({

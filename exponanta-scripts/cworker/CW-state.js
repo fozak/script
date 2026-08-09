@@ -173,7 +173,8 @@ Object.assign(globalThis.CW, {
 
   // compile sideEffects and rules strings in CW.Schema into live functions
   // call once at boot after CW.Schema is populated from db.json
-  // after this no further eval of schema strings is needed anywhere
+  // after this no further eval of schema strings is needed anywhere   -1 version
+  /*
 _compileSchemas: function () {
   for (const [doctype, schema] of Object.entries(globalThis.CW.Schema || {})) {
 
@@ -253,7 +254,86 @@ const sysFields = (globalThis.CW._config?.systemFields || [])
   }
 
   console.log("✅ CW.Schema compiled")
+},*/
+_compileSchemas: function () {
+  for (const [doctype, schema] of Object.entries(globalThis.CW.Schema || {})) {
+
+    // ── 1. shell schema.fields exist, systemFields enrich/override ─
+    if (!schema.fields) schema.fields = [];
+    if (!schema._state) schema._state = {};
+
+    for (const sf of globalThis.CW._config?.systemFields || []) {
+      // normalize name → fieldname
+      const field = { ...sf };
+      if (sf.name && !sf.fieldname) field.fieldname = sf.name;
+      delete field.name;
+      delete field._state;
+
+      const idx = schema.fields.findIndex((f) => f.fieldname === field.fieldname);
+      if (idx === -1) {
+        schema.fields.push(field);                               // new → add
+      } else {
+        schema.fields[idx] = { ...schema.fields[idx], ...field }; // system WINS
+      }
+
+      // _state dim from systemField
+      if (sf._state) {
+        const key = sf._state.name;
+        if (!(key in schema._state)) {
+          schema._state[key] = { ...sf._state };                // new dim → add
+        } else {
+          schema._state[key] = { ...sf._state, ...schema._state[key] }; // doctype overrides system
+        }
+      }
+    }
+
+    // ── 2. doctypeFields — last override, doctype WINS ────────────
+    const doctypeFields = globalThis.CW._config?.doctypeFields?.[doctype] || [];
+
+    for (const df of doctypeFields) {
+      const field = { ...df };
+      if (df.name && !df.fieldname) field.fieldname = df.name;
+      delete field.name;
+      delete field._state;
+
+      const idx = schema.fields.findIndex((f) => f.fieldname === field.fieldname);
+      if (idx === -1) {
+        schema.fields.push(field);                               // new → add
+      } else {
+        schema.fields[idx] = { ...schema.fields[idx], ...field }; // doctype WINS
+      }
+
+      // _state dim from doctypeField
+      if (df._state) {
+        const key = df._state.name;
+        if (!(key in schema._state)) {
+          schema._state[key] = { ...df._state };
+        } else {
+          schema._state[key] = { ...df._state, ...schema._state[key] }; // doctype overrides
+        }
+      }
+    }
+
+    // ── 3. compile sideEffects/rules strings → live fns ──────────
+    for (const [dim, def] of Object.entries(schema._state || {})) {
+      for (const [key, fnStr] of Object.entries(def.sideEffects || {})) {
+        if (typeof fnStr === "string") {
+          try { def.sideEffects[key] = eval("(" + fnStr + ")"); }
+          catch (e) { console.error(`[CW] sideEffects[${doctype}][${dim}][${key}]`, e); }
+        }
+      }
+      for (const [key, fnStr] of Object.entries(def.rules || {})) {
+        if (typeof fnStr === "string") {
+          try { def.rules[key] = eval("(" + fnStr + ")"); }
+          catch (e) { console.error(`[CW] rules[${doctype}][${dim}][${key}]`, e); }
+        }
+      }
+    }
+  }
+
+  console.log("✅ CW.Schema compiled");
 },
+
 
   compileAll: async function () {
     let compiled = 0;

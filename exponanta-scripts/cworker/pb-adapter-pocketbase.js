@@ -173,27 +173,7 @@ async function select(run_doc) {
 // CREATE — reads from target.data[0] (not input)
 // ============================================================
 
-async function create(run_doc) {
 
-  //console.log("pb.create fired. PB create input:", JSON.stringify(run_doc.target?.data?.[0] || {}));
-  const { collection } = globalThis.CW._config;
-  const doc = run_doc.target?.data?.[0];
-  if (!doc) {
-    run_doc.error = "400 create: no target document";
-    return;
-  }
-  const { top, data } = _splitRecord(doc);
-
-  try {
-    const created = await globalThis.pb.collection(collection).create({ id: doc.name, ...top, data });
-    run_doc.target  = { data: [_mergeRecord(created)], meta: { id: created.id, name: created.name } };
-    run_doc.success = true;
-
-  } catch (err) {
-    console.error("PB create error:", JSON.stringify(err.response?.data || err.message));
-    run_doc.error = err.message;
-  }
-}
 
 // ============================================================
 // UPDATE — reads from target.data[0], no fetch, no merge

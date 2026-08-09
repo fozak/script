@@ -191,6 +191,19 @@ CW.Schema.Http = {
   ],
 };
 
+//================================
+
+CW.Schema.HtmlForm = {
+  schema_name: "HtmlForm",
+  fields: [
+    { fieldname: "form_type", fieldtype: "Data", in_list_view: 1 },
+    { fieldname: "formdata", fieldtype: "Code", options: "JSON" },
+  ],
+  permissions: [
+    { role: "System Manager", read: 1, write: 1, create: 1, delete: 1 },
+  ],
+};
+
 globalThis.CW._config = {
   roles: {
     systemManager: "rolesystemmanag",
@@ -225,8 +238,8 @@ globalThis.CW._config = {
         if (!uid) {
           run_doc.d1.conditions.push({
             key: "aclFilter",
-            sql: `(__je_allowed_read.value = '${cfg.roles.public}')`,
-            params: [],
+            sql: `(item.domain = ? AND __je_allowed_read.value = '${cfg.roles.public}')`,
+            params: [domain],
           });
           return;
         }
@@ -358,6 +371,22 @@ globalThis.CW._config = {
     "files",
     "data", // ← blob column
   ]),
+
+  logChanges: {
+    skip: new Set([
+      "_changes",
+      "modified",
+      "modified_by",
+      "creation",
+      "_state",
+      "_allowed",
+      "_allowed_read",
+      "files",
+      "name",
+      "doctype",
+      "password",
+    ]),
+  },
 
   publicDoctypes: ["Event", "WebPage", "UserPublicProfile", "Session"],
 
@@ -494,19 +523,28 @@ globalThis.CW._config = {
       label: "State",
       onCreate: (run_doc) => {
         const doc = run_doc.target?.data?.[0];
-        if (doc && !doc._state) doc._state = {};
+        if (!doc) return;
+        if (!doc._state) doc._state = {};
+        // stamp FSM dim defaults for all dims at record birth
+        const stateDef = CW._getStateDef(run_doc.target_doctype);
+        for (const [dim, dimDef] of Object.entries(stateDef || {})) {
+          if (!(dim in doc._state)) {
+            doc._state[dim] = dimDef.default ?? dimDef.values?.[0] ?? null;
+          }
+        }
       },
       _state: {
         name: "docstatus",
         default: "Draft",
         values: ["Draft", "Submitted", "Cancelled"],
         transitions: {
-          Draft: ["Submitted"],
+          Draft: ["Submitted", "Cancelled"], // ← add Cancelled as valid from Draft
           Submitted: ["Cancelled"],
           Cancelled: [],
         },
         labels: {
           "Draft.Submitted": "Submit",
+          "Draft.Cancelled": "Delete", // ← add this
           "Submitted.Cancelled": "Cancel",
         },
       },
@@ -520,13 +558,26 @@ globalThis.CW._config = {
       in_local_view: 1,
       read_only: 1,
       onCreate: (run_doc) => {
-        // ← after _state
         const doc = run_doc.target?.data?.[0];
-        if (doc) doc.docstatus = doc._state?.docstatus ?? 0;
+        if (!doc) return;
+        const dimDef = CW._getStateDef(run_doc.target_doctype)?.docstatus;
+        if (dimDef) {
+          const idx = dimDef.values.indexOf(doc._state?.docstatus);
+          doc.docstatus = idx >= 0 ? idx : 0;
+        } else {
+          doc.docstatus = doc.docstatus ?? 0;
+        }
       },
       onWrite: (run_doc) => {
         const doc = run_doc.target?.data?.[0];
-        if (doc) doc.docstatus = doc._state?.docstatus ?? 0;
+        if (!doc) return;
+        const dimDef = CW._getStateDef(run_doc.target_doctype)?.docstatus;
+        if (dimDef) {
+          const idx = dimDef.values.indexOf(doc._state?.docstatus);
+          doc.docstatus = idx >= 0 ? idx : 0;
+        } else {
+          doc.docstatus = doc.docstatus ?? 0;
+        }
       },
     },
     {
@@ -798,20 +849,7 @@ globalThis.CW._config = {
         console.log("onCreate fired");
         const doc = run_doc.target?.data?.[0];
         if (!doc) return;
-        const skip = new Set([
-          "_changes",
-          "modified",
-          "modified_by",
-          "creation",
-          "_state",
-          "_allowed",
-          "_allowed_read",
-          "files",
-          "name",
-          "doctype",
-          "docstatus",
-          "owner",
-        ]);
+        const skip = CW._config.logChanges?.skip;
         const ch = Object.entries(doc)
           .filter(
             ([k, v]) =>

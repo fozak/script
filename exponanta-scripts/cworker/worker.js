@@ -39,6 +39,23 @@ export default {
           req.headers.get("Authorization") || "",
           env.JWT_SECRET,
         );
+
+        // stamp domain from Origin — trusted, browser cannot spoof cross-origin
+        const origin = req.headers.get("Origin") || "";
+        run_doc.user = run_doc.user || {};
+        run_doc.user.domain =
+          run_doc.user.domain || (origin ? new URL(origin).hostname : "");
+
+        if (!run_doc.user.domain) {
+          return Response.json(
+            { error: "400 domain required" },
+            { status: 400, headers: CORS },
+          );
+        }
+
+        // end domain
+
+
         const op = { operation: run_doc.operation };
         CW._resolveAll(op);
         await globalThis.Adapters[op.adapter]?.[run_doc.operation]?.(run_doc);
@@ -55,23 +72,6 @@ export default {
     for (const route of CW._config.routes?.filter((r) => r.method === "GET") ||
       []) {
       if (!new URLPattern({ pathname: route.path }).exec(url)) continue;
-
-      /*const run_doc = await CW.run({
-        operation: route.operation,
-        target_doctype: "Http",
-        input: {
-          provider: route.provider,
-          code: url.searchParams.get("code"),
-          state: url.searchParams.get("state"),
-          //return_url: url.searchParams.get('state') ? atob(url.searchParams.get('state')) : '/',
-
-          return_url: url.searchParams.get("state")
-            ? new URL(atob(url.searchParams.get("state")), url.origin).href
-            : url.origin + "/",
-        },
-        autosave: 0,
-        options: { render: false },
-      });*/
 
       const run_doc = await CW.run({
         operation: route.operation,

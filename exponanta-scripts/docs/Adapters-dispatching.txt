@@ -1,0 +1,66 @@
+From your actual _getAdapters code, complete routing picture:
+
+run_doc.adapter is null/undefined
+
+js
+CW.run({ operation: 'select', target_doctype: 'Task' })
+→ _getAdapters → [defaults.db] → ['d1']
+→ Adapters.d1.select(run_doc)
+
+run_doc.adapter is a string
+
+js
+CW.run({ operation: 'process', target_doctype: 'File', adapter: 'ai' })
+→ _getAdapters → ['ai']
+→ Adapters.ai.process(run_doc)
+
+run_doc.adapter is an array
+
+js
+// set via doctypeAdapters config resolution in _resolveAll
+run_doc.adapter = ['fs', 'dispatch', 'd1']
+→ _getAdapters → ['fs', 'dispatch', 'd1']
+→ Adapters.fs.update(run_doc)
+→ Adapters.dispatch.update(run_doc)
+→ Adapters.d1.update(run_doc)
+
+run_doc.adapter is an object, operation key exists
+
+js
+// doctypeAdapters: { File: { select: 'fs', update: ['fs','dispatch','d1'] } }
+run_doc.adapter = { select: 'fs', update: ['fs','dispatch','d1'] }
+run_doc.operation = 'select'
+→ a['select'] = 'fs'
+→ _getAdapters → ['fs']
+→ Adapters.fs.select(run_doc)
+
+run_doc.adapter is an object, operation key missing, default key exists
+
+js
+run_doc.adapter = { default: 'd1', process: 'ai' }
+run_doc.operation = 'select'
+→ a['select'] = undefined
+→ a['default'] = 'd1'
+→ _getAdapters → ['d1']
+→ Adapters.d1.select(run_doc)
+
+run_doc.adapter is an object, neither operation nor default key exists
+
+js
+run_doc.adapter = { process: 'ai' }
+run_doc.operation = 'select'
+→ a['select'] = undefined
+→ a['default'] = undefined
+→ falls to defaults.db = 'd1'
+→ _getAdapters → ['d1']
+→ Adapters.d1.select(run_doc)
+
+Summary table:
+
+adapter value          operation match    result
+─────────────────────────────────────────────────────
+null/undefined         any                [defaults.db]
+string                 any                [string]
+array                  any                array as-is
+object                 key exists         [].concat(a[operation])
+object                 key missing        [].concat(a['default'] || defaults.db)

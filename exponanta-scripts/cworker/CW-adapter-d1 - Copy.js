@@ -166,6 +166,10 @@
   // AUTH HELPERS — User only
   // ============================================================
 
+  async function _pbkdf2(password) {
+    return pbkdf2(password); // globalThis.pbkdf2 from CW-utils.js
+  }
+
   function _buildUserPayload(doc) {
     const schema = CW.Schema?.User;
     const fields = (schema?.fields || [])
@@ -199,7 +203,7 @@
     run_doc.user = { ...payload, token };
   }
 
-  /* ── NEW: OAuth code exchange not used──────────────────────────────
+  // ── NEW: OAuth code exchange ──────────────────────────────
   async function _exchangeOAuthCode(provider, code) {
     const oauthCfg = CW._config.oauth?.[provider];
     if (!oauthCfg) return null;
@@ -225,7 +229,6 @@
     const raw = await userRes.json();
     return oauthCfg.mapUser(raw);
   }
-    */
 
   //==========REFACTORING =======================================
 
@@ -349,9 +352,68 @@
   // CREATE
   // ============================================================
 
+  async function _d1Insert(run_doc) {
+    const doc = run_doc.target?.data?.[0];
+    if (!doc) {
+      run_doc.error = "400 create: no target document";
+      return;
+    }
+
+    const { top, data } = _splitRecord(doc);
+    const topKeys = Object.keys(top);
+
+    const topVals = Object.values(top).map((v) => (v === undefined ? null : v));
+
+    const sql = `
+      INSERT INTO ${cfg().collection}
+      (${topKeys.join(", ")}, data)
+      VALUES (${topKeys.map(() => "?").join(", ")}, ?)
+    `;
+    try {
+      await globalThis.env.DB.prepare(sql)
+        .bind(...topVals, JSON.stringify(data))
+        .run();
+      run_doc.target = { data: [doc], meta: { name: doc.name } };
+      run_doc.success = true;
+    } catch (err) {
+      run_doc.error = err.message;
+    }
+  }
+
+  async function createUser(run_doc) {
+    const doc = run_doc.target?.data?.[0];
+    if (!doc) {
+      run_doc.error = "400 createUser: no target document";
+      return;
+    }
+
+    // step 1 — userFields onCreate hooks
+    // (password_hash, owner, _allowed, _allowed_read)
+    for (const f of CW._config.userFields || []) {
+      if (f.onCreate) await f.onCreate(run_doc);
+    }
+
+    // step 2 — initialize _state with FSM defaults
+    const stateDef = CW._getStateDef("User");
+    if (!doc._state) doc._state = {};
+    for (const [dim, dimDef] of Object.entries(stateDef)) {
+      if (!(dim in doc._state)) {
+        doc._state[dim] = dimDef.default ?? dimDef.values?.[0] ?? null;
+      }
+    }
+
+    // step 3 — D1 insert
+    await _d1Insert(run_doc);
+    if (run_doc.error) return;
+
+    // step 4 — issue JWT
+    await _issueToken(doc, run_doc);
+  }
+
   async function create(run_doc) {
     if (!globalThis.env?.DB) {
       await _post(run_doc);
+      // client branch — store currentUser after User create
       if (
         run_doc.target_doctype === "User" &&
         run_doc.success &&
@@ -362,46 +424,108 @@
       }
       return;
     }
-
-    const doc = run_doc.target?.data?.[0];
-    if (!doc) {
-      run_doc.error = "400 create: no target document";
-      return;
-    }
-
-    const { top, data } = _splitRecord(doc);
-    const topKeys = Object.keys(top);
-    const topVals = Object.values(top).map((v) => (v === undefined ? null : v));
-
-    try {
-      await globalThis.env.DB.prepare(
-        `
-      INSERT INTO ${cfg().collection}
-      (${topKeys.join(", ")}, data)
-      VALUES (${topKeys.map(() => "?").join(", ")}, ?)
-    `,
-      )
-        .bind(...topVals, JSON.stringify(data))
-        .run();
-
-      run_doc.target = {
-        data: [_mergeRecord({ ...top, data: JSON.stringify(data) })],
-        meta: { name: doc.name },
-      };
-      run_doc.success = true;
-    } catch (err) {
-      run_doc.error = err.message;
-    }
-
-    // User only — issue JWT post-write
-    if (run_doc.target_doctype === "User" && !run_doc.error) {
-      await _issueToken(run_doc.target.data[0], run_doc);
-    }
+    if (run_doc.target_doctype === "User") return createUser(run_doc);
+    await _d1Insert(run_doc);
   }
 
   // ============================================================
   // UPDATE
   // ============================================================
+
+  async function _d1Update(run_doc) {
+    const doc = run_doc.target?.data?.[0];
+    const name = doc?.name || run_doc.query?.where?.name;
+    if (!name) {
+      run_doc.error = "400 update: no record name";
+      return;
+    }
+
+    const { top, data } = _splitRecord(doc);
+    const sets = Object.keys(top).map((k) => `${k} = ?`);
+    const vals = Object.values(top);
+
+    const sql = `
+      UPDATE ${cfg().collection}
+      SET ${sets.join(", ")}, data = ?
+      WHERE name = ?
+    `;
+    try {
+      await globalThis.env.DB.prepare(sql)
+        .bind(...vals, JSON.stringify(data), name)
+        .run();
+      run_doc.target = { data: [doc], meta: { name } };
+      run_doc.success = true;
+    } catch (err) {
+      run_doc.error = err.message;
+    }
+  }
+
+  async function updateUser(run_doc) {
+    const doc = run_doc.target?.data?.[0];
+    if (!doc) {
+      run_doc.error = "400 updateUser: no target document";
+      return;
+    }
+
+    // userFields onUpdate hooks
+    for (const f of CW._config.userFields || []) {
+      if (f.onUpdate) await f.onUpdate(run_doc);
+    }
+
+    await _d1Update(run_doc);
+    if (run_doc.error) return;
+
+    // re-issue JWT with updated payload
+    await _issueToken(doc, run_doc);
+  }
+
+  /*async function update(run_doc) {
+    if (!globalThis.env?.DB) {
+      await _post(run_doc);
+      // client branch — refresh currentUser if User updated
+      if (
+        run_doc.target_doctype === "User" &&
+        run_doc.success &&
+        run_doc.user?.token
+      ) {
+        localStorage.setItem("currentUser", JSON.stringify(run_doc.user));
+        globalThis.currentUser = run_doc.user;
+      }
+      return;
+    }
+    if (run_doc.target_doctype === "User") return updateUser(run_doc);
+    await _d1Update(run_doc);
+  }
+
+  // ============================================================
+  // DELETE
+  // ============================================================
+
+  async function _delete(run_doc) {
+    if (!globalThis.env?.DB) {
+      await _post(run_doc);
+      return;
+    }
+
+    const name = run_doc.target?.data?.[0]?.name || run_doc.query?.where?.name;
+    if (!name) {
+      run_doc.error = "400 delete: no record name";
+      return;
+    }
+
+    try {
+      await globalThis.env.DB.prepare(
+        `DELETE FROM ${cfg().collection} WHERE name = ?`,
+      )
+        .bind(name)
+        .run();
+      run_doc.success = true;
+    } catch (err) {
+      run_doc.error = err.message;
+    }
+  }*/
+
+  //refactored Updated
 
   async function update(run_doc) {
     if (!globalThis.env?.DB) {
@@ -447,38 +571,9 @@
 
     // User only — re-issue JWT post-write
     if (run_doc.target_doctype === "User" && !run_doc.error) {
-      await _issueToken(run_doc.target.data[0], run_doc);
+      await _issueToken(doc, run_doc);
     }
   }
-
-  // ============================================================
-  // DELETE
-  // ============================================================
-//dummy delete
-  async function _delete(run_doc) {
-    /*if (!globalThis.env?.DB) {
-      await _post(run_doc);
-      return;
-    }
-
-    const name = run_doc.target?.data?.[0]?.name || run_doc.query?.where?.name;
-    if (!name) {
-      run_doc.error = "400 delete: no record name";
-      return;
-    }
-
-    try {
-      await globalThis.env.DB.prepare(
-        `DELETE FROM ${cfg().collection} WHERE name = ?`,
-      )
-        .bind(name)
-        .run();
-      run_doc.success = true;
-    } catch (err) {
-      run_doc.error = err.message;
-    }*/
-  }
-
 
   // ============================================================
   // AUTH OPERATIONS

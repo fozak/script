@@ -1,0 +1,130 @@
+Widgets & HtmlForm — Architecture Documentation
+Widget Pattern
+
+Concept: Self-contained JS file served from hub. Page includes one div + one script tag. Zero HTML in page.
+
+Page side — 2 lines:
+
+html
+<div id="nesen-visit-apply"></div>
+<script src="https://hub-cf.i771468.workers.dev/widgets/visit-apply.js"></script>
+
+Widget file structure — single IIFE:
+
+javascript
+// widgets/visit-apply.js
+(function() {
+  // 1. inject HTML
+  document.getElementById('visit-apply').innerHTML = `...tabler html...`
+
+  // 2. define form schema — single source of truth
+  const formdata = {
+    form_type: 'GuestVisit',
+    fields: [
+      { name: 'first_name',     reqd: 1, label: 'First name' },
+      { name: 'last_name',      reqd: 1, label: 'Last name' },
+      { name: 'email',          reqd: 1, label: 'Email' },
+      { name: 'phone',                   label: 'Phone' },
+      { name: 'linkedin_url',   reqd: 1, label: 'LinkedIn profile' },
+      { name: 'recommended_by',          label: 'Recommended by' },
+      { name: 'interest',       reqd: 1, label: 'I am interested in…' },
+      { name: 'visit_date',     reqd: 1, label: 'Visit date' },
+      { name: 'terms_accepted', reqd: 1, label: 'Terms accepted', checkbox: 1 },
+    ]
+  }
+
+  // 3. init slots, wire events, handle submit
+  initSlots()
+  wireEvents()
+})()
+
+Served from: Cloudflare Workers assets — edge cached, globally fast, same infrastructure as hub.
+
+formdata.fields — Single Source of Truth
+
+One array drives three things — no duplication:
+
+Concern	How driven
+Collection	forEach reads id="f-{name}" from DOM
+Validation	filter(f => f.reqd && !collected[f.name])
+Error messages	map(f => f.label)
+
+Field definition:
+
+javascript
+{ 
+  name:     'first_name',  // → id="f-first_name" in HTML
+  reqd:     1,             // → validated on submit
+  label:    'First name',  // → shown in error message
+  checkbox: 1              // → collected as checked state (optional)
+}
+
+HTML input naming convention — id="f-{fieldname}":
+
+html
+<input type="text" id="f-first_name" placeholder="First name">
+<input type="checkbox" id="f-terms_accepted">
+HtmlForm Doctype
+
+Purpose: Universal D1 storage for all HTML form submissions. One doctype, all form types.
+
+Schema:
+
+javascript
+CW.Schema.HtmlForm = {
+  schema_name: 'HtmlForm',
+  fields: [
+    { fieldname: 'form_type', fieldtype: 'Data', reqd: 1, in_list_view: 1 },
+    { fieldname: 'formdata',  fieldtype: 'Code', options: 'JSON' },
+  ],
+  permissions: [
+    { role: 'System Manager', read: 1, write: 1, create: 1, delete: 1 }
+  ]
+}
+
+D1 record structure:
+
+doctype:   'HtmlForm'
+form_type: 'GuestVisit'             ← identifies which form
+formdata:  '{"first_name":"Denis","email":"...","visit_date":"..."}' ← all fields as JSON
+domain:    'nesen.org'              ← tenant
+owner:     'user01fldlgkbtq'        ← submitter (if logged in)
+_changes:  [...]                    ← full audit trail
+
+Submit call:
+
+javascript
+CW.run({
+  operation:      'create',
+  target_doctype: 'HtmlForm',
+  input: {
+    form_type: formdata.form_type,
+    formdata:  JSON.stringify(collected),
+    domain:    window.location.hostname,
+  },
+  options: { render: false }
+})
+Key Benefits
+
+1. Zero backend changes per new form
+New form = new widget JS file + new form_type string. D1 stores everything. No schema migration, no new doctype, no Worker deployment.
+
+2. Full audit trail automatically
+Every submission gets owner, domain, created, _changes via CW pipeline. Who submitted, when, from which site — all in D1.
+
+3. Client controls data shape
+formdata JSON is opaque to backend. Designer changes a field → update HTML + formdata.fields → done. Backend never touched.
+
+4. Multi-tenant isolation
+domain stamped automatically from window.location.hostname. nesen.org submissions visible only to nesen.org admins via ACL.
+
+5. Minimal page footprint
+Two lines per form. Widget HTML/JS managed from hub — update once, all sites updated instantly.
+
+Adding a New Form
+Create widgets/new-form.js on hub with new formdata.fields
+Add HTML inputs with matching id="f-{fieldname}"
+Change form_type string
+Add two lines to page
+
+No backend changes. No schema changes. No deployment beyond uploading the JS file.

@@ -120,7 +120,7 @@ CW._mergeInput = function (run_doc) {
     Object.assign(doc._state, run_doc.input._state);
   }
   //test
-   //console.log('_mergeInput doc.status after:', doc?.status);
+  //console.log('_mergeInput doc.status after:', doc?.status);
 };
 
 // ============================================================
@@ -143,7 +143,6 @@ CW._stripVirtual = function (run_doc) {
     .filter((f) => f.virtual)
     .forEach((f) => delete doc[f.fieldname]);
 };
-
 
 // ============================================================
 // CW._expand
@@ -306,7 +305,7 @@ CW.controller = async function (run_doc) {
           CW._clearInput(run_doc);
 
           // PHASE 2 — persist adapters (db only)
-          CW._preflight(run_doc);
+          await CW._preflight(run_doc); // added await
           if (!run_doc.error) {
             CW._stripVirtual(run_doc);
 
@@ -397,7 +396,7 @@ CW.run = async function (op) {
     parent_run_id: op.parent_run_id || null,
     child_run_ids: [],
     options: op.options || {},
-    user: op.user ?? globalThis.currentUser ?? {},  //<-migrated to use globalThis.currentUser if op.user is not provided
+    user: op.user ?? globalThis.currentUser ?? {}, //<-migrated to use globalThis.currentUser if op.user is not provided
   };
 
   run_doc.child = async function (childOp) {
@@ -421,7 +420,8 @@ CW.run = async function (op) {
 // Operates on target.data[0] — not input
 // ============================================================
 
-CW._preflight = function (run_doc) {
+CW._preflight = async function (run_doc) {
+  // added async
   const operation = run_doc.operation;
   const schema = CW.Schema?.[run_doc.target_doctype];
   const doc = run_doc.target?.data?.[0];
@@ -483,10 +483,15 @@ CW._preflight = function (run_doc) {
     }
   }
 
-  // systemFields — operate on target.data[0] via run_doc
-  for (const sf of CW._config.systemFields || []) {
+  // REFACTORE systemFields — operate on target.data[0] via run_doc
+  /*for (const sf of CW._config.systemFields || []) {
     if (sf.onWrite) sf.onWrite(run_doc);
     if (sf.onCreate && operation === "create") sf.onCreate(run_doc);
+  }*/
+  // compiled schema.fields is single source of truth — includes systemFields + userFields hooks
+  for (const f of schema?.fields || []) {
+    if (f.onWrite) await f.onWrite(run_doc);
+    if (f.onCreate && operation === "create") await f.onCreate(run_doc);
   }
 };
 
@@ -519,7 +524,7 @@ CW._handlers = {
 
     const schema =
       CW.Schema?.[run_doc.target_doctype ?? run_doc.source_doctype];
-    const activeView = run_doc.view || run_doc.query?.view || "list";
+    const activeView = run_doc.view || run_doc.query?.view || "form"; //was list
     const sel = run_doc.query?.select;
 
     if (schema && !sel) {
@@ -562,7 +567,7 @@ CW._handlers = {
   },
 
   create: async function (run_doc) {
-    CW._preflight(run_doc);
+    await CW._preflight(run_doc); //added await
     if (run_doc.error) return;
     CW._stripVirtual(run_doc); // strip virtual after validation, before DB write
 
@@ -591,7 +596,7 @@ CW._handlers = {
     const editable = (doc?.docstatus ?? 0) === 0;
     if (!editable && !run_doc.options?.internal) return;
 
-    CW._preflight(run_doc);
+    await CW._preflight(run_doc); //added await
     if (run_doc.error) return;
     CW._stripVirtual(run_doc); // strip virtual after validation, before DB write
 
@@ -627,9 +632,48 @@ CW._handlers = {
     run_doc.target.data = docs;
   },
 
-  delete: async function (run_doc) {
+  /*newer verion 
     if (run_doc.target?.data?.[0]) run_doc.target.data[0].docstatus = 2;
     await CW._handlers.update(run_doc);
+  },*/
+  delete: async function (run_doc) {
+    const doc = run_doc.target?.data?.[0];
+    const name = doc?.name || run_doc.query?.where?.name;
+    if (!name) {
+      run_doc.error = "400 delete: no record name";
+      return;
+    }
+
+    const stateDef = CW._getStateDef(run_doc.target_doctype);
+    const docstatusDef = stateDef?.docstatus;
+    const currentSemantic = doc?._state?.docstatus;
+
+    if (!currentSemantic || !docstatusDef) {
+      run_doc.error = "400 delete: cannot determine current docstatus";
+      return;
+    }
+
+    const validTos = docstatusDef.transitions?.[currentSemantic] || [];
+    if (!validTos.includes("Cancelled")) {
+      run_doc.error = `400 delete: no transition from ${currentSemantic} to Cancelled`;
+      return;
+    }
+
+    const child = await CW.run({
+      operation: "update",
+      target_doctype: run_doc.target_doctype,
+      query: { where: { name } },
+      input: { _state: { [`docstatus.${currentSemantic}.Cancelled`]: "" } },
+      options: { render: false, internal: true },
+      user: run_doc.user,
+    });
+
+    if (child.error) {
+      run_doc.error = child.error;
+      return;
+    }
+    run_doc.target = child.target;
+    run_doc.success = true;
   },
 };
 

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Folder Reader</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="preconnect" href="https://rsms.me">
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/core@1.4.0/dist/css/tabler.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+</head>
+<body class="antialiased">
+  <div class="container-xl py-3">
+
+    <div class="page-header mb-3">
+      <div class="row align-items-center">
+        <div class="col">
+          <h2 class="page-title">Folder Reader</h2>
+          <div class="text-muted mt-1" id="bar"></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="drop-zone" class="card card-dashed cursor-pointer mb-3">
+      <div class="card-body text-center py-5">
+        <div class="mb-2"><i class="ti ti-folder-open fs-1 text-muted"></i></div>
+        <div class="text-muted">Click or drop a folder here</div>
+        <div class="text-muted small mt-1">Renders .html .htm .txt .md .json .js .css alphabetically</div>
+      </div>
+    </div>
+
+    <input type="file" id="fi" webkitdirectory multiple style="display:none">
+
+    <div id="scroller" style="display:none">
+      <!-- placeholders injected here -->
+    </div>
+
+  </div>
+
+  <script>
+    const drop = document.getElementById('drop-zone');
+    const scroller = document.getElementById('scroller');
+    const bar = document.getElementById('bar');
+    const fi = document.getElementById('fi');
+    let files = [];
+
+    drop.onclick = () => fi.click();
+    fi.onchange = e => load([...e.target.files]);
+    drop.ondragover = e => { e.preventDefault(); drop.classList.add('border-primary'); };
+    drop.ondragleave = () => drop.classList.remove('border-primary');
+    drop.ondrop = e => { e.preventDefault(); drop.classList.remove('border-primary'); load([...e.dataTransfer.files]); };
+
+    function load(all) {
+      files = all
+        .filter(f => /\.(html?|txt|md|json|js|css)$/i.test(f.name))
+        .sort((a, b) => a.name.localeCompare(b.name));
+      if (!files.length) { bar.textContent = 'No readable files found.'; return; }
+      drop.style.display = 'none';
+      bar.textContent = `${files.length} files — scroll to render`;
+      scroller.style.display = '';
+      scroller.innerHTML = '';
+      files.forEach((_, i) => {
+        const ph = document.createElement('div');
+        ph.className = 'card mb-2';
+        ph.dataset.i = i;
+        ph.style.minHeight = '400px';
+        scroller.appendChild(ph);
+        io.observe(ph);
+      });
+    }
+
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        const ph = e.target;
+        const i = +ph.dataset.i;
+        if (e.isIntersecting) {
+          if (ph.dataset.loaded) return;
+          ph.dataset.loaded = 1;
+          const f = files[i];
+          ph.innerHTML = `
+            <div class="card-header">
+              <div class="card-title">
+                <i class="ti ti-file me-1"></i>${f.name}
+              </div>
+              <div class="card-options">
+                <span class="badge bg-secondary">${(f.size / 1024).toFixed(1)} KB</span>
+              </div>
+            </div>
+            <div class="card-body p-0 content"></div>`;
+          f.text().then(txt => {
+            const c = ph.querySelector('.content');
+            if (/\.html?$/i.test(f.name)) {
+              const iframe = document.createElement('iframe');
+              iframe.style.cssText = 'width:100%;border:none;min-height:300px;display:block';
+              iframe.srcdoc = txt;
+              iframe.onload = () => {
+                try { iframe.style.height = iframe.contentDocument.body.scrollHeight + 32 + 'px'; } catch(_) {}
+              };
+              c.appendChild(iframe);
+            } else {
+              c.innerHTML = `<pre class="p-3 m-0" style="white-space:pre-wrap;font-size:13px">${txt.replace(/&/g,'&amp;').replace(/</g,'&lt;')}</pre>`;
+            }
+          });
+        } else {
+          if (ph.dataset.loaded) {
+            const header = ph.querySelector('.card-header');
+            ph.innerHTML = header ? header.outerHTML : '';
+            delete ph.dataset.loaded;
+          }
+        }
+      });
+    }, { threshold: 0.01 });
+  </script>
+</body>
+</html>
