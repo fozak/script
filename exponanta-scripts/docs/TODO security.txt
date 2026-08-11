@@ -1,0 +1,5 @@
+From the Security Implementation doc open items and the ACL discussion:
+
+1. Email verification flow — email_status FSM dim exists, flow not built. Without it, anyone can register with any email — no proof of ownership. Critical for a referral-first community where email identity matters.
+
+2. Login lockout — maxFailedAttempts — config defined (max: 5, lockDurationMs: 15min) but not wired. Currently brute-force on passwords is only rate-limited by IP (100 req/min), not by failed login attempts per user.

@@ -201,6 +201,8 @@ CW.Schema.HtmlForm = {
   ],
   permissions: [
     { role: "System Manager", read: 1, write: 1, create: 1, delete: 1 },
+    { role: "Public", read: 1},
+
   ],
 };
 
@@ -219,22 +221,20 @@ globalThis.CW._config = {
     aclFilter: (run_doc) => {
       const uid = run_doc.user?.name ?? "";
       const domain = run_doc.user?.domain ?? "";
-      const opType =
-        globalThis.CW._config.operations?.[run_doc.operation_original]?.type;
-      const isWrite = opType === "write" || opType === "updateMany";
       const cfg = globalThis.CW._config;
 
-      if (isWrite) {
-        if (!uid) {
-          run_doc.error = "401 unauthorized";
-          return;
-        }
+      // CREATE — domain only, userFields handles doctype constraints
+      if (run_doc.operation === "create") {
         run_doc.d1.conditions.push({
           key: "aclFilter",
-          sql: `(item.domain = ? AND (item.owner = ? OR __je_allowed.value = ? OR EXISTS (SELECT 1 FROM item_users iu WHERE iu.id = ? AND __je_allowed.value = iu.role_id)))`,
-          params: [domain, uid, uid, uid],
+          sql: `(item.domain = ?)`,
+          params: [domain],
         });
-      } else {
+        return;
+      }
+
+      // SELECT — public or authenticated
+      if (run_doc.operation === "select") {
         if (!uid) {
           run_doc.d1.conditions.push({
             key: "aclFilter",
@@ -245,11 +245,23 @@ globalThis.CW._config = {
         }
         run_doc.d1.conditions.push({
           key: "aclFilter",
-          sql: `(__je_allowed_read.value = '${cfg.roles.public}' OR (item.domain = ? AND (item.id = ? OR item.owner = ? OR __je_allowed.value = ? OR __je_allowed_read.value = ? OR EXISTS (SELECT 1 FROM item_users iu WHERE iu.id = ? AND __je_allowed.value = iu.role_id) OR EXISTS (SELECT 1 FROM item_users iu WHERE iu.id = ? AND __je_allowed_read.value = iu.role_id))))`,
+          sql: `(item.domain = ? AND (__je_allowed_read.value = '${cfg.roles.public}' OR item.id = ? OR item.owner = ? OR __je_allowed.value = ? OR __je_allowed_read.value = ? OR EXISTS (SELECT 1 FROM item_users iu WHERE iu.id = ? AND __je_allowed.value = iu.role_id) OR EXISTS (SELECT 1 FROM item_users iu WHERE iu.id = ? AND __je_allowed_read.value = iu.role_id)))`,
           params: [domain, uid, uid, uid, uid, uid, uid],
         });
+        return;
       }
-    },
+
+      // UPDATE/DELETE — must be authenticated
+      if (!uid) {
+        run_doc.error = "401 unauthorized";
+        return;
+      }
+      run_doc.d1.conditions.push({
+        key: "aclFilter",
+        sql: `(item.domain = ? AND (item.owner = ? OR __je_allowed.value = ? OR EXISTS (SELECT 1 FROM item_users iu WHERE iu.id = ? AND __je_allowed.value = iu.role_id)))`,
+        params: [domain, uid, uid, uid],
+      });
+    }, 
   },
 
   hub: {
@@ -925,7 +937,7 @@ globalThis.CW._config = {
       in_local_view: 1,
       onCreate: (run_doc) => {
         if (!run_doc.target.data[0].domain) {
-          run_doc.target.data[0].domain = "unknown";
+          run_doc.target.data[0].domain = run_doc.user?.domain ?? "";
         }
       },
     },
@@ -2632,8 +2644,32 @@ globalThis.CW._config = {
 CW._config.doctypeFields = {
   User: CW._config.userFields,
 };
-
+// --boot steps
 // compile last
 CW._compileSchemas();
+
+//----
+
+if (globalThis.window) {
+  // browser only
+  const _stored = localStorage.getItem("currentUser");
+  if (_stored) {
+    try {
+      globalThis.currentUser = JSON.parse(_stored);
+    } catch {}
+  }
+  if (!globalThis.currentUser) {
+    globalThis.currentUser = { domain: window.location.hostname };
+  }
+  const _oauthToken = new URLSearchParams(window.location.hash.slice(1)).get(
+    "token",
+  );
+  if (_oauthToken) {
+    const _payload = JSON.parse(atob(_oauthToken.split(".")[1]));
+    globalThis.currentUser = { ..._payload, token: _oauthToken };
+    localStorage.setItem("currentUser", JSON.stringify(globalThis.currentUser));
+    window.history.replaceState({}, "", window.location.pathname);
+  }
+}
 
 console.log("Coworker Config Loaded:", CW._config);

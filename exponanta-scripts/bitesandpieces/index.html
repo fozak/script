@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bites & Pieces</title>
+  <link rel="preconnect" href="https://rsms.me">
+  <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/core@1.4.0/dist/css/tabler.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+  <style>
+    #overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,.45); z-index:1000; align-items:center; justify-content:center; }
+    #overlay.open { display:flex; }
+    #dialog { background:#fff; border-radius:8px; padding:1.5rem; width:100%; max-width:540px; margin:1rem; }
+    #identity-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,.55); z-index:2000; align-items:center; justify-content:center; }
+    #identity-overlay.open { display:flex; }
+    #identity-dialog { background:#fff; border-radius:8px; padding:2rem; width:100%; max-width:400px; margin:1rem; }
+    .index-lines { list-style:none; padding:0; margin:0; }
+    .index-line { display:flex; align-items:center; gap:8px; padding:5px 0; border-bottom:1px solid var(--tblr-border-color); }
+    .index-line:last-child { border-bottom:none; }
+    .line-text { flex:1; font-size:.9rem; }
+    .line-text a { color:var(--tblr-primary); }
+    .link-dropdown { position:relative; }
+    .link-menu { display:none; position:absolute; left:0; top:100%; background:#fff; border:1px solid var(--tblr-border-color); border-radius:6px; padding:4px 0; z-index:100; min-width:220px; box-shadow:0 4px 12px rgba(0,0,0,.08); }
+    .link-menu.open { display:block; }
+    .link-item { display:flex; align-items:center; gap:8px; padding:6px 12px; font-size:.8rem; cursor:pointer; }
+    .link-item:hover { background:var(--tblr-light); }
+    .link-item-new { border-top:1px solid var(--tblr-border-color); color:var(--tblr-primary); margin-top:2px; }
+    .block-anchor { padding-top:3rem; margin-top:-3rem; }
+    .note-body { font-size:.9rem; white-space:pre-wrap; }
+    .avatar-initials { text-transform:uppercase; }
+    .hint { font-size:.7rem; color:var(--tblr-muted); margin-top:4px; }
+  </style>
+</head>
+<body class="antialiased">
+
+<!-- Identity overlay -->
+<div id="identity-overlay">
+  <div id="identity-dialog">
+    <h4 class="mb-1">Who are you?</h4>
+    <p class="text-muted mb-3" style="font-size:.875rem">Your name appears next to notes. No account needed.</p>
+    <div class="mb-3">
+      <label class="form-label">Full name</label>
+      <input type="text" id="identity-name" class="form-control" placeholder="e.g. Denis Potschitaev">
+    </div>
+    <button class="btn btn-primary w-100" onclick="saveIdentity()">Continue</button>
+  </div>
+</div>
+
+<!-- Add/edit overlay -->
+<div id="overlay">
+  <div id="dialog">
+    <h5 id="dialog-title" class="mb-3"></h5>
+    <textarea id="dialog-content" class="form-control font-monospace mb-1" rows="8"></textarea>
+    <div class="hint mb-3">Drag content from any tab &nbsp;·&nbsp; Ctrl+Enter to submit</div>
+    <div class="d-flex justify-content-end gap-2">
+      <button class="btn btn-link link-secondary" onclick="closeAdd()">Cancel</button>
+      <button class="btn btn-primary" onclick="submitAdd()"><i class="ti ti-check me-1"></i>Add</button>
+    </div>
+  </div>
+</div>
+
+<div class="container-xl py-4">
+  <div class="page-header mb-4">
+    <div class="row align-items-center">
+      <div class="col"><h1 class="page-title">Bites &amp; Pieces</h1></div>
+      <div class="col-auto">
+        <span class="d-flex align-items-center gap-2" onclick="changeIdentity()" style="cursor:pointer" title="Change name">
+          <span class="avatar avatar-sm rounded-circle avatar-initials text-uppercase" id="header-avatar" style="background-color:var(--tblr-primary);color:#fff;font-size:.7rem;"></span>
+          <span id="header-name" class="text-muted" style="font-size:.875rem"></span>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Index pinned -->
+  <div id="index-section" class="card mb-4" style="display:none">
+    <div class="card-header">
+      <h3 class="card-title"><i class="ti ti-list me-2"></i>Index</h3>
+      <div class="card-options">
+        <button class="btn btn-sm btn-ghost-secondary" onclick="editIndex()"><i class="ti ti-edit"></i></button>
+      </div>
+    </div>
+    <div class="card-body">
+      <ul class="index-lines" id="index-lines"></ul>
+      <button class="btn btn-sm btn-ghost-primary mt-2" onclick="addIndexLine()"><i class="ti ti-plus me-1"></i>Add line</button>
+    </div>
+  </div>
+
+  <div id="timeline" class="timeline"></div>
+
+  <div id="empty-state" class="empty">
+    <div class="empty-icon"><i class="ti ti-notes fs-1 text-muted"></i></div>
+    <p class="empty-title">Nothing here yet</p>
+    <p class="empty-subtitle text-muted">Start by adding an index or an HTML block.</p>
+    <div class="empty-action">
+      <div class="btn-group">
+        <button class="btn btn-outline-primary" onclick="openAdd('index', null)"><i class="ti ti-list me-1"></i>+ Index</button>
+        <button class="btn btn-outline-secondary" onclick="openAdd('html', null)"><i class="ti ti-code me-1"></i>+ HTML</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+var items = [];
+var indexItem = null;
+var indexLines = [];
+var pendingType = 'html';
+var pendingAfterPosition = null;
+var pendingEditId = null;
+var currentUser = null;
+
+// ── identity ──────────────────────────────────────────────────────────────────
+function loadIdentity() {
+  try { currentUser = JSON.parse(localStorage.getItem('currentUser')); } catch(e) { currentUser = null; }
+  if (!currentUser || !currentUser.full_name) {
+    document.getElementById('identity-overlay').classList.add('open');
+    document.getElementById('identity-name').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') saveIdentity();
+    });
+  } else {
+    renderUserBadge();
+    loadItems();
+  }
+}
+
+function saveIdentity() {
+  var name = document.getElementById('identity-name').value.trim();
+  if (!name) return;
+  currentUser = { full_name: name };
+  localStorage.setItem('currentUser', JSON.stringify(currentUser));
+  document.getElementById('identity-overlay').classList.remove('open');
+  renderUserBadge();
+  loadItems();
+}
+
+function changeIdentity() {
+  document.getElementById('identity-name').value = currentUser ? currentUser.full_name : '';
+  document.getElementById('identity-overlay').classList.add('open');
+}
+
+function renderUserBadge() {
+  if (!currentUser) return;
+  document.getElementById('header-avatar').textContent = initials2(currentUser.full_name);
+  document.getElementById('header-name').textContent = currentUser.full_name;
+}
+
+function initials2(name) {
+  var parts = name.trim().split(/\s+/);
+  return parts.length >= 2
+    ? (parts[0][0] + parts[parts.length-1][0]).toUpperCase()
+    : name.slice(0,2).toUpperCase();
+}
+
+// ── data ──────────────────────────────────────────────────────────────────────
+function loadItems() {
+  fetch('/api/items')
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      items = data;
+      indexItem = null;
+      for (var i = 0; i < items.length; i++) {
+        if (items[i].type === 'index') { indexItem = items[i]; break; }
+      }
+      if (indexItem) {
+        try { indexLines = JSON.parse(indexItem.content); } catch(e) { indexLines = []; }
+      }
+      render();
+    });
+}
+
+// ── block title extraction ────────────────────────────────────────────────────
+function blockTitle(html) {
+  var tmp = document.createElement('div');
+  tmp.innerHTML = html;
+  var h = tmp.querySelector('h1,h2,h3,h4,h5,h6');
+  if (h) return h.textContent.trim().slice(0, 50);
+  return tmp.textContent.trim().slice(0, 50) || ('Block #' + '?');
+}
+
+// ── render ────────────────────────────────────────────────────────────────────
+function insertControls(afterPos) {
+  var wrap = document.createElement('div');
+  wrap.className = 'my-2';
+  var group = document.createElement('div');
+  group.className = 'btn-group btn-group-sm';
+  var b1 = document.createElement('button');
+  b1.className = 'btn btn-ghost-primary btn-sm py-0';
+  b1.innerHTML = '<i class="ti ti-code me-1"></i>+ HTML';
+  b1.onclick = function() { openAdd('html', afterPos); };
+  var b2 = document.createElement('button');
+  b2.className = 'btn btn-ghost-secondary btn-sm py-0';
+  b2.innerHTML = '<i class="ti ti-message-circle me-1"></i>+ Note';
+  b2.onclick = function() { openAdd('note', afterPos); };
+  group.appendChild(b1);
+  group.appendChild(b2);
+  wrap.appendChild(group);
+  return wrap;
+}
+
+function render() {
+  var tl = document.getElementById('timeline');
+  var empty = document.getElementById('empty-state');
+  var indexSection = document.getElementById('index-section');
+  tl.innerHTML = '';
+
+  var nonIndex = items.filter(function(i) { return i.type !== 'index'; });
+
+  if (indexItem) {
+    indexSection.style.display = '';
+    renderIndexLines();
+  } else {
+    indexSection.style.display = 'none';
+  }
+
+  if (!nonIndex.length && !indexItem) { empty.style.display = ''; return; }
+  empty.style.display = 'none';
+
+  if (!indexItem) {
+    var pi = document.createElement('button');
+    pi.className = 'btn btn-sm btn-ghost-primary mb-2';
+    pi.innerHTML = '<i class="ti ti-list me-1"></i>+ Index';
+    pi.onclick = function() { openAdd('index', null); };
+    tl.appendChild(pi);
+  }
+
+  for (var i = 0; i < nonIndex.length; i++) {
+    if (i > 0) tl.appendChild(insertControls(nonIndex[i-1].position));
+    if (nonIndex[i].type === 'html') tl.appendChild(renderHTML(nonIndex[i]));
+    else if (nonIndex[i].type === 'note') tl.appendChild(renderNote(nonIndex[i]));
+  }
+
+  tl.appendChild(insertControls(nonIndex.length ? nonIndex[nonIndex.length-1].position : null));
+}
+
+function actionBtns(item) {
+  var wrap = document.createElement('div');
+  wrap.className = 'd-flex gap-1';
+
+  var editBtn = document.createElement('button');
+  editBtn.className = 'btn btn-ghost-secondary btn-icon btn-sm';
+  editBtn.innerHTML = '<i class="ti ti-pencil"></i>';
+  (function(it) {
+    editBtn.onclick = function() { openEdit(it); };
+  })(item);
+
+  var delBtn = document.createElement('button');
+  delBtn.className = 'btn btn-ghost-danger btn-icon btn-sm';
+  delBtn.innerHTML = '<i class="ti ti-trash"></i>';
+  (function(id) { delBtn.onclick = function() { deleteItem(id); }; })(item.id);
+
+  wrap.appendChild(editBtn);
+  wrap.appendChild(delBtn);
+  return wrap;
+}
+
+function renderHTML(item) {
+  var ev = document.createElement('div');
+  ev.className = 'timeline-event block-anchor';
+  ev.id = 'block-' + item.id;
+
+  var icon = document.createElement('div');
+  icon.className = 'timeline-event-icon bg-blue-lt';
+  icon.innerHTML = '<i class="ti ti-code text-blue"></i>';
+
+  var card = document.createElement('div');
+  card.className = 'card timeline-event-card';
+  var body = document.createElement('div');
+  body.className = 'card-body';
+
+  var header = document.createElement('div');
+  header.className = 'd-flex justify-content-between align-items-center mb-2';
+
+  var left = document.createElement('div');
+  left.className = 'd-flex align-items-center gap-2';
+
+  var badge = document.createElement('span');
+  badge.className = 'badge bg-blue-lt text-blue';
+  badge.textContent = '#' + item.id;
+
+  var copyBtn = document.createElement('button');
+  copyBtn.className = 'btn btn-sm btn-ghost-secondary';
+  copyBtn.style.fontSize = '.7rem';
+  copyBtn.innerHTML = '<i class="ti ti-link me-1"></i>copy link';
+  (function(id) {
+    copyBtn.onclick = function() {
+      navigator.clipboard.writeText(location.href.split('#')[0] + '#block-' + id);
+      copyBtn.innerHTML = '<i class="ti ti-check me-1"></i>copied';
+      setTimeout(function() { copyBtn.innerHTML = '<i class="ti ti-link me-1"></i>copy link'; }, 1500);
+    };
+  })(item.id);
+
+  left.appendChild(badge);
+  left.appendChild(copyBtn);
+  header.appendChild(left);
+  header.appendChild(actionBtns(item));
+
+  var content = document.createElement('div');
+  content.innerHTML = item.content;
+
+  body.appendChild(header);
+  body.appendChild(content);
+  card.appendChild(body);
+  ev.appendChild(icon);
+  ev.appendChild(card);
+  return ev;
+}
+
+function renderNote(item) {
+  var ev = document.createElement('div');
+  ev.className = 'timeline-event';
+
+  var icon = document.createElement('div');
+  icon.className = 'timeline-event-icon bg-azure-lt';
+  icon.innerHTML = '<i class="ti ti-message-circle text-azure"></i>';
+
+  var card = document.createElement('div');
+  card.className = 'card timeline-event-card';
+  var body = document.createElement('div');
+  body.className = 'card-body py-2';
+
+  var authorRow = document.createElement('div');
+  authorRow.className = 'd-flex align-items-center gap-2 mb-2';
+
+  var avatar = document.createElement('span');
+  avatar.className = 'avatar avatar-xs rounded-circle';
+  avatar.style.cssText = 'background-color:var(--tblr-azure);color:#fff;font-size:.6rem;width:24px;height:24px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;text-transform:uppercase;';
+  avatar.textContent = item.author ? initials2(item.author) : '?';
+
+  var name = document.createElement('span');
+  name.className = 'fw-medium';
+  name.style.fontSize = '.8rem';
+  name.textContent = item.author || 'Anonymous';
+
+  var ts = document.createElement('span');
+  ts.className = 'text-muted ms-auto';
+  ts.style.fontSize = '.75rem';
+  ts.textContent = item.created_at;
+
+  authorRow.appendChild(avatar);
+  authorRow.appendChild(name);
+  authorRow.appendChild(ts);
+  authorRow.appendChild(actionBtns(item));
+
+  var content = document.createElement('div');
+  content.className = 'note-body text-secondary ms-1';
+  content.textContent = item.content;
+
+  body.appendChild(authorRow);
+  body.appendChild(content);
+  card.appendChild(body);
+  ev.appendChild(icon);
+  ev.appendChild(card);
+  return ev;
+}
+
+// ── index lines ───────────────────────────────────────────────────────────────
+function renderIndexLines() {
+  var ul = document.getElementById('index-lines');
+  ul.innerHTML = '';
+  var htmlBlocks = items.filter(function(i) { return i.type === 'html'; });
+
+  indexLines.forEach(function(line, idx) {
+    var li = document.createElement('li');
+    li.className = 'index-line';
+
+    var span = document.createElement('div');
+    span.className = 'line-text';
+    if (line.anchor) {
+      var a = document.createElement('a');
+      a.href = '#block-' + line.anchor;
+      a.textContent = line.text;
+      span.appendChild(a);
+    } else {
+      span.textContent = line.text;
+    }
+
+    // edit line text
+    var editLineBtn = document.createElement('button');
+    editLineBtn.className = 'btn btn-xs btn-ghost-secondary';
+    editLineBtn.innerHTML = '<i class="ti ti-pencil"></i>';
+    (function(lineIdx) {
+      editLineBtn.onclick = function() {
+        var newText = prompt('Edit line:', indexLines[lineIdx].text);
+        if (newText === null) return;
+        indexLines[lineIdx].text = newText.trim();
+        saveIndex();
+      };
+    })(idx);
+
+    // +link dropdown
+    var dd = document.createElement('div');
+    dd.className = 'link-dropdown';
+    var btn = document.createElement('button');
+    btn.className = 'btn btn-xs btn-ghost-primary';
+    btn.innerHTML = '<i class="ti ti-link me-1"></i>+ link';
+    var menu = document.createElement('div');
+    menu.className = 'link-menu';
+
+    htmlBlocks.forEach(function(block) {
+      var opt = document.createElement('div');
+      opt.className = 'link-item';
+      var title = blockTitle(block.content) || ('Block #' + block.id);
+      opt.innerHTML = '<span class="badge bg-blue-lt text-blue me-1">#' + block.id + '</span>' + title;
+      (function(blockId, lineIdx) {
+        opt.onclick = function() {
+          indexLines[lineIdx].anchor = blockId;
+          saveIndex();
+          menu.classList.remove('open');
+        };
+      })(block.id, idx);
+      menu.appendChild(opt);
+    });
+
+    var newOpt = document.createElement('div');
+    newOpt.className = 'link-item link-item-new';
+    newOpt.innerHTML = '<i class="ti ti-plus me-1"></i>+ new HTML block';
+    newOpt.onclick = function() { openAdd('html', null); menu.classList.remove('open'); };
+    menu.appendChild(newOpt);
+
+    btn.onclick = function(e) {
+      e.stopPropagation();
+      document.querySelectorAll('.link-menu').forEach(function(m) { m.classList.remove('open'); });
+      menu.classList.toggle('open');
+    };
+
+    // delete line
+    var delLine = document.createElement('button');
+    delLine.className = 'btn btn-xs btn-ghost-danger';
+    delLine.innerHTML = '<i class="ti ti-trash"></i>';
+    (function(lineIdx) {
+      delLine.onclick = function() {
+        indexLines.splice(lineIdx, 1);
+        saveIndex();
+      };
+    })(idx);
+
+    dd.appendChild(btn);
+    dd.appendChild(menu);
+    li.appendChild(span);
+    li.appendChild(editLineBtn);
+    li.appendChild(dd);
+    li.appendChild(delLine);
+    ul.appendChild(li);
+  });
+
+  document.addEventListener('click', function() {
+    document.querySelectorAll('.link-menu').forEach(function(m) { m.classList.remove('open'); });
+  });
+}
+
+function addIndexLine() {
+  var text = prompt('Line text:');
+  if (!text) return;
+  indexLines.push({ text: text.trim(), anchor: null });
+  saveIndex();
+}
+
+function editIndex() {
+  var text = indexLines.map(function(l) { return l.text; }).join('\n');
+  var newText = prompt('Edit lines (one per line):', text);
+  if (newText === null) return;
+  var existing = {};
+  indexLines.forEach(function(l) { existing[l.text] = l.anchor; });
+  indexLines = newText.split('\n').filter(function(l) { return l.trim(); }).map(function(t) {
+    return { text: t.trim(), anchor: existing[t.trim()] || null };
+  });
+  saveIndex();
+}
+
+function saveIndex() {
+  var content = JSON.stringify(indexLines);
+  if (indexItem) {
+    fetch('/api/items/' + indexItem.id, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ content: content })
+    }).then(loadItems);
+  } else {
+    fetch('/api/items', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ type: 'index', content: content, position: 0, author: null })
+    }).then(loadItems);
+  }
+}
+
+// ── add / edit / delete ───────────────────────────────────────────────────────
+function openAdd(type, afterPos) {
+  pendingType = type;
+  pendingAfterPosition = afterPos;
+  pendingEditId = null;
+  if (type === 'index') { addIndexLine(); return; }
+  document.getElementById('dialog-title').textContent = type === 'html' ? 'Add HTML block' : 'Add note';
+  document.getElementById('dialog-content').value = '';
+  document.getElementById('dialog-content').placeholder = type === 'html'
+    ? '<h2>Hello</h2><p>Any HTML...</p>'
+    : 'Write your note...';
+  document.getElementById('overlay').classList.add('open');
+  document.getElementById('dialog-content').focus();
+}
+
+function openEdit(item) {
+  pendingEditId = item.id;
+  pendingType = item.type;
+  pendingAfterPosition = null;
+  document.getElementById('dialog-title').textContent = item.type === 'html' ? 'Edit HTML block' : 'Edit note';
+  document.getElementById('dialog-content').value = item.content;
+  document.getElementById('overlay').classList.add('open');
+  document.getElementById('dialog-content').focus();
+}
+
+function closeAdd() {
+  document.getElementById('overlay').classList.remove('open');
+  pendingEditId = null;
+}
+
+document.getElementById('overlay').addEventListener('click', function(e) {
+  if (e.target === this) closeAdd();
+});
+
+// Ctrl+Enter to submit
+document.getElementById('dialog-content').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) submitAdd();
+});
+
+// Drop handler — grab text/html first, fallback text/plain
+document.getElementById('dialog-content').addEventListener('drop', function(e) {
+  e.preventDefault();
+  var html = e.dataTransfer.getData('text/html');
+  var text = e.dataTransfer.getData('text/plain');
+  this.value = html || text;
+});
+
+function submitAdd() {
+  var content = document.getElementById('dialog-content').value.trim();
+  if (!content) return;
+
+  // editing existing
+  if (pendingEditId) {
+    fetch('/api/items/' + pendingEditId, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ content: content })
+    }).then(function() { closeAdd(); loadItems(); });
+    return;
+  }
+
+  var nonIndex = items.filter(function(i) { return i.type !== 'index'; });
+  var position;
+  if (pendingAfterPosition === null) {
+    position = nonIndex.length ? nonIndex[nonIndex.length-1].position + 1000 : 1000;
+  } else {
+    var idx = -1;
+    for (var i = 0; i < nonIndex.length; i++) {
+      if (nonIndex[i].position === pendingAfterPosition) { idx = i; break; }
+    }
+    var next = nonIndex[idx+1];
+    position = next ? (nonIndex[idx].position + next.position) / 2 : nonIndex[idx].position + 1000;
+  }
+
+  var author = (pendingType === 'note' && currentUser) ? currentUser.full_name : null;
+
+  fetch('/api/items', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ type: pendingType, content: content, position: position, author: author })
+  }).then(function() { closeAdd(); loadItems(); });
+}
+
+function deleteItem(id) {
+  if (!confirm('Delete?')) return;
+  fetch('/api/items/' + id, { method: 'DELETE' }).then(loadItems);
+}
+
+loadIdentity();
+</script>
+</body>
+</html>
