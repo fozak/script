@@ -1,4 +1,26 @@
+Better references for your specific stack:
 
+Edge	Better reference
+Flat table + JSON ACL	PostgreSQL RLS — row level security on one table
+Parent cascade	Closure table pattern — SQL standard
+Token intersection	Zanzibar (Google) — exactly your model
+Schema-driven ACL	Frappe — your direct ancestor
+D1/SQLite specific	Sqlite WITH RECURSIVE docs
+
+Zanzibar is your closest reference — Google's ACL system uses exactly:
+
+user has relation to object
+object has token set
+access = intersection
+
+
+
+
+
+user._allowed_read  = capabilities (roles + scopes)
+record._allowed     = access tokens (roles + scopes)
+item_users view     = flattens user capabilities for EXISTS check
+aclFilter           = domain AND (owner OR token intersection)
 
 
 ACL & Query Pipeline — Invariants & Decisions
