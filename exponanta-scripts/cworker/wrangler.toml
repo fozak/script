@@ -14,6 +14,3 @@ LINKEDIN_CLIENT_ID = "77csy2pgtctq9s"
 binding = "DB"
 database_name = "nesen-d1"
 database_id = "bfafca56-dbc9-49d5-a6cc-137ec0ee06c9"
-
-# [vars]
-# JWT_SECRET = "your-secret-here"

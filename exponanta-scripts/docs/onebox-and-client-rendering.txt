@@ -1,0 +1,61 @@
+Architecture: Client-Rendered File Views
+
+Core principle
+
+Worker is transport only. All rendering runs in the browser. D1 stores the output.
+
+What runs where:
+
+R2              raw file bytes — immutable
+browser         renders file → generates HTML (PDF.js etc)
+D1/FileView     stores rendered HTML snapshot — the only important thing
+D1/Annotation   collaborative layer, append-only
+D1/Run          notebook code + execution history
+
+Why not Dynamic Workers for rendering:
+
+Requires $5/month paid plan
+Child isolate has no CW globals
+CDN imports blocked in Workers (both standard and Dynamic)
+Client eval already works — full CW access, no deploy needed
+
+Why not storing render logic in Worker:
+
+CF Workers block eval and new Function
+CDN URL imports not supported — modules must be bundled at deploy time
+Dynamic Workers only justified for user code that changes independently of deploy cycle
+
+The onebox pattern:
+
+javascript
+// 1. client renders → save to D1
+CW.run({
+  operation: 'create',
+  target_doctype: 'FileView',
+  input: { file: 'doc.pdf', html, version: Date.now() }
+});
+
+// 2. onebox display — no re-render
+const rd = await CW.run({
+  operation: 'select',
+  target_doctype: 'FileView',
+  query: { where: { file: 'doc.pdf' } }
+});
+container.innerHTML = rd.target.data[0].html;
+
+Power user notebook (client eval):
+
+Monaco editor (browser)
+  → eval() — full CW globals available
+    → CW.run() for D1 data via _post transport
+      → CDN imports work freely (PDF.js etc)
+        → save code to Run record in D1
+
+Isomorphic guard for CDN imports:
+
+javascript
+// CW-utils.js — only in browser, not worker
+if (typeof globalThis.env === 'undefined') {
+  import('https://cdn.jsdelivr.net/npm/transliteration@2.3.5/...')
+    .then(({ slugify }) => { slugify.config({...}) });
+}

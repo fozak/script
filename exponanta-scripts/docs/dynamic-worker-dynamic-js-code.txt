@@ -1,0 +1,69 @@
+wrangler.toml change:
+
+toml
+[[worker_loaders]]
+binding = "LOADER"
+
+CW-adapter-d1.js addition (bottom of file):
+
+javascript
+globalThis.Adapters.d1.exec = async (run_doc) => {
+  const childCode = `
+    export default {
+      async fetch(req) {
+        const args = await req.json();
+        const fn = ${run_doc.input.code};
+        const result = await fn(args);
+        return Response.json({ result });
+      }
+    }
+  `;
+  const worker = globalThis.env.LOADER.load({
+    compatibilityDate: "2026-06-11",
+    mainModule: "child.js",
+    modules: { "child.js": childCode },
+    globalOutbound: null,
+  });
+  const res = await worker.getEntrypoint().fetch(
+    new Request("https://child/", {
+      method: "POST",
+      body: JSON.stringify(run_doc.input.args),
+    })
+  );
+  Object.assign(run_doc, await res.json());
+  run_doc.success = true;
+};
+
+How it flows:
+
+browser
+  → CW.run({ operation: 'exec', input: { code: '...', args: {...} } })
+    → _post(run_doc)                          // client→worker transport
+      → worker.js POST handler
+        → _resolveAll({ operation: 'exec' })  // resolves adapter → 'd1' (default)
+          → Adapters.d1.exec(run_doc)         // your new function
+            → LOADER.load(childCode)          // spawn V8 child isolate
+              → child executes fn(args)       // dynamic JS runs here
+            → Object.assign(run_doc, result)  // merge back
+      → Response.json(run_doc)
+    → Object.assign(run_doc, await res.json()) // client syncs
+
+What child.js is: just a virtual label — the key in modules: { "child.js": childCode } matches mainModule: "child.js". No actual file on disk.
+
+What the child isolate gets: only what you pass. globalOutbound: null means no network. No access to globalThis.CW, globalThis.Adapters, env.DB, or anything from the parent worker — completely isolated heap.
+
+Test from browser console:
+
+javascript
+const rd = await CW.run({
+  operation: "exec",
+  input: {
+    code: `async (args) => args.x * 2`,
+    args: { x: 21 }
+  }
+});
+console.log(rd.result); // 42
+
+Requires: Workers Paid plan ($5/month) — free plan returns error code 10195.
+
+Zero changes to worker.js — the existing POST → _resolveAll → Adapters[adapter][operation] dispatch handles it automatically since exec falls through to the d1 default adapter.

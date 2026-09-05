@@ -1,0 +1,37 @@
+Because we went too deep too fast. Let me reset.
+
+What you actually have and it works:
+
+Task {
+  subject: 'update2',
+  _allowed: ['roleprojecuserx', 'roleispublixxxx'],
+  _allowed_read: ['roleprojecmanag', 'roleispublixxxx'],
+  topic: []   ← add this field
+}
+
+What you need:
+
+Anyone reads the task ✓ already working
+Logged-in user appends a post to topic
+Post shows who wrote it
+
+That's it. One operation:
+
+javascript
+// logged in user adds a post
+const topic = [...(state.task.topic || []), {
+  id:      Date.now(),
+  owner:   currentUser.name,
+  name:    currentUser.full_name,
+  at:      Date.now(),
+  content: 'my note'
+}]
+
+await CW.run({
+  operation: 'update',
+  target_doctype: 'Task',
+  query: { where: { name: state.task.name } },
+  input: { topic }
+})
+
+Everything else — CRDT, Yjs, server-side intercept, vandalism protection — is future problems. Ship the simple version first.

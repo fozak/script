@@ -1,0 +1,147 @@
+recall the last hub. worker that providing Linkedin oather from third party website
+
+Searched memory, used a tool
+
+Here's the full LinkedIn OAuth hub worker architecture from that session (chat 07cdbe0e, turn 577). The design is universal — one handler covers any provider.
+
+worker.js — two universal OAuth routes
+javascript
+// ── OAuth redirect — any provider ────────────────────────
+if (path.startsWith('/auth/') && path.endsWith('/login')) {
+  const provider   = path.split('/')[2]
+  const oauthCfg   = CW._config.oauth[provider]
+  if (!oauthCfg) return new Response('Unknown provider', { status: 404 })
+
+  const return_url = url.searchParams.get('return_url') || '/'
+  const params     = new URLSearchParams({
+    client_id:     env[`${provider.toUpperCase()}_CLIENT_ID`],
+    redirect_uri:  `${env.WORKER_URL}/auth/${provider}/callback`,
+    response_type: 'code',
+    scope:         oauthCfg.scope,
+    state:         btoa(return_url),
+  })
+  return Response.redirect(`${oauthCfg.authUrl}?${params}`, 302)
+}
+
+// ── OAuth callback — any provider ────────────────────────
+if (path.startsWith('/auth/') && path.endsWith('/callback')) {
+  const provider   = path.split('/')[2]
+  const code       = url.searchParams.get('code')
+  const return_url = atob(url.searchParams.get('state') || btoa('/'))
+
+  const run_doc = {
+    operation:      'loginWithOAuth',
+    target_doctype: 'User',
+    input:          { provider, code },
+    user:           {}, target: null, query: {}, options: {}
+  }
+
+  await CW.controller(run_doc)
+
+  if (!run_doc.success)
+    return Response.redirect(`${return_url}?error=${encodeURIComponent(run_doc.error)}`, 302)
+
+  return Response.redirect(`${return_url}#token=${run_doc.user.token}`, 302)
+}
+CW-config.js — LinkedIn oauth entry
+javascript
+oauth: {
+  linkedin: {
+    authUrl:     'https://www.linkedin.com/oauth/v2/authorization',
+    tokenUrl:    'https://www.linkedin.com/oauth/v2/accessToken',
+    userInfoUrl: 'https://api.linkedin.com/v2/me',
+    scope:       'r_liteprofile r_emailaddress',
+    // no callbackPath — derived from provider name
+    mapUser: (u) => ({
+      email:       u.email,
+      full_name:   `${u.localizedFirstName} ${u.localizedLastName}`,
+      user_image:  u.profilePicture?.['displayImage~']?.elements?.[0]?.identifiers?.[0]?.identifier,
+      linkedin_id: u.id,
+      providers: {
+        linkedin: {
+          id:        u.id,
+          firstName: u.localizedFirstName,
+          lastName:  u.localizedLastName,
+          picture:   u.profilePicture?.['displayImage~']?.elements?.[0]?.identifiers?.[0]?.identifier,
+        }
+      }
+    })
+  }
+}
+Client — trigger from any third-party site
+javascript
+function oauthLogin(provider, returnUrl = window.location.href) {
+  window.location.href =
+    `${CW._config.hub.url}auth/${provider}/login?return_url=${encodeURIComponent(returnUrl)}`
+}
+
+oauthLogin('linkedin')  // → redirects through hub → LinkedIn → back to caller page
+
+Token extraction on return (on any page that receives the redirect back):
+
+javascript
+const token = new URLSearchParams(window.location.hash.slice(1)).get('token')
+if (token) {
+  const payload = JSON.parse(atob(token.split('.')[1]))
+  const currentUser = { ...payload, token }
+  localStorage.setItem('currentUser', JSON.stringify(currentUser))
+  globalThis.currentUser = currentUser
+  window.history.replaceState({}, '', window.location.pathname)
+}
+
+Key notes from that session:
+
+Token passes back in #fragment (not ?query) — browsers strip query params on cross-origin 302 redirects, fragments survive
+LinkedIn's callback must be server-side (hub Worker handles it) — unlike Google which can be client-side
+callbackPath in config is redundant — Worker derives it from provider name: /auth/${provider}/callback
+Cloudflare secrets needed: LINKEDIN_CLIENT_ID, LINKEDIN_CLIENT_SECRET, WORKER_URL
+Redirect URI registered in LinkedIn Developer Portal: https://hub-cf.i771468.workers.dev/auth/linkedin/callback
+
+recall last sucessfuk tests to login. from what portal its done
+
+Relevant chats
+
+Found it. The successful LinkedIn OAuth test was done from nesen.org/remote-shell.html.
+
+Here's what was confirmed working:
+
+Portal: nesen.org/remote-shell.html (browser console)
+
+Test trigger:
+
+javascript
+window.location.href = `${CW._config.hub.url}auth/linkedin/login?return_url=${encodeURIComponent(window.location.href)}`
+
+Confirmed results after return:
+
+globalThis.currentUser?.name  → 'user01fldlgkbtq'
+globalThis.currentUser?.email → 'dennis.didkovsky@gmail.com'
+domain in User record         → 'nesen.org'
+domain in JWT                 → 'nesen.org'
+
+Full stack confirmed in that same session:
+
+javascript
+const r = await CW.run({ operation: 'select', target_doctype: 'Task', options: { render: false } })
+// count: 9, success: true
+
+So the full chain — nesen.org → hub → LinkedIn → hub callback → #token= fragment → nesen.org/remote-shell.html localStorage — was working end to end. The test account was dennis.didkovsky@gmail.com.
+
+javascript
+const r = await CW.run({
+  operation: 'create',
+  target_doctype: 'Task',
+  input: { subject: 'Test task from hub' }
+})
+console.log(r.success, r.target?.data?.[0]?.name)
+
+everything works
+
+Nice. So the full stack is confirmed:
+
+remote-boot.js loads CW from hub ✓
+LinkedIn OAuth via hub ✓
+currentUser set on return ✓
+CW.run create Task to central D1 ✓
+
+Any third-party site with one <script> tag is now a full CW client against the central hub D1.

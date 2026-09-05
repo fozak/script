@@ -115,6 +115,13 @@ CW.Schema.User = {
       options: "JSON",
       hidden: 0,
     },
+    {
+      fieldname: "role",
+      fieldtype: "Data",
+      in_local_view: 1, // goes into JWT
+      read_only: 1, // system managed
+      hidden: 0,
+    },
   ],
   _state: {
     status: {
@@ -201,15 +208,14 @@ CW.Schema.HtmlForm = {
   ],
   permissions: [
     { role: "System Manager", read: 1, write: 1, create: 1, delete: 1 },
-    { role: "Public", read: 1},
-
+    { role: "Public", read: 1 },
   ],
 };
 
 globalThis.CW._config = {
   roles: {
     systemManager: "rolesystemmanag",
-    public: "roleispublicxxx",
+    public: "roleispublixxxx",
   },
 
   sql: {
@@ -261,7 +267,7 @@ globalThis.CW._config = {
         sql: `(item.domain = ? AND (item.owner = ? OR __je_allowed.value = ? OR EXISTS (SELECT 1 FROM item_users iu WHERE iu.id = ? AND __je_allowed.value = iu.role_id)))`,
         params: [domain, uid, uid, uid],
       });
-    }, 
+    },
   },
 
   hub: {
@@ -695,7 +701,7 @@ globalThis.CW._config = {
     },
     {
       name: "_allowed",
-      read_only: 1,
+      read_only: 0,  //was 1
       fetch: true,
       hidden: 0,
       fieldtype: "SharePanel",
@@ -767,7 +773,7 @@ globalThis.CW._config = {
       name: "_allowed_read",
       fieldtype: "Code", // ← not SharePanel
       options: "JSON",
-      read_only: 1,
+      read_only: 0,    //
       fetch: true,
       hidden: 0,
       in_local_view: 1,

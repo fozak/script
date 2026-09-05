@@ -1,0 +1,102 @@
+if Label containes doctype. if yes not adding, itherwize add
+
+Smart. Compile-time check:
+
+js
+// in _compileSchemas — derive sideEffect key per transition
+const fnName = label.replace(/\s+/g, '').includes(doctype)
+  ? label.replace(/\s+/g, '')           // 'DisableUser' — doctype already in label
+  : label.replace(/\s+/g, '') + doctype // 'ActivateUser' — doctype appended
+
+So:
+
+js
+CW.sideEffects = {
+  ActivateUser:         (run_doc) => { ... },  // 'Activate' had no doctype
+  CancelInvitationUser: (run_doc) => { ... },  // 'Cancel Invitation' had no doctype
+  LockAccountUser:      (run_doc) => { ... },  // 'Lock Account' had no doctype
+  DisableUser:          (run_doc) => { ... },  // 'Disable User' already had doctype
+  UnlockAccountUser:    (run_doc) => { ... },  // 'Unlock Account' had no doctype
+  CompleteResetUser:    (run_doc) => { ... },  // 'Complete Reset' had no doctype
+  ReInviteUser:         (run_doc) => { ... },  // 'Re-invite' had no doctype — becomes 'ReInviteUser' after stripping '-'
+  VerifyEmailUser:      (run_doc) => { ... },  // 'Verify Email' had no doctype
+}
+
+One mechanical rule. Zero ambiguity. Zero manual decision per label.
+
+put explaintion in human language what we want
+
+When a FSM transition has a label, that label becomes the sideEffect function name.
+
+If the label already mentions the doctype — use the label as-is. If not — append the doctype.
+
+So you look at the label, you know exactly what to name the function. No thinking, no lookup, no mapping. The compiler warns you if the function is missing.
+
+in js can fn name has dot
+
+No. Dots are invalid in JS identifier names.
+
+So for dims like email_status the label Verify Email → VerifyEmailUser — no dot anywhere. The dim name is only used for lookup, never in the function name. Already clean.
+
+can we recall from User._state.dim backwards then the fn name and vs versa to have 1-1
+
+The key becomes a universal semantic identifier for any transition across the entire system.
+
+1. Permissions
+Instead of role-based string matching on label text:
+
+js
+permissions: {
+  rolesystemmanag: ['Activate', 'LockAccount', 'VerifyEmail']
+}
+
+Stable keys mean permission grants never break on label rename.
+
+2. Audit log
+_changes stores key not label — audit trail is language/display independent. You can relabel "Activate" to "Enable Account" in French or English — audit history stays consistent.
+
+3. Notifications / email templates
+onActivateUser email template keyed by transition key. Label change doesn't break notification routing.
+
+4. Analytics / reporting
+Count how many Activate transitions fired this month. Key is the stable group-by. Label variations don't fragment your metrics.
+
+5. API / webhooks
+External systems subscribe to Activate on User. Label is internal UI concern. API contract is stable.
+
+6. i18n
+label becomes translatable string. key stays English identifier. Same FSM schema works across languages — just swap label values per locale.
+
+7. Testing
+Test assertions use key — expect(transition.key).toBe('Activate'). Tests don't break when UX renames a button.
+
+One key field in schema. Entire system stabilizes around it.
+
+i like it. So we have adapter based (cross-document) fns and sideeffects that are document scecific.
+
+Exactly. Two distinct layers:
+
+sideEffects — document specific
+Derived from transition key + doctype. Live in CW.sideEffects. Scoped to one doctype's FSM transition. Know about the document, its fields, its state.
+
+js
+CW.sideEffects.ActivateUser    = (run_doc) => { ... }  // User only
+CW.sideEffects.VerifyEmailUser = (run_doc) => { ... }  // User only
+
+Adapter operations — cross-document
+Live in Adapters.d1. Not tied to any doctype. Work on any run_doc regardless of doctype. Handle transport, persistence, auth.
+
+js
+Adapters.d1.create           // any doctype
+Adapters.d1.update           // any doctype
+Adapters.d1.login            // cross-document — reads User, writes JWT
+Adapters.d1.authWithPassword // cross-document — compares virtual to stored
+
+The boundary is clear:
+
+Does it only make sense for one doctype's transition? → CW.sideEffects
+Does it work across doctypes or involve multiple documents? → Adapters.d1
+
+authWithPassword is adapter because it spans virtual Login doc + stored User doc. ActivateUser is sideEffect because it only concerns the User document being activated.
+
+Clean separation. No overlap.

@@ -1,5 +1,6 @@
 // ============================================================
 // CW-adapter-d1.js
+// version 687
 // Pure D1/SQLite connector. No business logic.
 // All functions: function(run_doc) — mutate only, no return.
 // Reads from run_doc.target.data[0] — never from run_doc.input
@@ -357,7 +358,7 @@
         run_doc.success &&
         run_doc.user?.token
       ) {
-        localStorage.setItem("currentUser", JSON.stringify(run_doc.user));
+        localStorage.setItem("", JSON.stringify(run_doc.user));
         globalThis.currentUser = run_doc.user;
       }
       return;

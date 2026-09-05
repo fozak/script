@@ -1,0 +1,12 @@
+Noted. To summarize the TODO:
+
+In CW-config.js systemFields:
+
+javascript
+// change these two:
+{ name: '_allowed',      read_only: 1, ... }  // → read_only: 0
+{ name: '_allowed_read', read_only: 1, ... }  // → read_only: 0
+
+So input: { _allowed_read: [...] } works directly via CW.run without needing the CW.controller bypass.
+
+Deferred. ✓
