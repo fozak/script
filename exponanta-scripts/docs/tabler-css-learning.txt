@@ -1,0 +1,31 @@
+Tabler CSS + dark mode — lessons learned
+
+1. tabler-theme.js is the real theme controller
+It reads OS prefers-color-scheme, falls back to localStorage('tabler-theme'), and sets data-bs-theme on <html>. CSS alone cannot override this.
+
+2. Don't include it unless you need switching
+For a light-only site, just remove it. Tabler defaults to light without it.
+
+3. If you keep it, set a default explicitly
+
+html
+<script src="tabler-theme.min.js"></script>
+<script>
+  if (!localStorage.getItem('tabler-theme')) {
+    document.documentElement.setAttribute('data-bs-theme', 'light');
+  }
+</script>
+
+This handles the null (first visit) case without overriding a user's stored preference.
+
+4. Custom CSS vars must be declared in both modes
+:root covers light. [data-bs-theme=dark] covers dark. If you only declare in :root, Tabler's dark block overrides your vars.
+
+5. color-scheme: light in CSS is not enough
+It tells the browser but doesn't stop Tabler's JS from setting data-bs-theme=dark, which has higher CSS specificity than :root.
+
+6. Chrome's auto-dark is a separate problem
+Even without Tabler, Chrome 141+ auto-darkens pages with no color-scheme declared. The fix is color-scheme: light in :root — but this only helps after Tabler's JS issue is resolved.
+
+7. Load order matters
+tabler-theme.js must be the first thing after <body> — no defer, no async — or you get a flash of wrong theme.

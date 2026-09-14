@@ -1,0 +1,32 @@
+Issue
+Existing users logging in via LinkedIn OAuth got #error=[object Object] instead of #token=. New users worked because create succeeded and _issueToken fired automatically. Existing users hit UNIQUE constraint, create failed, and the fallback used run_doc.child({ operation: "select" }) which runs through ACL — unauthenticated context, so it returned nothing, doc was undefined, causing a crash.
+
+Fix
+Replaced the ACL-gated select child call with a direct D1 query — same pattern as login uses — bypassing ACL entirely. Safe because LinkedIn already verified the user's identity before this code runs.
+
+Left to do
+Swap buildPayload → _buildUserPayload if you need FSM _state dims (status, email_status, docstatus) resolved into the JWT from the _state JSON blob rather than relying on them being stored as flat fields on the doc.
+
+ let token = r.user?.token;
+    /*if (!token) {
+      const sel = await run_doc.child({
+        operation: "select",
+        target_doctype: "User",
+        query: { where: { email: providerUser.email } },
+        options: { render: false },
+      });
+      const doc = sel.target?.data?.[0];
+      token = await signJWT(buildPayload(doc), globalThis.env.JWT_SECRET);
+    }*/
+
+      //start of replace
+   if (!token) {
+  const row = await globalThis.env.DB.prepare(
+    `SELECT * FROM item WHERE doctype = 'User' AND json_extract(data, '$.email') = ? LIMIT 1`
+  ).bind(providerUser.email).first();
+  const doc = row ? _mergeRecord(row) : null;
+  if (!doc) { run_doc.error = "user_not_found"; return; }
+  token = await signJWT(buildPayload(doc), globalThis.env.JWT_SECRET);
+}
+
+// end of replace

@@ -100,3 +100,132 @@ Does it work across doctypes or involve multiple documents? → Adapters.d1
 authWithPassword is adapter because it spans virtual Login doc + stored User doc. ActivateUser is sideEffect because it only concerns the User document being activated.
 
 Clean separation. No overlap.
+
+--------------------------------
+
+other question The alert view IS a state. User clicking Disable moves the document to an intermediate state:
+
+Active → [Disable Pending] → Disabled
+                           → Active (cancelled)
+
+Disable Pending is a real FSM state — persisted, survives page reload, waiting for user confirmation signal.
+
+So the schema is:
+
+js
+status: {
+  values: ['Invited', 'Active', 'Disable Pending', 'Disabled', ...],
+  transitions: {
+    'Active':          ['Disable Pending', 'Locked', ...],
+    'Disable Pending': ['Disabled', 'Active'],  // confirm or cancel
+  },
+  labels: {
+    'Active.Disable Pending':    { key: 'Disable',        label: 'Disable User' },
+    'Disable Pending.Disabled':  { key: 'ConfirmDisable', label: 'Confirm' },
+    'Disable Pending.Active':    { key: 'CancelDisable',  label: 'Cancel' },
+  },
+  views: {
+    'Disable Pending': 'alert',   // ← view declared on state, not on transition
+    'Active':          'form',
+    'Disabled':        'form',
+  }
+}
+
+No view on the label. views[toVal] in _execTransition handles it — already wired. Active→Disable Pending fires → _execTransition reads views['Disable Pending'] = 'alert' → renders alert form with in_alert_view fields. User fills reason → clicks Confirm → Disable Pending→Disabled fires. Clean, no special casing, fully FSM.
+
+Exactly. So it IS a real state.
+
+"Awaiting confirmation of critical operation" is a business state, not a UI state. It has real meaning:
+
+Admin initiated a disable
+System is waiting for explicit confirmation
+During this window the user account is in a known intermediate state
+If admin closes browser — the intent is recorded, not lost
+Audit trail shows who initiated and when
+
+That changes the characterization completely. Disable Pending is not UI pollution — it's a legitimate business state that happens to also drive a view. The view is a consequence of the state, not the reason for it.
+
+Which means the three disadvantages collapse:
+
+1. State pollution — not pollution. Pending confirmation of a critical operation is auditable business data.
+
+2. Persistence cost — not a cost. Recording that an admin initiated a disable is exactly what _changes and _state are for.
+
+3. Cancel complexity — not complexity. Disable Pending → Active with label Cancel is a meaningful rollback that should be in the audit trail.
+
+The real question becomes: which transitions warrant a pending state?
+
+Only truly critical + irreversible ones:
+
+Disable User
+Cancel Invitation
+Delete (if modeled as FSM)
+
+Reversible transitions like Lock, Unlock, Activate — no pending state needed. Direct transition, no confirmation.
+
+The FSM stays clean because the rule is business-driven not UI-driven.
+
+what is most business orineted vocabular over UI. SalesForce?
+
+Salesforce uses Approval Process.
+
+The vocabulary:
+
+Approval Process — the overall flow requiring explicit confirmation before a record moves to next state
+Approval Step — one stage in the process, with assigned approver and criteria
+Pending Approval — the intermediate state. Not "Disable Pending" — "Pending Approval"
+Approve / Reject — the two signals out of pending state
+Recall — withdraw the approval request (your Cancel)
+Approver — who can fire the Approve/Reject signals
+Requestor — who initiated the approval request
+Approval History — the audit trail of every step
+
+So your Disable Pending in Salesforce vocabulary is:
+
+Active → Pending Approval → Disabled   (Approved)
+                          → Active     (Rejected or Recalled)
+
+And the alert form fields map to:
+
+reason        → Comments (required on every approval step)
+notify_user   → Send Email Notification (checkbox on approval step)
+
+For CW the vocabulary lift is:
+
+Your term	Salesforce term
+Disable Pending	Pending Approval
+Confirm	Approve
+Cancel	Recall
+Alert form	Approval request form
+in_alert_view	Approval request fields
+
+Generic enough to apply to any critical transition, not just disable. Pending Approval as a system concept works across all doctypes.
+
+i am in search of ready SAAS vocabulary. check frappe for user management
+
+Good results. Cross-platform SaaS vocabulary is highly consistent:
+
+Standard SaaS User states vocabulary
+State	Used by
+Invited	ERPNext, SoftwareOne, EASA, Plivo — universal
+Invitation Expired	SoftwareOne, EASA — automatic timeout state
+Pending	EASA — logged in but not accepted T&C
+Inactive	Tulip, EASA — set up but never logged in
+Active	Everyone — universal
+Suspended	EASA — temporary block, reversible
+Blocked	SoftwareOne — security/policy violation
+Disabled	ERPNext, SoftwareOne — removed, no access
+Closed	EASA — permanent, admin-only reversal
+Deleted	SoftwareOne — no longer exists
+Key distinctions from real products
+
+Suspended vs Blocked vs Disabled — three distinct states most platforms collapse into one:
+
+Suspended — temporary, self-service reversible
+Blocked — security triggered, admin reversible
+Disabled — intentional removal, admin reversible
+Deleted — irreversible, data gone
+
+Pending — EASA's term for the approval confirmation state you were looking for. User exists, logged in, awaiting explicit acceptance. That's your intermediate state — not Disable Pending but Pending as a first-class SaaS concept.
+
+Your current schema is already aligned. The vocabulary from real products confirms Invited, Active, Locked, Disabled are the right choices. Suspended worth adding as distinct from Disabled.

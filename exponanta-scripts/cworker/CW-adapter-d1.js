@@ -455,7 +455,7 @@
   // ============================================================
   // DELETE
   // ============================================================
-//dummy delete
+  //dummy delete
   async function _delete(run_doc) {
     /*if (!globalThis.env?.DB) {
       await _post(run_doc);
@@ -479,7 +479,6 @@
       run_doc.error = err.message;
     }*/
   }
-
 
   // ============================================================
   // AUTH OPERATIONS
@@ -640,16 +639,22 @@
     }
 
     let token = r.user?.token;
+
     if (!token) {
-      const sel = await run_doc.child({
-        operation: "select",
-        target_doctype: "User",
-        query: { where: { email: providerUser.email } },
-        options: { render: false },
-      });
-      const doc = sel.target?.data?.[0];
+      const row = await globalThis.env.DB.prepare(
+        `SELECT * FROM item WHERE doctype = 'User' AND json_extract(data, '$.email') = ? LIMIT 1`,
+      )
+        .bind(providerUser.email)
+        .first();
+      const doc = row ? _mergeRecord(row) : null;
+      if (!doc) {
+        run_doc.error = "user_not_found";
+        return;
+      }
       token = await signJWT(buildPayload(doc), globalThis.env.JWT_SECRET);
     }
+
+    // end of replace
 
     run_doc.target.data[0].token = token;
     run_doc.target.data[0].return_url = return_url;

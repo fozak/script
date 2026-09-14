@@ -1,0 +1,188 @@
+Scenario A — amount = 300 (auto)
+
+human fires status.Draft.Pending
+  → lands in Pending
+  → rule["status.Pending"] evaluates → amount < 500 → returns "status.Pending.Approved"
+  → system auto-fires status.Pending.Approved
+  → done, no human needed
+
+Scenario B — amount = 800 (manual manager)
+
+human fires status.Draft.Pending
+  → lands in Pending
+  → rule["status.Pending"] evaluates → amount >= 500 → returns "status.Pending.Review"
+  → system auto-fires status.Pending.Review
+  → lands in Review, waits
+  → manager fires status.Review.Approved manually
+  → done
+
+Key:
+
+Rule only fires after Draft.Pending — decides next step
+Manager acts on Review state — completely separate transition
+No conflict — they operate on different states
+
+Clear?
+
+No. give me full FSM for that
+
+js
+{
+  status: {
+    name: "status",
+    default: "Draft",
+    values: ["Draft", "Pending", "Approved", "Review", "Director", "Rejected"],
+    transitions: {
+      Draft:    ["Pending"],
+      Pending:  ["Approved", "Review", "Director"],
+      Review:   ["Approved", "Rejected"],
+      Director: ["Approved", "Rejected"],
+      Approved: [],
+      Rejected: []
+    },
+    rules: {
+      "Pending": (run_doc) => {
+        const amount = run_doc.target.data[0].amount
+        if (amount < 500)  return "status.Pending.Approved"
+        if (amount < 1000) return "status.Pending.Review"
+        return "status.Pending.Director"
+      }
+    },
+    labels: {
+      "Draft.Pending":      "Submit",
+      "Pending.Approved":   "Auto Approved",
+      "Pending.Review":     "Sent to Review",
+      "Pending.Director":   "Sent to Director",
+      "Review.Approved":    "Approve",
+      "Review.Rejected":    "Reject",
+      "Director.Approved":  "Approve",
+      "Director.Rejected":  "Reject",
+    },
+    sideEffects: {
+      "Pending.Approved":  "CW.NotifyApproved",
+      "Pending.Review":    "CW.NotifyReviewer",
+      "Pending.Director":  "CW.NotifyDirector",
+      "Review.Rejected":   "CW.NotifyRejected",
+      "Director.Rejected": "CW.NotifyRejected",
+    },
+    permissions: {
+      "Draft.Pending":     ["roleuser"],
+      "Pending.Approved":  ["system"],
+      "Pending.Review":    ["system"],
+      "Pending.Director":  ["system"],
+      "Review.Approved":   ["rolefinancemanag"],
+      "Review.Rejected":   ["rolefinancemanag"],
+      "Director.Approved": ["roledirector"],
+      "Director.Rejected": ["roledirector"],
+    }
+  }
+}
+
+Human fires Draft.Pending → rule evaluates amount → system auto-fires the right next signal → human actors pick up from Review or Director state.
+
+how approval by manager done
+
+Manager fires manual signal directly:
+
+js
+CW.run({
+  operation: "update",
+  target_doctype: "Invoice",
+  _signal: "status.Review.Approved",
+  target: { data: [{ name: "inv001" }] },
+  input: { _state: {} }
+})
+
+_handleSignal checks:
+
+Is Review.Approved a valid transition? ✅
+Is manager's role in permissions ["rolefinancemanag"]? ✅
+No rule on Review → no auto-routing
+Execute → _state.status = "Approved"
+sideEffect CW.NotifyApproved fires
+
+Done. Manager explicitly picks the target, no rule involved.
+
+is this the cleanest in m architecture
+
+Yes — because it uses everything you already have:
+
+_signal — your existing format
+operation: "update" — existing path
+_handleSignal — existing fn
+permissions check — already there (just needs enforcing)
+sideEffects — already there
+
+No new concepts, no new fns. The manager just fires a signal like any other actor. Clean.
+
+how approval by manager done
+
+Manager fires manual signal directly:
+
+js
+CW.run({
+  operation: "update",
+  target_doctype: "Invoice",
+  _signal: "status.Review.Approved",
+  target: { data: [{ name: "inv001" }] },
+  input: { _state: {} }
+})
+_handleSignal checks:
+
+Is Review.Approved a valid transition? ✅
+Is manager's role in permissions ["rolefinancemanag"]? ✅
+No rule on Review → no auto-routing
+Execute → _state.status = "Approved"
+sideEffect CW.NotifyApproved fires
+Done. Manager explicitly picks the target, no rule involved.
+
+is this the cleanest in m architecture
+
+Yes — because it uses everything you already have:
+
+_signal — your existing format
+operation: "update" — existing path
+_handleSignal — existing fn
+permissions check — already there (just needs enforcing)
+sideEffects — already there
+No new concepts, no new fns. The manager just fires a signal like any other actor. Clean.
+
+then we can address funcntion like CW.Schema[User]._state.status.rules.Pending
+
+Yes — fully addressable:
+
+js
+CW.Schema["Invoice"]._state.status.rules["Pending"](run_doc)
+And in _handleSignal after every transition:
+
+js
+const rule = CW.Schema[doctype]?._state?.[dim]?.rules?.[toVal]
+if (rule) {
+  const nextSignal = rule(run_doc)
+  if (nextSignal) await run_doc.child({ _signal: nextSignal, user: SYSTEM_USER })
+}
+Direct address, no lookup table, no separate registry. Schema is the single source of truth for everything — transitions, rules, permissions, sideEffects, labels. All at the same address.
+
+is this the best possible got separated approach syntax
+
+Yes — because:
+
+js
+CW.Schema[doctype]._state[dim].rules[fromState]
+CW.Schema[doctype]._state[dim].sideEffects[from.to]
+CW.Schema[doctype]._state[dim].permissions[from.to]
+CW.Schema[doctype]._state[dim].transitions[fromState]
+CW.Schema[doctype]._state[dim].labels[from.to]
+Each concern has its own key, same address pattern, perfectly consistent:
+
+Key	Keyed by	Returns
+transitions	fromState	[toStates]
+rules	fromState	signal string
+permissions	from.to	[roles]
+sideEffects	from.to	fn name
+labels	from.to	display string
+transitions and rules keyed by fromState — they answer "what happens when leaving this state".
+
+permissions, sideEffects, labels keyed by from.to — they answer "what governs this specific edge".
+
+Perfectly separated, perfectly addressable. This is the cleanest it gets.
