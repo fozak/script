@@ -151,14 +151,31 @@ CW.Schema.User = {
     email_status: {
       name: "email_status",
       default: "Unverified",
-      values: ["Unverified", "Verified"],
+      values: ["Unverified", "Pending", "Verified"],
       transitions: {
-        Unverified: ["Verified"],
+        Unverified: ["Pending"],
+        Pending: ["Verified"],
       },
       labels: {
-        "Unverified.Verified": "Verify Email",
+        "Unverified.Pending": "Send Verification Email",
+        "Pending.Verified": "Verify Email",
       },
-      sideEffects: {},
+      sideEffects: {
+        "Unverified.Pending": async (run_doc) => {
+          const token = await signJWT(
+            {
+              email: run_doc.target.data[0].email,
+              purpose: "email_verify",
+              exp: Math.floor(Date.now() / 1000) + 86400,
+            },
+            globalThis.env.JWT_SECRET,
+          );
+          await CW.Email.send({
+            to: run_doc.target.data[0].email,
+            body: `https://nesen.org/verify?token=${token}`,
+          });
+        },
+      },
       rules: {},
     },
   },
@@ -174,7 +191,8 @@ CW.Schema.User = {
         "status.Active.Locked": "Lock Account",
         "status.Active.Disabled": "Disable User",
         "status.Locked.Active": "Unlock Account",
-        "email_status.Unverified.Verified": "Verify Email",
+        "email_status.Unverified.Pending": "Send Verification Email",
+        "email_status.Pending.Verified": "Verify Email",
       },
     },
     { role: "roleusermanagxx", read: 1, write: 1, transitions: {} },
@@ -701,7 +719,7 @@ globalThis.CW._config = {
     },
     {
       name: "_allowed",
-      read_only: 0,  //was 1
+      read_only: 0, //was 1
       fetch: true,
       hidden: 0,
       fieldtype: "SharePanel",
@@ -773,7 +791,7 @@ globalThis.CW._config = {
       name: "_allowed_read",
       fieldtype: "Code", // ← not SharePanel
       options: "JSON",
-      read_only: 0,    //
+      read_only: 0, //
       fetch: true,
       hidden: 0,
       in_local_view: 1,
