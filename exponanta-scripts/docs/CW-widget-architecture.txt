@@ -1,0 +1,167 @@
+CW Widget Architecture — Session Summary
+1. Universal Loader moved to hub (remote-boot.js)
+Single script tag on every page replaces components.js, separate widget script tags, and user init script:
+
+html
+<script src="https://hub-cf.i771468.workers.dev/remote-boot.js"></script>
+remote-boot.js runs three sequential stages:
+
+javascript
+(async () => {
+  const HUB  = 'https://hub-cf.i771468.workers.dev/'
+  const SITE = window.location.origin + '/'
+
+  // 1. CW framework — serial, order guaranteed
+  for (const src of ['CW-state.js', 'CW-config.js', 'CW-utils.js', 'CW-run.js', 'CW-adapter-d1.js', 'boot.js']) {
+    await new Promise((resolve, reject) => {
+      const s = document.createElement('script')
+      s.src = HUB + src
+      s.onload = resolve
+      s.onerror = reject
+      document.head.appendChild(s)
+    })
+  }
+
+  // 2. HTML components from site — parallel fetch by id
+  await Promise.all(
+    [...document.querySelectorAll('[id]')]
+      .filter(el => !el.innerHTML.trim())
+      .map(async el => {
+        try {
+          const res = await fetch(SITE + el.id + '.html')
+          if (!res.ok) return
+          el.innerHTML = await res.text()
+        } catch {}
+      })
+  )
+
+  // 3. widgets from hub — empty divs remaining after HTML components
+  for (const el of [...document.querySelectorAll('[id]')].filter(el => !el.innerHTML.trim())) {
+    await new Promise((resolve) => {
+      const s = document.createElement('script')
+      s.src = HUB + el.id + '.js'
+      s.onload = resolve
+      s.onerror = resolve  // missing widget is not fatal
+      document.head.appendChild(s)
+    })
+  }
+
+  document.dispatchEvent(new Event('components:ready'))
+})()
+Convention: empty div → try /{id}.html from site → if 404, try /{id}.js from hub. No explicit widget registration needed.
+
+2. Widget loading by id
+Page declares a widget with one div:
+
+html
+<div id="guest-visit"></div>
+remote-boot.js step 2 tries /guest-visit.html → 404 → skip. Step 3 tries /guest-visit.js from hub → loads widget. Widget injects its own HTML via innerHTML. No <script> tag for widget on page.
+
+3. DOM id naming convention
+Every id follows {slug}-{role}-{name}:
+
+{slug}     = cfg.mountId = CW record slug        e.g. "guest-visit"
+{role}     = section | field | action | state | target
+{name}     = specific identity within that role
+Examples:
+
+guest-visit-section-slots      ← slot list container
+guest-visit-section-apply      ← apply form section
+guest-visit-field-first_name   ← form data field
+guest-visit-field-visit_date   ← hidden field, written by slot click
+guest-visit-action-submit      ← submit button
+guest-visit-state-error        ← error banner
+guest-visit-state-banner       ← slot selected confirmation
+guest-visit-target-form        ← replaced on success
+Id helpers in widget:
+
+javascript
+const eid = (role, name) => `${cfg.mountId}-${role}-${name}`
+const el  = (role, name) => document.getElementById(eid(role, name))
+4. CW identity chain
+Single human name drives everything:
+
+form_type = "Guest Visit"          ← human name, single source of truth
+slug      = CW.slugify(form_type)  → "guest-visit"
+mountId   = slug                   → "guest-visit"
+widget    = hub/guest-visit.js     → served from hub
+name      = generateMultiId(...)   → unique per submission
+HtmlForm schema:
+
+javascript
+CW.Schema.HtmlForm = {
+  schema_name: "HtmlForm",
+  title_field: "form_type",
+  fields: [
+    { fieldname: "form_type", fieldtype: "Data", reqd: 1, in_list_view: 1 },
+    { fieldname: "formdata",  fieldtype: "Code", options: "JSON" },
+  ],
+  permissions: [
+    { role: "Public",         read: 1 },
+    { role: "Public",         create: 1 },
+    { role: "System Manager", read: 1, write: 1, create: 1, delete: 1 },
+  ],
+}
+No autoname — slug from title_field, name from generateMultiId (semantic prefix + random suffix, unique per submission).
+
+5. generateId fix
+HtmlForm removed from PATH_KEYED. Deterministic default branch removed. All multi-instance doctypes (Task, HtmlForm, etc.) now use generateMultiId:
+
+javascript
+function generateId(doctype, title = null) {
+  if (EMAIL_KEYED[doctype])    return (EMAIL_KEYED[doctype] + hashString(title)).substring(0, 15)
+  if (PATH_KEYED[doctype])     return (PATH_KEYED[doctype]  + hashString(title)).substring(0, 15)
+  if (SINGLE_DOCTYPES.has(doctype)) return generateSingleId(doctype, title)
+  return generateMultiId(doctype, title)  // semantic prefix + random suffix
+}
+Rule: deterministic id only for one-record-per-entity doctypes. Everything else is semantic+random.
+
+6. AI schema for widget generation
+AI receives this JSON, generates the widget JS. Every DOM id is derivable from mount + role + name — no invention needed:
+
+javascript
+{
+  mount: "guest-visit",         // slug — single source of truth
+
+  sections: [
+    {
+      id: "slots",              // → guest-visit-section-slots
+      type: "slot-picker",
+      title: "Visit as a guest",
+      description: "Pick any Thursday...",
+      location: "1 Broadway, 5th Floor, Cambridge MA 02142",
+      slot: { count: 8, dayOfWeek: 4, time: "6:30 PM" },
+      output: "visit_date",     // → writes to guest-visit-field-visit_date
+      scrollTo: "apply",        // → scrolls to guest-visit-section-apply
+    },
+    {
+      id: "apply",              // → guest-visit-section-apply
+      type: "form",
+      title: "Apply for membership",
+      description: "NESEN is a referral-first community...",
+      gate: "terms_accepted",   // → guest-visit-field-terms_accepted enables action
+      success: { type: "replace", target: "form", message: "Application submitted!" },
+      fields: [
+        { name: "first_name",     type: "text",     reqd: 1, layout: "half", icon: "user",           placeholder: "First name" },
+        { name: "last_name",      type: "text",     reqd: 1, layout: "half", icon: "user",           placeholder: "Last name" },
+        { name: "email",          type: "email",    reqd: 1, layout: "half", icon: "mail",           placeholder: "you@company.com" },
+        { name: "phone",          type: "tel",               layout: "half", icon: "phone",          placeholder: "+1 (617) 000-0000" },
+        { name: "linkedin_url",   type: "url",      reqd: 1,                 icon: "brand-linkedin", placeholder: "https://linkedin.com/in/yourname" },
+        { name: "recommended_by", type: "text",                               icon: "user-check",     placeholder: "Name of NESEN member", hint: "Two recommendations significantly improve your application." },
+        { name: "interest",       type: "textarea", reqd: 1, rows: 5,        placeholder: "Tell us what brought you to NESEN...", hint: "Be specific about your goals." },
+        { name: "visit_date",     type: "hidden",   reqd: 1, source: "slots" },
+        { name: "terms_accepted", type: "checkbox", reqd: 1, gate: true,     checkLabel: "I agree to the Terms of Use and Privacy Policy" },
+      ],
+      actions: [
+        { id: "submit", label: "Submit application", operation: "create", doctype: "HtmlForm", form_type: "Guest Visit" }
+      ],
+      states: [
+        { id: "error",  trigger: "action:fail" },
+        { id: "banner", trigger: "field:visit_date" },
+      ],
+      targets: [
+        { id: "form", on: "action:success" },
+      ]
+    }
+  ]
+}

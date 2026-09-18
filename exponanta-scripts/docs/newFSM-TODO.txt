@@ -168,7 +168,7 @@ is this the best possible got separated approach syntax
 Yes — because:
 
 js
-CW.Schema[doctype]._state[dim].rules[fromState]
+CW.Schema[doctype]._state[dim].rules[from State]
 CW.Schema[doctype]._state[dim].sideEffects[from.to]
 CW.Schema[doctype]._state[dim].permissions[from.to]
 CW.Schema[doctype]._state[dim].transitions[fromState]

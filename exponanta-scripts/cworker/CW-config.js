@@ -220,13 +220,16 @@ CW.Schema.Http = {
 
 CW.Schema.HtmlForm = {
   schema_name: "HtmlForm",
+  autoname:    "field:form_type",
+  title_field: "form_type",
   fields: [
-    { fieldname: "form_type", fieldtype: "Data", in_list_view: 1 },
-    { fieldname: "formdata", fieldtype: "Code", options: "JSON" },
+    { fieldname: "form_type", fieldtype: "Data", reqd: 1, in_list_view: 1 },
+    { fieldname: "formdata",  fieldtype: "Code", options: "JSON" },
   ],
   permissions: [
-    { role: "System Manager", read: 1, write: 1, create: 1, delete: 1 },
     { role: "Public", read: 1 },
+    { role: "Public", create: 1 },
+    { role: "System Manager", read: 1, write: 1, create: 1, delete: 1 },
   ],
 };
 

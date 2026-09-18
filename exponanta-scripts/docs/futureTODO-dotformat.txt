@@ -1,0 +1,62 @@
+Agreed. Nested it is.
+
+Schema:
+
+javascript
+status: {
+  Invited: {
+    next: (run_doc) => "status.Invited.Unverified",
+    Unverified: {
+      allow:   (run_doc) => true,
+      next:    (run_doc) => null,
+      cascade: {
+        inform: {
+          values:  ["Pending", "Sent", "Error"],
+          default: "Pending",
+          allow:   (run_doc) => !!run_doc.target.data[0].email,
+          next:    (run_doc) => null,
+          cascade: (run_doc) => sendVerificationEmail(run_doc),
+        }
+      }
+    }
+  },
+  Unverified: {
+    Active: {
+      allow:   (run_doc) => verifyJWT(...),
+      next:    (run_doc) => null,
+      cascade: {
+        inform: {
+          values:  ["Pending", "Sent", "Error"],
+          default: "Pending",
+          allow:   (run_doc) => true,
+          next:    (run_doc) => null,
+          cascade: (run_doc) => sendWelcomeEmail(run_doc),
+        }
+      }
+    }
+  }
+}
+
+Doc _state:
+
+javascript
+doc._state = {
+  status: "Active",
+  Invited: {
+    next: "status.Invited.Unverified",
+    Unverified: {
+      allow:   true,
+      next:    null,
+      cascade: { inform: "Sent" }
+    }
+  },
+  Unverified: {
+    Active: {
+      allow:   true,
+      next:    null,
+      cascade: { inform: "Sent" }
+    }
+  }
+}
+
+Pure dot access everywhere. Signal parsing needs updating — "status.Invited.Unverified" now traverses schema._state.status.Invited.Unverified instead of schema._state.status["Invited.Unverified"].

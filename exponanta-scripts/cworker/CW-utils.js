@@ -291,14 +291,16 @@ function generateId(doctype, title = null) {
     return generateSingleId(doctype, title)
   }
 
+  /* NO NEED
 
    const prefix = doctype.toLowerCase().replace(/[^a-z0-9]/g, '').substring(0, 4)
 
   if (!RANDOM_DOCTYPES.has(doctype) && title?.trim()) {
     return (prefix + hashString(title)).padEnd(15, '0').substring(0, 15)
-  }
+  }*/
 
-  return (prefix + generateRandom(15 - prefix.length)).substring(0, 15)
+  // default — semantic prefix + random suffix, always unique
+  return generateMultiId(doctype, title)
 }
 
 function hashString(email) {

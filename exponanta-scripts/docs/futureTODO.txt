@@ -1,0 +1,95 @@
+https://claude.ai/chat/bb9965b8-bceb-4b0e-b7cd-7b1ef56f6857
+
+
+Why signal as separate field + clean _state + unified _changes:
+
+Current problem:
+_state has two incompatible shapes in one object — dim values and signal protocol. _logChanges can't handle both, so _state is skipped entirely from change tracking. Signal outcomes ("1", "-1") are in memory only, never durably logged.
+
+What the refactor gives:
+
+Auditability — every state transition logged identically to every field change. _changes becomes complete — who changed what from what to what, including FSM transitions. No special query needed to reconstruct record history.
+
+Causality — signal field records what caused the state change. status: Pending→Approved + signal: status.Pending.Approved in same ch entry tells the full story — what changed and why.
+
+Clean _state — only current dim values, nothing else. Readable, queryable, no protocol noise.
+
+Simplified _logChanges — one loop handles everything. No special sig key, no _state exclusion, no separate signal logging path.
+
+Compliance — for approval workflows you can prove a human explicitly fired a signal vs system auto-transition. Critical for audit trails in business documents.
+
+Consistency — signal behaves like any other field. Same D1 column, same _changes entry shape, same query pattern. No special cases anywhere in the stack.
+
+
+You're right. Re-reading your requirement:
+
+1. Signal is a separate field — not nested in _state:
+
+javascript
+doc.signal = "status.Pending.Approved"   // top level field
+
+2. _state is clean — only current dim values:
+
+javascript
+doc._state = { status: "Approved", docstatus: "Draft" }
+
+3. Both logged the same way in _changes:
+
+javascript
+{ ch: [
+    { field: "status",  from: "Pending",           to: "Approved" },
+    { field: "signal",  from: null,                to: "status.Pending.Approved" },
+]}
+
+signal is just another field. _logChanges treats it identically to status, subject, any other field. No special sig key, no special handling. Both _state dims and signal diff naturally through the same loop.
+
+signal resets to null after each transition — next transition writes a new value. _changes accumulates the history.
+
+how difficult is refactoring
+
+Low. Three small changes:
+
+1. _execTransition — write dim value to input._state and signal to input.signal:
+
+javascript
+run_doc.input._state[dim] = toVal
+run_doc.input.signal = run_doc._signal
+
+2. _logChanges — remove _state skip, add _state dim expansion:
+
+javascript
+// remove: k !== '_state'
+// add after regular field changes:
+const stateChanges = Object.entries(run_doc.input._state || {})
+  .map(([dim, to]) => ({
+    field: dim,
+    from:  doc._state?.[dim] ?? null,
+    to,
+  }))
+  .filter(c => c.from !== c.to)
+
+changes = [...changes, ...stateChanges]
+
+3. _handleSignal — remove signal stamps from input._state:
+
+javascript
+// remove:
+doc._state[signal] = '1'
+run_doc.input._state[signal] = '1'
+// keep only:
+doc._state[dim] = toVal   // already done in _execTransition
+
+4. Schema — add signal to skip list in _logChanges... actually no — signal should log. Add it to topLevelFields so it gets a D1 column.
+
+That's it. No controller changes, no adapter changes, no UI changes.
+
+
+
+of for cascade. now give all 3 finalists for 3 stages
+
+javascript
+"Pending.Approved": {
+  allow:   (run_doc) => boolean,   // pre-transition guard
+  next:    (run_doc) => signal,    // post-landing router
+  cascade: (run_doc) => void,      // post-commit consequences
+}

@@ -1,0 +1,52 @@
+Agentic Inbox Setup — Summary
+Root Cause
+
+The key error was TEAM_DOMAIN had an incorrect value. It was either auto-populated with the full JWKS URL (https://nameless-haze-f332.cloudflareaccess.com/cdn-cgi/access/certs) or had a trailing slash. The correct value must be exactly:
+
+https://nameless-haze-f332.cloudflareaccess.com
+
+Secondary issue: multiple stale Access applications existed from repeated revoke/recreate cycles, causing JWTs with two AUDs that confused validation.
+
+Correct Step-by-Step Instructions (New Cloudflare UI — 2026)
+
+1. Deploy
+
+Click "Deploy to Cloudflare" from the repo
+Set DOMAINS to your domain (e.g. nesen.org)
+
+2. Enable Cloudflare Access
+
+Go to Workers & Pages → agentic-inbox → Domains
+Click Manage → next to the Production workers.dev URL
+Set Scope to All traffic
+Add policy: Cloudflare account members
+Save
+On the right side note the AUD tag value
+
+3. Set Worker secrets
+
+Go to Workers & Pages → agentic-inbox → Settings → Variables and Secrets
+Add secret POLICY_AUD = the full AUD tag from step 2
+Add secret TEAM_DOMAIN = https://[your-team-name].cloudflareaccess.com (no trailing slash, no /cdn-cgi/access/certs)
+Redeploy (edit code → add a comment → deploy)
+
+4. Set up Email Routing
+
+Go to your domain → Email Routing → Routes
+Create a rule: hello@yourdomain.com → Send to a Worker → agentic-inbox
+
+5. Verify Bindings
+
+Go to Workers & Pages → agentic-inbox → Bindings
+Confirm these exist: AI, BUCKET, EMAIL, MAILBOX, EMAIL_AGENT, EMAIL_MCP
+
+6. Create a mailbox
+
+Visit https://agentic-inbox.[account].workers.dev
+Create a mailbox for hello@yourdomain.com
+Test by sending an email to it
+Key Lessons
+The Cloudflare UI changed — "Settings > Domains & Routes" is now the Domains tab → Manage →
+Always set TEAM_DOMAIN as a fresh secret with the exact base URL only
+If you see "Invalid or expired Access token" after rotating — delete and recreate the secret, don't just edit it
+Multiple Access applications cause JWT AUD conflicts — delete old ones via Zero Trust → Access controls → Applications
