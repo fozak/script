@@ -1,3 +1,50 @@
+not final. proposed cascade fn as dummies (not here
+
+status: {
+  values:  ["Invited", "Unverified", "Active", "Suspended"],
+  default: "Invited",
+
+  Invited: {
+    label: "Invited",
+    next:  (run_doc) => "status.Invited.Unverified",
+
+    Unverified: {
+      label:   "Send Verification",
+      allow:   (run_doc) => true,
+      next:    (run_doc) => null,
+      cascade: {
+        inform: {
+          values:  ["Pending", "Sent", "Error"],
+          default: "Pending",
+          allow:   (run_doc) => !!run_doc.target.data[0].email,
+          next:    (run_doc) => null,
+          cascade: (run_doc) => sendVerificationEmail(run_doc),
+        }
+      }
+    }
+  },
+
+  Unverified: {
+    label: "Unverified",
+
+    Active: {
+      label:   "Activate",
+      allow:   (run_doc) => verifyJWT(...),
+      next:    (run_doc) => null,
+      cascade: {
+        inform: {
+          values:  ["Pending", "Sent", "Error"],
+          default: "Pending",
+          allow:   (run_doc) => true,
+          next:    (run_doc) => null,
+          cascade: (run_doc) => sendWelcomeEmail(run_doc),
+        }
+      }
+    }
+  }
+}
+
+
 Agreed. Nested it is.
 
 Schema:
