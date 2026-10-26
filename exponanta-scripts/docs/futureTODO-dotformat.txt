@@ -1,3 +1,94 @@
+
+Yes. Exactly.
+
+allow    →  self-storing, writes boolean result to _state
+cascade  →  array of pointers to adapters, runner executes and stores result
+
+So _state stores both:
+
+js
+doc._state = {
+  status:                                       "Active",
+  "status.Unverified.Active.allow":             true,       // self-stored by allow
+  "status.Unverified.Active.cascade.inform":    "Sent",     // stored by runner
+  "status.Unverified.Active.cascade.issue":     "Issued",   // stored by runner
+}
+
+And schema is precisely:
+
+js
+Unverified: {
+  Active: {
+    allow:   (run_doc) => boolean,        // self-storing
+    cascade: {                             // pointers to adapters
+      inform: "settings.default.inform",  // → Adapter.email.inform(run_doc)
+      issue:  "settings.default.auth",    // → Adapter.auth.issue(run_doc)
+    }
+  }
+}
+
+allow is a function that stores its own result. cascade is a map of dotpath pointers — runner resolves each dotpath against the doc, finds the adapter name, calls Adapter[name][key](run_doc), stores the result. Clean, symmetric, complete.
+
+Relevant chats
+Key things from prior discussions that affect what we just concluded:
+
+1. next was already established as redundant earlier
+From the prior session — next was a router returning a signal string post-DB-write. But we just proved the branch structure itself encodes from.to. This confirms next removal is correct and consistent with the earlier signal format dim.From.To.
+
+2. cascade keyword in dot path was already resolved
+Prior session established:
+
+status.Unverified.Active.inform   ← correct
+status.Unverified.Active.cascade.inform  ← redundant, removed
+So our current cascade: { inform: ..., token: ... } is correct in schema but the runtime dot path skips the word cascade.
+
+3. Signal format was dim.From.To not dim.From_To
+Prior session used "status.Invited.Unverified" dot notation — matches what we landed on today. Consistent.
+
+4. One edge we missed today — allow writes to input
+From prior session:
+
+js
+allow: (run_doc) => {
+  run_doc.input._allow = boolean  // writes result to input
+}
+But today we made allow a pure boolean return. These are inconsistent. The prior session had allow mutating input so the pipeline could carry the result. Today's version returns a boolean directly to the runner.
+
+The boolean return is cleaner — the runner reads it directly without needing input._allow. But it's a change from the prior established pattern worth noting.
+
+5. inform key naming
+Prior session used named cascade functions like SendVerificationUser registered in CW.sideEffects. Today we replaced that entirely with inform: { send: "settings.default.inform" }. This is a breaking change from the prior convention — but the correct one given the adapter architecture we established today.
+
+What's clean and consistent
+js
+Invited: {
+  Unverified: {
+    allow:   (run_doc) => !!run_doc.target.data[0].email,
+    cascade: {
+      inform: { send: "settings.default.inform" },
+    }
+  }
+},
+
+Unverified: {
+  Active: {
+    allow: (run_doc) => {
+      const doc = run_doc.target.data[0]
+      const providers = typeof doc.providers === "string"
+        ? JSON.parse(doc.providers)
+        : doc.providers || {}
+      return Object.values(providers).some(p => p.email_verified)
+        || verifyJWT(run_doc)
+    },
+    cascade: {
+      inform: { send: "settings.default.inform" },
+      token:  { issue: true },
+    }
+  }
+}
+No next. Boolean allow. Dot path skips cascade keyword at runtime. Named cascade functions replaced by universal adapter keys.
+
+
 not final. proposed cascade fn as dummies (not here
 
 status: {

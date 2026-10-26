@@ -364,6 +364,10 @@
       return;
     }
 
+    //added
+    _buildQuery(run_doc);
+    //end added
+
     const doc = run_doc.target?.data?.[0];
     if (!doc) {
       run_doc.error = "400 create: no target document";
@@ -418,6 +422,7 @@
       return;
     }
 
+    _buildQuery(run_doc);
     const doc = run_doc.target?.data?.[0];
     const name = doc?.name || run_doc.query?.where?.name;
     if (!name) {

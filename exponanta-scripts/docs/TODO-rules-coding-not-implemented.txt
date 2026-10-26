@@ -1,0 +1,65 @@
+1. Throw, don’t assign
+
+js
+// never
+run_doc.error = "something failed";
+
+// always
+throw new Error("something failed");
+
+2. One catch at the controller
+
+js
+catch (err) {
+  run_doc.error = { message: err.message, type: err.name, stack: err.stack };
+  run_doc.status = 'failed';
+  run_doc.success = false;
+}
+
+3. No if (run_doc.error) return guards — throw stops execution automatically
+
+4. Typed errors for different failures
+
+js
+class ValidationError extends Error {
+  constructor(msg) { super(msg); this.name = 'ValidationError'; }
+}
+throw new ValidationError("Required: name");
+
+5. External API wrapper
+
+js
+async function callAPI(url, options, { timeout = 10000, retries = 2 } = {}) {
+  let attempt = 0;
+  while (attempt <= retries) {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), timeout);
+    try {
+      const res = await fetch(url, { ...options, signal: controller.signal });
+      clearTimeout(timer);
+      if (!res.ok) {
+        const body = await res.json().catch(() => ({}));
+        throw new Error(`API ${res.status}: ${body?.error?.message || res.statusText}`);
+      }
+      return await res.json();
+    } catch (err) {
+      clearTimeout(timer);
+      if (attempt === retries) throw new Error(`callAPI failed: ${err.name === 'AbortError' ? 'timeout' : err.message}`);
+      attempt++;
+      await new Promise(r => setTimeout(r, 500 * attempt));
+    }
+  }
+}
+
+6. Wrap external calls with context
+
+js
+try {
+  await sendEmail(run_doc);
+} catch(err) {
+  throw new Error(`sendEmail failed: ${err.message}`);
+}
+
+The chain:
+
+inner fn throws → bubbles → controller catches once → run_doc.error set once → full stack preserved

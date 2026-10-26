@@ -248,8 +248,8 @@ CW.controller = async function (run_doc) {
     if (
       (run_doc.operation === "update" ||
         run_doc.operation === "delete" ||
-        run_doc.operation === "updateMany") &&
-      !run_doc.target?.data?.[0]?.name
+        run_doc.operation === "updateMany") //&&
+      //!run_doc.target?.data?.[0]?.name  //DELETED
     ) {
       //await globalThis.Adapters[CW._config.adapters.defaults.db].select(run_doc)
 

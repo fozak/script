@@ -2666,6 +2666,46 @@ globalThis.CW._config = {
     component: { handler: "_renderComponent" },
   },
 };
+//--spesific web-sites
+
+// ============================================================
+CW._config["exponanta.com"] = {
+ 
+  head: `
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NSLH4990V1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-NSLH4990V1');
+</script>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://rsms.me">
+<link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/core@1.4.0/dist/css/tabler.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/core@1.4.0/dist/css/tabler-marketing.min.css">
+<link rel="stylesheet" href="/added.css">
+`,
+ 
+  body_start: `
+<script src="https://cdn.jsdelivr.net/npm/@tabler/core@latest/dist/js/tabler-theme.min.js"></script>
+<script>
+  if (!localStorage.getItem('tabler-theme')) {
+    document.documentElement.setAttribute('data-bs-theme', 'light');
+  }
+</script>
+<div id="navbar"></div>
+`,
+ 
+  body_end: `
+<div id="footer"></div>
+<script src="https://cdn.jsdelivr.net/npm/@tabler/core@latest/dist/js/tabler.min.js"></script>
+<script src="https://hub-cf.i771468.workers.dev/remote-boot.js"></script>
+`,
+ 
+};
 
 // after _config is fully defined
 CW._config.doctypeFields = {
@@ -2676,6 +2716,9 @@ CW._config.doctypeFields = {
 CW._compileSchemas();
 
 //----
+
+
+
 
 if (globalThis.window) {
   // browser only
