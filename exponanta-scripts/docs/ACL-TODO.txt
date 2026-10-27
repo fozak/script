@@ -1,0 +1,52 @@
+  recommendation
+
+https://claude.ai/chat/d1a02c8f-e92e-43ac-9c7b-e013ac15be78
+
+Make the ACL non-optional at the type level: a function that returns a filter, never nothing, and a statement-builder that physically cannot run without consuming it.
+
+That’s the PocketBase property worth copying — not “rules act as filters” as a philosophy, but the concrete mechanism: refusal is what the compute-the-filter step produces, not a separate check wrapped around it. Your select already has this shape by accident; the fix is making it true by construction, everywhere.
+
+1. One function, always returns a real filter — never nothing, never maybe
+
+js
+function getAclFilter(run_doc) {
+  const mode = { select: "read", create: "create", update: "write", delete: "write" }[run_doc.operation];
+  if (!mode) return { sql: "0", params: [] };   // unknown op — always-false, not "no filter"
+
+  // ... existing aclFilter logic, but every branch MUST return {sql, params}
+  // no branch may fall through without returning — that's the actual bug class
+}
+No caller, no conditional push into an array that might stay empty. A direct return value. There is no way to “forget” to call this and end up with an empty conditions array, because conditions-as-an-accumulated-array is exactly the shape that allowed the silent-empty failure — replace it with a single mandatory return value instead.
+
+2. The one function allowed to build a mutating/filtered statement requires that filter as an argument, and refuses to produce a statement without weaving it in — checked, not trusted
+
+js
+async function runFiltered(run_doc, buildSql) {
+  const acl = getAclFilter(run_doc);          // always a real {sql, params}, per #1
+  const { sql, params } = buildSql(acl);      // caller MUST consume acl to build their statement
+  if (!sql.includes(acl.sql)) {               // verifies it was actually used, not just available
+    run_doc.error = "500 filter not applied";
+    return null;
+  }
+  return env.DB.prepare(sql).bind(...params);
+}
+select/create/update/_delete all funnel through this. This is the two-layer guarantee from earlier — the call signature makes bypass awkward, the string-inclusion check makes it visible if someone writes awkward code anyway — now applied uniformly to all four, not just the one that happens to work today.
+
+3. Writes additionally check affected-row-count, since a correct filter can still silently match zero rows
+
+js
+const result = await stmt.run();
+if (result.meta.changes === 0) { run_doc.error = "403 forbidden or not found"; return; }
+This is the PocketBase 404-on-unsatisfied-updateRule equivalent — a filter that correctly excludes the target row still needs its own explicit “nothing happened” check, because SQLite reports that as success with zero changes, not as an error.
+
+4. Gate _issueToken to identity match, not “a User record was written”
+
+js
+if (run_doc.target_doctype === "User" && !run_doc.error && doc.name === run_doc.user?.name) {
+  await _issueToken(doc, run_doc);
+}
+Independent of 1–3, but still the concrete fix for the impersonation path we traced.
+
+Why this is the right scope, not more and not less: it doesn’t require a new database (D1 stays), doesn’t require inventing infrastructure you’ve already ruled out as too radical (no triggers, no capability tokens, no event-sourcing rewrite), and it directly closes the exact failure modes we found by tracing your actual code — missing write ACL, silently-discardable filter computation, zero-row-changes treated as success, and token issuance keyed to the wrong identity. It’s the minimum change that makes “a JS bug or an empty filter leads to a security break” structurally harder rather than something that happens to not occur today because the current code is careful in three places and not in one.
+
+That’s what I’d actually implement, if you want me to write the full corrected CW-adapter-d1.js now.

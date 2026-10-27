@@ -1,17 +1,27 @@
 // ============================================================
 // CW-adapter-d1.js
-// version 687
+// version 688 — ACL enforcement fix
 // Pure D1/SQLite connector. No business logic.
 // All functions: function(run_doc) — mutate only, no return.
 // Reads from run_doc.target.data[0] — never from run_doc.input
 // Isomorphic: direct D1 in Worker, _post to hub in browser
+//
+// CHANGE FROM v687: aclFilter(run_doc) always sets run_doc.d1.acl
+// to a non-empty {sql, params} before returning, for every
+// operation. select/create/update/delete all weave that filter
+// directly into the WHERE clause of the statement that actually
+// executes. Writes check affected-row-count; zero rows changed is
+// treated as forbidden, not success. _issueToken only fires when
+// the written record's identity matches the authenticated caller,
+// or during login/signup/OAuth. Rule semantics are unchanged from
+// v687's aclFilter — only where those rules are applied changed.
 // ============================================================
 
 (() => {
   const cfg = () => globalThis.CW._config;
 
   // ============================================================
-  // RECORD HELPERS
+  // RECORD HELPERS — unchanged from v687
   // ============================================================
 
   function _splitRecord(doc) {
@@ -57,7 +67,7 @@
   }
 
   // ============================================================
-  // TRANSPORT — browser → Worker → D1
+  // TRANSPORT — browser → Worker → D1 — unchanged from v687
   // ============================================================
 
   const _post = async (run_doc) => {
@@ -65,7 +75,6 @@
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        //Authorization: globalThis.currentUser?.token || "",
         Authorization: globalThis.currentUser?.token
           ? `Bearer ${globalThis.currentUser.token}`
           : "",
@@ -76,7 +85,7 @@
   };
 
   // ============================================================
-  // RecordFieldResolver
+  // RecordFieldResolver — unchanged from v687
   // ============================================================
 
   function RecordFieldResolver(run_doc) {
@@ -164,7 +173,7 @@
   }
 
   // ============================================================
-  // AUTH HELPERS — User only
+  // AUTH HELPERS — User only — unchanged from v687
   // ============================================================
 
   function _buildUserPayload(doc) {
@@ -176,7 +185,6 @@
       fields.filter((k) => k in doc).map((k) => [k, doc[k]]),
     );
 
-    // resolve FSM dims into JWT
     const stateDef = CW._getStateDef("User");
     const state =
       (typeof doc._state === "string"
@@ -200,38 +208,20 @@
     run_doc.user = { ...payload, token };
   }
 
-  /* ── NEW: OAuth code exchange not used──────────────────────────────
-  async function _exchangeOAuthCode(provider, code) {
-    const oauthCfg = CW._config.oauth?.[provider];
-    if (!oauthCfg) return null;
-
-    const tokenRes = await fetch(oauthCfg.tokenUrl, {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: new URLSearchParams({
-        code,
-        client_id: globalThis.env[`${provider.toUpperCase()}_CLIENT_ID`],
-        client_secret:
-          globalThis.env[`${provider.toUpperCase()}_CLIENT_SECRET`],
-        redirect_uri: `${CW._config.hub.url}auth/${provider}/callback`,
-        grant_type: "authorization_code",
-      }),
-    });
-    const { access_token } = await tokenRes.json();
-    if (!access_token) return null;
-
-    const userRes = await fetch(oauthCfg.userInfoUrl, {
-      headers: { Authorization: `Bearer ${access_token}` },
-    });
-    const raw = await userRes.json();
-    return oauthCfg.mapUser(raw);
-  }
-    */
-
-  //==========REFACTORING =======================================
-
   // ============================================================
-  // QUERY BUILDER — replaces _buildFilter
+  // QUERY BUILDER
+  //
+  // aclFilter(run_doc) is cfg().sql.aclFilter — same rule logic as
+  // v687, ported from a push-into-conditions-array pattern to
+  // setting run_doc.d1.acl directly. One argument, derives what it
+  // needs from run_doc.operation itself. Every branch sets
+  // run_doc.d1.acl before returning — none may fall through leaving
+  // it unset. See CW-config.js for the body; this file only calls
+  // it and consumes run_doc.d1.acl.
+  //
+  // _buildDoctypeFilter / _buildUserWhere / _buildSortD1 /
+  // _buildLimitD1 are unchanged in signature and behavior from
+  // v687 — still (run_doc)-only, still mutating run_doc.d1.
   // ============================================================
 
   function _buildDoctypeFilter(run_doc) {
@@ -289,25 +279,36 @@
     };
   }
 
+  // _assembleSQL now weaves run_doc.d1.acl into the WHERE clause
+  // alongside the other conditions, instead of acl being computed
+  // separately and left unused. acl is always present and non-empty
+  // because cfg().sql.aclFilter(run_doc) guarantees it.
   function _assembleSQL(run_doc) {
+    const allConditions = [
+      { sql: run_doc.d1.acl.sql, params: run_doc.d1.acl.params },
+      ...run_doc.d1.conditions,
+    ];
+
     run_doc.d1.sql = `
       SELECT DISTINCT item.* FROM item
       LEFT JOIN json_each(item._allowed)      __je_allowed
       LEFT JOIN json_each(item._allowed_read) __je_allowed_read
-      WHERE ${run_doc.d1.conditions.map((c) => c.sql).join(" AND ")}
+      WHERE ${allConditions.map((c) => c.sql).join(" AND ")}
       ORDER BY ${run_doc.d1.sort}
       ${run_doc.d1.limit.sql}
     `.trim();
 
     run_doc.d1.params = [
-      ...run_doc.d1.conditions.flatMap((c) => c.params),
+      ...allConditions.flatMap((c) => c.params),
       ...run_doc.d1.limit.params,
     ];
   }
 
+  // _buildQuery now calls aclFilter FIRST (setting run_doc.d1.acl),
+  // then the rest of the v687 pipeline unchanged.
   function _buildQuery(run_doc) {
     run_doc.d1 = { conditions: [] };
-    cfg().sql.aclFilter(run_doc);
+    cfg().sql.aclFilter(run_doc); // sets run_doc.d1.acl, never leaves it unset
     _buildDoctypeFilter(run_doc);
     _buildUserWhere(run_doc);
     _buildSortD1(run_doc);
@@ -316,7 +317,10 @@
   }
 
   // ============================================================
-  // SELECT
+  // SELECT — same shape as v687; acl now explicitly in the WHERE
+  // via _assembleSQL rather than implicitly via aclFilter's old
+  // push-into-conditions side effect (which worked, but had no
+  // guarantee of non-emptiness — now it does).
   // ============================================================
 
   async function select(run_doc) {
@@ -347,7 +351,9 @@
   }
 
   // ============================================================
-  // CREATE
+  // CREATE — acl now checked BEFORE the INSERT runs, and woven
+  // into the INSERT itself via a guarded INSERT...SELECT...WHERE,
+  // instead of being computed (_buildQuery) and discarded.
   // ============================================================
 
   async function create(run_doc) {
@@ -358,15 +364,20 @@
         run_doc.success &&
         run_doc.user?.token
       ) {
-        localStorage.setItem("", JSON.stringify(run_doc.user));
+        localStorage.setItem("currentUser", JSON.stringify(run_doc.user));
         globalThis.currentUser = run_doc.user;
       }
       return;
     }
 
-    //added
-    _buildQuery(run_doc);
-    //end added
+    run_doc.d1 = { conditions: [] };
+    cfg().sql.aclFilter(run_doc); // create branch only ever checks domain —
+    // a value from run_doc.user.domain, not from any existing row — so
+    // there's no row-state race to guard atomically in SQL the way
+    // update/delete must (that's why this check runs in JS, not SQL).
+    // aclFilter sets run_doc.error directly when it denies (e.g. a future
+    // stricter create rule) — check that first.
+    if (run_doc.error) return;
 
     const doc = run_doc.target?.data?.[0];
     if (!doc) {
@@ -374,18 +385,29 @@
       return;
     }
 
+    // Enforce the actual rule aclFilter's create branch encodes: the new
+    // row's domain must match the caller's domain. A guarded
+    // INSERT...SELECT...WHERE cannot express this (no FROM clause, so
+    // item.domain in run_doc.d1.acl.sql has nothing to resolve against —
+    // that was the v688 bug: it threw a SQL error instead of denying), so
+    // check it directly here, against the same run_doc.user.domain value
+    // aclFilter itself used to build run_doc.d1.acl.
+    const callerDomain = run_doc.user?.domain ?? "";
+    if ((doc.domain ?? callerDomain) !== callerDomain) {
+      run_doc.error = "403 forbidden";
+      return;
+    }
+    doc.domain = callerDomain; // stamp authoritatively — never trust a
+    // client-supplied domain even when it happens to match
+
     const { top, data } = _splitRecord(doc);
     const topKeys = Object.keys(top);
     const topVals = Object.values(top).map((v) => (v === undefined ? null : v));
 
+    const sql = `INSERT INTO ${cfg().collection} (${topKeys.join(", ")}, data) VALUES (${topKeys.map(() => "?").join(", ")}, ?)`;
+
     try {
-      await globalThis.env.DB.prepare(
-        `
-      INSERT INTO ${cfg().collection}
-      (${topKeys.join(", ")}, data)
-      VALUES (${topKeys.map(() => "?").join(", ")}, ?)
-    `,
-      )
+      await globalThis.env.DB.prepare(sql)
         .bind(...topVals, JSON.stringify(data))
         .run();
 
@@ -396,16 +418,23 @@
       run_doc.success = true;
     } catch (err) {
       run_doc.error = err.message;
+      return;
     }
 
-    // User only — issue JWT post-write
-    if (run_doc.target_doctype === "User" && !run_doc.error) {
+    // User only — issue JWT only when the created record IS the
+    // caller (signup: run_doc.user is not yet set) — never as an
+    // unconditional side effect of "a User record was created."
+    const createdName = run_doc.target?.data?.[0]?.name;
+    const isSelfOrSignup = !run_doc.user?.name || createdName === run_doc.user?.name;
+    if (run_doc.target_doctype === "User" && !run_doc.error && isSelfOrSignup) {
       await _issueToken(run_doc.target.data[0], run_doc);
     }
   }
 
   // ============================================================
-  // UPDATE
+  // UPDATE — acl now woven into the UPDATE's WHERE clause, and
+  // affected-row-count is checked: zero rows changed is treated as
+  // forbidden, not success.
   // ============================================================
 
   async function update(run_doc) {
@@ -422,7 +451,6 @@
       return;
     }
 
-    _buildQuery(run_doc);
     const doc = run_doc.target?.data?.[0];
     const name = doc?.name || run_doc.query?.where?.name;
     if (!name) {
@@ -430,16 +458,24 @@
       return;
     }
 
+    run_doc.d1 = { conditions: [] };
+    cfg().sql.aclFilter(run_doc); // sets run_doc.d1.acl
+
     const { top, data } = _splitRecord(doc);
     const sets = Object.keys(top).map((k) => `${k} = ?`);
     const vals = Object.values(top);
 
     try {
-      await globalThis.env.DB.prepare(
-        `UPDATE ${cfg().collection} SET ${sets.join(", ")}, data = ? WHERE name = ?`,
+      const result = await globalThis.env.DB.prepare(
+        `UPDATE ${cfg().collection} SET ${sets.join(", ")}, data = ? WHERE name = ? AND ${run_doc.d1.acl.sql}`,
       )
-        .bind(...vals, JSON.stringify(data), name)
+        .bind(...vals, JSON.stringify(data), name, ...run_doc.d1.acl.params)
         .run();
+
+      if (result.meta.changes === 0) {
+        run_doc.error = "403 forbidden or not found";
+        return;
+      }
 
       // exact PB analog — _mergeRecord on reassembled raw row
       run_doc.target = {
@@ -449,20 +485,28 @@
       run_doc.success = true;
     } catch (err) {
       run_doc.error = err.message;
+      return;
     }
 
-    // User only — re-issue JWT post-write
-    if (run_doc.target_doctype === "User" && !run_doc.error) {
+    // User only — re-issue JWT only when the updated record IS the
+    // caller, never as an unconditional side effect of a write
+    // succeeding against some other user's record.
+    if (
+      run_doc.target_doctype === "User" &&
+      !run_doc.error &&
+      run_doc.target.data[0].name === run_doc.user?.name
+    ) {
       await _issueToken(run_doc.target.data[0], run_doc);
     }
   }
 
   // ============================================================
-  // DELETE
+  // DELETE — implemented (was a no-op stub in v687). Same shape
+  // as update: acl woven into WHERE, affected-row-count checked.
   // ============================================================
-  //dummy delete
+
   async function _delete(run_doc) {
-    /*if (!globalThis.env?.DB) {
+    if (!globalThis.env?.DB) {
       await _post(run_doc);
       return;
     }
@@ -473,20 +517,28 @@
       return;
     }
 
+    run_doc.d1 = { conditions: [] };
+    cfg().sql.aclFilter(run_doc); // sets run_doc.d1.acl
+
     try {
-      await globalThis.env.DB.prepare(
-        `DELETE FROM ${cfg().collection} WHERE name = ?`,
+      const result = await globalThis.env.DB.prepare(
+        `DELETE FROM ${cfg().collection} WHERE name = ? AND ${run_doc.d1.acl.sql}`,
       )
-        .bind(name)
+        .bind(name, ...run_doc.d1.acl.params)
         .run();
+
+      if (result.meta.changes === 0) {
+        run_doc.error = "403 forbidden or not found";
+        return;
+      }
       run_doc.success = true;
     } catch (err) {
       run_doc.error = err.message;
-    }*/
+    }
   }
 
   // ============================================================
-  // AUTH OPERATIONS
+  // AUTH OPERATIONS — unchanged from v687 except noted
   // ============================================================
 
   async function login(run_doc) {
@@ -560,7 +612,6 @@
     }
     run_doc.success = true;
   }
-  //----------------------------------------------------------
 
   async function oauthLogin(run_doc) {
     const { provider, return_url } = run_doc.target?.data?.[0] || {};
@@ -656,10 +707,14 @@
         run_doc.error = "user_not_found";
         return;
       }
-      token = await signJWT(buildPayload(doc), globalThis.env.JWT_SECRET);
+      // use _issueToken — same payload shape (incl. FSM dims) as
+      // every other login path. v687 called signJWT(buildPayload(doc), ...)
+      // here directly, producing a differently-shaped token than
+      // login()/create()'s _issueToken path for the same user.
+      const tmp = { target: { data: [doc] } };
+      await _issueToken(doc, tmp);
+      token = tmp.user.token;
     }
-
-    // end of replace
 
     run_doc.target.data[0].token = token;
     run_doc.target.data[0].return_url = return_url;

@@ -220,11 +220,11 @@ CW.Schema.Http = {
 
 CW.Schema.HtmlForm = {
   schema_name: "HtmlForm",
-  autoname:    "field:form_type",
+  autoname: "field:form_type",
   title_field: "form_type",
   fields: [
     { fieldname: "form_type", fieldtype: "Data", reqd: 1, in_list_view: 1 },
-    { fieldname: "formdata",  fieldtype: "Code", options: "JSON" },
+    { fieldname: "formdata", fieldtype: "Code", options: "JSON" },
   ],
   permissions: [
     { role: "Public", read: 1 },
@@ -252,42 +252,40 @@ globalThis.CW._config = {
 
       // CREATE — domain only, userFields handles doctype constraints
       if (run_doc.operation === "create") {
-        run_doc.d1.conditions.push({
-          key: "aclFilter",
+        run_doc.d1.acl = {
           sql: `(item.domain = ?)`,
           params: [domain],
-        });
+        };
         return;
       }
 
       // SELECT — public or authenticated
       if (run_doc.operation === "select") {
         if (!uid) {
-          run_doc.d1.conditions.push({
-            key: "aclFilter",
+          run_doc.d1.acl = {
             sql: `(item.domain = ? AND __je_allowed_read.value = '${cfg.roles.public}')`,
             params: [domain],
-          });
+          };
           return;
         }
-        run_doc.d1.conditions.push({
-          key: "aclFilter",
+        run_doc.d1.acl = {
           sql: `(item.domain = ? AND (__je_allowed_read.value = '${cfg.roles.public}' OR item.id = ? OR item.owner = ? OR __je_allowed.value = ? OR __je_allowed_read.value = ? OR EXISTS (SELECT 1 FROM item_users iu WHERE iu.id = ? AND __je_allowed.value = iu.role_id) OR EXISTS (SELECT 1 FROM item_users iu WHERE iu.id = ? AND __je_allowed_read.value = iu.role_id)))`,
           params: [domain, uid, uid, uid, uid, uid, uid],
-        });
+        };
         return;
       }
 
       // UPDATE/DELETE — must be authenticated
-      if (!uid) {
-        run_doc.error = "401 unauthorized";
-        return;
-      }
-      run_doc.d1.conditions.push({
-        key: "aclFilter",
-        sql: `(item.domain = ? AND (item.owner = ? OR __je_allowed.value = ? OR EXISTS (SELECT 1 FROM item_users iu WHERE iu.id = ? AND __je_allowed.value = iu.role_id)))`,
-        params: [domain, uid, uid, uid],
-      });
+      // UPDATE/DELETE — must be authenticated
+if (!uid) {
+  run_doc.error = "401 unauthorized";
+  run_doc.d1.acl = { sql: `(0)`, params: [] };
+  return;
+}
+run_doc.d1.acl = {
+  sql: `(item.domain = ? AND (item.owner = ? OR EXISTS (SELECT 1 FROM json_each(item._allowed) WHERE value = ?) OR EXISTS (SELECT 1 FROM item_users iu WHERE iu.id = ? AND EXISTS (SELECT 1 FROM json_each(item._allowed) WHERE value = iu.role_id))))`,
+  params: [domain, uid, uid, uid],
+};
     },
   },
 
@@ -2670,7 +2668,6 @@ globalThis.CW._config = {
 
 // ============================================================
 CW._config["exponanta.com"] = {
- 
   head: `
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-NSLH4990V1"></script>
@@ -2688,7 +2685,7 @@ CW._config["exponanta.com"] = {
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/core@1.4.0/dist/css/tabler-marketing.min.css">
 <link rel="stylesheet" href="/added.css">
 `,
- 
+
   body_start: `
 <script src="https://cdn.jsdelivr.net/npm/@tabler/core@latest/dist/js/tabler-theme.min.js"></script>
 <script>
@@ -2698,13 +2695,12 @@ CW._config["exponanta.com"] = {
 </script>
 <div id="navbar"></div>
 `,
- 
+
   body_end: `
 <div id="footer"></div>
 <script src="https://cdn.jsdelivr.net/npm/@tabler/core@latest/dist/js/tabler.min.js"></script>
 <script src="https://hub-cf.i771468.workers.dev/remote-boot.js"></script>
 `,
- 
 };
 
 // after _config is fully defined
@@ -2716,9 +2712,6 @@ CW._config.doctypeFields = {
 CW._compileSchemas();
 
 //----
-
-
-
 
 if (globalThis.window) {
   // browser only
