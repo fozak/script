@@ -1,3 +1,5 @@
+
+https://claude.ai/chat/cfe7aa3f-6270-4d4e-958f-f244b40f180d
 Confirmed directly — a plain function works identically for everything we’ve actually tested and needed: instanceof Error is still true (because cwError() constructs a real new Error() internally and attaches code/status to it), code and status come through fine. So for this use case — carry message+code+status through one throw/catch, stay instanceof Error — a class gives you nothing extra. I should say that plainly rather than default to “class is the canonical choice.”
 
 The actual, narrow reasons you’d want a class instead of the function here:
