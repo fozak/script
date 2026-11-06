@@ -1,0 +1,29 @@
+What was done
+
+One load-order list. remote-boot.js is now isomorphic. Its FILES array is the single source of truth for load order, and the same file works in all three platforms.
+
+Platform	How the framework loads	How we test it	Files	Result
+Browser	<script> tags from the hub, with an absolute boot URL so the HTML is identical on the hub and on third-party sites	Claude in Chrome opens /browser-test, reads the console line TEST-RESULT and the page’s window.__TEST_RESULTS__, and takes a screenshot	browser-test.html	15/15 on the hub. Not yet run on exponanta.com.
+Node 22+	remote-boot.js is evaluated, then CW_loadFramework(hub) fetches the files from the hub (or a local folder via CW_HUB) and runs them with vm	In-memory SQLite stands in for D1, built from the real item table definition plus the item_users view. Tests use node:test, and the database resets for each test.	node-setup.js, node-tests.js	12/12 against the live hub files
+Worker	Workers can’t load code at runtime, so the files are bundled at build time with import lines. This is the same as your worker.js.	Miniflare runs real workerd with a local D1 database. A harness worker imports the framework in FILES order and exposes a probe route. The test calls it with fetch.	worker-setup.js, worker-tests.js	Passes, on the harness. Your real worker.js is not public, so I haven’t run it.
+
+The three platforms test the same things: the framework loads, slugs come out right, a User update persists, and an HtmlForm create round-trips. The browser test uses a different test set.
+
+How Claude runs them:
+
+Browser: Chrome through the extension.
+Node: NODE_USE_ENV_PROXY=1 NODE_EXTRA_CA_CERTS=/root/.ccr/ca-bundle.crt node --test node-tests.js.
+Worker: node worker-tests.js, which downloads the files from the hub first.
+Prerequisite: the hub domain must be in the sandbox’s Allowed websites list, which you already added.
+Slugify as a non-core addon
+
+CW-slugify.js is a separate, optional file (292 KB, about 90 KB gzipped).
+
+Contents: the transliteration library bundled by esbuild, plus the 17 character replacements (@ → -at-, . → -dot-, and so on).
+API: it defines CW.slugify synchronously.
+Fallback: the core (generateSlug in CW-utils.js) uses CW.slugify if it exists. Without it, it falls back to a simple regex slug, so the core still runs.
+Limit of the fallback: without the addon, non-Latin text such as Russian or Kazakh gets a poor slug.
+Worker: it only takes effect if worker.js has import "./CW-slugify.js". I still can’t confirm that line is in your current worker.js.
+Gaps
+browser-test.html hasn’t run on exponanta.com yet (the third-party case).
+The Worker test uses a harness, not your real worker.js. Attach worker.js and I’ll run against it.

@@ -1,0 +1,12 @@
+controller(run_doc)
+...
+Adapter(run_doc) {
+  if ctx=sender -> pack -> send()
+  then if ctx = receiver
+    recieve() -> unpack()
+    sanitize()+enrich()
+    dispatch_to_operation()
+}
+
+
+e Adapter being platform specific was initially CRUD oriented. but we can not abstract specific tasks from platform so its bundled now with 1) sending and recieving and identifying the ctx - I am on sender side or or on receving 2) on receving part -> defender 3) unpacking run_doc 4) identity 5) sanitize 6) enrich 7) pass to operation 8) execute operation on pllatform

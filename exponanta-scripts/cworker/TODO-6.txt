@@ -1,0 +1,62 @@
+Goal
+
+We want every run_doc to carry a _transitionPath array — a recorded, in-order list of every tracked function that actually executed while processing it, written as a full owning-path string ("CW.preflight", "Adapters.d1.create", "Task.status.rules.Open.In Progress") rather than a bare function name.
+
+What that will give us
+
+A path we can diff against the known FSM graph (Task.status.transitions, User.status.transitions) and against the expected controller sequence for a given operation. It turns “the call returned success: true” into something checkable — did the execution actually walk a legal edge, or just land on a result that looks right. We already found this valuable: a Task update signal returned success: true with _state.status correctly flipped, yet the path showed it was persisted through Adapters.d1.create, not .update — a real bug invisible without the path.
+
+What we need to do
+
+Wrap each function we want tracked, once, after the framework loads — no edits inside CW-run.js, CW-utils.js, or CW-adapter-d1.js themselves:
+
+javascript
+function track(fn, path) {
+  return (...args) => {
+    const run_doc = args[0]
+    if (run_doc && typeof run_doc === 'object') {
+      if (!run_doc._transitionPath) run_doc._transitionPath = []
+      run_doc._transitionPath.push(path)
+    }
+    return fn(...args)
+  }
+}
+
+Applied the same way everywhere — controller stages, handlers, adapters, and FSM rules guards, no special case for any of them:
+
+javascript
+CW._resolveInput    = track(CW._resolveInput,    'CW.resolveInput')
+CW._mergeInput      = track(CW._mergeInput,      'CW.mergeInput')
+CW._clearInput      = track(CW._clearInput,      'CW.clearInput')
+CW._preflight       = track(CW._preflight,       'CW.preflight')
+CW._stripVirtual    = track(CW._stripVirtual,    'CW.stripVirtual')
+CW._handleSignal    = track(CW._handleSignal,    'CW.handleSignal')
+CW._execTransition  = track(CW._execTransition,  'CW.execTransition')
+CW._handlers.create = track(CW._handlers.create, 'CW._handlers.create')
+CW._handlers.update = track(CW._handlers.update, 'CW._handlers.update')
+Adapters.d1.create   = track(Adapters.d1.create,  'Adapters.d1.create')
+Adapters.d1.update   = track(Adapters.d1.update,  'Adapters.d1.update')
+
+CW.Schema.Task._state.status.rules['Open.In Progress'] =
+  track(CW.Schema.Task._state.status.rules['Open.In Progress'], 'Task.status.rules.Open.In Progress')
+
+The path string has to be supplied explicitly at each wrap — fn.name can’t be trusted: CW._preflight.name is "" (anonymous function expression assigned directly), and Adapters.d1.create.name and CW._handlers.create.name are both "create" — same bare name, two different functions, confirmed by direct test.
+
+What we tested
+track() against the real, loaded framework (not reimplementations) — CW._preflight, _mergeInput, _handleSignal, _execTransition, _handlers.create/update, Adapters.d1.create/update, all wrapped and called through CW.run.
+A real create: path came out ["CW.resolveInput", "CW.mergeInput", "CW.clearInput", "CW._handlers.create", "CW.preflight", "CW.stripVirtual", "Adapters.d1.create"].
+A real signaled update (Task Open → In Progress, a legal edge per Task.status.transitions): success: true, _state.status correctly became "In Progress", but the path showed "CW._handlers.create" / "Adapters.d1.create" instead of update, and "CW.execTransition" never appears at all — confirmed bug, not yet diagnosed.
+A rules-based guard, wrapped with the same track() with no special handling: confirmed it records cleanly as "Task.status.rules.Open.In Progress".
+Confirmed User.status has no transitions key in the real config — every User status signal is unconditionally rejected regardless of guard placement, a separate real bug found along the way.
+
+I think its is very substantial for code develeopment etc
+
+Agreed — and it’s worth being precise about why it’s substantial rather than just a logging nicety: it’s not just visibility into one request, it’s a diagnostic layer that already paid for itself twice in this session, finding real bugs (update silently persisting as create, User.status transitions unconditionally dead) that success: true / no error completely hid.
+
+A few things worth being deliberate about before it becomes real code, since you’ve flagged it as substantial rather than a quick add:
+
+It’s zero-risk to add and zero-risk to remove — every wrap calls straight through to the original function; nothing in the pipeline’s actual behavior changes. That makes it safe to land early, even before the create/update bug is fixed, since it’s the tool that will help confirm the fix once made.
+It needs to ship to the Worker too, not just local tests — everything we tested ran in Node against the local framework copy. For it to be useful against production traffic, the wrapping block needs to run in worker.js/remote-boot.js after the real imports, same pattern, not just in node-setup.js.
+Where does the path go once a run finishes? Right now it just sits on the in-memory run_doc, which (per the earlier finding) doesn’t survive across requests in a Worker. If you want to actually use this for debugging live traffic, not just local tests, it probably needs to be persisted somewhere (logged, written to D1, sent back in the response) rather than just existing transiently.
+
+Do you want to lock in the wrap-list (which ~60 functions get tracked) as a concrete next step, or deal with the create/update misroute bug first, since that’s the thing the path is already telling us is broken?

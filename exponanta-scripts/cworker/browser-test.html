@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>CW browser test</title>
+<style>
+  body { font: 15px/1.5 system-ui, sans-serif; margin: 24px; color: #1a1a1a; background: #fff; }
+  @media (prefers-color-scheme: dark) { body { color: #eee; background: #161616; } }
+  h1 { font-size: 20px; margin: 0 0 4px; }
+  .meta { color: #888; margin-bottom: 16px; font-size: 13px; }
+  .summary { font-weight: 700; font-size: 18px; margin: 12px 0; }
+  .row { display: grid; grid-template-columns: 56px 1fr 1fr; gap: 12px; padding: 4px 0; border-bottom: 1px solid #8884; }
+  .PASS { color: #1a9e55; font-weight: 700; }
+  .FAIL { color: #d63232; font-weight: 700; }
+  code { font: 13px ui-monospace, monospace; word-break: break-all; }
+</style>
+</head>
+<body>
+<h1>CW browser test</h1>
+<div class="meta">Read-only checks. Same file on the hub and on any third-party site.</div>
+
+<!-- non-empty on purpose: remote-boot treats empty [id] elements as component slots -->
+<div id="test-results">Running tests…</div>
+
+<!-- absolute path: identical HTML works on the hub and on third-party sites -->
+<script src="https://hub-cf.i771468.workers.dev/remote-boot.js"></script>
+
+<script>
+(function () {
+  var started = false;
+
+  var CASES = [
+    ['искусство переговоров',      'iskusstvo-peregovorov'],
+    ['Управление конфликтами',     'upravlenie-konfliktami'],
+    ['Эмоциональный интеллект',    'emocionalnyy-intellekt'],
+    ['Выгорание: как не сгореть?', 'vygoranie-colon-kak-ne-sgoret-q'],
+    ['Қазақстан әдемі',            'k-azak-stan-demi'],
+    ['denis@nesen.org',            'denis-at-nesen-dot-org'],
+    ['Manages conflict',           'manages-conflict'],
+    ['Guest Visit',                'guest-visit']
+  ];
+
+  var wait = function (ms) { return new Promise(function (r) { setTimeout(r, ms); }); };
+
+  async function run(booted) {
+    if (started) return;
+    started = true;
+    var res = [];
+    var t = function (test, ok, got) { res.push({ test: test, ok: !!ok, got: got === undefined ? '' : String(got) }); };
+
+    t('boot finished (components:ready)', booted, booted ? '' : 'timed out waiting');
+    t('CW defined', typeof window.CW === 'object', typeof window.CW);
+
+    var files = window.CW_FRAMEWORK_FILES || [];
+    var srcs = Array.prototype.map.call(document.scripts, function (s) { return s.src; });
+    var missing = files.filter(function (f) { return !srcs.some(function (s) { return s.indexOf('/' + f) !== -1; }); });
+    t('all framework files loaded', files.length > 0 && missing.length === 0,
+      files.length ? (missing.length ? 'missing: ' + missing.join(', ') : files.length + ' files') : 'CW_FRAMEWORK_FILES not found');
+
+    var first = window.CW && window.CW.slugify;
+    t('CW.slugify is a function', typeof first === 'function', typeof first);
+    await wait(2000);
+    t('slugify not replaced after load', window.CW && window.CW.slugify === first, '');
+    t('no CDN transliteration request',
+      !performance.getEntriesByType('resource').some(function (r) { return r.name.indexOf('transliteration') !== -1; }), '');
+
+    CASES.forEach(function (c) {
+      var got; try { got = window.CW.slugify(c[0]); } catch (e) { got = 'ERROR ' + e.message; }
+      t(c[0], got === c[1], got);
+    });
+
+    if (typeof generateSlug === 'function' && window.CW && window.CW.Schema) {
+      window.CW.Schema.__T = { autoname: 'field:title', title_field: 'title', fields: [] };
+      var g; try { g = generateSlug({ target_doctype: '__T', target: { data: [{ title: 'Искусство переговоров' }] } }); } catch (e) { g = 'ERROR ' + e.message; }
+      delete window.CW.Schema.__T;
+      t('generateSlug', g === 'iskusstvo-peregovorov', g);
+    } else {
+      t('generateSlug', false, 'generateSlug or CW.Schema not found');
+    }
+
+    var allPass = res.every(function (r) { return r.ok; });
+    window.__TEST_RESULTS__ = { origin: location.origin, allPass: allPass, results: res };
+
+    var box = document.getElementById('test-results');
+    box.textContent = '';
+    var sum = document.createElement('div');
+    sum.className = 'summary ' + (allPass ? 'PASS' : 'FAIL');
+    sum.textContent = (allPass ? 'ALL PASS' : 'SOME FAIL') + ' — ' + res.filter(function (r) { return r.ok; }).length + '/' + res.length + ' on ' + location.origin;
+    box.appendChild(sum);
+    res.forEach(function (r) {
+      var row = document.createElement('div'); row.className = 'row';
+      var a = document.createElement('span'); a.className = r.ok ? 'PASS' : 'FAIL'; a.textContent = r.ok ? 'PASS' : 'FAIL';
+      var b = document.createElement('span'); b.textContent = r.test;
+      var c = document.createElement('code'); c.textContent = r.got;
+      row.appendChild(a); row.appendChild(b); row.appendChild(c);
+      box.appendChild(row);
+    });
+    document.title = (allPass ? 'PASS' : 'FAIL') + ' — CW browser test';
+    console.log('TEST-RESULT: ' + (allPass ? 'ALL PASS' : 'SOME FAIL') + ' (' + location.origin + ')');
+  }
+
+  document.addEventListener('components:ready', function () { setTimeout(function () { run(true); }, 300); });
+  setTimeout(function () { run(false); }, 20000);   // fallback if boot never signals
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+https://claude.ai/chat/cfe7aa3f-6270-4d4e-958f-f244b40f180d
+
+TODO List — confirmed via direct test/code read this session
+
+TODO-1 — Close the Worker POST trust-boundary hole.
+worker.js’s POST branch calls the D1 adapter directly on the raw parsed body, bypassing CW.run/CW.controller entirely — confirmed live, on production: anonymous forged-_state User create and unauthenticated Task create both succeeded. Fix direction discussed: restore the arrived JSON as run_doc (not rebuilt into a minimal op), overwrite only run_doc.user (from verified JWT) and run_doc.user.domain (from Origin) in place, then call CW.controller(run_doc) — not CW.run(op) — so the object keeps traveling as itself, parent_run_id included for free. Not yet applied to the real worker.js on disk or deployed.
+
+TODO-2 — Diagnose and fix the signaled-update-persists-as-create bug.
+Confirmed twice on Task (which has a working transitions map, so this isn’t TODO-3’s bug): a signaled operation: 'update' on an existing row returns success: true, _state correctly updates, but run_doc.operation ends up 'create' and Adapters.d1.create (not .update) is what actually persists. Root cause not yet found — likely inside _handleSignal’s run_doc.operation = doc.name ? 'update' : 'create' branch (line 686) or something upstream clearing doc.name before that check runs. Needs tracing with _transitionPath once that’s in place, or direct console.log of doc.name at that line.
+
+TODO-3 — Align FSM helper functions (_handleSignal, _getTransitions) with the refactored schema shape.
+Already written out in full above. Short version: labels keys are now the intended source of truth for edge existence (confirmed: _handleSignal line 654 already treats labels[key] as sufficient to proceed), but both _handleSignal (line 660) and _getTransitions (line 488) still gate on a separate dimDef.transitions map that the refactored User.status no longer defines — so every User signal dies at that second, now-stale check. Fix: derive the from/to check directly from key (already ${fromVal}.${toVal}) instead of cross-checking against transitions; derive _getTransitions’s button list by filtering labels keys by current state instead of reading dimDef.transitions[current]. Must not touch permissions[].transitions/role-gating (explicitly held off). Must re-verify Task (old-shape, has both labels and transitions) still works unchanged after the fix.
+
+TODO-4 — Move (or formalize) the stray guard placement.
+User._state.status."Unverified.Active": async (run_doc) => {...} sits as a sibling of labels, not inside rules. Confirmed _handleSignal only ever reads dimDef.rules?.[key] (line 672) or dimDef.sideEffects?.[key] (line 654) for guard/effect logic — never a bare dimDef[key]. Open question, not yet decided: should this guard move into rules[key], or does the refactored schema intend a third lookup location that _handleSignal also needs to be taught to check? Depends on finishing TODO-3 first, since the guard can’t be exercised until a User signal can get past the edge-existence check at all.
+
+TODO-5 — Fix inconsistent/colliding function naming across the codebase.
+Confirmed: CW-run.js functions (_preflight, _mergeInput, _resolveInput, _clearInput, _stripVirtual, _execTransition, _handleSignal, CW.run, CW.controller) are anonymous function expressions assigned directly to properties — .name is "" for all of them. CW-utils.js functions (buildPayload, checkRateLimit, etc.) are named declarations assigned afterward — .name works correctly. Separately, CW._handlers.create.name and Adapters.d1.create.name both report "create" — a real collision between two distinct functions (same for update). Not urgent on its own, but it’s why any tracing/logging work (TODO-6) can’t rely on fn.name and needs explicit path labels instead.
+
+TODO-6 — Build and wire in _transitionPath tracking (optional/deferred, design already validated).
+track(fn, path) wrapper, confirmed working against the real framework for controller stages, handlers, adapters, and FSM rules guards alike, no source edits needed — see earlier design doc in this conversation for the exact code and wrap-list. Not yet applied to worker.js/remote-boot.js for live use; currently only tested in local Node scripts. This is the tool that would make TODO-2 and TODO-4 far faster to diagnose, so worth sequencing early even though it’s not a bug fix itself.
+
+Open/unscoped, not yet a concrete TODO:
+
+Whether other doctypes besides User have the same stale-transitions problem (not yet grepped across all of CW-config.js).
+Whether run_doc/CW.runs surviving across Worker requests (needed for the parent_run_id-join approach) is actually true in the live Worker, or only in the long-lived Node test process — flagged as an open question, not yet tested against the real Worker.
+Role-based transition gating via permissions[].transitions — explicitly deferred per your instruction, not forgotten, just not in scope yet.

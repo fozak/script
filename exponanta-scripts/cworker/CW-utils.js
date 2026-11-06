@@ -9,6 +9,8 @@ const CW = globalThis.CW;
 // transliteration bundle (embedded)
 // ============================================================
 // in CW-utils.js — non-blocking
+/* moved to CW-sugify.js:
+
 import('https://cdn.jsdelivr.net/npm/transliteration@2.3.5/dist/browser/bundle.esm.min.js')
   .then(({ slugify }) => {
   slugify.config({
@@ -39,7 +41,7 @@ import('https://cdn.jsdelivr.net/npm/transliteration@2.3.5/dist/browser/bundle.e
     const _slugify = slugify
 CW.slugify = (str) => _slugify(str).replace(/-{2,}/g, '-')
   });
-
+*/
 
 
 /*

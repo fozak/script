@@ -1,0 +1,59 @@
+Adapter(run_doc) {
+  if ctx=sender -> pack -> send()
+  then if ctx = receiver
+    recieve() -> unpack()
+    sanitize()+enrich()
+    dispatch_to_operation()
+}
+
+e Adapter being platform specific was initially CRUD oriented. but we can not abstract specific tasks from platform so its bundled now with 1) sending and recieving and identifying the ctx - I am on sender side or or on receving 2) on receving part -> defender 3) unpacking run_doc 4) identity 5) sanitize 6) enrich 7) pass to operation 8) execute operation on pllatform
+
+Let me check this against the real adapter and controller code before proposing anything, since this is asking for a structural split, not a patch.
+
+This confirms what’s actually bundled under one adapter object today: select/create/update/_delete (platform CRUD), login/logout/oauthLogin/oauthCallback (identity-specific flows), _issueToken (identity+enrich), cwPost/shell (transport-ish entry points) — all living as siblings in the same globalThis.Adapters["d1"] object, with no structural separation between “this is about talking to D1” and “this is about verifying who’s calling.”
+
+Your 8-stage breakdown is a real architectural proposal: Adapter(run_doc) becomes a dispatcher with two branches (sender vs receiver), and the receiver branch is itself a pipeline of 8 named stages, several of which (defender, identity, sanitize, enrich) currently have no dedicated function at all — they’re scattered inline (e.g., identity currently lives in worker.js’s verifyJWT call, not in the adapter; sanitize/enrich don’t exist as named steps anywhere, they’re implicit in _mergeInput/_preflight/onCreate hooks).
+
+Before I draft this as code, I want to check one structural question against what we already confirmed, since getting it wrong would repeat the earlier .child() mistake: is ctx = sender vs ctx = receiver meant to be the same Adapter function running on two different machines (client calls it in sender mode via _post, Worker calls it in receiver mode) — i.e., literally the dispatcher we tested, same globalThis.env?.DB check deciding which branch — or is it two separate functions that happen to share the name Adapter, one that only ever runs client-side and one that only ever runs in the Worker?
+
+Confirmed — this is exactly the if (!globalThis.env?.DB) { await _post(run_doc); return; } pattern from earlier in the session, repeated in every one of select/create/update/_delete/login/logout. Each individual function re-checks the same condition and branches the same way: no D1 → _post (become sender) → return; D1 present → run the real SQL (become receiver). It’s the same function on both sides of the wire, branching internally on an environment capability check, repeated six times rather than factored out once.
+
+That answers the structural question: it’s one function, two ctx branches, duplicated six times — exactly the shape your Adapter(run_doc) { if ctx=sender ... if ctx=receiver ... } proposal would factor into a single dispatcher, called once, with the create/update/select/delete logic becoming the “dispatch_to_operation / execute on platform” leaf stages (8) rather than each repeating the sender/receiver check themselves.
+
+Given that, here’s the concrete shape, matching your 8 numbered stages against what exists versus what’s missing:
+
+javascript
+async function Adapter(run_doc) {
+  // 1. identify ctx — same capability check, factored out once instead of ×6
+  const isReceiver = !!globalThis.env?.DB;
+
+  if (!isReceiver) {
+    // SENDER — pack (already is: run_doc IS the packed shape) → send
+    return await _post(run_doc);                      // existing _post, unchanged
+  }
+
+  // RECEIVER
+  // 2. defender — not yet existing as a named stage; currently nothing stands
+  //    between "JSON parsed" and "trusted as run_doc" in worker.js
+  if (!defend(run_doc)) return;                        // NEW — rate limit, shape check, etc.
+
+  // 3. unpack — restore as-is; already scoped earlier this session
+  unpack(run_doc);                                      // NEW — currently inline in worker.js
+
+  // 4. identity — currently verifyJWT() inline in worker.js, not in the adapter at all
+  run_doc.user = await identify(run_doc);               // NEW — extracted from worker.js
+
+  // 5. sanitize — currently implicit inside _mergeInput's field-copy loop; not a named stage
+  sanitize(run_doc);                                    // NEW — or reuse CW._mergeInput's filtering
+
+  // 6. enrich — currently implicit inside _preflight's onCreate/onWrite hooks; not named
+  await enrich(run_doc);                                // NEW — or reuse CW._preflight
+
+  // 7. dispatch_to_operation — this already exists: CW.controller's own dispatch block
+  // 8. execute on platform — this already exists: the real select/create/update/_delete below
+  return await CW.controller(run_doc);
+}
+
+The honest accounting: stages 1 (ctx-check) and 7-8 (dispatch + platform execution) already exist, just duplicated/scattered rather than factored through one entry point. Stages 2 (defender), 3 (unpack), 4 (identity), 5 (sanitize), 6 (enrich) have no dedicated function today — they’re either missing entirely (defender) or living as unnamed, inline logic buried inside worker.js (identity) or CW._mergeInput/_preflight (sanitize/enrich, arguably already doing this job under different names).
+
+Before I go further: do you want stages 5/6 (sanitize/enrich) to be new, separate functions, or should they be a rename/thin wrapper around the _mergeInput/_preflight logic that already does this work inside CW.controller — since duplicating that logic in the adapter would reintroduce the exact “two places decide the same thing” problem we’ve been finding all session?

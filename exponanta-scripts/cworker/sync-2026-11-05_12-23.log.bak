@@ -1,0 +1,35 @@
+2026/11/05 12:23:20 INFO  : sync-2026-11-05_12-23.log: Copied (new)
+2026/11/05 12:23:20 INFO  : CW-slugify.js: Copied (new)
+2026/11/05 12:23:21 INFO  : CW-utils.js: Copied (server-side copy) to: CW-utils.js.bak
+2026/11/05 12:23:21 INFO  : CW-utils.js: Deleted
+2026/11/05 12:23:21 INFO  : remote-boot.js: Copied (server-side copy) to: remote-boot.js.bak
+2026/11/05 12:23:21 INFO  : CW-utils.js: Copied (new)
+2026/11/05 12:23:22 INFO  : remote-boot.js: Deleted
+2026/11/05 12:23:22 INFO  : sync-2026-11-05_11-54.log: Copied (server-side copy) to: sync-2026-11-05_11-54.log.bak
+2026/11/05 12:23:22 INFO  : sync-2026-11-05_11-54.log: Deleted
+2026/11/05 12:23:22 INFO  : remote-boot.js: Copied (new)
+2026/11/05 12:23:22 INFO  : sync-2026-11-05_11-54.log: Copied (new)
+2026/11/05 12:23:22 INFO  : 
+Transferred:   	  389.727 KiB / 389.727 KiB, 100%, 167.660 KiB/s, ETA 0s
+Checks:                91 / 91, 100%, Listed 195
+Deleted:                3 (files), 0 (dirs), 51.752 KiB (freed)
+Renamed:                3
+Transferred:            8 / 8, 100%
+Server Side Copies:     3 @ 51.752 KiB
+Elapsed time:         3.0s
+
+2026/11/05 12:23:23 INFO  : CW-utils.js.bak: Copied (new)
+2026/11/05 12:23:23 INFO  : sync-2026-11-05_11-54.log.bak: Copied (new)
+2026/11/05 12:23:24 INFO  : remote-boot.js.bak: Moved (server-side) to: remote-boot.js.bak.bak
+2026/11/05 12:23:24 INFO  : remote-boot.js.bak: Copied (new)
+2026/11/05 12:23:24 INFO  : 
+Transferred:   	   51.752 KiB / 51.752 KiB, 100%, 47.555 KiB/s, ETA 0s
+Checks:                88 / 88, 100%, Listed 197
+Renamed:                1
+Transferred:            3 / 3, 100%
+Server Side Moves:      1 @ 2.705 KiB
+Elapsed time:         1.5s
+
+2026/11/05 12:23:25 INFO  : remote-boot.js.bak.bak: Copied (new)
+2026/11/05 12:23:27 INFO  : sync-2026-11-05_12-23.log: Copied (server-side copy) to: sync-2026-11-05_12-23.log.bak
+2026/11/05 12:23:27 INFO  : sync-2026-11-05_12-23.log: Deleted

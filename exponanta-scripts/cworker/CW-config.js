@@ -126,57 +126,16 @@ CW.Schema.User = {
   _state: {
     status: {
       name: "status",
-      default: "Active",
-      values: ["Invited", "Active", "Locked", "Reset Pending", "Disabled"],
-      transitions: {
-        Invited: ["Active", "Disabled"],
-        Active: ["Locked", "Reset Pending", "Disabled"],
-        Locked: ["Active", "Disabled"],
-        "Reset Pending": ["Active", "Disabled"],
-        Disabled: ["Invited"],
-      },
-      labels: {
-        "Invited.Active": "Activate",
-        "Invited.Disabled": "Cancel Invitation",
-        "Active.Locked": "Lock Account",
-        "Active.Reset Pending": "Require Password Reset",
-        "Active.Disabled": "Disable User",
-        "Locked.Active": "Unlock Account",
-        "Reset Pending.Active": "Complete Reset",
-        "Disabled.Invited": "Re-invite",
-      },
-      sideEffects: {},
-      rules: {},
-    },
-    email_status: {
-      name: "email_status",
       default: "Unverified",
-      values: ["Unverified", "Pending", "Verified"],
-      transitions: {
-        Unverified: ["Pending"],
-        Pending: ["Verified"],
-      },
       labels: {
-        "Unverified.Pending": "Send Verification Email",
-        "Pending.Verified": "Verify Email",
+        "Unverified.Active": "Activate",
+        "Active.Locked": "Lock Account",
+        "Locked.Active": "Unlock Account",
+        "Active.Disabled": "Disable User",
       },
-      sideEffects: {
-        "Unverified.Pending": async (run_doc) => {
-          const token = await signJWT(
-            {
-              email: run_doc.target.data[0].email,
-              purpose: "email_verify",
-              exp: Math.floor(Date.now() / 1000) + 86400,
-            },
-            globalThis.env.JWT_SECRET,
-          );
-          await CW.Email.send({
-            to: run_doc.target.data[0].email,
-            body: `https://nesen.org/verify?token=${token}`,
-          });
-        },
+      "Unverified.Active": async (run_doc) => {
+        /* guard */
       },
-      rules: {},
     },
   },
   permissions: [
@@ -187,12 +146,10 @@ CW.Schema.User = {
       create: 1,
       delete: 1,
       transitions: {
-        "status.Invited.Active": "Activate",
+        "status.Unverified.Active": "Activate", // only if admins may activate
         "status.Active.Locked": "Lock Account",
-        "status.Active.Disabled": "Disable User",
         "status.Locked.Active": "Unlock Account",
-        "email_status.Unverified.Pending": "Send Verification Email",
-        "email_status.Pending.Verified": "Verify Email",
+        "status.Active.Disabled": "Disable User",
       },
     },
     { role: "roleusermanagxx", read: 1, write: 1, transitions: {} },
@@ -259,33 +216,34 @@ globalThis.CW._config = {
         return;
       }
 
-      // SELECT — public or authenticated
+      // SELECT — public bypasses domain entirely, for anyone
       if (run_doc.operation === "select") {
         if (!uid) {
           run_doc.d1.acl = {
-            sql: `(item.domain = ? AND __je_allowed_read.value = '${cfg.roles.public}')`,
-            params: [domain],
+            sql: `(__je_allowed_read.value = '${cfg.roles.public}')`,
+            params: [],
           };
           return;
         }
         run_doc.d1.acl = {
-          sql: `(item.domain = ? AND (__je_allowed_read.value = '${cfg.roles.public}' OR item.id = ? OR item.owner = ? OR __je_allowed.value = ? OR __je_allowed_read.value = ? OR EXISTS (SELECT 1 FROM item_users iu WHERE iu.id = ? AND __je_allowed.value = iu.role_id) OR EXISTS (SELECT 1 FROM item_users iu WHERE iu.id = ? AND __je_allowed_read.value = iu.role_id)))`,
+          sql: `(__je_allowed_read.value = '${cfg.roles.public}' OR (item.domain = ? AND (item.id = ? OR item.owner = ? OR __je_allowed.value = ? OR __je_allowed_read.value = ? OR EXISTS (SELECT 1 FROM item_users iu WHERE iu.id = ? AND __je_allowed.value = iu.role_id) OR EXISTS (SELECT 1 FROM item_users iu WHERE iu.id = ? AND __je_allowed_read.value = iu.role_id))))`,
           params: [domain, uid, uid, uid, uid, uid, uid],
         };
         return;
       }
 
-      // UPDATE/DELETE — must be authenticated
-      // UPDATE/DELETE — must be authenticated
-if (!uid) {
-  run_doc.error = "401 unauthorized";
-  run_doc.d1.acl = { sql: `(0)`, params: [] };
-  return;
-}
-run_doc.d1.acl = {
-  sql: `(item.domain = ? AND (item.owner = ? OR EXISTS (SELECT 1 FROM json_each(item._allowed) WHERE value = ?) OR EXISTS (SELECT 1 FROM item_users iu WHERE iu.id = ? AND EXISTS (SELECT 1 FROM json_each(item._allowed) WHERE value = iu.role_id))))`,
-  params: [domain, uid, uid, uid],
-};
+      // UPDATE/DELETE — must be authenticated, always domain-scoped.
+      // Public read never implies write — write stays strictly within
+      // the caller's own domain regardless of a row's public flag.
+      if (!uid) {
+        run_doc.error = "401 unauthorized";
+        run_doc.d1.acl = { sql: `(0)`, params: [] };
+        return;
+      }
+      run_doc.d1.acl = {
+        sql: `(item.domain = ? AND (item.owner = ? OR EXISTS (SELECT 1 FROM json_each(item._allowed) WHERE value = ?) OR EXISTS (SELECT 1 FROM item_users iu WHERE iu.id = ? AND EXISTS (SELECT 1 FROM json_each(item._allowed) WHERE value = iu.role_id))))`,
+        params: [domain, uid, uid, uid],
+      };
     },
   },
 
@@ -950,7 +908,7 @@ run_doc.d1.acl = {
       fieldname: "_allowed_read",
       fieldtype: "Code",
       options: "JSON",
-      read_only: 1,
+      read_only: 0, // 1 was  this is the bug
       in_local_view: 1,
       onCreate: (run_doc) => {
         run_doc.target.data[0]._allowed_read = []; // empty — self-read via JWT identity, not ACL

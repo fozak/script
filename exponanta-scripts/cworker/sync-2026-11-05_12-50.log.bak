@@ -1,0 +1,25 @@
+2026/11/05 12:50:09 INFO  : sync-2026-11-05_12-50.log: Copied (new)
+2026/11/05 12:50:09 INFO  : node-setup.js: Copied (new)
+2026/11/05 12:50:09 INFO  : browser-test.html: Copied (new)
+2026/11/05 12:50:09 INFO  : node-tests.js: Copied (new)
+2026/11/05 12:50:10 INFO  : sync-2026-11-05_12-23.log: Copied (server-side copy) to: sync-2026-11-05_12-23.log.bak
+2026/11/05 12:50:10 INFO  : sync-2026-11-05_12-23.log: Deleted
+2026/11/05 12:50:11 INFO  : sync-2026-11-05_12-23.log: Copied (new)
+2026/11/05 12:50:11 INFO  : 
+Transferred:   	   16.736 KiB / 16.736 KiB, 100%, 7.424 KiB/s, ETA 0s
+Checks:                92 / 92, 100%, Listed 207
+Deleted:                1 (files), 0 (dirs), 1.867 KiB (freed)
+Renamed:                1
+Transferred:            6 / 6, 100%
+Server Side Copies:     1 @ 1.867 KiB
+Elapsed time:         3.0s
+
+2026/11/05 12:50:12 INFO  : sync-2026-11-05_12-23.log.bak: Copied (new)
+2026/11/05 12:50:13 INFO  : 
+Transferred:   	    1.867 KiB / 1.867 KiB, 100%, 1.865 KiB/s, ETA 0s
+Checks:                94 / 94, 100%, Listed 210
+Transferred:            1 / 1, 100%
+Elapsed time:         1.5s
+
+2026/11/05 12:50:15 INFO  : sync-2026-11-05_12-50.log: Copied (server-side copy) to: sync-2026-11-05_12-50.log.bak
+2026/11/05 12:50:15 INFO  : sync-2026-11-05_12-50.log: Deleted

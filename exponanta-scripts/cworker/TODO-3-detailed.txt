@@ -1,0 +1,66 @@
+TODO-3 — Align FSM helper functions with the refactored schema shape
+
+Context: the FSM schema shape itself has already changed — labels keys are now the source of truth for “does this edge exist,” and permissions[].transitions carries which roles may fire which edges (not yet in scope — see prior instruction, hold off on roles). The helper functions in CW-utils.js were written for the old shape and were never updated to match. Confirmed by direct test and code read, not assumed.
+
+1. _handleSignal (CW-utils.js, line ~650-664) — fix the double-gate.
+
+Current code:
+
+javascript
+for (const [dim, dimDef] of Object.entries(stateDef)) {
+  if (!signal.startsWith(dim + '.')) continue
+  const key = signal.slice(dim.length + 1)
+
+  if (dimDef.sideEffects?.[key] === undefined && dimDef.labels?.[key] === undefined) continue
+
+  const currentVal = _getDimValue(doc, dim, dimDef)
+  const [fromVal, toVal] = key.split('.')
+
+  // validate transition
+  const validTos = dimDef.transitions?.[currentVal] || []
+  if (fromVal !== currentVal || !validTos.includes(toVal)) {
+    _failSignal(`Transition ${key} not allowed from current state ${currentVal} (dim ${dim})`)
+    return
+  }
+  ...
+
+Confirmed: line 654 already treats labels[key] as proof the edge exists and lets execution continue — but line 660 then re-checks dimDef.transitions?.[currentVal], a second, independent source that User.status never populates, so it always rejects regardless of what labels says. This is the actual bug, not a missing field — labels is already correctly read as the edge definition at line 654; transitions is the stale, redundant gate left over from the old shape.
+
+Fix: validate against labels (the edge key itself), not a separate transitions lookup — since key (e.g. "Unverified.Active") is already exactly ${fromVal}.${toVal}, and its presence in labels is the edge:
+
+javascript
+  if (dimDef.sideEffects?.[key] === undefined && dimDef.labels?.[key] === undefined) continue
+
+  const currentVal = _getDimValue(doc, dim, dimDef)
+  const [fromVal, toVal] = key.split('.')
+
+  // edge exists iff labels (or sideEffects) define this exact key, AND fromVal matches current state
+  if (fromVal !== currentVal) {
+    _failSignal(`Transition ${key} not allowed from current state ${currentVal} (dim ${dim})`)
+    return
+  }
+  ...
+
+Dropping the validTos.includes(toVal) check entirely — key already encodes both fromVal and toVal together, and its presence in labels/sideEffects (already checked at line 654) is the only proof of existence the new shape provides. No separate transitions map needed, confirmed by reading the refactored User.status — it genuinely has none.
+
+2. _getTransitions (CW-utils.js, line 481-520) — same double-gate, used for UI buttons.
+
+Current:
+
+javascript
+const current = _getDimValue(doc, dim, dimDef)
+const tos     = dimDef.transitions?.[current] || []
+
+This is the function that drives _getFormButtons — which buttons the UI shows. Same bug: reads dimDef.transitions, which User doesn’t have, so User never gets any status buttons rendered, independent of role. Needs to instead enumerate dimDef.labels keys whose fromVal matches current:
+
+javascript
+const current = _getDimValue(doc, dim, dimDef)
+const tos = Object.keys(dimDef.labels || {})
+  .filter(k => k.startsWith(current + '.'))
+  .map(k => k.slice(current.length + 1))
+
+Role-based filtering of tos (via permissions[].transitions) stays exactly as it already is at lines 490-499 — not touched, per your instruction.
+
+3. Doctypes that still use the old shape (e.g. Task, confirmed has both labels and a real transitions map) must keep working unchanged. The fix above only changes how the edge’s existence is decided — from transitions-lookup to labels-presence — so it needs verifying against Task too, since Task’s labels keys and transitions map are already in agreement (both list the same edges) in every case we tested. Re-run the existing Task Open → In Progress test after the change to confirm no regression, before relying on it for User.
+
+Not yet covered by this TODO: the separate, already-confirmed bug where a signaled update persists via Adapters.d1.create instead of .update, and CW.execTransition never appearing in _transitionPath for a real signal — both independent of this schema-shape fix, still open.

@@ -1,0 +1,27 @@
+2026/11/05 11:54:06 INFO  : sync-2026-11-05_11-54.log: Copied (new)
+2026/11/05 11:54:06 INFO  : remote-boot.v2 (2).js: Copied (new)
+2026/11/05 11:54:08 INFO  : remote-boot.js: Copied (server-side copy) to: remote-boot.js.bak
+2026/11/05 11:54:08 INFO  : remote-boot.js: Deleted
+2026/11/05 11:54:08 INFO  : sync-2026-11-05_11-46.log: Copied (server-side copy) to: sync-2026-11-05_11-46.log.bak
+2026/11/05 11:54:08 INFO  : sync-2026-11-05_11-46.log: Deleted
+2026/11/05 11:54:08 INFO  : remote-boot.js: Copied (new)
+2026/11/05 11:54:08 INFO  : sync-2026-11-05_11-46.log: Copied (new)
+2026/11/05 11:54:08 INFO  : 
+Transferred:   	   23.054 KiB / 23.054 KiB, 100%, 3.448 KiB/s, ETA 0s
+Checks:                85 / 85, 100%, Listed 187
+Deleted:                2 (files), 0 (dirs), 9.229 KiB (freed)
+Renamed:                2
+Transferred:            6 / 6, 100%
+Server Side Copies:     2 @ 9.229 KiB
+Elapsed time:         2.9s
+
+2026/11/05 11:54:09 INFO  : sync-2026-11-05_11-46.log.bak: Copied (new)
+2026/11/05 11:54:09 INFO  : remote-boot.js.bak: Copied (new)
+2026/11/05 11:54:10 INFO  : 
+Transferred:   	    9.229 KiB / 9.229 KiB, 100%, 9.212 KiB/s, ETA 0s
+Checks:                83 / 83, 100%, Listed 189
+Transferred:            2 / 2, 100%
+Elapsed time:         1.6s
+
+2026/11/05 11:54:13 INFO  : sync-2026-11-05_11-54.log: Copied (server-side copy) to: sync-2026-11-05_11-54.log.bak
+2026/11/05 11:54:13 INFO  : sync-2026-11-05_11-54.log: Deleted

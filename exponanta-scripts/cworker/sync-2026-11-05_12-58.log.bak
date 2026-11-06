@@ -1,0 +1,24 @@
+2026/11/05 12:58:08 INFO  : sync-2026-11-05_12-58.log: Copied (new)
+2026/11/05 12:58:09 INFO  : worker-setup.js: Copied (new)
+2026/11/05 12:58:09 INFO  : worker-tests.js: Copied (new)
+2026/11/05 12:58:10 INFO  : sync-2026-11-05_12-50.log: Copied (server-side copy) to: sync-2026-11-05_12-50.log.bak
+2026/11/05 12:58:10 INFO  : sync-2026-11-05_12-50.log: Deleted
+2026/11/05 12:58:11 INFO  : sync-2026-11-05_12-50.log: Copied (new)
+2026/11/05 12:58:11 INFO  : 
+Transferred:   	    5.419 KiB / 5.419 KiB, 100%, 1.256 KiB/s, ETA 0s
+Checks:                97 / 97, 100%, Listed 216
+Deleted:                1 (files), 0 (dirs), 1.256 KiB (freed)
+Renamed:                1
+Transferred:            5 / 5, 100%
+Server Side Copies:     1 @ 1.256 KiB
+Elapsed time:         2.8s
+
+2026/11/05 12:58:12 INFO  : sync-2026-11-05_12-50.log.bak: Copied (new)
+2026/11/05 12:58:12 INFO  : 
+Transferred:   	    1.256 KiB / 1.256 KiB, 100%, 1.252 KiB/s, ETA 0s
+Checks:                98 / 98, 100%, Listed 218
+Transferred:            1 / 1, 100%
+Elapsed time:         1.5s
+
+2026/11/05 12:58:15 INFO  : sync-2026-11-05_12-58.log: Copied (server-side copy) to: sync-2026-11-05_12-58.log.bak
+2026/11/05 12:58:15 INFO  : sync-2026-11-05_12-58.log: Deleted

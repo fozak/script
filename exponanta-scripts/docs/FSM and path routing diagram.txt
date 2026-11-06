@@ -1,0 +1,25 @@
+discussion https://claude.ai/chat/cfe7aa3f-6270-4d4e-958f-f244b40f180d
+ 
+ 
+ 
+        User.status.Unverified.Active.1
+        |
+        v
+        User...............email.1
+        |                   |
+        v                   v
+Setting.User.notify.default.email.1
+        |
+        v        
+Template.User.notify.Unverified.Active.1
+        |
+        v
+Adapter.email.notify.Unverified.Active.1
+        |
+        v
+Schema.User.permissions.transitions.Unverified.Active.role (not final) = permitted_role for transition
+       	|
+        v
+Permitted_role.users.emails
+
+

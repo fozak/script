@@ -1,0 +1,7 @@
+wrangler.toml
+worker.js
+.assetsignore
+*.bak
+sync-*.log
+.wrangler/
+node_modules/
