@@ -190,6 +190,55 @@ CW.Schema.HtmlForm = {
   ],
 };
 
+//================================
+
+CW.Schema.Skill = {
+  schema_name: "Skill",
+  title_field: "title",
+  is_public: true, // Public read: every record gets the public role in _allowed_read
+  fields: [
+    {
+      fieldname: "skill_area",
+      fieldtype: "Select",
+      label: "Skill Area",
+      options: "Strategy\nCollaboration\nAgility\nLeadership\nExecution",
+      in_list_view: 1,
+    },
+    { fieldname: "path", fieldtype: "Data", label: "Path", read_only: 1 },
+
+    {
+      fieldname: "definition",
+      fieldtype: "Text",
+      label: "Definition",
+      in_lang_view: 1,
+      description: "What the skill is, in our own words",
+    },
+    {
+      fieldname: "levels",
+      fieldtype: "Table",
+      label: "Levels",
+      options: "Skill Level",
+    },
+    {
+      fieldname: "relations",
+      fieldtype: "Table",
+      label: "Relations",
+      options: "Skill Relation",
+    },
+
+    { fieldname: "previous_name", fieldtype: "Data", label: "Previous name" },
+    {
+      fieldname: "korn_ferry_ids",
+      fieldtype: "Data",
+      label: "Korn Ferry #",
+      hidden: 1,
+      description: "Private. Never shown on public pages",
+    },
+    { fieldname: "merged_from", fieldtype: "Data", label: "Merged from" },
+    { fieldname: "_note", fieldtype: "Small Text", label: "Note" },
+  ],
+};
+
 globalThis.CW._config = {
   roles: {
     systemManager: "rolesystemmanag",
@@ -468,6 +517,7 @@ globalThis.CW._config = {
       hidden: 0,
       in_list_view: 1,
       in_local_view: 1,
+      in_lang_view: 1,
       fieldtype: "Data",
       onCreate: (run_doc) => {
         const doc = run_doc.target?.data?.[0];
@@ -868,6 +918,38 @@ globalThis.CW._config = {
         if (!run_doc.target.data[0].domain) {
           run_doc.target.data[0].domain = run_doc.user?.domain ?? "";
         }
+      },
+    },
+    {
+      name: "path",
+      fieldtype: "Data",
+      read_only: 1,
+      in_list_view: 1,
+      onCreate: (run_doc) => {
+        const doc = run_doc.target?.data?.[0];
+        if (!doc || doc.path) return;
+        if (!doc.slug) doc.slug = generateSlug(run_doc);
+        doc.path = `${run_doc.target_doctype.toLowerCase()}--${doc.slug}`;
+      },
+    },
+    {
+      name: "lang",
+      fieldtype: "JSON",
+      in_list_view: 1,
+      hidden: 0,
+      onWrite: (run_doc) => {
+        const doc = run_doc.target?.data?.[0];
+        if (!doc?.lang) return;
+        const s = CW.Schema?.[run_doc.target_doctype];
+        const flagged = new Set(
+          (s?.fields || [])
+            .filter((f) => f.in_lang_view)
+            .map((f) => f.fieldname ?? f.name),
+        );
+        for (const [code, vals] of Object.entries(doc.lang))
+          for (const k of Object.keys(vals || {}))
+            if (!flagged.has(k))
+              throw new Error(`lang.${code}.${k}: field is not in_lang_view`);
       },
     },
   ],
